@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextBoxEx UnitTest renders correctly 1`] = `
+<ForwardRef(Themed.Input)
+  autoCapitalize="none"
+  autoCorrect={false}
+  errorStyle={
+    Object {
+      "fontSize": 12,
+      "textAlign": "center",
+    }
+  }
+  keyboardAppearance="light"
+  labelStyle={
+    Object {
+      "alignContent": "flex-start",
+      "color": "black",
+      "fontFamily": "mont-regular",
+    }
+  }
+  onEndEditing={[Function]}
+/>
+`;

@@ -1,0 +1,16 @@
+{
+    "react-native": {
+        "packager": {
+            "port": 19001
+        }
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true
+    },
+    "[typescriptreact]": {
+        "editor.formatOnSave": true
+    },
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+    "typescriptHero.imports.stringQuoteStyle": "\""
+}
