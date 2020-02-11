@@ -14,13 +14,13 @@ export default class BaseUrl {
 
         if (relCh !== undefined) {
             if (relCh!.includes("staging")) {
-                return AracanRestAPI.staging.url;
+                return IWinksRestAPI.staging.url;
             } else if (relCh!.includes("prod")) {
-                return AracanRestAPI.prod.url;
+                return IWinksRestAPI.prod.url;
             }
         }
 
-        return AracanRestAPI.dev.url;
+        return IWinksRestAPI.dev.url;
     }
 
     public static getDownloadUrl(
@@ -40,7 +40,7 @@ export default class BaseUrl {
     }
 }
 
-export const AracanRestAPI = {
+export const IWinksRestAPI = {
     dev: {
         url: "https://api.iwinks.io/"
     },

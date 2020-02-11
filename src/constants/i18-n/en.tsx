@@ -75,6 +75,7 @@ export default {
     signup_button: signup,
 
     // home fragment
+    home_default_profile: "Default Profile",
     home_title: "Home",
     home_edit_alarm_button: "Edit Alarm",
     home_go_to_sleep_button: "Go To Sleep",

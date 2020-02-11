@@ -1,13 +1,11 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
-import { Colors, Dimens, Fonts, Layout } from "../constants";
+import { Colors, Dimens, Layout } from "../constants";
 
 export default StyleSheet.create({
     bgImage: {
         alignItems: "center",
         flex: 1,
-        height: Layout.window.height,
-        justifyContent: "center",
         left: 0,
         top: 0,
         width: Layout.window.width
@@ -46,9 +44,11 @@ export default StyleSheet.create({
     headerStyle: {
         backgroundColor: Colors.navy
     },
-    headerTitleStyle: {
+    headerTitleContainerStyle: {
+        alignContent: "center",
         borderColor: Colors.blue,
         borderBottomWidth: 3,
+        justifyContent: "center",
         marginRight: Dimens.content_margin_horizontal
     },
     headerLeftContainerStyle: {

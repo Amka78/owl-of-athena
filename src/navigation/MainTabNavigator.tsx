@@ -22,21 +22,27 @@ const routeConfigMap: NavigationRouteConfigMap<
 > = {
     Route1: {
         navigationOptions: {
-            tabBarIcon: options => createTabBarIcon(options, "alarm-check")
+            tabBarIcon: (options): JSX.Element =>
+                createTabBarIcon(options, "alarm-check"),
+            title: ""
         },
         path: "",
         screen: HomeNavigator
     },
     Route2: {
         navigationOptions: {
-            tabBarIcon: options => createTabBarIcon(options, "blur")
+            tabBarIcon: (options): JSX.Element =>
+                createTabBarIcon(options, "blur"),
+            title: ""
         },
         path: "",
         screen: SessionNavigator
     },
     Route3: {
         navigationOptions: {
-            tabBarIcon: options => createTabBarIcon(options, "settings")
+            tabBarIcon: (options): JSX.Element =>
+                createTabBarIcon(options, "settings"),
+            title: ""
         },
         path: "",
         screen: SettingNavigator
@@ -69,6 +75,7 @@ function createTabBarIcon(
                 width: 15
             }}
             icon={iconImagePath}
+            theme={{ colors: { primary: options.tintColor } }}
         >
             {""}
         </Button>

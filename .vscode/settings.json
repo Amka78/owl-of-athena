@@ -4,13 +4,16 @@
             "port": 19001
         }
     },
-    "[typescript]": {
-        "editor.formatOnSave": true
-    },
-    "[typescriptreact]": {
-        "editor.formatOnSave": true
-    },
-    "prettier.tabWidth": 4,
-    "prettier.useTabs": false,
-    "typescriptHero.imports.stringQuoteStyle": "\""
+    "eslint.lintTask.enable": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        {"language": "typescript", "autoFix": true },
+        {"language": "typescriptreact", "autoFix": true }
+    ],
+    "typescriptHero.imports.stringQuoteStyle": "\"",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    }
 }

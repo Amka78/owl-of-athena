@@ -1,9 +1,9 @@
 {
   "expo": {
     "name": "Owl of Minerva",
-    "slug": "aracan-mobile",
+    "slug": "owl-of-minerva",
     "privacy": "unlisted",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"
@@ -20,6 +20,6 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Next-generation car sharing and C2C trading service"
+    "description": "Aurora Client for community user."
   }
 }

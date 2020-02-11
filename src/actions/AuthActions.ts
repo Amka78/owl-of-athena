@@ -1,15 +1,25 @@
-//import { ActionTypes } from "../constants";
+import { User } from "../types";
 
-/*export const loginSuccess = (tokenDto: TokenDto): any => ({
+import { ActionTypes } from "../constants";
+
+export type Actions = ReturnType<
+    typeof login | typeof updateUser | typeof logout
+>;
+
+export const login = (user: User) => ({
     payload: {
-        data: tokenDto
+        data: user
     },
-    type: ActionTypes.LOGIN_SUCCESS
+    type: ActionTypes.LOGIN
 });
 
-export const updateUserSuccess = (userDto: UserDto): any => ({
+export const logout = () => ({
+    type: ActionTypes.LOGOUT
+});
+
+export const updateUser = (userDto: User) => ({
     payload: {
         data: userDto
     },
-    type: ActionTypes.UPDATE_USER_SUCCESS
-});*/
+    type: ActionTypes.UPDATE_USER
+});

@@ -77,8 +77,9 @@ export default {
     signup_button: signup,
 
     // home fragment
+    home_default_profile: "ディフォルト プロファイル",
     home_title: "ホーム",
-    home_edit_alarm_button: "アラームを更新する",
+    home_edit_alarm_button: "アラームを更新",
     home_go_to_sleep_button: "眠る",
     home_aurora_disconnected_dialog_title: "Auroraが接続されていません。",
     home_aurora_disconnected_dialog_message:

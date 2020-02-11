@@ -14,8 +14,9 @@ enum SecureStoreKeys {
 export default class TokenManager {
     public static async hasToken(): Promise<boolean> {
         const result = await this.getPerPlatform(SecureStoreKeys.JWT_TOKEN);
+        console.debug("tokenValue:", result);
 
-        return result !== undefined;
+        return result !== undefined && result !== null;
     }
 
     /**
@@ -42,7 +43,7 @@ export default class TokenManager {
      * @param {TokenDto} value
      * @memberof TokenManager
      */
-    public static async set(value: string) {
+    public static async set(value: string): Promise<void> {
         await this.setPerPlatform(SecureStoreKeys.JWT_TOKEN, value);
     }
 

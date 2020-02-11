@@ -4,7 +4,7 @@ import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
 import React from "react";
 
-import { MultiLingualTextBox } from "../MultiLingualTextBox";
+import { TextBox } from "../TextBox";
 
 describe("TextBoxEx UnitTest", () => {
     beforeAll(async () => {
@@ -20,7 +20,7 @@ describe("TextBoxEx UnitTest", () => {
     });
 
     it("renders correctly", () => {
-        const tree = toJson(shallow(<MultiLingualTextBox />));
+        const tree = toJson(shallow(<TextBox />));
 
         expect(tree).toMatchSnapshot();
     });

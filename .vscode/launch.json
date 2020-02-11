@@ -14,7 +14,7 @@
       "request": "attach",
       "name": "Docker: Attach to Node",
       "localRoot": "${workspaceFolder}",
-      "remoteRoot": "/usr/local/src/aracan-mobile",
+      "remoteRoot": "/usr/local/src/owl-of-minerva",
       "port": 9230,
       "address": "0.0.0.0",
       "protocol": "inspector",
@@ -56,7 +56,7 @@
           "program": "${workspaceRoot}/node_modules/jest/bin/jest.js"
       },
       "osx": {
-        "runtimeExecutable": "/Users/aracan/.nodebrew/current/bin/node",
+        "runtimeExecutable": "/Users/owl-of-minerva/.nodebrew/current/bin/node",
       },
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

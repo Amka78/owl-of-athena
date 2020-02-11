@@ -44,10 +44,9 @@ export const useSignup = (
             } else {
                 setGeneralError(Message.get("email_already_registered"));
             }
+            setLoading(false);
         }
-
-        setLoading(false);
-    }, [signup, navigate]);
+    }, [signup, auroraClient, navigate]);
     return {
         loading,
         onPress,
@@ -57,13 +56,14 @@ export const useSignup = (
         passwordConfirmError
     };
 };
+
 function validate(
     signup: Signup,
     setEmailError: React.Dispatch<React.SetStateAction<string>>,
     setPasswordError: React.Dispatch<React.SetStateAction<string>>,
     setPasswordConfirmError: React.Dispatch<React.SetStateAction<string>>,
     setGeneralError: React.Dispatch<React.SetStateAction<string>>
-) {
+): boolean {
     if (signup.email === "") {
         setEmailError(
             Message.get({

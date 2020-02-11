@@ -1,12 +1,11 @@
 import { AppLoading } from "expo";
-import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 
 import { RootContainer, store } from "./src/store";
-import { Colors, Dimens } from "./src/constants";
+import { Colors } from "./src/constants";
 
 interface IAppProps {
     skipLoadingScreen: boolean;
@@ -28,7 +27,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return (
                 <AppLoading
-                    // @ts-ignore
                     startAsync={this.loadResourcesAsync}
                     onError={this.handleLoadingError}
                     onFinish={this.handleFinishLoading}

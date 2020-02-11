@@ -1,3 +1,3 @@
-import { loginSuccess, updateUserSuccess } from "./AuthActions";
+import { Actions, login, logout, updateUser } from "./AuthActions";
 
-export { loginSuccess, updateUserSuccess };
+export { Actions as AuthActions, login, logout, updateUser };

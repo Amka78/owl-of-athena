@@ -1,6 +1,8 @@
 export default class RestClient {
     protected headers: any = null;
 
+    protected onGetToken?: () => Promise<string | undefined>;
+
     private baseUrl: string = "";
 
     private devMode: boolean = false;
@@ -21,12 +23,6 @@ export default class RestClient {
         this.baseUrl = baseUrl;
         this.simulatedDelay = simulatedDelay;
         this.devMode = devMode;
-    }
-
-    public setToken(token: string) {
-        Object.assign(this.headers, this.headers, {
-            Authorization: `Bearer ${token}`
-        });
     }
 
     /**
@@ -89,6 +85,12 @@ export default class RestClient {
         return await this.fetch(route, "DELETE", query, true);
     }
 
+    private setTokenToHeader(token: string) {
+        Object.assign(this.headers, this.headers, {
+            Authorization: `Bearer ${token}`
+        });
+    }
+
     private createCommonHeader() {
         this.headers = {
             Accept: "application/json",
@@ -127,6 +129,13 @@ export default class RestClient {
         }
 
         let fullRoute = this.createFullRoute(route);
+
+        if (this.onGetToken) {
+            const result = await this.onGetToken();
+            if (result) {
+                this.setTokenToHeader(result);
+            }
+        }
 
         const opts = {
             headers: this.headers,

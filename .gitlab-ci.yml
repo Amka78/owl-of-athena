@@ -1,4 +1,4 @@
-image: registry.gitlab.com/aracan/expodockerimage:latest
+image: registry.gitlab.com/owl-of-minerva/expodockerimage:latest
 
 variables:
   EXPO_USERNAME: "amka78"

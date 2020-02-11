@@ -3,8 +3,8 @@ import { Platform } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap,
-    NavigationScreenConfigProps
+    NavigationRouteConfigMap
+    //NavigationScreenConfigProps
 } from "react-navigation";
 import {
     createStackNavigator,
@@ -41,7 +41,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         navigationOptions: {
             headerLeft: undefined,
             headerTitleContainerStyle: {
-                ...CommonStyles.headerTitleStyle,
+                ...CommonStyles.headerTitleContainerStyle,
                 marginLeft: Dimens.content_margin_horizontal
             }
         }
@@ -49,20 +49,21 @@ const routeConfigMap: NavigationRouteConfigMap<
 };
 
 const UnauthenticatedNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: (
-        configProps: NavigationScreenConfigProps<
+    defaultNavigationOptions: () =>
+        /*configProps: NavigationScreenConfigProps<
             NavigationStackProp<NavigationRoute<NavigationParams>>
-        >
-    ) => {
-        return {
-            headerLeft: (props: HeaderBackButtonProps) => (
-                <HeaderBackButton {...props} />
-            ),
-            headerStyle: CommonStyles.headerStyle,
-            headerTitleContainerStyle: CommonStyles.headerTitleStyle,
-            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
-        };
-    },
+        >*/
+        {
+            return {
+                headerLeft: (props: HeaderBackButtonProps) => (
+                    <HeaderBackButton {...props} />
+                ),
+                headerStyle: CommonStyles.headerStyle,
+                headerTitleContainerStyle:
+                    CommonStyles.headerTitleContainerStyle,
+                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+            };
+        },
     headerMode: Platform.OS === "web" ? "screen" : "float",
     initialRouteName: "Welcome"
 });

@@ -1,12 +1,12 @@
 FROM node:12.4.0
 
-LABEL maintainer="Aracan <AmemiyaHikaru@BysrSystemDevelopment.com>"
+LABEL maintainer="Bysr <AmemiyaHikaru@BysrSystemDevelopment.com>"
 
 EXPOSE 19000
 EXPOSE 19001
 EXPOSE 19002
 
-ENV APP_SOURCE_DIR=/usr/local/src/aracan-mobile
+ENV APP_SOURCE_DIR=/usr/local/src/owl-of-minerva
 
 COPY --chown=node package-lock.json $APP_SOURCE_DIR/
 COPY --chown=node package.json $APP_SOURCE_DIR/

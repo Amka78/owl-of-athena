@@ -3,7 +3,7 @@ import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
 
-type MultiLingualTextBoxProps = TextInputProps & { label?: string };
+type TextBoxProps = TextInputProps & { label?: string };
 
 const textInputStyle = {
     backgroundColor: "transparent",
@@ -12,9 +12,9 @@ const textInputStyle = {
     fontSize: Dimens.input_text_size,
     width: Layout.window.width - Dimens.content_margin_horizontal * 2
 };
-export const MultiLingualTextBox: FunctionComponent<
-    MultiLingualTextBoxProps
-> = (props: MultiLingualTextBoxProps) => {
+export const TextBox: FunctionComponent<TextBoxProps> = (
+    props: TextBoxProps
+) => {
     return (
         <TextInput
             {...props}
@@ -27,7 +27,7 @@ export const MultiLingualTextBox: FunctionComponent<
             label={props.label ? Message.get(props.label) : undefined}
             theme={{
                 colors: {
-                    text: Colors.white,
+                    text: Colors.cyan,
                     placeholder: Colors.white,
                     primary: Colors.cyan
                 }

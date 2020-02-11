@@ -3,8 +3,8 @@ import { Platform } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap,
-    NavigationScreenConfigProps
+    NavigationRouteConfigMap
+    //NavigationScreenConfigProps
 } from "react-navigation";
 import {
     createStackNavigator,
@@ -14,7 +14,7 @@ import {
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
-import { Dimens } from "../constants";
+import { Dimens, Message, Colors } from "../constants";
 import { SessionListScreen, SessionScreen } from "../screens";
 import { CommonStyles } from "../styles";
 
@@ -27,8 +27,9 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: SessionListScreen,
         navigationOptions: {
             headerLeft: undefined,
+            headerTitle: Message.get("session_list_title"),
             headerTitleContainerStyle: {
-                ...CommonStyles.headerTitleStyle,
+                ...CommonStyles.headerTitleContainerStyle,
                 marginLeft: Dimens.content_margin_horizontal
             }
         }
@@ -40,20 +41,22 @@ const routeConfigMap: NavigationRouteConfigMap<
 };
 
 const SessionNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: (
-        configProps: NavigationScreenConfigProps<
+    defaultNavigationOptions: () =>
+        /*configProps: NavigationScreenConfigProps<
             NavigationStackProp<NavigationRoute<NavigationParams>>
-        >
-    ) => {
-        return {
-            headerLeft: (props: HeaderBackButtonProps) => (
-                <HeaderBackButton {...props} />
-            ),
-            headerStyle: CommonStyles.headerStyle,
-            headerTitleContainerStyle: CommonStyles.headerTitleStyle,
-            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
-        };
-    },
+        >*/
+        {
+            return {
+                headerLeft: (props: HeaderBackButtonProps) => (
+                    <HeaderBackButton {...props} />
+                ),
+                headerTintColor: Colors.cyan,
+                headerStyle: CommonStyles.headerStyle,
+                headerTitleContainerStyle:
+                    CommonStyles.headerTitleContainerStyle,
+                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+            };
+        },
     headerMode: Platform.OS === "web" ? "screen" : "float",
     initialRouteName: "List"
 });

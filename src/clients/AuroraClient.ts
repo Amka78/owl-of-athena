@@ -9,12 +9,17 @@ import RestClient from "./RestClient";
  * @extends {RestClient}
  */
 export class AuroraClient extends RestClient {
-    constructor(baseUrl: string, locale: string) {
+    constructor(
+        baseUrl: string,
+        locale: string,
+        getToken: () => Promise<string | undefined>
+    ) {
         super(baseUrl, {
             headers: {
                 "Accept-Language": locale
             }
         });
+        this.onGetToken = getToken;
     }
 
     /**
@@ -42,6 +47,24 @@ export class AuroraClient extends RestClient {
      */
     public async login(login: Login): Promise<Auth> {
         const response = await this.post<Login>("auth/email", login);
+
+        if (response.ok) {
+            return await response.json();
+        }
+        throw await response.json();
+    }
+
+    public async getAuthUser(): Promise<User> {
+        const response = await this.get("users/me", {});
+
+        if (response.ok) {
+            return await response.json();
+        }
+        throw await response.json();
+    }
+
+    public async updateUser(user: User): Promise<User> {
+        const response = await this.put(`users/${user.id}`, user);
 
         if (response.ok) {
             return await response.json();

@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   mobile:
-    container_name: aracan-mobile
+    container_name: owl-of-minerva
     privileged: true
     build:
       context: .
@@ -17,7 +17,7 @@ services:
       - 19002:19002
       - 9230:9229
     volumes:
-      - .:/usr/local/src/aracan-mobile
-      - mobile_modules:/usr/local/src/aracan-mobile/node_modules # do not link node_modules in, and persist it between dc up runs
+      - .:/usr/local/src/owl-of-minerva
+      - mobile_modules:/usr/local/src/owl-of-minerva/node_modules # do not link node_modules in, and persist it between dc up runs
 volumes:
   mobile_modules:

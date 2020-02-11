@@ -1,10 +1,12 @@
 import { AsyncStorage } from "react-native";
 import { Login } from "../types";
+import { login as loginAction } from "../actions";
 import { useCallback, useState } from "react";
 import { useNavigation } from "react-navigation-hooks";
 
 import { TokenManager } from "../utils";
 import { useClientSelector } from "./useClientSelector";
+import { useDispatch } from "react-redux";
 import { Message, StorageKeys } from "../constants";
 
 export const useLogin = (
@@ -14,13 +16,16 @@ export const useLogin = (
     const [loading, setLoading] = useState(loadingInitialValue);
     const { auroraClient } = useClientSelector();
     const { navigate } = useNavigation();
+    const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
         setLoading(true);
         try {
             console.debug("useLogin start", login);
             const result = await auroraClient.login(login);
+            console.debug("loggedin user", result);
 
+            dispatch(loginAction(result.user));
             await AsyncStorage.setItem(StorageKeys.lastUsedEmail, login.email);
 
             await TokenManager.set(result.token);
@@ -36,9 +41,8 @@ export const useLogin = (
             } else {
                 setGeneralError(Message.get("login_general_error_message"));
             }
+            setLoading(false);
         }
-
-        setLoading(false);
     }, [login, navigate]);
     return { loading, onPress, generalError };
 };
