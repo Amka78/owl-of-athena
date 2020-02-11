@@ -1,5 +1,3 @@
-image: registry.gitlab.com/owl-of-minerva/expodockerimage:latest
-
 variables:
   EXPO_USERNAME: "amka78"
   EXPO_PASSWORD: "rolarola339"
