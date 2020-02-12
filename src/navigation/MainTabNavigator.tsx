@@ -26,7 +26,7 @@ const routeConfigMap: NavigationRouteConfigMap<
                 createTabBarIcon(options, "alarm-check"),
             title: ""
         },
-        path: "",
+        path: "home",
         screen: HomeNavigator
     },
     Route2: {
@@ -35,7 +35,7 @@ const routeConfigMap: NavigationRouteConfigMap<
                 createTabBarIcon(options, "blur"),
             title: ""
         },
-        path: "",
+        path: "sessions",
         screen: SessionNavigator
     },
     Route3: {
@@ -44,7 +44,7 @@ const routeConfigMap: NavigationRouteConfigMap<
                 createTabBarIcon(options, "settings"),
             title: ""
         },
-        path: "",
+        path: "account-settings",
         screen: SettingNavigator
     }
 };

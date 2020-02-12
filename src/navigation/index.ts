@@ -1,4 +1,4 @@
 import UnauthenticatedNavigator from "./UnauthenticatedNavigator";
 import InitialNavigator from "./InitialNavigator";
-
-export { InitialNavigator, UnauthenticatedNavigator };
+import RootContainer from "./RootContainer";
+export { RootContainer, InitialNavigator, UnauthenticatedNavigator };

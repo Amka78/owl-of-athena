@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
+    "@react-navigation/web": "^1.0.0-alpha.9",
     "@types/react-datepicker": "^2.9.5",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",

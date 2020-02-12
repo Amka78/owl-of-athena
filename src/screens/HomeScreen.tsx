@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Text, View, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Colors, Dimens, Fonts } from "../constants";
-import { Button, FlatButton, StandardView } from "../components";
+import { View, TouchableWithoutFeedback } from "react-native";
+import { Button, FlatButton, StandardView, AlarmView } from "../components";
 import { useNavigation } from "react-navigation-hooks";
 
 export const HomeScreen: FunctionComponent = () => {
@@ -14,10 +13,7 @@ export const HomeScreen: FunctionComponent = () => {
                 }}
             >
                 <View>
-                    <View style={style.alarmView}>
-                        <Text style={style.alarmTime}>8:00</Text>
-                        <Text style={style.alarmMeridian}>am</Text>
-                    </View>
+                    <AlarmView></AlarmView>
                     <FlatButton>{"home_edit_alarm_button"}</FlatButton>
                 </View>
             </TouchableWithoutFeedback>
@@ -38,21 +34,3 @@ export const HomeScreen: FunctionComponent = () => {
         </StandardView>
     );
 };
-
-const style = StyleSheet.create({
-    alarmView: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    alarmTime: {
-        color: Colors.cyan,
-        fontFamily: Fonts.primarySemiBold,
-        fontSize: Dimens.home_alarm_time_text_size
-    },
-    alarmMeridian: {
-        color: Colors.cyan,
-        fontFamily: Fonts.primaryRegular,
-        fontSize: Dimens.home_alarm_meridian_text_size
-    }
-});

@@ -19,7 +19,7 @@ const routeConfitMap: NavigationRouteConfigMap<
         screen: MainTabNavigator
     },
     Unauthenticated: {
-        path: "",
+        path: "login",
         screen: UnauthenticatedNavigator
     }
 };

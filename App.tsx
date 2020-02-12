@@ -3,8 +3,8 @@ import * as Font from "expo-font";
 import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
-
-import { RootContainer, store } from "./src/store";
+import { RootContainer } from "./src/navigation";
+import { store } from "./src/store";
 import { Colors } from "./src/constants";
 
 interface IAppProps {

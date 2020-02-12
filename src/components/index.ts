@@ -1,3 +1,4 @@
+import { AlarmView } from "./AlarmView";
 import { Button } from "./Button";
 import { FlatButton } from "./FlatButton";
 import { TextBox } from "./TextBox";
@@ -11,6 +12,7 @@ import { HeaderBackButton } from "./HeaderBackButton";
 import { StandardView } from "./StandardView";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 export {
+    AlarmView,
     CheckBox,
     ContentText,
     ContentTitle,
