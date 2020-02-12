@@ -1,3 +1,4 @@
+image: bycedric/expo-cli:latest
 variables:
   EXPO_USERNAME: "amka78"
   EXPO_PASSWORD: "rolarola339"
