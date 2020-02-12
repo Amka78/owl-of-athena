@@ -8,18 +8,16 @@ import {
 
 import { NavigationScreenProp } from "react-navigation";
 import {
-    IButtonProps,
-    IHeaderSearchBarProps,
+    ButtonProps
+    /*IHeaderSearchBarProps,
     IListItemProps,
-    ITextBoxProps
+    ITextBoxProps*/
 } from "../components";
 
 // @ts-ignore
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
 // @ts-ignore
-export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<
-    TextInputEndEditingEventData
-> = {};
+export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEventData> = {};
 
 /**
  * ユニットテスト補助関数一覧
@@ -66,15 +64,15 @@ export class TestHelper {
     public static getButtonPropsByTestID(
         component: ShallowWrapper<any, any>,
         testID: string
-    ): IButtonProps | undefined {
-        return this.getComponentPropsByTestID<IButtonProps>(
+    ): ButtonProps | undefined {
+        return this.getComponentPropsByTestID<ButtonProps>(
             component,
             "MultiLingualButton",
             testID
         );
     }
 
-    public static getTextBoxPropsByTestID(
+    /*public static getTextBoxPropsByTestID(
         component: ShallowWrapper<any, any>,
         testID: string
     ): ITextBoxProps | undefined {
@@ -105,7 +103,7 @@ export class TestHelper {
             "MultiLingualListItem",
             testID
         );
-    }
+    }*/
 
     public static createNavigationMock(
         param: Partial<NavigationScreenProp<any, any>>

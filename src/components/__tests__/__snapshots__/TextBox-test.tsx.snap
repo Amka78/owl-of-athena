@@ -24,3 +24,28 @@ exports[`TextBoxEx UnitTest renders correctly 1`] = `
   underlineColor="#ffffff"
 />
 `;
+
+exports[`TextBoxEx UnitTest renders correctly 2`] = `
+<withTheme(TextInput)
+  mode="flat"
+  style={
+    Object {
+      "backgroundColor": "transparent",
+      "fontFamily": "calibre_app_regular",
+      "fontSize": 12,
+      "marginBottom": 16,
+      "width": 654,
+    }
+  }
+  theme={
+    Object {
+      "colors": Object {
+        "placeholder": "#ffffff",
+        "primary": "#bcfeff",
+        "text": "#bcfeff",
+      },
+    }
+  }
+  underlineColor="#ffffff"
+/>
+`;

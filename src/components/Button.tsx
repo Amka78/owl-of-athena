@@ -10,7 +10,7 @@ import {
 } from "../constants";
 import { TextStyle, ViewStyle } from "react-native";
 
-type ButtonProps = {
+export type ButtonProps = {
     children: MessageLocalizationParam;
     onPress?: () => void;
 };

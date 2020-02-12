@@ -3,7 +3,7 @@ import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
 
-type TextBoxProps = TextInputProps & { label?: string };
+export type TextBoxProps = TextInputProps & { label?: string };
 
 const textInputStyle = {
     backgroundColor: "transparent",

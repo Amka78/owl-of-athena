@@ -13,7 +13,7 @@ import {
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
-import { Colors, Dimens, Message } from "../constants";
+import { Colors, Message } from "../constants";
 import {
     AwakeScreen,
     HomeScreen,
@@ -53,11 +53,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: HomeScreen,
         navigationOptions: {
             headerLeft: undefined,
-            headerTitle: Message.get("home_title"),
-            headerTitleContainerStyle: {
-                ...CommonStyles.headerTitleContainerStyle,
-                marginLeft: Dimens.content_margin_horizontal
-            }
+            headerTitle: Message.get("home_title")
         }
     },
     Waking: {
@@ -76,7 +72,7 @@ const HomeNavigator = createStackNavigator(routeConfigMap, {
         >*/
         {
             return {
-                headerLeft: (props: HeaderBackButtonProps) => (
+                headerLeft: (props: HeaderBackButtonProps): JSX.Element => (
                     <HeaderBackButton {...props} />
                 ),
                 headerTintColor: Colors.cyan,
