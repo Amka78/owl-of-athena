@@ -26,7 +26,7 @@ const routeConfigMap: NavigationRouteConfigMap<
                 createTabBarIcon(options, "alarm-check"),
             title: ""
         },
-        path: "home",
+        path: "",
         screen: HomeNavigator
     },
     Route2: {

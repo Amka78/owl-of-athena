@@ -35,7 +35,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         }
     },
     Sleeping: {
-        path: "",
+        path: "sleeping",
         screen: SleepingScreen,
         navigationOptions: {
             headerTitle: Message.get("sleeping_title")
@@ -49,7 +49,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         }
     },
     Home: {
-        path: "",
+        path: "home",
         screen: HomeScreen,
         navigationOptions: {
             headerLeft: undefined,
@@ -61,7 +61,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         }
     },
     Waking: {
-        path: "",
+        path: "waking",
         screen: WakingScreen,
         navigationOptions: {
             headerTitle: Message.get("waking_title")

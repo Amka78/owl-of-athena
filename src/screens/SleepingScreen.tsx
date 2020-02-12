@@ -10,7 +10,7 @@ export const SleepingScreen: FunctionComponent = () => {
             <AlarmView></AlarmView>
             <Button
                 onPress={(): void => {
-                    navigate("Wakeup");
+                    navigate("Waking");
                 }}
             >
                 {"sleeping_wakeup_button"}
