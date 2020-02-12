@@ -4,7 +4,7 @@ import React from "react";
 import { TestHelper } from "../../utils/TestHelper";
 import { Message } from "../../constants";
 import { TextBox, TextBoxProps } from "../TextBox";
-let component: ShallowWrapper<TextBoxProps, any, any>;
+let component: ShallowWrapper<TextBoxProps, unknown, unknown>;
 describe("TextBoxEx UnitTest", () => {
     it.each(["ja-JP", "en-US"])("renders correctly", (locale: string) => {
         Message.setLocale(locale);

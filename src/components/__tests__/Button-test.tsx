@@ -8,7 +8,7 @@ import { Button, ButtonProps } from "../Button";
 import { Message } from "../../constants";
 import { TestHelper } from "../../utils/TestHelper";
 
-let component: ShallowWrapper<ButtonProps, any, any>;
+let component: ShallowWrapper<ButtonProps, unknown, unknown>;
 
 describe("Button UnitTest", () => {
     it.each(["ja-JP", "en-US"])("renders correctly", (locale: string) => {
