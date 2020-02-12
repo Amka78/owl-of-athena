@@ -1,6 +1,21 @@
 import React, { FunctionComponent } from "react";
-import { View } from "react-native";
+import { Button, StandardView, ContentTitle, ContentText } from "../components";
 
+import { useNavigation } from "react-navigation-hooks";
 export const AwakeScreen: FunctionComponent = () => {
-    return <View></View>;
+    const { navigate } = useNavigation();
+    return (
+        <StandardView>
+            <ContentTitle>{"awake_title"}</ContentTitle>
+            <ContentText>{"awake_text"}</ContentText>
+            <Button>{"awake_questionnaire_continue_button"}</Button>
+            <Button
+                onPress={(): void => {
+                    navigate("Home");
+                }}
+            >
+                {"awake_questionnaire_skip_button"}
+            </Button>
+        </StandardView>
+    );
 };

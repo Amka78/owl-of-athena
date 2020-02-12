@@ -7,14 +7,21 @@ import {
     ContentTitle,
     ContentText
 } from "../components";
-
+import { useNavigation } from "react-navigation-hooks";
 export const WakingScreen: FunctionComponent = () => {
+    const { navigate } = useNavigation();
     return (
         <StandardView>
             <ContentTitle>{"waking_title"}</ContentTitle>
             <AlarmView></AlarmView>
             <View style={{ alignItems: "center" }}>
-                <Button>{"waking_wakeup_button"}</Button>
+                <Button
+                    onPress={(): void => {
+                        navigate("Awake");
+                    }}
+                >
+                    {"waking_wakeup_button"}
+                </Button>
                 <ContentText>{"waking_tip_text"}</ContentText>
             </View>
         </StandardView>

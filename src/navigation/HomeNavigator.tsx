@@ -28,7 +28,7 @@ const routeConfigMap: NavigationRouteConfigMap<
     NavigationStackProp<NavigationRoute<NavigationParams>, any>
 > = {
     Awake: {
-        path: "",
+        path: "awake",
         screen: AwakeScreen,
         navigationOptions: {
             headerTitle: Message.get("awake_title")
