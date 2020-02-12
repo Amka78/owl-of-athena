@@ -1,23 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TextBoxEx UnitTest renders correctly 1`] = `
-<ForwardRef(Themed.Input)
-  autoCapitalize="none"
-  autoCorrect={false}
-  errorStyle={
+<withTheme(TextInput)
+  mode="flat"
+  style={
     Object {
+      "backgroundColor": "transparent",
+      "fontFamily": "calibre_app_regular",
       "fontSize": 12,
-      "textAlign": "center",
+      "marginBottom": 16,
+      "width": 654,
     }
   }
-  keyboardAppearance="light"
-  labelStyle={
+  theme={
     Object {
-      "alignContent": "flex-start",
-      "color": "black",
-      "fontFamily": "mont-regular",
+      "colors": Object {
+        "placeholder": "#ffffff",
+        "primary": "#bcfeff",
+        "text": "#bcfeff",
+      },
     }
   }
-  onEndEditing={[Function]}
+  underlineColor="#ffffff"
 />
 `;
