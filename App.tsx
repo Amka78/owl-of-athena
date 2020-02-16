@@ -75,6 +75,6 @@ const styles = StyleSheet.create({
         width:
             Layout.isLargeDevice && Platform.OS === "web"
                 ? Layout.maxWidth
-                : undefined
+                : Layout.window.width
     }
 });
