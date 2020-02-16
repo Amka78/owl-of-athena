@@ -25,7 +25,7 @@ export const SettingsScreen: FunctionComponent = () => {
                 }}
             ></InlineTimePicker>
             <LabeledSelectorMenu
-                value={"A New Day"}
+                value={"None"}
                 label={"settings_option_alarm_audio"}
                 onPress={(): void => {
                     setShowAlarmSoundDialog(true);
@@ -34,6 +34,13 @@ export const SettingsScreen: FunctionComponent = () => {
             <LabeledSelectorMenu
                 value={"My Default Profile"}
                 label={"settings_option_profile"}
+            ></LabeledSelectorMenu>
+            <LabeledSelectorMenu
+                value={"None"}
+                label={"settings_option_rem_stim_audio"}
+                onPress={(): void => {
+                    setShowAlarmSoundDialog(true);
+                }}
             ></LabeledSelectorMenu>
             <AudioDialog
                 visible={showAlarmSoundDialog}

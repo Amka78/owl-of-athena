@@ -102,7 +102,7 @@ export const AudioDialog: FunctionComponent<AudioDialogProps> = (
         </Dialog>
     );
 };
-async function stopSound(sound: Audio.Sound) {
+async function stopSound(sound: Audio.Sound): Promise<void> {
     const status = await sound.getStatusAsync();
     if (status.isLoaded) {
         await sound.stopAsync();
