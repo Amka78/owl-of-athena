@@ -12,7 +12,10 @@ import { HeaderBackButton } from "./HeaderBackButton";
 import { InlineTimePicker } from "./InlineTimePicker";
 import { StandardView } from "./StandardView";
 import { LabeledRadioButton } from "./LabeledRadioButton";
+import { LabeledSelectorMenu } from "./LabeledSelectorMenu";
+import { AudioDialog } from "./AudioDialog";
 export {
+    AudioDialog,
     AlarmView,
     ButtonProps,
     CheckBox,
@@ -23,6 +26,7 @@ export {
     HeaderBackButton,
     InlineTimePicker,
     LabeledRadioButton,
+    LabeledSelectorMenu,
     Button,
     FlatButton,
     TextBox,
