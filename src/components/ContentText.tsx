@@ -16,7 +16,7 @@ export const ContentText: FunctionComponent<ContentTextProps> = (
     props: ContentTextProps
 ) => {
     return (
-        <Text style={createTextStyle(props.style)}>
+        <Text style={[textStyle, props.style]}>
             {Message.get(props.children)}
         </Text>
     );
@@ -27,6 +27,3 @@ const textStyle: TextStyle = {
     fontSize: Dimens.content_text_size,
     flex: 1
 };
-function createTextStyle(propsStyle?: TextStyle) {
-    return StyleSheet.flatten([propsStyle, textStyle]);
-}

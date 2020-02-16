@@ -4,16 +4,17 @@ import {
     AudioDialog,
     InlineTimePicker,
     StandardView,
-    LabeledSelectorMenu
+    LabeledSelectorMenu,
+    LabeledCheckBox
 } from "../components";
-import { Colors, Message, Fonts } from "../constants";
+import { Colors } from "../constants";
 export const SettingsScreen: FunctionComponent = () => {
     const [showAlarmSoundDialog, setShowAlarmSoundDialog] = useState<boolean>(
         false
     );
 
     return (
-        <StandardView>
+        <StandardView standardViewStyle={{ justifyContent: "flex-start" }}>
             <InlineTimePicker
                 mode="minute"
                 style={{
@@ -24,24 +25,38 @@ export const SettingsScreen: FunctionComponent = () => {
                     textColor: Colors.cyan
                 }}
             ></InlineTimePicker>
-            <LabeledSelectorMenu
-                value={"None"}
-                label={"settings_option_alarm_audio"}
-                onPress={(): void => {
-                    setShowAlarmSoundDialog(true);
-                }}
-            ></LabeledSelectorMenu>
-            <LabeledSelectorMenu
-                value={"My Default Profile"}
-                label={"settings_option_profile"}
-            ></LabeledSelectorMenu>
-            <LabeledSelectorMenu
-                value={"None"}
-                label={"settings_option_rem_stim_audio"}
-                onPress={(): void => {
-                    setShowAlarmSoundDialog(true);
-                }}
-            ></LabeledSelectorMenu>
+            <View>
+                <LabeledSelectorMenu
+                    value={"None"}
+                    label={"settings_option_alarm_audio"}
+                    onPress={(): void => {
+                        setShowAlarmSoundDialog(true);
+                    }}
+                ></LabeledSelectorMenu>
+                <LabeledSelectorMenu
+                    value={"My Default Profile"}
+                    label={"settings_option_profile"}
+                ></LabeledSelectorMenu>
+                <LabeledCheckBox
+                    status={"unchecked"}
+                    label={"settings_option_smart_alarm"}
+                ></LabeledCheckBox>
+                <LabeledCheckBox
+                    status={"unchecked"}
+                    label={"settings_option_dsl"}
+                ></LabeledCheckBox>
+                <LabeledCheckBox
+                    status={"unchecked"}
+                    label={"settings_option_rem_stim"}
+                ></LabeledCheckBox>
+                <LabeledSelectorMenu
+                    value={"None"}
+                    label={"settings_option_rem_stim_audio"}
+                    onPress={(): void => {
+                        setShowAlarmSoundDialog(true);
+                    }}
+                ></LabeledSelectorMenu>
+            </View>
             <AudioDialog
                 visible={showAlarmSoundDialog}
                 onDissmiss={(): void => {

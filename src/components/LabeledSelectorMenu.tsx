@@ -14,7 +14,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 type LabeledSelectorMenuProps = {
     value: string;
     label: MessageLocalizationParam;
-    children?: JSX.Element;
     onPress?: () => void;
 };
 export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = (
@@ -34,7 +33,6 @@ export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = 
                     }}
                 ></MaterialCommunityIcons>
             </View>
-            {props.children}
         </TouchableOpacity>
     );
 };

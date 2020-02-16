@@ -14,6 +14,7 @@ import { StandardView } from "./StandardView";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { LabeledSelectorMenu } from "./LabeledSelectorMenu";
 import { AudioDialog } from "./AudioDialog";
+import { LabeledCheckBox } from "./LabeledCheckBox";
 export {
     AudioDialog,
     AlarmView,
@@ -27,6 +28,7 @@ export {
     InlineTimePicker,
     LabeledRadioButton,
     LabeledSelectorMenu,
+    LabeledCheckBox,
     Button,
     FlatButton,
     TextBox,
