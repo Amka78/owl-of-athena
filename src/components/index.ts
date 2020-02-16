@@ -9,6 +9,7 @@ import { DatePicker } from "./DatePicker";
 import { ErrorText } from "./ErrorText";
 import { CheckBox } from "./CheckBox";
 import { HeaderBackButton } from "./HeaderBackButton";
+import { InlineTimePicker } from "./InlineTimePicker";
 import { StandardView } from "./StandardView";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 export {
@@ -20,6 +21,7 @@ export {
     DatePicker,
     ErrorText,
     HeaderBackButton,
+    InlineTimePicker,
     LabeledRadioButton,
     Button,
     FlatButton,
