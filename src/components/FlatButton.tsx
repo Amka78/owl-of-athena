@@ -11,6 +11,7 @@ import { TextStyle, ViewStyle } from "react-native";
 
 type FlatButtonProps = {
     children: MessageLocalizationParam;
+    labelStyle?: TextStyle;
     onPress?: () => void;
 };
 
@@ -30,7 +31,7 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (
         <PaperButton
             onPress={props.onPress}
             mode={"text"}
-            labelStyle={labelStyle}
+            labelStyle={[labelStyle, props.labelStyle]}
             contentStyle={contentStyle}
         >
             {Message.get(props.children)}
