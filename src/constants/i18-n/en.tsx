@@ -10,6 +10,8 @@ const input_birthday = "BIRTHDAY";
 const update = "Update";
 export default {
     app_name: "Aurora",
+    save: "SAVE",
+    cancel: "CANCEL",
     signup: signup,
     login: login,
     male: "Male",
@@ -142,5 +144,8 @@ export default {
     passwords_must_match: "Passwords must match.",
     must_agree_to_term_of_use:
         "You must agree to the terms of use to continue.",
-    email_already_registered: "This email has already been registered."
+    email_already_registered: "This email has already been registered.",
+
+    // alarm sound menu
+    alarm_sound_dialog_title: "Choose a sound"
 };

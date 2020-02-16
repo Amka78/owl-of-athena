@@ -10,6 +10,8 @@ const input_birthday = "誕生日";
 const update = "更新";
 export default {
     app_name: "Aurora",
+    save: "保存",
+    cancel: "キャンセル",
     signup: signup,
     login: login,
     male: "男性",
@@ -144,5 +146,8 @@ export default {
     passwords_must_match: "パスワードは一致している必要があります。",
     must_agree_to_term_of_use:
         "サインアップするには利用規約に同意する必要があります。",
-    email_already_registered: "すでに入力済みのメールアドレスです。"
+    email_already_registered: "すでに入力済みのメールアドレスです。",
+
+    // alarm sound menu
+    alarm_sound_dialog_title: "目覚まし用の音を選んでください。"
 };
