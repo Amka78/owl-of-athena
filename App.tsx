@@ -5,21 +5,21 @@ import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 import { RootContainer } from "./src/navigation";
 import { store } from "./src/store";
-import { Colors } from "./src/constants";
+import { Colors, Layout } from "./src/constants";
 
-interface IAppProps {
+type AppProps = {
     skipLoadingScreen: boolean;
-}
+};
 
-interface IAppState {
+type AppState = {
     isLoadingComplete: boolean;
-}
-export default class App extends React.Component<IAppProps, IAppState> {
+};
+export default class App extends React.Component<AppProps, AppState> {
     public state = {
         isLoadingComplete: false
     };
 
-    constructor(props: IAppProps) {
+    constructor(props: AppProps) {
         super(props);
     }
 
@@ -48,7 +48,6 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
     public loadResourcesAsync = async (): Promise<void[]> => {
         return Promise.all([
-            //Asset.loadAsync([require("./assets/images/camera.png")]),
             Font.loadAsync({
                 calibre_app_regular: require("./assets/fonts/calibre_app_regular.ttf"),
                 calibre_app_semibold: require("./assets/fonts/calibre_app_semibold.ttf")
@@ -70,7 +69,12 @@ export default class App extends React.Component<IAppProps, IAppState> {
 
 const styles = StyleSheet.create({
     container: {
+        alignSelf: "center",
         backgroundColor: Colors.navy,
-        flex: 1
+        flex: 1,
+        width:
+            Layout.isLargeDevice && Platform.OS === "web"
+                ? Layout.maxWidth
+                : undefined
     }
 });
