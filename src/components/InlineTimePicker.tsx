@@ -67,6 +67,7 @@ export class InlineTimePicker extends Component<
     constructor(props: InlineTimePickerProps) {
         super(props);
 
+        console.debug("InlineTimePickerProps:", props);
         this.state = {
             hours: 12,
             minutes: 0,
@@ -99,11 +100,18 @@ export class InlineTimePicker extends Component<
             initialDate = this.props.initialTime;
         }
 
+        const currentHours = initialDate.getHours();
+        const calculatedHours =
+            this.props.mode24hours === true
+                ? currentHours
+                : currentHours >= 12
+                ? currentHours - 12
+                : currentHours;
         this.setState({
-            hours: initialDate.getHours(),
+            hours: calculatedHours,
             minutes: initialDate.getMinutes(),
             seconds: initialDate.getSeconds(),
-            meridian: initialDate.getHours() > 12 ? "PM" : "AM"
+            meridian: currentHours > 12 ? "PM" : "AM"
         });
     }
 
@@ -241,6 +249,7 @@ export class InlineTimePicker extends Component<
     }
 
     private setStyle(): void {
+        console.debug("currentStyle:", this.style);
         if (!this.style.activeColor) {
             this.style.activeColor = TimePickerDefaultStyle.activeColor;
         }
@@ -279,18 +288,10 @@ export class InlineTimePicker extends Component<
     private updateHours = (currentHours: number): void => {
         let newHours = currentHours;
         if (this.props.mode24hours === true) {
-            if (currentHours > 23) {
-                newHours = 0;
-            } else if (currentHours < 0) {
-                newHours = 23;
-            }
+            newHours = this.calculate24Hours(currentHours);
             this.setState({ hours: newHours });
         } else {
-            if (currentHours > 12) {
-                newHours = 1;
-            } else if (currentHours <= 0) {
-                newHours = 12;
-            }
+            newHours = this.calculate12Hours(currentHours);
             this.setState({
                 hours: newHours,
                 meridian: this.getMeridian(newHours)
@@ -357,6 +358,26 @@ export class InlineTimePicker extends Component<
         }
     };
 
+    private calculate12Hours(currentHours: number): number {
+        let newHours = currentHours;
+        if (currentHours > 12) {
+            newHours = 1;
+        } else if (currentHours <= 0) {
+            newHours = 12;
+        }
+        return newHours;
+    }
+
+    private calculate24Hours(currentHours: number): number {
+        let newHours = currentHours;
+        if (currentHours > 23) {
+            newHours = 0;
+        } else if (currentHours < 0) {
+            newHours = 23;
+        }
+        return newHours;
+    }
+
     private incrementActiveControl(inc: number): void {
         if (this.state.updating === this.hoursText) {
             this.updateHours(this.state.hours + inc);
@@ -402,7 +423,8 @@ const styles = StyleSheet.create({
     container: {
         margin: 5,
         marginLeft: 7,
-        width: "auto",
+        //width: "auto",
+        flex: 1,
         height: 70,
         flexDirection: "row",
         justifyContent: "space-around",
