@@ -1,6 +1,5 @@
 import { Auth, Login, CreateUser, User } from "../types";
 import RestClient from "./RestClient";
-import UserInfoReducer from "../reducers/UserInfoReducers";
 
 /**
  * Aurora Rest API
