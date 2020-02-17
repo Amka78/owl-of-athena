@@ -8,7 +8,9 @@ import {
     ContentText
 } from "../components";
 import { useNavigation } from "react-navigation-hooks";
+import { useCheckLogging } from "../hooks";
 export const WakingScreen: FunctionComponent = () => {
+    useCheckLogging();
     const { navigate } = useNavigation();
     return (
         <StandardView>

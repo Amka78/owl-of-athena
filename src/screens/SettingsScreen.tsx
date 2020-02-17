@@ -8,7 +8,9 @@ import {
     LabeledCheckBox
 } from "../components";
 import { Colors } from "../constants";
+import { useCheckLogging } from "../hooks";
 export const SettingsScreen: FunctionComponent = () => {
+    useCheckLogging();
     const [showAlarmSoundDialog, setShowAlarmSoundDialog] = useState<boolean>(
         false
     );

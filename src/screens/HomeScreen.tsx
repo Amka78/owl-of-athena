@@ -2,8 +2,10 @@ import React, { FunctionComponent } from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import { Button, FlatButton, StandardView, AlarmView } from "../components";
 import { useNavigation } from "react-navigation-hooks";
+import { useCheckLogging } from "../hooks";
 
 export const HomeScreen: FunctionComponent = () => {
+    useCheckLogging();
     const { navigate } = useNavigation();
     return (
         <StandardView>

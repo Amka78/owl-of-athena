@@ -11,9 +11,11 @@ import { useGetUser } from "./useGetUser";
 import { useUserSelector } from "./useUserSelector";
 import { useDatePicker } from "./useDatePicker";
 import { useUpdateUser } from "./useUpdateUser";
+import { useCheckLogging } from "./useCheckLogging";
 export {
     useAutoLogin,
     useCheckBox,
+    useCheckLogging,
     useClientSelector,
     useDatePicker,
     useForgotPassword,

@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { Button, StandardView, ContentTitle, AlarmView } from "../components";
 import { useNavigation } from "react-navigation-hooks";
+import { useCheckLogging } from "../hooks";
 export const SleepingScreen: FunctionComponent = () => {
+    useCheckLogging();
     const { navigate } = useNavigation();
 
     return (

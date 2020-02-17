@@ -15,9 +15,10 @@ import {
     StandardView,
     TextBox
 } from "../components";
-import { useLogout, useUpdateUser } from "../hooks";
+import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
 
 export const AccountScreen: FunctionComponent = () => {
+    useCheckLogging();
     const { auroraClient } = useClientSelector();
     const dispatch = useDispatch();
 

@@ -2,7 +2,9 @@ import React, { FunctionComponent } from "react";
 import { Button, StandardView, ContentTitle, ContentText } from "../components";
 
 import { useNavigation } from "react-navigation-hooks";
+import { useCheckLogging } from "../hooks";
 export const AwakeScreen: FunctionComponent = () => {
+    useCheckLogging();
     const { navigate } = useNavigation();
     return (
         <StandardView>
