@@ -8,12 +8,9 @@ export const useRadioGroup = (
 } => {
     const [value, set] = useState(initialState);
 
-    const onValueChange = useCallback(
-        (value: string) => {
-            set(value);
-        },
-        [value]
-    );
+    const onValueChange = useCallback((value: string) => {
+        set(value);
+    }, []);
 
     return {
         onValueChange,

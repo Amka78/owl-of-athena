@@ -7,7 +7,7 @@ export type User = {
 
     last_name?: string;
 
-    birthday?: Date;
+    birthday?: string;
 
     gender: string;
 
