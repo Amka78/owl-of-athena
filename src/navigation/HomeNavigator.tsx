@@ -42,7 +42,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         }
     },
     Settings: {
-        path: "",
+        path: "settings",
         screen: SettingsScreen,
         navigationOptions: {
             headerTitle: Message.get("settings_title")

@@ -15,11 +15,11 @@ const routeConfitMap: NavigationRouteConfigMap<
     NavigationSwitchProp<NavigationRoute>
 > = {
     Main: {
-        path: "",
+        path: "main",
         screen: MainTabNavigator
     },
     Unauthenticated: {
-        path: "login",
+        path: "",
         screen: UnauthenticatedNavigator
     }
 };

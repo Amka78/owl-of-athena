@@ -24,15 +24,15 @@ const routeConfigMap: NavigationRouteConfigMap<
     NavigationStackProp<NavigationRoute<NavigationParams>, any>
 > = {
     ForgotPassword: {
-        path: "",
+        path: "forgot-password",
         screen: ForgotPasswordScreen
     },
     Signup: {
-        path: "",
+        path: "signup",
         screen: SignupScreen
     },
     Login: {
-        path: "",
+        path: "login",
         screen: LoginScreen
     },
     Welcome: {
