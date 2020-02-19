@@ -11,7 +11,6 @@ type DataTypesString =
     | "uint8";
 
 type ParseTypeLength = 2 | 4 | 1;
-type DoneType = () => void;
 export default class AuroraTransformBinary extends Stream.Transform {
     private parseType: unknown;
     private parseTypeLength: number;
@@ -38,7 +37,12 @@ export default class AuroraTransformBinary extends Stream.Transform {
         });
     }
 
-    public transform(respChunk: Buffer, done: DoneType): void {
+    transform(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        respChunk: any,
+        _encoding: string,
+        done: Stream.TransformCallback
+    ): void {
         if (!respChunk.length) {
             done();
             return;
@@ -79,7 +83,7 @@ export default class AuroraTransformBinary extends Stream.Transform {
         done();
     }
 
-    public flush(done: DoneType): void {
+    _flush(done: Stream.TransformCallback): void {
         if (this.leftoverBuffer) {
             console.log("Unparsed binary buffer: ", this.leftoverBuffer);
         }
