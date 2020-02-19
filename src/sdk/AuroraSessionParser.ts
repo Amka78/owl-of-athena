@@ -39,27 +39,10 @@ type Session = {
     duration?: number;
 };
 export default class AuroraSessionParser {
-    static parseSessionTxtObject = (
+    public static parseSessionTxtObject(
         sessionTxtObject: unknown
-    ): Promise<Session> => {
-        const session: Session = {
-            awakenings: 0,
-            sleepOnset: 0,
-            incomplete: false,
-            awakeAt: 0,
-            asleepAt: 0,
-            sleepScore: 0,
-            sleepDuration: {
-                total: 0,
-                unknown: 0,
-                awake: 0,
-                light: 0,
-                deep: 0,
-                rem: 0
-            },
-            events: [],
-            streams: []
-        };
+    ): Promise<Session> {
+        const session: Session = AuroraSessionParser.initializeSession();
 
         const throwError = (error: string): Promise<never> => {
             session.error = error;
@@ -239,5 +222,26 @@ export default class AuroraSessionParser {
         }
 
         return Promise.resolve(session);
-    };
+    }
+
+    private static initializeSession(): Session {
+        return {
+            awakenings: 0,
+            sleepOnset: 0,
+            incomplete: false,
+            awakeAt: 0,
+            asleepAt: 0,
+            sleepScore: 0,
+            sleepDuration: {
+                total: 0,
+                unknown: 0,
+                awake: 0,
+                light: 0,
+                deep: 0,
+                rem: 0
+            },
+            events: [],
+            streams: []
+        };
+    }
 }
