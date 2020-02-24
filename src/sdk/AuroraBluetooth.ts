@@ -2,7 +2,12 @@ import EventEmitter from "events";
 import { Dictionary } from "lodash";
 import keyBy from "lodash/keyBy";
 import { sleep, promisify } from "./util";
-import AuroraBluetoothParser from "./AuroraBluetoothParser";
+import {
+    AuroraBluetoothParser,
+    AuroraCommand,
+    AuroraEvent,
+    BluetoothStream
+} from "./AuroraBluetoothParser";
 import {
     BleAuroraChars,
     BleAuroraService,
@@ -152,14 +157,14 @@ export default class AuroraBluetooth extends EventEmitter {
                 this.characteristicsByUUID[
                     BleAuroraChars.AURORA_EVENT_NOTIFIED
                 ],
-                (event: any): void => {
+                (event: Buffer): void => {
                     this.bluetoothParser.onAuroraEventCharNotification(event);
                 }
             );
 
             await this.charSubscribe(
                 this.cmdStatusChar,
-                (status: unknown): void => {
+                (status: Buffer): void => {
                     this.bluetoothParser.onCmdStatusCharNotification(status);
                 }
             );
@@ -215,7 +220,7 @@ export default class AuroraBluetooth extends EventEmitter {
         if (this.connectionState === ConnectionStates.DISCONNECTED) return;
 
         //nope but we can't wait any longer
-        return promisify(this.peripheral!.disconnect, this.peripheral)().then(
+        return promisify(this.peripheral!.disconnect, this.peripheral!)().then(
             () => {
                 //in case disconnected event hasn't fired yet, we fire it here
                 this.setConnectionState(ConnectionStates.DISCONNECTED);
@@ -223,7 +228,7 @@ export default class AuroraBluetooth extends EventEmitter {
         );
     }
 
-    public async writeCmd(cmd: unknown): Promise<void> {
+    public async writeCmd(cmd: unknown): Promise<AuroraCommand> {
         //check for error condition
         if (this.connectionState != ConnectionStates.CONNECTED_IDLE) {
             switch (this.connectionState) {
@@ -253,13 +258,18 @@ export default class AuroraBluetooth extends EventEmitter {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             try {
-                this.bluetoothParser.once("cmdResponse", cmdResponse => {
-                    this.setConnectionState(ConnectionStates.CONNECTED_IDLE);
+                this.bluetoothParser.once(
+                    "cmdResponse",
+                    (cmdResponse: AuroraCommand) => {
+                        this.setConnectionState(
+                            ConnectionStates.CONNECTED_IDLE
+                        );
 
-                    cmdResponse.origin = "bluetooth";
+                        cmdResponse.origin = "bluetooth";
 
-                    resolve(cmdResponse);
-                });
+                        resolve(cmdResponse);
+                    }
+                );
 
                 //write the status byte, indicating start of command
                 await this.charWrite(
@@ -544,14 +554,14 @@ export default class AuroraBluetooth extends EventEmitter {
 
     private onParseCmdResponseRead = (
         bytesToRead: number,
-        cbAfterRead: any
+        cbAfterRead: (value: Buffer) => void
     ): void => {
         this.charRead(this.cmdDataChar!, bytesToRead).then(cbAfterRead);
     };
 
     private onParseCmdResponseWrite = (
         buffer: Buffer,
-        cbAfterWrite: any
+        cbAfterWrite: (value: void) => Buffer
     ): void => {
         this.charWrite(this.cmdDataChar!, buffer).then(() => {
             this.charWrite(
@@ -569,19 +579,19 @@ export default class AuroraBluetooth extends EventEmitter {
         this.emit("cmdOutputReady", output);
     };
 
-    private onParseAuroraEvent = (auroraEvent: any): void => {
+    private onParseAuroraEvent = (auroraEvent: AuroraEvent): void => {
         auroraEvent.origin = "bluetooth";
 
         this.emit("auroraEvent", auroraEvent);
     };
 
-    private onParseStreamData = (streamData: any): void => {
+    private onParseStreamData = (streamData: BluetoothStream): void => {
         streamData.origin = "bluetooth";
 
         this.emit("streamData", streamData);
     };
 
-    private onParseError = (error: unknown): void => {
+    private onParseError = (error: string): void => {
         this.emit("bluetoothError", "Parse Error: " + error);
     };
 }
