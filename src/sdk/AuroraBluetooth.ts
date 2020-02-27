@@ -2,24 +2,20 @@ import EventEmitter from "events";
 import { Dictionary } from "lodash";
 import keyBy from "lodash/keyBy";
 import { sleep, promisify } from "./util";
-import {
-    AuroraBluetoothParser,
-    AuroraCommand,
-    AuroraEvent,
-    BluetoothStream
-} from "./AuroraBluetoothParser";
+import { AuroraBluetoothParser } from "./AuroraBluetoothParser";
 import {
     BleAuroraChars,
     BleAuroraService,
     BLE_CMD_MAX_PACKET_LENGTH,
     BleCmdStates
 } from "./AuroraConstants";
+import { AuroraCommand, BluetoothStream, AuroraEvent } from "./AuroraTypes";
 import noble from "noble";
 
 const INIT_DELAY_MS = 5000;
 const DISCONNECT_RETRY_DELAY_MS = 3000;
 
-const enum ConnectionStates {
+export enum BluetoothConnectionStates {
     INIT = "init",
     DISCONNECTED = "disconnected",
     CONNECTING = "connecting",
@@ -32,9 +28,9 @@ const enum PoweredStates {
     OFF = "poweredOff"
 }
 
-export default class AuroraBluetooth extends EventEmitter {
+export class AuroraBluetooth extends EventEmitter {
     private initializing: boolean;
-    private connectionState: ConnectionStates;
+    private connectionState: BluetoothConnectionStates;
     private disconnectPending: boolean;
     private bluetoothParser: AuroraBluetoothParser;
     private peripheral?: noble.Peripheral;
@@ -49,7 +45,7 @@ export default class AuroraBluetooth extends EventEmitter {
         super();
 
         this.initializing = false;
-        this.connectionState = ConnectionStates.INIT;
+        this.connectionState = BluetoothConnectionStates.INIT;
         this.disconnectPending = false;
         this.bluetoothParser = new AuroraBluetoothParser();
         this.bluetoothParser.on("parseError", this.onParseError);
@@ -71,13 +67,13 @@ export default class AuroraBluetooth extends EventEmitter {
 
     public isConnected(): boolean {
         return (
-            this.connectionState == ConnectionStates.CONNECTED_IDLE ||
-            this.connectionState == ConnectionStates.CONNECTED_BUSY
+            this.connectionState == BluetoothConnectionStates.CONNECTED_IDLE ||
+            this.connectionState == BluetoothConnectionStates.CONNECTED_BUSY
         );
     }
 
     public isConnecting(): boolean {
-        return this.connectionState == ConnectionStates.CONNECTING;
+        return this.connectionState == BluetoothConnectionStates.CONNECTING;
     }
 
     public async connect(timeoutMs = 30000): Promise<noble.Peripheral | void> {
@@ -87,7 +83,7 @@ export default class AuroraBluetooth extends EventEmitter {
 
         //has the system booted up yet? If not, we'll
         //wait for a bit and try again
-        if (this.connectionState == ConnectionStates.INIT) {
+        if (this.connectionState == BluetoothConnectionStates.INIT) {
             this.initializing = true;
 
             //sleep for a little bit
@@ -97,7 +93,7 @@ export default class AuroraBluetooth extends EventEmitter {
 
             //if the state hasn't changed since we waited for
             //initialization to complete, something is wrong
-            if (this.connectionState == ConnectionStates.INIT) {
+            if (this.connectionState == BluetoothConnectionStates.INIT) {
                 return Promise.reject(
                     "No bluetooth adapter found. Is bluetooth disabled?"
                 );
@@ -107,13 +103,13 @@ export default class AuroraBluetooth extends EventEmitter {
             return this.connect(timeoutMs);
         }
 
-        if (this.connectionState != ConnectionStates.DISCONNECTED) {
+        if (this.connectionState != BluetoothConnectionStates.DISCONNECTED) {
             switch (this.connectionState) {
-                case ConnectionStates.CONNECTING:
+                case BluetoothConnectionStates.CONNECTING:
                     return Promise.reject("Already connecting...");
 
-                case ConnectionStates.CONNECTED_BUSY:
-                case ConnectionStates.CONNECTED_IDLE:
+                case BluetoothConnectionStates.CONNECTED_BUSY:
+                case BluetoothConnectionStates.CONNECTED_IDLE:
                     return Promise.reject("Already connected.");
 
                 default:
@@ -123,10 +119,9 @@ export default class AuroraBluetooth extends EventEmitter {
             }
         }
 
-        this.setConnectionState(ConnectionStates.CONNECTING);
+        this.setConnectionState(BluetoothConnectionStates.CONNECTING);
 
         try {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
             // @ts-ignore
             const [peripheral, characteristics] = await this.connectDevice(
                 timeoutMs
@@ -175,11 +170,11 @@ export default class AuroraBluetooth extends EventEmitter {
                 }
             );
 
-            this.setConnectionState(ConnectionStates.CONNECTED_IDLE);
+            this.setConnectionState(BluetoothConnectionStates.CONNECTED_IDLE);
 
             return this.peripheral;
         } catch (error) {
-            this.setConnectionState(ConnectionStates.DISCONNECTED);
+            this.setConnectionState(BluetoothConnectionStates.DISCONNECTED);
 
             return Promise.reject(error);
         }
@@ -187,7 +182,7 @@ export default class AuroraBluetooth extends EventEmitter {
 
     public async disconnect(): Promise<void> {
         if (
-            this.connectionState == ConnectionStates.DISCONNECTED ||
+            this.connectionState == BluetoothConnectionStates.DISCONNECTED ||
             this.disconnectPending
         ) {
             return;
@@ -196,48 +191,51 @@ export default class AuroraBluetooth extends EventEmitter {
         this.disconnectPending = true;
 
         //check if we are in the process of connecting, or are processing a command
-        if (this.connectionState == ConnectionStates.CONNECTING) {
+        if (this.connectionState == BluetoothConnectionStates.CONNECTING) {
             noble.stopScanning();
 
             //give scanning a little time to stop
             await sleep(20);
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            if (this.connectionState !== ConnectionStates.DISCONNECTED) {
+            if (
+                // @ts-ignore
+                this.connectionState !== BluetoothConnectionStates.DISCONNECTED
+            ) {
                 return Promise.reject(
                     "Failed to disconnect. Scanning not stopped."
                 );
             }
-        } else if (this.connectionState == ConnectionStates.CONNECTED_BUSY) {
+        } else if (
+            this.connectionState == BluetoothConnectionStates.CONNECTED_BUSY
+        ) {
             //let's give the system a little time before we pull the plug
             await sleep(DISCONNECT_RETRY_DELAY_MS);
         }
 
         //have we disconnected yet?
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        if (this.connectionState === ConnectionStates.DISCONNECTED) return;
+        if (this.connectionState === BluetoothConnectionStates.DISCONNECTED)
+            return;
 
         //nope but we can't wait any longer
         return promisify(this.peripheral!.disconnect, this.peripheral!)().then(
             () => {
                 //in case disconnected event hasn't fired yet, we fire it here
-                this.setConnectionState(ConnectionStates.DISCONNECTED);
+                this.setConnectionState(BluetoothConnectionStates.DISCONNECTED);
             }
         );
     }
 
     public async writeCmd(cmd: unknown): Promise<AuroraCommand> {
         //check for error condition
-        if (this.connectionState != ConnectionStates.CONNECTED_IDLE) {
+        if (this.connectionState != BluetoothConnectionStates.CONNECTED_IDLE) {
             switch (this.connectionState) {
-                case ConnectionStates.DISCONNECTED:
+                case BluetoothConnectionStates.DISCONNECTED:
                     //case ConnectionStates.ADAPTER_FOUND:
                     //case ConnectionStates.DEVICE_FOUND:
                     return Promise.reject("No idle serial connection.");
 
-                case ConnectionStates.CONNECTED_BUSY:
+                case BluetoothConnectionStates.CONNECTED_BUSY:
                     return Promise.reject(
                         "Another command is already in progress."
                     );
@@ -253,7 +251,7 @@ export default class AuroraBluetooth extends EventEmitter {
             return Promise.reject("Bluetooth currently disconnecting.");
         }
 
-        this.setConnectionState(ConnectionStates.CONNECTED_BUSY);
+        this.setConnectionState(BluetoothConnectionStates.CONNECTED_BUSY);
 
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
@@ -262,7 +260,7 @@ export default class AuroraBluetooth extends EventEmitter {
                     "cmdResponse",
                     (cmdResponse: AuroraCommand) => {
                         this.setConnectionState(
-                            ConnectionStates.CONNECTED_IDLE
+                            BluetoothConnectionStates.CONNECTED_IDLE
                         );
 
                         cmdResponse.origin = "bluetooth";
@@ -280,7 +278,6 @@ export default class AuroraBluetooth extends EventEmitter {
                 //write the actual command string as ascii (max 128bytes)
                 await this.charWrite(
                     this.cmdDataChar!,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                     // @ts-ignore
                     Buffer.from(cmd, "ascii")
                 );
@@ -297,7 +294,9 @@ export default class AuroraBluetooth extends EventEmitter {
                 this.bluetoothParser.reset();
                 this.bluetoothParser.removeAllListeners("cmdResponse");
 
-                this.setConnectionState(ConnectionStates.CONNECTED_IDLE);
+                this.setConnectionState(
+                    BluetoothConnectionStates.CONNECTED_IDLE
+                );
 
                 reject(error);
             }
@@ -306,14 +305,14 @@ export default class AuroraBluetooth extends EventEmitter {
 
     public async writeCmdInput(data: Buffer): Promise<void> {
         //check for error condition
-        if (this.connectionState != ConnectionStates.CONNECTED_BUSY) {
+        if (this.connectionState != BluetoothConnectionStates.CONNECTED_BUSY) {
             switch (this.connectionState) {
-                case ConnectionStates.DISCONNECTED:
+                case BluetoothConnectionStates.DISCONNECTED:
                     //case ConnectionStates.ADAPTER_FOUND:
                     //case ConnectionStates.DEVICE_FOUND:
                     return Promise.reject("No idle serial connection.");
 
-                case ConnectionStates.CONNECTED_IDLE:
+                case BluetoothConnectionStates.CONNECTED_IDLE:
                     return Promise.reject(
                         "Command input can only be written during a command."
                     );
@@ -328,7 +327,9 @@ export default class AuroraBluetooth extends EventEmitter {
         return this.charWrite(this.cmdDataChar!, data);
     }
 
-    private setConnectionState(connectionState: ConnectionStates): void {
+    private setConnectionState(
+        connectionState: BluetoothConnectionStates
+    ): void {
         if (this.connectionState == connectionState) {
             return;
         }
@@ -337,7 +338,7 @@ export default class AuroraBluetooth extends EventEmitter {
 
         this.connectionState = connectionState;
 
-        if (this.connectionState == ConnectionStates.DISCONNECTED) {
+        if (this.connectionState == BluetoothConnectionStates.DISCONNECTED) {
             this.disconnectPending = false;
         }
 
@@ -494,17 +495,17 @@ export default class AuroraBluetooth extends EventEmitter {
 
     private onAdapterStateChange = (state: PoweredStates): void => {
         if (state == PoweredStates.ON) {
-            if (this.connectionState == ConnectionStates.INIT) {
+            if (this.connectionState == BluetoothConnectionStates.INIT) {
                 //don't fire event here, just set connection state directly
-                this.connectionState = ConnectionStates.DISCONNECTED;
+                this.connectionState = BluetoothConnectionStates.DISCONNECTED;
             }
         } else if (state == PoweredStates.OFF) {
-            this.connectionState = ConnectionStates.INIT;
+            this.connectionState = BluetoothConnectionStates.INIT;
         }
     };
 
     private onPeripheralDisconnect = (): void => {
-        this.setConnectionState(ConnectionStates.DISCONNECTED);
+        this.setConnectionState(BluetoothConnectionStates.DISCONNECTED);
     };
 
     private onPeripheralFound = (peripheral: noble.Peripheral): void => {
@@ -546,7 +547,7 @@ export default class AuroraBluetooth extends EventEmitter {
         noble.removeListener("discover", this.onPeripheralFound);
 
         if (this.connectPromise) {
-            this.setConnectionState(ConnectionStates.DISCONNECTED);
+            this.setConnectionState(BluetoothConnectionStates.DISCONNECTED);
             this.connectPromise.reject("Connection cancelled.");
             this.connectPromise = null;
         }

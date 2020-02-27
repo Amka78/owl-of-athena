@@ -5,7 +5,6 @@ import { parseValueString, camelCaseObjectKeys } from "./util";
 export default class AuroraTransformObject extends Stream.Transform {
     private leftoverData: string;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private transformedObject: any;
     constructor() {
         super({ objectMode: true, encoding: undefined });
@@ -15,7 +14,6 @@ export default class AuroraTransformObject extends Stream.Transform {
     }
 
     transform(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         chunk: string,
         _encoding: string,
         done: Stream.TransformCallback

@@ -7,28 +7,8 @@ import {
     STREAM_ID_MAX,
     StreamIdsToNames
 } from "./AuroraConstants";
+import { AuroraCommand, BluetoothStream } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
-export type AuroraCommand = {
-    command: unknown;
-    response?: unknown;
-    error: boolean;
-    origin?: string;
-};
-export type AuroraEvent = {
-    eventId: number;
-    event: string;
-    flags: number;
-    time: number;
-    origin?: string;
-};
-
-export type BluetoothStream = {
-    streamId: number;
-    stream: string;
-    data: number[];
-    time: number;
-    origin?: string;
-};
 export class AuroraBluetoothParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
     private cmdWatchdogTimer: NodeJS.Timeout;

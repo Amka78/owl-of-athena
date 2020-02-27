@@ -29,16 +29,15 @@ export default class AuroraTransformBinary extends Stream.Transform {
         this.hasData = false;
 
         this.parser.array("values", {
+            // @ts-ignore
             type: this.parseType,
             readUntil: "eof",
 
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             formatter: (values: any) => values.join(",")
         });
     }
 
     transform(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         respChunk: any,
         _encoding: string,
         done: Stream.TransformCallback
@@ -76,6 +75,7 @@ export default class AuroraTransformBinary extends Stream.Transform {
             parsedChunk = this.parser.parse(respChunk);
         }
 
+        // @ts-ignore
         this.push((this.hasData ? "," : "") + parsedChunk.values);
 
         this.hasData = true;

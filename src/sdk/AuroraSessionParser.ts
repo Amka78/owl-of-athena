@@ -131,7 +131,6 @@ export default class AuroraSessionParser {
         let currentStageTime = 0;
         let currentStageDate = 0;
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
         const stageDurations = new Array(getEnumlength(SleepStages)).fill(0);
 
