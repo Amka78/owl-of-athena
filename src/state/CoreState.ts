@@ -3,5 +3,5 @@ import { User } from "../types";
 
 export type CoreState = {
     auroraClient: AuroraClient;
-    user: User;
+    user?: User;
 };
