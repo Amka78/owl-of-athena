@@ -8,3 +8,4 @@ npm-debug.*
 coverage/**/*
 web-build/**/*
 web/**/*
+package-lock.json
