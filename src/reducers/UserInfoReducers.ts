@@ -17,6 +17,7 @@ export default function UserInfoReducer(
     state: CoreState = initialState,
     action: AuthActions
 ): CoreState {
+    console.debug("userInfoReducer called.");
     switch (action.type) {
         case ActionTypes.LOGIN:
             return Object.assign({}, state, {
