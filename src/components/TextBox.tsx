@@ -10,7 +10,7 @@ const textInputStyle = {
     marginBottom: Dimens.button_margin_bottom,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.input_text_size,
-    width: Layout.window.width - Dimens.content_margin_horizontal * 2
+    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2
 };
 export const TextBox: FunctionComponent<TextBoxProps> = (
     props: TextBoxProps

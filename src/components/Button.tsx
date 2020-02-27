@@ -25,7 +25,7 @@ const containerStyle: ViewStyle = {
     borderRadius: Dimens.button_radius,
     marginBottom: Dimens.button_margin_bottom,
     height: Dimens.button_height,
-    width: Layout.window.width - Dimens.content_margin_horizontal * 2
+    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2
 };
 export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     return (
