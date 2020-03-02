@@ -3,14 +3,14 @@ export default class RestClient {
 
     protected onGetToken?: () => Promise<string | undefined>;
 
-    private baseUrl: string = "";
+    private baseUrl = "";
 
-    private devMode: boolean = false;
+    private devMode = false;
 
     private simulatedDelay = 0;
 
     constructor(
-        baseUrl: string = "",
+        baseUrl = "",
         { headers = {}, devMode = false, simulatedDelay = 0 } = {}
     ) {
         if (!baseUrl) {
@@ -122,7 +122,7 @@ export default class RestClient {
         route: string,
         methodName: string,
         sendData: T,
-        isQuery: boolean = false
+        isQuery = false
     ): Promise<Response> {
         if (!route) {
             throw new Error("Route is undefined");
