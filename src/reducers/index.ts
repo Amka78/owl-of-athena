@@ -1,3 +1,4 @@
+import CoreReducers from "./CoreReducers";
 import UserInfoReducers from "./UserInfoReducers";
 
-export { UserInfoReducers };
+export { CoreReducers, UserInfoReducers };

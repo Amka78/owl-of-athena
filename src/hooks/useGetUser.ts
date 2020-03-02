@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { updateUser } from "../actions";
 import { User } from "../types";
 import { useClientSelector } from "./useClientSelector";
 
 export const useGetUser = (onInitialize: (user: User) => void): void => {
-    const { auroraClient } = useClientSelector();
+    const restClient = useClientSelector();
     const dispatch = useDispatch();
     useEffect(() => {
         let unmounted = false;
@@ -14,7 +13,7 @@ export const useGetUser = (onInitialize: (user: User) => void): void => {
         const f = async (): Promise<User | undefined> => {
             if (!unmounted)
                 try {
-                    const result = await auroraClient.getAuthUser();
+                    const result = await restClient.getAuthUser();
                     console.debug("authenticatedUser", result);
                     return result;
                 } catch (ex) {
@@ -30,5 +29,5 @@ export const useGetUser = (onInitialize: (user: User) => void): void => {
             unmounted = true;
         };
         return cleanup;
-    }, [auroraClient, dispatch, onInitialize]);
+    }, [dispatch, onInitialize, restClient]);
 };

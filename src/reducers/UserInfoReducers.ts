@@ -1,23 +1,12 @@
-import * as Localization from "expo-localization";
-import { AuroraClient } from "../clients";
 import { ActionTypes } from "../constants";
-import { BaseUrl, TokenManager } from "../utils";
-import { CoreState } from "../state";
+import { UserInfoState } from "../state";
 import { AuthActions } from "../actions";
 
-const getToken = async (): Promise<string | undefined> => {
-    return TokenManager.get() ? TokenManager.get() : undefined;
-};
-
-const initialState: CoreState = {
-    auroraClient: new AuroraClient(BaseUrl.get(), Localization.locale, getToken)
-};
-
 export default function UserInfoReducer(
-    state: CoreState = initialState,
+    state: UserInfoState = {},
     action: AuthActions
-): CoreState {
-    console.debug("userInfoReducer called.");
+): UserInfoState {
+    console.debug("userInfoReducer initialized.");
     switch (action.type) {
         case ActionTypes.LOGIN:
             return Object.assign({}, state, {

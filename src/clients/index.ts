@@ -1,3 +1,3 @@
-import { AuroraClient } from "./AuroraClient";
+import { AuroraRestClient } from "./AuroraRestClient";
 
-export { AuroraClient };
+export { AuroraRestClient };

@@ -8,7 +8,7 @@ import RestClient from "./RestClient";
  * @class AuroraClient
  * @extends {RestClient}
  */
-export class AuroraClient extends RestClient {
+export class AuroraRestClient extends RestClient {
     constructor(
         baseUrl: string,
         locale: string,

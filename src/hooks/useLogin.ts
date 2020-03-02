@@ -14,7 +14,7 @@ export const useLogin = (
     login: Login
 ): { loading: boolean; onPress: () => Promise<void>; generalError: string } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const { auroraClient } = useClientSelector();
+    const restClient = useClientSelector();
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
@@ -22,7 +22,7 @@ export const useLogin = (
         setLoading(true);
         try {
             console.debug("useLogin start", login);
-            const result = await auroraClient.login(login);
+            const result = await restClient.login(login);
             console.debug("loggedin user", result);
 
             dispatch(loginAction(result.user));
@@ -43,6 +43,6 @@ export const useLogin = (
             }
             setLoading(false);
         }
-    }, [login, navigate]);
+    }, [dispatch, login, navigate, restClient]);
     return { loading, onPress, generalError };
 };

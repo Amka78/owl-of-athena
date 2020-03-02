@@ -19,7 +19,7 @@ import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
 
 export const AccountScreen: FunctionComponent = () => {
     useCheckLogging();
-    const { auroraClient } = useClientSelector();
+    const restClient = useClientSelector();
     const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState("");
@@ -34,7 +34,7 @@ export const AccountScreen: FunctionComponent = () => {
             if (!unmounted)
                 try {
                     console.debug("useGetUser useEffect start");
-                    const result = await auroraClient.getAuthUser();
+                    const result = await restClient.getAuthUser();
                     console.debug("authenticatedUser", result);
                     dispatch(updateUser(result));
                     setFirstName(result.first_name!);
@@ -50,7 +50,7 @@ export const AccountScreen: FunctionComponent = () => {
             unmounted = true;
         };
         return cleanup;
-    }, [auroraClient, dispatch]);
+    }, [dispatch, restClient]);
 
     const useLogoutHook = useLogout();
 

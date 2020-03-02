@@ -1,10 +1,11 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import logger from "redux-logger";
 
-import { UserInfoReducers } from "./reducers";
+import { CoreReducers, UserInfoReducers } from "./reducers";
 
 const appReducer = combineReducers({
-    core: UserInfoReducers
+    core: CoreReducers,
+    userInfo: UserInfoReducers
 });
 
 const middleware = () => {

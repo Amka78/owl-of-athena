@@ -17,7 +17,7 @@ export const useSignup = (
     passwordConfirmError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const { auroraClient } = useClientSelector();
+    const restClient = useClientSelector();
     const { navigate } = useNavigation();
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -35,7 +35,7 @@ export const useSignup = (
                     setGeneralError
                 )
             ) {
-                await auroraClient.signup(signup);
+                await restClient.signup(signup);
                 navigate("Login");
             }
         } catch (e) {
@@ -46,7 +46,7 @@ export const useSignup = (
             }
             setLoading(false);
         }
-    }, [signup, auroraClient, navigate]);
+    }, [signup, restClient, navigate]);
     return {
         loading,
         onPress,

@@ -1,4 +1,4 @@
 import { CoreState } from "./CoreState";
 import { RootState } from "./RootState";
-
-export { CoreState, RootState };
+import { UserInfoState } from "./UserInfoState";
+export { CoreState, RootState, UserInfoState };

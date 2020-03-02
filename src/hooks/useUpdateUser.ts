@@ -11,13 +11,13 @@ export const useUpdateUser = (
     generalError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const { auroraClient } = useClientSelector();
+    const restClient = useClientSelector();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
         setLoading(true);
         try {
             if (validate(user, setGeneralError)) {
-                await auroraClient.updateUser(user as User);
+                await restClient.updateUser(user as User);
             }
         } catch (e) {
             if (e.message) {
@@ -25,7 +25,7 @@ export const useUpdateUser = (
             }
             setLoading(false);
         }
-    }, [user, auroraClient]);
+    }, [user, restClient]);
     return {
         loading,
         onPress,

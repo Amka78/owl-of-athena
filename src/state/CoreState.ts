@@ -1,7 +1,7 @@
-import { AuroraClient } from "../clients";
-import { User } from "../types";
+import { AuroraRestClient } from "../clients";
+import { Aurora } from "../sdk/Aurora";
 
 export type CoreState = {
-    auroraClient: AuroraClient;
-    user?: User;
+    restClient: AuroraRestClient;
+    auroraDevice: Aurora;
 };
