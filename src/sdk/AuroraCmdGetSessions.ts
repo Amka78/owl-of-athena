@@ -5,7 +5,7 @@ import stream from "stream";
 import { promisifyStream } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 
-module.exports = async function(
+const AuroraCmdGetSessions = async function(
     connector: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
     const sessions = [];
@@ -128,3 +128,5 @@ module.exports = async function(
 
     return sessions;
 };
+
+export default AuroraCmdGetSessions;

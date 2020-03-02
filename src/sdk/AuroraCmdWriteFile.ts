@@ -2,7 +2,7 @@ import Stream from "stream";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
 
-module.exports = function(
+const AuroraCmdUploadFile = function(
     destPath: string,
     dataOrReadStream: string | Stream.Readable,
     // @ts-ignore
@@ -59,3 +59,5 @@ module.exports = function(
         return cmdWithResponse;
     });
 };
+
+export default AuroraCmdUploadFile;

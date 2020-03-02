@@ -1,6 +1,6 @@
 import { ConnectorTypes } from "./AuroraConstants";
 
-module.exports = function(
+const AuroraCmdSyncTime = function(
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): unknown {
     const date = new Date();
@@ -17,3 +17,5 @@ module.exports = function(
         connectorType
     );
 };
+
+export default AuroraCmdSyncTime;

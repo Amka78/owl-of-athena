@@ -87,7 +87,7 @@ const camelCaseObjectKeys = (object: any): any => {
         let value = object[key];
 
         if (isPlainObject(value)) {
-            value = exports.camelCaseObjectKeys(value);
+            value = camelCaseObjectKeys(value);
         }
 
         camelCaseObject[camelCase(key)] = value;
@@ -96,7 +96,7 @@ const camelCaseObjectKeys = (object: any): any => {
     return camelCaseObject;
 };
 
-exports.maskFromIds = (...ids: any[]): any => {
+const maskFromIds = (...ids: any[]): any => {
     return ids.reduce((mask, id) => mask + (1 << id), 0);
 };
 

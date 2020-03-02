@@ -1,7 +1,7 @@
 import { buzzSongObjToCmd } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 
-module.exports = function(
+const AuroraCmdPlayBuzzSong = function(
     buzzSong: unknown,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): unknown {
@@ -11,3 +11,5 @@ module.exports = function(
     // @ts-ignore
     return this.queueCmd(cmd, connectorType);
 };
+
+export default AuroraCmdPlayBuzzSong;

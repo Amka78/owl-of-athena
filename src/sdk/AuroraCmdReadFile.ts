@@ -3,8 +3,9 @@ import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
 import { CmdQueue } from "./AuroraTypes";
 import Stream from "stream";
+import defaultIcon from "react-native-paper/lib/typescript/src/components/MaterialCommunityIcon";
 
-module.exports = function(
+const AuroraCmdReadFile = function(
     srcPath: string,
     writeStream: any = false,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
@@ -58,3 +59,5 @@ module.exports = function(
         });
     });
 };
+
+export default AuroraCmdReadFile;

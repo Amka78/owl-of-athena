@@ -10,7 +10,7 @@ const BLE_CMD_MAX_PACKET_LENGTH = 20;
 
 const BLE_CMD_MAX_PAYLOAD = 120;
 
-const enum BleCmdStates {
+enum BleCmdStates {
     IDLE = 0,
     CMD_EXECUTE = 1,
     CMD_RESP_OBJECT_READY = 2,
@@ -18,7 +18,7 @@ const enum BleCmdStates {
     CMD_INPUT_REQUESTED = 4
 }
 
-const enum ConnectorTypes {
+enum ConnectorTypes {
     BLUETOOTH = "bluetooth",
     USB = "usb",
     ANY = "any"
@@ -38,8 +38,7 @@ const BleAuroraChars = {
     STREAM_DATA_INDICATED: "6175726f726149ce8077b954b033c890",
     STREAM_DATA_NOTIFIED: "6175726f726149ce8077b954b033c891"
 };
-
-const enum DataTypes {
+enum DataTypes {
     UNKNOWN = 0,
     BOOL = 1,
     CHAR = 2,
@@ -243,7 +242,7 @@ const StreamOutputIds = {
     BLE: 5
 };
 
-const enum SleepStages {
+enum SleepStages {
     UNKNOWN = 0,
     AWAKE = 1,
     LIGHT = 2,

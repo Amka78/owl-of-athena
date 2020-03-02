@@ -2,7 +2,7 @@ import split from "split";
 import { ConnectorTypes } from "./AuroraConstants";
 import { AuroraProfile } from "./AuroraTypes";
 
-module.exports = async function(
+const AuroraCmdGetProfiles = async function(
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
     // @ts-ignore
@@ -73,3 +73,5 @@ module.exports = async function(
         a.key > b.key ? 1 : a.key < b.key ? -1 : 0
     );
 };
+
+export default AuroraCmdGetProfiles;

@@ -11,14 +11,14 @@ import { AuroraCommand, BluetoothStream } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 export class AuroraBluetoothParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
-    private cmdWatchdogTimer: NodeJS.Timeout;
+    private cmdWatchdogTimer: any;
     private cmd?: AuroraCommand;
     private cmdState: BleCmdStates;
     constructor() {
         super();
 
         this.cmdResponseParser = new AuroraCmdResponseParser();
-        this.cmdWatchdogTimer = new NodeJS.Timeout();
+        this.cmdWatchdogTimer = {};
         this.cmdState = BleCmdStates.IDLE;
         this.reset();
     }

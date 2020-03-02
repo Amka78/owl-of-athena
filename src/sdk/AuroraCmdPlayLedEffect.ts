@@ -1,7 +1,7 @@
 import { ledEffectObjToCmd } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 
-module.exports = function(
+const AuroraCmdPlayLedEffect = function(
     ledEffect: unknown,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): unknown {
@@ -11,3 +11,5 @@ module.exports = function(
     // @ts-ignore
     return this.queueCmd(cmd, connectorType);
 };
+
+export default AuroraCmdPlayLedEffect;

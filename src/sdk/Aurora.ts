@@ -6,9 +6,10 @@ import * as AuroraConstants from "./AuroraConstants";
 import EventEmitter from "events";
 import Stream from "stream";
 import { sleep, promisify, versionToString, stringToVersion } from "./util";
-import usbDetect from "usb-detection";
+//import usbDetect from "usb-detection";
 import { AuroraResponse, FirmwareInformation, CmdQueue } from "./AuroraTypes";
 import { AuroraEvent } from "../model/AuroraEvent";
+import { isDesktop } from "./Platform";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
@@ -31,18 +32,20 @@ class Aurora extends EventEmitter {
         super();
 
         this.msdAttaching = false;
-        this.auroraUsb = new AuroraUsb();
-        this.auroraUsb.on(
-            "connectionStateChange",
-            this.onUsbConnectionStateChange
-        );
-        this.auroraUsb.on("usbError", this.onAuroraError);
-        this.auroraUsb.on("log", this.onAuroraLog);
-        this.auroraUsb.on("streamData", this.onAuroraStreamData);
-        this.auroraUsb.on("auroraEvent", this.onAuroraEvent);
-        this.auroraUsb.on("cmdInputRequested", this.onCmdInputRequested);
-        this.auroraUsb.on("cmdOutputReady", this.onCmdOutputReady);
 
+        if (isDesktop) {
+            this.auroraUsb = new AuroraUsb();
+            this.auroraUsb.on(
+                "connectionStateChange",
+                this.onUsbConnectionStateChange
+            );
+            this.auroraUsb.on("usbError", this.onAuroraError);
+            this.auroraUsb.on("log", this.onAuroraLog);
+            this.auroraUsb.on("streamData", this.onAuroraStreamData);
+            this.auroraUsb.on("auroraEvent", this.onAuroraEvent);
+            this.auroraUsb.on("cmdInputRequested", this.onCmdInputRequested);
+            this.auroraUsb.on("cmdOutputReady", this.onCmdOutputReady);
+        }
         this.bluetooth = new AuroraBluetooth();
         this.bluetooth.on(
             "connectionStateChange",
@@ -599,43 +602,52 @@ class Aurora extends EventEmitter {
     }
 
     private watchUsb = (): void => {
-        this.unwatchUsb();
+        if (isDesktop) {
+            this.unwatchUsb();
 
-        usbDetect.on(
-            `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-            this.onAuroraUsbAttached
-        );
-        usbDetect.on(
-            `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-            this._onAuroraUsbDetached
-        );
+            usbDetect.on(
+                `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
+                this.onAuroraUsbAttached
+            );
+            usbDetect.on(
+                `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
+                this._onAuroraUsbDetached
+            );
+        }
     };
 
     private unwatchUsb = (): void => {
-        // @ts-ignore
-        usbDetect.removeListener(
-            `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-            this.onAuroraUsbAttached
-        );
-        // @ts-ignore
-        usbDetect.removeListener(
-            `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-            this._onAuroraUsbDetached
-        );
+        if (isDesktop) {
+            // @ts-ignore
+            usbDetect.removeListener(
+                `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
+                this.onAuroraUsbAttached
+            );
+            // @ts-ignore
+            usbDetect.removeListener(
+                `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
+                this._onAuroraUsbDetached
+            );
+        }
     };
 
     private onAuroraUsbAttached = async (device: {
         productId: number;
     }): Promise<void> => {
-        if (device.productId === parseInt(AuroraConstants.AURORA_USB_MSD_PID)) {
-            // @ts-ignore
-            this.findMsdDrive(5).then(this.msdSetAttached, true);
-        } else if (
-            device.productId ===
-                parseInt(AuroraConstants.AURORA_USB_SERIAL_PID) &&
-            this.isAutoConnectUsb
-        ) {
-            this.executeUsbAutoConnection();
+        if (isDesktop) {
+            /*if (
+                device.productId ===
+                parseInt(AuroraConstants.AURORA_USB_MSD_PID)
+            ) {
+                // @ts-ignore
+                this.findMsdDrive(5).then(this.msdSetAttached, true);
+            } else if (
+                device.productId ===
+                    parseInt(AuroraConstants.AURORA_USB_SERIAL_PID) &&
+                this.isAutoConnectUsb
+            ) {
+                this.executeUsbAutoConnection();
+            }*/
         }
     };
 

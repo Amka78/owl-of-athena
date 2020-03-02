@@ -5,7 +5,7 @@ import { promisify } from "./util";
 import AuroraTransformBinary from "./AuroraTransformBinary";
 import { DataTypes, ConnectorTypes } from "./AuroraConstants";
 
-module.exports = async function(
+const AuroraCmdDownloadStream = async function(
     srcPath: string,
     destDir: string,
     type: DataTypes,
@@ -41,3 +41,5 @@ module.exports = async function(
         return Promise.reject(error);
     }
 };
+
+export default AuroraCmdDownloadStream;

@@ -1,7 +1,7 @@
 import fs from "fs";
 import fetch from "node-fetch";
 
-module.exports = function(
+const AuroraCmdSyncTime = function(
     srcPath: string,
     destPath: string,
     // @ts-ignore
@@ -17,3 +17,5 @@ module.exports = function(
     // @ts-ignore
     return this.writeFile(destPath, fs.createReadStream(srcPath));
 };
+
+export default AuroraCmdSyncTime;

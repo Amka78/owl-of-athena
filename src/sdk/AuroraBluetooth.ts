@@ -23,7 +23,7 @@ export enum BluetoothConnectionStates {
     CONNECTED_BUSY = "busy"
 }
 
-const enum PoweredStates {
+enum PoweredStates {
     ON = "poweredOn",
     OFF = "poweredOff"
 }
@@ -39,7 +39,7 @@ export class AuroraBluetooth extends EventEmitter {
     private cmdDataChar?: noble.Characteristic;
     private cmdOutputChar?: noble.Characteristic;
     private connectPromise?: any;
-    private connectTimer?: NodeJS.Timeout;
+    private connectTimer?: any;
 
     constructor() {
         super();

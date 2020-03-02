@@ -10,7 +10,7 @@ import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import moment from "moment";
 import { CmdQueue } from "./AuroraTypes";
 
-const enum CmdStates {
+enum CmdStates {
     NO_CMD = 0,
     CMD_HEADER = 1,
     CMD_RESPONSE = 2,

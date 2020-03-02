@@ -2,7 +2,7 @@ import camelCase from "lodash/camelCase";
 import zipObject from "lodash/zipObject";
 import { parseValueString } from "./util";
 
-const enum ResponseStates {
+enum ResponseStates {
     INIT = 0,
     OBJECT = 1,
     TABLE = 2,
