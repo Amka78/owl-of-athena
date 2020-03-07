@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { useNavigation } from "react-navigation-hooks";
 
 import { TokenManager } from "../utils";
-import { useClientSelector } from "./useClientSelector";
+import { useRestClientSelector } from "./useRestClientSelector";
 import { useDispatch } from "react-redux";
 import { Message, StorageKeys } from "../constants";
 
@@ -14,7 +14,7 @@ export const useLogin = (
     login: Login
 ): { loading: boolean; onPress: () => Promise<void>; generalError: string } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useClientSelector();
+    const restClient = useRestClientSelector();
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");

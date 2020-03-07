@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { useClientSelector } from "../hooks/useClientSelector";
+import { useRestClientSelector } from "../hooks/useRestClientSelector";
 import { useDispatch } from "react-redux";
 
 import { updateUser } from "../actions";
@@ -19,7 +19,7 @@ import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
 
 export const AccountScreen: FunctionComponent = () => {
     useCheckLogging();
-    const restClient = useClientSelector();
+    const restClient = useRestClientSelector();
     const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState("");

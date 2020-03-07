@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { User } from "../types";
-import { useClientSelector } from "./useClientSelector";
+import { useRestClientSelector } from "./useRestClientSelector";
 
 export const useUpdateUser = (
     loadingInitialValue: boolean,
@@ -11,7 +11,7 @@ export const useUpdateUser = (
     generalError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useClientSelector();
+    const restClient = useRestClientSelector();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
         setLoading(true);

@@ -3,7 +3,7 @@ import { useNavigation } from "react-navigation-hooks";
 
 import { Message } from "../constants";
 import { Signup } from "../types";
-import { useClientSelector } from "./useClientSelector";
+import { useRestClientSelector } from "./useRestClientSelector";
 
 export const useSignup = (
     loadingInitialValue: boolean,
@@ -17,7 +17,7 @@ export const useSignup = (
     passwordConfirmError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useClientSelector();
+    const restClient = useRestClientSelector();
     const { navigate } = useNavigation();
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");

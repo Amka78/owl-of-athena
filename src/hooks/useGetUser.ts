@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { User } from "../types";
-import { useClientSelector } from "./useClientSelector";
+import { useRestClientSelector } from "./useRestClientSelector";
 
 export const useGetUser = (onInitialize: (user: User) => void): void => {
-    const restClient = useClientSelector();
+    const restClient = useRestClientSelector();
     const dispatch = useDispatch();
     useEffect(() => {
         let unmounted = false;
