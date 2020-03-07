@@ -8,19 +8,19 @@ before_script:
  
 stages:
   - testing
-  - deploy
+#  - deploy
  
 test:
   stage: testing
   script:
     - npm run coverage
  
-deploy:
-  stage: deploy
-  script:
-    - expo login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
-    - cat /proc/sys/fs/inotify/max_user_watches
-    - echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
-    - expo publish --release-channel=staging-daily-build
-  only:
-    - master
+#deploy:
+#  stage: deploy
+#  script:
+#    - expo login -u "$EXPO_USERNAME" -p "$EXPO_PASSWORD"
+#    - cat /proc/sys/fs/inotify/max_user_watches
+#    - echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+#    - expo publish --release-channel=staging-daily-build
+#  only:
+#    - master
