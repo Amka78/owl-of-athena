@@ -24,12 +24,15 @@ export default class Message {
      * @static
      * @memberof Message
      */
-    public static get = (value: MessageLocalizationParam): string => {
+    public static get = (
+        value: MessageLocalizationParam,
+        translation = true
+    ): string => {
         if (typeof value === "string") {
             if (value == "") {
                 return "";
             }
-            return Message.getTranslatedValue(value);
+            return translation ? Message.getTranslatedValue(value) : value;
         } else if (typeof value === "undefined") {
             return "";
         } else if (value.key) {
