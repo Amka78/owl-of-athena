@@ -3,7 +3,8 @@ import { useCheckBox } from "./useCheckBox";
 import { useForgotPassword } from "./useForgotPassword";
 import { useSignup } from "./useSignup";
 import { useTextBox } from "./useTextBox";
-import { useClientSelector } from "./useClientSelector";
+import { useRestClientSelector } from "./useRestClientSelector";
+import { useAuroraSelector } from "./useAuroraClientSelector";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
 import { useRadioGroup } from "./useRadioGroup";
@@ -16,7 +17,8 @@ export {
     useAutoLogin,
     useCheckBox,
     useCheckLogging,
-    useClientSelector,
+    useAuroraSelector,
+    useRestClientSelector,
     useDatePicker,
     useForgotPassword,
     useGetUser,
