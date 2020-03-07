@@ -30,7 +30,7 @@
     "binary-parser": "github:iwinks/binary-parser",
     "drivelist": "^8.0.10",
     "eject-media": "0.0.3",
-    "expo": "^36.0.0",
+    "expo": "^36.0.2",
     "expo-av": "~8.0.0",
     "expo-localization": "~8.0.0",
     "expo-secure-store": "~8.0.0",
@@ -59,6 +59,7 @@
     "usb-detection": "^4.7.0"
   },
   "devDependencies": {
+    "@expo/webpack-config": "^0.11.1",
     "@types/enzyme": "^3.10.3",
     "@types/i18n-js": "^3.0.1",
     "@types/jest": "^24.0.23",
