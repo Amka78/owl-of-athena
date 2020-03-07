@@ -84,6 +84,7 @@ export class AuroraBluetooth extends EventEmitter {
         //has the system booted up yet? If not, we'll
         //wait for a bit and try again
         if (this.connectionState == BluetoothConnectionStates.INIT) {
+            console.debug("Initialized Called.");
             this.initializing = true;
 
             //sleep for a little bit
@@ -122,6 +123,7 @@ export class AuroraBluetooth extends EventEmitter {
         this.setConnectionState(BluetoothConnectionStates.CONNECTING);
 
         try {
+            console.debug("connect bluetooth start");
             // @ts-ignore
             const [peripheral, characteristics] = await this.connectDevice(
                 timeoutMs
@@ -365,11 +367,18 @@ export class AuroraBluetooth extends EventEmitter {
 
             noble.on("discover", this.onPeripheralFound);
             noble.on("scanStop", this.onPeripheralScanStop);
-            noble.startScanning([BleAuroraService], false);
+            console.debug("bluetooth scanning start.");
+            noble.startScanning([BleAuroraService], false, (error?: Error) => {
+                if (error) {
+                    console.debug(error);
+                    reject(error.message);
+                }
+            });
 
             clearTimeout(this.connectTimer!);
 
             if (timeoutMs > 0) {
+                console.debug(`wating scanning:${timeoutMs}ms`);
                 this.connectTimer = setTimeout(() => {
                     this.connectPromise = undefined;
 
@@ -527,13 +536,12 @@ export class AuroraBluetooth extends EventEmitter {
                             "Peripheral found event fired without valid connection promise."
                         );
                     }
-
                     this.connectPromise.resolve([
                         peripheral,
                         services[0],
                         characteristics
                     ]);
-                    this.connectPromise = null;
+                    this.connectPromise = undefined;
 
                     noble.stopScanning();
                 }
@@ -549,7 +557,7 @@ export class AuroraBluetooth extends EventEmitter {
         if (this.connectPromise) {
             this.setConnectionState(BluetoothConnectionStates.DISCONNECTED);
             this.connectPromise.reject("Connection cancelled.");
-            this.connectPromise = null;
+            this.connectPromise = undefined;
         }
     };
 

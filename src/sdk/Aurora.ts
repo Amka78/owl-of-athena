@@ -33,19 +33,17 @@ class Aurora extends EventEmitter {
 
         this.msdAttaching = false;
 
-        if (isDesktop) {
-            this.auroraUsb = new AuroraUsb();
-            this.auroraUsb.on(
-                "connectionStateChange",
-                this.onUsbConnectionStateChange
-            );
-            this.auroraUsb.on("usbError", this.onAuroraError);
-            this.auroraUsb.on("log", this.onAuroraLog);
-            this.auroraUsb.on("streamData", this.onAuroraStreamData);
-            this.auroraUsb.on("auroraEvent", this.onAuroraEvent);
-            this.auroraUsb.on("cmdInputRequested", this.onCmdInputRequested);
-            this.auroraUsb.on("cmdOutputReady", this.onCmdOutputReady);
-        }
+        this.auroraUsb = new AuroraUsb();
+        this.auroraUsb.on(
+            "connectionStateChange",
+            this.onUsbConnectionStateChange
+        );
+        this.auroraUsb.on("usbError", this.onAuroraError);
+        this.auroraUsb.on("log", this.onAuroraLog);
+        this.auroraUsb.on("streamData", this.onAuroraStreamData);
+        this.auroraUsb.on("auroraEvent", this.onAuroraEvent);
+        this.auroraUsb.on("cmdInputRequested", this.onCmdInputRequested);
+        this.auroraUsb.on("cmdOutputReady", this.onCmdOutputReady);
         this.bluetooth = new AuroraBluetooth();
         this.bluetooth.on(
             "connectionStateChange",
@@ -96,11 +94,11 @@ class Aurora extends EventEmitter {
         }
     }
 
-    public executeBluetoothAutoConnectioin(): void {
+    public async executeBluetoothAutoConnection(): Promise<void | never> {
         this.isAutoConnectBluetooth = true;
 
         if (!this.bluetooth.isConnected() && !this.bluetooth.isConnecting()) {
-            this.bluetooth.connect(0).catch(undefined);
+            await this.bluetooth.connect(0);
         }
     }
 
@@ -137,7 +135,9 @@ class Aurora extends EventEmitter {
         return this.auroraUsb.disconnect();
     }
 
-    public async connectBluetooth(timeoutMs = 20000): Promise<unknown | never> {
+    public async connectBluetooth(
+        timeoutMs = 20000
+    ): Promise<FirmwareInformation | never> {
         if (this.bluetooth.isConnected()) {
             return Promise.reject("Already connected over bluetooth.");
         }
