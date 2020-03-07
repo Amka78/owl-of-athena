@@ -16,6 +16,6 @@ export const useLogout = (): { onPress: () => Promise<void> } => {
         await TokenManager.reset();
 
         navigate("Unauthenticated");
-    }, [navigate]);
+    }, [dispatch, navigate]);
     return { onPress };
 };
