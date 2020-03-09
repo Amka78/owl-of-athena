@@ -2,6 +2,7 @@
 
 exports[`Button UnitTest renders correctly 1`] = `
 <withTheme(Button)
+  disabled={true}
   labelStyle={
     Object {
       "color": "#070724",
@@ -26,6 +27,7 @@ exports[`Button UnitTest renders correctly 1`] = `
 
 exports[`Button UnitTest renders correctly 2`] = `
 <withTheme(Button)
+  disabled={true}
   labelStyle={
     Object {
       "color": "#070724",

@@ -12,6 +12,7 @@ import { TextStyle, ViewStyle } from "react-native";
 
 export type ButtonProps = {
     children: MessageLocalizationParam;
+    disabled?: boolean;
     onPress?: () => void;
 };
 
@@ -30,6 +31,7 @@ const containerStyle: ViewStyle = {
 export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     return (
         <PaperButton
+            disabled
             onPress={props.onPress}
             mode={"contained"}
             labelStyle={labelStyle}
