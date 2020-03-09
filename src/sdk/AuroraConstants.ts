@@ -250,6 +250,28 @@ enum SleepStages {
     REM = 4
 }
 
+enum SleepStates {
+    INIT = 0,
+    CONFIGURING = 1,
+    SLEEPING = 2,
+    WAKING = 3,
+    AWAKE = 4,
+    SYNCING = 5,
+    SYNCING_ERROR = 6
+}
+
+enum ConnectionStates {
+    IDLE = 0,
+    INIT = 1,
+    SCANNING = 2,
+    CONNECTING = 3,
+    CONNECTED = 4,
+    BUSY = 5,
+    DISCONNECTING = 6,
+    DISCONNECTED = 7,
+    RECONNECTING = 8
+}
+
 const LogTypeIds = {
     DATA: 0,
     INFO: 1,
@@ -306,6 +328,14 @@ const LedEffects = [
     { name: "transition", cmd: "led-transition" }
 ];
 
+enum DeviceEventList {
+    connectionStateChange = "connectionStateChange",
+    cmdInputRequested = "cmdInputRequested",
+    cmdOutputReady = "cmdOutputReady",
+    auroraEvent = "auroraEvent",
+    streamData = "streamData",
+    Error = "error"
+}
 export {
     AURORA_USB_VID,
     AURORA_USB_MSD_PID,
@@ -332,5 +362,8 @@ export {
     StreamIdsToNames,
     StreamOutputIds,
     STREAM_ID_MAX,
-    SleepStages
+    SleepStages,
+    SleepStates,
+    ConnectionStates,
+    DeviceEventList
 };
