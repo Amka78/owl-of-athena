@@ -1,0 +1,106 @@
+# default.prof initially loaded on Aurora
+# ID = F367G2
+################################################################################
+
+# PROFILE LOADING EVENT
+##############################################################
+[prof-monitor=0]
+
+# Sets the REM default stimulation delay to 4 hours
+stream-config 18 16 {stim-delay:14400000}
+
+# Sets the REM default stimulation repeat interval to 5 minutes
+stream-config 18 17 {stim-interval:300000}
+
+# Disables REM stimulations
+# In this case, the stimulation delay and repeat intervals have no effect 
+stream-config 18 19 {stim-enabled:0}
+
+# Sets the wakeup window to 30 minutes
+# In this case, this window has no effect
+stream-config 18 21 {wakeup-window:1800000} 
+
+# Disables the Smart Alarm feature      
+stream-config 18 23 {sa-enabled:0}
+
+# Disables the DSL feature
+stream-config 18 25 {dsl-enabled:0} 
+
+# Reset alarm time
+stream-config 18 27 {wakeup-time:-1} 
+
+# Outputs button, awakening, sleep stage, and movement events to the session.txt file 
+event-output-enable 0x0001007F 0x04
+
+# Disable stream debug mode
+stream-debug {stream-debug:0}
+
+# Begins a new session
+stream-session 1
+
+# Enable all streams required for sleep tracking 
+stream-output-enable 0x01070003 0x01
+
+# Save RAW .dat files of EEG, Accel Mag., Signal, Batt., Sleep Tracker, and 6 EEG freq. streams
+stream-output-enable {file-streams:0x01FE0403} {file-output:0x04}
+
+# PROFILE UNLOADING EVENT
+##############################################################
+[prof-monitor=2]
+
+# Disable ALL sensors/streams, closing files
+stream-output-disable 0xFFFFFFFF 0xFF
+
+# End current session
+stream-session 0
+
+# Restore original state of session.txt events
+event-output-disable 0x0001007F 0x04
+
+# Reset alarm time
+stream-config 18 27 -1
+
+# Disabl DSL feature
+stream-config 18 25 0
+
+# Disable Smart Alarm feature
+stream-config 18 23 0
+
+# Disable REM stimulations
+stream-config 18 19 0
+
+# POWER BUTTON INITIAL PRESS
+##############################################################
+[button-monitor@0]
+
+# Set both LEDs to pink, half brightness
+led-set 0x03 0xFF00FF 0x7F -1
+
+# POWER BUTTON RELEASE
+##############################################################
+[button-monitor@1]
+
+# Turn off LEDs
+led-set 0x03 0 0 -1
+
+# REM STIMULATION
+# (this event will never be emitted when REM stimulations are disabled)
+##############################################################
+[stim-presented]
+
+# Blink red 5 times @ 1Hz, full brightness
+{stim-led:led-blink 0x03 0xFF0000 0xFF 5 500 0}
+
+# Don't make any noise
+{stim-buzz:}
+
+# WAKEUP ALARM
+# Either at the configured alarm time, or potentially earlier if Smart Alarm is used
+##############################################################
+[wakeup-alarm]
+
+# Don't make any light
+{wakeup-led:}
+
+# Don't make any noise
+{wakeup-buzz:}
