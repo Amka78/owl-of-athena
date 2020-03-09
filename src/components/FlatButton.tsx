@@ -13,6 +13,7 @@ type FlatButtonProps = {
     children: MessageLocalizationParam;
     multiLingual?: boolean;
     labelStyle?: TextStyle;
+    contentStyle?: ViewStyle;
     onPress?: () => void;
 };
 
@@ -33,7 +34,7 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (
             onPress={props.onPress}
             mode={"text"}
             labelStyle={[labelStyle, props.labelStyle]}
-            contentStyle={contentStyle}
+            contentStyle={[contentStyle, props.contentStyle]}
         >
             {Message.get(props.children, props.multiLingual)}
         </PaperButton>
