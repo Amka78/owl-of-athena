@@ -15,11 +15,6 @@ export type AuroraResponse = {
     response?: unknown;
 };
 
-export type FirmwareInformation = {
-    bootloaderVersion?: number;
-    bleVersion?: number;
-    version: number;
-};
 export type AuroraEvent = {
     eventId: number;
     event: string;
