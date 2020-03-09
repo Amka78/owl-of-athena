@@ -15,6 +15,7 @@ import { LabeledRadioButton } from "./LabeledRadioButton";
 import { LabeledSelectorMenu } from "./LabeledSelectorMenu";
 import { AudioDialog } from "./AudioDialog";
 import { LabeledCheckBox } from "./LabeledCheckBox";
+import { LoadingDialog } from "./LoadingDialog";
 export {
     AudioDialog,
     AlarmView,
@@ -29,6 +30,7 @@ export {
     LabeledRadioButton,
     LabeledSelectorMenu,
     LabeledCheckBox,
+    LoadingDialog,
     Button,
     FlatButton,
     TextBox,
