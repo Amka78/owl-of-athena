@@ -7,12 +7,6 @@ import { AuroraEvent } from "./AuroraTypes";
 
 const CONNECT_RETRY_DELAY_MS = 1500;
 const DISCONNECT_RETRY_DELAY_MS = 3000;
-export enum UsbConnectionStates {
-    DISCONNECTED = "disconnected",
-    CONNECTING = "connecting",
-    CONNECTED_IDLE = "idle",
-    CONNECTED_BUSY = "busy"
-}
 export class AuroraUsb extends EventEmitter {
     // @ts-ignore
     static discoverAuroraPorts(): Promise<any[]> {
@@ -42,7 +36,7 @@ export class AuroraUsb extends EventEmitter {
     }
 
     private serialParser: AuroraSerialParser;
-    private connectionState: UsbConnectionStates;
+    private connectionState: AuroraConstants.ConnectionStates;
     private disconnectPending: boolean;
     private serialPort?: SerialPort;
     constructor() {
@@ -50,7 +44,7 @@ export class AuroraUsb extends EventEmitter {
 
         this.serialParser = new AuroraSerialParser();
 
-        this.connectionState = UsbConnectionStates.DISCONNECTED;
+        this.connectionState = AuroraConstants.ConnectionStates.DISCONNECTED;
         this.disconnectPending = false;
 
         this.serialParser.on("auroraEvent", this.onParseAuroraEvent);
@@ -67,25 +61,30 @@ export class AuroraUsb extends EventEmitter {
 
     public isConnected(): boolean {
         return (
-            this.connectionState == UsbConnectionStates.CONNECTED_IDLE ||
-            this.connectionState == UsbConnectionStates.CONNECTED_BUSY
+            this.connectionState == AuroraConstants.ConnectionStates.IDLE ||
+            this.connectionState == AuroraConstants.ConnectionStates.BUSY
         );
     }
 
     public isConnecting(): boolean {
-        return this.connectionState == UsbConnectionStates.CONNECTING;
+        return (
+            this.connectionState == AuroraConstants.ConnectionStates.CONNECTING
+        );
     }
 
     public async connect(port = "detect", retryCount = 3): Promise<unknown> {
         //at this point state should be disconnected
         //otherwise, this is an error case.
-        if (this.connectionState != UsbConnectionStates.DISCONNECTED) {
+        if (
+            this.connectionState !=
+            AuroraConstants.ConnectionStates.DISCONNECTED
+        ) {
             switch (this.connectionState) {
-                case UsbConnectionStates.CONNECTING:
+                case AuroraConstants.ConnectionStates.CONNECTING:
                     return Promise.reject("Already connecting...");
 
-                case UsbConnectionStates.CONNECTED_BUSY:
-                case UsbConnectionStates.CONNECTED_IDLE:
+                case AuroraConstants.ConnectionStates.BUSY:
+                case AuroraConstants.ConnectionStates.IDLE:
                     return Promise.reject("Already connected.");
 
                 default:
@@ -93,7 +92,7 @@ export class AuroraUsb extends EventEmitter {
             }
         }
 
-        this.setConnectionState(UsbConnectionStates.CONNECTING);
+        this.setConnectionState(AuroraConstants.ConnectionStates.CONNECTING);
 
         let connectionAttempts = 0;
 
@@ -121,7 +120,7 @@ export class AuroraUsb extends EventEmitter {
                             )) as SerialPort;
 
                             this.setConnectionState(
-                                UsbConnectionStates.CONNECTED_IDLE
+                                AuroraConstants.ConnectionStates.IDLE
                             );
 
                             return auroraPort;
@@ -140,7 +139,9 @@ export class AuroraUsb extends EventEmitter {
                         port
                     )) as SerialPort;
 
-                    this.setConnectionState(UsbConnectionStates.CONNECTED_IDLE);
+                    this.setConnectionState(
+                        AuroraConstants.ConnectionStates.IDLE
+                    );
 
                     return port;
                 }
@@ -152,19 +153,21 @@ export class AuroraUsb extends EventEmitter {
         } while (
             connectionAttempts <= retryCount &&
             // @ts-ignore
-            this.connectionState == UsbConnectionStates.CONNECTING &&
+            this.connectionState ==
+                AuroraConstants.ConnectionStates.CONNECTING &&
             !this.disconnectPending
         );
 
         //if we are here, all connection attempts failed
-        this.setConnectionState(UsbConnectionStates.DISCONNECTED);
+        this.setConnectionState(AuroraConstants.ConnectionStates.DISCONNECTED);
 
         return Promise.reject(`Failed connecting to Aurora on port "${port}".`);
     }
 
     public async disconnect(): Promise<void> {
         if (
-            this.connectionState == UsbConnectionStates.DISCONNECTED ||
+            this.connectionState ==
+                AuroraConstants.ConnectionStates.DISCONNECTED ||
             this.disconnectPending
         ) {
             return;
@@ -174,15 +177,19 @@ export class AuroraUsb extends EventEmitter {
 
         //check if we are in the process of connecting, or are processing a command
         if (
-            this.connectionState == UsbConnectionStates.CONNECTING ||
-            this.connectionState == UsbConnectionStates.CONNECTED_BUSY
+            this.connectionState ==
+                AuroraConstants.ConnectionStates.CONNECTING ||
+            this.connectionState == AuroraConstants.ConnectionStates.BUSY
         ) {
             //let's give the system a little time before we pull the plug
             await sleep(DISCONNECT_RETRY_DELAY_MS);
 
             //did it work
-            // @ts-ignore
-            if (this.connectionState == UsbConnectionStates.DISCONNECTED)
+            if (
+                // @ts-ignore
+                this.connectionState ==
+                AuroraConstants.ConnectionStates.DISCONNECTED
+            )
                 return;
 
             //no but we can't wait any longer...
@@ -192,19 +199,21 @@ export class AuroraUsb extends EventEmitter {
             .catch(console.log)
             .then(() => {
                 //in case disconnected event hasn't fired yet, we fire it here
-                this.setConnectionState(UsbConnectionStates.DISCONNECTED);
+                this.setConnectionState(
+                    AuroraConstants.ConnectionStates.DISCONNECTED
+                );
             });
     }
 
     public async writeCmd(cmd: string): Promise<void> {
         //check for error condition
-        if (this.connectionState != UsbConnectionStates.CONNECTED_IDLE) {
+        if (this.connectionState != AuroraConstants.ConnectionStates.IDLE) {
             switch (this.connectionState) {
-                case UsbConnectionStates.DISCONNECTED:
-                case UsbConnectionStates.CONNECTING:
+                case AuroraConstants.ConnectionStates.DISCONNECTED:
+                case AuroraConstants.ConnectionStates.CONNECTING:
                     return Promise.reject("No idle serial connection.");
 
-                case UsbConnectionStates.CONNECTED_BUSY:
+                case AuroraConstants.ConnectionStates.BUSY:
                     return Promise.reject(
                         "Another command is already in progress."
                     );
@@ -218,13 +227,16 @@ export class AuroraUsb extends EventEmitter {
             return Promise.reject("Serial port currently disconnecting.");
         }
 
-        this.setConnectionState(UsbConnectionStates.CONNECTED_BUSY);
+        this.setConnectionState(AuroraConstants.ConnectionStates.BUSY);
 
         return new Promise((resolve, reject) => {
             const onDisconnect = (
-                connectionState: UsbConnectionStates
+                connectionState: AuroraConstants.ConnectionStates
             ): void => {
-                if (connectionState == UsbConnectionStates.DISCONNECTED) {
+                if (
+                    connectionState ==
+                    AuroraConstants.ConnectionStates.DISCONNECTED
+                ) {
                     reject(
                         "Usb disconnected while processing command response."
                     );
@@ -235,9 +247,12 @@ export class AuroraUsb extends EventEmitter {
                 this.removeListener("connectionStateChange", onDisconnect);
 
                 if (
-                    this.connectionState == UsbConnectionStates.CONNECTED_BUSY
+                    this.connectionState ==
+                    AuroraConstants.ConnectionStates.BUSY
                 ) {
-                    this.setConnectionState(UsbConnectionStates.CONNECTED_IDLE);
+                    this.setConnectionState(
+                        AuroraConstants.ConnectionStates.IDLE
+                    );
                 }
 
                 cmdResponse.origin = "usb";
@@ -254,9 +269,12 @@ export class AuroraUsb extends EventEmitter {
                 this.removeListener("connectionStateChange", onDisconnect);
 
                 if (
-                    this.connectionState == UsbConnectionStates.CONNECTED_BUSY
+                    this.connectionState ==
+                    AuroraConstants.ConnectionStates.BUSY
                 ) {
-                    this.setConnectionState(UsbConnectionStates.CONNECTED_IDLE);
+                    this.setConnectionState(
+                        AuroraConstants.ConnectionStates.IDLE
+                    );
                 }
 
                 reject(error);
@@ -266,13 +284,13 @@ export class AuroraUsb extends EventEmitter {
 
     public async writeCmdInput(data: string): Promise<string> {
         //check for error condition
-        if (this.connectionState != UsbConnectionStates.CONNECTED_BUSY) {
+        if (this.connectionState != AuroraConstants.ConnectionStates.BUSY) {
             switch (this.connectionState) {
-                case UsbConnectionStates.DISCONNECTED:
-                case UsbConnectionStates.CONNECTING:
+                case AuroraConstants.ConnectionStates.DISCONNECTED:
+                case AuroraConstants.ConnectionStates.CONNECTING:
                     return Promise.reject("No idle serial connection.");
 
-                case UsbConnectionStates.CONNECTED_IDLE:
+                case AuroraConstants.ConnectionStates.IDLE:
                     return Promise.reject(
                         "Command input can only be written during a command."
                     );
@@ -296,7 +314,9 @@ export class AuroraUsb extends EventEmitter {
         return data;
     }
 
-    private setConnectionState(connectionState: UsbConnectionStates): void {
+    private setConnectionState(
+        connectionState: AuroraConstants.ConnectionStates
+    ): void {
         //don't fire or respond to events when the
         //state doesn't actually change
         if (this.connectionState == connectionState) {
@@ -307,15 +327,16 @@ export class AuroraUsb extends EventEmitter {
 
         this.connectionState = connectionState;
 
-        if (connectionState == UsbConnectionStates.DISCONNECTED) {
+        if (connectionState == AuroraConstants.ConnectionStates.DISCONNECTED) {
             this.disconnectPending = false;
 
             if (this.serialPort) {
                 this.serialPort.removeAllListeners();
             }
         } else if (
-            connectionState == UsbConnectionStates.CONNECTED_IDLE &&
-            previousConnectionState == UsbConnectionStates.CONNECTING
+            connectionState == AuroraConstants.ConnectionStates.IDLE &&
+            previousConnectionState ==
+                AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.serialParser.reset();
 
@@ -370,7 +391,7 @@ export class AuroraUsb extends EventEmitter {
     }
 
     private onSerialDisconnect = (): void => {
-        this.setConnectionState(UsbConnectionStates.DISCONNECTED);
+        this.setConnectionState(AuroraConstants.ConnectionStates.DISCONNECTED);
     };
 
     private onSerialData = (chunk: Buffer): void => {
