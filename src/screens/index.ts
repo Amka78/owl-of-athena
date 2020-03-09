@@ -9,6 +9,7 @@ import { LoginScreen } from "./LoginScreen";
 import { SignupScreen } from "./SignupScreen";
 import { WakingScreen } from "./WakingScreen";
 import { WelcomeScreen } from "./WelcomeScreen";
+import { MainScreen } from "./MainScreen";
 
 export {
     AccountScreen,
@@ -19,6 +20,7 @@ export {
     SettingsScreen,
     SleepingScreen,
     LoginScreen,
+    MainScreen,
     WakingScreen,
     WelcomeScreen,
     SignupScreen
