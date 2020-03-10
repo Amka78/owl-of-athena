@@ -1,5 +1,5 @@
-import { AuroraUsb, UsbConnectionStates } from "./AuroraUsb";
-import { AuroraBluetooth, BluetoothConnectionStates } from "./AuroraBluetooth";
+import { AuroraUsb } from "./AuroraUsb";
+import { AuroraBluetooth } from "./AuroraBluetooth";
 import DriveList from "drivelist";
 import ejectMedia from "eject-media";
 import * as AuroraConstants from "./AuroraConstants";
@@ -7,16 +7,16 @@ import EventEmitter from "events";
 import Stream from "stream";
 import { sleep, promisify, versionToString, stringToVersion } from "./util";
 //import usbDetect from "usb-detection";
-import { AuroraResponse, FirmwareInformation, CmdQueue } from "./AuroraTypes";
+import { AuroraResponse, CmdQueue } from "./AuroraTypes";
 import { AuroraEvent } from "../model/AuroraEvent";
 import { isDesktop } from "./Platform";
+import AuroraCmdPlayLedEffect from "./AuroraCmdPlayLedEffect";
+import { AuroraOSInfo } from "./models/AuroraOSInfo";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
 
-type AuroraInfo = {
-    version?: number;
-};
+type playLedEffectType = typeof AuroraCmdPlayLedEffect;
 class Aurora extends EventEmitter {
     private auroraUsb: AuroraUsb;
     private bluetooth: AuroraBluetooth;
@@ -24,7 +24,7 @@ class Aurora extends EventEmitter {
     private cmdCurrent?: CmdQueue;
     private msdDrive: boolean;
     private isFlashing: boolean;
-    private info: AuroraInfo;
+    private info?: AuroraOSInfo;
     private isAutoConnectUsb: boolean;
     private isAutoConnectBluetooth: boolean;
     private msdAttaching: boolean;
@@ -35,25 +35,52 @@ class Aurora extends EventEmitter {
 
         this.auroraUsb = new AuroraUsb();
         this.auroraUsb.on(
-            "connectionStateChange",
+            AuroraConstants.DeviceEventList.connectionStateChange,
             this.onUsbConnectionStateChange
         );
         this.auroraUsb.on("usbError", this.onAuroraError);
         this.auroraUsb.on("log", this.onAuroraLog);
-        this.auroraUsb.on("streamData", this.onAuroraStreamData);
-        this.auroraUsb.on("auroraEvent", this.onAuroraEvent);
-        this.auroraUsb.on("cmdInputRequested", this.onCmdInputRequested);
-        this.auroraUsb.on("cmdOutputReady", this.onCmdOutputReady);
+        this.auroraUsb.on(
+            AuroraConstants.DeviceEventList.streamData,
+            this.onAuroraStreamData
+        );
+        this.auroraUsb.on(
+            AuroraConstants.DeviceEventList.auroraEvent,
+            this.onAuroraEvent
+        );
+        this.auroraUsb.on(
+            AuroraConstants.DeviceEventList.cmdInputRequested,
+            this.onCmdInputRequested
+        );
+        this.auroraUsb.on(
+            AuroraConstants.DeviceEventList.cmdOutputReady,
+            this.onCmdOutputReady
+        );
         this.bluetooth = new AuroraBluetooth();
         this.bluetooth.on(
-            "connectionStateChange",
+            AuroraConstants.DeviceEventList.connectionStateChange,
             this.onBluetoothConnectionStateChange
         );
-        this.bluetooth.on("bluetoothError", this.onAuroraError);
-        this.bluetooth.on("streamData", this.onAuroraStreamData);
-        this.bluetooth.on("auroraEvent", this.onAuroraEvent);
-        this.bluetooth.on("cmdInputRequested", this.onCmdInputRequested);
-        this.bluetooth.on("cmdOutputReady", this.onCmdOutputReady);
+        this.bluetooth.on(
+            AuroraConstants.DeviceEventList.Error,
+            this.onAuroraError
+        );
+        this.bluetooth.on(
+            AuroraConstants.DeviceEventList.streamData,
+            this.onAuroraStreamData
+        );
+        this.bluetooth.on(
+            AuroraConstants.DeviceEventList.auroraEvent,
+            this.onAuroraEvent
+        );
+        this.bluetooth.on(
+            AuroraConstants.DeviceEventList.cmdInputRequested,
+            this.onCmdInputRequested
+        );
+        this.bluetooth.on(
+            AuroraConstants.DeviceEventList.cmdOutputReady,
+            this.onCmdOutputReady
+        );
 
         this.cmdQueue = [];
 
@@ -61,7 +88,7 @@ class Aurora extends EventEmitter {
         this.isAutoConnectBluetooth = false;
         this.msdDrive = false;
         this.isFlashing = false;
-        this.info = {};
+        this.info = undefined;
 
         //this scans for MSD disks that could potentially be the Aurora
         // @ts-ignore
@@ -137,7 +164,7 @@ class Aurora extends EventEmitter {
 
     public async connectBluetooth(
         timeoutMs = 20000
-    ): Promise<FirmwareInformation | never> {
+    ): Promise<AuroraOSInfo | never> {
         if (this.bluetooth.isConnected()) {
             return Promise.reject("Already connected over bluetooth.");
         }
@@ -154,9 +181,10 @@ class Aurora extends EventEmitter {
 
         return new Promise((resolve, reject) => {
             this.once("bluetoothConnectionChange", fwInfo => {
+                console.debug("aurora device found.");
                 if (!fwInfo) return reject();
 
-                resolve(fwInfo);
+                resolve(new AuroraOSInfo(fwInfo));
             });
 
             this.bluetooth.connect(timeoutMs).catch(reject);
@@ -291,7 +319,7 @@ class Aurora extends EventEmitter {
                 ? "ble-flash"
                 : "os-flash";
 
-        if (this.info.version! >= 20100) {
+        if (this.info!.version! >= 20100) {
             flashCmd += ` ${fwFile} /`;
 
             if (fwType == "bootloader-and-bootstrap") {
@@ -305,7 +333,7 @@ class Aurora extends EventEmitter {
             return new Promise((resolve, reject) => {
                 // eslint-disable-next-line prefer-const
                 let onFlashConnectionChange: (
-                    fwInfo: FirmwareInformation
+                    fwInfo: AuroraOSInfo
                 ) => void | undefined;
                 // eslint-disable-next-line prefer-const
                 let flashTimeout: NodeJS.Timeout | undefined;
@@ -344,9 +372,7 @@ class Aurora extends EventEmitter {
                     }
                 };
 
-                onFlashConnectionChange = (
-                    fwInfo: FirmwareInformation
-                ): void => {
+                onFlashConnectionChange = (fwInfo: AuroraOSInfo): void => {
                     if (fwInfo) {
                         finish();
 
@@ -387,7 +413,7 @@ class Aurora extends EventEmitter {
         connectorType = AuroraConstants.ConnectorTypes.ANY,
         onCmdBegin = undefined,
         onCmdEnd = undefined
-    ): Promise<unknown> {
+    ): Promise<void> {
         if (!this.getConnector(connectorType).isConnected()) {
             return Promise.reject(
                 `Not connected to Aurora over ${
@@ -441,7 +467,7 @@ class Aurora extends EventEmitter {
                     );
                 }
 
-                this.info = cmdWithResponse.response;
+                this.info = new AuroraOSInfo(cmdWithResponse.response);
 
                 return cmdWithResponse;
             });
@@ -571,6 +597,10 @@ class Aurora extends EventEmitter {
         }
     }
 
+    public get playLedEffect(): playLedEffectType {
+        return AuroraCmdPlayLedEffect;
+    }
+
     public async findMsdDrive(
         retryCount = 0,
         successOnFound = true
@@ -676,12 +706,13 @@ class Aurora extends EventEmitter {
     };
 
     private onUsbConnectionStateChange = (
-        connectionState: UsbConnectionStates,
-        previousConnectionState: UsbConnectionStates
+        connectionState: AuroraConstants.ConnectionStates,
+        previousConnectionState: AuroraConstants.ConnectionStates
     ): void => {
         if (
-            connectionState === UsbConnectionStates.CONNECTED_IDLE &&
-            previousConnectionState === UsbConnectionStates.CONNECTING
+            connectionState === AuroraConstants.ConnectionStates.IDLE &&
+            previousConnectionState ===
+                AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.getOsInfo(AuroraConstants.ConnectorTypes.USB)
                 //@ts-ignore
@@ -698,8 +729,9 @@ class Aurora extends EventEmitter {
                     this.disconnectUsb();
                 });
         } else if (
-            connectionState === UsbConnectionStates.DISCONNECTED &&
-            previousConnectionState !== UsbConnectionStates.CONNECTING
+            connectionState === AuroraConstants.ConnectionStates.DISCONNECTED &&
+            previousConnectionState !==
+                AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.emit(
                 this.isFlashing
@@ -711,12 +743,13 @@ class Aurora extends EventEmitter {
     };
 
     private onBluetoothConnectionStateChange = (
-        connectionState: BluetoothConnectionStates,
-        previousConnectionState: BluetoothConnectionStates
+        connectionState: AuroraConstants.ConnectionStates,
+        previousConnectionState: AuroraConstants.ConnectionStates
     ): void => {
         if (
-            connectionState === BluetoothConnectionStates.CONNECTED_IDLE &&
-            previousConnectionState === BluetoothConnectionStates.CONNECTING
+            connectionState === AuroraConstants.ConnectionStates.IDLE &&
+            previousConnectionState ===
+                AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.getOsInfo(AuroraConstants.ConnectorTypes.BLUETOOTH)
                 .then((cmd: any): void => {
@@ -732,8 +765,9 @@ class Aurora extends EventEmitter {
                     this.disconnectBluetooth();
                 });
         } else if (
-            connectionState === BluetoothConnectionStates.DISCONNECTED &&
-            previousConnectionState !== BluetoothConnectionStates.CONNECTING
+            connectionState === AuroraConstants.ConnectionStates.DISCONNECTED &&
+            previousConnectionState !==
+                AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.emit(
                 this.isFlashing
@@ -831,8 +865,7 @@ Object.defineProperty(Aurora.prototype, "downloadStream", {
 Object.defineProperty(Aurora.prototype, "playBuzzSong", {
     value: require("./AuroraCmdPlayBuzzSong")
 });
-Object.defineProperty(Aurora.prototype, "playLedEffect", {
+/*Object.defineProperty(Aurora.prototype, "playLedEffect", {
     value: require("./AuroraCmdPlayLedEffect")
-});
-
+});*/
 export default new Aurora();
