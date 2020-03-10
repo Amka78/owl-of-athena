@@ -8,7 +8,8 @@ import {
     BleAuroraService,
     BLE_CMD_MAX_PACKET_LENGTH,
     BleCmdStates,
-    ConnectionStates
+    ConnectionStates,
+    DeviceEventList
 } from "./AuroraConstants";
 import { AuroraCommand, BluetoothStream, AuroraEvent } from "./AuroraTypes";
 import noble from "noble";
@@ -335,7 +336,7 @@ export class AuroraBluetooth extends EventEmitter {
         //console.log(`${previousConnectionState} --> ${connectionState}`);
 
         this.emit(
-            AuroraBluetoothEventList.connectionStateChange,
+            DeviceEventList.connectionStateChange,
             connectionState,
             previousConnectionState
         );
@@ -572,26 +573,26 @@ export class AuroraBluetooth extends EventEmitter {
     };
 
     private onParseCmdInputRequested = (): void => {
-        this.emit(AuroraBluetoothEventList.cmdInputRequested);
+        this.emit(DeviceEventList.cmdInputRequested);
     };
 
     private onParseCmdOutputReady = (output: unknown): void => {
-        this.emit(AuroraBluetoothEventList.cmdOutputReady, output);
+        this.emit(DeviceEventList.cmdOutputReady, output);
     };
 
     private onParseAuroraEvent = (auroraEvent: AuroraEvent): void => {
         auroraEvent.origin = "bluetooth";
 
-        this.emit(AuroraBluetoothEventList.auroraEvent, auroraEvent);
+        this.emit(DeviceEventList.auroraEvent, auroraEvent);
     };
 
     private onParseStreamData = (streamData: BluetoothStream): void => {
         streamData.origin = "bluetooth";
 
-        this.emit(AuroraBluetoothEventList.streamData, streamData);
+        this.emit(DeviceEventList.streamData, streamData);
     };
 
     private onParseError = (error: string): void => {
-        this.emit(AuroraBluetoothEventList.Error, "Parse Error: " + error);
+        this.emit(DeviceEventList.Error, "Parse Error: " + error);
     };
 }
