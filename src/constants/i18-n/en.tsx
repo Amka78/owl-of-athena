@@ -84,7 +84,7 @@ export default {
     home_aurora_disconnected_dialog_title: "Aurora Not Connected",
     home_aurora_disconnected_dialog_message:
         "To connect, please shut down the Aurora if it is on, then turn it back on.",
-    home_go_to_sleep_loading_message: "Configuring Aurora&#8230;",
+    home_go_to_sleep_loading_message: "Configuring Aurora",
     home_go_to_sleep_error_message:
         "Failed configuring Aurora. Please reset the unit and try again.",
 

@@ -86,7 +86,7 @@ export default {
     home_aurora_disconnected_dialog_title: "Auroraが接続されていません。",
     home_aurora_disconnected_dialog_message:
         "接続してください、 もしAuroraの電源がオンの場合一旦オフにし, 起動してください。",
-    home_go_to_sleep_loading_message: "Aurora設定中&#8230;",
+    home_go_to_sleep_loading_message: "Aurora設定中",
     home_go_to_sleep_error_message:
         "Auroraの設定中です。 Aurora再起動し、再度実行してください。",
 
