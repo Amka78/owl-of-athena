@@ -6,6 +6,8 @@ import { promisifyStream } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 
 const AuroraCmdGetSessions = async function(
+    isFile = false,
+    filter?: string,
     connector: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
     const sessions = [];
@@ -13,7 +15,10 @@ const AuroraCmdGetSessions = async function(
 
     try {
         // @ts-ignore
-        dirReadCmd = await this.queueCmd("sd-dir-read sessions", connector);
+        dirReadCmd = await this.queueCmd(
+            `sd-dir-read sessions ${isFile ? 1 : 0} ${filter}`,
+            connector
+        );
     } catch (error) {
         return [];
     }
