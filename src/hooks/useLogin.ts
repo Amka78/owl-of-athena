@@ -5,16 +5,15 @@ import { useCallback, useState } from "react";
 import { useNavigation } from "react-navigation-hooks";
 
 import { TokenManager } from "../utils";
-import { useRestClientSelector } from "./useRestClientSelector";
 import { useDispatch } from "react-redux";
-import { Message, StorageKeys } from "../constants";
+import { Message, MessageKeys, StorageKeys } from "../constants";
+import { AuroraRestClientInstance } from "../clients";
 
 export const useLogin = (
     loadingInitialValue: boolean,
     login: Login
 ): { loading: boolean; onPress: () => Promise<void>; generalError: string } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useRestClientSelector();
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
@@ -22,7 +21,7 @@ export const useLogin = (
         setLoading(true);
         try {
             console.debug("useLogin start", login);
-            const result = await restClient.login(login);
+            const result = await AuroraRestClientInstance.login(login);
             console.debug("loggedin user", result);
 
             dispatch(loginAction(result.user));

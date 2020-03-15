@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { User } from "../types";
-import { useRestClientSelector } from "./useRestClientSelector";
-
+import { AuroraRestClientInstance } from "../clients";
 export const useUpdateUser = (
     loadingInitialValue: boolean,
     user: Partial<User>
@@ -11,13 +10,12 @@ export const useUpdateUser = (
     generalError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useRestClientSelector();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
         setLoading(true);
         try {
             if (validate(user, setGeneralError)) {
-                await restClient.updateUser(user as User);
+                await AuroraRestClientInstance.updateUser(user as User);
             }
         } catch (e) {
             if (e.message) {
@@ -25,7 +23,7 @@ export const useUpdateUser = (
             }
             setLoading(false);
         }
-    }, [user, restClient]);
+    }, [user]);
     return {
         loading,
         onPress,

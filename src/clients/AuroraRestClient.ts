@@ -1,6 +1,9 @@
 import { Auth, Login, CreateUser, User } from "../types";
 import RestClient from "./RestClient";
 
+import { BaseUrl, TokenManager } from "../utils";
+import * as Localization from "expo-localization";
+
 /**
  * Aurora Rest API
  *
@@ -82,3 +85,11 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 }
+const getToken = async (): Promise<string | undefined> => {
+    return TokenManager.get() ? TokenManager.get() : undefined;
+};
+export default new AuroraRestClient(
+    BaseUrl.get(),
+    Localization.locale,
+    getToken
+);

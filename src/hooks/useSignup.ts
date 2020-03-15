@@ -1,10 +1,9 @@
 import { useCallback, useState } from "react";
 import { useNavigation } from "react-navigation-hooks";
 
-import { Message } from "../constants";
+import { Message, MessageKeys } from "../constants";
 import { Signup } from "../types";
-import { useRestClientSelector } from "./useRestClientSelector";
-
+import { AuroraRestClientInstance } from "../clients/";
 export const useSignup = (
     loadingInitialValue: boolean,
     signup: Signup
@@ -17,7 +16,6 @@ export const useSignup = (
     passwordConfirmError: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const restClient = useRestClientSelector();
     const { navigate } = useNavigation();
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
@@ -35,18 +33,20 @@ export const useSignup = (
                     setGeneralError
                 )
             ) {
-                await restClient.signup(signup);
+                await AuroraRestClientInstance.signup(signup);
                 navigate("Login");
             }
         } catch (e) {
             if (e.message) {
                 setGeneralError(e.message);
             } else {
-                setGeneralError(Message.get("email_already_registered"));
+                setGeneralError(
+                    Message.get(MessageKeys.email_already_registered)
+                );
             }
             setLoading(false);
         }
-    }, [signup, restClient, navigate]);
+    }, [signup, navigate]);
     return {
         loading,
         onPress,

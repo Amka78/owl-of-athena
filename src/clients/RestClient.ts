@@ -85,13 +85,13 @@ export default class RestClient {
         return await this.fetch(route, "DELETE", query, true);
     }
 
-    private setTokenToHeader(token: string) {
+    private setTokenToHeader(token: string): void {
         Object.assign(this.headers, this.headers, {
             Authorization: `Bearer ${token}`
         });
     }
 
-    private createCommonHeader() {
+    private createCommonHeader(): void {
         this.headers = {
             Accept: "application/json",
             "Content-Type": "application/json"

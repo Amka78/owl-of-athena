@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { useRestClientSelector } from "../hooks/useRestClientSelector";
+import { AuroraRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
 
 import { updateUser } from "../actions";
@@ -16,10 +16,10 @@ import {
     TextBox
 } from "../components";
 import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
+import { MessageKeys } from "../constants";
 
 export const AccountScreen: FunctionComponent = () => {
     useCheckLogging();
-    const restClient = useRestClientSelector();
     const dispatch = useDispatch();
 
     const [firstName, setFirstName] = useState("");
@@ -34,7 +34,7 @@ export const AccountScreen: FunctionComponent = () => {
             if (!unmounted)
                 try {
                     console.debug("useGetUser useEffect start");
-                    const result = await restClient.getAuthUser();
+                    const result = await AuroraRestClientInstance.getAuthUser();
                     console.debug("authenticatedUser", result);
                     dispatch(updateUser(result));
                     setFirstName(result.first_name!);
@@ -50,7 +50,7 @@ export const AccountScreen: FunctionComponent = () => {
             unmounted = true;
         };
         return cleanup;
-    }, [dispatch, restClient]);
+    }, [dispatch]);
 
     const useLogoutHook = useLogout();
 

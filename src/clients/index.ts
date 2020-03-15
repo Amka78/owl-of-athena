@@ -1,3 +1,3 @@
-import { AuroraRestClient } from "./AuroraRestClient";
+import AuroraRestClientInstance, { AuroraRestClient } from "./AuroraRestClient";
 
-export { AuroraRestClient };
+export { AuroraRestClient, AuroraRestClientInstance };
