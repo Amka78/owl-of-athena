@@ -42,6 +42,7 @@
         "@typescript-eslint/camelcase": "off",
         "@typescript-eslint/ban-ts-ignore": "off",
         "@typescript-eslint/no-explicit-any": "off",
+        "react/display-name": [0, { "ignoreTranspilerName": true }],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
     },
