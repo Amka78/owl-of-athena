@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import {
     Colors,
@@ -21,7 +21,9 @@ export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = 
 ) => {
     return (
         <TouchableOpacity style={style.container} onPress={props.onPress}>
-            <Text style={style.label}>{Message.get(props.label)}</Text>
+            <Text style={style.label}>
+                {Message.get(props.label.key, props.label.restParam)}
+            </Text>
             <View style={style.optionContainer}>
                 <Text style={style.option}>{props.value}</Text>
                 <MaterialCommunityIcons

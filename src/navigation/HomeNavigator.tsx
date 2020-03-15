@@ -13,7 +13,7 @@ import {
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
-import { Colors, Message } from "../constants";
+import { Colors, Message, MessageKeys } from "../constants";
 import {
     AwakeScreen,
     HomeScreen,
@@ -31,21 +31,21 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "awake",
         screen: AwakeScreen,
         navigationOptions: {
-            headerTitle: Message.get("awake_title")
+            headerTitle: Message.get(MessageKeys.awake_title)
         }
     },
     Sleeping: {
         path: "sleeping",
         screen: SleepingScreen,
         navigationOptions: {
-            headerTitle: Message.get("sleeping_title")
+            headerTitle: Message.get(MessageKeys.sleeping_title)
         }
     },
     Settings: {
         path: "settings",
         screen: SettingsScreen,
         navigationOptions: {
-            headerTitle: Message.get("settings_title")
+            headerTitle: Message.get(MessageKeys.settings_title)
         }
     },
     Home: {
@@ -53,14 +53,14 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: HomeScreen,
         navigationOptions: {
             headerLeft: undefined,
-            headerTitle: Message.get("home_title")
+            headerTitle: Message.get(MessageKeys.home_title)
         }
     },
     Waking: {
         path: "waking",
         screen: WakingScreen,
         navigationOptions: {
-            headerTitle: Message.get("waking_title")
+            headerTitle: Message.get(MessageKeys.waking_title)
         }
     }
 };

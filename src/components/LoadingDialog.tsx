@@ -29,7 +29,10 @@ export const LoadingDialog: FunctionComponent<LoadingDialogProps> = (
                     fontFamily: Fonts.primarySemiBold
                 }}
             >
-                {Message.get(props.dialogTitle)}
+                {Message.get(
+                    props.dialogTitle.key,
+                    props.dialogTitle.restParam
+                )}
             </Dialog.Title>
             <Dialog.Content>
                 <ActivityIndicator></ActivityIndicator>

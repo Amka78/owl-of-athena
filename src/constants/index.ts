@@ -4,6 +4,7 @@ import Dimens from "./Dimens";
 import Fonts from "./Fonts";
 import Layout from "./Layout";
 import Message, { MessageLocalizationParam } from "./Message";
+import { MessageKeys } from "./MessageKeys";
 import StorageKeys from "./StorageKeys";
 
 export {
@@ -14,5 +15,6 @@ export {
     Layout,
     MessageLocalizationParam,
     Message,
+    MessageKeys,
     StorageKeys
 };

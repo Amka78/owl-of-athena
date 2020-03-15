@@ -66,40 +66,35 @@ function validate(
 ): boolean {
     if (signup.email === "") {
         setEmailError(
-            Message.get({
-                key: "required",
-                restParam: [{ value: "signup_input_email" }]
-            })
+            Message.get(MessageKeys.required, [MessageKeys.signup_input_email])
         );
 
         return false;
     }
     if (signup.password === "") {
         setPasswordError(
-            Message.get({
-                key: "required",
-                restParam: [{ value: "signup_input_password" }]
-            })
+            Message.get(MessageKeys.required, [
+                MessageKeys.signup_input_password
+            ])
         );
         return false;
     }
     if (signup.passwordConfirm === "") {
         setPasswordConfirmError(
-            Message.get({
-                key: "required",
-                restParam: [{ value: "signup_input_password_confirm" }]
-            })
+            Message.get(MessageKeys.required, [
+                MessageKeys.signup_input_password_confirm
+            ])
         );
         return false;
     }
 
     if (signup.password === signup.passwordConfirm) {
-        setPasswordConfirmError(Message.get("passwords_must_match"));
+        setPasswordConfirmError(Message.get(MessageKeys.passwords_must_match));
         return false;
     }
 
     if (signup.agreeToTerm === false) {
-        setGeneralError(Message.get("must_agree_to_term_of_use"));
+        setGeneralError(Message.get(MessageKeys.must_agree_to_term_of_use));
         return false;
     }
 

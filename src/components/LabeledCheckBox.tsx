@@ -11,7 +11,7 @@ import {
 } from "../constants";
 
 export type LabeledCheckBoxProps = {
-    label?: MessageLocalizationParam | string;
+    label?: MessageLocalizationParam;
     status: "checked" | "unchecked" | "indeterminate";
 };
 
@@ -20,7 +20,9 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
 ) => {
     return (
         <View style={style.container}>
-            <Text style={style.label}>{Message.get(props.label)}</Text>
+            <Text style={style.label}>
+                {Message.get(props.label!.key, props.label!.restParam)}
+            </Text>
             <View style={{ marginBottom: Dimens.option_margin_bottom }}>
                 <Checkbox
                     {...props}

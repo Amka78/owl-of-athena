@@ -17,7 +17,7 @@ export const ContentTitle: FunctionComponent<ContentTitleProps> = (
 ) => {
     return (
         <Text style={createTextStyle(props.style)}>
-            {Message.get(props.children)}
+            {Message.get(props.children.key, props.children.restParam)}
         </Text>
     );
 };
@@ -29,6 +29,6 @@ const textStyle: TextStyle = {
     marginTop: Dimens.content_title_margin_top,
     marginBottom: Dimens.content_title_margin_bottom
 };
-function createTextStyle(propsStyle?: TextStyle) {
+function createTextStyle(propsStyle?: TextStyle): TextStyle {
     return StyleSheet.flatten([propsStyle, textStyle]);
 }

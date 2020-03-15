@@ -9,22 +9,28 @@ import {
     TextBox
 } from "../components";
 import { useForgotPassword, useTextBox } from "../hooks";
-
+import { MessageKeys } from "../constants";
 export const ForgotPasswordScreen: FunctionComponent = () => {
     const emailHooks = useTextBox("");
     const forgotPassword = useForgotPassword(false, emailHooks.value);
     return (
         <StandardView>
-            <ContentTitle>{"forgot_password_title"}</ContentTitle>
-            <ContentText>{"forgot_password_text"}</ContentText>
+            <ContentTitle>
+                {{ key: MessageKeys.forgot_password_title }}
+            </ContentTitle>
+            <ContentText>
+                {{ key: MessageKeys.forgot_password_text }}
+            </ContentText>
             <TextBox
                 {...emailHooks}
-                label={"forgot_password_input_email"}
+                label={{ key: MessageKeys.forgot_password_input_email }}
                 keyboardType={"email-address"}
             ></TextBox>
 
-            <ErrorText>{forgotPassword.generalError}</ErrorText>
-            <Button {...forgotPassword}>{"forgot_password_button"}</Button>
+            <ErrorText>{{ key: forgotPassword.generalError }}</ErrorText>
+            <Button {...forgotPassword}>
+                {{ key: MessageKeys.forgot_password_button }}
+            </Button>
         </StandardView>
     );
 };

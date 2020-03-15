@@ -14,7 +14,7 @@ import {
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
-import { Dimens, Message, Colors } from "../constants";
+import { Dimens, Message, MessageKeys, Colors } from "../constants";
 import { SessionListScreen, SessionScreen } from "../screens";
 import { CommonStyles } from "../styles";
 
@@ -27,7 +27,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: SessionListScreen,
         navigationOptions: {
             headerLeft: undefined,
-            headerTitle: Message.get("session_list_title"),
+            headerTitle: Message.get(MessageKeys.session_list_title),
             headerTitleContainerStyle: {
                 ...CommonStyles.headerTitleContainerStyle,
                 marginLeft: Dimens.content_margin_horizontal
@@ -41,22 +41,17 @@ const routeConfigMap: NavigationRouteConfigMap<
 };
 
 const SessionNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: () =>
-        /*configProps: NavigationScreenConfigProps<
-            NavigationStackProp<NavigationRoute<NavigationParams>>
-        >*/
-        {
-            return {
-                headerLeft: (props: HeaderBackButtonProps) => (
-                    <HeaderBackButton {...props} />
-                ),
-                headerTintColor: Colors.cyan,
-                headerStyle: CommonStyles.headerStyle,
-                headerTitleContainerStyle:
-                    CommonStyles.headerTitleContainerStyle,
-                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
-            };
-        },
+    defaultNavigationOptions: () => {
+        return {
+            headerLeft: (props: HeaderBackButtonProps): JSX.Element => (
+                <HeaderBackButton {...props} />
+            ),
+            headerTintColor: Colors.cyan,
+            headerStyle: CommonStyles.headerStyle,
+            headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle,
+            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+        };
+    },
     headerMode: Platform.OS === "web" ? "screen" : "float",
     initialRouteName: "List"
 });

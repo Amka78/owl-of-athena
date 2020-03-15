@@ -37,7 +37,7 @@ export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
             labelStyle={labelStyle}
             style={containerStyle}
         >
-            {Message.get(props.children)}
+            {Message.get(props.children.key, props.children.restParam)}
         </PaperButton>
     );
 };

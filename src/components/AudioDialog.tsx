@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import { View } from "react-native";
-import { Message, Colors, Fonts } from "../constants";
+import { Message, MessageKeys, Colors, Fonts } from "../constants";
 
 import { Dialog, RadioButton } from "react-native-paper";
 import { LabeledRadioButton } from "./LabeledRadioButton";
@@ -47,7 +47,7 @@ export const AudioDialog: FunctionComponent<AudioDialogProps> = (
                     fontFamily: Fonts.primarySemiBold
                 }}
             >
-                {Message.get("alarm_sound_dialog_title")}
+                {Message.get(MessageKeys.alarm_sound_dialog_title)}
             </Dialog.Title>
             <Dialog.Content>
                 <RadioButton.Group
@@ -68,7 +68,7 @@ export const AudioDialog: FunctionComponent<AudioDialogProps> = (
                                 <LabeledRadioButton
                                     key={index}
                                     value={value.showName}
-                                    label={value.showName}
+                                    label={{ key: value.showName }}
                                     onLabelPress={async (): Promise<void> => {
                                         await stopSound(sound);
 
@@ -93,10 +93,10 @@ export const AudioDialog: FunctionComponent<AudioDialogProps> = (
                         props.onDissmiss();
                     }}
                 >
-                    {"cancel"}
+                    {{ key: MessageKeys.cancel }}
                 </FlatButton>
                 <FlatButton labelStyle={{ color: Colors.cyan }}>
-                    {"save"}
+                    {{ key: MessageKeys.save }}
                 </FlatButton>
             </Dialog.Actions>
         </Dialog>

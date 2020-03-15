@@ -1,9 +1,19 @@
 import React, { FunctionComponent } from "react";
 import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
-import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
+import {
+    Dimens,
+    Fonts,
+    Message,
+    Layout,
+    Colors,
+    MessageLocalizationParam
+} from "../constants";
 
-export type TextBoxProps = TextInputProps & { label?: string };
+export type TextBoxProps = TextInputProps & {
+    label?: MessageLocalizationParam;
+    localizedPlaceholder?: MessageLocalizationParam;
+};
 
 const textInputStyle = {
     backgroundColor: "transparent",
@@ -22,9 +32,18 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
             style={textInputStyle}
             underlineColor={Colors.white}
             placeholder={
-                props.placeholder ? Message.get(props.placeholder) : undefined
+                props.localizedPlaceholder
+                    ? Message.get(
+                          props.localizedPlaceholder!.key,
+                          props.localizedPlaceholder!.restParam
+                      )
+                    : props.placeholder
             }
-            label={props.label ? Message.get(props.label) : undefined}
+            label={
+                props.label
+                    ? Message.get(props.label.key, props.label.restParam)
+                    : undefined
+            }
             theme={{
                 colors: {
                     text: Colors.cyan,

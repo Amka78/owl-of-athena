@@ -31,7 +31,7 @@ export const useLogin = (
             await TokenManager.set(result.token);
 
             if (result.user.providers.email.activation_expires_at) {
-                throw new Error(Message.get("account_not_activated"));
+                throw new Error(Message.get(MessageKeys.account_not_activated));
             }
             navigate("Main");
         } catch (e) {
@@ -39,10 +39,12 @@ export const useLogin = (
             if (e.message) {
                 setGeneralError(e.message);
             } else {
-                setGeneralError(Message.get("login_general_error_message"));
+                setGeneralError(
+                    Message.get(MessageKeys.login_general_error_message)
+                );
             }
             setLoading(false);
         }
-    }, [dispatch, login, navigate, restClient]);
+    }, [dispatch, login, navigate]);
     return { loading, onPress, generalError };
 };

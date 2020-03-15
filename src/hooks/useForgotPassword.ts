@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import { Message } from "../constants";
+import { Message, MessageKeys } from "../constants";
 
 export const useForgotPassword = (
     loadingInitialValue: boolean,
@@ -15,7 +15,7 @@ export const useForgotPassword = (
             console.debug("called forgotPasswordOnPress:", emailAddress);
             throw new Error();
         } catch (e) {
-            setGeneralError(Message.get("wip_dialog_message"));
+            setGeneralError(Message.get(MessageKeys.wip_dialog_message));
         }
 
         setLoading(false);

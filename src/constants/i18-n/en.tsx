@@ -1,3 +1,4 @@
+import { MessageKeys } from "../MessageKeys";
 const login = "Log In";
 const signup = "Sign Up";
 const input_email = "EMAIL ADDRESS";
@@ -8,144 +9,152 @@ const input_first_name = "FIRST NAME";
 const input_last_name = "LAST NAME";
 const input_birthday = "BIRTHDAY";
 const update = "Update";
+
 export default {
-    app_name: "Aurora",
-    save: "SAVE",
-    cancel: "CANCEL",
-    signup: signup,
-    login: login,
+    [MessageKeys.app_name]: "Aurora",
+    [MessageKeys.save]: "SAVE",
+    [MessageKeys.cancel]: "CANCEL",
+    [MessageKeys.signup]: signup,
+    [MessageKeys.login]: login,
     male: "Male",
-    female: "Female",
-    update: update,
-    sessions: sessions,
-    long_dash: "\u2014",
-    pipe_separator: " | ",
+    [MessageKeys.female]: "Female",
+    [MessageKeys.update]: update,
+    [MessageKeys.sessions]: sessions,
+    [MessageKeys.long_dash]: "\u2014",
+    [MessageKeys.pipe_separator]: " | ",
     // sleep stages
-    stage_awake: "Awake",
-    stage_rem: "REM",
-    stage_light: "Light Sleep",
-    stage_deep: "Deep Sleep",
+    [MessageKeys.stage_awake]: "Awake",
+    [MessageKeys.stage_rem]: "REM",
+    [MessageKeys.stage_light]: "Light Sleep",
+    [MessageKeys.stage_deep]: "Deep Sleep",
     // form strings - uppercase since you can't style the hint/label separately
-    input_first_name: input_first_name,
-    input_last_name: input_last_name,
-    input_email: input_email,
-    input_password: input_password,
-    input_password_confirm: input_password_confirm,
-    input_birthday: input_birthday,
+    [MessageKeys.input_first_name]: input_first_name,
+    [MessageKeys.input_last_name]: input_last_name,
+    [MessageKeys.input_email]: input_email,
+    [MessageKeys.input_password]: input_password,
+    [MessageKeys.input_password_confirm]: input_password_confirm,
+    [MessageKeys.input_birthday]: input_birthday,
     // aurora strings
-    aurora_connected: "Aurora connected.",
-    aurora_disconnected: "Aurora disconnected.",
-    aurora_unsynced_sessions_dialog_title: "Unsynced Sessions Found",
-    aurora_unsynced_sessions_dialog_message:
-        "Aurora has %1$d unsynced session(s). Would you like to sync now?",
-    aurora_low_battery_dialog_title: "Aurora Battery is Low",
-    aurora_low_battery_dialog_message:
-        "Aurora's battery is at %1$d%%. To ensure the Aurora remains connected through the night, consider charging the battery before continuing.",
-    aurora_sync_successful_snackbar_message:
-        "Successfully synced %1$d session(s).",
-    aurora_sync_successful_snackbar_action: "View Now",
+    [MessageKeys.aurora_connected]: "Aurora connected.",
+    [MessageKeys.aurora_disconnected]: "Aurora disconnected.",
+    [MessageKeys.aurora_unsynced_sessions_dialog_title]:
+        "Unsynced Sessions Found",
+    [MessageKeys.aurora_unsynced_sessions_dialog_message]:
+        "Aurora has {0} unsynced session(s). Would you like to sync now?",
+    [MessageKeys.aurora_low_battery_dialog_title]: "Aurora Battery is Low",
+    [MessageKeys.aurora_low_battery_dialog_message]:
+        "Aurora's battery is at {0}%. To ensure the Aurora remains connected through the night, consider charging the battery before continuing.",
+    [MessageKeys.aurora_sync_successful_snackbar_message]:
+        "Successfully synced {0} session(s).",
+    [MessageKeys.aurora_sync_successful_snackbar_action]: "View Now",
     // welcome fragment
-    welcome_title: "Welcome to Aurora!",
-    welcome_text:
+    [MessageKeys.welcome_title]: "Welcome to Aurora!",
+    [MessageKeys.welcome_text]:
         "Aurora’s advanced software will help you improve dream recall, achieve sounder sleep,and accelerate your journey towards maximizing your potential. Sweet dreams!",
-    welcome_login_button: login,
-    welcome_signup_button: signup,
+    [MessageKeys.welcome_login_button]: login,
+    [MessageKeys.welcome_signup_button]: signup,
     // login fragment
-    login_title: login,
-    login_input_email: input_email,
-    login_input_password: input_password,
-    login_forgot_password_button: "Forgot password?",
-    login_no_account_button: "No account yet?",
-    login_button: login,
-    login_loading_message: "Logging in...",
-    login_general_error_message: "Login failed. Invalid email or password.",
+    [MessageKeys.login_title]: login,
+    [MessageKeys.login_input_email]: input_email,
+    [MessageKeys.login_input_password]: input_password,
+    [MessageKeys.login_forgot_password_button]: "Forgot password?",
+    [MessageKeys.login_no_account_button]: "No account yet?",
+    [MessageKeys.login_button]: login,
+    [MessageKeys.login_loading_message]: "Logging in...",
+    [MessageKeys.login_general_error_message]:
+        "Login failed. Invalid email or password.",
 
     // forgot-password fragment
-    forgot_password_title: "Forgot Password?",
-    forgot_password_text:
+    [MessageKeys.forgot_password_title]: "Forgot Password?",
+    [MessageKeys.forgot_password_text]:
         "Having trouble remembering your password? Input your email address below and we’ll send you instructions to reset it.",
-    forgot_password_input_email: input_email,
-    forgot_password_button: "Request Reset",
+    [MessageKeys.forgot_password_input_email]: input_email,
+    [MessageKeys.forgot_password_button]: "Request Reset",
 
     // signup fragment
-    signup_title: signup,
-    signup_input_email: input_email,
-    signup_input_password: input_password,
-    signup_input_password_confirm: input_password_confirm,
-    signup_terms: "I agree to the terms of use",
-    signup_newsletter: "Keep me updated with Aurora news and developments",
-    signup_button: signup,
+    [MessageKeys.signup_title]: signup,
+    [MessageKeys.signup_input_email]: input_email,
+    [MessageKeys.signup_input_password]: input_password,
+    [MessageKeys.signup_input_password_confirm]: input_password_confirm,
+    [MessageKeys.signup_terms]: "I agree to the terms of use",
+    [MessageKeys.signup_newsletter]:
+        "Keep me updated with Aurora news and developments",
+    [MessageKeys.signup_button]: signup,
 
     // home fragment
-    home_default_profile: "Default Profile",
-    home_title: "Home",
-    home_edit_alarm_button: "Edit Alarm",
-    home_go_to_sleep_button: "Go To Sleep",
-    home_aurora_disconnected_dialog_title: "Aurora Not Connected",
-    home_aurora_disconnected_dialog_message:
+    [MessageKeys.home_default_profile]: "Default Profile",
+    [MessageKeys.home_title]: "Home",
+    [MessageKeys.home_edit_alarm_button]: "Edit Alarm",
+    [MessageKeys.home_go_to_sleep_button]: "Go To Sleep",
+    [MessageKeys.home_aurora_disconnected_dialog_title]: "Aurora Not Connected",
+    [MessageKeys.home_aurora_disconnected_dialog_message]:
         "To connect, please shut down the Aurora if it is on, then turn it back on.",
-    home_go_to_sleep_loading_message: "Configuring Aurora",
-    home_go_to_sleep_error_message:
+    [MessageKeys.home_go_to_sleep_loading_message]: "Configuring Aurora...",
+    [MessageKeys.home_go_to_sleep_error_message]:
         "Failed configuring Aurora. Please reset the unit and try again.",
 
     // settings fragment
-    settings_title: "Edit Alarm",
-    settings_option_profile: "Profile",
-    settings_option_smart_alarm: "Smart Alarm",
-    settings_option_rem_stim: "REM Stim",
-    settings_option_dsl: "Dawn Simulating Light",
-    settings_option_alarm_audio: "Alarm Sound",
-    settings_option_rem_stim_audio: "REM Stim Sound",
-    settings_option_no_audio_selected: "None",
+    [MessageKeys.settings_title]: "Edit Alarm",
+    [MessageKeys.settings_option_profile]: "Profile",
+    [MessageKeys.settings_option_smart_alarm]: "Smart Alarm",
+    [MessageKeys.settings_option_rem_stim]: "REM Stim",
+    [MessageKeys.settings_option_dsl]: "Dawn Simulating Light",
+    [MessageKeys.settings_option_alarm_audio]: "Alarm Sound",
+    [MessageKeys.settings_option_rem_stim_audio]: "REM Stim Sound",
+    [MessageKeys.settings_option_no_audio_selected]: "None",
     // sessions fragment
-    sessions_title: sessions,
-    sessions_toolbar_button_left: "Prev",
-    sessions_toolbar_button_right: "Next",
+    [MessageKeys.sessions_title]: sessions,
+    [MessageKeys.sessions_toolbar_button_left]: "Prev",
+    [MessageKeys.sessions_toolbar_button_right]: "Next",
     // session picker fragment
-    session_list_title: "Choose a session",
+    [MessageKeys.session_list_title]: "Choose a session",
     // session fragment
-    session_asleep_time_label: "asleep at",
-    session_awake_time_label: "awake at",
-    session_sleep_score_label: "sleep score",
-    session_sleep_duration_label: "sleep time",
-    session_rem_duration_label: "REM time",
-    session_deep_duration_label: "deep time",
-    session_movement_label: "Movement",
-    session_notes_label: "Notes",
-    session_notes_hint_text: "tap to add a note",
+    [MessageKeys.session_asleep_time_label]: "asleep at",
+    [MessageKeys.session_awake_time_label]: "awake at",
+    [MessageKeys.session_sleep_score_label]: "sleep score",
+    [MessageKeys.session_sleep_duration_label]: "sleep time",
+    [MessageKeys.session_rem_duration_label]: "REM time",
+    [MessageKeys.session_deep_duration_label]: "deep time",
+    [MessageKeys.session_movement_label]: "Movement",
+    [MessageKeys.session_notes_label]: "Notes",
+    [MessageKeys.session_notes_hint_text]: "tap to add a note",
 
     // account fragment
-    account_title: "Account",
-    account_input_first_name: input_first_name,
-    account_input_last_name: input_last_name,
-    account_input_birthday: input_birthday,
-    account_button: update,
-    account_signout: "Sign Out",
-    account_loading_message: "Saving...",
-    account_success_message: "Account saved successfully.",
+    [MessageKeys.account_title]: "Account",
+    [MessageKeys.account_input_first_name]: input_first_name,
+    [MessageKeys.account_input_last_name]: input_last_name,
+    [MessageKeys.account_input_birthday]: input_birthday,
+    [MessageKeys.account_button]: update,
+    [MessageKeys.account_signout]: "Sign Out",
+    [MessageKeys.account_loading_message]: "Saving...",
+    [MessageKeys.account_success_message]: "Account saved successfully.",
     // sleeping fragment
-    sleeping_title: "Sweet dreams...",
-    sleeping_wakeup_button: "Wake Up",
+    [MessageKeys.sleeping_title]: "Sweet dreams...",
+    [MessageKeys.sleeping_wakeup_button]: "Wake Up",
     // waking fragment
-    waking_title: "Time to wake up!",
-    waking_wakeup_button: "Wake Up",
-    waking_tip_text: "Tip: You can use the Aurora’s button to stop the alarm.",
+    [MessageKeys.waking_title]: "Time to wake up!",
+    [MessageKeys.waking_wakeup_button]: "Wake Up",
+    [MessageKeys.waking_tip_text]:
+        "Tip: You can use the Aurora’s button to stop the alarm.",
     // awake fragment
-    awake_title: "Good Morning!",
-    awake_text: "Please answer a few questions about last night’s sleep.",
-    awake_questionnaire_continue_button: "Continue",
-    awake_questionnaire_skip_button: "Skip",
-    wip_dialog_title: "Work in Progress",
-    wip_dialog_message: "Oops, this feature isn't quite ready for prime time.",
-    account_not_activated: "Account not activated.",
+    [MessageKeys.awake_title]: "Good Morning!",
+    [MessageKeys.awake_text]:
+        "Please answer a few questions about last night’s sleep.",
+    [MessageKeys.awake_questionnaire_continue_button]: "Continue",
+    [MessageKeys.awake_questionnaire_skip_button]: "Skip",
+    [MessageKeys.wip_dialog_title]: "Work in Progress",
+    [MessageKeys.wip_dialog_message]:
+        "Oops, this feature isn't quite ready for prime time.",
+    [MessageKeys.account_not_activated]: "Account not activated.",
 
     // error required
-    required: "{0} field is required.",
-    passwords_must_match: "Passwords must match.",
-    must_agree_to_term_of_use:
+    [MessageKeys.required]: "{0} field is required.",
+    [MessageKeys.passwords_must_match]: "Passwords must match.",
+    [MessageKeys.must_agree_to_term_of_use]:
         "You must agree to the terms of use to continue.",
-    email_already_registered: "This email has already been registered.",
+    [MessageKeys.email_already_registered]:
+        "This email has already been registered.",
 
     // alarm sound menu
-    alarm_sound_dialog_title: "Choose a sound"
+    [MessageKeys.alarm_sound_dialog_title]: "Choose a sound"
 };

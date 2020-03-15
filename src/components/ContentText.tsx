@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Text, StyleSheet, TextStyle } from "react-native";
+import { Text, TextStyle } from "react-native";
 import {
     MessageLocalizationParam,
     Message,
@@ -17,7 +17,7 @@ export const ContentText: FunctionComponent<ContentTextProps> = (
 ) => {
     return (
         <Text style={[textStyle, props.style]}>
-            {Message.get(props.children)}
+            {Message.get(props.children.key, props.children.restParam)}
         </Text>
     );
 };

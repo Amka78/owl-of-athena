@@ -11,6 +11,7 @@ import {
     TextBox
 } from "../components";
 import { useLogin, useTextBox } from "../hooks";
+import { MessageKeys } from "../constants";
 
 export const LoginScreen: FunctionComponent = () => {
     const emailHooks = useTextBox("");
@@ -22,36 +23,36 @@ export const LoginScreen: FunctionComponent = () => {
     });
     return (
         <StandardView>
-            <ContentTitle>{"login_title"}</ContentTitle>
+            <ContentTitle>{{ key: MessageKeys.login_title }}</ContentTitle>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...emailHooks}
-                    label={"login_input_email"}
+                    label={{ key: MessageKeys.login_input_email }}
                     keyboardType={"email-address"}
                 ></TextBox>
             </View>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...passwordHooks}
-                    label={"login_input_password"}
+                    label={{ key: MessageKeys.login_input_password }}
                     secureTextEntry={true}
                 ></TextBox>
             </View>
-            <ErrorText>{login.generalError}</ErrorText>
-            <Button {...login}>{"login_button"}</Button>
+            <ErrorText>{{ key: login.generalError }}</ErrorText>
+            <Button {...login}>{{ key: MessageKeys.login_button }}</Button>
             <FlatButton
                 onPress={(): void => {
                     navigate("ForgotPassword");
                 }}
             >
-                {"login_forgot_password_button"}
+                {{ key: MessageKeys.login_forgot_password_button }}
             </FlatButton>
             <FlatButton
                 onPress={(): void => {
                     navigate("Signup");
                 }}
             >
-                {"login_no_account_button"}
+                {{ key: MessageKeys.login_no_account_button }}
             </FlatButton>
         </StandardView>
     );

@@ -36,7 +36,9 @@ export const HomeScreen: FunctionComponent = () => {
             >
                 <View>
                     <AlarmView></AlarmView>
-                    <FlatButton>{"home_edit_alarm_button"}</FlatButton>
+                    <FlatButton>
+                        {{ key: MessageKeys.home_edit_alarm_button }}
+                    </FlatButton>
                 </View>
             </TouchableWithoutFeedback>
             <FlatButton
@@ -44,44 +46,19 @@ export const HomeScreen: FunctionComponent = () => {
                     navigate("Settings");
                 }}
             >
-                {"home_default_profile"}
+                {{ key: MessageKeys.home_default_profile }}
             </FlatButton>
-            <FlatButton
-                onPress={async () => {
-                    console.debug("connect bluetooth start.");
-
-                    try {
-                        const result = await auroraDevice.connectBluetooth(
-                            200000000
-                        );
-
-                        auroraDevice.isBluetoothConnected
-                            ? setConnect(true)
-                            : setConnect(false);
-                    } catch (e) {
-                        console.debug(e);
-                        setErrorText(e);
-                        setIsBluetoothSupport(false);
-                    }
-                }}
-                multiLingual={false}
-            >
-                {`Connected Status: ${
-                    isBluetoothSupport
-                        ? connect
-                            ? "Connected"
-                            : "Disconnected"
-                        : "Browser that does not support Bluetooth."
-                }`}
-            </FlatButton>
-            <ErrorText>{errorText}</ErrorText>
-            <Button
-                onPress={(): void => {
-                    navigate("Sleeping");
-                }}
-            >
-                {"home_go_to_sleep_button"}
-            </Button>
+            <View style={{ alignItems: "center" }}>
+                <ErrorText>{{ key: errorText }}</ErrorText>
+                <Button
+                    disabled={!AuroraManagerInstance.isConnected}
+                    onPress={(): void => {
+                        navigate("Sleeping");
+                    }}
+                >
+                    {{ key: MessageKeys.home_go_to_sleep_button }}
+                </Button>
+            </View>
         </StandardView>
     );
 };

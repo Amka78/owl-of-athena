@@ -14,7 +14,7 @@ import {
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
-import { Dimens, Message, Colors } from "../constants";
+import { Dimens, Message, MessageKeys, Colors } from "../constants";
 import { AccountScreen } from "../screens";
 import { CommonStyles } from "../styles";
 
@@ -27,7 +27,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: AccountScreen,
         navigationOptions: {
             headerLeft: undefined,
-            headerTitle: Message.get("account_title"),
+            headerTitle: Message.get(MessageKeys.account_title),
             headerTitleContainerStyle: {
                 ...CommonStyles.headerTitleContainerStyle,
                 marginLeft: Dimens.content_margin_horizontal
@@ -37,22 +37,17 @@ const routeConfigMap: NavigationRouteConfigMap<
 };
 
 const SettingNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: () =>
-        /*configProps: NavigationScreenConfigProps<
-            NavigationStackProp<NavigationRoute<NavigationParams>>
-        >*/
-        {
-            return {
-                headerLeft: (props: HeaderBackButtonProps) => (
-                    <HeaderBackButton {...props} />
-                ),
-                headerStyle: CommonStyles.headerStyle,
-                headerTintColor: Colors.cyan,
-                headerTitleContainerStyle:
-                    CommonStyles.headerTitleContainerStyle,
-                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
-            };
-        },
+    defaultNavigationOptions: () => {
+        return {
+            headerLeft: (props: HeaderBackButtonProps): JSX.Element => (
+                <HeaderBackButton {...props} />
+            ),
+            headerStyle: CommonStyles.headerStyle,
+            headerTintColor: Colors.cyan,
+            headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle,
+            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+        };
+    },
     headerMode: Platform.OS === "web" ? "screen" : "float",
     initialRouteName: "Account"
 });

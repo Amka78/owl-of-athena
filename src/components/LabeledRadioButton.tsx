@@ -5,7 +5,7 @@ import { Colors, Message, MessageLocalizationParam } from "../constants";
 
 type LabeledRadioButtonProps = {
     value: string;
-    label: MessageLocalizationParam | string;
+    label: MessageLocalizationParam;
     onLabelPress?: () => void;
 };
 export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
@@ -28,7 +28,7 @@ export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
             <Text style={{ color: Colors.white }} onPress={props.onLabelPress}>
                 {typeof props.label === "string"
                     ? props.label
-                    : Message.get(props.label)}
+                    : Message.get(props.label!.key, props.label!.restParam)}
             </Text>
         </View>
     );

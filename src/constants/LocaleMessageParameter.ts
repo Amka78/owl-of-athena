@@ -1,10 +1,9 @@
-export interface IMessageRestParameter {
-    isKey?: boolean;
-
-    value: string;
-}
+import { MessageKeys } from "./Message";
 
 export default class LocaleMessageParameter {
-    public key?: string;
-    public restParam?: IMessageRestParameter[];
+    constructor() {
+        this.key = "";
+    }
+    public key: MessageKeys;
+    public restParam?: MessageKeys[];
 }

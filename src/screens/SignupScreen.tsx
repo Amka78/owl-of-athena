@@ -9,7 +9,7 @@ import {
     StandardView,
     TextBox
 } from "../components";
-import { Colors, Message } from "../constants";
+import { Colors, Message, MessageKeys } from "../constants";
 import { useCheckBox, useSignup, useTextBox } from "../hooks";
 
 export const SignupScreen: FunctionComponent = () => {
@@ -25,25 +25,25 @@ export const SignupScreen: FunctionComponent = () => {
     });
     return (
         <StandardView>
-            <ContentTitle>{"signup_title"}</ContentTitle>
+            <ContentTitle>{{ key: MessageKeys.signup_title }}</ContentTitle>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...emailHooks}
-                    label={"signup_input_email"}
+                    label={{ key: MessageKeys.signup_input_email }}
                     keyboardType={"email-address"}
                 ></TextBox>
             </View>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...passwordHooks}
-                    label={"signup_input_password"}
+                    label={{ key: MessageKeys.signup_input_password }}
                     secureTextEntry={true}
                 ></TextBox>
             </View>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...passwordConfirmHooks}
-                    label={"signup_input_password_confirm"}
+                    label={{ key: MessageKeys.signup_input_password_confirm }}
                     secureTextEntry={true}
                 ></TextBox>
             </View>
@@ -58,17 +58,17 @@ export const SignupScreen: FunctionComponent = () => {
                 <CheckBox {...checkBoxHooks}></CheckBox>
                 <Text
                     style={{ color: Colors.cyan }}
-                    onPress={() => {
+                    onPress={(): void => {
                         Linking.openURL(
                             "https://sleepwithaurora.com/shop/order-terms"
                         );
                     }}
                 >
-                    {Message.get("signup_terms")}
+                    {Message.get(MessageKeys.signup_terms)}
                 </Text>
             </View>
-            <ErrorText>{signup.generalError}</ErrorText>
-            <Button {...signup}>{"signup_button"}</Button>
+            <ErrorText>{{ key: signup.generalError }}</ErrorText>
+            <Button {...signup}>{{ key: MessageKeys.signup_button }}</Button>
         </StandardView>
     );
 };

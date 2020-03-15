@@ -7,7 +7,7 @@ import {
     LabeledSelectorMenu,
     LabeledCheckBox
 } from "../components";
-import { Colors } from "../constants";
+import { Colors, MessageKeys } from "../constants";
 import { useCheckLogging } from "../hooks";
 export const SettingsScreen: FunctionComponent = () => {
     useCheckLogging();
@@ -30,30 +30,30 @@ export const SettingsScreen: FunctionComponent = () => {
             <View>
                 <LabeledSelectorMenu
                     value={"None"}
-                    label={"settings_option_alarm_audio"}
+                    label={{ key: MessageKeys.settings_option_alarm_audio }}
                     onPress={(): void => {
                         setShowAlarmSoundDialog(true);
                     }}
                 ></LabeledSelectorMenu>
                 <LabeledSelectorMenu
                     value={"My Default Profile"}
-                    label={"settings_option_profile"}
+                    label={{ key: MessageKeys.settings_option_profile }}
                 ></LabeledSelectorMenu>
                 <LabeledCheckBox
                     status={"unchecked"}
-                    label={"settings_option_smart_alarm"}
+                    label={{ key: MessageKeys.settings_option_smart_alarm }}
                 ></LabeledCheckBox>
                 <LabeledCheckBox
                     status={"unchecked"}
-                    label={"settings_option_dsl"}
+                    label={{ key: MessageKeys.settings_option_dsl }}
                 ></LabeledCheckBox>
                 <LabeledCheckBox
                     status={"unchecked"}
-                    label={"settings_option_rem_stim"}
+                    label={{ key: MessageKeys.settings_option_rem_stim }}
                 ></LabeledCheckBox>
                 <LabeledSelectorMenu
                     value={"None"}
-                    label={"settings_option_rem_stim_audio"}
+                    label={{ key: MessageKeys.settings_option_rem_stim_audio }}
                     onPress={(): void => {
                         setShowAlarmSoundDialog(true);
                     }}

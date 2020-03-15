@@ -9,12 +9,13 @@ import {
 } from "../components";
 import { useNavigation } from "react-navigation-hooks";
 import { useCheckLogging } from "../hooks";
+import { MessageKeys } from "../constants";
 export const WakingScreen: FunctionComponent = () => {
     useCheckLogging();
     const { navigate } = useNavigation();
     return (
         <StandardView>
-            <ContentTitle>{"waking_title"}</ContentTitle>
+            <ContentTitle>{{ key: MessageKeys.waking_title }}</ContentTitle>
             <AlarmView></AlarmView>
             <View style={{ alignItems: "center" }}>
                 <Button
@@ -22,9 +23,11 @@ export const WakingScreen: FunctionComponent = () => {
                         navigate("Awake");
                     }}
                 >
-                    {"waking_wakeup_button"}
+                    {{ key: MessageKeys.waking_wakeup_button }}
                 </Button>
-                <ContentText>{"waking_tip_text"}</ContentText>
+                <ContentText>
+                    {{ key: MessageKeys.waking_tip_text }}
+                </ContentText>
             </View>
         </StandardView>
     );

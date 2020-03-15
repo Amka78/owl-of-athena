@@ -69,7 +69,7 @@ export const AccountScreen: FunctionComponent = () => {
                     onChangeText={(text: string): void => {
                         setFirstName(text);
                     }}
-                    label={"account_input_first_name"}
+                    label={{ key: MessageKeys.account_input_first_name }}
                 ></TextBox>
             </View>
             <View style={{ flex: 1 }}>
@@ -78,7 +78,7 @@ export const AccountScreen: FunctionComponent = () => {
                     onChangeText={(text: string): void => {
                         setLastName(text);
                     }}
-                    label={"account_input_last_name"}
+                    label={{ key: MessageKeys.account_input_last_name }}
                 ></TextBox>
             </View>
             <DatePicker
@@ -105,17 +105,21 @@ export const AccountScreen: FunctionComponent = () => {
                 >
                     <LabeledRadioButton
                         value={"male"}
-                        label={"male"}
+                        label={{ key: MessageKeys.male }}
                     ></LabeledRadioButton>
                     <LabeledRadioButton
                         value={"female"}
-                        label={"female"}
+                        label={{ key: MessageKeys.female }}
                     ></LabeledRadioButton>
                 </View>
             </RadioButton.Group>
-            <ErrorText>{""}</ErrorText>
-            <Button {...useUpdateUserHook}>{"account_button"}</Button>
-            <FlatButton {...useLogoutHook}>{"account_signout"}</FlatButton>
+            <ErrorText>{{ key: "" }}</ErrorText>
+            <Button {...useUpdateUserHook}>
+                {{ key: MessageKeys.account_button }}
+            </Button>
+            <FlatButton {...useLogoutHook}>
+                {{ key: MessageKeys.account_signout }}
+            </FlatButton>
         </StandardView>
     );
 };
