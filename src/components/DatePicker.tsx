@@ -11,6 +11,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
         <View>
             <TextBox
                 onFocus={() => {
+                    console.log(props);
                     DatePickerAndroid.open({
                         date: new Date(),
                         mode: "calendar"

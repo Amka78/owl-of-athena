@@ -156,5 +156,7 @@ export default {
         "すでに入力済みのメールアドレスです。",
 
     // alarm sound menu
-    [MessageKeys.alarm_sound_dialog_title]: "目覚まし用の音を選んでください。"
+    [MessageKeys.alarm_sound_dialog_title]: "目覚まし用の音を選んでください。",
+
+    [MessageKeys.profile_dialog_title]: "プロファイルを選んでください。"
 };

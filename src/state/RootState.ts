@@ -1,7 +1,7 @@
-import { CoreState } from "./CoreState";
+import { AuroraState } from "./AuroraState";
 import { UserInfoState } from ".";
 
 export type RootState = {
-    core: CoreState;
+    aurora: AuroraState;
     userInfo: UserInfoState;
 };

@@ -1,12 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Button as PaperButton } from "react-native-paper";
-import {
-    MessageLocalizationParam,
-    Message,
-    Colors,
-    Dimens,
-    Fonts
-} from "../constants";
+import { Message, Colors, Dimens, Fonts } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 import { TextStyle, ViewStyle } from "react-native";
 
 type FlatButtonProps = {

@@ -3,7 +3,6 @@ import { useCheckBox } from "./useCheckBox";
 import { useForgotPassword } from "./useForgotPassword";
 import { useSignup } from "./useSignup";
 import { useTextBox } from "./useTextBox";
-import { useRestClientSelector } from "./useRestClientSelector";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
 import { useRadioGroup } from "./useRadioGroup";
@@ -12,17 +11,20 @@ import { useUserSelector } from "./useUserSelector";
 import { useDatePicker } from "./useDatePicker";
 import { useUpdateUser } from "./useUpdateUser";
 import { useCheckLogging } from "./useCheckLogging";
+import { useSettingsSelector } from "./useSettingsSelector";
+import { useProfilesSelector } from "./useProfilesSelector";
 export {
     useAutoLogin,
     useCheckBox,
     useCheckLogging,
-    useRestClientSelector,
     useDatePicker,
     useForgotPassword,
     useGetUser,
     useLogin,
     useLogout,
     useSignup,
+    useSettingsSelector,
+    useProfilesSelector,
     useTextBox,
     useUpdateUser,
     useRadioGroup,

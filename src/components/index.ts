@@ -1,5 +1,5 @@
 import { AlarmView } from "./AlarmView";
-import { Button, ButtonProps } from "./Button";
+import { Button } from "./Button";
 import { FlatButton } from "./FlatButton";
 import { TextBox } from "./TextBox";
 
@@ -13,13 +13,16 @@ import { InlineTimePicker } from "./InlineTimePicker";
 import { StandardView } from "./StandardView";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { LabeledSelectorMenu } from "./LabeledSelectorMenu";
-import { AudioDialog } from "./AudioDialog";
+import { AudioDialog, AudioList } from "./AudioDialog";
 import { LabeledCheckBox } from "./LabeledCheckBox";
 import { LoadingDialog } from "./LoadingDialog";
+import { ConfirmDialog } from "./ConfirmDialog";
+import { ProfilesDialog } from "./ProfilesDialog";
 export {
     AudioDialog,
+    AudioList as SoundList,
     AlarmView,
-    ButtonProps,
+    ConfirmDialog,
     CheckBox,
     ContentText,
     ContentTitle,
@@ -34,5 +37,6 @@ export {
     Button,
     FlatButton,
     TextBox,
-    StandardView
+    StandardView,
+    ProfilesDialog
 };

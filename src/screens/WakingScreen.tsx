@@ -7,20 +7,24 @@ import {
     ContentTitle,
     ContentText
 } from "../components";
-import { useNavigation } from "react-navigation-hooks";
-import { useCheckLogging } from "../hooks";
+import { useCheckLogging, useSettingsSelector } from "../hooks";
 import { MessageKeys } from "../constants";
+import { AuroraManagerInstance } from "../managers";
+import { SleepStates } from "../sdk";
 export const WakingScreen: FunctionComponent = () => {
     useCheckLogging();
-    const { navigate } = useNavigation();
+    const settings = useSettingsSelector();
     return (
         <StandardView>
             <ContentTitle>{{ key: MessageKeys.waking_title }}</ContentTitle>
-            <AlarmView></AlarmView>
+            <AlarmView
+                hours={settings.alarmHour}
+                minutes={settings.alarmMinute}
+            ></AlarmView>
             <View style={{ alignItems: "center" }}>
                 <Button
                     onPress={(): void => {
-                        navigate("Awake");
+                        AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
                     }}
                 >
                     {{ key: MessageKeys.waking_wakeup_button }}

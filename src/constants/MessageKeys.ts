@@ -135,5 +135,6 @@ export const MessageKeys = {
     email_already_registered: "email_already_registered",
 
     // alarm sound menu
-    alarm_sound_dialog_title: "alarm_sound_dialog_title"
+    alarm_sound_dialog_title: "alarm_sound_dialog_title",
+    profile_dialog_title: "profile_dialog_title"
 };

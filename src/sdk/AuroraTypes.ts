@@ -1,6 +1,6 @@
 import { AuroraBluetooth } from "./AuroraBluetooth";
 import { AuroraUsb } from "./AuroraUsb";
-import { ConnectorTypes } from "./AuroraConstants";
+import { ConnectorTypes, EventIds } from "./AuroraConstants";
 import Stream from "stream";
 export type AuroraCommand = {
     command: unknown;
@@ -16,7 +16,7 @@ export type AuroraResponse = {
 };
 
 export type AuroraEvent = {
-    eventId: number;
+    eventId: EventIds;
     event: string;
     flags: number;
     time: number;
@@ -29,6 +29,10 @@ export type AuroraProfile = {
     name?: string;
     id?: string;
     key?: string;
+    type?: string;
+    description?: string;
+    title?: string;
+    updatedAt?: Date;
 };
 
 export type BluetoothStream = {

@@ -1,10 +1,10 @@
 import { ActionTypes } from "../constants";
 import { UserInfoState } from "../state";
-import { AuthActions } from "../actions";
+import { UserActions } from "../actions";
 
 export default function UserInfoReducer(
     state: UserInfoState = {},
-    action: AuthActions
+    action: UserActions
 ): UserInfoState {
     console.debug("userInfoReducer initialized.");
     switch (action.type) {

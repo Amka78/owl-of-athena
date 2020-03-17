@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Button } from "react-native-paper";
-import { HeaderBackButtonProps } from "react-navigation-stack";
+import { StackHeaderLeftButtonProps } from "react-navigation-stack";
 
 import { Colors } from "../constants";
 
-export const HeaderBackButton: FunctionComponent<HeaderBackButtonProps> = (
-    props: HeaderBackButtonProps
+export const HeaderBackButton: FunctionComponent<StackHeaderLeftButtonProps> = (
+    props: StackHeaderLeftButtonProps
 ) => {
     return (
         <Button

@@ -156,5 +156,8 @@ export default {
         "This email has already been registered.",
 
     // alarm sound menu
-    [MessageKeys.alarm_sound_dialog_title]: "Choose a sound"
+    [MessageKeys.alarm_sound_dialog_title]: "Choose a sound",
+
+    // profile menu
+    [MessageKeys.profile_dialog_title]: "Choose a profile"
 };

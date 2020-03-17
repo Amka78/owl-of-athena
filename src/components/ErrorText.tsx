@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle } from "react-native";
 
-import { Colors, Dimens, Fonts, MessageLocalizationParam } from "../constants";
+import { Colors, Dimens, Fonts, Message } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 
 type ErrorTextProps = {
     children: MessageLocalizationParam;
@@ -10,7 +11,11 @@ type ErrorTextProps = {
 export const ErrorText: FunctionComponent<ErrorTextProps> = (
     props: ErrorTextProps
 ) => {
-    return <Text style={createTextStyle(props.style)}>{props.children}</Text>;
+    return (
+        <Text style={createTextStyle(props.style)}>
+            {Message.get(props.children.key, props.children.restParam)}
+        </Text>
+    );
 };
 const textStyle: TextStyle = {
     color: Colors.red,
@@ -18,6 +23,7 @@ const textStyle: TextStyle = {
     fontSize: Dimens.error_text_size,
     marginBottom: Dimens.error_text_margin_bottom
 };
-function createTextStyle(propsStyle?: TextStyle) {
+
+function createTextStyle(propsStyle?: TextStyle): TextStyle {
     return StyleSheet.flatten([propsStyle, textStyle]);
 }

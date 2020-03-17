@@ -3,16 +3,22 @@ import { Text, StyleSheet, TextStyle, View } from "react-native";
 import { Colors, Dimens, Fonts } from "../constants";
 
 type AlarmViewProps = {
-    AlarmTimeStyle?: TextStyle;
-    AlarmMeridianStyle?: TextStyle;
+    alarmTimeStyle?: TextStyle;
+    alarmMeridianStyle?: TextStyle;
+    hours: number;
+    minutes: number;
 };
 export const AlarmView: FunctionComponent<AlarmViewProps> = (
     props: AlarmViewProps
 ) => {
     return (
         <View style={style.alarmView}>
-            <Text style={style.alarmTime}>8:00</Text>
-            <Text style={style.alarmMeridian}>am</Text>
+            <Text style={style.alarmTime}>{`${props.hours}:${(
+                "00" + props.minutes
+            ).slice(-2)}`}</Text>
+            <Text style={style.alarmMeridian}>
+                {props.hours > 12 ? "pm" : "am"}
+            </Text>
         </View>
     );
 };

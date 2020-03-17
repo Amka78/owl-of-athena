@@ -11,12 +11,32 @@ import { AuroraResponse, CmdQueue } from "./AuroraTypes";
 import { AuroraEvent } from "../model/AuroraEvent";
 import { isDesktop } from "./Platform";
 import AuroraCmdPlayLedEffect from "./AuroraCmdPlayLedEffect";
+import AuroraCmdWriteFile from "./AuroraCmdWriteFile";
+import AuroraCmdSyncTime from "./AuroraCmdSyncTime";
+import AuroraCmdGetSessions from "./AuroraCmdGetSessions";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
+import { Event } from "./models/Event";
+import _ from "lodash";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
 
 type playLedEffectType = typeof AuroraCmdPlayLedEffect;
+type getSessionsType = typeof AuroraCmdGetSessions;
+enum AuroraEventList {
+    usbConnectionChange = "usbConnectionChange",
+    bluetoothConnectionChange = "bluetoothConnectionChange",
+    cmdBegin = "cmdBegin",
+    cmdEnd = "cmdEnd",
+    msdAttachmentChange = "msdAttachmentChange",
+    flashConnectionChange = "flashConnectionChange",
+    cmdInputRequested = "cmdInputRequested",
+    cmdOutputReady = "cmdOutputReady",
+    log = "log",
+    streamData = "streamData",
+    auroraEvent = "auroraEvent",
+    auroraError = "auroraError"
+}
 class Aurora extends EventEmitter {
     private auroraUsb: AuroraUsb;
     private bluetooth: AuroraBluetooth;
@@ -28,6 +48,7 @@ class Aurora extends EventEmitter {
     private isAutoConnectUsb: boolean;
     private isAutoConnectBluetooth: boolean;
     private msdAttaching: boolean;
+    private enabledEventList: Array<AuroraConstants.EventIds>;
     constructor() {
         super();
 
@@ -89,6 +110,7 @@ class Aurora extends EventEmitter {
         this.msdDrive = false;
         this.isFlashing = false;
         this.info = undefined;
+        this.enabledEventList = new Array<AuroraConstants.EventIds>();
 
         //this scans for MSD disks that could potentially be the Aurora
         // @ts-ignore
@@ -355,18 +377,21 @@ class Aurora extends EventEmitter {
                     clearTimeout(flashTimeout!);
 
                     this.removeListener(
-                        "flashConnectionChange",
+                        AuroraEventList.flashConnectionChange,
                         onFlashConnectionChange
                     );
 
                     if (wasUsbConnected && !this.isUsbConnected()) {
-                        this.emit("usbConnectionChange", false);
+                        this.emit(AuroraEventList.usbConnectionChange, false);
                     }
 
                     if (wasBluetoothConnected && !this.isBluetoothConnected()) {
                         setTimeout(() => {
                             if (!this.isBluetoothConnected()) {
-                                this.emit("bluetoothConnectionChange", false);
+                                this.emit(
+                                    AuroraEventList.bluetoothConnectionChange,
+                                    false
+                                );
                             }
                         }, 3000);
                     }
@@ -436,6 +461,31 @@ class Aurora extends EventEmitter {
                 this.processCmdQueue();
             }
         });
+    }
+
+    public async enableEvents(
+        enableEvent: AuroraConstants.EventIds[]
+    ): Promise<void> {
+        this.enabledEventList.concat(enableEvent);
+
+        this.enabledEventList = _.concat(this.enabledEventList, enableEvent);
+        const mask = Event.toMask(enableEvent);
+
+        return await this.queueCmd(
+            `${AuroraConstants.CommandNames.EVENT_OUTPUT_ENABLE}${mask} ${16}`
+        );
+    }
+
+    public async disableEvents(
+        disableEvent: AuroraConstants.EventIds[]
+    ): Promise<void> {
+        this.enabledEventList = _.pullAll(this.enabledEventList, disableEvent);
+
+        const mask = Event.toMask(disableEvent);
+
+        return await this.queueCmd(
+            `${AuroraConstants.CommandNames.EVENT_OUTPUT_DISABLE}${mask} ${16}`
+        );
     }
 
     //this command is really only useful to reconcile differences between
@@ -516,7 +566,7 @@ class Aurora extends EventEmitter {
             beginTime: Date.now()
         };
 
-        this.emit("cmdBegin", cmd);
+        this.emit(AuroraEventList.cmdBegin, cmd);
 
         if (this.cmdCurrent.onCmdBegin) {
             this.cmdCurrent.onCmdBegin(cmd);
@@ -567,7 +617,7 @@ class Aurora extends EventEmitter {
                         this.cmdCurrent!.onCmdEnd(cmd);
                     }
 
-                    this.emit("cmdEnd", cmd);
+                    this.emit(AuroraEventList.cmdEnd, cmd);
 
                     //todo this shouldn't be necessary!!
                     //figure out WTF is going on
@@ -599,6 +649,18 @@ class Aurora extends EventEmitter {
 
     public get playLedEffect(): playLedEffectType {
         return AuroraCmdPlayLedEffect;
+    }
+
+    public get writeFile(): any {
+        return AuroraCmdWriteFile;
+    }
+
+    public get syncTime(): any {
+        return AuroraCmdSyncTime;
+    }
+
+    public get getSessions(): getSessionsType {
+        return AuroraCmdGetSessions;
     }
 
     public async findMsdDrive(
@@ -641,7 +703,7 @@ class Aurora extends EventEmitter {
             );
             usbDetect.on(
                 `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this._onAuroraUsbDetached
+                this.onAuroraUsbDetached
             );
         }
     };
@@ -656,7 +718,7 @@ class Aurora extends EventEmitter {
             // @ts-ignore
             usbDetect.removeListener(
                 `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this._onAuroraUsbDetached
+                this.onAuroraUsbDetached
             );
         }
     };
@@ -681,7 +743,7 @@ class Aurora extends EventEmitter {
         }
     };
 
-    private _onAuroraUsbDetached = (device: { productId: number }): void => {
+    private onAuroraUsbDetached = (device: { productId: number }): void => {
         if (device.productId === parseInt(AuroraConstants.AURORA_USB_MSD_PID)) {
             // @ts-ignore
             this.findMsdDrive(5).then(this.msdSetDetached, false);
@@ -693,7 +755,7 @@ class Aurora extends EventEmitter {
             this.msdAttaching = false;
             this.msdDrive = msdDrive;
 
-            this.emit("msdAttachmentChange", msdDrive);
+            this.emit(AuroraEventList.msdAttachmentChange, msdDrive);
         }
     };
 
@@ -701,7 +763,7 @@ class Aurora extends EventEmitter {
         if (this.msdDrive && !msdDrive) {
             this.msdDrive = false;
 
-            this.emit("msdAttachmentChange", false);
+            this.emit(AuroraEventList.msdAttachmentChange, false);
         }
     };
 
@@ -719,8 +781,8 @@ class Aurora extends EventEmitter {
                 .then((cmd: CmdQueue): void => {
                     this.emit(
                         this.isFlashing
-                            ? "flashConnectionChange"
-                            : "usbConnectionChange",
+                            ? AuroraEventList.flashConnectionChange
+                            : AuroraEventList.usbConnectionChange,
                         cmd.response
                     );
                 })
@@ -735,8 +797,8 @@ class Aurora extends EventEmitter {
         ) {
             this.emit(
                 this.isFlashing
-                    ? "flashConnectionChange"
-                    : "usbConnectionChange",
+                    ? AuroraEventList.flashConnectionChange
+                    : AuroraEventList.usbConnectionChange,
                 false
             );
         }
@@ -755,8 +817,8 @@ class Aurora extends EventEmitter {
                 .then((cmd: any): void => {
                     this.emit(
                         this.isFlashing
-                            ? "flashConnectionChange"
-                            : "bluetoothConnectionChange",
+                            ? AuroraEventList.flashConnectionChange
+                            : AuroraEventList.bluetoothConnectionChange,
                         cmd.response
                     );
                 })
@@ -771,8 +833,8 @@ class Aurora extends EventEmitter {
         ) {
             this.emit(
                 this.isFlashing
-                    ? "flashConnectionChange"
-                    : "bluetoothConnectionChange",
+                    ? AuroraEventList.flashConnectionChange
+                    : AuroraEventList.bluetoothConnectionChange,
                 false
             );
 
@@ -787,7 +849,10 @@ class Aurora extends EventEmitter {
     private onCmdInputRequested = (): void => {
         if (!this.cmdCurrent) return;
 
-        this.emit("cmdInputRequested", this.cmdCurrent.inputStream);
+        this.emit(
+            AuroraEventList.cmdInputRequested,
+            this.cmdCurrent.inputStream
+        );
     };
 
     private onCmdOutputReady = (output: {
@@ -800,19 +865,19 @@ class Aurora extends EventEmitter {
     };
 
     private onAuroraLog = (log: unknown): void => {
-        this.emit("log", log);
+        this.emit(AuroraEventList.log, log);
     };
 
     private onAuroraStreamData = (streamData: unknown): void => {
-        this.emit("streamData", streamData);
+        this.emit(AuroraEventList.streamData, streamData);
     };
 
     private onAuroraEvent = (auroraEvent: AuroraEvent): void => {
-        this.emit("auroraEvent", auroraEvent);
+        this.emit(AuroraEventList.auroraEvent, auroraEvent);
     };
 
     private onAuroraError = (error: unknown): void => {
-        this.emit("auroraError", error);
+        this.emit(AuroraEventList.auroraError, error);
     };
 }
 
@@ -823,23 +888,17 @@ const AuroraStreamIds = AuroraConstants.StreamIds;
 const AuroraStreamOutputIds = AuroraConstants.StreamOutputIds;
 
 export {
-    Aurora,
     AuroraConstants,
     AuroraEventIds,
     AuroraEventOutputIds,
     AuroraLogTypeIds,
     AuroraStreamIds,
-    AuroraStreamOutputIds
+    AuroraStreamOutputIds,
+    AuroraEventList
 };
 
-Object.defineProperty(Aurora.prototype, "syncTime", {
-    value: require("./AuroraCmdSyncTime")
-});
 Object.defineProperty(Aurora.prototype, "readFile", {
     value: require("./AuroraCmdReadFile")
-});
-Object.defineProperty(Aurora.prototype, "writeFile", {
-    value: require("./AuroraCmdWriteFile")
 });
 Object.defineProperty(Aurora.prototype, "downloadFile", {
     value: require("./AuroraCmdDownloadFile")
@@ -856,16 +915,10 @@ Object.defineProperty(Aurora.prototype, "getProfiles", {
 Object.defineProperty(Aurora.prototype, "setProfiles", {
     value: require("./AuroraCmdSetProfiles")
 });
-Object.defineProperty(Aurora.prototype, "getSessions", {
-    value: require("./AuroraCmdGetSessions")
-});
 Object.defineProperty(Aurora.prototype, "downloadStream", {
     value: require("./AuroraCmdDownloadStream")
 });
 Object.defineProperty(Aurora.prototype, "playBuzzSong", {
     value: require("./AuroraCmdPlayBuzzSong")
 });
-/*Object.defineProperty(Aurora.prototype, "playLedEffect", {
-    value: require("./AuroraCmdPlayLedEffect")
-});*/
 export default new Aurora();

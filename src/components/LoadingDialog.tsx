@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
-import { Message, Colors, Fonts, MessageLocalizationParam } from "../constants";
+import { Message, Colors, Fonts } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 import { Dialog, ActivityIndicator } from "react-native-paper";
 type LoadingDialogProps = {
     visible: boolean;

@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
-import { RootState, UserInfoState } from "../state";
+import { RootState } from "../state";
+import { User } from "../types";
 
-const clientSelector = (state: RootState): UserInfoState => ({
-    user: state.userInfo.user
-});
+const clientSelector = (state: RootState): User | undefined =>
+    state.userInfo.user;
 
-export const useUserSelector = (): UserInfoState => {
+export const useUserSelector = (): User | undefined => {
     return useSelector(clientSelector);
 };

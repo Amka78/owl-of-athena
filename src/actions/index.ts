@@ -1,3 +1,13 @@
-import { Actions, login, logout, updateUser } from "./AuthActions";
-
-export { Actions as AuthActions, login, logout, updateUser };
+import { UserActions, login, logout, updateUser } from "./UserActions";
+import { SettingsActions, updateSettings } from "./SettingsActions";
+import { ProfilesActions, updateProfiles } from "./ProfilesAction";
+export {
+    UserActions,
+    login,
+    logout,
+    updateUser,
+    SettingsActions,
+    ProfilesActions,
+    updateSettings,
+    updateProfiles
+};

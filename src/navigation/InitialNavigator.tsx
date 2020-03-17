@@ -8,7 +8,7 @@ import {
 } from "react-navigation";
 
 import UnauthenticatedNavigator from "./UnauthenticatedNavigator";
-import MainTabNavigator from "./MainTabNavigator";
+import { MainScreen } from "../screens";
 
 const routeConfitMap: NavigationRouteConfigMap<
     {},
@@ -16,7 +16,7 @@ const routeConfitMap: NavigationRouteConfigMap<
 > = {
     Main: {
         path: "main",
-        screen: MainTabNavigator
+        screen: MainScreen
     },
     Unauthenticated: {
         path: "",

@@ -1,13 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Button as PaperButton } from "react-native-paper";
-import {
-    MessageLocalizationParam,
-    Message,
-    Colors,
-    Dimens,
-    Fonts,
-    Layout
-} from "../constants";
+import { Message, Colors, Dimens, Fonts, Layout } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 import { TextStyle, ViewStyle } from "react-native";
 
 export type ButtonProps = {
@@ -31,7 +25,7 @@ const containerStyle: ViewStyle = {
 export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
     return (
         <PaperButton
-            disabled
+            disabled={props.disabled !== undefined ? props.disabled! : false}
             onPress={props.onPress}
             mode={"contained"}
             labelStyle={labelStyle}

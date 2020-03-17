@@ -4,8 +4,10 @@ import React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
 import { RootContainer } from "./src/navigation";
-import { store } from "./src/store";
+import reduxStore from "./src/store";
 import { Colors, Layout } from "./src/constants";
+import { AudioDialog, ProfilesDialog } from "./src/components";
+import { PersistGate } from "redux-persist/integration/react";
 
 type AppProps = {
     skipLoadingScreen: boolean;
@@ -24,6 +26,7 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     public render(): JSX.Element {
+        const persistedRedux = reduxStore();
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return (
                 <AppLoading
@@ -34,13 +37,20 @@ export default class App extends React.Component<AppProps, AppState> {
             );
         } else {
             return (
-                <Provider store={store}>
-                    <View style={styles.container}>
-                        {Platform.OS === "ios" && (
-                            <StatusBar barStyle="default" />
-                        )}
-                        <RootContainer />
-                    </View>
+                <Provider store={persistedRedux.store}>
+                    <PersistGate
+                        loading={undefined}
+                        persistor={persistedRedux.persistor}
+                    >
+                        <View style={styles.container}>
+                            {Platform.OS === "ios" && (
+                                <StatusBar barStyle="default" />
+                            )}
+                            <RootContainer />
+                            <AudioDialog></AudioDialog>
+                            <ProfilesDialog></ProfilesDialog>
+                        </View>
+                    </PersistGate>
                 </Provider>
             );
         }

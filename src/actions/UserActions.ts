@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { User } from "../types";
 
 import { ActionTypes } from "../constants";
 
-export type Actions = ReturnType<
+export type UserActions = ReturnType<
     typeof login | typeof updateUser | typeof logout
 >;
 

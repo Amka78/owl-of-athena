@@ -1,13 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import {
-    Colors,
-    Message,
-    MessageLocalizationParam,
-    Dimens,
-    Fonts,
-    Layout
-} from "../constants";
+import { Colors, Message, Dimens, Fonts, Layout } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

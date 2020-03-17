@@ -18,6 +18,12 @@ enum BleCmdStates {
     CMD_INPUT_REQUESTED = 4
 }
 
+enum CommandNames {
+    EVENT_OUTPUT_ENABLE = "event-output-enable ",
+    EVENT_OUTPUT_DISABLE = "event-output-disable",
+    PROF_UNLOAD = "prof_unload"
+}
+
 enum ConnectorTypes {
     BLUETOOTH = "bluetooth",
     USB = "usb",
@@ -53,47 +59,47 @@ enum DataTypes {
     PTR = 11
 }
 
-const EventIds = {
-    SIGNAL_MONITOR: 0,
-    SLEEP_TRACKER_MONITOR: 1,
-    MOVEMENT_MONITOR: 2,
-    STIM_PRESENTED: 3,
+enum EventIds {
+    SIGNAL_MONITOR = 0,
+    SLEEP_TRACKER_MONITOR = 1,
+    MOVEMENT_MONITOR = 2,
+    STIM_PRESENTED = 3,
 
-    AWAKENING: 4,
-    AUTO_SHUTDOWN: 5,
-    EVENT_RESERVED1: 6,
-    EVENT_RESERVED2: 7,
+    AWAKENING = 4,
+    AUTO_SHUTDOWN = 5,
+    SMART_ALARM = 6,
+    EVENT_RESERVED1 = 7,
 
-    EVENT_RESERVED3: 8,
-    EVENT_RESERVED4: 9,
-    EVENT_RESERVED5: 10,
-    EVENT_RESERVED6: 11,
+    EVENT_RESERVED2 = 8,
+    EVENT_RESERVED3 = 9,
+    EVENT_RESERVED4 = 10,
+    EVENT_RESERVED5 = 11,
 
-    EVENT_RESERVED7: 12,
-    EVENT_RESERVED8: 13,
-    EVENT_RESERVED9: 14,
-    EVENT_RESERVED10: 15,
+    EVENT_RESERVED6 = 12,
+    EVENT_RESERVED7 = 13,
+    EVENT_RESERVED8 = 14,
+    EVENT_RESERVED9 = 15,
 
-    BUTTON_MONITOR: 16,
-    SDCARD_MONITOR: 17,
-    USB_MONITOR: 18,
-    BATTERY_MONITOR: 19,
+    BUTTON_MONITOR = 16,
+    SDCARD_MONITOR = 17,
+    USB_MONITOR = 18,
+    BATTERY_MONITOR = 19,
 
-    BUZZ_MONITOR: 20,
-    LED_MONITOR: 21,
-    EVENT_RESERVED11: 22,
-    EVENT_RESERVED12: 23,
+    BUZZ_MONITOR = 20,
+    LED_MONITOR = 21,
+    EVENT_RESERVED11 = 22,
+    EVENT_RESERVED12 = 23,
 
-    BLE_MONITOR: 24,
-    BLE_NOTIFY: 25,
-    BLE_INDICATE: 26,
-    CLOCK_ALARM_FIRE: 27,
+    BLE_MONITOR = 24,
+    BLE_NOTIFY = 25,
+    BLE_INDICATE = 26,
+    CLOCK_ALARM_FIRE = 27,
 
-    CLOCK_TIMER0_FIRE: 28,
-    CLOCK_TIMER1_FIRE: 29,
-    CLOCK_TIMER2_FIRE: 30,
-    CLOCK_TIMER_FIRE: 31
-};
+    CLOCK_TIMER0_FIRE = 28,
+    CLOCK_TIMER1_FIRE = 29,
+    CLOCK_TIMER2_FIRE = 30,
+    CLOCK_TIMER_FIRE = 31
+}
 
 const EventIdsToNames = {
     [EventIds.SIGNAL_MONITOR]: "signal-monitor",
@@ -365,5 +371,6 @@ export {
     SleepStages,
     SleepStates,
     ConnectionStates,
-    DeviceEventList
+    DeviceEventList,
+    CommandNames
 };

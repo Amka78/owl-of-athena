@@ -1,18 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Checkbox } from "react-native-paper";
-import {
-    Dimens,
-    Fonts,
-    Message,
-    Layout,
-    Colors,
-    MessageLocalizationParam
-} from "../constants";
-
+import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
+export type CheckBoxStatus = "checked" | "unchecked" | "indeterminate";
 export type LabeledCheckBoxProps = {
     label?: MessageLocalizationParam;
-    status: "checked" | "unchecked" | "indeterminate";
+    status: CheckBoxStatus;
+    onPress?: () => void;
 };
 
 export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
@@ -28,6 +23,7 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
                     {...props}
                     color={Colors.white}
                     uncheckedColor={Colors.white}
+                    onPress={props.onPress}
                 ></Checkbox>
             </View>
         </View>

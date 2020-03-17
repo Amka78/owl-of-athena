@@ -1,34 +1,90 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { View } from "react-native";
 import { MainContainer } from "../navigation";
-import { FlatButton, LoadingDialog } from "../components";
-import { useAuroraSelector } from "../hooks";
-import { Colors } from "../constants";
-type connetStatus = "connected" | "connecting" | "disconnect" | "disconnecting";
+import { FlatButton, LoadingDialog, ConfirmDialog } from "../components";
+import { Colors, MessageKeys } from "../constants";
+import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
+import { ConnectionStates } from "../sdk";
+import { useNavigation } from "react-navigation-hooks";
 export const MainScreen: FunctionComponent = () => {
-    const [connect, setConnect] = useState<connetStatus>("disconnect");
-    const auroraDevice = useAuroraSelector();
+    const [connect, setConnect] = useState<ConnectionStates>(
+        ConnectionStates.DISCONNECTED
+    );
+
+    const { navigate } = useNavigation();
+    const onConnectionStateChange = (connect: boolean): void => {
+        connect
+            ? setConnect(ConnectionStates.CONNECTED)
+            : setConnect(ConnectionStates.DISCONNECTED);
+    };
+
     useEffect(() => {
-        auroraDevice.on("bluetoothConnectionChange", (connect: boolean) => {
-            connect ? setConnect("connected") : setConnect("disconnect");
+        AuroraManagerInstance.on(
+            AuroraManagetEventList.onConnectionChange,
+            onConnectionStateChange
+        );
+        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
+            navigate("Sleeping");
         });
+        AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
+            navigate("Awake");
+        });
+        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
+            navigate("Waking");
+        });
+        AuroraManagerInstance.on(
+            AuroraManagetEventList.onAuroraReady,
+            (batteryLevel: number) => {
+                if (batteryLevel < 25) {
+                    ConfirmDialog.show({
+                        title: {
+                            key: MessageKeys.aurora_low_battery_dialog_title
+                        },
+                        message: {
+                            key: MessageKeys.aurora_low_battery_dialog_message,
+                            restParam: [batteryLevel]
+                        },
+                        isCancelable: false
+                    });
+                } else {
+                    const unsyncedSession = AuroraManagerInstance.getUnsyncedSessions();
+
+                    if (
+                        unsyncedSession &&
+                        AuroraManagerInstance.isConfiguring
+                    ) {
+                        ConfirmDialog.show({
+                            title: {
+                                key:
+                                    MessageKeys.aurora_unsynced_sessions_dialog_title
+                            },
+                            message: {
+                                key:
+                                    MessageKeys.aurora_unsynced_sessions_dialog_message,
+                                restParam: [unsyncedSession.length]
+                            }
+                        });
+                    }
+                }
+            }
+        );
         return (): void => {
             return;
         };
-    }, [auroraDevice]);
+    }, [navigate]);
     return (
         <View style={{ flex: 1 }}>
             <MainContainer></MainContainer>
             <FlatButton
                 contentStyle={{
                     backgroundColor:
-                        connect === "connected"
+                        connect === ConnectionStates.CONNECTED
                             ? Colors.aurora_connected
                             : Colors.aurora_disconnected
                 }}
                 labelStyle={{
                     color:
-                        connect === "connected"
+                        connect === ConnectionStates.CONNECTED
                             ? Colors.aurora_connected_text
                             : Colors.aurora_disconnected_text
                 }}
@@ -38,43 +94,44 @@ export const MainScreen: FunctionComponent = () => {
                     try {
                         await executeConfiguring(
                             setConnect,
-                            auroraDevice,
-                            connect === "connected"
-                                ? "disconnecting"
-                                : "connecting"
+                            connect === ConnectionStates.CONNECTED
+                                ? ConnectionStates.DISCONNECTING
+                                : ConnectionStates.CONNECTING
                         );
                     } catch (e) {
                         console.log(e);
                     }
                 }}
             >
-                {connect === "connected"
-                    ? "aurora_connected"
-                    : "aurora_disconnected"}
+                {connect === ConnectionStates.CONNECTED
+                    ? { key: MessageKeys.aurora_connected }
+                    : { key: MessageKeys.aurora_disconnected }}
             </FlatButton>
             <LoadingDialog
                 visible={
-                    connect === "connecting" || connect === "disconnecting"
+                    connect === ConnectionStates.CONNECTING ||
+                    connect === ConnectionStates.DISCONNECTING
                 }
-                dialogTitle={"home_go_to_sleep_loading_message"}
+                dialogTitle={{
+                    key: MessageKeys.home_go_to_sleep_loading_message
+                }}
             ></LoadingDialog>
+            <ConfirmDialog></ConfirmDialog>
         </View>
     );
 };
 
 async function executeConfiguring(
-    setConnect: React.Dispatch<React.SetStateAction<connetStatus>>,
-    auroraDevice: import("../sdk/Aurora").Aurora,
-    connectStatus: connetStatus
+    setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>,
+    connectStatus: ConnectionStates
 ): Promise<void> {
     setConnect(connectStatus);
     let result = undefined;
 
-    if (connectStatus === "connecting") {
-        result = await auroraDevice.connectBluetooth();
-        await auroraDevice.queueCmd("led-demo");
+    if (connectStatus === ConnectionStates.CONNECTING) {
+        result = await AuroraManagerInstance.connect();
     } else {
-        result = await auroraDevice.disconnectBluetooth();
+        result = await AuroraManagerInstance.disconnect();
     }
     console.log("configuring aurora succeed.", result);
 }

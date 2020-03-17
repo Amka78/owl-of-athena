@@ -1,13 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Text, TextStyle } from "react-native";
-import {
-    MessageLocalizationParam,
-    Message,
-    Colors,
-    Dimens,
-    Fonts
-} from "../constants";
-
+import { Message, Colors, Dimens, Fonts } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 type ContentTextProps = {
     children: MessageLocalizationParam;
     style?: TextStyle;

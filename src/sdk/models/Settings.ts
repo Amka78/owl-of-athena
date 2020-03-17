@@ -1,13 +1,15 @@
+import { SoundList } from "../../components";
+
 export class Settings {
-    public userId: string;
+    public userId?: string;
 
     public profileId?: string;
 
-    public profileTitle?: string;
+    public profileTitle: string;
 
-    public alarmHour?: number;
+    public alarmHour: number;
 
-    public alarmMinute?: number;
+    public alarmMinute: number;
 
     public smartAlarmEnabled: boolean;
 
@@ -15,18 +17,16 @@ export class Settings {
 
     public dslEnabled: boolean;
 
+    public alarmAudio: SoundList;
+
     public alarmAudioPath?: string;
+
+    public remStimAudio: SoundList;
 
     public remStimAudioPath?: string;
 
-    public saveAt?: Date;
+    public savedAt?: Date;
     constructor(settings: Partial<Settings>) {
-        if (settings.userId) {
-            this.userId = settings.userId!;
-        } else {
-            throw new Error("userId is required.");
-        }
-
         this.profileId = settings.profileId;
 
         settings.profileTitle
@@ -53,8 +53,18 @@ export class Settings {
             ? (this.dslEnabled = settings.dslEnabled)
             : (this.dslEnabled = false);
 
+        settings.alarmAudio
+            ? (this.alarmAudio = settings.alarmAudio)
+            : (this.alarmAudio = SoundList.NONE);
         this.alarmAudioPath = settings.alarmAudioPath;
+        settings.remStimAudio
+            ? (this.remStimAudio = settings.remStimAudio)
+            : (this.remStimAudio = SoundList.NONE);
         this.remStimAudioPath = settings.remStimAudioPath;
-        this.saveAt = settings.saveAt;
+        this.savedAt = settings.savedAt;
+    }
+
+    public getMsAfterMidnight(): number {
+        return this.alarmHour! * 60 * 60 * 1000 + this.alarmMinute! * 60 * 1000;
     }
 }

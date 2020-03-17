@@ -35,8 +35,8 @@ type TimePickerMode = "full" | "minute";
 
 type InlineTimePickerProps = {
     style?: TimePickerStyle;
-    initialTime?: Date;
-    onChangeTime?: (hours: number, minutes: number, seconds: number) => {};
+    initialTime?: Date | { hours: number; minutes: number; seconds: number };
+    onChangeTime?: (hours?: number, minutes?: number, seconds?: number) => void;
     mode24hours?: boolean;
     mode?: TimePickerMode;
 };
@@ -97,7 +97,18 @@ export class InlineTimePicker extends Component<
         let initialDate = new Date();
 
         if (this.props.initialTime !== undefined) {
-            initialDate = this.props.initialTime;
+            if ("hours" in this.props.initialTime) {
+                initialDate = new Date(
+                    initialDate.getFullYear(),
+                    initialDate.getMonth(),
+                    initialDate.getDate(),
+                    this.props.initialTime!.hours,
+                    this.props.initialTime!.minutes,
+                    this.props.initialTime!.seconds
+                );
+            } else {
+                initialDate = this.props.initialTime;
+            }
         }
 
         const currentHours = initialDate.getHours();

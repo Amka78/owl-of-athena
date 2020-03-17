@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { Text, View } from "react-native";
 import { RadioButton } from "react-native-paper";
-import { Colors, Message, MessageLocalizationParam } from "../constants";
-
+import { Colors, Message } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 type LabeledRadioButtonProps = {
     value: string;
     label: MessageLocalizationParam;

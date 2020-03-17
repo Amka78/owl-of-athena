@@ -1,15 +1,9 @@
 import React, { FunctionComponent } from "react";
 import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
-import {
-    Dimens,
-    Fonts,
-    Message,
-    Layout,
-    Colors,
-    MessageLocalizationParam
-} from "../constants";
+import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
 
+import { MessageLocalizationParam } from "../constants/Message";
 export type TextBoxProps = TextInputProps & {
     label?: MessageLocalizationParam;
     localizedPlaceholder?: MessageLocalizationParam;

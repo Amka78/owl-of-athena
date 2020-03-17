@@ -1,5 +1,11 @@
 import React, { FunctionComponent } from "react";
-import { Button, StandardView, ContentTitle, ContentText } from "../components";
+import {
+    Button,
+    StandardView,
+    ContentTitle,
+    ContentText,
+    ConfirmDialog
+} from "../components";
 
 import { useNavigation } from "react-navigation-hooks";
 import { useCheckLogging } from "../hooks";
@@ -11,7 +17,15 @@ export const AwakeScreen: FunctionComponent = () => {
         <StandardView>
             <ContentTitle>{{ key: MessageKeys.awake_title }}</ContentTitle>
             <ContentText>{{ key: MessageKeys.awake_text }}</ContentText>
-            <Button>
+            <Button
+                onPress={(): void => {
+                    ConfirmDialog.show({
+                        title: { key: MessageKeys.wip_dialog_title },
+                        message: { key: MessageKeys.wip_dialog_message },
+                        isCancelable: false
+                    });
+                }}
+            >
                 {{ key: MessageKeys.awake_questionnaire_continue_button }}
             </Button>
             <Button

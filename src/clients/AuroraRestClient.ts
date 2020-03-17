@@ -3,6 +3,7 @@ import RestClient from "./RestClient";
 
 import { BaseUrl, TokenManager } from "../utils";
 import * as Localization from "expo-localization";
+import { AuroraProfile } from "../sdk/AuroraTypes";
 
 /**
  * Aurora Rest API
@@ -82,6 +83,20 @@ export class AuroraRestClient extends RestClient {
             return await response.json();
         }
         console.debug("update failed");
+        throw await response.json();
+    }
+
+    public async getAuroraProfiles(): Promise<Array<AuroraProfile>> {
+        const response = await this.get(
+            "aurora-profiles?$sort[updated_at]=-1",
+            {}
+        );
+
+        if (response.ok) {
+            const result: Array<AuroraProfile> = await response.json();
+
+            return result;
+        }
         throw await response.json();
     }
 }
