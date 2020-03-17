@@ -7,12 +7,12 @@ import {
 } from "react-native";
 
 import { NavigationScreenProp } from "react-navigation";
-import {
-    ButtonProps
-    /*IHeaderSearchBarProps,
+import //ButtonProps
+/*IHeaderSearchBarProps,
     IListItemProps,
     ITextBoxProps*/
-} from "../components";
+"../components";
+import { ButtonProps } from "../components/Button";
 
 // @ts-ignore
 export const FakeGestureResponderEvent: GestureResponderEvent = {};

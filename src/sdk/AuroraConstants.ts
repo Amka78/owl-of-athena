@@ -120,7 +120,6 @@ const EventIdsToNames = {
     [EventIds.EVENT_RESERVED7]: "rsvd7",
     [EventIds.EVENT_RESERVED8]: "rsvd8",
     [EventIds.EVENT_RESERVED9]: "rsvd9",
-    [EventIds.EVENT_RESERVED10]: "rsvd10",
 
     [EventIds.BUTTON_MONITOR]: "button-monitor",
     [EventIds.SDCARD_MONITOR]: "sdcard-monitor",

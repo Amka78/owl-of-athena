@@ -3,9 +3,8 @@ import "react-native";
 
 import { ShallowWrapper } from "enzyme";
 import React from "react";
-
 import { Button, ButtonProps } from "../Button";
-import { Message } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import { TestHelper } from "../../utils/TestHelper";
 
 let component: ShallowWrapper<ButtonProps, unknown, unknown>;
@@ -14,7 +13,9 @@ describe("Button UnitTest", () => {
     it.each(["ja-JP", "en-US"])("renders correctly", (locale: string) => {
         Message.setLocale(locale);
 
-        component = TestHelper.createMock(<Button>{"login"}</Button>);
+        component = TestHelper.createMock(
+            <Button>{{ key: MessageKeys.login }}</Button>
+        );
 
         expect(TestHelper.toJson(component)).toMatchSnapshot();
     });
