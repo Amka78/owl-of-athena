@@ -7,7 +7,13 @@ import EventEmitter from "events";
 import Stream from "stream";
 import { sleep, promisify, versionToString, stringToVersion } from "./util";
 //import usbDetect from "usb-detection";
-import { AuroraResponse, CmdQueue } from "./AuroraTypes";
+import {
+    AuroraResponse,
+    CommandResult,
+    Command,
+    CommandResolverType,
+    EventResponse
+} from "./AuroraTypes";
 import { AuroraEvent } from "../model/AuroraEvent";
 import { isDesktop } from "./Platform";
 import AuroraCmdPlayLedEffect from "./AuroraCmdPlayLedEffect";
@@ -17,12 +23,31 @@ import AuroraCmdGetSessions from "./AuroraCmdGetSessions";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { Event } from "./models/Event";
 import _ from "lodash";
+import AuroraCmdReadFile from "./AuroraCmdReadFile";
+import AuroraCmdDownloadFile from "./AuroraCmdDownloadFile";
+import AuroraCmdDownloadStream from "./AuroraCmdDownloadStream";
+import AuroraCmdGetProfiles from "./AuroraCmdGetProfiles";
+import { AuroraCmdSetProfiles } from "./AuroraCmdSetProfiles";
+import AuroraCmdFlashFile from "./AuroraCmdFlashFile";
+import AuroraCmdPlayBuzzSong from "./AuroraCmdPlayBuzzSong";
+import AuroraCmdUploadFile from "./AuroraCmdWriteFile";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
 
-type playLedEffectType = typeof AuroraCmdPlayLedEffect;
-type getSessionsType = typeof AuroraCmdGetSessions;
+type PlayLedEffect = typeof AuroraCmdPlayLedEffect;
+type GetSessions = typeof AuroraCmdGetSessions;
+type SyncTime = typeof AuroraCmdSyncTime;
+type WriteFile = typeof AuroraCmdWriteFile;
+type ReadFile = typeof AuroraCmdReadFile;
+type DownloadFile = typeof AuroraCmdDownloadFile;
+type DownloadStream = typeof AuroraCmdDownloadStream;
+type GetProfiles = typeof AuroraCmdGetProfiles;
+type SetProfiles = typeof AuroraCmdSetProfiles;
+type FlashFile = typeof AuroraCmdFlashFile;
+type PlayBuzzSong = typeof AuroraCmdPlayBuzzSong;
+type UploadFile = typeof AuroraCmdUploadFile;
+
 enum AuroraEventList {
     usbConnectionChange = "usbConnectionChange",
     bluetoothConnectionChange = "bluetoothConnectionChange",
@@ -40,8 +65,8 @@ enum AuroraEventList {
 class Aurora extends EventEmitter {
     private auroraUsb: AuroraUsb;
     private bluetooth: AuroraBluetooth;
-    private cmdQueue: CmdQueue[];
-    private cmdCurrent?: CmdQueue;
+    private cmdQueue: Command[];
+    private cmdCurrent?: Command;
     private msdDrive: boolean;
     private isFlashing: boolean;
     private info?: AuroraOSInfo;
@@ -103,7 +128,7 @@ class Aurora extends EventEmitter {
             this.onCmdOutputReady
         );
 
-        this.cmdQueue = [];
+        this.cmdQueue = new Array<Command>();
 
         this.isAutoConnectUsb = false;
         this.isAutoConnectBluetooth = false;
@@ -194,7 +219,10 @@ class Aurora extends EventEmitter {
         //is USB is already connected, lets signal to
         //the Aurora to start advertising aggressively
         if (this.isUsbConnected()) {
-            this.queueCmd("ble-reset", AuroraConstants.ConnectorTypes.USB);
+            await this.queueCmd(
+                "ble-reset",
+                AuroraConstants.ConnectorTypes.USB
+            );
         }
 
         if (this.bluetooth.isConnecting()) {
@@ -203,7 +231,7 @@ class Aurora extends EventEmitter {
 
         return new Promise((resolve, reject) => {
             this.once("bluetoothConnectionChange", fwInfo => {
-                console.debug("aurora device found.");
+                console.debug("Found Aurora device.");
                 if (!fwInfo) return reject();
 
                 resolve(new AuroraOSInfo(fwInfo));
@@ -433,12 +461,12 @@ class Aurora extends EventEmitter {
         });
     }
 
-    public async queueCmd(
+    public async queueCmd<T>(
         commandStr: string,
         connectorType = AuroraConstants.ConnectorTypes.ANY,
         onCmdBegin = undefined,
         onCmdEnd = undefined
-    ): Promise<void> {
+    ): Promise<T> {
         if (!this.getConnector(connectorType).isConnected()) {
             return Promise.reject(
                 `Not connected to Aurora over ${
@@ -448,12 +476,13 @@ class Aurora extends EventEmitter {
         }
 
         return new Promise((resolve, reject) => {
+            const commandResolver = resolve as CommandResolverType;
             this.cmdQueue.push({
                 commandStr,
                 connectorType,
                 onCmdBegin,
                 onCmdEnd,
-                resolve,
+                resolve: commandResolver,
                 reject
             });
 
@@ -465,7 +494,7 @@ class Aurora extends EventEmitter {
 
     public async enableEvents(
         enableEvent: AuroraConstants.EventIds[]
-    ): Promise<void> {
+    ): Promise<CommandResult<EventResponse>> {
         this.enabledEventList.concat(enableEvent);
 
         this.enabledEventList = _.concat(this.enabledEventList, enableEvent);
@@ -558,7 +587,7 @@ class Aurora extends EventEmitter {
             return;
         };
 
-        const cmd: CmdQueue = {
+        const cmd: CommandResult<unknown> = {
             command,
             args,
             connectorType: this.cmdCurrent.connectorType,
@@ -577,7 +606,7 @@ class Aurora extends EventEmitter {
             // @ts-ignore
             .then(
                 // @ts-ignore
-                (cmdWithResponse: AuroraResponse): CmdQueue => {
+                (cmdWithResponse: AuroraResponse): CommandResult => {
                     cmd.endTime = Date.now();
                     cmd.origin = cmdWithResponse.origin;
                     cmd.error = cmdWithResponse.error;
@@ -587,7 +616,7 @@ class Aurora extends EventEmitter {
                 }
             )
             .catch(
-                (error: string): CmdQueue => {
+                (error: string): CommandResult<unknown> => {
                     cmd.origin =
                         this.cmdCurrent!.connectorType ==
                         AuroraConstants.ConnectorTypes.ANY
@@ -604,16 +633,19 @@ class Aurora extends EventEmitter {
                 }
             )
             .then(
-                async (cmd: CmdQueue): Promise<void> => {
+                async (cmd: CommandResult<unknown>): Promise<void> => {
                     cmd.outputStream!.push(null);
 
                     if (cmd.error) {
+                        console.error("Rejected command:", cmd);
                         this.cmdCurrent!.reject!(cmd);
                     } else {
-                        this.cmdCurrent!.resolve!(cmd);
+                        console.debug("Succeed command:", cmd);
+                        this.cmdCurrent!.resolve(cmd);
                     }
 
                     if (this.cmdCurrent!.onCmdEnd) {
+                        console.debug("onCmdEnd has been executed.");
                         this.cmdCurrent!.onCmdEnd(cmd);
                     }
 
@@ -647,20 +679,52 @@ class Aurora extends EventEmitter {
         }
     }
 
-    public get playLedEffect(): playLedEffectType {
+    public get playLedEffect(): PlayLedEffect {
         return AuroraCmdPlayLedEffect;
     }
 
-    public get writeFile(): any {
+    public get writeFile(): WriteFile {
         return AuroraCmdWriteFile;
     }
 
-    public get syncTime(): any {
+    public get syncTime(): SyncTime {
         return AuroraCmdSyncTime;
     }
 
-    public get getSessions(): getSessionsType {
+    public get getSessions(): GetSessions {
         return AuroraCmdGetSessions;
+    }
+
+    public get readFile(): ReadFile {
+        return AuroraCmdReadFile;
+    }
+
+    public get downloadFile(): DownloadFile {
+        return AuroraCmdDownloadFile;
+    }
+
+    public get uploadFile(): UploadFile {
+        return AuroraCmdUploadFile;
+    }
+
+    public get flashFile(): FlashFile {
+        return AuroraCmdFlashFile;
+    }
+
+    public get getProfiles(): GetProfiles {
+        return AuroraCmdGetProfiles;
+    }
+
+    public get setProfiles(): SetProfiles {
+        return AuroraCmdSetProfiles;
+    }
+
+    public get downloadStream(): DownloadStream {
+        return AuroraCmdDownloadStream;
+    }
+
+    public get playBuzzSong(): PlayBuzzSong {
+        return AuroraCmdPlayBuzzSong;
     }
 
     public async findMsdDrive(
@@ -778,7 +842,7 @@ class Aurora extends EventEmitter {
         ) {
             this.getOsInfo(AuroraConstants.ConnectorTypes.USB)
                 //@ts-ignore
-                .then((cmd: CmdQueue): void => {
+                .then((cmd: CommandResult): void => {
                     this.emit(
                         this.isFlashing
                             ? AuroraEventList.flashConnectionChange
@@ -808,6 +872,7 @@ class Aurora extends EventEmitter {
         connectionState: AuroraConstants.ConnectionStates,
         previousConnectionState: AuroraConstants.ConnectionStates
     ): void => {
+        console.debug("start onBluetoothConnectionStateChange.");
         if (
             connectionState === AuroraConstants.ConnectionStates.IDLE &&
             previousConnectionState ===
@@ -888,6 +953,7 @@ const AuroraStreamIds = AuroraConstants.StreamIds;
 const AuroraStreamOutputIds = AuroraConstants.StreamOutputIds;
 
 export {
+    Aurora,
     AuroraConstants,
     AuroraEventIds,
     AuroraEventOutputIds,
@@ -897,28 +963,4 @@ export {
     AuroraEventList
 };
 
-Object.defineProperty(Aurora.prototype, "readFile", {
-    value: require("./AuroraCmdReadFile")
-});
-Object.defineProperty(Aurora.prototype, "downloadFile", {
-    value: require("./AuroraCmdDownloadFile")
-});
-Object.defineProperty(Aurora.prototype, "uploadFile", {
-    value: require("./AuroraCmdUploadFile")
-});
-Object.defineProperty(Aurora.prototype, "flashFile", {
-    value: require("./AuroraCmdFlashFile")
-});
-Object.defineProperty(Aurora.prototype, "getProfiles", {
-    value: require("./AuroraCmdGetProfiles")
-});
-Object.defineProperty(Aurora.prototype, "setProfiles", {
-    value: require("./AuroraCmdSetProfiles")
-});
-Object.defineProperty(Aurora.prototype, "downloadStream", {
-    value: require("./AuroraCmdDownloadStream")
-});
-Object.defineProperty(Aurora.prototype, "playBuzzSong", {
-    value: require("./AuroraCmdPlayBuzzSong")
-});
 export default new Aurora();

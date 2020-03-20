@@ -8,7 +8,7 @@ import {
 } from "./AuroraConstants";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import moment from "moment";
-import { CmdQueue } from "./AuroraTypes";
+import { CommandResult } from "./AuroraTypes";
 
 enum CmdStates {
     NO_CMD = 0,
@@ -23,7 +23,7 @@ export default class AuroraSerialParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
     private cmdWatchdogTimer?: NodeJS.Timeout;
     private regexLog: RegExp;
-    private cmd?: CmdQueue;
+    private cmd?: CommandResult<unknown>;
     private unparsedBuffer?: Buffer;
     private cmdState: CmdStates;
     constructor() {

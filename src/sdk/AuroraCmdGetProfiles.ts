@@ -1,12 +1,13 @@
 import split from "split";
 import { ConnectorTypes } from "./AuroraConstants";
 import { AuroraProfile } from "./AuroraTypes";
+import { Aurora } from "./Aurora";
 
 const AuroraCmdGetProfiles = async function(
+    this: Aurora,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
-    // @ts-ignore
-    const profileListReadResp = await this.readFile(
+    const profileListReadResp: any = await this.readFile(
         "profiles/_profiles.list",
         split(),
         connectorType
@@ -33,7 +34,6 @@ const AuroraCmdGetProfiles = async function(
             return profile;
         });
 
-    // @ts-ignore
     const { response } = await this.queueCmd(
         "sd-dir-read profiles 1 *.prof",
         connectorType
@@ -42,7 +42,6 @@ const AuroraCmdGetProfiles = async function(
 
     for (const profile of response) {
         try {
-            // @ts-ignore
             const readCmdWithResponse = await this.readFile(
                 `profiles/${profile.name}`,
                 false,
@@ -51,6 +50,7 @@ const AuroraCmdGetProfiles = async function(
 
             const p = {
                 active: false,
+                // @ts-ignore
                 content: readCmdWithResponse.output,
                 key: "_" + profile.name
             };

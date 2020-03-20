@@ -1,7 +1,9 @@
 import fs from "fs";
 import fetch from "node-fetch";
+import { Aurora } from "./Aurora";
 
-const AuroraCmdSyncTime = function(
+const AuroraCmdUploadFile = async function(
+    this: Aurora,
     srcPath: string,
     destPath: string,
     // @ts-ignore
@@ -14,8 +16,7 @@ const AuroraCmdSyncTime = function(
         });
     }
 
-    // @ts-ignore
     return this.writeFile(destPath, fs.createReadStream(srcPath));
 };
 
-export default AuroraCmdSyncTime;
+export default AuroraCmdUploadFile;

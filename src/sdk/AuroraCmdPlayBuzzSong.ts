@@ -1,15 +1,16 @@
 import { buzzSongObjToCmd } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 
-const AuroraCmdPlayBuzzSong = function(
+import { Aurora } from "./Aurora";
+const AuroraCmdPlayBuzzSong = async function(
+    this: Aurora,
     buzzSong: unknown,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): unknown {
+): Promise<unknown> {
     const cmd =
         typeof buzzSong == "string" ? buzzSong : buzzSongObjToCmd(buzzSong);
 
-    // @ts-ignore
-    return this.queueCmd(cmd, connectorType);
+    return await this.queueCmd(cmd, connectorType);
 };
 
 export default AuroraCmdPlayBuzzSong;

@@ -4,8 +4,10 @@ import fs from "fs";
 import { promisify } from "./util";
 import AuroraTransformBinary from "./AuroraTransformBinary";
 import { DataTypes, ConnectorTypes } from "./AuroraConstants";
+import { Aurora } from "./Aurora";
 
 const AuroraCmdDownloadStream = async function(
+    this: Aurora,
     srcPath: string,
     destDir: string,
     type: DataTypes,
@@ -30,10 +32,8 @@ const AuroraCmdDownloadStream = async function(
             writeStream = transform;
         }
 
-        // @ts-ignore
         await this.readFile(srcPath, writeStream, connector);
 
-        // @ts-ignore
         await this.queueCmd(`sd-file-del ${srcPath}`);
 
         return path.join(destDir, file);

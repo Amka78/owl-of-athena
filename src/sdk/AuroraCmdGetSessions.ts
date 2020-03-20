@@ -4,8 +4,10 @@ import moment from "moment";
 import stream from "stream";
 import { promisifyStream } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
+import { Aurora } from "./Aurora";
 
 const AuroraCmdGetSessions = async function(
+    this: Aurora,
     isFile = false,
     filter?: string,
     connector: ConnectorTypes = ConnectorTypes.ANY
@@ -14,15 +16,18 @@ const AuroraCmdGetSessions = async function(
     let dirReadCmd;
 
     try {
-        // @ts-ignore
+        console.debug("Start sd-dir-read.");
         dirReadCmd = await this.queueCmd(
             `sd-dir-read sessions ${isFile ? 1 : 0} ${filter}`,
             connector
         );
+        console.debug("Completed sd-dir-read:", dirReadCmd);
     } catch (error) {
+        console.warn(error);
         return [];
     }
 
+    // @ts-ignore
     const sessionDirs = dirReadCmd.response;
 
     for (const sessionDir of sessionDirs) {
@@ -32,11 +37,13 @@ const AuroraCmdGetSessions = async function(
         try {
             if (sessionDir.isFile) continue;
 
-            // @ts-ignore
+            console.debug("Start sd-dir-read command.");
             const sessionDirReadCmd = await this.queueCmd(
                 `sd-dir-read ${sessionDir.name} 1`
             );
+            console.debug("Completed sd-dir-read command:", sessionDirReadCmd);
 
+            // @ts-ignore
             sessionDirFiles = sessionDirReadCmd.response;
 
             const sessionTxtFile = sessionDirFiles.find(
@@ -51,13 +58,16 @@ const AuroraCmdGetSessions = async function(
             )
                 continue;
 
+            console.debug("Start readFile.");
             // @ts-ignore
             readSessionTxtCmd = await this.readFile(
                 `${sessionDir.name}/session.txt`,
                 false,
                 connector
             );
+            console.debug("Completed readFiles:", readSessionTxtCmd);
         } catch (error) {
+            console.warn(error);
             continue;
         }
 

@@ -11,7 +11,7 @@ import {
     ConnectionStates,
     DeviceEventList
 } from "./AuroraConstants";
-import { AuroraCommand, BluetoothStream, AuroraEvent } from "./AuroraTypes";
+import { BluetoothStream, AuroraEvent, CommandResult } from "./AuroraTypes";
 import noble from "noble";
 
 const INIT_DELAY_MS = 5000;
@@ -223,7 +223,7 @@ export class AuroraBluetooth extends EventEmitter {
         );
     }
 
-    public async writeCmd(cmd: unknown): Promise<AuroraCommand> {
+    public async writeCmd(cmd: string): Promise<CommandResult<unknown>> {
         //check for error condition
         if (this.connectionState != ConnectionStates.IDLE) {
             switch (this.connectionState) {
@@ -255,7 +255,7 @@ export class AuroraBluetooth extends EventEmitter {
             try {
                 this.bluetoothParser.once(
                     "cmdResponse",
-                    (cmdResponse: AuroraCommand) => {
+                    (cmdResponse: CommandResult<unknown>) => {
                         this.setConnectionState(ConnectionStates.IDLE);
 
                         cmdResponse.origin = "bluetooth";

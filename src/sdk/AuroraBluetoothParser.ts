@@ -7,12 +7,12 @@ import {
     STREAM_ID_MAX,
     StreamIdsToNames
 } from "./AuroraConstants";
-import { AuroraCommand, BluetoothStream } from "./AuroraTypes";
+import { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 export class AuroraBluetoothParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
     private cmdWatchdogTimer: any;
-    private cmd?: AuroraCommand;
+    private cmd?: CommandResult<unknown>;
     private cmdState: BleCmdStates;
     constructor() {
         super();
@@ -31,7 +31,7 @@ export class AuroraBluetoothParser extends EventEmitter {
         this.cmdState = BleCmdStates.IDLE;
     }
 
-    public setCmd(cmd: unknown): void {
+    public setCmd(cmd: string): void {
         if (this.cmdState != BleCmdStates.IDLE)
             throw new Error("Parser command state not idle.");
 

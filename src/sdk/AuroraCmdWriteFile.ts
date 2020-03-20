@@ -2,19 +2,22 @@ import Stream from "stream";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
 
-const AuroraCmdUploadFile = function(
+const AuroraCmdUploadFile = async function(
+    this: any,
     destPath: string,
-    dataOrReadStream: string | Stream.Readable,
+    dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
     // @ts-ignore
     rename = false,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): unknown {
+): Promise<unknown> {
     const destPathSegments = destPath.split("/");
 
-    const destFileName = destPathSegments.pop();
+    /*const destFileName = destPathSegments.pop();
     const destFileDir = destPathSegments.length
         ? destPathSegments.join("/")
-        : "/";
+        : "/";*/
+    const destFileName = destPath;
+    const destFileDir = "/";
 
     let crc: number;
     let stream: Stream.Readable;
@@ -40,14 +43,14 @@ const AuroraCmdUploadFile = function(
         //crc = crc32.unsigned(chunk, crc);
     });
 
-    // @ts-ignore
     return this.queueCmd(
-        `sd-file-write ${destFileName} ${destFileDir} ${rename ? 1 : 0} 1 500`,
+        `sd-file-write ${destFileName} ${destFileDir} ${
+            rename ? 1 : 0
+        } 1 500 1`,
         connectorType,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         (_cmd: unknown): void => {
-            // @ts-ignore
-            this.once("cmdInputRequested", inputStream => {
+            console.debug(_cmd);
+            this.once("cmdInputRequested", (inputStream: any) => {
                 stream.pipe(inputStream);
                 stream.resume();
             });

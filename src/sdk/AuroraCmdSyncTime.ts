@@ -1,8 +1,10 @@
 import { ConnectorTypes } from "./AuroraConstants";
+import { Aurora } from "../sdk";
 
-const AuroraCmdSyncTime = function(
+const AuroraCmdSyncTime = async function(
+    this: Aurora,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): unknown {
+): Promise<number> {
     const date = new Date();
     const msAfterMidnight =
         date.getHours() * 3600000 +
@@ -10,8 +12,7 @@ const AuroraCmdSyncTime = function(
         date.getSeconds() * 1000 +
         date.getMilliseconds();
 
-    // @ts-ignore
-    return this.queueCmd(
+    return await this.queueCmd(
         `clock-set ${date.getFullYear()} ${date.getMonth() +
             1} ${date.getDate()} ${msAfterMidnight}`,
         connectorType

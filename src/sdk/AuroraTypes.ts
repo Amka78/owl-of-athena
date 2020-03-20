@@ -2,17 +2,24 @@ import { AuroraBluetooth } from "./AuroraBluetooth";
 import { AuroraUsb } from "./AuroraUsb";
 import { ConnectorTypes, EventIds } from "./AuroraConstants";
 import Stream from "stream";
-export type AuroraCommand = {
-    command: unknown;
-    response?: unknown;
-    error: boolean;
-    origin?: string;
-};
 
 export type AuroraResponse = {
     origin?: string;
-    error?: unknown;
+    error: boolean;
     response?: unknown;
+};
+
+export type EventResponse = {
+    ble: boolean;
+    console: boolean;
+    count: number;
+    event: string;
+    handler: boolean;
+    id: number;
+    log: boolean;
+    outputMask: number;
+    profile: boolean;
+    session: boolean;
 };
 
 export type AuroraEvent = {
@@ -43,19 +50,30 @@ export type BluetoothStream = {
     origin?: string;
 };
 
-export type CmdQueue = {
+export type CommandResolverType = (
+    value?: void | PromiseLike<void> | undefined | CommandResult<any>
+) => void;
+export type CommandRejectType = (rejected?: any) => void;
+export type Command = {
+    commandStr: string;
+    connectorType: ConnectorTypes;
+    connector?: AuroraBluetooth | AuroraUsb;
+    onCmdBegin?: Function;
+    onCmdEnd?: Function;
+    resolve: CommandResolverType;
+    reject: CommandRejectType;
+    inputStream?: Stream.Writable;
+    outputStream?: Stream.Readable;
+};
+
+export type CommandResult<T> = {
     origin?: string;
     args?: string[];
     command?: string;
-    commandStr?: string;
-    connector?: AuroraBluetooth | AuroraUsb;
     connectorType?: ConnectorTypes;
-    error?: unknown;
-    onCmdBegin?: Function;
-    onCmdEnd?: Function;
-    resolve?: Function;
-    reject?: Function;
-    response?: unknown;
+    connector?: AuroraBluetooth | AuroraUsb;
+    error?: boolean;
+    response?: T;
     inputStream?: Stream.Writable;
     outputStream?: Stream.Readable;
     beginTime?: number;

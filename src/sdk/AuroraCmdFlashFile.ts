@@ -1,14 +1,17 @@
-export default function(
+import { Aurora } from "./Aurora";
+
+const AuroraCmdFlashFile = async function(
+    this: Aurora,
     fwPath: string,
-    fwVersion = false,
+    fwVersion: number | false | undefined = false,
     fwType = "app"
-): unknown {
+): Promise<unknown> {
     //TODO: this condition is for backwards compatibility
     const filename = fwType == "app" ? "aurora.hex" : `aurora-${fwType}.hex`;
 
-    // @ts-ignore
     return this.uploadFile(fwPath, filename).then(() => {
-        // @ts-ignore
         return this.flash(filename, fwVersion, fwType);
     });
-}
+};
+
+export default AuroraCmdFlashFile;

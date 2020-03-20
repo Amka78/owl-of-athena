@@ -1,23 +1,23 @@
 import pick from "lodash/pick";
 import { ConnectorTypes } from "./AuroraConstants";
 import { AuroraProfile } from "./AuroraTypes";
+import { Aurora } from "./Aurora";
 
-export async function AuroraCmdSetProfiles(
+const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
+    this: Aurora,
     newProfiles: Array<AuroraProfile>,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<Array<AuroraProfile>> {
-    // @ts-ignore
     await this.queueCmd("sd-dir-del profiles");
-    // @ts-ignore
     await this.queueCmd("sd-dir-create profiles");
 
     const profiles = [];
     const profileList = [];
 
     for (let i = 0; i < newProfiles.length; i++) {
-        // @ts-ignore
         const profWriteCmd = await this.writeFile(
             `profiles/${newProfiles[i].name}`,
+            // @ts-ignore
             newProfiles[i].content,
             true,
             connectorType
@@ -40,7 +40,6 @@ export async function AuroraCmdSetProfiles(
         profiles.push(profile);
     }
 
-    // @ts-ignore
     await this.writeFile(
         "profiles/_profiles.list",
         profileList.join("\r\n"),
@@ -49,4 +48,5 @@ export async function AuroraCmdSetProfiles(
     );
 
     return profiles;
-}
+};
+export default AuroraCmdSetProfiles;

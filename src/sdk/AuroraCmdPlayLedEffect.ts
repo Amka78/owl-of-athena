@@ -1,15 +1,16 @@
 import { ledEffectObjToCmd } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
+import { Aurora } from "./Aurora";
 
-const AuroraCmdPlayLedEffect = function(
+const AuroraCmdPlayLedEffect = async function(
+    this: Aurora,
     ledEffect: unknown,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): unknown {
+): Promise<unknown> {
     const cmd =
         typeof ledEffect == "string" ? ledEffect : ledEffectObjToCmd(ledEffect);
 
-    // @ts-ignore
-    return this.queueCmd(cmd, connectorType);
+    return await this.queueCmd(cmd, connectorType);
 };
 
 export default AuroraCmdPlayLedEffect;

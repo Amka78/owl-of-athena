@@ -1,15 +1,16 @@
 import { promisifyStream } from "./util";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
-import { CmdQueue } from "./AuroraTypes";
+import { CommandResult } from "./AuroraTypes";
 import Stream from "stream";
-import defaultIcon from "react-native-paper/lib/typescript/src/components/MaterialCommunityIcon";
+import { Aurora } from "./Aurora";
 
-const AuroraCmdReadFile = function(
+const AuroraCmdReadFile = async function(
+    this: Aurora,
     srcPath: string,
     writeStream: any = false,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): unknown {
+): Promise<unknown> {
     const srcPathSegments = srcPath.split("/");
 
     const srcFileName = srcPathSegments.pop();
@@ -26,11 +27,11 @@ const AuroraCmdReadFile = function(
     let crc: any;
     let stream: Stream.Readable | undefined;
 
-    // @ts-ignore
     return this.queueCmd(
         `sd-file-read ${srcFileName} ${srcFileDir} 0`,
         connectorType,
-        (cmd: CmdQueue) => {
+        // @ts-ignore
+        (cmd: CommandResult<unknown>) => {
             cmd.outputStream!.on("data", chunk => {
                 //crc = crc32.unsigned(chunk, crc);
                 crc = crc32.unsigned(chunk);
