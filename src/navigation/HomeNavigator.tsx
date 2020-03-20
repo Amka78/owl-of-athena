@@ -7,7 +7,7 @@ import {
 } from "react-navigation";
 import {
     createStackNavigator,
-    HeaderBackButtonProps,
+    StackHeaderLeftButtonProps,
     NavigationStackOptions,
     NavigationStackProp
 } from "react-navigation-stack";
@@ -72,9 +72,10 @@ const HomeNavigator = createStackNavigator(routeConfigMap, {
         >*/
         {
             return {
-                headerLeft: (props: HeaderBackButtonProps): JSX.Element => (
-                    <HeaderBackButton {...props} />
-                ),
+                headerLeft: (
+                    props: StackHeaderLeftButtonProps
+                ): JSX.Element => <HeaderBackButton {...props} />,
+                headerTitleAlign: "center",
                 headerTintColor: Colors.cyan,
                 headerStyle: CommonStyles.headerStyle,
                 headerTitleContainerStyle:
