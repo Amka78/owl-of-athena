@@ -13,9 +13,9 @@ export const AlarmView: FunctionComponent<AlarmViewProps> = (
 ) => {
     return (
         <View style={style.alarmView}>
-            <Text style={style.alarmTime}>{`${props.hours}:${(
-                "00" + props.minutes
-            ).slice(-2)}`}</Text>
+            <Text style={style.alarmTime}>{`${
+                props.hours > 12 ? props.hours - 12 : props.hours
+            }:${("00" + props.minutes).slice(-2)}`}</Text>
             <Text style={style.alarmMeridian}>
                 {props.hours > 12 ? "pm" : "am"}
             </Text>
