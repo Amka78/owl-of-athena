@@ -96,9 +96,9 @@ const camelCaseObjectKeys = (object: any): any => {
     return camelCaseObject;
 };
 
-const maskFromIds = (...ids: any[]): any => {
+/*const maskFromIds = (...ids: any[]): any => {
     return ids.reduce((mask, id) => mask + (1 << id), 0);
-};
+};*/
 
 const versionToString = (version: number): string => {
     if (!version) return "UNKNOWN";
