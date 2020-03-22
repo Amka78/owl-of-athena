@@ -63,8 +63,4 @@ export class Settings {
         this.remStimAudioPath = settings.remStimAudioPath;
         this.savedAt = settings.savedAt;
     }
-
-    public getMsAfterMidnight(): number {
-        return this.alarmHour! * 60 * 60 * 1000 + this.alarmMinute! * 60 * 1000;
-    }
 }
