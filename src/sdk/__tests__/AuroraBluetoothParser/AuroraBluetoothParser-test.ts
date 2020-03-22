@@ -140,7 +140,7 @@ const spiesNeverCalled = (
     });
 };
 
-describe("bluetoothParserTest", () => {
+describe("AuroraBluetoothParserTest", () => {
     beforeAll(() => {
         events.forEach(event =>
             eventSpies.set(
