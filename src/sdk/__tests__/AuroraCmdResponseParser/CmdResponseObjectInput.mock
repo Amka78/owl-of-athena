@@ -1,0 +1,9 @@
+key1 : value 1
+key2:value 2
+key3: 3
+Key4 :value 4
+
+key2: overwrite
+hex: 0x000F
+date: 2017-01-01 00:05:05:005
+
