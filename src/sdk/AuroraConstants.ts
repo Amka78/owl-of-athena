@@ -108,6 +108,7 @@ const EventIdsToNames = {
     [EventIds.STIM_PRESENTED]: "stim-presented",
 
     [EventIds.AWAKENING]: "awakening",
+    [EventIds.SMART_ALARM]: "smartalarm",
     [EventIds.AUTO_SHUTDOWN]: "auto-shutdown",
     [EventIds.EVENT_RESERVED1]: "rsvd1",
     [EventIds.EVENT_RESERVED2]: "rsvd2",
