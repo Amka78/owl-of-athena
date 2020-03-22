@@ -79,3 +79,9 @@ export type CommandResult<T> = {
     beginTime?: number;
     endTime?: number;
 };
+
+export type WriteFileResponse = {
+    file: string;
+    ultProf: number;
+    size: string;
+};
