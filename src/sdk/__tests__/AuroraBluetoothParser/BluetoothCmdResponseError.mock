@@ -1,0 +1,4 @@
+command:command-error
+object:Error: -1
+object:Message: Command failed.
+status:0x00,0xFF

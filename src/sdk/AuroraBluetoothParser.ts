@@ -9,6 +9,17 @@ import {
 } from "./AuroraConstants";
 import { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
+
+export enum EventList {
+    cmdResponse = "cmdResponse",
+    cmdInputRequested = "cmdInputRequested",
+    cmdResponseRead = "cmdResponseRead",
+    cmdOutputReady = "cmdOutputReady",
+    auroraEvent = "auroraEvent",
+    streamData = "streamData",
+    parseError = "parseError"
+}
+
 export class AuroraBluetoothParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
     private cmdWatchdogTimer: any;
@@ -55,7 +66,10 @@ export class AuroraBluetoothParser extends EventEmitter {
                 const streamId = dataBuffer[i];
 
                 if (streamId > STREAM_ID_MAX) {
-                    this.emit("parseError", "Invalid stream id: " + streamId);
+                    this.emit(
+                        EventList.parseError,
+                        "Invalid stream id: " + streamId
+                    );
                     continue;
                 }
 
@@ -77,7 +91,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                     }
                 }
 
-                this.emit("parseError", "Incomplete stream packet.");
+                this.emit(EventList.parseError, "Incomplete stream packet.");
             } else {
                 switch (streamDataType) {
                     case DataTypes.BOOL:
@@ -120,7 +134,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                     case DataTypes.CHAR:
                     default:
                         this.emit(
-                            "parseError",
+                            EventList.parseError,
                             "Invalid or unsupported stream data type: " +
                                 streamDataType
                         );
@@ -129,7 +143,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                 streamDataLength--;
 
                 if (!streamDataLength) {
-                    this.emit("streamData", stream);
+                    this.emit(EventList.streamData, stream);
                     stream = undefined;
                 }
             }
@@ -138,19 +152,20 @@ export class AuroraBluetoothParser extends EventEmitter {
 
     public onAuroraEventCharNotification(eventBuffer: Buffer): void {
         if (eventBuffer.length != 5) {
-            this.emit("parseError", "Incomplete event packet.");
+            this.emit(EventList.parseError, "Incomplete event packet.");
             return;
         }
 
         const eventId = eventBuffer[0];
 
         if (eventId > EVENT_ID_MAX) {
-            this.emit("parseError", "Invalid event id.");
+            this.emit(EventList.parseError, "Invalid event id.");
             return;
         }
 
-        this.emit("auroraEvent", {
+        this.emit(EventList.auroraEvent, {
             eventId,
+            // @ts-ignore
             event: EventIdsToNames[eventId],
             flags: eventBuffer.readUInt32LE(1),
             time: Date.now()
@@ -165,7 +180,10 @@ export class AuroraBluetoothParser extends EventEmitter {
         this.cmdWatchdogTimer = setTimeout(this.onCmdTimeout, 10000);
 
         if (this.cmdState != BleCmdStates.IDLE && !this.cmd) {
-            this.emit("parseError", "Invalid status change. No command set.");
+            this.emit(
+                EventList.parseError,
+                "Invalid status change. No command set."
+            );
             return;
         }
 
@@ -176,7 +194,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                     this.cmd.response = this.cmdResponseParser.getResponse();
                     this.cmd.error = statusBuffer[1] !== 0;
 
-                    this.emit("cmdResponse", this.cmd);
+                    this.emit(EventList.cmdResponse, this.cmd);
                 }
 
                 this.reset();
@@ -206,7 +224,7 @@ export class AuroraBluetoothParser extends EventEmitter {
 
             //command waiting for input
             case BleCmdStates.CMD_INPUT_REQUESTED:
-                this.emit("cmdInputRequested");
+                this.emit(EventList.cmdInputRequested);
                 clearTimeout(this.cmdWatchdogTimer);
 
                 break;
@@ -221,31 +239,31 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onCmdOutputCharNotification(output: unknown): void {
-        this.emit("cmdOutputReady", output);
+        this.emit(EventList.cmdOutputReady, output);
 
         clearTimeout(this.cmdWatchdogTimer);
         this.cmdWatchdogTimer = setTimeout(this.onCmdTimeout, 10000);
     }
 
-    private cmdDataReceiveResponseObject = (buffer: Buffer): void => {
+    public cmdDataReceiveResponseObject = (buffer: Buffer): void => {
         if (this.cmdState != BleCmdStates.CMD_RESP_OBJECT_READY)
             throw new Error("Invalid state to receive object response.");
 
         try {
             this.cmdResponseParser.parseObject(buffer.toString("ascii"));
         } catch (error) {
-            this.emit("parseError", `Failed parsing object: ${error}`);
+            this.emit(EventList.parseError, `Failed parsing object: ${error}`);
         }
     };
 
-    private cmdDataReceiveResponseTable = (buffer: Buffer): void => {
+    public cmdDataReceiveResponseTable = (buffer: Buffer): void => {
         if (this.cmdState != BleCmdStates.CMD_RESP_TABLE_READY)
             throw new Error("Invalid state to receive table response.");
 
         try {
             this.cmdResponseParser.parseTable(buffer.toString("ascii"));
         } catch (error) {
-            this.emit("parseError", `Failed parsing table: ${error}`);
+            this.emit(EventList.parseError, `Failed parsing table: ${error}`);
         }
     };
 
@@ -254,13 +272,18 @@ export class AuroraBluetoothParser extends EventEmitter {
     };
 
     private triggerCmdError = (message: string): void => {
-        this.cmd!.error = true;
-        this.cmd!.response = {
+        if (!this.cmd) {
+            this.cmd = {
+                error: false
+            };
+        }
+        this.cmd.error = true;
+        this.cmd.response = {
             error: -64,
             message
         };
 
-        this.emit("cmdResponse", this.cmd);
+        this.emit(EventList.cmdResponse, this.cmd);
 
         this.reset();
     };

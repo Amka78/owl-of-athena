@@ -1,0 +1,13 @@
+command:os-info
+object:Version String : v1.0.1
+object:Version        : 10001
+object:Board          : iWinks Aurora v1 rev3
+object:Build Date     : Jan 01 2017 - 05:05:05
+input:abcdefghijklmnopqrstuvwxyz
+input:ABCDEFGHIJKLMNOPQRSTUVWXYZ
+object:Bytes Free     : 5555
+object:Battery Level  : 100%
+object:Running Time   : 5.20 h
+object:Profile        : None
+object:Debug Mode     : OFF
+status:0x00,0x00
