@@ -1,4 +1,4 @@
-import Aurora from "./Aurora";
+import AuroraInstance, { Aurora } from "./Aurora";
 import { ConnectionStates, SleepStates } from "./AuroraConstants";
 
-export { Aurora, ConnectionStates, SleepStates };
+export { AuroraInstance, Aurora, ConnectionStates, SleepStates };
