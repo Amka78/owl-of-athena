@@ -3,9 +3,9 @@ import path from "path";
 import readline from "readline";
 import AuroraCmdResponseParser from "../../AuroraCmdResponseParser";
 
-import mockObject from "./CmdResponseObjectOutput";
-import mockTable from "./CmdResponseTableOutput";
-import mockTableCondensed from "./CmdResponseTableCondensedOutput";
+import mockObject from "../../testData/CmdResponseObjectOutput";
+import mockTable from "../../testData/CmdResponseTableOutput";
+import mockTableCondensed from "../../testData/CmdResponseTableCondensedOutput";
 describe("AuroraCmdResponseParserTest", () => {
     test("Testing response line parsing (success cases)...", () => {
         const responseTypes = [
