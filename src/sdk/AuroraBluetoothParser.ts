@@ -57,6 +57,7 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onStreamDataCharNotification(dataBuffer: Buffer): void {
+        console.debug("Raw data:", dataBuffer);
         let stream: BluetoothStream | undefined = undefined;
         let streamDataType = DataTypes.UNKNOWN;
         let streamDataLength = 0;
@@ -151,6 +152,7 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onAuroraEventCharNotification(eventBuffer: Buffer): void {
+        console.debug("Aurora Event notificated buffer:", eventBuffer);
         if (eventBuffer.length != 5) {
             this.emit(EventList.parseError, "Incomplete event packet.");
             return;
@@ -173,6 +175,7 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onCmdStatusCharNotification(statusBuffer: Buffer): void {
+        console.debug("Status notification buffer:", statusBuffer);
         this.cmdState = statusBuffer[0];
 
         clearTimeout(this.cmdWatchdogTimer);
