@@ -102,7 +102,11 @@ export const MessageKeys = {
     session_movement_label: "session_movement_label",
     session_notes_label: "session_notes_label",
     session_notes_hint_text: "session_notes_hint_text",
-
+    session_light_pie_chart_label: "session_light_pie_chart_label",
+    session_deep_pie_chart_label: "session_deep_pie_chart_label",
+    session_rem_pie_chart_label: "session_rem_pie_chart_label",
+    session_awake_pie_chart_label: "session_awake_pie_chart_label",
+    session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
     // account fragment
     account_title: "account_title",
     account_input_first_name: "account_input_first_name",

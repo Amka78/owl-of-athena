@@ -118,6 +118,11 @@ export default {
     [MessageKeys.session_movement_label]: "Movement",
     [MessageKeys.session_notes_label]: "Notes",
     [MessageKeys.session_notes_hint_text]: "tap to add a note",
+    [MessageKeys.session_light_pie_chart_label]: "Light - {0}",
+    [MessageKeys.session_deep_pie_chart_label]: "Deep - {0}",
+    [MessageKeys.session_rem_pie_chart_label]: "REM - {0}",
+    [MessageKeys.session_awake_pie_chart_label]: "Awake - {0}",
+    [MessageKeys.session_no_signal_pie_chart_label]: "No Signal - {0}",
 
     // account fragment
     [MessageKeys.account_title]: "Account",
