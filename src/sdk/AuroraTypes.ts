@@ -85,3 +85,30 @@ export type WriteFileResponse = {
     ultProf: number;
     size: string;
 };
+
+export type AuroraSessionJson = {
+    id: string;
+    user_id: string;
+    aurora_profile_id: string;
+    aurora_profile_name: string;
+    firmware_version: number;
+    app_platform: string;
+    app_version: number;
+    sleep_onset: number;
+    session_duration: number;
+    sleep_duration: number;
+    no_signal_duration: number;
+    awake_duration: number;
+    light_duration: number;
+    deep_duration: number;
+    rem_duration: number;
+    sleep_score: number;
+    incomplete: boolean;
+    starred: boolean;
+    notes?: string;
+    asleep_at: number;
+    awake_at: number;
+    create_at: number;
+    session_at: number;
+    session_url: string;
+};
