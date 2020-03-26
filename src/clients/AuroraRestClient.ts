@@ -3,7 +3,8 @@ import RestClient from "./RestClient";
 
 import { BaseUrl, TokenManager } from "../utils";
 import * as Localization from "expo-localization";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import { AuroraSession } from "../sdk/models";
+import { AuroraProfile, AuroraSessionJson } from "../sdk/AuroraTypes";
 
 /**
  * Aurora Rest API
@@ -96,6 +97,26 @@ export class AuroraRestClient extends RestClient {
             const result: Array<AuroraProfile> = await response.json();
 
             return result;
+        }
+        throw await response.json();
+    }
+
+    public async getAuroraSessions(
+        userId: string
+    ): Promise<Array<AuroraSession>> {
+        const response = await this.get(
+            `users/${userId}/aurora-sessions?\$sort[session_at]=1`,
+            {}
+        );
+
+        if (response.ok) {
+            const result: Array<AuroraSessionJson> = await response.json();
+
+            const auroraSessions = new Array<AuroraSession>();
+            result.forEach((value: AuroraSessionJson) => {
+                auroraSessions.push(new AuroraSession(value));
+            });
+            return auroraSessions;
         }
         throw await response.json();
     }
