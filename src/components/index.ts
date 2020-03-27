@@ -1,4 +1,4 @@
-import { AlarmView } from "./AlarmView";
+import { TimeView } from "./TimeView";
 import { Button } from "./Button";
 import { FlatButton } from "./FlatButton";
 import { TextBox } from "./TextBox";
@@ -18,22 +18,30 @@ import { LabeledCheckBox } from "./LabeledCheckBox";
 import { LoadingDialog } from "./LoadingDialog";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { ProfilesDialog } from "./ProfilesDialog";
+import { ProgressCircle } from "./ProgressCircle";
+import { LabeledTimeView } from "./LabeledTimeView";
+import { LabeledCircle } from "./LabeledCircle";
+import { FlexSpacer } from "./FlexSpacer";
 export {
     AudioDialog,
     AudioList as SoundList,
-    AlarmView,
+    TimeView,
     ConfirmDialog,
     CheckBox,
     ContentText,
     ContentTitle,
     DatePicker,
     ErrorText,
+    FlexSpacer,
     HeaderBackButton,
     InlineTimePicker,
     LabeledRadioButton,
     LabeledSelectorMenu,
     LabeledCheckBox,
+    LabeledTimeView,
+    LabeledCircle,
     LoadingDialog,
+    ProgressCircle,
     Button,
     FlatButton,
     TextBox,

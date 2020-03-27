@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 import {
-    AlarmView,
+    TimeView,
     Button,
     StandardView,
     ContentTitle,
@@ -17,10 +17,11 @@ export const WakingScreen: FunctionComponent = () => {
     return (
         <StandardView>
             <ContentTitle>{{ key: MessageKeys.waking_title }}</ContentTitle>
-            <AlarmView
+            <TimeView
                 hours={settings.alarmHour}
                 minutes={settings.alarmMinute}
-            ></AlarmView>
+                mode={"meridian"}
+            ></TimeView>
             <View style={{ alignItems: "center" }}>
                 <Button
                     onPress={(): void => {

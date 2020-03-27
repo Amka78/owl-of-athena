@@ -4,8 +4,10 @@ import {
     Button,
     FlatButton,
     StandardView,
-    AlarmView,
-    ErrorText
+    TimeView,
+    ErrorText,
+    LoadingDialog,
+    ConfirmDialog
 } from "../components";
 import { useNavigation } from "react-navigation-hooks";
 import {
@@ -107,10 +109,11 @@ export const HomeScreen: FunctionComponent = () => {
                 }}
             >
                 <View>
-                    <AlarmView
+                    <TimeView
                         hours={settings.alarmHour}
                         minutes={settings.alarmMinute}
-                    ></AlarmView>
+                        mode={"meridian"}
+                    ></TimeView>
                     <FlatButton>
                         {{ key: MessageKeys.home_edit_alarm_button }}
                     </FlatButton>

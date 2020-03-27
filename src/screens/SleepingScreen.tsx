@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Button, StandardView, ContentTitle, AlarmView } from "../components";
+import { Button, StandardView, ContentTitle, TimeView } from "../components";
 import { useCheckLogging, useSettingsSelector } from "../hooks";
 import { MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";
@@ -12,10 +12,11 @@ export const SleepingScreen: FunctionComponent = () => {
     return (
         <StandardView>
             <ContentTitle>{{ key: MessageKeys.sleeping_title }}</ContentTitle>
-            <AlarmView
+            <TimeView
                 hours={setting.alarmHour}
                 minutes={setting.alarmMinute}
-            ></AlarmView>
+                mode={"meridian"}
+            ></TimeView>
             <Button
                 onPress={(): void => {
                     AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
