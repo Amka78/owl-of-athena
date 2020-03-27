@@ -164,7 +164,7 @@ export const SettingsScreen: FunctionComponent = () => {
                     settings.dslEnabled = dslEnabled;
                     settings.remStimEnabled = remStimEnabled;
                     settings.remStimAudio = remStimAudio.name;
-                    settings.alarmAudioPath = remStimAudio.path;
+                    settings.remStimAudioPath = remStimAudio.path;
                     settings.savedAt = new Date();
 
                     console.log("updated Settings:", settings);
