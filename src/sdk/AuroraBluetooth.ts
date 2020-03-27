@@ -456,6 +456,8 @@ export class AuroraBluetooth extends EventEmitter {
 
         //read packets until we've read all required bytes
         while (packetCount--) {
+            // wait 10ms for prevent gatt error.
+            await sleep(10);
             //read the packet, and add it to packet array
             const packet = await this.charReadPacket(char);
             packets.push(packet);
