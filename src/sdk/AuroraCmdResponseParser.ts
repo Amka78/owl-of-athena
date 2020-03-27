@@ -27,6 +27,7 @@ export default class AuroraCmdResponseParser {
     }
 
     public parseObject(line: string): void {
+        console.debug("Parse target line:", line);
         if (line.length > 120)
             throw new Error("Line exceeded max length of 120 bytes.");
 
@@ -49,6 +50,7 @@ export default class AuroraCmdResponseParser {
     }
 
     public parseTable(line: string): void {
+        console.debug("parse target table:", line);
         if (line.length > 120)
             throw new Error("Line exceeded max length of 120 bytes.");
 
@@ -85,6 +87,7 @@ export default class AuroraCmdResponseParser {
     }
 
     public parseDetect(line: string): void {
+        console.debug("parse detect line:", line);
         if (line.length > 120)
             throw new Error("Line exceeded max length of 120 bytes.");
 
