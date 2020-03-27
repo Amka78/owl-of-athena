@@ -15,7 +15,6 @@ import { Colors } from "../constants";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
-import { Platform } from "react-native";
 
 const routeConfigMap: NavigationRouteConfigMap<
     NavigationBottomTabOptions,
