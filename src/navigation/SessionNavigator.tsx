@@ -4,7 +4,6 @@ import {
     NavigationParams,
     NavigationRoute,
     NavigationRouteConfigMap
-    //NavigationScreenConfigProps
 } from "react-navigation";
 import {
     createStackNavigator,
@@ -36,7 +35,13 @@ const routeConfigMap: NavigationRouteConfigMap<
     },
     Detail: {
         path: "",
-        screen: SessionScreen
+        screen: SessionScreen,
+        navigationOptions: ({ navigation }): any => {
+            const { params } = navigation.state;
+            return {
+                title: params ? params.sessionTitle : "Detail"
+            };
+        }
     }
 };
 
