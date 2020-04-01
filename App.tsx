@@ -94,6 +94,10 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         backgroundColor: Colors.navy,
         flex: 1,
+        flexShrink: Layout.window.height,
+        height: "100%",
+        position: "absolute",
+        minHeight: Layout.window.height,
         width:
             Layout.isLargeDevice && Platform.OS === "web"
                 ? Layout.maxWidth
