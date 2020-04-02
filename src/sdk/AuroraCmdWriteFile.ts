@@ -1,16 +1,19 @@
 import Stream from "stream";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
+import { CommandResult, WriteFileResponse } from "./AuroraTypes";
 
+const checkCrcSupportedOSVersion = 30000;
 const AuroraCmdUploadFile = async function(
     this: any,
     destPath: string,
     dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
     // @ts-ignore
     rename = false,
+    osVersion = 3000,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
-    const destPathSegments = destPath.split("/");
+    //const destPathSegments = destPath.split("/");
 
     /*const destFileName = destPathSegments.pop();
     const destFileDir = destPathSegments.length
@@ -39,14 +42,15 @@ const AuroraCmdUploadFile = async function(
 
     stream.pause();
     stream.on("data", chunk => {
+        //crc = crc32.unsigned(chunk);
+        // @ts-ignore
         crc = crc32.unsigned(chunk);
-        //crc = crc32.unsigned(chunk, crc);
     });
 
-    return this.queueCmd(
+    return await this.queueCmd(
         `sd-file-write ${destFileName} ${destFileDir} ${
             rename ? 1 : 0
-        } 1 500 1`,
+        } 1 500 0 }`,
         connectorType,
         (_cmd: unknown): void => {
             console.debug(_cmd);
@@ -55,9 +59,11 @@ const AuroraCmdUploadFile = async function(
                 stream.resume();
             });
         }
-    ).then((cmdWithResponse: { response: { crc: number } }) => {
-        if (cmdWithResponse.response.crc != crc)
-            return Promise.reject("CRC failed.");
+    ).then((cmdWithResponse: { response: { crc: string } }) => {
+        if (cmdWithResponse.response.crc) {
+            const deviceCrc = parseInt(cmdWithResponse.response.crc);
+            if (deviceCrc !== crc) return Promise.reject("CRC failed.");
+        }
 
         return cmdWithResponse;
     });
