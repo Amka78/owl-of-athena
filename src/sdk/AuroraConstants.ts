@@ -21,7 +21,7 @@ enum BleCmdStates {
 enum CommandNames {
     EVENT_OUTPUT_ENABLE = "event-output-enable ",
     EVENT_OUTPUT_DISABLE = "event-output-disable",
-    PROF_UNLOAD = "prof_unload"
+    PROF_UNLOAD = "prof-unload"
 }
 
 enum ConnectorTypes {
