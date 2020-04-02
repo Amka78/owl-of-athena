@@ -3,8 +3,15 @@ import RestClient from "./RestClient";
 
 import { BaseUrl, TokenManager } from "../utils";
 import * as Localization from "expo-localization";
-import { AuroraSession } from "../sdk/models";
-import { AuroraProfile, AuroraSessionJson } from "../sdk/AuroraTypes";
+import { AuroraSession, AuroraStream, AuroraEvent } from "../sdk/models";
+import {
+    AuroraProfile,
+    AuroraSessionJson,
+    AuroraStreamJson,
+    AuroraEventJson
+} from "../sdk/AuroraTypes";
+import { EventIds } from "../sdk/AuroraConstants";
+import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
 
 /**
  * Aurora Rest API
@@ -119,6 +126,96 @@ export class AuroraRestClient extends RestClient {
             return auroraSessions;
         }
         throw await response.json();
+    }
+
+    public async getSessionStreams(
+        sessionId: string
+    ): Promise<Array<AuroraStream>> {
+        const response = await this.get(
+            `aurora-sessions/${sessionId}/streams`,
+            {}
+        );
+
+        if (response.ok) {
+            const result = await response.json();
+
+            const auroraStreams = new Array<AuroraStream>();
+            result.forEach((value: AuroraStreamJson) => {
+                auroraStreams.push(new AuroraStream(value));
+            });
+            return auroraStreams;
+        }
+        throw await response.json();
+    }
+
+    public async getSessionEvents(sessionId: string): Promise<any> {
+        const queries = {
+            movementEvents: {
+                bins: "0,5,10,15,20",
+                aurora_event_id: EventIds.MOVEMENT_MONITOR,
+                group_by: "average"
+            },
+            sleepEvents: {
+                bins: "0,5,10,15,20,25",
+                aurora_event_id: EventIds.SLEEP_TRACKER_MONITOR,
+                group_by: "duration"
+            },
+            awakeningEvents: {
+                bins: "0,15,30,45,60",
+                aurora_event_id: EventIds.AWAKENING,
+                group_by: "sum"
+            },
+            stimEvents: {
+                bins: "0,15,30,45,60",
+                aurora_event_id: EventIds.STIM_PRESENTED,
+                group_by: "count"
+            },
+            buttonEvents: {
+                bins: "0,15,30,45,60",
+                aurora_event_id: EventIds.BUTTON_MONITOR,
+                flags: 1,
+                group_by: "sum"
+            }
+        };
+
+        return Promise.all(
+            Object.entries(queries).map(async ([eventIndex, eventQuery]) => {
+                return this.get(
+                    `aurora-sessions/${sessionId}/events`,
+                    eventQuery
+                ).then(async (response: Response) => {
+                    const result = await response.json();
+
+                    const auroraEvents = Array<AuroraEvent>();
+                    result.forEach((value: AuroraEventJson) => {
+                        auroraEvents.push(new AuroraEvent(value));
+                    });
+
+                    // @ts-ignore
+                    queries[eventIndex] = auroraEvents;
+                });
+            })
+        ).then(() => queries);
+    }
+
+    public async getSessionDetails(
+        sessionId: string
+    ): Promise<AuroraSessionDetail> {
+        const streams = await this.getSessionStreams(sessionId);
+        const events = await this.getSessionEvents(sessionId);
+
+        const sessionDetail = new AuroraSessionDetail(
+            sessionId,
+            streams,
+            events.awakeningEvents,
+            events.buttonEvents,
+            events.movementEvents,
+            events.sleepEvents,
+            events.stimEvents
+        );
+
+        console.debug("sessionDetail:", sessionDetail);
+        return sessionDetail;
     }
 }
 const getToken = async (): Promise<string | undefined> => {
