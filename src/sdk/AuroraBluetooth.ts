@@ -270,12 +270,16 @@ export class AuroraBluetooth extends EventEmitter {
                     Buffer.from([BleCmdStates.IDLE])
                 );
 
+                await sleep(10);
+
                 //write the actual command string as ascii (max 128bytes)
                 await this.charWrite(
                     this.cmdDataChar!,
                     // @ts-ignore
                     Buffer.from(cmd, "ascii")
                 );
+
+                await sleep(10);
 
                 //let the parser know the command too
                 this.bluetoothParser.setCmd(cmd);
@@ -285,6 +289,7 @@ export class AuroraBluetooth extends EventEmitter {
                     this.cmdStatusChar!,
                     Buffer.from([BleCmdStates.CMD_EXECUTE])
                 );
+                await sleep(10);
             } catch (error) {
                 this.bluetoothParser.reset();
                 this.bluetoothParser.removeAllListeners("cmdResponse");
@@ -457,9 +462,9 @@ export class AuroraBluetooth extends EventEmitter {
         //read packets until we've read all required bytes
         while (packetCount--) {
             // wait 10ms for prevent gatt error.
-            await sleep(10);
             //read the packet, and add it to packet array
             const packet = await this.charReadPacket(char);
+            await sleep(10);
             packets.push(packet);
         }
 
