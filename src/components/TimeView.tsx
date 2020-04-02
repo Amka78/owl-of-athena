@@ -4,8 +4,9 @@ import { Colors, Dimens, Fonts } from "../constants";
 export type TimeViewMode = "meridian" | "time";
 
 type TimeViewProps = {
-    alarmTimeStyle?: TextStyle;
-    alarmMeridianStyle?: TextStyle;
+    timeViewStyle?: TextStyle;
+    timeStyle?: TextStyle;
+    timeMeridianStyle?: TextStyle;
     hours: number;
     minutes: number;
     mode: TimeViewMode;
@@ -14,10 +15,12 @@ export const TimeView: FunctionComponent<TimeViewProps> = (
     props: TimeViewProps
 ) => {
     return (
-        <View style={style.alarmView}>
-            <Text style={style.alarmTime}>{getTimeText(props)}</Text>
+        <View style={[style.alarmView, props.timeViewStyle]}>
+            <Text style={[style.alarmTime, props.timeStyle]}>
+                {getTimeText(props)}
+            </Text>
             {props.mode === "meridian" ? (
-                <Text style={style.alarmMeridian}>
+                <Text style={[style.alarmMeridian, props.timeMeridianStyle]}>
                     {props.hours > 12 ? "pm" : "am"}
                 </Text>
             ) : (
@@ -37,12 +40,12 @@ const style = StyleSheet.create({
     alarmTime: {
         color: Colors.cyan,
         fontFamily: Fonts.primarySemiBold,
-        fontSize: Dimens.home_alarm_time_text_size
+        fontSize: 20
     },
     alarmMeridian: {
         color: Colors.cyan,
         fontFamily: Fonts.primaryRegular,
-        fontSize: Dimens.home_alarm_meridian_text_size
+        fontSize: 20
     }
 });
 
@@ -54,7 +57,7 @@ function getTimeText(props: TimeViewProps): string {
             "00" + props.minutes
         ).slice(-2)}`;
     } else {
-        timeText = `${props.hours}h ${("00" + props.minutes).slice(-2)}m`;
+        timeText = `${props.hours ? props.hours + "h" : ""} ${props.minutes}m`;
     }
     return timeText;
 }

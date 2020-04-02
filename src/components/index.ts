@@ -18,10 +18,11 @@ import { LabeledCheckBox } from "./LabeledCheckBox";
 import { LoadingDialog } from "./LoadingDialog";
 import { ConfirmDialog } from "./ConfirmDialog";
 import { ProfilesDialog } from "./ProfilesDialog";
-import { ProgressCircle } from "./ProgressCircle";
 import { LabeledTimeView } from "./LabeledTimeView";
-import { LabeledCircle } from "./LabeledCircle";
 import { FlexSpacer } from "./FlexSpacer";
+import { SessionChartPie } from "./SessionChartPie";
+import { SessionSleepChart } from "./SessionSleepChart";
+import { SessionTimeView } from "./SessionTimeView";
 export {
     AudioDialog,
     AudioList as SoundList,
@@ -39,9 +40,10 @@ export {
     LabeledSelectorMenu,
     LabeledCheckBox,
     LabeledTimeView,
-    LabeledCircle,
     LoadingDialog,
-    ProgressCircle,
+    SessionChartPie,
+    SessionSleepChart,
+    SessionTimeView,
     Button,
     FlatButton,
     TextBox,

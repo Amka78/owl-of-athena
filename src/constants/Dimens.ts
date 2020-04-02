@@ -1,3 +1,8 @@
+import Layout from "./Layout";
+
+const session_margin_left = 30;
+const session_margin_right = 30;
+
 export default {
     toolbar_title_text_size: 14,
     toolbar_button_text_size: 14,
@@ -61,9 +66,22 @@ export default {
 
     // session fragment dimensions
     session_label_text_size: 20,
-    session_time_text_size: 28,
     session_sleep_score_text_size: 48,
     session_notes_text_size: 20,
+    session_margin_left: session_margin_left,
+    session_margin_right: session_margin_right,
+    session_chart_width:
+        Layout.window.fixedWidth - (session_margin_left + session_margin_right),
+    session_radial_progress_chart_width: Layout.isSmallDevice ? 45 : 90,
+    session_radial_progress_chart_height: Layout.isSmallDevice ? 45 : 90,
+    session_radial_progress_chart_font_size: Layout.isSmallDevice ? 25 : 50,
+    session_time_text_size: Layout.isSmallDevice ? 15 : 30,
+    session_alarm_meridian_text_size: Layout.isSmallDevice ? 11 : 22,
+    session_percent_label_size: Layout.isSmallDevice ? 6 : 15,
+    session_category_label_size: Layout.isSmallDevice ? 10 : 20,
+    session_chart_pie_outer_radius: Layout.isSmallDevice ? 63 : 146,
+    session_chart_pie_inner_radius: Layout.isSmallDevice ? 40 : 80,
+    session_chart_pie_category_label_padding: Layout.isSmallDevice ? 18 : 36,
 
     // session list fragment dimensions
     session_list_item_padding: 12,

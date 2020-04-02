@@ -5,7 +5,7 @@ const height = Dimensions.get("window").height;
 const maxWidth = 1280;
 
 export default {
-    isSmallDevice: width < 375,
+    isSmallDevice: width <= 414 || height < 667,
     isLargeDevice: width > 1280,
     window: {
         height,
