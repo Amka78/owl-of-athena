@@ -27,10 +27,12 @@ import AuroraCmdReadFile from "./AuroraCmdReadFile";
 import AuroraCmdDownloadFile from "./AuroraCmdDownloadFile";
 import AuroraCmdDownloadStream from "./AuroraCmdDownloadStream";
 import AuroraCmdGetProfiles from "./AuroraCmdGetProfiles";
-import { AuroraCmdSetProfiles } from "./AuroraCmdSetProfiles";
+import AuroraCmdSetProfiles from "./AuroraCmdSetProfiles";
 import AuroraCmdFlashFile from "./AuroraCmdFlashFile";
 import AuroraCmdPlayBuzzSong from "./AuroraCmdPlayBuzzSong";
 import AuroraCmdUploadFile from "./AuroraCmdWriteFile";
+import AuroraCmdFileInfo from "./AuroraCmdFileInfo";
+import AuroraCmdGetUnSyncedSessions from "./AuroraCmdGetUnsyncedSessions";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
@@ -47,7 +49,8 @@ type SetProfiles = typeof AuroraCmdSetProfiles;
 type FlashFile = typeof AuroraCmdFlashFile;
 type PlayBuzzSong = typeof AuroraCmdPlayBuzzSong;
 type UploadFile = typeof AuroraCmdUploadFile;
-
+type ReadFileInfo = typeof AuroraCmdFileInfo;
+type GetUnsyncedSessions = typeof AuroraCmdGetUnSyncedSessions;
 enum AuroraEventList {
     usbConnectionChange = "usbConnectionChange",
     bluetoothConnectionChange = "bluetoothConnectionChange",
@@ -139,7 +142,7 @@ class Aurora extends EventEmitter {
 
         //this scans for MSD disks that could potentially be the Aurora
         // @ts-ignore
-        this.findMsdDrive().then(this.msdSetAttached, true);
+        //this.findMsdDrive().then(this.msdSetAttached, true);
 
         this.watchUsb();
     }
@@ -523,7 +526,7 @@ class Aurora extends EventEmitter {
     private async getOsInfo(
         connectorType: AuroraConstants.ConnectorTypes
     ): Promise<unknown> {
-        return this.queueCmd("os-info 1", connectorType)
+        return await this.queueCmd("os-info 1", connectorType)
             .catch(cmdWithResponse => {
                 //if the "too many arguments" error, then we'll reissue the command without params
                 if (cmdWithResponse.response.error === 3) {
@@ -687,8 +690,16 @@ class Aurora extends EventEmitter {
         return AuroraCmdWriteFile;
     }
 
+    public get readFileInfo(): ReadFileInfo {
+        return AuroraCmdFileInfo;
+    }
+
     public get syncTime(): SyncTime {
         return AuroraCmdSyncTime;
+    }
+
+    public get getUsyncedSessions(): GetUnsyncedSessions {
+        return AuroraCmdGetUnSyncedSessions;
     }
 
     public get getSessions(): GetSessions {
@@ -868,18 +879,19 @@ class Aurora extends EventEmitter {
         }
     };
 
-    private onBluetoothConnectionStateChange = (
+    private onBluetoothConnectionStateChange = async (
         connectionState: AuroraConstants.ConnectionStates,
         previousConnectionState: AuroraConstants.ConnectionStates
-    ): void => {
+    ): Promise<void> => {
         console.debug("start onBluetoothConnectionStateChange.");
         if (
             connectionState === AuroraConstants.ConnectionStates.IDLE &&
             previousConnectionState ===
                 AuroraConstants.ConnectionStates.CONNECTING
         ) {
-            this.getOsInfo(AuroraConstants.ConnectorTypes.BLUETOOTH)
+            await this.getOsInfo(AuroraConstants.ConnectorTypes.BLUETOOTH)
                 .then((cmd: any): void => {
+                    console.debug("Start bluetoothConnectionChange:", cmd);
                     this.emit(
                         this.isFlashing
                             ? AuroraEventList.flashConnectionChange
