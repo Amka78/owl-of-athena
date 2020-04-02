@@ -38,7 +38,7 @@ export class TestHelper {
      * TestIDを利用してComponetのPropsを取得します。
      *
      * @static
-     * @template T　Propsの型を指定
+     * @template T Propsの型を指定
      * @param {ShallowWrapper} component
      * @param {string} name
      * @param {string} testId
