@@ -1,16 +1,23 @@
 import { UserActions, login, logout, updateUser } from "./UserActions";
 import { SettingsActions, updateSettings } from "./SettingsActions";
 import { ProfilesActions, updateProfiles } from "./ProfilesAction";
-import { SessionsActions, updateSessions } from "./SessionsActions";
+import {
+    SessionActions,
+    cacheSessions,
+    selectSession,
+    selectSessionDetail
+} from "./SessionsActions";
 export {
     UserActions,
     login,
     logout,
     updateUser,
-    SessionsActions,
+    SessionActions,
     SettingsActions,
     ProfilesActions,
-    updateSessions,
+    cacheSessions,
     updateSettings,
-    updateProfiles
+    updateProfiles,
+    selectSession,
+    selectSessionDetail
 };

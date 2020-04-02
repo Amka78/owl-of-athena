@@ -4,8 +4,8 @@ import { RootState } from "../state";
 import { AuroraSession } from "../sdk/models";
 
 const clientSelector = (state: RootState): Array<AuroraSession> =>
-    state.aurora.sessionList;
+    state.session.sessionList;
 
-export const useSessionsSelector = (): Array<AuroraSession> => {
+export const useSessionListSelector = (): Array<AuroraSession> => {
     return useSelector(clientSelector);
 };

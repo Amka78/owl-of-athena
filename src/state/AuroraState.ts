@@ -5,5 +5,4 @@ export type AuroraState = {
     userSettings: Settings;
     settingList: Array<Settings>;
     profileList: Array<AuroraProfile>;
-    sessionList: Array<AuroraSession>;
 };

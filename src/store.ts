@@ -4,6 +4,7 @@ import logger from "redux-logger";
 
 import { AuroraReducers, UserInfoReducers } from "./reducers";
 import { AsyncStorage } from "react-native";
+import SessionReducers from "./reducers/SessionReducers";
 
 const persitConfig = {
     key: "root",
@@ -12,6 +13,7 @@ const persitConfig = {
 
 const appReducer = combineReducers({
     aurora: AuroraReducers,
+    session: SessionReducers,
     userInfo: UserInfoReducers
 });
 
