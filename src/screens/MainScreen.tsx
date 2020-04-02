@@ -1,80 +1,33 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { View } from "react-native";
 import { MainContainer } from "../navigation";
 import { FlatButton, LoadingDialog, ConfirmDialog } from "../components";
 import { Colors, MessageKeys } from "../constants";
-import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
+import { AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
+import { AuroraOSInfo } from "../sdk/models";
 import { useNavigation } from "react-navigation-hooks";
+import { NavigationState } from "react-navigation";
 export const MainScreen: FunctionComponent = () => {
+    const { navigate } = useNavigation();
     const [connect, setConnect] = useState<ConnectionStates>(
         ConnectionStates.DISCONNECTED
     );
+    const [error, setError] = useState<string>("");
 
-    const { navigate } = useNavigation();
-    const onConnectionStateChange = (connect: boolean): void => {
-        connect
-            ? setConnect(ConnectionStates.CONNECTED)
-            : setConnect(ConnectionStates.DISCONNECTED);
-    };
-
-    useEffect(() => {
-        AuroraManagerInstance.on(
-            AuroraManagetEventList.onConnectionChange,
-            onConnectionStateChange
-        );
-        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
-            navigate("Sleeping");
-        });
-        AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
-            navigate("Awake");
-        });
-        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
-            navigate("Waking");
-        });
-        AuroraManagerInstance.on(
-            AuroraManagetEventList.onAuroraReady,
-            (batteryLevel: number) => {
-                if (batteryLevel < 25) {
-                    ConfirmDialog.show({
-                        title: {
-                            key: MessageKeys.aurora_low_battery_dialog_title
-                        },
-                        message: {
-                            key: MessageKeys.aurora_low_battery_dialog_message,
-                            restParam: [batteryLevel]
-                        },
-                        isCancelable: false
-                    });
-                } else {
-                    const unsyncedSession = AuroraManagerInstance.getUnsyncedSessions();
-
-                    if (
-                        unsyncedSession &&
-                        AuroraManagerInstance.isConfiguring
-                    ) {
-                        ConfirmDialog.show({
-                            title: {
-                                key:
-                                    MessageKeys.aurora_unsynced_sessions_dialog_title
-                            },
-                            message: {
-                                key:
-                                    MessageKeys.aurora_unsynced_sessions_dialog_message,
-                                restParam: [unsyncedSession.length]
-                            }
-                        });
-                    }
-                }
-            }
-        );
-        return (): void => {
-            return;
-        };
-    }, [navigate]);
     return (
         <View style={{ flex: 1 }}>
-            <MainContainer></MainContainer>
+            <MainContainer
+                onNavigationStateChange={(
+                    _prevNavigationState: NavigationState,
+                    _nextNavigationState: NavigationState,
+                    action: any
+                ): void => {
+                    if (action.routeName === "Logout") {
+                        navigate("Unauthenticated");
+                    }
+                }}
+            ></MainContainer>
             <FlatButton
                 contentStyle={{
                     backgroundColor:

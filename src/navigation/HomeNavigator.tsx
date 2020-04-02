@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
@@ -62,6 +62,9 @@ const routeConfigMap: NavigationRouteConfigMap<
         navigationOptions: {
             headerTitle: Message.get(MessageKeys.waking_title)
         }
+    },
+    Logout: {
+        screen: (): JSX.Element => <View></View>
     }
 };
 
