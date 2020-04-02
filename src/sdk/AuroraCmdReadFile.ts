@@ -8,9 +8,12 @@ import { Aurora } from "./Aurora";
 const AuroraCmdReadFile = async function(
     this: Aurora,
     srcPath: string,
-    writeStream: any = false,
+    writeStream: boolean,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
+    console.debug("start AuroraCmdReadFile.");
+    console.debug("srcPath:", srcPath);
+    console.debug("writeStream:", writeStream);
     const srcPathSegments = srcPath.split("/");
 
     const srcFileName = srcPathSegments.pop();
@@ -27,8 +30,8 @@ const AuroraCmdReadFile = async function(
     let crc: any;
     let stream: Stream.Readable | undefined;
 
-    return this.queueCmd(
-        `sd-file-read ${srcFileName} ${srcFileDir} 0`,
+    return await this.queueCmd(
+        `sd-file-read ${srcFileName} ${srcFileDir}`,
         connectorType,
         // @ts-ignore
         (cmd: CommandResult<unknown>) => {
@@ -49,8 +52,10 @@ const AuroraCmdReadFile = async function(
         }
     ).then((cmdWithResponse: any) => {
         return promisifyStream(stream!).then(() => {
-            if (cmdWithResponse.response.crc != crc)
-                return Promise.reject("CRC failed.");
+            console.debug("Calculated Crc:", crc);
+            console.debug("Aurora crc:", cmdWithResponse.response.crc);
+            /*if (cmdWithResponse.response.crc != crc)
+                return Promise.reject("CRC failed.");*/
 
             cmdWithResponse.output = writeStream
                 ? outputChunks
