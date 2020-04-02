@@ -1,25 +1,19 @@
-import AuroraTransformObject from "./AuroraTransformObject";
-import AuroraSessionParser from "./AuroraSessionParser";
-import moment from "moment";
-import stream from "stream";
-import { promisifyStream } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
-import AuroraSessionReader from "./AuroraSessionReader";
+import { FileInfo } from "./AuroraTypes";
 
-const AuroraCmdGetSessions = async function(
+const AuroraCmdGetUnsyncedSessions = async function(
     this: Aurora,
-    isFile: boolean,
     filter?: string,
     connector: ConnectorTypes = ConnectorTypes.ANY
-): Promise<unknown> {
-    const sessions = [];
+): Promise<Array<FileInfo>> {
+    const unsyncedSessions: Array<FileInfo> = [];
     let dirReadCmd;
 
     try {
         console.debug("Start sd-dir-read.");
         dirReadCmd = await this.queueCmd(
-            `sd-dir-read sessions ${isFile ? 1 : 0} ${filter ? filter : ""}`,
+            `sd-dir-read sessions 0 ${filter ? filter : ""}`,
             connector
         );
         console.debug("Completed sd-dir-read:", dirReadCmd);
@@ -32,7 +26,7 @@ const AuroraCmdGetSessions = async function(
     const sessionDirs = dirReadCmd.response;
 
     for (const sessionDir of sessionDirs) {
-        let readSessionTxtCmd;
+        let readFileInfo;
         let sessionDirFiles;
 
         try {
@@ -59,29 +53,23 @@ const AuroraCmdGetSessions = async function(
             )
                 continue;
 
-            console.debug("Start readFile.");
-
-            readSessionTxtCmd = await this.readFile(
+            console.debug("Start readFileInfo.");
+            readFileInfo = await this.readFileInfo(
                 `${sessionDir.name}/session.txt`,
-                false,
                 connector
             );
-            console.debug("Completed readFiles:", readSessionTxtCmd);
+            console.debug("Completed readFileInfo:", readFileInfo);
         } catch (error) {
             console.warn(error);
             continue;
         }
 
-        const session = await AuroraSessionReader.read(
-            sessionDir.name,
-            readSessionTxtCmd.output,
-            sessionDirFiles
-        );
-
-        sessions.push(session);
+        if (readFileInfo.size) {
+            unsyncedSessions.push(readFileInfo);
+        }
     }
 
-    return sessions;
+    return unsyncedSessions;
 };
 
-export default AuroraCmdGetSessions;
+export default AuroraCmdGetUnsyncedSessions;
