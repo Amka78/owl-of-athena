@@ -112,3 +112,30 @@ export type AuroraSessionJson = {
     session_at: number;
     session_url: string;
 };
+
+export type FileInfo = {
+    file: string;
+    size?: number;
+};
+
+export type AuroraStreamJson = {
+    aurora_session_id: string;
+    aurora_stream_id: number;
+    config: string;
+    data_type: number;
+    duration: number;
+    file: string;
+    id: number;
+    stream_at: number;
+    url: string;
+    user_id: string;
+};
+
+export type AuroraEventJson = {
+    aurora_event_id: number;
+    bins: Array<any>;
+    event_at: number;
+    flags: number;
+    id: number;
+    time: number;
+};
