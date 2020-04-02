@@ -13,7 +13,7 @@ export class AuroraSession {
     public noSignalDuration: number;
     public awakeDuration: number;
     public lightDuration: number;
-    public deepDuratin: number;
+    public deepDuration: number;
     public remDuration: number;
     public sleepScore: number;
     public incomplete: boolean;
@@ -24,6 +24,7 @@ export class AuroraSession {
     public createAt: number;
     public sessionAt: number;
     public sessionUrl: string;
+    [propName: string]: any;
     constructor(src: AuroraSessionJson) {
         this.id = src.id;
         this.userId = src.user_id;
@@ -38,7 +39,7 @@ export class AuroraSession {
         this.noSignalDuration = src.no_signal_duration;
         this.awakeDuration = src.awake_duration;
         this.lightDuration = src.light_duration;
-        this.deepDuratin = src.deep_duration;
+        this.deepDuration = src.deep_duration;
         this.remDuration = src.rem_duration;
         this.sleepScore = src.sleep_score;
         this.incomplete = src.incomplete;
