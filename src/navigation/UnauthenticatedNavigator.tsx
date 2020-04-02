@@ -8,7 +8,7 @@ import {
 } from "react-navigation";
 import {
     createStackNavigator,
-    HeaderBackButtonProps,
+    StackHeaderLeftButtonProps,
     NavigationStackOptions,
     NavigationStackProp
 } from "react-navigation-stack";
@@ -55,9 +55,9 @@ const UnauthenticatedNavigator = createStackNavigator(routeConfigMap, {
         >*/
         {
             return {
-                headerLeft: (props: HeaderBackButtonProps) => (
-                    <HeaderBackButton {...props} />
-                ),
+                headerLeft: (
+                    props: StackHeaderLeftButtonProps
+                ): React.ReactNode => <HeaderBackButton {...props} />,
                 headerStyle: CommonStyles.headerStyle,
                 headerTitleContainerStyle:
                     CommonStyles.headerTitleContainerStyle,

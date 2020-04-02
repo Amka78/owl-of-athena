@@ -6,7 +6,6 @@ export default function UserInfoReducer(
     state: UserInfoState = {},
     action: UserActions
 ): UserInfoState {
-    console.debug("userInfoReducer initialized.");
     switch (action.type) {
         case ActionTypes.LOGIN:
             return Object.assign({}, state, {

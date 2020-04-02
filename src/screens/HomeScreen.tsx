@@ -16,8 +16,8 @@ import {
     useSettingsSelector,
     useProfilesSelector
 } from "../hooks";
-import { AuroraManagerInstance } from "../managers";
-import { MessageKeys } from "../constants";
+import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
+import { MessageKeys, Dimens } from "../constants";
 import { updateSettings, updateProfiles } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
@@ -35,6 +35,15 @@ export const HomeScreen: FunctionComponent = () => {
     let selectedProfile: AuroraProfile | undefined;
 
     useEffect(() => {
+        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
+            navigate("Sleeping");
+        });
+        AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
+            navigate("Awake");
+        });
+        AuroraManagerInstance.on(AuroraManagetEventList.onWaking, () => {
+            navigate("Waking");
+        });
         let unmounted = false;
         console.log("Loading profiles start");
         const f = async (): Promise<void> => {
@@ -83,7 +92,7 @@ export const HomeScreen: FunctionComponent = () => {
                         }
                     }
                     settings.userId = user!.id;
-                    dispatch(updateSettings(settings));
+                    dispatch(updateSettings(settings, settings.userId));
                 }
             }
         };
@@ -113,6 +122,12 @@ export const HomeScreen: FunctionComponent = () => {
                         hours={settings.alarmHour}
                         minutes={settings.alarmMinute}
                         mode={"meridian"}
+                        timeStyle={{
+                            fontSize: Dimens.home_alarm_time_text_size
+                        }}
+                        timeMeridianStyle={{
+                            fontSize: Dimens.home_alarm_meridian_text_size
+                        }}
                     ></TimeView>
                     <FlatButton>
                         {{ key: MessageKeys.home_edit_alarm_button }}
@@ -129,12 +144,41 @@ export const HomeScreen: FunctionComponent = () => {
             <View style={{ alignItems: "center" }}>
                 <ErrorText>{{ key: errorText }}</ErrorText>
                 <Button
-                    disabled={!AuroraManagerInstance.isConnected()}
-                    onPress={(): void => {
-                        AuroraManagerInstance.goToSleep(
-                            selectedProfile!,
-                            settings
-                        );
+                    // disabled={!AuroraManagerInstance.isConnected()}
+                    onPress={async (): Promise<void> => {
+                        try {
+                            if (AuroraManagerInstance.isConnected()) {
+                                LoadingDialog.show({
+                                    dialogTitle: {
+                                        key:
+                                            MessageKeys.home_go_to_sleep_loading_message
+                                    }
+                                });
+                                await AuroraManagerInstance.goToSleep(
+                                    selectedProfile!,
+                                    settings
+                                );
+                            } else {
+                                ConfirmDialog.show({
+                                    title: {
+                                        key:
+                                            MessageKeys.home_aurora_disconnected_dialog_title
+                                    },
+                                    message: {
+                                        key:
+                                            MessageKeys.home_aurora_disconnected_dialog_message
+                                    },
+                                    isCancelable: false
+                                });
+                            }
+                        } catch (e) {
+                            console.error(e);
+                            setErrorText(
+                                MessageKeys.home_go_to_sleep_error_message
+                            );
+                        } finally {
+                            LoadingDialog.close();
+                        }
                     }}
                 >
                     {{ key: MessageKeys.home_go_to_sleep_button }}

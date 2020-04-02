@@ -1,16 +1,21 @@
-import { Aurora, SleepStates } from "../sdk";
+import { AuroraInstance, SleepStates } from "../sdk";
 import EventEmitter from "events";
 import { AuroraOSInfo, Profile, Settings } from "../sdk/models";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import { AuroraProfile, CommandResult } from "../sdk/AuroraTypes";
 import { AuroraEventList } from "../sdk/Aurora";
-import { EventIds, CommandNames } from "../sdk/AuroraConstants";
+import {
+    EventIds,
+    CommandNames,
+    EventIdsToNames
+} from "../sdk/AuroraConstants";
 import { AuroraEvent } from "../sdk/AuroraTypes";
 import { Audio } from "expo-av";
+import { AuroraManagerInstance } from ".";
+import { FileInfo } from "../sdk/AuroraTypes";
+import AuroraSessionReader from "../sdk/AuroraSessionReader";
 export enum AuroraManagetEventList {
-    onConnectionChange = "onConnectionStateChange",
     onSleepStateChange = "onSleepStateChnage",
     onFoundUnsyncedSession = "onFoundUnsyncedSession",
-    onAuroraReady = "onAuroraReady",
     onSleeping = "onSleeping",
     onWaking = "onWaking",
     onAwake = "onAwake"
@@ -30,12 +35,7 @@ export class AuroraManager extends EventEmitter {
         this.alarmSound = new Audio.Sound();
         this.remStimSound = new Audio.Sound();
 
-        Aurora.on(
-            AuroraEventList.bluetoothConnectionChange,
-            this.onConnectionChange
-        );
-
-        Aurora.on(AuroraEventList.auroraEvent, this.onEvent);
+        AuroraInstance.on(AuroraEventList.auroraEvent, this.onEvent);
     }
 
     public isConnected(): boolean {
@@ -50,22 +50,29 @@ export class AuroraManager extends EventEmitter {
         return this.batteryLevel;
     }
 
-    public async connect(): Promise<void> {
+    public async connect(): Promise<AuroraOSInfo | void> {
         try {
-            this.osInfo = await Aurora.connectBluetooth();
+            console.debug("Start connection to aurora.");
+            this.osInfo = await AuroraInstance.connectBluetooth();
+            await this.setupAurora();
+            this.connected = true;
+            return this.osInfo;
         } catch (e) {
-            console.log(e);
+            this.connected = false;
+            console.error(e);
+            throw e;
         }
     }
 
     public async disconnect(): Promise<void> {
-        await Aurora.disconnectBluetooth();
+        await AuroraInstance.disconnectBluetooth();
 
+        this.connected = false;
         this.setSleepState(SleepStates.CONFIGURING);
     }
 
     public async executeCommand(command: string): Promise<unknown> {
-        return await Aurora.queueCmd(command);
+        return await AuroraInstance.queueCmd(command);
     }
 
     public async goToSleep(
@@ -74,64 +81,110 @@ export class AuroraManager extends EventEmitter {
     ): Promise<void> {
         const writingProfile = new Profile(profile.content!);
 
-        writingProfile.wakeupTime = settings.getMsAfterMidnight();
+        writingProfile.wakeupTime = this.getMsAfterMidnight(
+            settings.alarmHour,
+            settings.alarmMinute
+        );
         writingProfile.saEnabled = settings.smartAlarmEnabled;
         writingProfile.stimEnabled = settings.remStimEnabled;
         writingProfile.dslEnabled = settings.dslEnabled;
 
-        await this.alarmSound.loadAsync(
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            require(`../../assets/audio/${settings.alarmAudioPath}`)
-        );
-        await this.remStimSound.loadAsync(
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            require(`../../assets/audio/${settings.remStimAudioPath}`)
-        );
-        try {
-            Aurora.writeFile("profiles/default.prof", writingProfile.raw, true);
+        if (settings.alarmAudioPath) {
+            await this.alarmSound.loadAsync(
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                require(`../../assets/audio/${settings.alarmAudioPath}`)
+            );
+        }
 
-            await Aurora.queueCmd("prof-load default.prof");
+        if (settings.remStimAudioPath) {
+            await this.remStimSound.loadAsync(
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                require(`../../assets/audio/${settings.remStimAudioPath}`)
+            );
+        }
+        try {
+            console.debug("Start write files.");
+            await AuroraInstance.writeFile(
+                "profiles/default.prof",
+                writingProfile.raw,
+                true,
+                this.osInfo!.version
+            );
+            console.debug("Completed write files.");
+
+            console.debug("Start prop unload.");
+            await AuroraInstance.queueCmd<CommandResult<undefined>>(
+                "prof-unload"
+            );
+            console.debug("Completed prof unload.");
+
+            console.debug("Start prof load.");
+            await AuroraInstance.queueCmd<CommandResult<undefined>>(
+                "prof-load default.prof"
+            );
+            console.debug("Completed prop load.");
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
-            console.log(e);
             this.setSleepState(SleepStates.CONFIGURING);
             this.emit("onError", e);
         }
     }
 
+    public getMsAfterMidnight(alarmHour: number, alarmMinute: number): number {
+        const msAfterMidNight =
+            alarmHour! * 60 * 60 * 1000 + alarmMinute! * 60 * 1000;
+        console.debug(msAfterMidNight);
+        return msAfterMidNight;
+    }
+
     public setSleepState(followingSleepState: SleepStates): void {
+        console.debug(
+            `currentSleepState: ${this.currentSleepState} followingSleepState: ${followingSleepState}`
+        );
         if (followingSleepState !== this.currentSleepState) {
             this.currentSleepState = followingSleepState;
 
             switch (this.currentSleepState) {
                 case SleepStates.SLEEPING: {
+                    console.debug("start onSleeping.");
                     this.emit(AuroraManagetEventList.onSleeping);
                     break;
                 }
                 case SleepStates.CONFIGURING: {
-                    this.alarmSound.stopAsync();
-                    this.remStimSound.stopAsync();
+                    if (this.alarmSound._loaded) {
+                        this.alarmSound.stopAsync();
+                    }
+                    if (this.remStimSound._loaded) {
+                        this.remStimSound.stopAsync();
+                    }
                     break;
                 }
                 case SleepStates.WAKING: {
+                    console.debug("start onWaking.");
+                    if (this.alarmSound._loaded) {
+                        this.alarmSound.setIsLoopingAsync(true).then(() => {
+                            this.alarmSound.playAsync();
+                        });
+                    }
                     this.emit(AuroraManagetEventList.onWaking);
-                    this.alarmSound.playAsync();
                     break;
                 }
                 case SleepStates.AWAKE: {
-                    this.alarmSound.stopAsync();
+                    if (this.alarmSound._loaded) {
+                        this.alarmSound.stopAsync();
+                    }
                     this.emit(AuroraManagetEventList.onAwake);
                     this.setSleepState(SleepStates.SYNCING);
                     break;
                 }
                 case SleepStates.SYNCING: {
-                    Aurora.queueCmd(CommandNames.PROF_UNLOAD)
+                    AuroraInstance.queueCmd(CommandNames.PROF_UNLOAD)
                         .catch((reason: any) => {
                             console.error(reason);
                             this.setSleepState(SleepStates.SYNCING_ERROR);
                         })
                         .then(() => {
-                            this.getUnsyncedSessions();
+                            //this.getUnsyncedSessions();
                             this.setSleepState(SleepStates.CONFIGURING);
                         });
                 }
@@ -141,13 +194,34 @@ export class AuroraManager extends EventEmitter {
         }
     }
 
-    private async onConnectionChange(connected: boolean): Promise<void> {
-        this.connected = connected;
+    public async getUnsyncedSessions(): Promise<Array<FileInfo>> {
+        return await AuroraInstance.getUsyncedSessions("*@*");
+    }
 
-        if (connected) {
-            await this.setupAurora();
-        }
-        this.emit(AuroraManagetEventList.onConnectionChange, connected);
+    public async readSessionContent(
+        sessions: Array<FileInfo>
+    ): Promise<Map<string, any>> {
+        const readSessionContent = new Map<string, any>();
+        /*sessions.forEach((value: FileInfo) => {
+            AuroraInstance.readFile(value.file, false)
+                .then((readFileContent: unknown) => {
+                    console.debug("readFileSucceed");
+                    readSessionContent.set(value.file, readFileContent);
+                })
+                .catch((reason: any) => {
+                    console.debug(reason);
+                });
+        });*/
+
+        const result = await AuroraInstance.readFile(sessions[0].file, false);
+
+        const session = await AuroraSessionReader.read(
+            sessions[0].file.replace("/session.txt", ""),
+            result.output
+        );
+        readSessionContent.set(sessions[0].file, session);
+
+        return readSessionContent;
     }
 
     private async setupAurora(): Promise<void> {
@@ -162,7 +236,7 @@ export class AuroraManager extends EventEmitter {
                 //all we really need to is restart profile
                 //since the events will get resubscribed to below
                 //and backup alarm should still be running
-                await Aurora.queueCmd("prof-load default.prof");
+                await AuroraInstance.queueCmd("prof-load default.prof");
             } else {
                 //TODO: make sure backup alarm is still running?
                 //aurora
@@ -182,25 +256,25 @@ export class AuroraManager extends EventEmitter {
         enableEventList.push(EventIds.CLOCK_ALARM_FIRE);
         enableEventList.push(EventIds.STIM_PRESENTED);
 
-        Aurora.enableEvents(enableEventList);
-        //good as time as any to make sure clock is still in sync with device time
-        Aurora.syncTime();
+        console.debug("Execute enable events command.");
+        const enableEventConmmandResult = await AuroraInstance.enableEvents(
+            enableEventList
+        );
+        console.debug(
+            "Completed enable events command:",
+            enableEventConmmandResult
+        );
 
-        this.emit(AuroraManagetEventList.onAuroraReady, this.batteryLevel);
-    }
-
-    public getUnsyncedSessions(): any {
-        Aurora.getSessions(false, "*@*")
-            .then((value: unknown) => {
-                return value;
-            })
-            .catch((reason: any) => {
-                console.log(reason);
-            });
+        console.debug("Execute sync time command.");
+        //good as time as any to make sure clock is still in sync with device timeurora
+        const syncTimeResult = await AuroraInstance.syncTime();
+        console.debug("Completed sync time command:", syncTimeResult);
     }
 
     private onEvent(event: AuroraEvent): void {
-        console.log("Aurora Event: %s", event.eventId);
+        console.debug("Aurora Event: %s", event.eventId);
+        // @ts-ignore
+        console.debug("Aurora Event Name:", EventIdsToNames[event.eventId]);
 
         switch (event.eventId) {
             case EventIds.BATTERY_MONITOR: {
@@ -216,16 +290,27 @@ export class AuroraManager extends EventEmitter {
                 }
                 break;
             }
+            case EventIds.CLOCK_ALARM_FIRE:
             case EventIds.SMART_ALARM: {
-                if (this.currentSleepState === SleepStates.SLEEPING) {
-                    this.alarmSound.playAsync();
+                console.debug(
+                    "Current SleepState:",
+                    AuroraManagerInstance.currentSleepState
+                );
+                if (
+                    AuroraManagerInstance.currentSleepState ===
+                    SleepStates.SLEEPING
+                ) {
+                    console.debug("Execute Smart Alarm Event.");
+                    AuroraManagerInstance.setSleepState(SleepStates.WAKING);
                 }
                 break;
             }
             case EventIds.STIM_PRESENTED: {
-                if (this.currentSleepState === SleepStates.SLEEPING) {
+                //if (this.currentSleepState === SleepStates.SLEEPING) {
+                if (this.remStimSound._loaded) {
                     this.remStimSound.playAsync();
                 }
+                //}
             }
         }
     }
