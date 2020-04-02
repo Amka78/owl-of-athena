@@ -9,6 +9,7 @@ import {
 } from "./AuroraConstants";
 import { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
+import { sleep } from "./util";
 
 export enum EventList {
     cmdResponse = "cmdResponse",
@@ -25,12 +26,14 @@ export class AuroraBluetoothParser extends EventEmitter {
     private cmdWatchdogTimer: any;
     private cmd?: CommandResult<unknown>;
     private cmdState: BleCmdStates;
+    private parsing: boolean;
     constructor() {
         super();
 
         this.cmdResponseParser = new AuroraCmdResponseParser();
         this.cmdWatchdogTimer = {};
         this.cmdState = BleCmdStates.IDLE;
+        this.parsing = false;
         this.reset();
     }
 
@@ -40,6 +43,7 @@ export class AuroraBluetoothParser extends EventEmitter {
         this.cmd = undefined;
         this.cmdResponseParser.reset();
         this.cmdState = BleCmdStates.IDLE;
+        this.parsing = false;
     }
 
     public setCmd(cmd: string): void {
@@ -57,7 +61,6 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onStreamDataCharNotification(dataBuffer: Buffer): void {
-        console.debug("Raw data:", dataBuffer);
         let stream: BluetoothStream | undefined = undefined;
         let streamDataType = DataTypes.UNKNOWN;
         let streamDataLength = 0;
@@ -152,7 +155,6 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onAuroraEventCharNotification(eventBuffer: Buffer): void {
-        console.debug("Aurora Event notificated buffer:", eventBuffer);
         if (eventBuffer.length != 5) {
             this.emit(EventList.parseError, "Incomplete event packet.");
             return;
@@ -174,8 +176,12 @@ export class AuroraBluetoothParser extends EventEmitter {
         });
     }
 
-    public onCmdStatusCharNotification(statusBuffer: Buffer): void {
-        console.debug("Status notification buffer:", statusBuffer);
+    public async onCmdStatusCharNotification(
+        statusBuffer: Buffer
+    ): Promise<void> {
+        if (this.parsing) {
+            await sleep(100);
+        }
         this.cmdState = statusBuffer[0];
 
         clearTimeout(this.cmdWatchdogTimer);
@@ -206,6 +212,7 @@ export class AuroraBluetoothParser extends EventEmitter {
 
             //do we have a response to receive
             case BleCmdStates.CMD_RESP_OBJECT_READY:
+                this.parsing = true;
                 //second statusBuffer byte is number of bytes available to read
                 this.emit(
                     "cmdResponseRead",
@@ -216,6 +223,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                 break;
 
             case BleCmdStates.CMD_RESP_TABLE_READY:
+                this.parsing = true;
                 //second statusBuffer byte is number of bytes available to read
                 this.emit(
                     "cmdResponseRead",
@@ -256,6 +264,8 @@ export class AuroraBluetoothParser extends EventEmitter {
             this.cmdResponseParser.parseObject(buffer.toString("ascii"));
         } catch (error) {
             this.emit(EventList.parseError, `Failed parsing object: ${error}`);
+        } finally {
+            this.parsing = false;
         }
     };
 
@@ -267,6 +277,8 @@ export class AuroraBluetoothParser extends EventEmitter {
             this.cmdResponseParser.parseTable(buffer.toString("ascii"));
         } catch (error) {
             this.emit(EventList.parseError, `Failed parsing table: ${error}`);
+        } finally {
+            this.parsing = false;
         }
     };
 
