@@ -1,0 +1,5 @@
+FROM bycedric/expo-cli:latest
+
+LABEL maintainer="Bysr <AmemiyaHikaru@BysrSystemDevelopment.com>"
+
+RUN apt-get update && apt-get install build-essential && apt-get install libudev-dev -y
