@@ -1,4 +1,4 @@
-image: amka78/owl-of-athena:latest
+image: registry.gitlab.com/amka78/owl-of-athena:latest
 variables:
   EXPO_USERNAME: "amka78"
   EXPO_PASSWORD: "rolarola339"
