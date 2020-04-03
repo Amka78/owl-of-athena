@@ -17,7 +17,7 @@ export const LoginScreen: FunctionComponent = () => {
     const emailHooks = useTextBox("");
     const passwordHooks = useTextBox("");
     const { navigate } = useNavigation();
-    const login = useLogin(false, {
+    const login = useLogin({
         email: emailHooks.value,
         password: passwordHooks.value
     });

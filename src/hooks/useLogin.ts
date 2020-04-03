@@ -8,17 +8,18 @@ import { TokenManager } from "../utils";
 import { useDispatch } from "react-redux";
 import { Message, MessageKeys, StorageKeys } from "../constants";
 import { AuroraRestClientInstance } from "../clients";
+import { LoadingDialog } from "../components";
 
 export const useLogin = (
-    loadingInitialValue: boolean,
     login: Login
 ): { loading: boolean; onPress: () => Promise<void>; generalError: string } => {
-    const [loading, setLoading] = useState(loadingInitialValue);
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
-        setLoading(true);
+        LoadingDialog.show({
+            dialogTitle: { key: MessageKeys.login_loading_message }
+        });
         try {
             console.debug("useLogin start", login);
             const result = await AuroraRestClientInstance.login(login);
@@ -42,8 +43,9 @@ export const useLogin = (
                     Message.get(MessageKeys.login_general_error_message)
                 );
             }
-            setLoading(false);
+        } finally {
+            LoadingDialog.close();
         }
     }, [dispatch, login, navigate]);
-    return { loading, onPress, generalError };
+    return { onPress, generalError };
 };
