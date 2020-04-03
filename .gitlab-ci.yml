@@ -1,4 +1,4 @@
-image: bycedric/expo-cli:latest
+image: amka78/owl-of-athena:latest
 variables:
   EXPO_USERNAME: "amka78"
   EXPO_PASSWORD: "rolarola339"
