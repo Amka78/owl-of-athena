@@ -12,11 +12,11 @@ export type Margin = {
 };
 
 export type ChartProps = {
-    containerStyle: ViewStyle;
+    containerStyle?: ViewStyle;
     margin: Margin;
     transition: number;
-    clipToRange: number;
-    title: string;
+    clipToRange: boolean;
+    title?: string;
     titleSize: number;
     titleColor: string;
     axisMargin: Margin;
@@ -35,8 +35,8 @@ export type ChartProps = {
     data?: any;
     dataBins: number[];
     dataBinThreshold: number;
-    width: number | string;
-    height: number | string;
+    width: number;
+    height: number;
     zoomX: number;
     zoomY: number;
 };
@@ -56,9 +56,11 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     private title?: d3.Selection<any, unknown, null, undefined>;
     private clipPath?: d3.Selection<any, unknown, null, undefined>;
     private clipPathId?: string;
+    // @ts-ignore
     private transition?: d3.Transition<HTMLElement, unknown, null, undefined>;
     private zoom?: d3.ZoomBehavior<Element, unknown>;
     private brush?: d3.BrushBehavior<unknown>;
+    // @ts-ignore
     private k?: number;
     constructor(props: T) {
         super(props);
@@ -126,7 +128,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         if (transition) {
             this.transition = d3
                 .transition()
-                .duration(transition)
+                .duration(transition as number)
                 .delay(10);
         }
     }
@@ -157,7 +159,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             .attr("y", margin.top)
             .attr("font-size", titleSize)
             .attr("fill", titleColor)
-            .text(title);
+            .text(title!);
     }
 
     enableZoom(): void {

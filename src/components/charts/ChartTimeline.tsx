@@ -1,3 +1,5 @@
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
@@ -28,7 +30,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .tickFormat((d, i) =>
                 !i || i % 6
                     ? ""
-                    : moment(d)
+                    : moment(d as Date)
                           .utc()
                           .format("h:mm a")
                           .replace(":00", "")
@@ -105,8 +107,6 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .attrs(this.getEventTickPositionProps);
 
         eventTicks.exit().remove();
-
-        const currentBin = this.getCurrentBin();
 
         eventLabels
             .enter()

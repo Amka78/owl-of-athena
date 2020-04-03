@@ -1,3 +1,5 @@
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";

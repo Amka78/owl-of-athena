@@ -1,3 +1,5 @@
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
@@ -127,7 +129,7 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
 
         this.axisGroupY!.selectAll("text").style(
             "fill",
-            (d, i) => ChartSleep.sleepStageColors[i]
+            (_d, i) => ChartSleep.sleepStageColors[i]
         );
 
         this.horizontalDividerTop!.attr("stroke", axisXColor)
@@ -168,6 +170,7 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             );
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         let sleepPath = this.graphGroup!.selectAll("path").data([sleep]);
 
         sleepPath = sleepPath

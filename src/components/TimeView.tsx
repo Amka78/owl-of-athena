@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Text, StyleSheet, TextStyle, View } from "react-native";
-import { Colors, Dimens, Fonts } from "../constants";
+import { Colors, Fonts } from "../constants";
 export type TimeViewMode = "meridian" | "time";
 
 type TimeViewProps = {

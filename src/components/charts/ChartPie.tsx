@@ -238,10 +238,6 @@ export default class ChartPie extends Chart<ChartPieProps> {
         const outerRadius = this.props.outerRadius
             ? this.props.outerRadius
             : width / 2;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const innerRadius = this.props.innerRadius
-            ? this.props.innerRadius
-            : width / 3;
 
         let legendTranslateX = width / 2 - legendGroupBBox.width / 2;
         let legendTranslateY = height / 2 - legendGroupBBox.height / 2;
@@ -280,13 +276,12 @@ export default class ChartPie extends Chart<ChartPieProps> {
         );
     }
 
-    _arcTransition = (a: any) => {
+    _arcTransition = (a: any): ((a: any) => string | null) => {
         const interpolateAngle = d3.interpolate(this.currentAngle, a);
 
         this.currentAngle = interpolateAngle(0);
 
-        // @ts-ignore
-        return t => this.arc!(interpolateAngle(t));
+        return (t: number): string | null => this.arc!(interpolateAngle(t));
     };
 
     static propTypes = {

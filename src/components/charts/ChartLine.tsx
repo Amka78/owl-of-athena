@@ -44,13 +44,13 @@ export default class ChartLine extends Chart<ChartProps> {
             this.lines![i] = d3.line();
 
             this.lines[i]
-                .x((d, i) => this.scaleX!(i * 128))
+                .x((_d, i) => this.scaleX!(i * 128))
                 // @ts-ignore
                 .y(d => this.scaleY!(d));
 
             this.svg!.append("path")
                 .datum(this.props.data[i])
-                .filter((d, i) => !(i % 64))
+                .filter((_d, i) => !(i % 64))
                 .attr("class", "path")
                 .attr("stroke", "steelblue")
                 // @ts-ignore
