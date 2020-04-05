@@ -7,12 +7,10 @@ import {
 } from "react-navigation";
 import {
     createStackNavigator,
-    StackHeaderLeftButtonProps,
     NavigationStackOptions,
     NavigationStackProp
 } from "react-navigation-stack";
 
-import { HeaderBackButton } from "../components";
 import { Colors, Message, MessageKeys } from "../constants";
 import {
     AwakeScreen,
@@ -52,7 +50,6 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "home",
         screen: HomeScreen,
         navigationOptions: {
-            headerLeft: undefined,
             headerTitle: Message.get(MessageKeys.home_title)
         }
     },
@@ -69,23 +66,15 @@ const routeConfigMap: NavigationRouteConfigMap<
 };
 
 const HomeNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: () =>
-        /*configProps: NavigationScreenConfigProps<
-            NavigationStackProp<NavigationRoute<NavigationParams>>
-        >*/
-        {
-            return {
-                headerLeft: (
-                    props: StackHeaderLeftButtonProps
-                ): JSX.Element => <HeaderBackButton {...props} />,
-                headerTitleAlign: "center",
-                headerTintColor: Colors.cyan,
-                headerStyle: CommonStyles.headerStyle,
-                headerTitleContainerStyle:
-                    CommonStyles.headerTitleContainerStyle,
-                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
-            };
-        },
+    defaultNavigationOptions: () => {
+        return {
+            headerLeft: (): JSX.Element => <View></View>,
+            headerTitleAlign: "center",
+            headerTintColor: Colors.cyan,
+            headerStyle: CommonStyles.headerStyle,
+            headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle
+        };
+    },
     headerMode: Platform.OS === "web" ? "screen" : "float",
     initialRouteName: "Home"
 });
