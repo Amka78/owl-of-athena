@@ -37,7 +37,7 @@ export default class AuroraTransformBinary extends Stream.Transform {
         });
     }
 
-    transform(
+    _transform(
         respChunk: any,
         _encoding: string,
         done: Stream.TransformCallback

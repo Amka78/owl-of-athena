@@ -1,24 +1,31 @@
 import { AuroraInstance, SleepStates } from "../sdk";
 import EventEmitter from "events";
 import { AuroraOSInfo, Profile, Settings } from "../sdk/models";
-import { AuroraProfile, CommandResult } from "../sdk/AuroraTypes";
+import {
+    AuroraProfile,
+    CommandResult,
+    AuroraSessionJson
+} from "../sdk/AuroraTypes";
 import { AuroraEventList } from "../sdk/Aurora";
 import {
     EventIds,
     CommandNames,
     EventIdsToNames
 } from "../sdk/AuroraConstants";
-import { AuroraEvent } from "../sdk/AuroraTypes";
 import { Audio } from "expo-av";
+import { AuroraSession } from "../sdk/models";
 import { AuroraManagerInstance } from ".";
-import { FileInfo } from "../sdk/AuroraTypes";
+import { AuroraEvent, FileInfo } from "../sdk/AuroraTypes";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-export enum AuroraManagetEventList {
+import { Platform } from "react-native";
+import { AuroraRestClientInstance } from "../clients";
+export enum AuroraManagerEventList {
     onSleepStateChange = "onSleepStateChnage",
     onFoundUnsyncedSession = "onFoundUnsyncedSession",
     onSleeping = "onSleeping",
     onWaking = "onWaking",
-    onAwake = "onAwake"
+    onAwake = "onAwake",
+    onPushedSession = "onPushedSession"
 }
 export class AuroraManager extends EventEmitter {
     private connected: boolean;
@@ -147,7 +154,7 @@ export class AuroraManager extends EventEmitter {
             switch (this.currentSleepState) {
                 case SleepStates.SLEEPING: {
                     console.debug("start onSleeping.");
-                    this.emit(AuroraManagetEventList.onSleeping);
+                    this.emit(AuroraManagerEventList.onSleeping);
                     break;
                 }
                 case SleepStates.CONFIGURING: {
@@ -166,14 +173,14 @@ export class AuroraManager extends EventEmitter {
                             this.alarmSound.playAsync();
                         });
                     }
-                    this.emit(AuroraManagetEventList.onWaking);
+                    this.emit(AuroraManagerEventList.onWaking);
                     break;
                 }
                 case SleepStates.AWAKE: {
                     if (this.alarmSound._loaded) {
                         this.alarmSound.stopAsync();
                     }
-                    this.emit(AuroraManagetEventList.onAwake);
+                    this.emit(AuroraManagerEventList.onAwake);
                     this.setSleepState(SleepStates.SYNCING);
                     break;
                 }
@@ -184,7 +191,6 @@ export class AuroraManager extends EventEmitter {
                             this.setSleepState(SleepStates.SYNCING_ERROR);
                         })
                         .then(() => {
-                            //this.getUnsyncedSessions();
                             this.setSleepState(SleepStates.CONFIGURING);
                         });
                 }
@@ -202,26 +208,73 @@ export class AuroraManager extends EventEmitter {
         sessions: Array<FileInfo>
     ): Promise<Map<string, any>> {
         const readSessionContent = new Map<string, any>();
-        /*sessions.forEach((value: FileInfo) => {
-            AuroraInstance.readFile(value.file, false)
-                .then((readFileContent: unknown) => {
-                    console.debug("readFileSucceed");
-                    readSessionContent.set(value.file, readFileContent);
-                })
-                .catch((reason: any) => {
-                    console.debug(reason);
-                });
-        });*/
 
-        const result = await AuroraInstance.readFile(sessions[0].file, false);
+        for (const sessionFileInfo of sessions) {
+            const result = await AuroraInstance.readFile(
+                sessionFileInfo.file,
+                false
+            );
 
-        const session = await AuroraSessionReader.read(
-            sessions[0].file.replace("/session.txt", ""),
-            result.output
-        );
-        readSessionContent.set(sessions[0].file, session);
+            const dirName = sessionFileInfo.file.replace("/session.txt", "");
+            console.debug("Start reading session.");
+            const sessionDirReadCmd = await AuroraInstance.queueCmd(
+                `sd-dir-read ${dirName} 1`
+            );
+            const session = await AuroraSessionReader.read(
+                dirName,
+                result.output,
+                sessionDirReadCmd.response as any
+            );
+            readSessionContent.set(sessions[0].file, session);
+        }
 
         return readSessionContent;
+    }
+
+    public async pushSessions(
+        sessions: Array<FileInfo>
+    ): Promise<Array<AuroraSession>> {
+        const sessionList = await this.readSessionContent(sessions);
+
+        const pushedSessionList = new Array<AuroraSession>();
+        for (const value of sessionList) {
+            const sessionInfo = value[1];
+            const uploadSession: Partial<AuroraSessionJson> = {
+                ...sessionInfo
+            };
+            uploadSession.app_version = this.osInfo!.version;
+            uploadSession.app_platform = "win"; //Platform.OS;
+            uploadSession.session_txt = sessionInfo.content;
+
+            let newSession: AuroraSession | undefined;
+
+            try {
+                if (sessionInfo.name.indexOf("@") == -1) {
+                    await AuroraRestClientInstance.getAuroraSessionById(
+                        sessionInfo.name
+                    ).catch(async () => {
+                        newSession = await AuroraRestClientInstance.createAurora(
+                            uploadSession as AuroraSessionJson
+                        );
+                    });
+                } else {
+                    newSession = await AuroraRestClientInstance.createAurora(
+                        uploadSession as AuroraSessionJson
+                    );
+                }
+                if (newSession!.id != sessionInfo.name) {
+                    await AuroraInstance.queueCmd(
+                        `sd-rename sessions/${sessionInfo.name} sessions/${
+                            newSession!.id
+                        }`
+                    );
+                }
+                pushedSessionList.push(newSession!);
+            } catch (e) {
+                await AuroraInstance.queueCmd(`sd-dir-del ${sessionInfo[0]}`);
+            }
+        }
+        return pushedSessionList;
     }
 
     private async setupAurora(): Promise<void> {

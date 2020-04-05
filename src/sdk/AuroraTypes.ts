@@ -111,6 +111,7 @@ export type AuroraSessionJson = {
     create_at: number;
     session_at: number;
     session_url: string;
+    session_txt: string;
 };
 
 export type FileInfo = {

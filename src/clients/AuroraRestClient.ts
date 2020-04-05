@@ -128,6 +128,34 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 
+    public async getAuroraSessionById(
+        sessionId: string
+    ): Promise<AuroraSession> {
+        const response = await this.get(
+            `users/me/aurora-sessions/${sessionId}`,
+            {}
+        );
+
+        if (response.ok) {
+            return new AuroraSession(await response.json());
+        }
+        throw await response.json();
+    }
+
+    public async createAurora(
+        sessionJson: AuroraSessionJson
+    ): Promise<AuroraSession> {
+        const response = await this.post(
+            "users/me/aurora-sessions",
+            sessionJson
+        );
+
+        if (response.ok) {
+            return new AuroraSession(await response.json());
+        }
+        throw await response.json();
+    }
+
     public async getSessionStreams(
         sessionId: string
     ): Promise<Array<AuroraStream>> {

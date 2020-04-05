@@ -1,15 +1,11 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-    useCheckLogging,
-    useUserSelector,
-    useSessionDetailListSelector
-} from "../hooks";
+import { useCheckLogging, useSessionDetailListSelector } from "../hooks";
 import { StandardView } from "../components";
-import { useSessionListSelector, useSelectedSessionSelector } from "../hooks";
+import { useSessionListSelector } from "../hooks";
 import { AuroraRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
-import { cacheSessions, selectSession, selectSessionDetail } from "../actions";
+import { selectSession, selectSessionDetail } from "../actions";
 import { AuroraSession } from "../sdk/models";
 import { Colors, Layout } from "../constants";
 import moment from "moment";
@@ -20,36 +16,12 @@ import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
 import { ScrollView } from "react-native-gesture-handler";
 export type SessionListProps = {};
 
-export const SessionListScreen: FunctionComponent = (
-    props: SessionListProps
-) => {
+export const SessionListScreen: FunctionComponent = () => {
     useCheckLogging();
     const dispatch = useDispatch();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
-    const selectedSession = useSelectedSessionSelector();
-    const userInfo = useUserSelector();
     const { navigate } = useNavigation();
-
-    useEffect(() => {
-        let unmounted = false;
-        const f = async (): Promise<void> => {
-            if (!unmounted) {
-                console.debug("Current session list:", sessionList);
-                if (sessionList.length <= 0) {
-                    const remoteSessionList = await AuroraRestClientInstance.getAuroraSessions(
-                        userInfo!.id
-                    );
-                    dispatch(cacheSessions(remoteSessionList));
-                }
-            }
-        };
-        f();
-        const cleanup = (): void => {
-            unmounted = true;
-        };
-        return cleanup();
-    }, [dispatch, sessionList, userInfo]);
 
     return sessionList ? (
         <StandardView standardViewStyle={{ justifyContent: "flex-start" }}>

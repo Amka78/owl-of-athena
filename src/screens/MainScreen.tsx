@@ -1,20 +1,55 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { View } from "react-native";
 import { MainContainer } from "../navigation";
 import { FlatButton, LoadingDialog, ConfirmDialog } from "../components";
 import { Colors, MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
-import { AuroraOSInfo } from "../sdk/models";
+import { AuroraOSInfo, AuroraSession } from "../sdk/models";
 import { useNavigation } from "react-navigation-hooks";
 import { NavigationState } from "react-navigation";
+import { cacheSessions } from "../actions";
+import { useSessionListSelector, useUserSelector } from "../hooks";
+import { useDispatch } from "react-redux";
+import { AuroraRestClientInstance } from "../clients";
+import { AuroraManagerEventList } from "../managers/AuroraManager";
 export const MainScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
+    const dispatch = useDispatch();
+    const sessionList = useSessionListSelector();
+    const userInfo = useUserSelector();
     const [connect, setConnect] = useState<ConnectionStates>(
         ConnectionStates.DISCONNECTED
     );
     const [error, setError] = useState<string>("");
 
+    useEffect(() => {
+        let unmounted = false;
+        const f = async (): Promise<void> => {
+            if (!unmounted) {
+                console.debug("Current session list:", sessionList);
+                AuroraManagerInstance.on(
+                    AuroraManagerEventList.onPushedSession,
+                    (value: AuroraSession[]) => {
+                        sessionList.push(...value);
+
+                        dispatch(cacheSessions(sessionList));
+                    }
+                );
+                if (sessionList.length <= 0) {
+                    const remoteSessionList = await AuroraRestClientInstance.getAuroraSessions(
+                        userInfo!.id
+                    );
+                    dispatch(cacheSessions(remoteSessionList));
+                }
+            }
+        };
+        f();
+        const cleanup = (): void => {
+            unmounted = true;
+        };
+        return cleanup();
+    }, [dispatch, sessionList, userInfo]);
     return (
         <View style={{ flex: 1 }}>
             <MainContainer
@@ -55,7 +90,12 @@ export const MainScreen: FunctionComponent = () => {
                             setConnect,
                             connect === ConnectionStates.CONNECTED
                                 ? ConnectionStates.DISCONNECTING
-                                : ConnectionStates.CONNECTING
+                                : ConnectionStates.CONNECTING,
+                            (pushedSessionList: Array<AuroraSession>) => {
+                                sessionList.unshift(...pushedSessionList);
+
+                                dispatch(cacheSessions(sessionList));
+                            }
                         );
                     } catch (e) {
                         setError(e);
@@ -77,7 +117,8 @@ export const MainScreen: FunctionComponent = () => {
 
 async function executeConfiguring(
     setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>,
-    connectStatus: ConnectionStates
+    connectStatus: ConnectionStates,
+    pushedSessionCallback: (sessionList: Array<AuroraSession>) => void
 ): Promise<void> {
     setConnect(connectStatus);
     let result = undefined;
@@ -101,14 +142,17 @@ async function executeConfiguring(
                     isCancelable: false
                 });
             } else {
-                console.debug("Start getUnsycedSessions.");
+                console.debug("Sart getUnsycedSessions.");
                 const unsyncedSessions = await AuroraManagerInstance.getUnsyncedSessions();
                 console.debug(
                     "Completed getUnsyncedSessions:",
                     unsyncedSessions
                 );
 
-                if (unsyncedSessions && AuroraManagerInstance.isConfiguring()) {
+                if (
+                    unsyncedSessions.length > 0 &&
+                    AuroraManagerInstance.isConfiguring()
+                ) {
                     ConfirmDialog.show({
                         title: {
                             key:
@@ -121,10 +165,21 @@ async function executeConfiguring(
                             restParam: [unsyncedSessions.length]
                         },
                         onConfirm: async (): Promise<void> => {
-                            const result = await AuroraManagerInstance.readSessionContent(
-                                unsyncedSessions
-                            );
-                            console.debug("session content:", result);
+                            LoadingDialog.show({
+                                dialogTitle: {
+                                    key:
+                                        MessageKeys.home_go_to_sleep_loading_message
+                                }
+                            });
+                            try {
+                                const result = await AuroraManagerInstance.pushSessions(
+                                    unsyncedSessions
+                                );
+
+                                pushedSessionCallback(result);
+                            } finally {
+                                LoadingDialog.close();
+                            }
                         },
                         isCancelable: true
                     });

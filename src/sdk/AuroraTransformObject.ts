@@ -13,7 +13,7 @@ export default class AuroraTransformObject extends Stream.Transform {
         this.transformedObject = {};
     }
 
-    transform(
+    _transform(
         chunk: string,
         _encoding: string,
         done: Stream.TransformCallback

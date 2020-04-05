@@ -93,8 +93,8 @@ export default class RestClient {
 
     private createCommonHeader(): void {
         this.headers = {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json;charset=UTF-8"
         };
     }
 
