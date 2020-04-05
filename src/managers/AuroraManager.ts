@@ -17,7 +17,6 @@ import { AuroraSession } from "../sdk/models";
 import { AuroraManagerInstance } from ".";
 import { AuroraEvent, FileInfo } from "../sdk/AuroraTypes";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-import { Platform } from "react-native";
 import { AuroraRestClientInstance } from "../clients";
 export enum AuroraManagerEventList {
     onSleepStateChange = "onSleepStateChnage",
