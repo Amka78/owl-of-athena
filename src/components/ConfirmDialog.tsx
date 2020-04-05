@@ -43,6 +43,7 @@ export class ConfirmDialog extends React.Component<
         if (this.state.dialogSettings!.onDissmiss) {
             this.state.dialogSettings!.onDissmiss();
         }
+        this.setState({ dialogSettings: undefined });
     }
 
     public render(): JSX.Element | null {
