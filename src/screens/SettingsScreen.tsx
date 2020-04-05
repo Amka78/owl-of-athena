@@ -18,7 +18,7 @@ import {
     useUserSelector
 } from "../hooks";
 import { Settings } from "../sdk/models";
-import { updateSettings } from "../actions";
+import { cacheSettings } from "../actions";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "react-navigation-hooks";
 export const SettingsScreen: FunctionComponent = () => {
@@ -168,7 +168,7 @@ export const SettingsScreen: FunctionComponent = () => {
                     settings.savedAt = new Date();
 
                     console.log("updated Settings:", settings);
-                    dispatch(updateSettings(settings, user!.id));
+                    dispatch(cacheSettings(settings, user!.id));
 
                     navigate("Home");
                 }}

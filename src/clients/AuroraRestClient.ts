@@ -21,17 +21,12 @@ import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
  * @extends {RestClient}
  */
 export class AuroraRestClient extends RestClient {
-    constructor(
-        baseUrl: string,
-        locale: string,
-        getToken: () => Promise<string | undefined>
-    ) {
+    constructor(baseUrl: string, locale: string) {
         super(baseUrl, {
             headers: {
                 "Accept-Language": locale
             }
         });
-        this.onGetToken = getToken;
     }
 
     /**
@@ -123,7 +118,7 @@ export class AuroraRestClient extends RestClient {
             result.forEach((value: AuroraSessionJson) => {
                 auroraSessions.push(new AuroraSession(value));
             });
-            return auroraSessions;
+            return auroraSessions.reverse();
         }
         throw await response.json();
     }
@@ -246,11 +241,4 @@ export class AuroraRestClient extends RestClient {
         return sessionDetail;
     }
 }
-const getToken = async (): Promise<string | undefined> => {
-    return TokenManager.get() ? TokenManager.get() : undefined;
-};
-export default new AuroraRestClient(
-    BaseUrl.get(),
-    Localization.locale,
-    getToken
-);
+export default new AuroraRestClient(BaseUrl.get(), Localization.locale);

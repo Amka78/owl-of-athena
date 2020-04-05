@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 
-import { TokenManager } from "../utils";
+import { useTokenSelector } from ".";
 import { useNavigation } from "react-navigation-hooks";
 
 export const useCheckLogging = (): void => {
     const { navigate } = useNavigation();
 
+    const token = useTokenSelector();
     useEffect(() => {
         let unmounted = false;
         const f = async (): Promise<void> => {
             if (!unmounted) {
                 console.debug("useCheckLogging start");
-                if (!(await TokenManager.hasToken())) {
+                if (!token) {
                     navigate("Welcome");
                 }
             }
@@ -21,7 +22,7 @@ export const useCheckLogging = (): void => {
             unmounted = true;
         };
         return cleanup;
-    }, [navigate]);
+    }, [navigate, token]);
 
     return;
 };

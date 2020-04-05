@@ -3,7 +3,8 @@ import { useNavigation } from "react-navigation-hooks";
 import { useDispatch } from "react-redux";
 
 import { logout } from "../actions";
-import { TokenManager } from "../utils";
+import { initializeAurora } from "../actions/ProfilesAction";
+import { initializeSession } from "../actions/SessionsActions";
 
 export const useLogout = (): { onPress: () => Promise<void> } => {
     const { navigate } = useNavigation();
@@ -11,9 +12,9 @@ export const useLogout = (): { onPress: () => Promise<void> } => {
     const onPress = useCallback(async () => {
         console.debug("useSignout start");
 
+        dispatch(initializeAurora());
+        dispatch(initializeSession());
         dispatch(logout());
-
-        await TokenManager.reset();
 
         navigate("Logout");
     }, [dispatch, navigate]);

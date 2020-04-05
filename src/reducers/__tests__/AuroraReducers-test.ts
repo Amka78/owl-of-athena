@@ -10,55 +10,33 @@ describe("AuroraReducers-test", () => {
     beforeAll(() => {
         const state: AuroraState = {
             profileList: new Array<AuroraProfile>(),
-            settingList: new Array<Settings>(),
             userSettings: new Settings({})
         };
 
         initialSetting.userId = testUserId;
         const action: SettingsActions = {
             payload: {
-                data: initialSetting,
-                userId: testUserId
+                data: initialSetting
             },
-            type: "UPDATE_SETTINGS"
+            type: "CACHE_SETTINGS"
         };
         firstResult = AuroraReducer(state, action);
     });
     it("initialize userSettings succeed.", () => {
         expect(firstResult.userSettings).toEqual(initialSetting);
-        expect(firstResult.settingList.length).toBe(1);
     });
 
-    it("update UserSetting by same user.", () => {
+    it("update UserSetting.", () => {
         const updateSetting = new Settings({ profileTitle: "update" });
         const updateAction: SettingsActions = {
             payload: {
-                data: updateSetting,
-                userId: testUserId
+                data: updateSetting
             },
-            type: "UPDATE_SETTINGS"
+            type: "CACHE_SETTINGS"
         };
 
         const updateResult = AuroraReducer(firstResult, updateAction);
 
         expect(updateResult.userSettings!.profileTitle).toBe("update");
-        expect(updateResult.settingList.length).toBe(1);
-    });
-
-    it("update UserSetting by different user.", () => {
-        const testDifferentUserId = "differentUser";
-        const updateSetting = new Settings({});
-        const updateAction: SettingsActions = {
-            payload: {
-                data: updateSetting,
-                userId: testDifferentUserId
-            },
-            type: "UPDATE_SETTINGS"
-        };
-
-        const updateResult = AuroraReducer(firstResult, updateAction);
-
-        expect(updateResult.userSettings).toEqual(updateSetting);
-        expect(updateResult.settingList.length).toBe(2);
     });
 });

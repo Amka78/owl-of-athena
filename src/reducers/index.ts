@@ -1,5 +1,5 @@
 import AuroraReducers from "./AuroraReducers";
-import UserInfoReducers from "./UserInfoReducers";
+import AuthReducers from "./AuthReducers";
 import SessionReducers from "./SessionReducers";
 
-export { AuroraReducers, UserInfoReducers, SessionReducers };
+export { AuroraReducers, AuthReducers, SessionReducers };

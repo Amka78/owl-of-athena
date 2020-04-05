@@ -1,12 +1,10 @@
-import { AsyncStorage } from "react-native";
 import { Login } from "../types";
 import { login as loginAction } from "../actions";
 import { useCallback, useState } from "react";
 import { useNavigation } from "react-navigation-hooks";
 
-import { TokenManager } from "../utils";
 import { useDispatch } from "react-redux";
-import { Message, MessageKeys, StorageKeys } from "../constants";
+import { Message, MessageKeys } from "../constants";
 import { AuroraRestClientInstance } from "../clients";
 import { LoadingDialog } from "../components";
 
@@ -25,10 +23,7 @@ export const useLogin = (
             const result = await AuroraRestClientInstance.login(login);
             console.debug("loggedin user", result);
 
-            dispatch(loginAction(result.user));
-            await AsyncStorage.setItem(StorageKeys.lastUsedEmail, login.email);
-
-            await TokenManager.set(result.token);
+            dispatch(loginAction(result.user, result.token));
 
             if (result.user.providers.email.activation_expires_at) {
                 throw new Error(Message.get(MessageKeys.account_not_activated));

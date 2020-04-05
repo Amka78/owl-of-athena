@@ -15,7 +15,7 @@ export default function SessionReducers(
     action: SessionActions
 ): SessionState {
     switch (action.type) {
-        case ActionTypes.CACHE_SESSION: {
+        case ActionTypes.CACHE_SESSIONS: {
             return Object.assign({}, state, {
                 sessionList: action.payload.sessionList
             });
@@ -41,6 +41,14 @@ export default function SessionReducers(
             return Object.assign({}, state, {
                 selectedSessionDetail: action.payload.sessionDetail,
                 sessionDetailList: state.sessionDetailList
+            });
+        }
+        case ActionTypes.INITIALIZE_SESSION: {
+            return Object.assign({}, state, {
+                selectedSession: undefined,
+                selectedSessionDetail: undefined,
+                sessionList: new Array<AuroraSession>(),
+                sessionDetailList: new Array<AuroraSessionDetail>()
             });
         }
         default:

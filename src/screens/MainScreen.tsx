@@ -26,16 +26,7 @@ export const MainScreen: FunctionComponent = () => {
     useEffect(() => {
         let unmounted = false;
         const f = async (): Promise<void> => {
-            if (!unmounted) {
-                console.debug("Current session list:", sessionList);
-                AuroraManagerInstance.on(
-                    AuroraManagerEventList.onPushedSession,
-                    (value: AuroraSession[]) => {
-                        sessionList.push(...value);
-
-                        dispatch(cacheSessions(sessionList));
-                    }
-                );
+            if (!unmounted && userInfo !== undefined) {
                 if (sessionList.length <= 0) {
                     const remoteSessionList = await AuroraRestClientInstance.getAuroraSessions(
                         userInfo!.id

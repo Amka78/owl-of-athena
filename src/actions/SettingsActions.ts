@@ -2,12 +2,11 @@
 import { Settings } from "../sdk/models";
 import { ActionTypes } from "../constants";
 
-export type SettingsActions = ReturnType<typeof updateSettings>;
+export type SettingsActions = ReturnType<typeof cacheSettings>;
 
-export const updateSettings = (settings: Settings, userId: string) => ({
+export const cacheSettings = (settings: Settings) => ({
     payload: {
-        data: settings,
-        userId
+        data: settings
     },
-    type: ActionTypes.UPDATE_SETTINGS
+    type: ActionTypes.CACHE_SETTINGS
 });

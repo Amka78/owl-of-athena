@@ -18,7 +18,7 @@ import {
 } from "../hooks";
 import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
 import { MessageKeys, Dimens } from "../constants";
-import { updateSettings, updateProfiles } from "../actions";
+import { cacheSettings, updateProfiles } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
@@ -47,7 +47,7 @@ export const HomeScreen: FunctionComponent = () => {
         let unmounted = false;
         console.log("Loading profiles start");
         const f = async (): Promise<void> => {
-            if (!unmounted) {
+            if (!unmounted && user !== undefined) {
                 let auroraProfiles = profiles;
 
                 console.log("Current profiles:", auroraProfiles);
@@ -92,7 +92,7 @@ export const HomeScreen: FunctionComponent = () => {
                         }
                     }
                     settings.userId = user!.id;
-                    dispatch(updateSettings(settings, settings.userId));
+                    dispatch(cacheSettings(settings));
                 }
             }
         };

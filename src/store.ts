@@ -2,7 +2,7 @@ import { applyMiddleware, combineReducers, createStore, Store } from "redux";
 import { persistReducer, persistStore, Persistor } from "redux-persist";
 import logger from "redux-logger";
 
-import { AuroraReducers, UserInfoReducers } from "./reducers";
+import { AuroraReducers, AuthReducers } from "./reducers";
 import { AsyncStorage } from "react-native";
 import SessionReducers from "./reducers/SessionReducers";
 
@@ -14,7 +14,7 @@ const persitConfig = {
 const appReducer = combineReducers({
     aurora: AuroraReducers,
     session: SessionReducers,
-    userInfo: UserInfoReducers
+    auth: AuthReducers
 });
 
 const persistedReducer = persistReducer(persitConfig, appReducer);

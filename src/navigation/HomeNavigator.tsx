@@ -29,6 +29,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "awake",
         screen: AwakeScreen,
         navigationOptions: {
+            headerLeft: (): JSX.Element => <View></View>,
             headerTitle: Message.get(MessageKeys.awake_title)
         }
     },
@@ -36,6 +37,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "sleeping",
         screen: SleepingScreen,
         navigationOptions: {
+            headerLeft: (): JSX.Element => <View></View>,
             headerTitle: Message.get(MessageKeys.sleeping_title)
         }
     },
@@ -50,6 +52,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "home",
         screen: HomeScreen,
         navigationOptions: {
+            headerLeft: (): JSX.Element => <View></View>,
             headerTitle: Message.get(MessageKeys.home_title)
         }
     },
@@ -57,6 +60,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         path: "waking",
         screen: WakingScreen,
         navigationOptions: {
+            headerLeft: (): JSX.Element => <View></View>,
             headerTitle: Message.get(MessageKeys.waking_title)
         }
     },
@@ -68,7 +72,6 @@ const routeConfigMap: NavigationRouteConfigMap<
 const HomeNavigator = createStackNavigator(routeConfigMap, {
     defaultNavigationOptions: () => {
         return {
-            headerLeft: (): JSX.Element => <View></View>,
             headerTitleAlign: "center",
             headerTintColor: Colors.cyan,
             headerStyle: CommonStyles.headerStyle,

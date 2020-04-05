@@ -1,13 +1,13 @@
 export default class RestClient {
     protected headers: any = null;
 
-    protected onGetToken?: () => Promise<string | undefined>;
-
     private baseUrl = "";
 
     private devMode = false;
 
     private simulatedDelay = 0;
+
+    private _token: string | undefined;
 
     constructor(
         baseUrl = "",
@@ -23,6 +23,10 @@ export default class RestClient {
         this.baseUrl = baseUrl;
         this.simulatedDelay = simulatedDelay;
         this.devMode = devMode;
+    }
+
+    public set token(value: string | undefined) {
+        this._token = value;
     }
 
     /**
@@ -130,11 +134,8 @@ export default class RestClient {
 
         let fullRoute = this.createFullRoute(route);
 
-        if (this.onGetToken) {
-            const result = await this.onGetToken();
-            if (result) {
-                this.setTokenToHeader(result);
-            }
+        if (this._token) {
+            this.setTokenToHeader(this._token);
         }
 
         const opts = {

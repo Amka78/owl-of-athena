@@ -1,7 +1,7 @@
-import { AuroraState, SessionState, UserInfoState } from ".";
+import { AuroraState, SessionState, AuthState } from ".";
 
 export type RootState = {
     aurora: AuroraState;
     session: SessionState;
-    userInfo: UserInfoState;
+    auth: AuthState;
 };

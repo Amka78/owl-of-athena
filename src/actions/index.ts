@@ -1,5 +1,5 @@
-import { UserActions, login, logout, updateUser } from "./UserActions";
-import { SettingsActions, updateSettings } from "./SettingsActions";
+import { AuthActions, login, logout, updateUser } from "./AuthActions";
+import { SettingsActions, cacheSettings } from "./SettingsActions";
 import { ProfilesActions, updateProfiles } from "./ProfilesAction";
 import {
     SessionActions,
@@ -8,7 +8,7 @@ import {
     selectSessionDetail
 } from "./SessionsActions";
 export {
-    UserActions,
+    AuthActions,
     login,
     logout,
     updateUser,
@@ -16,7 +16,7 @@ export {
     SettingsActions,
     ProfilesActions,
     cacheSessions,
-    updateSettings,
+    cacheSettings,
     updateProfiles,
     selectSession,
     selectSessionDetail

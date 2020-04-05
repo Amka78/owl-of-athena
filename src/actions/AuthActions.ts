@@ -3,13 +3,14 @@ import { User } from "../types";
 
 import { ActionTypes } from "../constants";
 
-export type UserActions = ReturnType<
+export type AuthActions = ReturnType<
     typeof login | typeof updateUser | typeof logout
 >;
 
-export const login = (user: User) => ({
+export const login = (user: User, token: string) => ({
     payload: {
-        data: user
+        data: user,
+        token: token
     },
     type: ActionTypes.LOGIN
 });

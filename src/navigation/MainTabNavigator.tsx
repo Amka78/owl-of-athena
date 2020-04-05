@@ -54,7 +54,8 @@ const bottomTabNavigationConfig = {
         activeTintColor: Colors.cyan,
         inactiveTintColor: Colors.navy_darker,
         style: { backgroundColor: Colors.navy }
-    }
+    },
+    initialRouteName: "Route1"
 };
 
 const MainTabNavigator = createBottomTabNavigator(
