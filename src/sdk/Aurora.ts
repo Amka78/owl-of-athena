@@ -3,7 +3,7 @@ import { AuroraBluetooth } from "./AuroraBluetooth";
 import DriveList from "drivelist";
 import ejectMedia from "eject-media";
 import * as AuroraConstants from "./AuroraConstants";
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 import Stream from "stream";
 import { sleep, promisify, versionToString, stringToVersion } from "./util";
 //import usbDetect from "usb-detection";

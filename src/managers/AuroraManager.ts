@@ -1,5 +1,5 @@
 import { AuroraInstance, SleepStates } from "../sdk";
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 import { AuroraOSInfo, Profile, Settings } from "../sdk/models";
 import {
     AuroraProfile,

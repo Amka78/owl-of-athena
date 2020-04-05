@@ -1,4 +1,4 @@
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 import { Dictionary } from "lodash";
 import keyBy from "lodash/keyBy";
 import { sleep, promisify } from "./util";
