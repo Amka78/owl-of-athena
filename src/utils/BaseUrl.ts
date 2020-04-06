@@ -8,6 +8,7 @@ import Constants from "expo-constants";
  */
 export default class BaseUrl {
     public static get(relCh?: string) {
+        console.debug("Current constants:", Constants);
         if (!relCh && Constants.manifest.releaseChannel) {
             relCh = Constants.manifest.releaseChannel;
         }
@@ -45,7 +46,7 @@ export const IWinksRestAPI = {
         url: "https://api.iwinks.io/"
     },
     staging: {
-        url: "https://api.iwinks.io/"
+        url: "https://api-staging.iwinks.io/"
     },
     prod: {
         url: "https://api.iwinks.io/"
