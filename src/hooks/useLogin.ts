@@ -23,11 +23,10 @@ export const useLogin = (
             const result = await AuroraRestClientInstance.login(login);
             console.debug("loggedin user", result);
 
-            dispatch(loginAction(result.user, result.token));
-
             if (result.user.providers.email.activation_expires_at) {
                 throw new Error(Message.get(MessageKeys.account_not_activated));
             }
+            dispatch(loginAction(result.user, result.token));
             navigate("Main");
         } catch (e) {
             console.debug(e);

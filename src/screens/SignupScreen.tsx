@@ -11,6 +11,7 @@ import {
 } from "../components";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useCheckBox, useSignup, useTextBox } from "../hooks";
+import { HelperText } from "react-native-paper";
 
 export const SignupScreen: FunctionComponent = () => {
     const emailHooks = useTextBox("");
@@ -29,23 +30,41 @@ export const SignupScreen: FunctionComponent = () => {
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...emailHooks}
+                    error={signup.emailError !== ""}
                     label={{ key: MessageKeys.signup_input_email }}
                     keyboardType={"email-address"}
                 ></TextBox>
+                <HelperText type={"error"} visible={signup.emailError !== ""}>
+                    {signup.emailError}
+                </HelperText>
             </View>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...passwordHooks}
+                    error={signup.passwordError !== ""}
                     label={{ key: MessageKeys.signup_input_password }}
                     secureTextEntry={true}
                 ></TextBox>
+                <HelperText
+                    type={"error"}
+                    visible={signup.passwordError !== ""}
+                >
+                    {signup.passwordError}
+                </HelperText>
             </View>
             <View style={{ flex: 1 }}>
                 <TextBox
                     {...passwordConfirmHooks}
+                    error={signup.passwordConfirmError !== ""}
                     label={{ key: MessageKeys.signup_input_password_confirm }}
                     secureTextEntry={true}
                 ></TextBox>
+                <HelperText
+                    type={"error"}
+                    visible={signup.passwordConfirmError !== ""}
+                >
+                    {signup.passwordConfirmError}
+                </HelperText>
             </View>
             <View
                 style={{

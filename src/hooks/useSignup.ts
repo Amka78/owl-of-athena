@@ -10,19 +10,21 @@ export const useSignup = (
 ): {
     loading: boolean;
     onPress: () => Promise<void>;
-    generalError: string;
-    emailError: string;
-    passwordError: string;
-    passwordConfirmError: string;
+    generalError?: string;
+    emailError?: string;
+    passwordError?: string;
+    passwordConfirmError?: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
     const { navigate } = useNavigation();
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [passwordConfirmError, setPasswordConfirmError] = useState("");
-    const [generalError, setGeneralError] = useState("");
+    const [emailError, setEmailError] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<string>("");
+    const [passwordConfirmError, setPasswordConfirmError] = useState<string>(
+        ""
+    );
+    const [generalError, setGeneralError] = useState<string>("");
     const onPress = useCallback(async () => {
-        setLoading(true);
+        console.debug("useSignup called.");
         try {
             if (
                 validate(
@@ -33,7 +35,10 @@ export const useSignup = (
                     setGeneralError
                 )
             ) {
-                await AuroraRestClientInstance.signup(signup);
+                await AuroraRestClientInstance.signup({
+                    email: signup.email,
+                    password: signup.password
+                });
                 navigate("Login");
             }
         } catch (e) {
@@ -88,7 +93,7 @@ function validate(
         return false;
     }
 
-    if (signup.password === signup.passwordConfirm) {
+    if (signup.password !== signup.passwordConfirm) {
         setPasswordConfirmError(Message.get(MessageKeys.passwords_must_match));
         return false;
     }

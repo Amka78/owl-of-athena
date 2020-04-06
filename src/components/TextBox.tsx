@@ -5,6 +5,7 @@ import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
 
 import { MessageLocalizationParam } from "../constants/Message";
 export type TextBoxProps = TextInputProps & {
+    error?: boolean;
     label?: MessageLocalizationParam;
     localizedPlaceholder?: MessageLocalizationParam;
 };
