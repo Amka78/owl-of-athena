@@ -3,20 +3,20 @@ import { Platform } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap
+    NavigationRouteConfigMap,
 } from "react-navigation";
 import {
     createStackNavigator,
     StackHeaderLeftButtonProps,
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp,
 } from "react-navigation-stack";
 
+import { IconButton } from "react-native-paper";
 import { HeaderBackButton } from "../components";
 import { Dimens, Message, MessageKeys, Colors } from "../constants";
 import { SessionListScreen, SessionScreen } from "../screens";
 import { CommonStyles } from "../styles";
-
 const routeConfigMap: NavigationRouteConfigMap<
     NavigationStackOptions,
     NavigationStackProp<NavigationRoute<NavigationParams>, any>
@@ -24,14 +24,34 @@ const routeConfigMap: NavigationRouteConfigMap<
     List: {
         path: "",
         screen: SessionListScreen,
-        navigationOptions: {
-            headerLeft: undefined,
-            headerTitle: Message.get(MessageKeys.session_list_title),
-            headerTitleContainerStyle: {
-                ...CommonStyles.headerTitleContainerStyle,
-                marginLeft: Dimens.content_margin_horizontal
-            }
-        }
+        navigationOptions: ({ navigation }): any => {
+            const { params } = navigation.state;
+            return {
+                headerLeft: (
+                    props: StackHeaderLeftButtonProps
+                ): React.ReactNode => {
+                    return (
+                        <IconButton
+                            {...props}
+                            icon={"refresh"}
+                            size={40}
+                            color={Colors.white}
+                            onPress={(): void => {
+                                if (params.onPressedRefresh) {
+                                    params.onPressedRefresh();
+                                }
+                            }}
+                        ></IconButton>
+                    );
+                },
+                headerTitle: Message.get(MessageKeys.session_list_title),
+                headerTitleContainerStyle: {
+                    ...CommonStyles.headerTitleContainerStyle,
+                    marginLeft: Dimens.content_margin_horizontal,
+                },
+                title: params ? params.sessionTitle : "Detail",
+            };
+        },
     },
     Detail: {
         path: "",
@@ -39,10 +59,10 @@ const routeConfigMap: NavigationRouteConfigMap<
         navigationOptions: ({ navigation }): any => {
             const { params } = navigation.state;
             return {
-                title: params ? params.sessionTitle : "Detail"
+                title: params ? params.sessionTitle : "Detail",
             };
-        }
-    }
+        },
+    },
 };
 
 const SessionNavigator = createStackNavigator(routeConfigMap, {
@@ -55,11 +75,11 @@ const SessionNavigator = createStackNavigator(routeConfigMap, {
             headerTintColor: Colors.cyan,
             headerStyle: CommonStyles.headerStyle,
             headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle,
-            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle,
         };
     },
     headerMode: Platform.OS === "web" ? "screen" : "float",
-    initialRouteName: "List"
+    initialRouteName: "List",
 });
 
 export default SessionNavigator;

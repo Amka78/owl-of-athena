@@ -119,7 +119,7 @@ export default {
     [MessageKeys.session_movement_label]: "ムーブメント",
     [MessageKeys.session_notes_label]: "ノート",
     [MessageKeys.session_notes_hint_text]: "タップして、ノートを追加します。",
-
+    [MessageKeys.session_refresh]: "セッション再読み込み中...",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
     [MessageKeys.account_input_first_name]: input_first_name,
@@ -158,5 +158,5 @@ export default {
     // alarm sound menu
     [MessageKeys.alarm_sound_dialog_title]: "目覚まし用の音を選んでください。",
 
-    [MessageKeys.profile_dialog_title]: "プロファイルを選んでください。"
+    [MessageKeys.profile_dialog_title]: "プロファイルを選んでください。",
 };

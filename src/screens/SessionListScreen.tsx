@@ -1,13 +1,17 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { useCheckLogging, useSessionDetailListSelector } from "../hooks";
-import { StandardView } from "../components";
+import {
+    useCheckLogging,
+    useSessionDetailListSelector,
+    useUserSelector,
+} from "../hooks";
+import { StandardView, LoadingDialog } from "../components";
 import { useSessionListSelector } from "../hooks";
 import { AuroraRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
-import { selectSession, selectSessionDetail } from "../actions";
+import { selectSession, selectSessionDetail, cacheSessions } from "../actions";
 import { AuroraSession } from "../sdk/models";
-import { Colors, Layout } from "../constants";
+import { Colors, Layout, MessageKeys } from "../constants";
 import moment from "moment";
 import { List } from "react-native-paper";
 import { useNavigation } from "react-navigation-hooks";
@@ -19,9 +23,30 @@ export type SessionListProps = {};
 export const SessionListScreen: FunctionComponent = () => {
     useCheckLogging();
     const dispatch = useDispatch();
+    const user = useUserSelector();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
-    const { navigate } = useNavigation();
+    const { navigate, setParams } = useNavigation();
+
+    useEffect(() => {
+        setParams({
+            onPressedRefresh: async () => {
+                LoadingDialog.show({
+                    dialogTitle: { key: MessageKeys.session_refresh },
+                });
+                const sessions = await AuroraRestClientInstance.getAuroraSessions(
+                    user!.id
+                );
+                dispatch(cacheSessions(sessions));
+                LoadingDialog.close();
+            },
+        });
+        const cleanup = (): void => {
+            return;
+        };
+        return cleanup;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return sessionList ? (
         <StandardView standardViewStyle={{ justifyContent: "flex-start" }}>
@@ -35,7 +60,7 @@ export const SessionListScreen: FunctionComponent = () => {
                                 alignItems: "center",
                                 flexDirection: "row",
                                 justifyContent: "flex-start",
-                                width: Layout.window.fixedWidth
+                                width: Layout.window.fixedWidth,
                             }}
                         >
                             <List.Item
@@ -103,7 +128,7 @@ export const SessionListScreen: FunctionComponent = () => {
                                         sessionIndex: index,
                                         sessionTitle: moment(
                                             value.sessionAt
-                                        ).format("MM.DD.YYYY")
+                                        ).format("MM.DD.YYYY"),
                                     });
                                 }}
                             ></List.Item>
@@ -121,20 +146,20 @@ const style = StyleSheet.create({
         alignItems: "flex-start",
         flex: 1,
         width: Layout.window.fixedWidth,
-        marginTop: 30
+        marginTop: 30,
     },
     pieChartContainer: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         width: Layout.window.fixedWidth,
-        flex: 5
+        flex: 5,
     },
     sessionInfoFooter: {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "flex-start",
         flex: 1,
-        width: Layout.window.fixedWidth
-    }
+        width: Layout.window.fixedWidth,
+    },
 });

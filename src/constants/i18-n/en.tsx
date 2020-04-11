@@ -123,7 +123,7 @@ export default {
     [MessageKeys.session_rem_pie_chart_label]: "REM - {0}",
     [MessageKeys.session_awake_pie_chart_label]: "Awake - {0}",
     [MessageKeys.session_no_signal_pie_chart_label]: "No Signal - {0}",
-
+    [MessageKeys.session_refresh]: "Session Reload...",
     // account fragment
     [MessageKeys.account_title]: "Account",
     [MessageKeys.account_input_first_name]: input_first_name,
@@ -164,5 +164,5 @@ export default {
     [MessageKeys.alarm_sound_dialog_title]: "Choose a sound",
 
     // profile menu
-    [MessageKeys.profile_dialog_title]: "Choose a profile"
+    [MessageKeys.profile_dialog_title]: "Choose a profile",
 };

@@ -107,6 +107,7 @@ export const MessageKeys = {
     session_rem_pie_chart_label: "session_rem_pie_chart_label",
     session_awake_pie_chart_label: "session_awake_pie_chart_label",
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
+    session_refresh: "session_refresh",
     // account fragment
     account_title: "account_title",
     account_input_first_name: "account_input_first_name",
@@ -140,5 +141,5 @@ export const MessageKeys = {
 
     // alarm sound menu
     alarm_sound_dialog_title: "alarm_sound_dialog_title",
-    profile_dialog_title: "profile_dialog_title"
+    profile_dialog_title: "profile_dialog_title",
 };
