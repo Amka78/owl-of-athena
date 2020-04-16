@@ -26,11 +26,11 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
         </Text>
     );
 
-    const descriptionComponent = (
+    const descriptionComponent = props.description ? (
         <Text style={[style.text, props.descriptionStyle]}>
             {Message.get(props.description!.key, props.description!.restParam)}
         </Text>
-    );
+    ) : undefined;
 
     const labelContainerComponent = (
         <View
