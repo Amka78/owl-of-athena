@@ -6,7 +6,7 @@ export type SettingsActions = ReturnType<typeof cacheSettings>;
 
 export const cacheSettings = (settings: Settings) => ({
     payload: {
-        data: settings
+        data: settings,
     },
-    type: ActionTypes.CACHE_SETTINGS
+    type: ActionTypes.CACHE_SETTINGS,
 });

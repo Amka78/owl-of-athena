@@ -5,7 +5,7 @@ import {
     SessionActions,
     cacheSessions,
     selectSession,
-    selectSessionDetail
+    selectSessionDetail,
 } from "./SessionsActions";
 export {
     AuthActions,
@@ -19,5 +19,5 @@ export {
     cacheSettings,
     updateProfiles,
     selectSession,
-    selectSessionDetail
+    selectSessionDetail,
 };

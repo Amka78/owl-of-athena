@@ -10,15 +10,15 @@ describe("AuroraReducers-test", () => {
     beforeAll(() => {
         const state: AuroraState = {
             profileList: new Array<AuroraProfile>(),
-            userSettings: new Settings({})
+            userSettings: new Settings({}),
         };
 
         initialSetting.userId = testUserId;
         const action: SettingsActions = {
             payload: {
-                data: initialSetting
+                data: initialSetting,
             },
-            type: "CACHE_SETTINGS"
+            type: "CACHE_SETTINGS",
         };
         firstResult = AuroraReducer(state, action);
     });
@@ -30,9 +30,9 @@ describe("AuroraReducers-test", () => {
         const updateSetting = new Settings({ profileTitle: "update" });
         const updateAction: SettingsActions = {
             payload: {
-                data: updateSetting
+                data: updateSetting,
             },
-            type: "CACHE_SETTINGS"
+            type: "CACHE_SETTINGS",
         };
 
         const updateResult = AuroraReducer(firstResult, updateAction);

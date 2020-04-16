@@ -8,11 +8,11 @@ export type ProfilesActions =
 
 export const updateProfiles = (profiles: Array<AuroraProfile>) => ({
     payload: {
-        data: profiles
+        data: profiles,
     },
-    type: ActionTypes.CACHE_PROFILES
+    type: ActionTypes.CACHE_PROFILES,
 });
 
 export const initializeAurora = () => ({
-    type: ActionTypes.INITIALIZE_AURORA
+    type: ActionTypes.INITIALIZE_AURORA,
 });

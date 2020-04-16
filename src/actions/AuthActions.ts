@@ -10,18 +10,18 @@ export type AuthActions = ReturnType<
 export const login = (user: User, token: string) => ({
     payload: {
         data: user,
-        token: token
+        token: token,
     },
-    type: ActionTypes.LOGIN
+    type: ActionTypes.LOGIN,
 });
 
 export const logout = () => ({
-    type: ActionTypes.LOGOUT
+    type: ActionTypes.LOGOUT,
 });
 
 export const updateUser = (userDto: User) => ({
     payload: {
-        data: userDto
+        data: userDto,
     },
-    type: ActionTypes.UPDATE_USER
+    type: ActionTypes.UPDATE_USER,
 });
