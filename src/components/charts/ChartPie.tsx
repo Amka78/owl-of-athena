@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
 import * as d3 from "d3";
+import { Colors } from "../../constants";
 
 export type ChartPieProps = ChartProps & {
     categoryColors: string[];
@@ -37,7 +38,7 @@ export default class ChartPie extends Chart<ChartPieProps> {
             categoryLabelSize,
             categoryLabelColor,
             categoryLabelPadding,
-            legendPosition
+            legendPosition,
         } = this.props;
 
         this.pie = d3.pie();
@@ -92,7 +93,7 @@ export default class ChartPie extends Chart<ChartPieProps> {
             .attr("class", "legend-label")
             .attr("x", categoryLabelPadding + 12)
             .attr("y", categoryLabelPadding / 2 + 6)
-            .text(d => d)
+            .text((d) => d)
             .style("fill", categoryLabelColor)
             .style("font-size", categoryLabelSize);
 
@@ -146,13 +147,13 @@ export default class ChartPie extends Chart<ChartPieProps> {
             percentLabelColorDark,
             percentLabelColorLight,
             transition,
-            legendPosition
+            legendPosition,
         } = this.props;
 
         // @ts-ignore
         this.legendCategoryGroups!.select(".legend-label")
             .data(categoryLabels)
-            .text(d => d);
+            .text((d) => d);
 
         let slices = this.pieGroup!.selectAll("path").data(
             // @ts-ignore
@@ -177,7 +178,7 @@ export default class ChartPie extends Chart<ChartPieProps> {
             //@ts-ignore
             .attr("d", this.arc)
             //@ts-ignore
-            .each(d => (this.currentAngle = d))
+            .each((d) => (this.currentAngle = d))
             .merge(slices)
             // @ts-ignore
             .attr("fill", (d: any, i: number) => categoryColors[i]);
@@ -220,15 +221,17 @@ export default class ChartPie extends Chart<ChartPieProps> {
                     : percentLabelColorLight;
             })
             // @ts-ignore
-            .text(d => (d.data >= 5 ? `${Math.round(d.data)}%` : ""));
+            .text((d) => (d.data >= 5 ? `${Math.round(d.data)}%` : ""));
 
         if (transition) {
             // @ts-ignore
             percents = percents.transition().duration(transition);
         }
-
         // @ts-ignore
-        percents.attr("transform", d => `translate(${this.arc!.centroid(d)})`);
+        percents.attr(
+            "transform",
+            (d) => `translate(${this.arc!.centroid(d)})`
+        );
 
         //copied here because I'm lazy
         const width = this.getChartWidth();
@@ -297,8 +300,8 @@ export default class ChartPie extends Chart<ChartPieProps> {
             "right",
             "top",
             "bottom",
-            "center"
-        ])
+            "center",
+        ]),
     };
 
     static defaultProps = {
@@ -311,7 +314,7 @@ export default class ChartPie extends Chart<ChartPieProps> {
         categoryLabelPadding: 32,
 
         percentLabelSize: 20,
-        percentLabelColorDark: "#001438",
+        percentLabelColorDark: Colors.blue,
         percentLabelColorLight: "#d0d0d0",
 
         clipToRange: false,
@@ -319,6 +322,6 @@ export default class ChartPie extends Chart<ChartPieProps> {
 
         legendPosition: "right",
 
-        categoryColors: d3.schemeCategory10
+        categoryColors: d3.schemeCategory10,
     };
 }

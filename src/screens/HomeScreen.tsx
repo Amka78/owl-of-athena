@@ -7,14 +7,14 @@ import {
     TimeView,
     ErrorText,
     LoadingDialog,
-    ConfirmDialog
+    ConfirmDialog,
 } from "../components";
 import { useNavigation } from "react-navigation-hooks";
 import {
     useCheckLogging,
     useUserSelector,
     useSettingsSelector,
-    useProfilesSelector
+    useProfilesSelector,
 } from "../hooks";
 import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
 import { MessageKeys, Dimens } from "../constants";
@@ -108,7 +108,7 @@ export const HomeScreen: FunctionComponent = () => {
         settings.profileId,
         settings.profileTitle,
         settings.savedAt,
-        user
+        user,
     ]);
     return (
         <StandardView>
@@ -123,10 +123,10 @@ export const HomeScreen: FunctionComponent = () => {
                         minutes={settings.alarmMinute}
                         mode={"meridian"}
                         timeStyle={{
-                            fontSize: Dimens.home_alarm_time_text_size
+                            fontSize: Dimens.home_alarm_time_text_size,
                         }}
                         timeMeridianStyle={{
-                            fontSize: Dimens.home_alarm_meridian_text_size
+                            fontSize: Dimens.home_alarm_meridian_text_size,
                         }}
                     ></TimeView>
                     <FlatButton>
@@ -151,8 +151,8 @@ export const HomeScreen: FunctionComponent = () => {
                                 LoadingDialog.show({
                                     dialogTitle: {
                                         key:
-                                            MessageKeys.home_go_to_sleep_loading_message
-                                    }
+                                            MessageKeys.home_go_to_sleep_loading_message,
+                                    },
                                 });
                                 await AuroraManagerInstance.goToSleep(
                                     selectedProfile!,
@@ -162,13 +162,13 @@ export const HomeScreen: FunctionComponent = () => {
                                 ConfirmDialog.show({
                                     title: {
                                         key:
-                                            MessageKeys.home_aurora_disconnected_dialog_title
+                                            MessageKeys.home_aurora_disconnected_dialog_title,
                                     },
                                     message: {
                                         key:
-                                            MessageKeys.home_aurora_disconnected_dialog_message
+                                            MessageKeys.home_aurora_disconnected_dialog_message,
                                     },
-                                    isCancelable: false
+                                    isCancelable: false,
                                 });
                             }
                         } catch (e) {

@@ -8,14 +8,14 @@ import {
     SoundList,
     LabeledSelectorMenu,
     LabeledCheckBox,
-    ProfilesDialog
+    ProfilesDialog,
 } from "../components";
 import { Colors, MessageKeys } from "../constants";
 import {
     useCheckLogging,
     useSettingsSelector,
     useProfilesSelector,
-    useUserSelector
+    useUserSelector,
 } from "../hooks";
 import { Settings } from "../sdk/models";
 import { cacheSettings } from "../actions";
@@ -63,7 +63,7 @@ export const SettingsScreen: FunctionComponent = () => {
                     backgroundColor: Colors.navy,
                     borderColor: Colors.white,
                     containerBackgroudColor: Colors.navy,
-                    textColor: Colors.cyan
+                    textColor: Colors.cyan,
                 }}
                 onChangeTime={(hours?: number, minutes?: number): void => {
                     setDatePickerState({ hours: hours!, minutes: minutes! });
@@ -83,9 +83,9 @@ export const SettingsScreen: FunctionComponent = () => {
                                 ) => {
                                     setSmartAlarmSound({
                                         name: showName,
-                                        path: fileName
+                                        path: fileName,
                                     });
-                                }
+                                },
                             },
                             smartAlarmAudio.name
                         );
@@ -103,7 +103,7 @@ export const SettingsScreen: FunctionComponent = () => {
                                 profileTitle: string
                             ) => {
                                 setProfileState({ profileId, profileTitle });
-                            }
+                            },
                         });
                     }}
                 ></LabeledSelectorMenu>
@@ -113,6 +113,7 @@ export const SettingsScreen: FunctionComponent = () => {
                         setSmartAlarmEnabled(!smartAlarmEnabled);
                     }}
                     label={{ key: MessageKeys.settings_option_smart_alarm }}
+                    labelPlace={"left"}
                 ></LabeledCheckBox>
                 <LabeledCheckBox
                     status={dslEnabled ? "checked" : "unchecked"}
@@ -120,6 +121,7 @@ export const SettingsScreen: FunctionComponent = () => {
                         setDslEnabled(!dslEnabled);
                     }}
                     label={{ key: MessageKeys.settings_option_dsl }}
+                    labelPlace={"left"}
                 ></LabeledCheckBox>
                 <LabeledCheckBox
                     status={remStimEnabled ? "checked" : "unchecked"}
@@ -127,6 +129,7 @@ export const SettingsScreen: FunctionComponent = () => {
                         setRemStimEnabled(!remStimEnabled);
                     }}
                     label={{ key: MessageKeys.settings_option_rem_stim }}
+                    labelPlace={"left"}
                 ></LabeledCheckBox>
                 <LabeledSelectorMenu
                     value={remStimAudio.name}
@@ -140,9 +143,9 @@ export const SettingsScreen: FunctionComponent = () => {
                                 ) => {
                                     setRemStimAudio({
                                         name: showName,
-                                        path: fileName
+                                        path: fileName,
                                     });
-                                }
+                                },
                             },
                             remStimAudio.name
                         );

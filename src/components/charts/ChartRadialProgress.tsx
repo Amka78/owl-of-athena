@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
 import * as d3 from "d3";
+import { Colors } from "../../constants";
 
 export type ChartRadialProgressProps = ChartProps & {
     startAngle: number;
@@ -35,7 +36,7 @@ export default class ChartRadialProgress extends Chart<
             bgColor,
             fgColor,
             valueLabelColor,
-            valueLabelSize
+            valueLabelSize,
         } = this.props;
 
         const outerRadius = this.props.outerRadius
@@ -85,7 +86,7 @@ export default class ChartRadialProgress extends Chart<
             value,
             minValue,
             maxValue,
-            valueLabel
+            valueLabel,
         } = this.props;
 
         this.arcFg!.transition().attr(
@@ -141,7 +142,7 @@ export default class ChartRadialProgress extends Chart<
         startAngle: PropTypes.number,
 
         bgColor: PropTypes.string,
-        fgColor: PropTypes.string
+        fgColor: PropTypes.string,
     };
 
     static defaultProps = {
@@ -162,7 +163,7 @@ export default class ChartRadialProgress extends Chart<
         minValue: 0,
         maxValue: 100,
         bgColor: "rgba(255,255,255,.5)",
-        fgColor: "#00ffe6",
-        startAngle: 0
+        fgColor: Colors.teal,
+        startAngle: 0,
     };
 }

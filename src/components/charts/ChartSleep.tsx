@@ -6,7 +6,7 @@ import Chart, { ChartProps } from "./Chart";
 import moment from "moment";
 import * as d3 from "d3";
 import { AuroraEvent } from "../../sdk/models";
-
+import { Colors } from "../../constants";
 export type TickInterval = "hour" | "default";
 export type ChartSleepProps = ChartProps & {
     tickInterval: TickInterval;
@@ -17,16 +17,16 @@ export type ChartSleepProps = ChartProps & {
 export default class ChartSleep extends Chart<ChartSleepProps> {
     static propTypes = {
         ...Chart.propTypes,
-        sleep: PropTypes.array.isRequired
+        sleep: PropTypes.array.isRequired,
     };
 
     static sleepStageLabels = ["", "Deep", "Light", "REM", "Awake"];
     static sleepStageColors = [
-        "#001438",
+        Colors.blue,
         "#4a2fba",
-        "#00ffe6",
+        Colors.teal,
         "#ff8260",
-        "#daf392"
+        "#daf392",
     ];
     static sleepStageMapping = [0, 4, 2, 1, 3];
 
@@ -52,27 +52,21 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
         super.buildAxes();
 
         if (this.props.tickInterval === "default") {
-            this.axisX!.tickFormat(d =>
+            this.axisX!.tickFormat((d) =>
                 // @ts-ignore
-                moment(d)
-                    .utc()
-                    .format("h:mm a")
-                    .replace(":00", "")
-                    .slice(0, -1)
+                moment(d).utc().format("h:mm a").replace(":00", "").slice(0, -1)
             ).tickSizeOuter(0);
         } else {
             this.axisX!.ticks(this.props.totalSleepHour)
-                .tickFormat(d =>
+                .tickFormat((d) =>
                     // @ts-ignore
-                    moment(d)
-                        .utc()
-                        .format("h")
+                    moment(d).utc().format("h")
                 )
                 .tickSizeOuter(0);
         }
 
         // @ts-ignore
-        this.axisY!.tickFormat(d => ChartSleep.sleepStageLabels[d])
+        this.axisY!.tickFormat((d) => ChartSleep.sleepStageLabels[d])
             .tickSize(0)
             .ticks(ChartSleep.sleepStageLabels.length - 1);
 
@@ -112,9 +106,9 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             .line()
             .curve(d3.curveStepAfter)
             // @ts-ignore
-            .x(d => this.scaleX!(d.eventAt))
+            .x((d) => this.scaleX!(d.eventAt))
             // @ts-ignore
-            .y(d => this.scaleY!(ChartSleep.sleepStageMapping[d.flags]));
+            .y((d) => this.scaleY!(ChartSleep.sleepStageMapping[d.flags]));
     }
 
     updateAxes(): void {
@@ -158,14 +152,14 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             sleep.unshift(
                 Object.assign({}, sleep[0], {
                     time: 0,
-                    eventAt: scaleXDomain[0]
+                    eventAt: scaleXDomain[0],
                 })
             );
             sleep.push(
                 Object.assign({}, sleep[sleep.length - 1], {
                     eventAt: scaleXDomain[1],
                     // @ts-ignore
-                    time: scaleXDomain[1] - scaleXDomain[0]
+                    time: scaleXDomain[1] - scaleXDomain[0],
                 })
             );
         }
@@ -191,6 +185,6 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
         axisYLabelSize: 15,
         axisYLabelPadding: 24,
         axisXLabelSize: 15,
-        axisXLabelPadding: 16
+        axisXLabelPadding: 16,
     };
 }
