@@ -4,13 +4,13 @@ import { AuroraOSInfo, Profile, Settings } from "../sdk/models";
 import {
     AuroraProfile,
     CommandResult,
-    AuroraSessionJson
+    AuroraSessionJson,
 } from "../sdk/AuroraTypes";
 import { AuroraEventList } from "../sdk/Aurora";
 import {
     EventIds,
     CommandNames,
-    EventIdsToNames
+    EventIdsToNames,
 } from "../sdk/AuroraConstants";
 import { Audio } from "expo-av";
 import { AuroraSession } from "../sdk/models";
@@ -24,7 +24,7 @@ export enum AuroraManagerEventList {
     onSleeping = "onSleeping",
     onWaking = "onWaking",
     onAwake = "onAwake",
-    onPushedSession = "onPushedSession"
+    onPushedSession = "onPushedSession",
 }
 export class AuroraManager extends EventEmitter {
     private connected: boolean;
@@ -211,7 +211,8 @@ export class AuroraManager extends EventEmitter {
         for (const sessionFileInfo of sessions) {
             const result = await AuroraInstance.readFile(
                 sessionFileInfo.file,
-                false
+                false,
+                true
             );
 
             const dirName = sessionFileInfo.file.replace("/session.txt", "");
@@ -239,7 +240,7 @@ export class AuroraManager extends EventEmitter {
         for (const value of sessionList) {
             const sessionInfo = value[1];
             const uploadSession: Partial<AuroraSessionJson> = {
-                ...sessionInfo
+                ...sessionInfo,
             };
             uploadSession.app_version = this.osInfo!.version;
             uploadSession.app_platform = "win"; //Platform.OS;

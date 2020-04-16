@@ -10,6 +10,7 @@ const AuroraCmdGetProfiles = async function(
     const profileListReadResp: any = await this.readFile(
         "profiles/_profiles.list",
         split(),
+        true,
         connectorType
     );
 

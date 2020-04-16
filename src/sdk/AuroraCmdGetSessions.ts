@@ -1,13 +1,8 @@
-import AuroraTransformObject from "./AuroraTransformObject";
-import AuroraSessionParser from "./AuroraSessionParser";
-import moment from "moment";
-import stream from "stream";
-import { promisifyStream } from "./util";
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
 import AuroraSessionReader from "./AuroraSessionReader";
 
-const AuroraCmdGetSessions = async function(
+const AuroraCmdGetSessions = async function (
     this: Aurora,
     isFile: boolean,
     filter?: string,
@@ -64,6 +59,7 @@ const AuroraCmdGetSessions = async function(
             readSessionTxtCmd = await this.readFile(
                 `${sessionDir.name}/session.txt`,
                 false,
+                true,
                 connector
             );
             console.debug("Completed readFiles:", readSessionTxtCmd);

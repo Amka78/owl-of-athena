@@ -32,7 +32,7 @@ const AuroraCmdDownloadStream = async function(
             writeStream = transform;
         }
 
-        await this.readFile(srcPath, writeStream, connector);
+        await this.readFile(srcPath, writeStream, true, connector);
 
         await this.queueCmd(`sd-file-del ${srcPath}`);
 
