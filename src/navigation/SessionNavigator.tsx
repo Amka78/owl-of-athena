@@ -44,6 +44,23 @@ const routeConfigMap: NavigationRouteConfigMap<
                         ></IconButton>
                     );
                 },
+                headerRight: (
+                    props: StackHeaderLeftButtonProps
+                ): React.ReactNode => {
+                    return (
+                        <IconButton
+                            {...props}
+                            icon={"filter-variant"}
+                            size={40}
+                            color={Colors.white}
+                            onPress={(): void => {
+                                if (params.onPressedFilter) {
+                                    params.onPressedFilter();
+                                }
+                            }}
+                        ></IconButton>
+                    );
+                },
                 headerTitle: Message.get(MessageKeys.session_list_title),
                 headerTitleContainerStyle: {
                     ...CommonStyles.headerTitleContainerStyle,

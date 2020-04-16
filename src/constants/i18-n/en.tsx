@@ -106,6 +106,16 @@ export default {
     [MessageKeys.sessions_title]: sessions,
     [MessageKeys.sessions_toolbar_button_left]: "Prev",
     [MessageKeys.sessions_toolbar_button_right]: "Next",
+    [MessageKeys.sessions_filter_by_date_label]: "Filter by Date",
+    [MessageKeys.sessions_picker_values_any_time]: "Any Time",
+    [MessageKeys.sessions_picker_values_past_week]: "Past Week",
+    [MessageKeys.sessions_picker_values_past_month]: "Past Month",
+    [MessageKeys.sessions_check_show_starred_label]: "Show Starred",
+    [MessageKeys.sessions_check_show_starred_description]:
+        "Only starred sessions",
+    [MessageKeys.sessions_check_show_notes_label]: "Show Notes",
+    [MessageKeys.sessions_check_show_notes_description]:
+        "Only sessions with notes",
     // session picker fragment
     [MessageKeys.session_list_title]: "Choose a session",
     // session fragment
@@ -123,7 +133,7 @@ export default {
     [MessageKeys.session_rem_pie_chart_label]: "REM - {0}",
     [MessageKeys.session_awake_pie_chart_label]: "Awake - {0}",
     [MessageKeys.session_no_signal_pie_chart_label]: "No Signal - {0}",
-    [MessageKeys.session_refresh]: "Session Reload...",
+    [MessageKeys.session_reloading]: "Session Reload...",
     // account fragment
     [MessageKeys.account_title]: "Account",
     [MessageKeys.account_input_first_name]: input_first_name,

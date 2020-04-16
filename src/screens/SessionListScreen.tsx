@@ -1,38 +1,47 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { StyleSheet, Text, View, Picker } from "react-native";
 import {
-    useCheckLogging,
+    useFilterConditionSelector,
+    useFilteredSessionListSelector,
     useSessionDetailListSelector,
+    useTokenSelector,
     useUserSelector,
 } from "../hooks";
-import { StandardView, LoadingDialog } from "../components";
-import { useSessionListSelector } from "../hooks";
+import { StandardView, LoadingDialog, LabeledCheckBox } from "../components";
 import { AuroraRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
-import { selectSession, selectSessionDetail, cacheSessions } from "../actions";
-import { AuroraSession } from "../sdk/models";
-import { Colors, Layout, MessageKeys } from "../constants";
+import {
+    selectSession,
+    selectSessionDetail,
+    cacheSessions,
+    updateFilter,
+} from "../actions/SessionsActions";
+import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import { Colors, Layout, MessageKeys, Message } from "../constants";
 import moment from "moment";
 import { List } from "react-native-paper";
 import { useNavigation } from "react-navigation-hooks";
 import { ChartRadialProgress } from "../components/charts";
-import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
 import { ScrollView } from "react-native-gesture-handler";
-export type SessionListProps = {};
+import { FilterByDateValues } from "../state/SessionState";
 
 export const SessionListScreen: FunctionComponent = () => {
-    useCheckLogging();
     const dispatch = useDispatch();
     const user = useUserSelector();
-    const sessionList = useSessionListSelector();
+    const filterCondition = useFilterConditionSelector();
+    const sessionList = useFilteredSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
     const { navigate, setParams } = useNavigation();
-
+    const [showMenu, setShowMenu] = useState<boolean>(false);
+    const token = useTokenSelector();
     useEffect(() => {
+        if (!token) {
+            navigate("Welcome");
+        }
         setParams({
             onPressedRefresh: async () => {
                 LoadingDialog.show({
-                    dialogTitle: { key: MessageKeys.session_refresh },
+                    dialogTitle: { key: MessageKeys.session_reloading },
                 });
                 const sessions = await AuroraRestClientInstance.getAuroraSessions(
                     user!.id
@@ -40,17 +49,148 @@ export const SessionListScreen: FunctionComponent = () => {
                 dispatch(cacheSessions(sessions));
                 LoadingDialog.close();
             },
+            onPressedFilter: async () => {
+                setShowMenu(!showMenu);
+            },
         });
         const cleanup = (): void => {
             return;
         };
         return cleanup;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [showMenu]);
 
+    let menu = undefined;
+    if (showMenu) {
+        menu = (
+            <View
+                style={{
+                    backgroundColor: Colors.purple,
+                    flex: 1,
+                    width: Layout.window.fixedWidth,
+                }}
+            >
+                <View
+                    style={{
+                        flex: 1,
+                        marginTop: 4,
+                        marginLeft: 20,
+                        marginRight: 20,
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: Colors.cyan,
+                            fontSize: 13,
+                        }}
+                    >
+                        {Message.get(MessageKeys.sessions_filter_by_date_label)}
+                    </Text>
+                    <Picker
+                        style={{
+                            // @ts-ignore
+                            color: Colors.white,
+                            backgroundColor: Colors.purple,
+                            borderLeftWidth: 0,
+                            borderRightWidth: 0,
+                            borderTopWidth: 0,
+                            borderBottomColor: Colors.cyan,
+                        }}
+                        itemStyle={{
+                            textDecorationColor: Colors.white,
+                            borderColor: Colors.white,
+                        }}
+                        selectedValue={filterCondition.byDate}
+                        onValueChange={(
+                            itemValue: FilterByDateValues
+                        ): void => {
+                            dispatch(updateFilter({ byDate: itemValue }));
+                        }}
+                    >
+                        <Picker.Item
+                            label={Message.get(
+                                MessageKeys.sessions_picker_values_any_time
+                            )}
+                            value={FilterByDateValues.ANY_TIME}
+                        ></Picker.Item>
+                        <Picker.Item
+                            label={Message.get(
+                                MessageKeys.sessions_picker_values_past_week
+                            )}
+                            value={FilterByDateValues.PAST_WEEK}
+                        ></Picker.Item>
+                        <Picker.Item
+                            label={Message.get(
+                                MessageKeys.sessions_picker_values_past_month
+                            )}
+                            value={FilterByDateValues.PAST_MONTH}
+                        ></Picker.Item>
+                    </Picker>
+                </View>
+                <LabeledCheckBox
+                    labelPlace={"right"}
+                    status={
+                        filterCondition.showStarred ? "checked" : "unchecked"
+                    }
+                    container={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginTop: 4,
+                    }}
+                    label={{
+                        key: MessageKeys.sessions_check_show_starred_label,
+                    }}
+                    labelStyle={{ color: Colors.white, marginBottom: 0 }}
+                    description={{
+                        key:
+                            MessageKeys.sessions_check_show_starred_description,
+                    }}
+                    descriptionStyle={{
+                        color: Colors.gray,
+                        fontSize: 10,
+                    }}
+                    onPress={(): void => {
+                        dispatch(
+                            updateFilter({
+                                showStarred: !filterCondition.showStarred,
+                            })
+                        );
+                    }}
+                ></LabeledCheckBox>
+                <LabeledCheckBox
+                    labelPlace={"right"}
+                    container={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginTop: 4,
+                    }}
+                    status={filterCondition.showNotes ? "checked" : "unchecked"}
+                    label={{
+                        key: MessageKeys.sessions_check_show_notes_label,
+                    }}
+                    labelStyle={{ color: Colors.white, marginBottom: 0 }}
+                    description={{
+                        key: MessageKeys.sessions_check_show_notes_description,
+                    }}
+                    descriptionStyle={{
+                        color: Colors.gray,
+                        fontSize: 10,
+                    }}
+                    onPress={(): void => {
+                        dispatch(
+                            updateFilter({
+                                showNotes: !filterCondition.showNotes,
+                            })
+                        );
+                    }}
+                ></LabeledCheckBox>
+            </View>
+        );
+    }
     return sessionList ? (
         <StandardView standardViewStyle={{ justifyContent: "flex-start" }}>
-            <ScrollView>
+            {showMenu ? menu : undefined}
+            <ScrollView style={{ flex: Layout.isSmallDevice ? 2 : 4 }}>
                 {sessionList.map((value: AuroraSession, index: number) => {
                     const sessionAt = moment(value.sessionAt);
                     return (

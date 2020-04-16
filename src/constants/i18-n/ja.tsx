@@ -107,6 +107,17 @@ export default {
     [MessageKeys.sessions_title]: sessions,
     [MessageKeys.sessions_toolbar_button_left]: "前へ",
     [MessageKeys.sessions_toolbar_button_right]: "次へ",
+    [MessageKeys.sessions_filter_by_date_label]: "日付で絞り込む",
+    [MessageKeys.sessions_picker_values_any_time]: "全て",
+    [MessageKeys.sessions_picker_values_past_week]: "1週間",
+    [MessageKeys.sessions_picker_values_past_month]: "1ヵ月",
+    [MessageKeys.sessions_check_show_starred_label]: "星付きを表示",
+    [MessageKeys.sessions_check_show_starred_description]:
+        "星付きのセッションのみ表示します。",
+    [MessageKeys.sessions_check_show_notes_label]: "ノートを表示",
+    [MessageKeys.sessions_check_show_notes_description]:
+        "ノートを記述しているセッションのみ表示します。",
+
     // session picker fragment
     [MessageKeys.session_list_title]: "セッションを選んでください。",
     // session fragment
@@ -119,7 +130,7 @@ export default {
     [MessageKeys.session_movement_label]: "ムーブメント",
     [MessageKeys.session_notes_label]: "ノート",
     [MessageKeys.session_notes_hint_text]: "タップして、ノートを追加します。",
-    [MessageKeys.session_refresh]: "セッション再読み込み中...",
+    [MessageKeys.session_reloading]: "セッション再読み込み中...",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
     [MessageKeys.account_input_first_name]: input_first_name,

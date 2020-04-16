@@ -90,6 +90,17 @@ export const MessageKeys = {
     sessions_title: "sessions_title",
     sessions_toolbar_button_left: "sessions_toolbar_button_left",
     sessions_toolbar_button_right: "sessions_toolbar_button_right",
+    sessions_filter_by_date_label: "sessions_filter_by_date_label",
+    sessions_picker_values_any_time: "sessions_picker_value_any_time",
+    sessions_picker_values_past_week: "sessions_picker_value_past_week",
+    sessions_picker_values_past_month: "sessions_picker_value_past_month",
+    sessions_check_show_starred_label: "sessions_check_show_starred_label",
+    sessions_check_show_starred_description:
+        "sessions_check_show_starred_description",
+    sessions_check_show_notes_label: "sessions_check_show_notes_label",
+    sessions_check_show_notes_description:
+        "sessions_check_show_notes_description",
+
     // session picker fragment
     session_list_title: "session_list_title",
     // session fragment
@@ -107,7 +118,7 @@ export const MessageKeys = {
     session_rem_pie_chart_label: "session_rem_pie_chart_label",
     session_awake_pie_chart_label: "session_awake_pie_chart_label",
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
-    session_refresh: "session_refresh",
+    session_reloading: "session_reloading",
     // account fragment
     account_title: "account_title",
     account_input_first_name: "account_input_first_name",
