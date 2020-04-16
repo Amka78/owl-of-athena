@@ -92,6 +92,26 @@ function createFilteredSessionList(
 ): Array<AuroraSession> {
     const filteredSessionList = new Array<AuroraSession>();
 
+    let dateFrom = undefined;
+    const dateTo = moment().utc();
+
+    if (filterCondition.byDate !== FilterByDateValues.ANY_TIME) {
+        switch (filterCondition.byDate) {
+            case FilterByDateValues.PAST_WEEK:
+                dateFrom = moment().utc().subtract(7, "days");
+                break;
+
+            case FilterByDateValues.PAST_MONTH:
+                dateFrom = moment().utc().subtract(1, "month");
+                break;
+
+            /*case SessionConstants.DateFilterTypes.CUSTOM_RANGE :
+                dateTo = this.filter.dateTo;
+                dateFrom = this.filter.dateFrom;
+                break;*/
+        }
+    }
+
     for (const session of sessionList) {
         const sessionDate = moment(session.sessionAt).utc();
         if (filterCondition.showNotes) {
@@ -107,20 +127,8 @@ function createFilteredSessionList(
         }
 
         if (filterCondition.byDate !== FilterByDateValues.ANY_TIME) {
-            if (filterCondition.byDate === FilterByDateValues.PAST_WEEK) {
-                const dateFrom = moment().utc().subtract(7, "days");
-
-                if (sessionDate < dateFrom) {
-                    continue;
-                }
-            }
-
-            if (filterCondition.byDate === FilterByDateValues.PAST_MONTH) {
-                const dateFrom = moment().utc().subtract(1, "month");
-
-                if (sessionDate < dateFrom) {
-                    continue;
-                }
+            if (!sessionDate.isBetween(dateFrom, dateTo)) {
+                continue;
             }
         }
 
