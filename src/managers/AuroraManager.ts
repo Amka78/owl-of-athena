@@ -11,6 +11,7 @@ import {
     EventIds,
     CommandNames,
     EventIdsToNames,
+    SleepStatesToNames,
 } from "../sdk/AuroraConstants";
 import { Audio } from "expo-av";
 import { AuroraSession } from "../sdk/models";
@@ -145,7 +146,11 @@ export class AuroraManager extends EventEmitter {
 
     public setSleepState(followingSleepState: SleepStates): void {
         console.debug(
-            `currentSleepState: ${this.currentSleepState} followingSleepState: ${followingSleepState}`
+            `SleepState Change ${
+                SleepStatesToNames[this.currentSleepState]
+            } to ${SleepStatesToNames[followingSleepState]} when ${new Date(
+                Date.now()
+            ).toLocaleString()}`
         );
         if (followingSleepState !== this.currentSleepState) {
             this.currentSleepState = followingSleepState;

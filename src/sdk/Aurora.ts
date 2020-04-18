@@ -12,7 +12,7 @@ import {
     CommandResult,
     Command,
     CommandResolverType,
-    EventResponse
+    EventResponse,
 } from "./AuroraTypes";
 import { AuroraEvent } from "../model/AuroraEvent";
 import { isDesktop } from "./Platform";
@@ -63,7 +63,7 @@ enum AuroraEventList {
     log = "log",
     streamData = "streamData",
     auroraEvent = "auroraEvent",
-    auroraError = "auroraError"
+    auroraError = "auroraError",
 }
 class Aurora extends EventEmitter {
     private auroraUsb: AuroraUsb;
@@ -190,7 +190,7 @@ class Aurora extends EventEmitter {
         }
 
         return new Promise((resolve, reject) => {
-            this.once("usbConnectionChange", fwInfo => {
+            this.once("usbConnectionChange", (fwInfo) => {
                 if (!fwInfo) return reject();
 
                 resolve(fwInfo);
@@ -233,7 +233,7 @@ class Aurora extends EventEmitter {
         }
 
         return new Promise((resolve, reject) => {
-            this.once("bluetoothConnectionChange", fwInfo => {
+            this.once("bluetoothConnectionChange", (fwInfo) => {
                 console.debug("Found Aurora device.");
                 if (!fwInfo) return reject();
 
@@ -486,7 +486,7 @@ class Aurora extends EventEmitter {
                 onCmdBegin,
                 onCmdEnd,
                 resolve: commandResolver,
-                reject
+                reject,
             });
 
             if (!this.cmdCurrent) {
@@ -527,7 +527,7 @@ class Aurora extends EventEmitter {
         connectorType: AuroraConstants.ConnectorTypes
     ): Promise<unknown> {
         return await this.queueCmd("os-info 1", connectorType)
-            .catch(cmdWithResponse => {
+            .catch((cmdWithResponse) => {
                 //if the "too many arguments" error, then we'll reissue the command without params
                 if (cmdWithResponse.response.error === 3) {
                     return this.queueCmd("os-info", connectorType);
@@ -542,7 +542,7 @@ class Aurora extends EventEmitter {
 
                 return cmdWithResponse;
             })
-            .then(cmdWithResponse => {
+            .then((cmdWithResponse) => {
                 if (typeof cmdWithResponse.response.version == "string") {
                     cmdWithResponse.response.version = stringToVersion(
                         cmdWithResponse.response.version
@@ -595,7 +595,7 @@ class Aurora extends EventEmitter {
             args,
             connectorType: this.cmdCurrent.connectorType,
             outputStream: this.cmdCurrent.outputStream,
-            beginTime: Date.now()
+            beginTime: Date.now(),
         };
 
         this.emit(AuroraEventList.cmdBegin, cmd);
@@ -628,7 +628,7 @@ class Aurora extends EventEmitter {
                     cmd.error = true;
                     cmd.response = {
                         error: -99,
-                        message: `Fatal error: ${error}`
+                        message: `Fatal error: ${error}`,
                     };
                     this.cmdQueue = [];
 
@@ -883,7 +883,13 @@ class Aurora extends EventEmitter {
         connectionState: AuroraConstants.ConnectionStates,
         previousConnectionState: AuroraConstants.ConnectionStates
     ): Promise<void> => {
-        console.debug("start onBluetoothConnectionStateChange.");
+        console.debug(
+            `BluetoothConnectionStateChange ${
+                AuroraConstants.ConnectionStatesToNames[previousConnectionState]
+            } to ${
+                AuroraConstants.ConnectionStatesToNames[connectionState]
+            } when ${new Date(Date.now()).toLocaleString()}`
+        );
         if (
             connectionState === AuroraConstants.ConnectionStates.IDLE &&
             previousConnectionState ===
@@ -972,7 +978,7 @@ export {
     AuroraLogTypeIds,
     AuroraStreamIds,
     AuroraStreamOutputIds,
-    AuroraEventList
+    AuroraEventList,
 };
 
 export default new Aurora();

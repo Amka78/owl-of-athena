@@ -9,7 +9,7 @@ import {
     BLE_CMD_MAX_PACKET_LENGTH,
     BleCmdStates,
     ConnectionStates,
-    DeviceEventList
+    DeviceEventList,
 } from "./AuroraConstants";
 import { BluetoothStream, AuroraEvent, CommandResult } from "./AuroraTypes";
 import noble from "noble";
@@ -19,7 +19,7 @@ const DISCONNECT_RETRY_DELAY_MS = 3000;
 
 enum PoweredStates {
     ON = "poweredOn",
-    OFF = "poweredOff"
+    OFF = "poweredOff",
 }
 
 export class AuroraBluetooth extends EventEmitter {
@@ -123,7 +123,7 @@ export class AuroraBluetooth extends EventEmitter {
                 peripheral,
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 service,
-                characteristics
+                characteristics,
             ] = await this.connectDevice(timeoutMs);
 
             console.log("connectDevice succeed");
@@ -514,8 +514,8 @@ export class AuroraBluetooth extends EventEmitter {
     };
 
     private onPeripheralFound = (peripheral: noble.Peripheral): void => {
-        console.log("onPeripheralFound called.");
-        peripheral.connect(error => {
+        console.debug("onPeripheralFound called.");
+        peripheral.connect((error) => {
             if (error) {
                 return;
             }
@@ -537,7 +537,7 @@ export class AuroraBluetooth extends EventEmitter {
                     this.connectPromise.resolve([
                         peripheral,
                         services[0],
-                        characteristics
+                        characteristics,
                     ]);
                     this.connectPromise = undefined;
 

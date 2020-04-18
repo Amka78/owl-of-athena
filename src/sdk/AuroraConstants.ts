@@ -15,19 +15,19 @@ enum BleCmdStates {
     CMD_EXECUTE = 1,
     CMD_RESP_OBJECT_READY = 2,
     CMD_RESP_TABLE_READY = 3,
-    CMD_INPUT_REQUESTED = 4
+    CMD_INPUT_REQUESTED = 4,
 }
 
 enum CommandNames {
     EVENT_OUTPUT_ENABLE = "event-output-enable ",
     EVENT_OUTPUT_DISABLE = "event-output-disable",
-    PROF_UNLOAD = "prof-unload"
+    PROF_UNLOAD = "prof-unload",
 }
 
 enum ConnectorTypes {
     BLUETOOTH = "bluetooth",
     USB = "usb",
-    ANY = "any"
+    ANY = "any",
 }
 
 const BleAuroraService = "6175726f7261454daf7942b381af0204";
@@ -42,7 +42,7 @@ const BleAuroraChars = {
     CMD_OUTPUT_NOTIFIED: "6175726f726149ce8077b954b033c883",
 
     STREAM_DATA_INDICATED: "6175726f726149ce8077b954b033c890",
-    STREAM_DATA_NOTIFIED: "6175726f726149ce8077b954b033c891"
+    STREAM_DATA_NOTIFIED: "6175726f726149ce8077b954b033c891",
 };
 enum DataTypes {
     UNKNOWN = 0,
@@ -56,7 +56,7 @@ enum DataTypes {
     INT32 = 8,
     FLOAT = 9,
     STR = 10,
-    PTR = 11
+    PTR = 11,
 }
 
 enum EventIds {
@@ -98,7 +98,7 @@ enum EventIds {
     CLOCK_TIMER0_FIRE = 28,
     CLOCK_TIMER1_FIRE = 29,
     CLOCK_TIMER2_FIRE = 30,
-    CLOCK_TIMER_FIRE = 31
+    CLOCK_TIMER_FIRE = 31,
 }
 
 const EventIdsToNames = {
@@ -140,7 +140,7 @@ const EventIdsToNames = {
     [EventIds.CLOCK_TIMER0_FIRE]: "clock-timer0-fire",
     [EventIds.CLOCK_TIMER1_FIRE]: "clock-timer1-fire",
     [EventIds.CLOCK_TIMER2_FIRE]: "clock-timer2-fire",
-    [EventIds.CLOCK_TIMER_FIRE]: "clock-timer-fire"
+    [EventIds.CLOCK_TIMER_FIRE]: "clock-timer-fire",
 };
 
 const EVENT_ID_MAX = 31;
@@ -150,7 +150,7 @@ const EventOutputIds = {
     LOG: 1,
     SESSION_FILE: 2,
     PROFILE: 3,
-    BLUETOOTH: 4
+    BLUETOOTH: 4,
 };
 
 const StreamIds = {
@@ -192,7 +192,7 @@ const StreamIds = {
     ACCEL_STDDEV: 28,
     EEG_POWER_SUM: 29,
     STREAM_RESERVED6: 30,
-    STREAM_RESERVED7: 31
+    STREAM_RESERVED7: 31,
 };
 
 const STREAM_ID_MAX = 31;
@@ -234,7 +234,7 @@ const StreamIdsToNames = {
     [StreamIds.ROTATION_PITCH]: "pitch",
 
     [StreamIds.ACCEL_STDDEV]: "accel-sd",
-    [StreamIds.EEG_POWER_SUM]: "eeg-powsum"
+    [StreamIds.EEG_POWER_SUM]: "eeg-powsum",
     //    [StreamIds.STREAM_RESERVED13]: "rsvd13",
     //   [StreamIds.STREAM_RESERVED14]: "rsvd14"
 };
@@ -245,7 +245,7 @@ const StreamOutputIds = {
     FILE_RAW: 2,
     CONSOLE: 3,
     DATA_LOG: 4,
-    BLE: 5
+    BLE: 5,
 };
 
 enum SleepStages {
@@ -253,7 +253,7 @@ enum SleepStages {
     AWAKE = 1,
     LIGHT = 2,
     DEEP = 3,
-    REM = 4
+    REM = 4,
 }
 
 enum SleepStates {
@@ -263,8 +263,18 @@ enum SleepStates {
     WAKING = 3,
     AWAKE = 4,
     SYNCING = 5,
-    SYNCING_ERROR = 6
+    SYNCING_ERROR = 6,
 }
+
+const SleepStatesToNames = {
+    [SleepStates.INIT]: "INIT",
+    [SleepStates.CONFIGURING]: "CONFIGURING",
+    [SleepStates.SLEEPING]: "SLEEPING",
+    [SleepStates.WAKING]: "WAKING",
+    [SleepStates.AWAKE]: "AWAKE",
+    [SleepStates.SYNCING]: "SYNCING",
+    [SleepStates.SYNCING_ERROR]: "SYNCING_ERROR",
+};
 
 enum ConnectionStates {
     IDLE = 0,
@@ -275,8 +285,20 @@ enum ConnectionStates {
     BUSY = 5,
     DISCONNECTING = 6,
     DISCONNECTED = 7,
-    RECONNECTING = 8
+    RECONNECTING = 8,
 }
+
+const ConnectionStatesToNames = {
+    [ConnectionStates.IDLE]: "IDLE",
+    [ConnectionStates.INIT]: "INIT",
+    [ConnectionStates.SCANNING]: "SCANNING",
+    [ConnectionStates.CONNECTING]: "CONNECTING",
+    [ConnectionStates.CONNECTED]: "CONNECTED",
+    [ConnectionStates.BUSY]: "BUSY",
+    [ConnectionStates.DISCONNECTING]: "DISCONNECTING",
+    [ConnectionStates.DISCONNECTED]: "DISCONNECTED",
+    [ConnectionStates.RECONNECTING]: "RECONNECTING",
+};
 
 const LogTypeIds = {
     DATA: 0,
@@ -284,7 +306,7 @@ const LogTypeIds = {
     EVENT: 2,
     WARNING: 3,
     ERROR: 4,
-    DEBUG: 5
+    DEBUG: 5,
 };
 
 const LogNamesToTypeIds = {
@@ -293,7 +315,7 @@ const LogNamesToTypeIds = {
     EVNT: LogTypeIds.EVENT,
     WARN: LogTypeIds.WARNING,
     ERRO: LogTypeIds.ERROR,
-    DBUG: LogTypeIds.DEBUG
+    DBUG: LogTypeIds.DEBUG,
 };
 
 const BuzzerSongs = [
@@ -313,7 +335,7 @@ const BuzzerSongs = [
     { file: "simpsons-theme.buzz", title: "Simpsons Theme" },
     { file: "spain.buzz", title: "Spain" },
     { file: "whole-tone-scale.buzz", title: "Whole Tone Scale" },
-    { file: "zelda-secret.buzz", title: "Zelda Secret" }
+    { file: "zelda-secret.buzz", title: "Zelda Secret" },
 ];
 
 const LedColors = [
@@ -324,14 +346,14 @@ const LedColors = [
     { name: "cyan", value: "#00FFFF" },
     { name: "green", value: "#00FF00" },
     { name: "blue", value: "#0000FF" },
-    { name: "yellow", value: "#FF7700" }
+    { name: "yellow", value: "#FF7700" },
 ];
 
 const LedEffects = [
     { name: "set", cmd: "led-set" },
     { name: "blink", cmd: "led-blink" },
     { name: "alternate", cmd: "led-alternate" },
-    { name: "transition", cmd: "led-transition" }
+    { name: "transition", cmd: "led-transition" },
 ];
 
 enum DeviceEventList {
@@ -340,7 +362,7 @@ enum DeviceEventList {
     cmdOutputReady = "cmdOutputReady",
     auroraEvent = "auroraEvent",
     streamData = "streamData",
-    Error = "error"
+    Error = "error",
 }
 export {
     AURORA_USB_VID,
@@ -370,7 +392,9 @@ export {
     STREAM_ID_MAX,
     SleepStages,
     SleepStates,
+    SleepStatesToNames,
     ConnectionStates,
+    ConnectionStatesToNames,
     DeviceEventList,
-    CommandNames
+    CommandNames,
 };
