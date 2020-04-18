@@ -23,6 +23,7 @@ import { FlexSpacer } from "./FlexSpacer";
 import { SessionChartPie } from "./SessionChartPie";
 import { SessionSleepChart } from "./SessionSleepChart";
 import { SessionTimeView } from "./SessionTimeView";
+import { UpdateSnackBar } from "./UpdateSnackBar";
 export {
     AudioDialog,
     AudioList as SoundList,
@@ -48,5 +49,6 @@ export {
     FlatButton,
     TextBox,
     StandardView,
-    ProfilesDialog
+    UpdateSnackBar,
+    ProfilesDialog,
 };

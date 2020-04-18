@@ -175,4 +175,9 @@ export default {
 
     // profile menu
     [MessageKeys.profile_dialog_title]: "Choose a profile",
+
+    [MessageKeys.update_snack_bar_title]:
+        "There is a new version. Please update.",
+
+    [MessageKeys.update_snack_bar_action_label]: "Update",
 };

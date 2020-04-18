@@ -10,7 +10,8 @@ import {
     AudioDialog,
     ProfilesDialog,
     LoadingDialog,
-    ConfirmDialog
+    ConfirmDialog,
+    UpdateSnackBar,
 } from "./src/components";
 import { PersistGate } from "redux-persist/integration/react";
 import { Portal, Provider } from "react-native-paper";
@@ -24,7 +25,7 @@ type AppState = {
 };
 export default class App extends React.Component<AppProps, AppState> {
     public state = {
-        isLoadingComplete: false
+        isLoadingComplete: false,
     };
 
     constructor(props: AppProps) {
@@ -59,6 +60,7 @@ export default class App extends React.Component<AppProps, AppState> {
                                     <ProfilesDialog></ProfilesDialog>
                                     <LoadingDialog></LoadingDialog>
                                     <ConfirmDialog></ConfirmDialog>
+                                    <UpdateSnackBar></UpdateSnackBar>
                                 </View>
                             </Portal>
                         </Provider>
@@ -72,8 +74,8 @@ export default class App extends React.Component<AppProps, AppState> {
         return Promise.all([
             Font.loadAsync({
                 calibre_app_regular: require("./assets/fonts/calibre_app_regular.ttf"),
-                calibre_app_semibold: require("./assets/fonts/calibre_app_semibold.ttf")
-            })
+                calibre_app_semibold: require("./assets/fonts/calibre_app_semibold.ttf"),
+            }),
         ]);
     };
 
@@ -101,6 +103,6 @@ const styles = StyleSheet.create({
         width:
             Layout.isLargeDevice && Platform.OS === "web"
                 ? Layout.maxWidth
-                : Layout.window.width
-    }
+                : Layout.window.width,
+    },
 });

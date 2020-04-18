@@ -153,4 +153,8 @@ export const MessageKeys = {
     // alarm sound menu
     alarm_sound_dialog_title: "alarm_sound_dialog_title",
     profile_dialog_title: "profile_dialog_title",
+
+    // update snack bar
+    update_snack_bar_title: "update_snack_bar_title",
+    update_snack_bar_action_label: "update_snack_bar_action_label",
 };

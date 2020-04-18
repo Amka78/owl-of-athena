@@ -170,4 +170,8 @@ export default {
     [MessageKeys.alarm_sound_dialog_title]: "目覚まし用の音を選んでください。",
 
     [MessageKeys.profile_dialog_title]: "プロファイルを選んでください。",
+
+    [MessageKeys.update_snack_bar_title]:
+        "新しいバージョンが存在します。アップデートしてください。",
+    [MessageKeys.update_snack_bar_action_label]: "更新",
 };
