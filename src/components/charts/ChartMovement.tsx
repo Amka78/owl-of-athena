@@ -39,12 +39,12 @@ export default class ChartMovement extends Chart<ChartMovementProps> {
             .attr("stroke", movementTickColor)
             .merge(movements)
             //.transition(transition)
-            .attr("x1", d => this.scaleX!(d.eventAt))
-            .attr("y1", d =>
+            .attr("x1", (d) => this.scaleX!(d.eventAt))
+            .attr("y1", (d) =>
                 this.scaleY!(-Math.floor(d.flags + 0.25) * movementTickSize)
             )
-            .attr("x2", d => this.scaleX!(d.eventAt))
-            .attr("y2", d =>
+            .attr("x2", (d) => this.scaleX!(d.eventAt))
+            .attr("y2", (d) =>
                 this.scaleY!(Math.floor(d.flags + 0.25) * movementTickSize)
             );
         //.style('opacity', 1);
@@ -62,9 +62,7 @@ export default class ChartMovement extends Chart<ChartMovementProps> {
         const chartHeight = this.getChartHeight();
 
         // @ts-ignore
-        this.axisX!.tickFormat("")
-            .tickSizeOuter(0)
-            .tickSizeInner(-chartHeight);
+        this.axisX!.tickFormat("").tickSizeOuter(0).tickSizeInner(-chartHeight);
 
         // @ts-ignore
         this.axisY!.tickFormat("").tickSize(0);
@@ -110,7 +108,7 @@ export default class ChartMovement extends Chart<ChartMovementProps> {
     static propTypes = {
         ...Chart.propTypes,
         movement: PropTypes.array.isRequired,
-        movementTickSize: PropTypes.number.isRequired
+        movementTickSize: PropTypes.number.isRequired,
     };
 
     static defaultProps = {
@@ -119,6 +117,6 @@ export default class ChartMovement extends Chart<ChartMovementProps> {
         axisYLabelPadding: 24,
         axisMargin: { top: 0, right: 32, bottom: 0, left: 100 },
         movementTickSize: 10,
-        movementTickColor: "#ff8260"
+        movementTickColor: "#ff8260",
     };
 }

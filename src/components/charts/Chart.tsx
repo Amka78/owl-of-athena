@@ -86,7 +86,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
                 marginLeft: this.props.margin.left,
                 marginRight: this.props.margin.right,
                 marginTop: this.props.margin.top,
-                marginBottom: this.props.margin.bottom
+                marginBottom: this.props.margin.bottom,
             },
             this.props.containerStyle
         );
@@ -139,7 +139,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             margin,
             titleSize,
             titleColor,
-            clipToRange
+            clipToRange,
         } = this.props;
 
         const chartRangeX = this.getChartRangeX();
@@ -167,7 +167,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             .zoom()
             .translateExtent([
                 [0, 0],
-                [this.getChartWidth(), this.getChartHeight()]
+                [this.getChartWidth(), this.getChartHeight()],
             ])
             .scaleExtent([0.5, 4])
             .on("zoom", this.onZoom.bind(this));
@@ -181,7 +181,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         const extentStart = [this.props.axisMargin.left, 0];
         const extentStop = [
             this.getChartWidth() - this.props.axisMargin.right,
-            this.getChartHeight() - this.props.axisMargin.bottom
+            this.getChartHeight() - this.props.axisMargin.bottom,
         ];
 
         if (Array.isArray(extentX)) {
@@ -255,7 +255,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             axisYLabelColor,
             axisYLabelPadding,
             axisXEnabled,
-            axisYEnabled
+            axisYEnabled,
         } = this.props;
 
         if (axisXEnabled) {
@@ -375,14 +375,14 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     getChartRangeX(): number[] {
         return [
             this.props.axisMargin.left,
-            this.getChartWidth() - this.props.axisMargin.right
+            this.getChartWidth() - this.props.axisMargin.right,
         ];
     }
 
     getChartRangeY(): number[] {
         return [
             this.getChartHeight() - this.props.axisMargin.bottom,
-            this.props.axisMargin.top
+            this.props.axisMargin.top,
         ];
     }
 
@@ -432,7 +432,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             top: PropTypes.number,
             bottom: PropTypes.number,
             left: PropTypes.number,
-            right: PropTypes.number
+            right: PropTypes.number,
         }),
 
         containerStyle: PropTypes.object,
@@ -441,7 +441,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             top: PropTypes.number,
             bottom: PropTypes.number,
             left: PropTypes.number,
-            right: PropTypes.number
+            right: PropTypes.number,
         }),
 
         dataBins: PropTypes.arrayOf(PropTypes.number),
@@ -471,7 +471,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         axisYColor: PropTypes.string,
         axisYLabelSize: PropTypes.number,
         axisYLabelColor: PropTypes.string,
-        axisYLabelPadding: PropTypes.number
+        axisYLabelPadding: PropTypes.number,
     };
 
     static defaultProps = {
@@ -507,6 +507,6 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         axisYColor: "#250d6d",
         axisYLabelSize: 12,
         axisYLabelColor: "#ccc",
-        axisYLabelPadding: 4
+        axisYLabelPadding: 4,
     };
 }

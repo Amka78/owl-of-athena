@@ -75,7 +75,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             eventLabelColor,
             eventLabelSize,
             eventTickColor,
-            eventTickWidth
+            eventTickWidth,
         } = this.props;
 
         const events = this.getData("events");
@@ -89,11 +89,11 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         );
 
         const eventLabels = this.graphGroup!.selectAll(".event-label").data(
-            events.filter(e => typeof e.label != "undefined")
+            events.filter((e) => typeof e.label != "undefined")
         );
 
         const eventIcons = this.graphGroup!.selectAll(".event-icon").data(
-            events.filter(e => typeof e.icon != "undefined")
+            events.filter((e) => typeof e.icon != "undefined")
         );
 
         eventTicks
@@ -101,8 +101,8 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .append("line")
             .attr("class", "event-tick")
             .merge(eventTicks)
-            .attr("stroke", d => d.tickColor || eventTickColor)
-            .attr("stroke-width", d => d.tickWidth || eventTickWidth)
+            .attr("stroke", (d) => d.tickColor || eventTickColor)
+            .attr("stroke-width", (d) => d.tickWidth || eventTickWidth)
             .styles(this.props.eventTickStyle)
             .attrs(this.getEventTickPositionProps);
 
@@ -113,17 +113,14 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .append("text")
             .attr("class", "event-label")
             .merge(eventLabels)
-            .attr("fill", d => d.labelColor || eventLabelColor)
-            .attr("font-size", d => d.labelSize || eventLabelSize)
+            .attr("fill", (d) => d.labelColor || eventLabelColor)
+            .attr("font-size", (d) => d.labelSize || eventLabelSize)
             .styles(this.props.eventLabelStyle)
-            .text(d => {
+            .text((d) => {
                 return d.label
                     .replace(
                         "${time}",
-                        moment(d.date)
-                            .utc()
-                            .format("h:mm a")
-                            .slice(0, -1)
+                        moment(d.date).utc().format("h:mm a").slice(0, -1)
                     )
                     .replace("${flags}", d.flags > 1 ? d.flags : "");
             })
@@ -136,10 +133,10 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .append("use")
             .attr("class", "event-icon")
             .merge(eventIcons)
-            .attr("width", d => d.iconSize || eventIconSize)
-            .attr("height", d => d.iconSize || eventIconSize)
-            .attr("fill", d => d.iconColor || eventIconColor)
-            .attr("href", d => `#${d.icon}`)
+            .attr("width", (d) => d.iconSize || eventIconSize)
+            .attr("height", (d) => d.iconSize || eventIconSize)
+            .attr("fill", (d) => d.iconColor || eventIconColor)
+            .attr("href", (d) => `#${d.icon}`)
             .styles(this.props.eventIconStyle)
             .attrs(this.getEventIconPositionProps);
 
@@ -155,7 +152,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         const props = {
             x: this.scaleX!(d.date) - iconSize / 2,
-            y: 0
+            y: 0,
         };
 
         props.y =
@@ -180,7 +177,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             x1: x,
             x2: x,
             y1: 0,
-            y2: 0
+            y2: 0,
         };
 
         if (placement == "below") {
@@ -199,7 +196,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             eventPlacement,
             eventIconSize,
             eventLabelPosition,
-            eventTickSize
+            eventTickSize,
         } = this.props;
 
         const iconSize = d.iconSize || eventIconSize;
@@ -211,7 +208,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             // @ts-ignore
             "text-anchor": ChartTimeline.labelPositions[labelPosition],
             x: this.scaleX!(d.date),
-            y: tickSize
+            y: tickSize,
         };
 
         if (d.icon) {
@@ -247,7 +244,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         eventLabelStyle: PropTypes.oneOfType([
             PropTypes.object,
-            PropTypes.func
+            PropTypes.func,
         ]),
         eventLabelPosition: PropTypes.oneOf(["left", "center", "right"]),
         eventLabelColor: PropTypes.string,
@@ -255,7 +252,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         eventIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
         eventIconColor: PropTypes.string,
-        eventIconSize: PropTypes.number
+        eventIconSize: PropTypes.number,
     };
 
     static defaultProps = {
@@ -280,12 +277,12 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         eventIconStyle: {},
         eventIconColor: "#fff",
-        eventIconSize: 36
+        eventIconSize: 36,
     };
 
     static labelPositions = {
         left: "end",
         center: "middle",
-        right: "start"
+        right: "start",
     };
 }

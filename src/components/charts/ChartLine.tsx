@@ -24,11 +24,9 @@ export default class ChartLine extends Chart<ChartProps> {
 
         this.buildAxes();
 
-        this.axisX!.tickFormat(d =>
+        this.axisX!.tickFormat((d) =>
             // @ts-ignore
-            moment(d)
-                .format("h:ma")
-                .slice(0, -1)
+            moment(d).format("h:ma").slice(0, -1)
         );
 
         this.axisY!.ticks(16);
@@ -46,7 +44,7 @@ export default class ChartLine extends Chart<ChartProps> {
             this.lines[i]
                 .x((_d, i) => this.scaleX!(i * 128))
                 // @ts-ignore
-                .y(d => this.scaleY!(d));
+                .y((d) => this.scaleY!(d));
 
             this.svg!.append("path")
                 .datum(this.props.data[i])
@@ -64,10 +62,10 @@ export default class ChartLine extends Chart<ChartProps> {
 
     static propTypes = {
         ...Chart.propTypes,
-        data: PropTypes.arrayOf(PropTypes.array).isRequired
+        data: PropTypes.arrayOf(PropTypes.array).isRequired,
     };
 
     static defaultProps = {
-        ...Chart.defaultProps
+        ...Chart.defaultProps,
     };
 }

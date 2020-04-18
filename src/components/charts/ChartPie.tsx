@@ -227,10 +227,10 @@ export default class ChartPie extends Chart<ChartPieProps> {
             // @ts-ignore
             percents = percents.transition().duration(transition);
         }
-        // @ts-ignore
         percents.attr(
             "transform",
-            (d) => `translate(${this.arc!.centroid(d)})`
+            // @ts-ignore
+            (d: d3.DefaultArcObject) => `translate(${this.arc!.centroid(d)})`
         );
 
         //copied here because I'm lazy
