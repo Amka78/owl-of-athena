@@ -9,19 +9,27 @@ export const UpdateSnackBar: FunctionComponent = () => {
         setWaitingWorker,
     ] = React.useState<ServiceWorker | null>(null);
 
-    const onSWUpdate = (registration: ServiceWorkerRegistration): void => {
-        setShowReload(true);
-        setWaitingWorker(registration.waiting);
-    };
-
     useEffect(() => {
         // @ts-ignore
-        navigator.serviceWorker.register({ onUpdate: onSWUpdate });
+        navigator.serviceWorker
+            .register("/expo-service-worker.js", {
+                scope: "/",
+            })
+            .then((registration: ServiceWorkerRegistration) => {
+                registration.onupdatefound = (): void => {
+                    setShowReload(true);
+                    setWaitingWorker(registration.waiting);
+                };
+                console.debug(registration);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
     }, []);
 
     const reloadPage = (): void => {
         // @ts-ignore
-        waitingWorker!.postMessage({ type: "SKIP_WAITING" });
+        waitingWorker?.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
         // @ts-ignore
         window.location.reload(true);
