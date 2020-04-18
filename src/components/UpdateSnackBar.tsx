@@ -21,7 +21,7 @@ export const UpdateSnackBar: FunctionComponent = () => {
 
     const reloadPage = (): void => {
         // @ts-ignore
-        waitingWorker?.postMessage({ type: "SKIP_WAITING" });
+        waitingWorker!.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
         // @ts-ignore
         window.location.reload(true);
