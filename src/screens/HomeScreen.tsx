@@ -33,15 +33,37 @@ export const HomeScreen: FunctionComponent = () => {
     const [errorText, setErrorText] = useState<string>("");
 
     let selectedProfile: AuroraProfile | undefined;
+    const [wakeLock, setWakeLock] = useState<any>();
 
     useEffect(() => {
         AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
+            try {
+                // @ts-ignore
+                navigator.wakeLock
+                    .request("screen")
+                    .then((wakeLockValue: any) => {
+                        setWakeLock(wakeLockValue);
+
+                        wakeLockValue.addEventListener("release", () => {
+                            console.log("Screen Wake Lock was released");
+                        });
+                    });
+                console.log("Screen Wake Lock is active");
+            } catch (err) {
+                console.error(`${err.name}, ${err.message}`);
+            }
             navigate("Sleeping");
         });
         AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
+            if (wakeLock) {
+                wakeLock.release();
+            }
             navigate("Awake");
         });
         AuroraManagerInstance.on(AuroraManagetEventList.onWaking, () => {
+            if (wakeLock) {
+                wakeLock.release();
+            }
             navigate("Waking");
         });
         let unmounted = false;
