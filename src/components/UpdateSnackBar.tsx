@@ -11,8 +11,8 @@ export const UpdateSnackBar: FunctionComponent = () => {
 
     useEffect(() => {
         // @ts-ignore
-        navigator.serviceWorker
-            .register("/expo-service-worker.js", {
+        navigator?.serviceWorker
+            ?.register("/expo-service-worker.js", {
                 scope: "/",
             })
             .then((registration: ServiceWorkerRegistration) => {
