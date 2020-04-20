@@ -1,4 +1,4 @@
-import { Profile } from "../";
+import { Profile } from "../Profile";
 import path from "path";
 import fs from "fs";
 let content: string;
