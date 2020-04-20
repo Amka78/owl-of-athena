@@ -360,11 +360,12 @@ export class AuroraBluetooth extends EventEmitter {
             noble.removeListener("scanStop", this.onPeripheralScanStop);
 
             noble.on("discover", this.onPeripheralFound);
-            //noble.on("scanStop", this.onPeripheralScanStop);
+            noble.on("scanStop", this.onPeripheralScanStop);
             console.debug("bluetooth scanning start.");
+
             noble.startScanning([BleAuroraService], false, (error?: Error) => {
                 if (error) {
-                    console.log(error);
+                    console.debug(error);
                     reject(error.message);
                 }
             });
@@ -378,6 +379,7 @@ export class AuroraBluetooth extends EventEmitter {
 
                     noble.stopScanning();
                     noble.removeListener("discover", this.onPeripheralFound);
+                    this.setConnectionState(ConnectionStates.DISCONNECTED);
 
                     reject("Timeout waiting for bluetooth connection.");
                 }, timeoutMs);
@@ -547,16 +549,10 @@ export class AuroraBluetooth extends EventEmitter {
         });
     };
 
-    private onPeripheralScanStop = (): void => {
-        console.log("onPeripheralScanStop called.");
-        clearTimeout(this.connectTimer!);
-
-        noble.removeListener("discover", this.onPeripheralFound);
-
-        if (this.connectPromise) {
-            this.setConnectionState(ConnectionStates.DISCONNECTED);
-            this.connectPromise.reject("Connection cancelled.");
-            this.connectPromise = undefined;
+    private onPeripheralScanStop = (args: any): void => {
+        if (args?.err) {
+            console.error(args.err);
+            this.peripheralStopProcess();
         }
     };
 
@@ -602,4 +598,14 @@ export class AuroraBluetooth extends EventEmitter {
     private onParseError = (error: string): void => {
         this.emit(DeviceEventList.Error, "Parse Error: " + error);
     };
+
+    private peripheralStopProcess(): void {
+        clearTimeout(this.connectTimer!);
+        noble.removeListener("discover", this.onPeripheralFound);
+        if (this.connectPromise) {
+            this.setConnectionState(ConnectionStates.DISCONNECTED);
+            this.connectPromise.reject("Connection Canceled.");
+            this.connectPromise = undefined;
+        }
+    }
 }
