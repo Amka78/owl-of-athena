@@ -59,13 +59,13 @@ export const MainScreen: FunctionComponent = () => {
                     backgroundColor:
                         connect === ConnectionStates.CONNECTED
                             ? Colors.aurora_connected
-                            : Colors.aurora_disconnected
+                            : Colors.aurora_disconnected,
                 }}
                 labelStyle={{
                     color:
                         connect === ConnectionStates.CONNECTED
                             ? Colors.aurora_connected_text
-                            : Colors.aurora_disconnected_text
+                            : Colors.aurora_disconnected_text,
                 }}
                 onPress={async (): Promise<void> => {
                     console.debug("Start configuring aurora.");
@@ -74,9 +74,11 @@ export const MainScreen: FunctionComponent = () => {
                         LoadingDialog.show({
                             dialogTitle: {
                                 key:
-                                    MessageKeys.home_go_to_sleep_loading_message
-                            }
+                                    MessageKeys.home_go_to_sleep_loading_message,
+                            },
                         });
+
+                        setError("");
                         await executeConfiguring(
                             setConnect,
                             connect === ConnectionStates.CONNECTED
@@ -124,13 +126,13 @@ async function executeConfiguring(
             if (result.batteryLevel < 25) {
                 ConfirmDialog.show({
                     title: {
-                        key: MessageKeys.aurora_low_battery_dialog_title
+                        key: MessageKeys.aurora_low_battery_dialog_title,
                     },
                     message: {
                         key: MessageKeys.aurora_low_battery_dialog_message,
-                        restParam: [result.batteryLevel]
+                        restParam: [result.batteryLevel],
                     },
-                    isCancelable: false
+                    isCancelable: false,
                 });
             } else {
                 console.debug("Sart getUnsycedSessions.");
@@ -147,20 +149,20 @@ async function executeConfiguring(
                     ConfirmDialog.show({
                         title: {
                             key:
-                                MessageKeys.aurora_unsynced_sessions_dialog_title
+                                MessageKeys.aurora_unsynced_sessions_dialog_title,
                         },
                         message: {
                             key:
                                 MessageKeys.aurora_unsynced_sessions_dialog_message,
                             // @ts-ignore
-                            restParam: [unsyncedSessions.length]
+                            restParam: [unsyncedSessions.length],
                         },
                         onConfirm: async (): Promise<void> => {
                             LoadingDialog.show({
                                 dialogTitle: {
                                     key:
-                                        MessageKeys.home_go_to_sleep_loading_message
-                                }
+                                        MessageKeys.home_go_to_sleep_loading_message,
+                                },
                             });
                             try {
                                 const result = await AuroraManagerInstance.pushSessions(
@@ -172,7 +174,7 @@ async function executeConfiguring(
                                 LoadingDialog.close();
                             }
                         },
-                        isCancelable: true
+                        isCancelable: true,
                     });
                 }
             }
