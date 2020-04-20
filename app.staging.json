@@ -1,0 +1,31 @@
+{
+    "expo": {
+      "name": "Owl of Athena",
+      "slug": "owl-of-athena",
+      "privacy": "unlisted",
+      "platforms": [
+        "ios",
+        "android",
+        "web"
+      ],
+      "version": "1.0.0",
+      "icon": "./assets/images/icon.png",
+      "orientation": "portrait",
+      "updates": {
+        "fallbackToCacheTimeout": 0
+      },
+      "assetBundlePatterns": [
+        "**/*"
+      ],
+      "ios": {
+        "supportsTablet": true
+      },
+      "description": "Aurora Client for community user.",
+      "releaseChannel": "staging",
+      "splash": {
+        "resizeMode": "cover",
+        "image": "./assets/images/iwinks-logo-loading.png"
+      }
+    }
+  }
+  

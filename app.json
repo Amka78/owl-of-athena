@@ -1,17 +1,16 @@
 {
   "expo": {
-    "name": "Owl of Minerva",
-    "slug": "owl-of-minerva",
+    "name": "Owl of Athena",
+    "slug": "owl-of-athena",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
+    "icon": "./assets/images/icon.png",
     "version": "1.0.0",
     "orientation": "portrait",
-    //"icon": "./assets/images/icon.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -21,6 +20,11 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "Aurora Client for community user."
+    "description": "Aurora Client for community user.",
+    "splash": {
+
+      "resizeMode": "cover",
+      "image": "./assets/images/iwinks-logo-loading.png"
+    }
   }
 }
