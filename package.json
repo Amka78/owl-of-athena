@@ -4,7 +4,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start:web",
+    "web": "sudo expo start:web",
     "eject": "expo eject",
     "tsc": "tsc",
     "lint": "tslint --fix './**/*.ts{,x}'",
@@ -16,8 +16,6 @@
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
-    "@types/service_worker_api": "0.0.9",
-    "@types/window-or-global": "^1.0.1",
     "art": "^0.10.3",
     "binary-parser": "github:iwinks/binary-parser",
     "d3": "^5.15.0",
@@ -58,6 +56,8 @@
   },
   "devDependencies": {
     "@expo/webpack-config": "^0.11.8",
+    "@types/service_worker_api": "0.0.9",
+    "@types/window-or-global": "^1.0.1",
     "@types/binary-parser": "^1.5.0",
     "@types/buffer-crc32": "^0.2.0",
     "@types/d3": "^5.7.2",
