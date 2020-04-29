@@ -33,5 +33,5 @@ export const LabeledTimeView: FunctionComponent<LabeledTimeViewProps> = (
 };
 
 const style = StyleSheet.create({
-    label: { color: Colors.cyan, fontSize: 20 }
+    label: { color: Colors.cyan, fontSize: 20 },
 });
