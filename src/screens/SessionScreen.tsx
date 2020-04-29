@@ -1,26 +1,32 @@
+//#region "Import modules"
 import React, { FunctionComponent, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import {
     useCheckLogging,
     useSelectedSessionSelector,
-    useSelectedSessionDetailSelector
+    useSelectedSessionDetailSelector,
 } from "../hooks";
 import {
     StandardView,
     SessionTimeView,
     SessionChartPie,
     SessionSleepChart,
-    FlexSpacer
+    FlexSpacer,
 } from "../components";
 import { Colors, Layout, MessageKeys, Dimens } from "../constants";
 import { ChartRadialProgress } from "../components/charts";
 import { IconButton } from "react-native-paper";
+import moment, { Moment } from "moment";
+//#endregion
+
+//#region "Private type definition"
 type Duration = {
     hours: number;
     minutes: number;
 };
 
 type CurrentChart = "SleepChart" | "PieChart";
+//#endregion
 export const SessionScreen: FunctionComponent = () => {
     useCheckLogging();
     const selectedSession = useSelectedSessionSelector();
@@ -30,15 +36,15 @@ export const SessionScreen: FunctionComponent = () => {
         "SleepChart"
     );
 
-    let asleepAt: Date;
-    let awakeAt: Date;
+    let asleepAt: Moment;
+    let awakeAt: Moment;
     let sleepDuration: Duration;
     let remDuration: Duration;
     let deepDuration: Duration;
 
     if (selectedSession) {
-        asleepAt = new Date(selectedSession!.asleepAt);
-        awakeAt = new Date(selectedSession!.awakeAt);
+        asleepAt = moment(selectedSession!.asleepAt).utc();
+        awakeAt = moment(selectedSession!.awakeAt).utc();
         sleepDuration = getDuration(selectedSession!.sleepDuration);
         remDuration = getDuration(selectedSession!.remDuration);
         deepDuration = getDuration(selectedSession!.deepDuration);
@@ -46,7 +52,7 @@ export const SessionScreen: FunctionComponent = () => {
 
     const scaleXDomain = [
         selectedSession!.sessionAt - 300000,
-        selectedSession!.sessionAt + selectedSession!.sessionDuration + 300000
+        selectedSession!.sessionAt + selectedSession!.sessionDuration + 300000,
     ];
 
     return selectedSession ? (
@@ -54,10 +60,10 @@ export const SessionScreen: FunctionComponent = () => {
             <View style={style.sessionInfoHeader}>
                 <SessionTimeView
                     label={{
-                        key: MessageKeys.session_asleep_time_label
+                        key: MessageKeys.session_asleep_time_label,
                     }}
-                    hours={asleepAt!.getHours()}
-                    minutes={asleepAt!.getMinutes()}
+                    hours={asleepAt!.hours()}
+                    minutes={asleepAt!.minutes()}
                     mode={"meridian"}
                 ></SessionTimeView>
                 <ChartRadialProgress
@@ -81,10 +87,10 @@ export const SessionScreen: FunctionComponent = () => {
                 />
                 <SessionTimeView
                     label={{
-                        key: MessageKeys.session_awake_time_label
+                        key: MessageKeys.session_awake_time_label,
                     }}
-                    hours={awakeAt!.getHours()}
-                    minutes={awakeAt!.getMinutes()}
+                    hours={awakeAt!.hours()}
+                    minutes={awakeAt!.minutes()}
                     mode={"meridian"}
                 ></SessionTimeView>
             </View>
@@ -92,7 +98,7 @@ export const SessionScreen: FunctionComponent = () => {
                 style={{
                     flex: 1,
                     flexDirection: "row",
-                    width: Layout.window.fixedWidth
+                    width: Layout.window.fixedWidth,
                 }}
             >
                 <IconButton
@@ -124,7 +130,7 @@ export const SessionScreen: FunctionComponent = () => {
                     flex: 5,
                     alignItems: "center",
                     marginLeft: Dimens.session_margin_left,
-                    marginRight: Dimens.session_margin_right
+                    marginRight: Dimens.session_margin_right,
                 }}
             >
                 {currentChart === "SleepChart" ? (
@@ -154,7 +160,7 @@ export const SessionScreen: FunctionComponent = () => {
             <View style={style.sessionInfoFooter}>
                 <SessionTimeView
                     label={{
-                        key: MessageKeys.session_sleep_duration_label
+                        key: MessageKeys.session_sleep_duration_label,
                     }}
                     hours={sleepDuration!.hours}
                     minutes={sleepDuration!.minutes}
@@ -162,7 +168,7 @@ export const SessionScreen: FunctionComponent = () => {
                 ></SessionTimeView>
                 <SessionTimeView
                     label={{
-                        key: MessageKeys.session_rem_duration_label
+                        key: MessageKeys.session_rem_duration_label,
                     }}
                     hours={remDuration!.hours}
                     minutes={remDuration!.minutes}
@@ -170,7 +176,7 @@ export const SessionScreen: FunctionComponent = () => {
                 ></SessionTimeView>
                 <SessionTimeView
                     label={{
-                        key: MessageKeys.session_deep_duration_label
+                        key: MessageKeys.session_deep_duration_label,
                     }}
                     hours={deepDuration!.hours}
                     minutes={deepDuration!.minutes}
@@ -188,22 +194,22 @@ const style = StyleSheet.create({
         alignItems: "flex-start",
         flex: 1,
         width: Layout.window.fixedWidth,
-        marginTop: 30
+        marginTop: 30,
     },
     pieChartContainer: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         width: Layout.window.fixedWidth,
-        flex: 5
+        flex: 5,
     },
     sessionInfoFooter: {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "flex-start",
         flex: 1,
-        width: Layout.window.fixedWidth
-    }
+        width: Layout.window.fixedWidth,
+    },
 });
 
 const getDuration = (ms: number): Duration => {
