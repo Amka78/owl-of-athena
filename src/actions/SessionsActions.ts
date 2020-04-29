@@ -7,13 +7,17 @@ export type CacheAction = ReturnType<typeof cacheSessions>;
 export type SelectAction = ReturnType<typeof selectSession>;
 export type SelectDetailAction = ReturnType<typeof selectSessionDetail>;
 export type InitializeSession = ReturnType<typeof initializeSession>;
-export type UPDATE_FILTER = ReturnType<typeof updateFilter>;
+export type UpdateFilter = ReturnType<typeof updateFilter>;
+export type UpdateSession = ReturnType<typeof updateSession>;
+export type DeleteSession = ReturnType<typeof deleteSession>;
 export type SessionActions =
     | CacheAction
     | SelectAction
     | SelectDetailAction
     | InitializeSession
-    | UPDATE_FILTER;
+    | UpdateFilter
+    | DeleteSession
+    | UpdateSession;
 
 export const cacheSessions = (sessionList: Array<AuroraSession>) => ({
     payload: {
@@ -34,6 +38,20 @@ export const selectSession = (session: AuroraSession) => ({
         session,
     },
     type: ActionTypes.SELECT_SESSION,
+});
+
+export const updateSession = (session: AuroraSession) => ({
+    payload: {
+        session,
+    },
+    type: ActionTypes.UPDATE_SESSION,
+});
+
+export const deleteSession = (sessionId: string) => ({
+    payload: {
+        sessionId,
+    },
+    type: ActionTypes.DELETE_SESSION,
 });
 
 export const selectSessionDetail = (sessionDetail: AuroraSessionDetail) => ({

@@ -12,14 +12,19 @@ import {
     CommandNames,
     EventIdsToNames,
     SleepStatesToNames,
+    ConnectionStates,
 } from "../sdk/AuroraConstants";
 import { Audio } from "expo-av";
 import { AuroraSession } from "../sdk/models";
-import { AuroraManagerInstance } from ".";
+import { AuroraManagerInstance, AuroraManagetEventList } from ".";
 import { AuroraEvent, FileInfo } from "../sdk/AuroraTypes";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-import { AuroraRestClientInstance } from "../clients";
+import {
+    AuroraRestClientInstance,
+    SessionRestClientInstance,
+} from "../clients";
 export enum AuroraManagerEventList {
+    onConnectionChange = "onConnectionChange",
     onSleepStateChange = "onSleepStateChnage",
     onFoundUnsyncedSession = "onFoundUnsyncedSession",
     onSleeping = "onSleeping",
@@ -255,15 +260,15 @@ export class AuroraManager extends EventEmitter {
 
             try {
                 if (sessionInfo.name.indexOf("@") == -1) {
-                    await AuroraRestClientInstance.getAuroraSessionById(
+                    await SessionRestClientInstance.getById(
                         sessionInfo.name
                     ).catch(async () => {
-                        newSession = await AuroraRestClientInstance.createAurora(
+                        newSession = await SessionRestClientInstance.create(
                             uploadSession as AuroraSessionJson
                         );
                     });
                 } else {
-                    newSession = await AuroraRestClientInstance.createAurora(
+                    newSession = await SessionRestClientInstance.create(
                         uploadSession as AuroraSessionJson
                     );
                 }

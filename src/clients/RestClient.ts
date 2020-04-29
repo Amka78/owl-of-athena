@@ -7,7 +7,7 @@ export default class RestClient {
 
     private simulatedDelay = 0;
 
-    private _token: string | undefined;
+    private _getTokenCallback?: () => string;
 
     constructor(
         baseUrl = "",
@@ -25,8 +25,8 @@ export default class RestClient {
         this.devMode = devMode;
     }
 
-    public set token(value: string | undefined) {
-        this._token = value;
+    public set getTokenCallback(getTokenCallback: () => string) {
+        this._getTokenCallback = getTokenCallback;
     }
 
     /**
@@ -57,6 +57,20 @@ export default class RestClient {
      */
     protected async post<T>(route: string, body: T): Promise<Response> {
         return await this.fetch(route, "POST", body);
+    }
+
+    /**
+     * Call Patch method of Rest API.
+     *
+     * @protected
+     * @template T
+     * @param {string} route
+     * @param {T} body
+     * @returns {Promise<Response>}
+     * @memberof RestClient
+     */
+    protected async patch<T>(route: string, body: T): Promise<Response> {
+        return await this.fetch(route, "PATCH", body);
     }
 
     /**
@@ -91,19 +105,19 @@ export default class RestClient {
 
     private setTokenToHeader(token: string): void {
         Object.assign(this.headers, this.headers, {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
         });
     }
 
     private createCommonHeader(): void {
         this.headers = {
             Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json;charset=UTF-8"
+            "Content-Type": "application/json;charset=UTF-8",
         };
     }
 
     private createSimulateDelay(): Promise<[]> {
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 resolve();
             }, this.simulatedDelay);
@@ -134,13 +148,13 @@ export default class RestClient {
 
         let fullRoute = this.createFullRoute(route);
 
-        if (this._token) {
-            this.setTokenToHeader(this._token);
+        if (this._getTokenCallback) {
+            this.setTokenToHeader(this._getTokenCallback());
         }
 
         const opts = {
             headers: this.headers,
-            method: methodName
+            method: methodName,
         };
 
         if (isQuery && sendData) {

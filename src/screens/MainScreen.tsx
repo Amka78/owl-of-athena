@@ -11,7 +11,10 @@ import { NavigationState } from "react-navigation";
 import { cacheSessions } from "../actions";
 import { useSessionListSelector, useUserSelector } from "../hooks";
 import { useDispatch } from "react-redux";
-import { AuroraRestClientInstance } from "../clients";
+import {
+    AuroraRestClientInstance,
+    SessionRestClientInstance,
+} from "../clients";
 import { AuroraManagerEventList } from "../managers/AuroraManager";
 export const MainScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
@@ -28,7 +31,7 @@ export const MainScreen: FunctionComponent = () => {
         const f = async (): Promise<void> => {
             if (!unmounted && userInfo !== undefined) {
                 if (sessionList.length <= 0) {
-                    const remoteSessionList = await AuroraRestClientInstance.getAuroraSessions(
+                    const remoteSessionList = await SessionRestClientInstance.getAll(
                         userInfo!.id
                     );
                     dispatch(cacheSessions(remoteSessionList));

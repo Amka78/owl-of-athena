@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 
 import { useNavigation } from "react-navigation-hooks";
-import { AuroraRestClientInstance } from "../clients";
+import {
+    AuroraRestClientInstance,
+    SessionRestClientInstance,
+} from "../clients";
 import { useDispatch } from "react-redux";
 import { useTokenSelector, useUserSelector } from "../hooks";
 
@@ -22,7 +25,10 @@ export const useAutoLogin = (): void => {
                         const currentUser = await AuroraRestClientInstance.getAuthUser();
                         dispatch(updateUser(currentUser));
                     }
-                    AuroraRestClientInstance.token = token;
+                    AuroraRestClientInstance.getTokenCallback = (): string =>
+                        token;
+                    SessionRestClientInstance.getTokenCallback = (): string =>
+                        token;
                     navigate("Main");
                 }
             }

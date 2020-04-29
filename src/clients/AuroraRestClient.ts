@@ -1,36 +1,28 @@
 import { Auth, Login, CreateUser, User } from "../types";
 import RestClient from "./RestClient";
 
-import { BaseUrl, TokenManager } from "../utils";
+import { BaseUrl } from "../utils";
 import * as Localization from "expo-localization";
-import { AuroraSession, AuroraStream, AuroraEvent } from "../sdk/models";
-import {
-    AuroraProfile,
-    AuroraSessionJson,
-    AuroraStreamJson,
-    AuroraEventJson
-} from "../sdk/AuroraTypes";
-import { EventIds } from "../sdk/AuroraConstants";
-import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
+import { AuroraProfile } from "../sdk/AuroraTypes";
 
 /**
- * Aurora Rest API
+ * Managing aurora related RestAPI communication.
  *
  * @export
- * @class AuroraClient
+ * @class AuroraRestClient
  * @extends {RestClient}
  */
 export class AuroraRestClient extends RestClient {
     constructor(baseUrl: string, locale: string) {
         super(baseUrl, {
             headers: {
-                "Accept-Language": locale
-            }
+                "Accept-Language": locale,
+            },
         });
     }
 
     /**
-     * Signup
+     * Request a signup.
      *
      * @param {AuthDto} createUser
      * @returns {(Promise<TokenDto>)}
@@ -46,7 +38,7 @@ export class AuroraRestClient extends RestClient {
     }
 
     /**
-     * Login
+     * Request a login.
      *
      * @param {Login} login
      * @returns {(Promise<Auth>)}
@@ -61,6 +53,12 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 
+    /**
+     * Obtain the authenticated user information.
+     *
+     * @returns {Promise<User>}
+     * @memberof AuroraRestClient
+     */
     public async getAuthUser(): Promise<User> {
         const response = await this.get("users/me", {});
 
@@ -72,13 +70,20 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 
+    /**
+     * Update user information.
+     *
+     * @param {User} user
+     * @returns {Promise<User>}
+     * @memberof AuroraRestClient
+     */
     public async updateUser(user: User): Promise<User> {
         console.debug("updateUser called:", user);
         const response = await this.put<Partial<User>>("users/me", {
             first_name: user.first_name,
             last_name: user.last_name,
             gender: user.gender,
-            birthday: user.birthday
+            birthday: user.birthday,
         });
         console.debug("update result:", response);
         if (response.ok) {
@@ -89,6 +94,12 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 
+    /**
+     * Get aurora profile.
+     *
+     * @returns {Promise<Array<AuroraProfile>>}
+     * @memberof AuroraRestClient
+     */
     public async getAuroraProfiles(): Promise<Array<AuroraProfile>> {
         const response = await this.get(
             "aurora-profiles?$sort[updated_at]=-1",
@@ -101,144 +112,6 @@ export class AuroraRestClient extends RestClient {
             return result;
         }
         throw await response.json();
-    }
-
-    public async getAuroraSessions(
-        userId: string
-    ): Promise<Array<AuroraSession>> {
-        const response = await this.get(
-            `users/${userId}/aurora-sessions?\$sort[session_at]=1`,
-            {}
-        );
-
-        if (response.ok) {
-            const result: Array<AuroraSessionJson> = await response.json();
-
-            const auroraSessions = new Array<AuroraSession>();
-            result.forEach((value: AuroraSessionJson) => {
-                auroraSessions.push(new AuroraSession(value));
-            });
-            return auroraSessions.reverse();
-        }
-        throw await response.json();
-    }
-
-    public async getAuroraSessionById(
-        sessionId: string
-    ): Promise<AuroraSession> {
-        const response = await this.get(
-            `users/me/aurora-sessions/${sessionId}`,
-            {}
-        );
-
-        if (response.ok) {
-            return new AuroraSession(await response.json());
-        }
-        throw await response.json();
-    }
-
-    public async createAurora(
-        sessionJson: AuroraSessionJson
-    ): Promise<AuroraSession> {
-        const response = await this.post(
-            "users/me/aurora-sessions",
-            sessionJson
-        );
-
-        if (response.ok) {
-            return new AuroraSession(await response.json());
-        }
-        throw await response.json();
-    }
-
-    public async getSessionStreams(
-        sessionId: string
-    ): Promise<Array<AuroraStream>> {
-        const response = await this.get(
-            `aurora-sessions/${sessionId}/streams`,
-            {}
-        );
-
-        if (response.ok) {
-            const result = await response.json();
-
-            const auroraStreams = new Array<AuroraStream>();
-            result.forEach((value: AuroraStreamJson) => {
-                auroraStreams.push(new AuroraStream(value));
-            });
-            return auroraStreams;
-        }
-        throw await response.json();
-    }
-
-    public async getSessionEvents(sessionId: string): Promise<any> {
-        const queries = {
-            movementEvents: {
-                bins: "0,5,10,15,20",
-                aurora_event_id: EventIds.MOVEMENT_MONITOR,
-                group_by: "average"
-            },
-            sleepEvents: {
-                bins: "0,5,10,15,20,25",
-                aurora_event_id: EventIds.SLEEP_TRACKER_MONITOR,
-                group_by: "duration"
-            },
-            awakeningEvents: {
-                bins: "0,15,30,45,60",
-                aurora_event_id: EventIds.AWAKENING,
-                group_by: "sum"
-            },
-            stimEvents: {
-                bins: "0,15,30,45,60",
-                aurora_event_id: EventIds.STIM_PRESENTED,
-                group_by: "count"
-            },
-            buttonEvents: {
-                bins: "0,15,30,45,60",
-                aurora_event_id: EventIds.BUTTON_MONITOR,
-                flags: 1,
-                group_by: "sum"
-            }
-        };
-
-        return Promise.all(
-            Object.entries(queries).map(async ([eventIndex, eventQuery]) => {
-                return this.get(
-                    `aurora-sessions/${sessionId}/events`,
-                    eventQuery
-                ).then(async (response: Response) => {
-                    const result = await response.json();
-
-                    const auroraEvents = Array<AuroraEvent>();
-                    result.forEach((value: AuroraEventJson) => {
-                        auroraEvents.push(new AuroraEvent(value));
-                    });
-
-                    // @ts-ignore
-                    queries[eventIndex] = auroraEvents;
-                });
-            })
-        ).then(() => queries);
-    }
-
-    public async getSessionDetails(
-        sessionId: string
-    ): Promise<AuroraSessionDetail> {
-        const streams = await this.getSessionStreams(sessionId);
-        const events = await this.getSessionEvents(sessionId);
-
-        const sessionDetail = new AuroraSessionDetail(
-            sessionId,
-            streams,
-            events.awakeningEvents,
-            events.buttonEvents,
-            events.movementEvents,
-            events.sleepEvents,
-            events.stimEvents
-        );
-
-        console.debug("sessionDetail:", sessionDetail);
-        return sessionDetail;
     }
 }
 export default new AuroraRestClient(BaseUrl.get(), Localization.locale);

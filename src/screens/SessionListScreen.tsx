@@ -8,23 +8,34 @@ import {
     useUserSelector,
 } from "../hooks";
 import { StandardView, LoadingDialog, LabeledCheckBox } from "../components";
-import { AuroraRestClientInstance } from "../clients";
+import { SessionRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
 import {
     selectSession,
     selectSessionDetail,
     cacheSessions,
     updateFilter,
+    updateSession,
+    deleteSession,
 } from "../actions/SessionsActions";
 import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
 import { Colors, Layout, MessageKeys, Message } from "../constants";
 import moment from "moment";
-import { List } from "react-native-paper";
+import { List, IconButton } from "react-native-paper";
 import { useNavigation } from "react-navigation-hooks";
 import { ChartRadialProgress } from "../components/charts";
 import { ScrollView } from "react-native-gesture-handler";
 import { FilterByDateValues } from "../state/SessionState";
+import { AuroraSessionJson } from "../sdk/AuroraTypes";
 
+export type ListItemProps = {
+    color: string;
+    style: {
+        marginLeft?: number;
+        marginRight: number;
+        marginVertical?: number;
+    };
+};
 export const SessionListScreen: FunctionComponent = () => {
     const dispatch = useDispatch();
     const user = useUserSelector();
@@ -32,7 +43,7 @@ export const SessionListScreen: FunctionComponent = () => {
     const sessionList = useFilteredSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
     const { navigate, setParams } = useNavigation();
-    const [showMenu, setShowMenu] = useState<boolean>(false);
+    const [showFilter, setShowFilter] = useState<boolean>(false);
     const token = useTokenSelector();
     useEffect(() => {
         if (!token) {
@@ -43,14 +54,14 @@ export const SessionListScreen: FunctionComponent = () => {
                 LoadingDialog.show({
                     dialogTitle: { key: MessageKeys.session_reloading },
                 });
-                const sessions = await AuroraRestClientInstance.getAuroraSessions(
+                const sessions = await SessionRestClientInstance.getAll(
                     user!.id
                 );
                 dispatch(cacheSessions(sessions));
                 LoadingDialog.close();
             },
             onPressedFilter: async () => {
-                setShowMenu(!showMenu);
+                setShowFilter(!showFilter);
             },
         });
         const cleanup = (): void => {
@@ -58,10 +69,10 @@ export const SessionListScreen: FunctionComponent = () => {
         };
         return cleanup;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showMenu]);
+    }, [showFilter]);
 
     let menu = undefined;
-    if (showMenu) {
+    if (showFilter) {
         menu = (
             <View
                 style={{
@@ -188,31 +199,18 @@ export const SessionListScreen: FunctionComponent = () => {
         );
     }
     return sessionList ? (
-        <StandardView standardViewStyle={{ justifyContent: "flex-start" }}>
-            {showMenu ? menu : undefined}
+        <StandardView standardViewStyle={style.standardView}>
+            {showFilter ? menu : undefined}
             <ScrollView style={{ flex: Layout.isSmallDevice ? 2 : 4 }}>
                 {sessionList.map((value: AuroraSession, index: number) => {
                     const sessionAt = moment(value.sessionAt);
                     return (
-                        <View
-                            key={value.id}
-                            style={{
-                                alignItems: "center",
-                                flexDirection: "row",
-                                justifyContent: "flex-start",
-                                width: Layout.window.fixedWidth,
-                            }}
-                        >
+                        <View key={value.id} style={style.sessionItemContainer}>
                             <List.Item
                                 key={value.id}
-                                left={(props: {
-                                    color: string;
-                                    style: {
-                                        marginLeft: number;
-                                        marginRight: number;
-                                        marginVertical?: number;
-                                    };
-                                }): React.ReactNode => (
+                                left={(
+                                    props: ListItemProps
+                                ): React.ReactNode => (
                                     <ChartRadialProgress
                                         {...props}
                                         width={40}
@@ -231,11 +229,73 @@ export const SessionListScreen: FunctionComponent = () => {
                                         )}
                                     />
                                 )}
+                                right={(props: unknown): React.ReactNode => (
+                                    <View
+                                        {...props}
+                                        style={{
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <IconButton
+                                            icon={
+                                                value.starred
+                                                    ? "star"
+                                                    : "star-outline"
+                                            }
+                                            size={25}
+                                            color={Colors.white}
+                                            onPress={(): void => {
+                                                const asyncFunc = async (): Promise<
+                                                    void
+                                                > => {
+                                                    const updateInfo: Partial<AuroraSessionJson> = {
+                                                        starred: !value.starred,
+                                                    };
+
+                                                    await SessionRestClientInstance.updateById(
+                                                        value.id,
+                                                        updateInfo
+                                                    );
+
+                                                    value.starred = !value.starred;
+                                                    dispatch(
+                                                        updateSession(value)
+                                                    );
+                                                };
+
+                                                asyncFunc();
+                                            }}
+                                        ></IconButton>
+                                        <IconButton
+                                            icon={"delete"}
+                                            size={25}
+                                            color={Colors.white}
+                                            onPress={(): void => {
+                                                const asyncFunc = async (): Promise<
+                                                    void
+                                                > => {
+                                                    await SessionRestClientInstance.deleteById(
+                                                        value.id
+                                                    );
+                                                    dispatch(
+                                                        deleteSession(value.id)
+                                                    );
+                                                };
+                                                asyncFunc();
+                                            }}
+                                        ></IconButton>
+                                    </View>
+                                )}
                                 titleStyle={{ color: Colors.white }}
                                 title={sessionAt.format("dddd")}
                                 description={sessionAt.format("MM,DD,YYYY")}
                                 descriptionStyle={{ color: Colors.gray }}
-                                style={{ width: Layout.window.fixedWidth }}
+                                style={{
+                                    width: Layout.window.fixedWidth,
+                                    justifyContent: "center",
+                                }}
                                 // @ts-ignore
                                 onPress={async (): Promise<void> => {
                                     dispatch(selectSession(value));
@@ -255,7 +315,7 @@ export const SessionListScreen: FunctionComponent = () => {
                                     }
 
                                     if (!sessionDetail) {
-                                        sessionDetail = await AuroraRestClientInstance.getSessionDetails(
+                                        sessionDetail = await SessionRestClientInstance.getDetailsById(
                                             value.id
                                         );
                                     }
@@ -300,6 +360,13 @@ const style = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "flex-start",
         flex: 1,
+        width: Layout.window.fixedWidth,
+    },
+    standardView: { justifyContent: "flex-start" },
+    sessionItemContainer: {
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "flex-start",
         width: Layout.window.fixedWidth,
     },
 });
