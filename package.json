@@ -14,15 +14,15 @@
     "ncu": "npm-check-updates -u && npm install"
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.0.0",
+    "@expo/vector-icons": "^10.1.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "art": "^0.10.3",
     "binary-parser": "github:iwinks/binary-parser",
-    "d3": "^5.15.0",
+    "d3": "^5.16.0",
     "d3-selection-multi": "^1.0.1",
     "drivelist": "^8.0.10",
     "eject-media": "0.0.3",
-    "expo": "^37.0.7",
+    "expo": "^37.0.8",
     "expo-av": "~8.1.0",
     "expo-localization": "~8.1.0",
     "expo-secure-store": "~8.1.0",
