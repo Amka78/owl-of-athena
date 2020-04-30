@@ -2,6 +2,10 @@ import { useEffect } from "react";
 
 import { useTokenSelector } from ".";
 import { useNavigation } from "react-navigation-hooks";
+import {
+    AuroraRestClientInstance,
+    SessionRestClientInstance,
+} from "../clients";
 
 export const useCheckLogging = (): void => {
     const { navigate } = useNavigation();
@@ -14,6 +18,16 @@ export const useCheckLogging = (): void => {
                 console.debug("useCheckLogging start");
                 if (!token) {
                     navigate("Welcome");
+                } else {
+                    if (!AuroraRestClientInstance.getTokenCallback) {
+                        AuroraRestClientInstance.getTokenCallback = (): string =>
+                            token;
+                    }
+
+                    if (!SessionRestClientInstance.getTokenCallback) {
+                        SessionRestClientInstance.getTokenCallback = (): string =>
+                            token;
+                    }
                 }
             }
         };
