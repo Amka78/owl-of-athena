@@ -92,36 +92,36 @@ export class AuroraManager extends EventEmitter {
         profile: AuroraProfile,
         settings: Settings
     ): Promise<void> {
-        const writingProfile = new Profile(profile.content!);
-
-        writingProfile.wakeupTime = this.getMsAfterMidnight(
-            settings.alarmHour,
-            settings.alarmMinute
-        );
-        writingProfile.saEnabled = settings.smartAlarmEnabled;
-        writingProfile.stimEnabled = settings.remStimEnabled;
-        writingProfile.dslEnabled = settings.dslEnabled;
-
-        if (settings.alarmAudioPath) {
-            if (this.alarmSound._loaded) {
-                await this.alarmSound.unloadAsync();
-            }
-            await this.alarmSound.loadAsync(
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                require(`../../assets/audio/${settings.alarmAudioPath}`)
-            );
-        }
-
-        if (settings.remStimAudioPath) {
-            if (this.remStimSound._loaded) {
-                await this.remStimSound.unloadAsync();
-            }
-            await this.remStimSound.loadAsync(
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                require(`../../assets/audio/${settings.remStimAudioPath}`)
-            );
-        }
         try {
+            const writingProfile = new Profile(profile.content!);
+
+            writingProfile.wakeupTime = this.getMsAfterMidnight(
+                settings.alarmHour,
+                settings.alarmMinute
+            );
+            writingProfile.saEnabled = settings.smartAlarmEnabled;
+            writingProfile.stimEnabled = settings.remStimEnabled;
+            writingProfile.dslEnabled = settings.dslEnabled;
+
+            if (settings.alarmAudioPath) {
+                if (this.alarmSound._loaded) {
+                    await this.alarmSound.unloadAsync();
+                }
+                await this.alarmSound.loadAsync(
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
+                    require(`../../assets/audio/${settings.alarmAudioPath}`)
+                );
+            }
+
+            if (settings.remStimAudioPath) {
+                if (this.remStimSound._loaded) {
+                    await this.remStimSound.unloadAsync();
+                }
+                await this.remStimSound.loadAsync(
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires
+                    require(`../../assets/audio/${settings.remStimAudioPath}`)
+                );
+            }
             console.debug("Start write files.");
             await AuroraInstance.writeFile(
                 "profiles/default.prof",
@@ -144,6 +144,7 @@ export class AuroraManager extends EventEmitter {
             console.debug("Completed prop load.");
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
+            console.log(e);
             this.setSleepState(SleepStates.INIT);
             this.emit("onError", e);
         }
