@@ -103,6 +103,9 @@ export class AuroraManager extends EventEmitter {
         writingProfile.dslEnabled = settings.dslEnabled;
 
         if (settings.alarmAudioPath) {
+            if (this.alarmSound._loaded) {
+                await this.alarmSound.unloadAsync();
+            }
             await this.alarmSound.loadAsync(
                 // eslint-disable-next-line @typescript-eslint/no-var-requires
                 require(`../../assets/audio/${settings.alarmAudioPath}`)
@@ -110,6 +113,9 @@ export class AuroraManager extends EventEmitter {
         }
 
         if (settings.remStimAudioPath) {
+            if (this.remStimSound._loaded) {
+                await this.remStimSound.unloadAsync();
+            }
             await this.remStimSound.loadAsync(
                 // eslint-disable-next-line @typescript-eslint/no-var-requires
                 require(`../../assets/audio/${settings.remStimAudioPath}`)
