@@ -8,13 +8,13 @@ import SessionReducers from "./reducers/SessionReducers";
 
 const persitConfig = {
     key: "root",
-    storage: AsyncStorage
+    storage: AsyncStorage,
 };
 
 const appReducer = combineReducers({
     aurora: AuroraReducers,
     session: SessionReducers,
-    auth: AuthReducers
+    auth: AuthReducers,
 });
 
 const persistedReducer = persistReducer(persitConfig, appReducer);

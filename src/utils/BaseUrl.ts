@@ -7,8 +7,7 @@ import Constants from "expo-constants";
  * @class BaseUrl
  */
 export default class BaseUrl {
-    public static get(relCh?: string) {
-        console.debug("Current constants:", Constants);
+    public static get(relCh?: string): string {
         if (!relCh && Constants.manifest.releaseChannel) {
             relCh = Constants.manifest.releaseChannel;
         }
@@ -23,32 +22,16 @@ export default class BaseUrl {
 
         return IWinksRestAPI.dev.url;
     }
-
-    public static getDownloadUrl(
-        image: string | string[],
-        index?: number
-    ): string | undefined {
-        if (typeof image === "undefined") {
-            return undefined;
-        } else if (typeof image === "string") {
-            return BaseUrl.get() + image;
-        } else {
-            if (index === undefined) {
-                index = 0;
-            }
-            return BaseUrl.get() + image![index];
-        }
-    }
 }
 
 export const IWinksRestAPI = {
     dev: {
-        url: "https://api.iwinks.io/"
+        url: "https://api.iwinks.io/",
     },
     staging: {
-        url: "https://api-staging.iwinks.io/"
+        url: "https://api-staging.iwinks.io/",
     },
     prod: {
-        url: "https://api.iwinks.io/"
-    }
+        url: "https://api.iwinks.io/",
+    },
 };

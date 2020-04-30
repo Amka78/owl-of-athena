@@ -3,12 +3,12 @@ import { Platform, View } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap
+    NavigationRouteConfigMap,
 } from "react-navigation";
 import {
     createStackNavigator,
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp,
 } from "react-navigation-stack";
 
 import { Colors, Message, MessageKeys } from "../constants";
@@ -17,7 +17,7 @@ import {
     HomeScreen,
     SettingsScreen,
     SleepingScreen,
-    WakingScreen
+    WakingScreen,
 } from "../screens";
 import { CommonStyles } from "../styles";
 
@@ -30,43 +30,43 @@ const routeConfigMap: NavigationRouteConfigMap<
         screen: AwakeScreen,
         navigationOptions: {
             headerLeft: (): JSX.Element => <View></View>,
-            headerTitle: Message.get(MessageKeys.awake_title)
-        }
+            headerTitle: Message.get(MessageKeys.awake_title),
+        },
     },
     Sleeping: {
         path: "sleeping",
         screen: SleepingScreen,
         navigationOptions: {
             headerLeft: (): JSX.Element => <View></View>,
-            headerTitle: Message.get(MessageKeys.sleeping_title)
-        }
+            headerTitle: Message.get(MessageKeys.sleeping_title),
+        },
     },
     Settings: {
         path: "settings",
         screen: SettingsScreen,
         navigationOptions: {
-            headerTitle: Message.get(MessageKeys.settings_title)
-        }
+            headerTitle: Message.get(MessageKeys.settings_title),
+        },
     },
     Home: {
         path: "home",
         screen: HomeScreen,
         navigationOptions: {
             headerLeft: (): JSX.Element => <View></View>,
-            headerTitle: Message.get(MessageKeys.home_title)
-        }
+            headerTitle: Message.get(MessageKeys.home_title),
+        },
     },
     Waking: {
         path: "waking",
         screen: WakingScreen,
         navigationOptions: {
             headerLeft: (): JSX.Element => <View></View>,
-            headerTitle: Message.get(MessageKeys.waking_title)
-        }
+            headerTitle: Message.get(MessageKeys.waking_title),
+        },
     },
     Logout: {
-        screen: (): JSX.Element => <View></View>
-    }
+        screen: (): JSX.Element => <View></View>,
+    },
 };
 
 const HomeNavigator = createStackNavigator(routeConfigMap, {
@@ -75,11 +75,11 @@ const HomeNavigator = createStackNavigator(routeConfigMap, {
             headerTitleAlign: "center",
             headerTintColor: Colors.cyan,
             headerStyle: CommonStyles.headerStyle,
-            headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle
+            headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle,
         };
     },
     headerMode: Platform.OS === "web" ? "screen" : "float",
-    initialRouteName: "Home"
+    initialRouteName: "Home",
 });
 
 export default HomeNavigator;
