@@ -347,15 +347,16 @@ export class AuroraManager extends EventEmitter {
 
         switch (event.eventId) {
             case EventIds.BATTERY_MONITOR: {
-                this.batteryLevel = event.flags;
+                AuroraManagerInstance.batteryLevel = event.flags;
                 break;
             }
             case EventIds.BUTTON_MONITOR: {
                 if (
                     event.flags == 1 &&
-                    this.currentSleepState === SleepStates.WAKING
+                    AuroraManagerInstance.currentSleepState ===
+                        SleepStates.WAKING
                 ) {
-                    this.setSleepState(SleepStates.AWAKE);
+                    AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
                 }
                 break;
             }
