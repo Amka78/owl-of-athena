@@ -169,7 +169,7 @@ export class AuroraManager extends EventEmitter {
 
             switch (this.currentSleepState) {
                 case SleepStates.SLEEPING: {
-                    console.debug("start onSleeping.");
+                    console.debug("Start onSleeping.");
                     this.emit(AuroraManagerEventList.onSleeping);
                     break;
                 }
@@ -325,7 +325,6 @@ export class AuroraManager extends EventEmitter {
         enableEventList.push(EventIds.SMART_ALARM);
         enableEventList.push(EventIds.CLOCK_ALARM_FIRE);
         enableEventList.push(EventIds.STIM_PRESENTED);
-
         console.debug("Execute enable events command.");
         const enableEventConmmandResult = await AuroraInstance.enableEvents(
             enableEventList
