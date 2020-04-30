@@ -144,7 +144,7 @@ export class AuroraManager extends EventEmitter {
             console.debug("Completed prop load.");
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
-            this.setSleepState(SleepStates.CONFIGURING);
+            this.setSleepState(SleepStates.INIT);
             this.emit("onError", e);
         }
     }
