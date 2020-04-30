@@ -5,7 +5,7 @@ import {
     EVENT_ID_MAX,
     EventIdsToNames,
     STREAM_ID_MAX,
-    StreamIdsToNames
+    StreamIdsToNames,
 } from "./AuroraConstants";
 import { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
@@ -18,7 +18,7 @@ export enum EventList {
     cmdOutputReady = "cmdOutputReady",
     auroraEvent = "auroraEvent",
     streamData = "streamData",
-    parseError = "parseError"
+    parseError = "parseError",
 }
 
 export class AuroraBluetoothParser extends EventEmitter {
@@ -54,7 +54,7 @@ export class AuroraBluetoothParser extends EventEmitter {
 
         this.cmd = {
             command: cmd,
-            error: false
+            error: false,
         };
 
         this.cmdWatchdogTimer = setTimeout(this.onCmdTimeout, 2000);
@@ -88,7 +88,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                             streamId,
                             stream: StreamIdsToNames[streamId],
                             data: new Array<number>(),
-                            time: Date.now()
+                            time: Date.now(),
                         };
 
                         continue;
@@ -172,7 +172,7 @@ export class AuroraBluetoothParser extends EventEmitter {
             // @ts-ignore
             event: EventIdsToNames[eventId],
             flags: eventBuffer.readUInt32LE(1),
-            time: Date.now()
+            time: Date.now(),
         });
     }
 
@@ -289,13 +289,13 @@ export class AuroraBluetoothParser extends EventEmitter {
     private triggerCmdError = (message: string): void => {
         if (!this.cmd) {
             this.cmd = {
-                error: false
+                error: false,
             };
         }
         this.cmd.error = true;
         this.cmd.response = {
             error: -64,
-            message
+            message,
         };
 
         this.emit(EventList.cmdResponse, this.cmd);
