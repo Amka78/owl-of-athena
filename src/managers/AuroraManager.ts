@@ -16,13 +16,10 @@ import {
 } from "../sdk/AuroraConstants";
 import { Audio } from "expo-av";
 import { AuroraSession } from "../sdk/models";
-import { AuroraManagerInstance, AuroraManagetEventList } from ".";
+import { AuroraManagerInstance } from ".";
 import { AuroraEvent, FileInfo } from "../sdk/AuroraTypes";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-import {
-    AuroraRestClientInstance,
-    SessionRestClientInstance,
-} from "../clients";
+import { SessionRestClientInstance } from "../clients";
 export enum AuroraManagerEventList {
     onConnectionChange = "onConnectionChange",
     onSleepStateChange = "onSleepStateChnage",
@@ -48,6 +45,10 @@ export class AuroraManager extends EventEmitter {
         this.remStimSound = new Audio.Sound();
 
         AuroraInstance.on(AuroraEventList.auroraEvent, this.onEvent);
+        AuroraInstance.on(
+            AuroraEventList.bluetoothConnectionChange,
+            this.onBluetoothConnectionChange
+        );
     }
 
     public isConnected(): boolean {
@@ -369,13 +370,25 @@ export class AuroraManager extends EventEmitter {
                 break;
             }
             case EventIds.STIM_PRESENTED: {
-                //if (this.currentSleepState === SleepStates.SLEEPING) {
-                if (this.remStimSound._loaded) {
-                    this.remStimSound.playAsync();
+                if (
+                    AuroraManagerInstance.currentSleepState ===
+                    SleepStates.SLEEPING
+                ) {
+                    if (AuroraManagerInstance.remStimSound._loaded) {
+                        AuroraManagerInstance.remStimSound.playAsync();
+                    }
                 }
-                //}
             }
         }
+    }
+
+    private onBluetoothConnectionChange(
+        connectionState: ConnectionStates
+    ): void {
+        AuroraManagerInstance.emit(
+            AuroraManagerEventList.onConnectionChange,
+            connectionState
+        );
     }
 }
 export default new AuroraManager();

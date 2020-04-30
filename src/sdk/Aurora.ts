@@ -914,12 +914,8 @@ class Aurora extends EventEmitter {
             previousConnectionState !==
                 AuroraConstants.ConnectionStates.CONNECTING
         ) {
-            this.emit(
-                this.isFlashing
-                    ? AuroraEventList.flashConnectionChange
-                    : AuroraEventList.bluetoothConnectionChange,
-                false
-            );
+            if (this.isFlashing)
+                this.emit(AuroraEventList.flashConnectionChange, false);
 
             if (this.isAutoConnectBluetooth) {
                 this.bluetooth.connect(0).catch(() => {
@@ -927,6 +923,7 @@ class Aurora extends EventEmitter {
                 });
             }
         }
+        this.emit(AuroraEventList.bluetoothConnectionChange, connectionState);
     };
 
     private onCmdInputRequested = (): void => {

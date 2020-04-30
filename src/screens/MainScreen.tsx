@@ -39,6 +39,25 @@ export const MainScreen: FunctionComponent = () => {
             }
         };
         f();
+
+        AuroraManagerInstance.on(
+            AuroraManagerEventList.onConnectionChange,
+            (connectionState: ConnectionStates) => {
+                if (
+                    connectionState === ConnectionStates.CONNECTED ||
+                    connectionState === ConnectionStates.IDLE ||
+                    connectionState === ConnectionStates.DISCONNECTED
+                )
+                    if (
+                        connect === ConnectionStates.DISCONNECTED &&
+                        connectionState === ConnectionStates.IDLE
+                    ) {
+                        setConnect(ConnectionStates.CONNECTED);
+                    } else {
+                        setConnect(connectionState);
+                    }
+            }
+        );
         const cleanup = (): void => {
             unmounted = true;
         };
@@ -83,7 +102,6 @@ export const MainScreen: FunctionComponent = () => {
 
                         setError("");
                         await executeConfiguring(
-                            setConnect,
                             connect === ConnectionStates.CONNECTED
                                 ? ConnectionStates.DISCONNECTING
                                 : ConnectionStates.CONNECTING,
@@ -112,11 +130,9 @@ export const MainScreen: FunctionComponent = () => {
 };
 
 async function executeConfiguring(
-    setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>,
     connectStatus: ConnectionStates,
     pushedSessionCallback: (sessionList: Array<AuroraSession>) => void
 ): Promise<void> {
-    setConnect(connectStatus);
     let result = undefined;
 
     try {
@@ -125,7 +141,6 @@ async function executeConfiguring(
 
             console.debug("Aurora connected result:", result);
 
-            setConnect(ConnectionStates.CONNECTED);
             if (result.batteryLevel < 25) {
                 ConfirmDialog.show({
                     title: {
@@ -183,7 +198,6 @@ async function executeConfiguring(
             }
         } else {
             result = await AuroraManagerInstance.disconnect();
-            setConnect(ConnectionStates.DISCONNECTED);
         }
         console.debug("Succeed configuring aurora.", result);
     } catch (e) {

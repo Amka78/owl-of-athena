@@ -22,6 +22,13 @@ enum PoweredStates {
     OFF = "poweredOff",
 }
 
+/**
+ * Manage Bluetooth connections with Aurora devices.
+ *
+ * @export
+ * @class AuroraBluetooth
+ * @extends {EventEmitter}
+ */
 export class AuroraBluetooth extends EventEmitter {
     private initializing: boolean;
     private connectionState: ConnectionStates;
