@@ -36,24 +36,15 @@ export const HomeScreen: FunctionComponent = () => {
     const [wakeLock, setWakeLock] = useState<any>();
 
     useEffect(() => {
-        AuroraManagerInstance.on(AuroraManagetEventList.onSleeping, () => {
-            try {
-                // @ts-ignore
-                navigator.wakeLock
-                    .request("screen")
-                    .then((wakeLockValue: any) => {
-                        setWakeLock(wakeLockValue);
-
-                        wakeLockValue.addEventListener("release", () => {
-                            console.log("Screen Wake Lock was released");
-                        });
-                    });
-                console.log("Screen Wake Lock is active");
-            } catch (err) {
-                console.error(`${err.name}, ${err.message}`);
-            }
-            navigate("Sleeping");
-        });
+        console.log("Called HomeScreen useEffect.");
+        AuroraManagerInstance.removeListener(
+            AuroraManagetEventList.onSleeping,
+            onSleeping
+        );
+        AuroraManagerInstance.on(
+            AuroraManagetEventList.onSleeping,
+            onSleeping(setWakeLock, navigate)
+        );
         AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
             if (wakeLock) {
                 wakeLock.release();
@@ -131,6 +122,7 @@ export const HomeScreen: FunctionComponent = () => {
         settings.profileTitle,
         settings.savedAt,
         user,
+        wakeLock,
     ]);
     return (
         <StandardView>
@@ -209,3 +201,27 @@ export const HomeScreen: FunctionComponent = () => {
         </StandardView>
     );
 };
+function onSleeping(
+    setWakeLock: React.Dispatch<any>,
+    navigate
+): (...args: any[]) => void {
+    return () => {
+        try {
+            // @ts-ignore
+            navigator.wakeLock.request("screen").then((wakeLockValue: any) => {
+                try {
+                    setWakeLock(wakeLockValue);
+                    wakeLockValue.addEventListener("release", () => {
+                        console.log("Screen Wake Lock was released");
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+            console.log("Screen Wake Lock is active");
+        } catch (err) {
+            console.error(`${err.name}, ${err.message}`);
+        }
+        navigate("Sleeping");
+    };
+}
