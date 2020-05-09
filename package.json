@@ -4,7 +4,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "sudo expo start:web",
+    "web": "expo start:web --no-https",
     "eject": "expo eject",
     "tsc": "tsc",
     "lint": "tslint --fix './**/*.ts{,x}'",
