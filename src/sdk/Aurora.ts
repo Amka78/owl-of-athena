@@ -54,6 +54,7 @@ type GetUnsyncedSessions = typeof AuroraCmdGetUnSyncedSessions;
 enum AuroraEventList {
     usbConnectionChange = "usbConnectionChange",
     bluetoothConnectionChange = "bluetoothConnectionChange",
+    findBluetoothDevice = "findBluetoothDevice",
     cmdBegin = "cmdBegin",
     cmdEnd = "cmdEnd",
     msdAttachmentChange = "msdAttachmentChange",
@@ -233,7 +234,7 @@ class Aurora extends EventEmitter {
         }
 
         return new Promise((resolve, reject) => {
-            this.once("bluetoothConnectionChange", (fwInfo) => {
+            this.once(AuroraEventList.findBluetoothDevice, (fwInfo) => {
                 console.debug("Found Aurora device.");
                 if (!fwInfo) return reject();
 
@@ -901,7 +902,7 @@ class Aurora extends EventEmitter {
                     this.emit(
                         this.isFlashing
                             ? AuroraEventList.flashConnectionChange
-                            : AuroraEventList.bluetoothConnectionChange,
+                            : AuroraEventList.findBluetoothDevice,
                         cmd.response
                     );
                 })

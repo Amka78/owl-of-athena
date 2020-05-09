@@ -30,7 +30,7 @@
     "heatshrink-ts": "^0.1.0",
     "i18n-js": "^3.5.0",
     "moment": "^2.24.0",
-    "noble": "https://github.com/abandonware/noble",
+    "noble": "https://github.com/Amka78/noble",
     "react": "16.9.0",
     "react-datepicker": "^2.10.1",
     "react-dom": "16.9.0",
