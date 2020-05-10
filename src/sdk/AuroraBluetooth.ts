@@ -138,47 +138,7 @@ export class AuroraBluetooth extends EventEmitter {
             this.peripheral = peripheral;
             this.peripheral!.once("disconnect", this.onPeripheralDisconnect);
 
-            this.characteristicsByUUID = keyBy(characteristics, "uuid");
-
-            //these get used a lot, so let's store references
-            this.cmdStatusChar = this.characteristicsByUUID[
-                BleAuroraChars.CMD_STATUS
-            ];
-            this.cmdDataChar = this.characteristicsByUUID[
-                BleAuroraChars.CMD_DATA
-            ];
-            this.cmdOutputChar = this.characteristicsByUUID[
-                BleAuroraChars.CMD_OUTPUT_INDICATED
-            ];
-
-            await this.charSubscribe(
-                this.characteristicsByUUID[BleAuroraChars.STREAM_DATA_NOTIFIED],
-                this.onParseStreamData
-            );
-
-            await this.charSubscribe(
-                this.characteristicsByUUID[
-                    BleAuroraChars.AURORA_EVENT_NOTIFIED
-                ],
-                (event: Buffer): void => {
-                    this.bluetoothParser.onAuroraEventCharNotification(event);
-                }
-            );
-
-            await this.charSubscribe(
-                this.cmdStatusChar,
-                (status: Buffer): void => {
-                    this.bluetoothParser.onCmdStatusCharNotification(status);
-                }
-            );
-            await this.charSubscribe(
-                this.cmdOutputChar,
-                (output: unknown): void => {
-                    this.bluetoothParser.onCmdOutputCharNotification(output);
-                }
-            );
-
-            this.setConnectionState(ConnectionStates.IDLE);
+            await this.setupConnection(characteristics);
 
             return this.peripheral;
         } catch (error) {
@@ -186,6 +146,39 @@ export class AuroraBluetooth extends EventEmitter {
 
             return Promise.reject(error);
         }
+    }
+
+    private async setupConnection(characteristics: any): Promise<void> {
+        this.characteristicsByUUID = keyBy(characteristics, "uuid");
+        //these get used a lot, so let's store references
+        this.cmdStatusChar = this.characteristicsByUUID[
+            BleAuroraChars.CMD_STATUS
+        ];
+        this.cmdDataChar = this.characteristicsByUUID[BleAuroraChars.CMD_DATA];
+        this.cmdOutputChar = this.characteristicsByUUID[
+            BleAuroraChars.CMD_OUTPUT_INDICATED
+        ];
+        await this.charSubscribe(
+            this.characteristicsByUUID[BleAuroraChars.STREAM_DATA_NOTIFIED],
+            this.onParseStreamData
+        );
+        await this.charSubscribe(
+            this.characteristicsByUUID[BleAuroraChars.AURORA_EVENT_NOTIFIED],
+            (event: Buffer): void => {
+                this.bluetoothParser.onAuroraEventCharNotification(event);
+            }
+        );
+        await this.charSubscribe(this.cmdStatusChar, (status: Buffer): void => {
+            this.bluetoothParser.onCmdStatusCharNotification(status);
+        });
+        await this.charSubscribe(
+            this.cmdOutputChar,
+            (output: unknown): void => {
+                this.bluetoothParser.onCmdOutputCharNotification(output);
+            }
+        );
+
+        this.setConnectionState(ConnectionStates.IDLE);
     }
 
     public async disconnect(): Promise<void> {
@@ -519,8 +512,89 @@ export class AuroraBluetooth extends EventEmitter {
     };
 
     private onPeripheralDisconnect = (): void => {
-        this.setConnectionState(ConnectionStates.DISCONNECTED);
+        console.debug("onPeripheralDisconnect called.");
+
+        if (this.disconnectPending || !this.reconnect(this.peripheral!)) {
+            this.setConnectionState(ConnectionStates.DISCONNECTED);
+        }
     };
+
+    private reconnect(peripheral: Peripheral): boolean {
+        let reconnectResult = false;
+        this.exponentialBackoff(
+            3 /* max retries */,
+            2 /* seconds delay */,
+            async () => {
+                console.log("Called toTry.");
+                this.time("Connecting to Bluetooth Device... ");
+                console.debug(peripheral);
+                peripheral.connect((error: string) => {
+                    console.debug("Start peripheral connect.");
+                    if (error) {
+                        console.error(error);
+                        return false;
+                    }
+                    peripheral.discoverSomeServicesAndCharacteristics(
+                        [BleAuroraService],
+                        Object.values(BleAuroraChars),
+                        (error, services, characteristics) => {
+                            if (error) {
+                                console.error(error);
+                                return;
+                            }
+
+                            console.debug("Start connection setup.");
+                            this.setupConnection(characteristics);
+                        }
+                    );
+                    reconnectResult = true;
+                    return true;
+                });
+            },
+            () => {
+                console.log("> Bluetooth Device recconnected.");
+            },
+            () => {
+                this.time("Failed to reconnect.");
+            }
+        );
+
+        return reconnectResult;
+    }
+
+    // retried "max" number of times. First retry has a delay of "delay" seconds.
+    // "success" is called upon success.
+    private exponentialBackoff(
+        max: number,
+        delay: number,
+        toTry: any,
+        success: () => void,
+        fail: () => void
+    ): void {
+        toTry()
+            .then(() => success())
+            .catch(() => {
+                if (max === 0) {
+                    return fail();
+                }
+                this.time(
+                    "Retrying in " + delay + "s... (" + max + " tries left)"
+                );
+                setTimeout(() => {
+                    this.exponentialBackoff(
+                        --max,
+                        delay * 2,
+                        toTry,
+                        success,
+                        fail
+                    );
+                }, delay * 1000);
+            });
+    }
+
+    private time(text: string): void {
+        console.log("[" + new Date().toJSON().substr(11, 8) + "] " + text);
+    }
 
     private onPeripheralFound = (peripheral: noble.Peripheral): void => {
         console.debug("onPeripheralFound called.");
