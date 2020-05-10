@@ -1,6 +1,6 @@
+//#region Import modules
 import { EventEmitter } from "events";
-import { Dictionary } from "lodash";
-import keyBy from "lodash/keyBy";
+import { Dictionary, keyBy } from "lodash";
 import { sleep, promisify } from "./util";
 import { AuroraBluetoothParser } from "./AuroraBluetoothParser";
 import {
@@ -12,7 +12,8 @@ import {
     DeviceEventList,
 } from "./AuroraConstants";
 import { BluetoothStream, AuroraEvent, CommandResult } from "./AuroraTypes";
-import noble from "noble";
+import noble, { Peripheral } from "noble";
+//#endregion
 
 const INIT_DELAY_MS = 5000;
 const DISCONNECT_RETRY_DELAY_MS = 3000;
@@ -345,8 +346,6 @@ export class AuroraBluetooth extends EventEmitter {
             this.disconnectPending = false;
         }
 
-        //console.log(`${previousConnectionState} --> ${connectionState}`);
-
         this.emit(
             DeviceEventList.connectionStateChange,
             connectionState,
@@ -367,7 +366,8 @@ export class AuroraBluetooth extends EventEmitter {
             noble.removeListener("scanStop", this.onPeripheralScanStop);
 
             noble.on("discover", this.onPeripheralFound);
-            noble.on("scanStop", this.onPeripheralScanStop);
+            noble.on("error", this.onPeripheralError);
+            //noble.on("scanStop", this.onPeripheralScanStop);
             console.debug("bluetooth scanning start.");
 
             noble.startScanning([BleAuroraService], false, (error?: Error) => {
@@ -561,6 +561,11 @@ export class AuroraBluetooth extends EventEmitter {
             console.error(args.err);
             this.peripheralStopProcess();
         }
+    };
+
+    private onPeripheralError = (error: string): void => {
+        console.error(error);
+        this.peripheralStopProcess();
     };
 
     private onParseCmdResponseRead = (
