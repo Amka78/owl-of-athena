@@ -180,4 +180,9 @@ export default {
         "There is a new version. Please update.",
 
     [MessageKeys.update_snack_bar_action_label]: "Update",
+
+    [MessageKeys.delete_dialog_title]: "Delete Session?",
+
+    [MessageKeys.delete_dialog_message]:
+        "Are you sure you want to delete this session? This action cannot be undone.",
 };

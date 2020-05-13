@@ -7,7 +7,12 @@ import {
     useTokenSelector,
     useUserSelector,
 } from "../hooks";
-import { StandardView, LoadingDialog, LabeledCheckBox } from "../components";
+import {
+    StandardView,
+    LoadingDialog,
+    LabeledCheckBox,
+    ConfirmDialog,
+} from "../components";
 import { SessionRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
 import {
@@ -27,6 +32,7 @@ import { ChartRadialProgress } from "../components/charts";
 import { ScrollView } from "react-native-gesture-handler";
 import { FilterByDateValues } from "../state/SessionState";
 import { AuroraSessionJson } from "../sdk/AuroraTypes";
+import { AuroraManagerInstance } from "../managers";
 
 export type ListItemProps = {
     color: string;
@@ -271,17 +277,41 @@ export const SessionListScreen: FunctionComponent = () => {
                                             size={25}
                                             color={Colors.white}
                                             onPress={(): void => {
-                                                const asyncFunc = async (): Promise<
-                                                    void
-                                                > => {
-                                                    await SessionRestClientInstance.deleteById(
-                                                        value.id
-                                                    );
-                                                    dispatch(
-                                                        deleteSession(value.id)
-                                                    );
-                                                };
-                                                asyncFunc();
+                                                ConfirmDialog.show({
+                                                    title: {
+                                                        key:
+                                                            MessageKeys.delete_dialog_title,
+                                                    },
+                                                    message: {
+                                                        key:
+                                                            MessageKeys.delete_dialog_message,
+                                                    },
+                                                    isCancelable: true,
+                                                    onConfirm: async () => {
+                                                        await SessionRestClientInstance.deleteById(
+                                                            value.id
+                                                        );
+
+                                                        if (
+                                                            AuroraManagerInstance.isConnected()
+                                                        ) {
+                                                            try {
+                                                                await AuroraManagerInstance.executeCommand(
+                                                                    `sd-dir-del sessions/${value.id}`
+                                                                );
+                                                            } catch (e) {
+                                                                console.error(
+                                                                    e
+                                                                );
+                                                            }
+                                                        }
+                                                        dispatch(
+                                                            deleteSession(
+                                                                value.id
+                                                            )
+                                                        );
+                                                    },
+                                                });
                                             }}
                                         ></IconButton>
                                     </View>

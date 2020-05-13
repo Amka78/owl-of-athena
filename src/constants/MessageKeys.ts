@@ -157,4 +157,8 @@ export const MessageKeys = {
     // update snack bar
     update_snack_bar_title: "update_snack_bar_title",
     update_snack_bar_action_label: "update_snack_bar_action_label",
+
+    // delete confirm dialog
+    delete_dialog_title: "delete_dialog_title",
+    delete_dialog_message: "delete_dialog_message",
 };

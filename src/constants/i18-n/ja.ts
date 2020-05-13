@@ -174,4 +174,9 @@ export default {
     [MessageKeys.update_snack_bar_title]:
         "新しいバージョンが存在します。アップデートしてください。",
     [MessageKeys.update_snack_bar_action_label]: "更新",
+
+    [MessageKeys.delete_dialog_title]: "セッションを削除しますか?",
+
+    [MessageKeys.delete_dialog_message]:
+        "本当に削除しても宜しいですか?　この処理は戻せません。",
 };
