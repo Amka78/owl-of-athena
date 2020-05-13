@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useState, useRef } from "react";
 import { View, TouchableWithoutFeedback } from "react-native";
 import {
     Button,
@@ -49,8 +49,8 @@ export const HomeScreen: FunctionComponent = () => {
     const profiles = useProfilesSelector();
     const [errorText, setErrorText] = useState<string>("");
 
-    let selectedProfile: AuroraProfile | undefined;
-    const [wakeLock, setWakeLock] = useState<WakeLockSentinel>();
+    const selectedProfile = useRef<AuroraProfile | undefined>(undefined);
+    const wakeLockContainer = useRef<WakeLockSentinel | undefined>(undefined);
 
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
@@ -60,18 +60,14 @@ export const HomeScreen: FunctionComponent = () => {
         );
         AuroraManagerInstance.on(
             AuroraManagetEventList.onSleeping,
-            onSleeping(setWakeLock, navigate)
+            onSleeping(wakeLockContainer, navigate)
         );
         AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
-            if (wakeLock) {
-                wakeLock.release();
-            }
+            wakeLockContainer.current?.release();
             navigate("Awake");
         });
         AuroraManagerInstance.on(AuroraManagetEventList.onWaking, () => {
-            if (wakeLock) {
-                wakeLock.release();
-            }
+            wakeLockContainer.current?.release();
             navigate("Waking");
         });
         let unmounted = false;
@@ -94,31 +90,32 @@ export const HomeScreen: FunctionComponent = () => {
                     console.log("Profile select start");
                     // get last used profile.
                     if (settings.profileId) {
-                        selectedProfile = auroraProfiles.find(
+                        selectedProfile.current = auroraProfiles.find(
                             (value: AuroraProfile) => {
                                 return value.id! === settings.profileId;
                             }
                         );
                     }
 
-                    if (selectedProfile === undefined) {
+                    if (selectedProfile.current === undefined) {
                         //if we don't have one, use the first (which is the latest saved)
-                        selectedProfile = auroraProfiles[0];
+                        selectedProfile.current = auroraProfiles[0];
                         console.log("selected Profile:", selectedProfile);
                     } else {
                         //check if most recently saved profile is more recent
                         //than last time settings were saved
                         if (
                             settings.savedAt != undefined &&
-                            auroraProfiles[0].id !== selectedProfile!.id &&
+                            auroraProfiles[0].id !==
+                                selectedProfile.current.id &&
                             auroraProfiles[0].updatedAt! < settings.savedAt
                         ) {
                             //use the most recently saved profile instead
                             //of the last one used in the app
-                            selectedProfile = profiles[0];
+                            selectedProfile.current = profiles[0];
 
-                            settings.profileId = selectedProfile!.id;
-                            settings.profileTitle = selectedProfile!.title!;
+                            settings.profileId = selectedProfile.current.id;
+                            settings.profileTitle = selectedProfile.current.title!;
                         }
                     }
                     settings.userId = user!.id;
@@ -133,13 +130,13 @@ export const HomeScreen: FunctionComponent = () => {
         return cleanup();
     }, [
         dispatch,
+        navigate,
         profiles,
         settings,
         settings.profileId,
         settings.profileTitle,
         settings.savedAt,
         user,
-        wakeLock,
     ]);
     return (
         <StandardView>
@@ -186,7 +183,7 @@ export const HomeScreen: FunctionComponent = () => {
                                     },
                                 });
                                 await AuroraManagerInstance.goToSleep(
-                                    selectedProfile!,
+                                    selectedProfile.current!,
                                     settings
                                 );
                             } else {
@@ -220,23 +217,17 @@ export const HomeScreen: FunctionComponent = () => {
 };
 
 function onSleeping(
-    setWakeLock: React.Dispatch<any>,
+    wakeLockContainer: React.MutableRefObject<WakeLockSentinel | undefined>,
     navigate: any
 ): (...args: any[]) => void {
-    return (): void => {
+    return async (): Promise<void> => {
         try {
-            navigator.wakeLock
-                .request("screen")
-                .then((wakeLockValue: WakeLockSentinel) => {
-                    try {
-                        setWakeLock(wakeLockValue);
-                        wakeLockValue.addEventListener("release", () => {
-                            console.log("Screen Wake Lock was released");
-                        });
-                    } catch (error) {
-                        console.error(error);
-                    }
-                });
+            const wakeLockSentinel = await navigator.wakeLock.request("screen");
+
+            wakeLockContainer.current = wakeLockSentinel;
+            wakeLockSentinel.addEventListener("release", () => {
+                console.log("Screen Wake Lock was released");
+            });
             console.log("Screen Wake Lock is active");
         } catch (err) {
             console.error(`${err.name}, ${err.message}`);
