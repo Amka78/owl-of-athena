@@ -15,8 +15,7 @@ export default class ChartLine extends Chart<ChartProps> {
         return false;
     }
     buildGraph(): void {
-        // @ts-ignore
-        this.buildScales(d3.scaleLinear());
+        this.buildScales(undefined, d3.scaleLinear());
 
         this.scaleY!.domain([-2048, 2048]);
 
@@ -25,8 +24,9 @@ export default class ChartLine extends Chart<ChartProps> {
         this.buildAxes();
 
         this.axisX!.tickFormat((d) =>
-            // @ts-ignore
-            moment(d).format("h:ma").slice(0, -1)
+            moment(d as Date)
+                .format("h:ma")
+                .slice(0, -1)
         );
 
         this.axisY!.ticks(16);
@@ -35,7 +35,6 @@ export default class ChartLine extends Chart<ChartProps> {
     }
 
     updateGraph(): void {
-        // @ts-ignore
         this.lines = [];
 
         for (let i = 0; i < this.props.data.length; i++) {
@@ -43,16 +42,14 @@ export default class ChartLine extends Chart<ChartProps> {
 
             this.lines[i]
                 .x((_d, i) => this.scaleX!(i * 128))
-                // @ts-ignore
-                .y((d) => this.scaleY!(d));
+                .y((d) => this.scaleY!(d as any));
 
             this.svg!.append("path")
                 .datum(this.props.data[i])
                 .filter((_d, i) => !(i % 64))
                 .attr("class", "path")
                 .attr("stroke", "steelblue")
-                // @ts-ignore
-                .attr("d", this.lines[i](this.props.data[i]));
+                .attr("d", this.lines[i](this.props.data[i]) as any);
         }
     }
 

@@ -61,10 +61,8 @@ export default class ChartMovement extends Chart<ChartMovementProps> {
 
         const chartHeight = this.getChartHeight();
 
-        // @ts-ignore
-        this.axisX!.tickFormat("").tickSizeOuter(0).tickSizeInner(-chartHeight);
+        this.axisX!.tickFormat("").tickSizeOuter(1).tickSizeInner(-chartHeight);
 
-        // @ts-ignore
         this.axisY!.tickFormat("").tickSize(0);
 
         this.axisGroupY!.append("text")

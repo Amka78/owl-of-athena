@@ -99,8 +99,6 @@ export const SessionListScreen: FunctionComponent = () => {
                     </Text>
                     <Picker
                         style={{
-                            // @ts-ignore
-                            color: Colors.white,
                             backgroundColor: Colors.purple,
                             borderLeftWidth: 0,
                             borderRightWidth: 0,
@@ -296,40 +294,44 @@ export const SessionListScreen: FunctionComponent = () => {
                                     width: Layout.window.fixedWidth,
                                     justifyContent: "center",
                                 }}
-                                // @ts-ignore
-                                onPress={async (): Promise<void> => {
-                                    dispatch(selectSession(value));
+                                onPress={(): void => {
+                                    const asyncFunction = async (): Promise<
+                                        void
+                                    > => {
+                                        dispatch(selectSession(value));
 
-                                    let sessionDetail;
-                                    if (sessionDetailList.length > 0) {
-                                        sessionDetail = sessionDetailList.find(
-                                            (
-                                                detailValue: AuroraSessionDetail
-                                            ) => {
-                                                return (
-                                                    detailValue.sessionId ===
-                                                    value.id
-                                                );
-                                            }
+                                        let sessionDetail;
+                                        if (sessionDetailList.length > 0) {
+                                            sessionDetail = sessionDetailList.find(
+                                                (
+                                                    detailValue: AuroraSessionDetail
+                                                ) => {
+                                                    return (
+                                                        detailValue.sessionId ===
+                                                        value.id
+                                                    );
+                                                }
+                                            );
+                                        }
+
+                                        if (!sessionDetail) {
+                                            sessionDetail = await SessionRestClientInstance.getDetailsById(
+                                                value.id
+                                            );
+                                        }
+
+                                        dispatch(
+                                            selectSessionDetail(sessionDetail)
                                         );
-                                    }
 
-                                    if (!sessionDetail) {
-                                        sessionDetail = await SessionRestClientInstance.getDetailsById(
-                                            value.id
-                                        );
-                                    }
-
-                                    dispatch(
-                                        selectSessionDetail(sessionDetail)
-                                    );
-
-                                    navigate("Detail", {
-                                        sessionIndex: index,
-                                        sessionTitle: moment(
-                                            value.sessionAt
-                                        ).format("MM.DD.YYYY"),
-                                    });
+                                        navigate("Detail", {
+                                            sessionIndex: index,
+                                            sessionTitle: moment(
+                                                value.sessionAt
+                                            ).format("MM.DD.YYYY"),
+                                        });
+                                    };
+                                    asyncFunction();
                                 }}
                             ></List.Item>
                         </View>

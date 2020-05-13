@@ -1,6 +1,3 @@
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
 import moment from "moment";
@@ -53,20 +50,23 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
 
         if (this.props.tickInterval === "default") {
             this.axisX!.tickFormat((d) =>
-                // @ts-ignore
-                moment(d).utc().format("h:mm a").replace(":00", "").slice(0, -1)
+                moment(d as Date)
+                    .utc()
+                    .format("h:mm a")
+                    .replace(":00", "")
+                    .slice(0, -1)
             ).tickSizeOuter(0);
         } else {
             this.axisX!.ticks(this.props.totalSleepHour)
                 .tickFormat((d) =>
-                    // @ts-ignore
-                    moment(d).utc().format("h")
+                    moment(d as Date)
+                        .utc()
+                        .format("h")
                 )
                 .tickSizeOuter(0);
         }
 
-        // @ts-ignore
-        this.axisY!.tickFormat((d) => ChartSleep.sleepStageLabels[d])
+        this.axisY!.tickFormat((d) => ChartSleep.sleepStageLabels[d as any])
             .tickSize(0)
             .ticks(ChartSleep.sleepStageLabels.length - 1);
 
@@ -105,10 +105,10 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
         this.lineFunction = d3
             .line()
             .curve(d3.curveStepAfter)
-            // @ts-ignore
-            .x((d) => this.scaleX!(d.eventAt))
-            // @ts-ignore
-            .y((d) => this.scaleY!(ChartSleep.sleepStageMapping[d.flags]));
+            .x((d) => this.scaleX!((d as any).eventAt))
+            .y((d) =>
+                this.scaleY!(ChartSleep.sleepStageMapping[(d as any).flags])
+            );
     }
 
     updateAxes(): void {
@@ -158,7 +158,6 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             sleep.push(
                 Object.assign({}, sleep[sleep.length - 1], {
                     eventAt: scaleXDomain[1],
-                    // @ts-ignore
                     time: scaleXDomain[1] - scaleXDomain[0],
                 })
             );
@@ -174,9 +173,8 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             .attr("stroke-width", 2)
             .attr("stroke", `url(#${this.gradientId})`)
             .attr("fill", "none")
-            .merge(sleepPath)
-            // @ts-ignore
-            .attr("d", this.lineFunction);
+            .merge(sleepPath as any)
+            .attr("d", this.lineFunction as any) as any;
     }
 
     static defaultProps = {

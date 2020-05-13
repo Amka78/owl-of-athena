@@ -3,14 +3,14 @@ import { Platform } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap
+    NavigationRouteConfigMap,
     //NavigationScreenConfigProps
 } from "react-navigation";
 import {
     createStackNavigator,
     StackHeaderLeftButtonProps,
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp,
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
@@ -25,15 +25,15 @@ const routeConfigMap: NavigationRouteConfigMap<
 > = {
     ForgotPassword: {
         path: "forgot-password",
-        screen: ForgotPasswordScreen
+        screen: ForgotPasswordScreen,
     },
     Signup: {
         path: "signup",
-        screen: SignupScreen
+        screen: SignupScreen,
     },
     Login: {
         path: "login",
-        screen: LoginScreen
+        screen: LoginScreen,
     },
     Welcome: {
         path: "",
@@ -42,10 +42,10 @@ const routeConfigMap: NavigationRouteConfigMap<
             headerLeft: undefined,
             headerTitleContainerStyle: {
                 ...CommonStyles.headerTitleContainerStyle,
-                marginLeft: Dimens.content_margin_horizontal
-            }
-        }
-    }
+                marginLeft: Dimens.content_margin_horizontal,
+            },
+        },
+    },
 };
 
 const UnauthenticatedNavigator = createStackNavigator(routeConfigMap, {
@@ -61,11 +61,11 @@ const UnauthenticatedNavigator = createStackNavigator(routeConfigMap, {
                 headerStyle: CommonStyles.headerStyle,
                 headerTitleContainerStyle:
                     CommonStyles.headerTitleContainerStyle,
-                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle,
             };
         },
     headerMode: Platform.OS === "web" ? "screen" : "float",
-    initialRouteName: "Welcome"
+    initialRouteName: "Welcome",
 });
 
 export default UnauthenticatedNavigator;

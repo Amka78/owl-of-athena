@@ -142,7 +142,6 @@ class Aurora extends EventEmitter {
         this.enabledEventList = new Array<AuroraConstants.EventIds>();
 
         //this scans for MSD disks that could potentially be the Aurora
-        // @ts-ignore
         //this.findMsdDrive().then(this.msdSetAttached, true);
 
         this.watchUsb();
@@ -468,8 +467,8 @@ class Aurora extends EventEmitter {
     public async queueCmd<T>(
         commandStr: string,
         connectorType = AuroraConstants.ConnectorTypes.ANY,
-        onCmdBegin = undefined,
-        onCmdEnd = undefined
+        onCmdBegin?: (cmd: T) => void,
+        onCmdEnd?: () => void
     ): Promise<T> {
         if (!this.getConnector(connectorType).isConnected()) {
             return Promise.reject(
@@ -582,7 +581,6 @@ class Aurora extends EventEmitter {
 
         this.cmdCurrent.inputStream = new Stream.Writable();
         this.cmdCurrent.inputStream._write = (data, _encoding, done): void => {
-            // @ts-ignore
             this.cmdCurrent!.connector!.writeCmdInput(data).then(() => done());
         };
 
@@ -607,10 +605,10 @@ class Aurora extends EventEmitter {
 
         this.cmdCurrent.connector
             .writeCmd(this.cmdCurrent.commandStr!)
-            // @ts-ignore
             .then(
-                // @ts-ignore
-                (cmdWithResponse: AuroraResponse): CommandResult => {
+                (
+                    cmdWithResponse: CommandResult<unknown>
+                ): CommandResult<unknown> => {
                     cmd.endTime = Date.now();
                     cmd.origin = cmdWithResponse.origin;
                     cmd.error = cmdWithResponse.error;
@@ -853,8 +851,7 @@ class Aurora extends EventEmitter {
                 AuroraConstants.ConnectionStates.CONNECTING
         ) {
             this.getOsInfo(AuroraConstants.ConnectorTypes.USB)
-                //@ts-ignore
-                .then((cmd: CommandResult): void => {
+                .then((cmd: any): void => {
                     this.emit(
                         this.isFlashing
                             ? AuroraEventList.flashConnectionChange

@@ -30,8 +30,8 @@ export type ChartProps = {
     axisYColor: string;
     axisYLabelColor: string;
     axisYLabelPadding: number;
-    scaleXDomain: (number | Date | { valueOf(): number })[];
-    scaleYDomain: (number | Date | { valueOf(): number })[];
+    scaleXDomain: (any | number | Date | { valueOf(): number })[];
+    scaleYDomain: (any | number | Date | { valueOf(): number })[];
     data?: any;
     dataBins: number[];
     dataBinThreshold: number;
@@ -39,29 +39,28 @@ export type ChartProps = {
     height: number;
     zoomX: number;
     zoomY: number;
+    [stringIndex: string]: any;
 };
 
 export default class Chart<T extends ChartProps> extends React.Component<T> {
     protected svg?: d3.Selection<any, unknown, null, undefined>;
     protected scaleX?: d3.ScaleTime<number, number>;
-    protected scaleY?: d3.ScaleTime<number, number>;
-    protected axisX?: d3.Axis<number | Date | { valueOf(): number }>;
+    protected scaleY?: d3.ScaleLinear<number, number>;
+    protected axisX?: d3.Axis<number | Date | { valueOf(): number } | string>;
     protected lines?: d3.Line<[number, number]>[];
     protected axisGroupX?: d3.Selection<any, unknown, null, undefined>;
-    protected axisY?: d3.Axis<number | Date | { valueOf(): number }>;
+    protected axisY?: d3.Axis<number | Date | { valueOf(): number } | string>;
     protected axisGroupY?: d3.Selection<any, unknown, null, undefined>;
     protected graphGroup?: d3.Selection<any, unknown, null, undefined>;
     protected brushGroup?: d3.Selection<any, unknown, null, undefined>;
+    protected transition?: d3.Transition<HTMLElement, unknown, null, undefined>;
+    protected k?: number;
     private svgRef: any;
     private title?: d3.Selection<any, unknown, null, undefined>;
     private clipPath?: d3.Selection<any, unknown, null, undefined>;
     private clipPathId?: string;
-    // @ts-ignore
-    private transition?: d3.Transition<HTMLElement, unknown, null, undefined>;
     private zoom?: d3.ZoomBehavior<Element, unknown>;
-    private brush?: d3.BrushBehavior<unknown>;
-    // @ts-ignore
-    private k?: number;
+    private brush?: d3.BrushBehavior<any>;
     constructor(props: T) {
         super(props);
     }
@@ -178,8 +177,8 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     enableBrush(extentX: number, extentY: number): void {
         this.brush = d3.brushX();
 
-        const extentStart = [this.props.axisMargin.left, 0];
-        const extentStop = [
+        const extentStart: [number, number] = [this.props.axisMargin.left, 0];
+        const extentStop: [number, number] = [
             this.getChartWidth() - this.props.axisMargin.right,
             this.getChartHeight() - this.props.axisMargin.bottom,
         ];
@@ -195,7 +194,6 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         }
 
         this.brush
-            // @ts-ignore
             .extent([extentStart, extentStop])
             .on("end", this.onBrushEnd.bind(this));
 
@@ -214,14 +212,14 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
     buildScales(
         xScale?: d3.ScaleTime<number, number>,
-        yScale?: d3.ScaleTime<number, number>
+        yScale?: d3.ScaleLinear<number, number>
     ): void {
         this.scaleX = (xScale ? xScale : d3.scaleTime()).range(
             this.getChartRangeX()
         );
         this.scaleY = (yScale ? yScale : d3.scaleLinear()).range(
             this.getChartRangeY()
-        ) as d3.ScaleTime<number, number>;
+        );
     }
 
     buildAxes(
@@ -311,8 +309,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     }
 
     getData(prop = "data"): any[] {
-        // @ts-ignore
-        const data = this.props[prop];
+        const data: Array<any> = this.props[prop];
 
         const bin = this.getCurrentBin();
 
@@ -342,7 +339,6 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         if (!dataBins.length) return 0;
 
-        // @ts-ignore
         const minutesVisible = (scaleXDomain[1] - scaleXDomain[0]) / 1000 / 60;
 
         if (minutesVisible < dataBinThreshold) return 0;

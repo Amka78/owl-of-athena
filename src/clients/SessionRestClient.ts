@@ -124,7 +124,7 @@ export class SessionRestClient extends RestClient {
      * @memberof SessionRestClient
      */
     public async getEvents(sessionId: string): Promise<any> {
-        const queries = {
+        const queries: { [index: string]: any } = {
             movementEvents: {
                 bins: "0,5,10,15,20",
                 aurora_event_id: EventIds.MOVEMENT_MONITOR,
@@ -166,7 +166,6 @@ export class SessionRestClient extends RestClient {
                         auroraEvents.push(new AuroraEvent(value));
                     });
 
-                    // @ts-ignore
                     queries[eventIndex] = auroraEvents;
                 });
             })

@@ -2,7 +2,7 @@ import fs from "fs";
 import fetch from "node-fetch";
 import { Aurora } from "./Aurora";
 
-const AuroraCmdUploadFile = async function(
+const AuroraCmdUploadFile = async function (
     this: Aurora,
     srcPath: string,
     destPath: string,
@@ -10,8 +10,7 @@ const AuroraCmdUploadFile = async function(
     rename = false
 ): Promise<unknown> {
     if (srcPath.match(/https?:\/\//i)) {
-        return fetch(srcPath).then(res => {
-            // @ts-ignore
+        return fetch(srcPath).then((res) => {
             return this.writeFile(destPath, res.body, rename);
         });
     }

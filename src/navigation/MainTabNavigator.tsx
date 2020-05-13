@@ -3,12 +3,12 @@ import { Button } from "react-native-paper";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap
+    NavigationRouteConfigMap,
 } from "react-navigation";
 import {
     createBottomTabNavigator,
     NavigationBottomTabOptions,
-    NavigationTabProp
+    NavigationTabProp,
 } from "react-navigation-tabs";
 
 import { Colors } from "../constants";
@@ -24,38 +24,38 @@ const routeConfigMap: NavigationRouteConfigMap<
         navigationOptions: {
             tabBarIcon: (options): JSX.Element =>
                 createTabBarIcon(options, "alarm-check"),
-            title: ""
+            title: "",
         },
         path: "",
-        screen: HomeNavigator
+        screen: HomeNavigator,
     },
     Route2: {
         navigationOptions: {
             tabBarIcon: (options): JSX.Element =>
                 createTabBarIcon(options, "blur"),
-            title: ""
+            title: "",
         },
         path: "sessions",
-        screen: SessionNavigator
+        screen: SessionNavigator,
     },
     Route3: {
         navigationOptions: {
             tabBarIcon: (options): JSX.Element =>
                 createTabBarIcon(options, "settings"),
-            title: ""
+            title: "",
         },
         path: "account-settings",
-        screen: SettingNavigator
-    }
+        screen: SettingNavigator,
+    },
 };
 
 const bottomTabNavigationConfig = {
     tabBarOptions: {
         activeTintColor: Colors.cyan,
         inactiveTintColor: Colors.navy_darker,
-        style: { backgroundColor: Colors.navy }
+        style: { backgroundColor: Colors.navy },
     },
-    initialRouteName: "Route1"
+    initialRouteName: "Route1",
 };
 
 const MainTabNavigator = createBottomTabNavigator(
@@ -73,7 +73,7 @@ function createTabBarIcon(
         <Button
             style={{
                 height: 15,
-                width: 15
+                width: 15,
             }}
             icon={iconImagePath}
             theme={{ colors: { primary: options.tintColor } }}

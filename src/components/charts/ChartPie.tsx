@@ -72,8 +72,7 @@ export default class ChartPie extends Chart<ChartPieProps> {
             .attr("class", "legend-category")
             .attr(
                 "transform",
-                // @ts-ignore
-                (d, i) => `translate(0, ${i * (categoryLabelPadding + 12)})`
+                (_d, i) => `translate(0, ${i * (categoryLabelPadding + 12)})`
             );
 
         this.legendCategoryGroups
@@ -84,16 +83,14 @@ export default class ChartPie extends Chart<ChartPieProps> {
             .attr("ry", categoryLabelPadding)
             .style("fill", "transparent")
             .style("stroke-width", 2)
-            // @ts-ignore
-            .style("stroke", (d, i) => categoryColors[i]);
+            .style("stroke", (_d, i) => categoryColors[i]);
 
-        // @ts-ignore
         this.legendCategoryGroups
             .append("text")
             .attr("class", "legend-label")
             .attr("x", categoryLabelPadding + 12)
             .attr("y", categoryLabelPadding / 2 + 6)
-            .text((d) => d)
+            .text((d) => d as any)
             .style("fill", categoryLabelColor)
             .style("font-size", categoryLabelSize);
 
@@ -150,14 +147,12 @@ export default class ChartPie extends Chart<ChartPieProps> {
             legendPosition,
         } = this.props;
 
-        // @ts-ignore
         this.legendCategoryGroups!.select(".legend-label")
             .data(categoryLabels)
-            .text((d) => d);
+            .text((d) => d as any);
 
         let slices = this.pieGroup!.selectAll("path").data(
-            // @ts-ignore
-            this.pie!(categoryPercents)
+            this.pie!(categoryPercents as any)
         );
 
         /*
@@ -175,29 +170,23 @@ export default class ChartPie extends Chart<ChartPieProps> {
         slices = slices
             .enter()
             .append("path")
-            //@ts-ignore
-            .attr("d", this.arc)
-            //@ts-ignore
-            .each((d) => (this.currentAngle = d))
-            .merge(slices)
-            // @ts-ignore
-            .attr("fill", (d: any, i: number) => categoryColors[i]);
+            .attr("d", this.arc as any)
+            .each((d) => (this.currentAngle = d as any))
+            .merge(slices as any)
+            .attr("fill", (_d: any, i: number) => categoryColors[i]) as any;
 
         if (transition) {
-            // @ts-ignore
             slices = slices
                 .transition()
                 .duration(transition)
-                // @ts-ignore
-                .attrTween("d", this._arcTransition);
+                .attrTween("d", this._arcTransition as any) as any;
         } else {
-            // @ts-ignore
-            slices.attr("d", this.arc);
+            slices.attr("d", this.arc as any);
         }
 
-        let percents = this.pieGroup!.selectAll("text")
-            // @ts-ignore
-            .data(this.pie(categoryPercents));
+        let percents = this.pieGroup!.selectAll("text").data(
+            this.pie!(categoryPercents as any)
+        );
 
         /*
         if (transitionIntro){
@@ -213,24 +202,22 @@ export default class ChartPie extends Chart<ChartPieProps> {
             .attr("dy", ".4em")
             .attr("text-anchor", "middle")
             .style("font-size", percentLabelSize + "px")
-            .merge(percents)
-            // @ts-ignore
-            .style("fill", (d, i) => {
+            .merge(percents as any)
+            .style("fill", (_d, i) => {
                 return d3.hsl(categoryColors[i]).l >= 0.5
                     ? percentLabelColorDark
                     : percentLabelColorLight;
             })
-            // @ts-ignore
-            .text((d) => (d.data >= 5 ? `${Math.round(d.data)}%` : ""));
+            .text((d) =>
+                d.data >= 5 ? `${Math.round(d.data as any)}%` : ""
+            ) as any;
 
         if (transition) {
-            // @ts-ignore
-            percents = percents.transition().duration(transition);
+            percents = percents.transition().duration(transition) as any;
         }
         percents.attr(
             "transform",
-            // @ts-ignore
-            (d: d3.DefaultArcObject) => `translate(${this.arc!.centroid(d)})`
+            (d) => `translate(${this.arc!.centroid(d as any)})`
         );
 
         //copied here because I'm lazy

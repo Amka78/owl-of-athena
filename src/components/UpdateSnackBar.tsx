@@ -1,16 +1,21 @@
+//#region Import modules
 import React, { useEffect, FunctionComponent } from "react";
 import { Snackbar } from "react-native-paper";
 import { Message, MessageKeys } from "../constants";
+//#endregion
 
+//#region Export functions
 export const UpdateSnackBar: FunctionComponent = () => {
+    //#region useState
     const [showReload, setShowReload] = React.useState(false);
     const [
         waitingWorker,
         setWaitingWorker,
     ] = React.useState<ServiceWorker | null>(null);
+    //#endregion
 
+    //#region useEffect
     useEffect(() => {
-        // @ts-ignore
         navigator?.serviceWorker
             ?.register("/expo-service-worker.js", {
                 scope: "/",
@@ -23,28 +28,30 @@ export const UpdateSnackBar: FunctionComponent = () => {
                 console.debug(registration);
             })
             .catch((error: any) => {
-                console.log(error);
+                console.error(error);
             });
     }, []);
+    //#endregion
 
-    const reloadPage = (): void => {
-        // @ts-ignore
+    const reloadPageCallback = (): void => {
         waitingWorker?.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
-        // @ts-ignore
         window.location.reload(true);
     };
 
+    //#region components
     return (
         <Snackbar
             visible={showReload}
-            onDismiss={reloadPage}
+            onDismiss={reloadPageCallback}
             action={{
                 label: Message.get(MessageKeys.update_snack_bar_action_label),
-                onPress: reloadPage,
+                onPress: reloadPageCallback,
             }}
         >
             {Message.get(MessageKeys.update_snack_bar_title)}
         </Snackbar>
     );
+    //#endregion
 };
+//#endregion

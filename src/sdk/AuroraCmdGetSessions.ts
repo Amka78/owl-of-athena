@@ -1,6 +1,7 @@
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
 import AuroraSessionReader from "./AuroraSessionReader";
+import { CommandResult, DirectoryInfo } from "./AuroraTypes";
 
 const AuroraCmdGetSessions = async function (
     this: Aurora,
@@ -13,7 +14,7 @@ const AuroraCmdGetSessions = async function (
 
     try {
         console.debug("Start sd-dir-read.");
-        dirReadCmd = await this.queueCmd(
+        dirReadCmd = await this.queueCmd<CommandResult<Array<DirectoryInfo>>>(
             `sd-dir-read sessions ${isFile ? 1 : 0} ${filter ? filter : ""}`,
             connector
         );
@@ -23,8 +24,7 @@ const AuroraCmdGetSessions = async function (
         return [];
     }
 
-    // @ts-ignore
-    const sessionDirs = dirReadCmd.response;
+    const sessionDirs = dirReadCmd.response!;
 
     for (const sessionDir of sessionDirs) {
         let readSessionTxtCmd;
@@ -34,13 +34,12 @@ const AuroraCmdGetSessions = async function (
             if (sessionDir.isFile) continue;
 
             console.debug("Start sd-dir-read command.");
-            const sessionDirReadCmd = await this.queueCmd(
-                `sd-dir-read ${sessionDir.name} 1`
-            );
+            const sessionDirReadCmd = await this.queueCmd<
+                CommandResult<Array<DirectoryInfo>>
+            >(`sd-dir-read ${sessionDir.name} 1`);
             console.debug("Completed sd-dir-read command:", sessionDirReadCmd);
 
-            // @ts-ignore
-            sessionDirFiles = sessionDirReadCmd.response;
+            sessionDirFiles = sessionDirReadCmd.response!;
 
             const sessionTxtFile = sessionDirFiles.find(
                 (file: any): boolean => file.name == "session.txt"

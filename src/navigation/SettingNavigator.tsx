@@ -3,14 +3,14 @@ import { Platform } from "react-native";
 import {
     NavigationParams,
     NavigationRoute,
-    NavigationRouteConfigMap
+    NavigationRouteConfigMap,
     // NavigationScreenConfigProps
 } from "react-navigation";
 import {
     createStackNavigator,
     StackHeaderLeftButtonProps,
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp,
 } from "react-navigation-stack";
 
 import { HeaderBackButton } from "../components";
@@ -30,10 +30,10 @@ const routeConfigMap: NavigationRouteConfigMap<
             headerTitle: Message.get(MessageKeys.account_title),
             headerTitleContainerStyle: {
                 ...CommonStyles.headerTitleContainerStyle,
-                marginLeft: Dimens.content_margin_horizontal
-            }
-        }
-    }
+                marginLeft: Dimens.content_margin_horizontal,
+            },
+        },
+    },
 };
 
 const SettingNavigator = createStackNavigator(routeConfigMap, {
@@ -46,11 +46,11 @@ const SettingNavigator = createStackNavigator(routeConfigMap, {
             headerStyle: CommonStyles.headerStyle,
             headerTintColor: Colors.cyan,
             headerTitleContainerStyle: CommonStyles.headerTitleContainerStyle,
-            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle
+            headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle,
         };
     },
     headerMode: Platform.OS === "web" ? "screen" : "float",
-    initialRouteName: "Account"
+    initialRouteName: "Account",
 });
 
 export default SettingNavigator;

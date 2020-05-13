@@ -6,7 +6,7 @@ import AuroraTransformBinary from "./AuroraTransformBinary";
 import { DataTypes, ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
 
-const AuroraCmdDownloadStream = async function(
+const AuroraCmdDownloadStream = async function (
     this: Aurora,
     srcPath: string,
     destDir: string,
@@ -24,11 +24,14 @@ const AuroraCmdDownloadStream = async function(
             transform = new AuroraTransformBinary(type);
         }
 
-        let writeStream = fs.createWriteStream(path.join(destDir, file));
+        let writeStream:
+            | fs.WriteStream
+            | AuroraTransformBinary = fs.createWriteStream(
+            path.join(destDir, file)
+        );
 
         if (transform) {
             transform.pipe(writeStream);
-            // @ts-ignore
             writeStream = transform;
         }
 

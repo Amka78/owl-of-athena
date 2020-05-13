@@ -22,6 +22,23 @@ import { cacheSettings, updateProfiles } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
+
+type WakeLockSentinel = {
+    addEventListener(
+        event: string,
+        listener: (...args: any[]) => void,
+        opts?: { once: boolean }
+    ): any;
+    release(): void;
+};
+type WakeLock = {
+    request: (target: string) => Promise<WakeLockSentinel>;
+};
+type ExperimentalNavigator = Navigator & {
+    wakeLock: WakeLock;
+};
+declare const navigator: ExperimentalNavigator;
+
 export const HomeScreen: FunctionComponent = () => {
     useCheckLogging();
     const { navigate } = useNavigation();
@@ -33,7 +50,7 @@ export const HomeScreen: FunctionComponent = () => {
     const [errorText, setErrorText] = useState<string>("");
 
     let selectedProfile: AuroraProfile | undefined;
-    const [wakeLock, setWakeLock] = useState<any>();
+    const [wakeLock, setWakeLock] = useState<WakeLockSentinel>();
 
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
@@ -201,23 +218,25 @@ export const HomeScreen: FunctionComponent = () => {
         </StandardView>
     );
 };
+
 function onSleeping(
     setWakeLock: React.Dispatch<any>,
-    navigate
+    navigate: any
 ): (...args: any[]) => void {
-    return () => {
+    return (): void => {
         try {
-            // @ts-ignore
-            navigator.wakeLock.request("screen").then((wakeLockValue: any) => {
-                try {
-                    setWakeLock(wakeLockValue);
-                    wakeLockValue.addEventListener("release", () => {
-                        console.log("Screen Wake Lock was released");
-                    });
-                } catch (error) {
-                    console.error(error);
-                }
-            });
+            navigator.wakeLock
+                .request("screen")
+                .then((wakeLockValue: WakeLockSentinel) => {
+                    try {
+                        setWakeLock(wakeLockValue);
+                        wakeLockValue.addEventListener("release", () => {
+                            console.log("Screen Wake Lock was released");
+                        });
+                    } catch (error) {
+                        console.error(error);
+                    }
+                });
             console.log("Screen Wake Lock is active");
         } catch (err) {
             console.error(`${err.name}, ${err.message}`);

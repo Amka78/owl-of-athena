@@ -1,6 +1,3 @@
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
 import * as d3 from "d3";
@@ -56,8 +53,7 @@ export default class ChartRadialProgress extends Chart<
         this.arcBg = this.graphGroup!.append("path");
 
         this.arcBg
-            // @ts-ignore
-            .attr("d", this.arc.endAngle(2 * Math.PI))
+            .attr("d", this.arc.endAngle(2 * Math.PI) as any)
             .attr("transform", `translate(${outerRadius},${outerRadius})`)
             .attr("fill", bgColor);
 
@@ -91,7 +87,6 @@ export default class ChartRadialProgress extends Chart<
 
         this.arcFg!.transition().attr(
             "d",
-            // @ts-ignore
             this.arc!.endAngle(
                 this.getRadiansFromProgress(
                     startAngle,
@@ -99,7 +94,7 @@ export default class ChartRadialProgress extends Chart<
                     minValue,
                     maxValue
                 )
-            )
+            ) as any
         );
 
         this.label!.text(valueLabel);

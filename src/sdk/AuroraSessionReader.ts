@@ -13,7 +13,7 @@ export default class AuroraSessionReader {
             name: sessionDirName.split("/").pop(),
             auroraDir: sessionDirName,
             content: sessionRaw,
-            streams: []
+            streams: [],
         };
 
         try {
@@ -31,7 +31,7 @@ export default class AuroraSessionReader {
                 new AuroraTransformObject()
             );
 
-            sessionTxtStream.on("data", data => {
+            sessionTxtStream.on("data", (data) => {
                 sessionTxtObject = data;
             });
 
@@ -48,7 +48,7 @@ export default class AuroraSessionReader {
                 for (let i = 0; i < session.streams.length; i++) {
                     const streamFile = sessionDirFilesForCheck.find(
                         // @ts-ignore
-                        file => file.name == session.streams[i].file
+                        (file) => file.name == session.streams[i].file
                     );
 
                     if (

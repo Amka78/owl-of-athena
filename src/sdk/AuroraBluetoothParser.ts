@@ -6,6 +6,7 @@ import {
     EventIdsToNames,
     STREAM_ID_MAX,
     StreamIdsToNames,
+    EventIds,
 } from "./AuroraConstants";
 import { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
@@ -160,7 +161,7 @@ export class AuroraBluetoothParser extends EventEmitter {
             return;
         }
 
-        const eventId = eventBuffer[0];
+        const eventId: EventIds = eventBuffer[0];
 
         if (eventId > EVENT_ID_MAX) {
             this.emit(EventList.parseError, "Invalid event id.");
@@ -169,7 +170,6 @@ export class AuroraBluetoothParser extends EventEmitter {
 
         this.emit(EventList.auroraEvent, {
             eventId,
-            // @ts-ignore
             event: EventIdsToNames[eventId],
             flags: eventBuffer.readUInt32LE(1),
             time: Date.now(),

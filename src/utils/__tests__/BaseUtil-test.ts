@@ -9,7 +9,7 @@ describe("BaseUtil Test", () => {
         ["dev", IWinksRestAPI.dev.url],
         ["staging", IWinksRestAPI.staging.url],
         ["prod", IWinksRestAPI.prod.url],
-        ["xxx", IWinksRestAPI.dev.url]
+        ["xxx", IWinksRestAPI.dev.url],
     ])(
         "Able to obtain the Rest-API server corresponding to the release channel",
         // @ts-ignore
@@ -26,7 +26,7 @@ describe("BaseUtil Test", () => {
         ["prod", IWinksRestAPI.prod.url],
         [undefined, IWinksRestAPI.dev.url],
         ["staging-XXX", IWinksRestAPI.staging.url],
-        ["prod-XXX", IWinksRestAPI.prod.url]
+        ["prod-XXX", IWinksRestAPI.prod.url],
     ])(
         "if the release channel is set dev, connect to the local server.",
         // @ts-ignore

@@ -3,7 +3,7 @@ import { ConnectorTypes } from "./AuroraConstants";
 import { AuroraProfile } from "./AuroraTypes";
 import { Aurora } from "./Aurora";
 
-const AuroraCmdGetProfiles = async function(
+const AuroraCmdGetProfiles = async function (
     this: Aurora,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<unknown> {
@@ -46,14 +46,14 @@ const AuroraCmdGetProfiles = async function(
             const readCmdWithResponse = await this.readFile(
                 `profiles/${profile.name}`,
                 false,
+                false,
                 connectorType
             );
 
             const p = {
                 active: false,
-                // @ts-ignore
                 content: readCmdWithResponse.output,
-                key: "_" + profile.name
+                key: "_" + profile.name,
             };
 
             Object.assign(

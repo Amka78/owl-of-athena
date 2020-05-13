@@ -115,8 +115,17 @@ export type AuroraSessionJson = {
 };
 
 export type FileInfo = {
+    compressedSize?: number;
+    compressionRatio?: number;
     file: string;
     size?: number;
+    crc?: number;
+};
+
+export type DirectoryInfo = {
+    isFile: boolean;
+    name: string;
+    size: number;
 };
 
 export type AuroraStreamJson = {

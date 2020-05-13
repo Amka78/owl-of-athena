@@ -172,7 +172,6 @@ async function executeConfiguring(
                         message: {
                             key:
                                 MessageKeys.aurora_unsynced_sessions_dialog_message,
-                            // @ts-ignore
                             restParam: [unsyncedSessions.length],
                         },
                         onConfirm: async (): Promise<void> => {

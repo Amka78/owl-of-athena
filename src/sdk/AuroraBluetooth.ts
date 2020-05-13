@@ -12,7 +12,7 @@ import {
     DeviceEventList,
 } from "./AuroraConstants";
 import { BluetoothStream, AuroraEvent, CommandResult } from "./AuroraTypes";
-import noble, { Peripheral } from "noble";
+import noble, { Peripheral, Characteristic } from "noble";
 //#endregion
 
 const INIT_DELAY_MS = 5000;
@@ -36,11 +36,12 @@ export class AuroraBluetooth extends EventEmitter {
     private disconnectPending: boolean;
     private bluetoothParser: AuroraBluetoothParser;
     private peripheral?: noble.Peripheral;
-    private characteristicsByUUID?: Dictionary<noble.Characteristic>;
-    private cmdStatusChar?: noble.Characteristic;
-    private cmdDataChar?: noble.Characteristic;
-    private cmdOutputChar?: noble.Characteristic;
+    private characteristicsByUUID?: Dictionary<Characteristic>;
+    private cmdStatusChar?: Characteristic;
+    private cmdDataChar?: Characteristic;
+    private cmdOutputChar?: Characteristic;
     private connectPromise?: any;
+
     private connectTimer?: any;
 
     constructor() {
@@ -126,19 +127,13 @@ export class AuroraBluetooth extends EventEmitter {
 
         try {
             console.log("connectDevice start");
-            // @ts-ignore
-            const [
-                peripheral,
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                service,
-                characteristics,
-            ] = await this.connectDevice(timeoutMs);
+            const result = await this.connectDevice(timeoutMs);
 
             console.log("connectDevice succeed");
-            this.peripheral = peripheral;
+            this.peripheral = result.peripheral;
             this.peripheral!.once("disconnect", this.onPeripheralDisconnect);
 
-            await this.setupConnection(characteristics);
+            await this.setupConnection(result.characteristics);
 
             return this.peripheral;
         } catch (error) {
@@ -148,7 +143,9 @@ export class AuroraBluetooth extends EventEmitter {
         }
     }
 
-    private async setupConnection(characteristics: any): Promise<void> {
+    private async setupConnection(
+        characteristics: Characteristic[]
+    ): Promise<void> {
         this.characteristicsByUUID = keyBy(characteristics, "uuid");
         //these get used a lot, so let's store references
         this.cmdStatusChar = this.characteristicsByUUID[
@@ -198,10 +195,8 @@ export class AuroraBluetooth extends EventEmitter {
             //give scanning a little time to stop
             await sleep(20);
 
-            if (
-                // @ts-ignore
-                this.connectionState !== ConnectionStates.DISCONNECTED
-            ) {
+            // @ts-ignore
+            if (this.connectionState !== ConnectionStates.DISCONNECTED) {
                 return Promise.reject(
                     "Failed to disconnect. Scanning not stopped."
                 );
@@ -224,7 +219,7 @@ export class AuroraBluetooth extends EventEmitter {
         );
     }
 
-    public async writeCmd(cmd: string): Promise<CommandResult<unknown>> {
+    public async writeCmd(cmd: string): Promise<any> {
         //check for error condition
         if (this.connectionState != ConnectionStates.IDLE) {
             switch (this.connectionState) {
@@ -276,7 +271,6 @@ export class AuroraBluetooth extends EventEmitter {
                 //write the actual command string as ascii (max 128bytes)
                 await this.charWrite(
                     this.cmdDataChar!,
-                    // @ts-ignore
                     Buffer.from(cmd, "ascii")
                 );
 
@@ -302,7 +296,7 @@ export class AuroraBluetooth extends EventEmitter {
         });
     }
 
-    public async writeCmdInput(data: Buffer): Promise<void> {
+    public async writeCmdInput(data: Buffer): Promise<any> {
         //check for error condition
         if (this.connectionState != ConnectionStates.BUSY) {
             switch (this.connectionState) {
@@ -346,7 +340,9 @@ export class AuroraBluetooth extends EventEmitter {
         );
     }
 
-    private async connectDevice(timeoutMs: number): Promise<unknown> {
+    private async connectDevice(
+        timeoutMs: number
+    ): Promise<{ peripheral: Peripheral; characteristics: Characteristic[] }> {
         if (this.connectPromise) {
             throw new Error("Already have a pending connection.");
         }
@@ -537,7 +533,7 @@ export class AuroraBluetooth extends EventEmitter {
                     peripheral.discoverSomeServicesAndCharacteristics(
                         [BleAuroraService],
                         Object.values(BleAuroraChars),
-                        (error, services, characteristics) => {
+                        (error, _services, characteristics) => {
                             if (error) {
                                 console.error(error);
                                 return;
@@ -606,7 +602,7 @@ export class AuroraBluetooth extends EventEmitter {
             peripheral.discoverSomeServicesAndCharacteristics(
                 [BleAuroraService],
                 Object.values(BleAuroraChars),
-                (error, services, characteristics) => {
+                (error, _services, characteristics) => {
                     if (error) {
                         return;
                     }
@@ -617,11 +613,10 @@ export class AuroraBluetooth extends EventEmitter {
                         );
                     }
 
-                    this.connectPromise.resolve([
+                    this.connectPromise.resolve({
                         peripheral,
-                        services[0],
                         characteristics,
-                    ]);
+                    });
                     this.connectPromise = undefined;
 
                     noble.stopScanning();

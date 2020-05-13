@@ -1,3 +1,4 @@
+//#region "Import Modules"
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Message, MessageKeys, Colors, Fonts } from "../constants";
@@ -6,6 +7,7 @@ import { Dialog, RadioButton } from "react-native-paper";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { FlatButton } from "./FlatButton";
 import { Audio } from "expo-av";
+////#endregion
 type AudioDialogSettings = {
     onConfirm: (showName: AudioList, fileName: string) => void;
     onDissmiss?: () => void;
@@ -30,7 +32,7 @@ export enum AudioList {
     CREATION = "Creation",
     EPIC = "Epic",
     GREEN_GARDEN = "Green Garden",
-    SINGING_BIRDS = "Singing Birds"
+    SINGING_BIRDS = "Singing Birds",
 }
 
 export class AudioDialog extends React.Component<{}, AudioDialogState> {
@@ -42,7 +44,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
         { showName: AudioList.CREATION, fileName: "creation.m4a" },
         { showName: AudioList.EPIC, fileName: "epic.m4a" },
         { showName: AudioList.GREEN_GARDEN, fileName: "green_garden.m4a" },
-        { showName: AudioList.SINGING_BIRDS, fileName: "singing_birds.m4a" }
+        { showName: AudioList.SINGING_BIRDS, fileName: "singing_birds.m4a" },
     ];
 
     private sound = new Audio.Sound();
@@ -60,7 +62,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
         AudioDialog.Instance!.setState({
             dialogSettings: args,
             selectedFileName: foundAudio!.fileName!,
-            selectedShowName: foundAudio!.showName
+            selectedShowName: foundAudio!.showName,
         });
     }
 
@@ -69,7 +71,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
         this.state = {
             dialogSettings: undefined,
             selectedShowName: AudioList.NONE,
-            selectedFileName: ""
+            selectedFileName: "",
         };
     }
 
@@ -78,7 +80,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
         this.setState({
             dialogSettings: undefined,
             selectedShowName: AudioList.NONE,
-            selectedFileName: ""
+            selectedFileName: "",
         });
     }
 
@@ -151,7 +153,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
             const selectedSound = this.findAudio(value);
             this.setState({
                 selectedShowName: selectedSound!.showName,
-                selectedFileName: selectedSound!.fileName
+                selectedFileName: selectedSound!.fileName,
             });
         };
     }
@@ -225,14 +227,14 @@ const style = StyleSheet.create({
     audioRadioButtonList: {
         flex: 1,
         alignItems: "flex-start",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     dialogContainer: {
-        backgroundColor: Colors.navy_darker
+        backgroundColor: Colors.navy_darker,
     },
     dialogTitle: {
         color: Colors.cyan,
-        fontFamily: Fonts.primarySemiBold
+        fontFamily: Fonts.primarySemiBold,
     },
-    dialogButton: { color: Colors.cyan }
+    dialogButton: { color: Colors.cyan },
 });

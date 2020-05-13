@@ -1,6 +1,3 @@
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import React from "react";
 import PropTypes from "prop-types";
 import Chart, { ChartProps } from "./Chart";
 import moment from "moment";
@@ -60,8 +57,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         const chartCenter = this.getChartHeight() / 2;
 
-        // @ts-ignore
-        this.enableBrush(null, [chartCenter - 25, chartCenter]);
+        this.enableBrush(null as any, [chartCenter - 25, chartCenter] as any);
 
         this.brushGroup!.select(".selection").attr("stroke", "none");
     }
@@ -100,7 +96,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .enter()
             .append("line")
             .attr("class", "event-tick")
-            .merge(eventTicks)
+            .merge(eventTicks as any)
             .attr("stroke", (d) => d.tickColor || eventTickColor)
             .attr("stroke-width", (d) => d.tickWidth || eventTickWidth)
             .styles(this.props.eventTickStyle)
@@ -112,7 +108,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .enter()
             .append("text")
             .attr("class", "event-label")
-            .merge(eventLabels)
+            .merge(eventLabels as any)
             .attr("fill", (d) => d.labelColor || eventLabelColor)
             .attr("font-size", (d) => d.labelSize || eventLabelSize)
             .styles(this.props.eventLabelStyle)
@@ -132,7 +128,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .enter()
             .append("use")
             .attr("class", "event-icon")
-            .merge(eventIcons)
+            .merge(eventIcons as any)
             .attr("width", (d) => d.iconSize || eventIconSize)
             .attr("height", (d) => d.iconSize || eventIconSize)
             .attr("fill", (d) => d.iconColor || eventIconColor)
@@ -205,7 +201,6 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         const labelPosition = d.labelPosition || eventLabelPosition;
 
         const props = {
-            // @ts-ignore
             "text-anchor": ChartTimeline.labelPositions[labelPosition],
             x: this.scaleX!(d.date),
             y: tickSize,
@@ -280,7 +275,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         eventIconSize: 36,
     };
 
-    static labelPositions = {
+    static labelPositions: { [stringIndex: string]: any } = {
         left: "end",
         center: "middle",
         right: "start",

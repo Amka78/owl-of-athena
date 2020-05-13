@@ -1,12 +1,12 @@
 import { promisifyStream } from "./util";
-import * as _ from "lodash";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
-import { CommandResult } from "./AuroraTypes";
+import { CommandResult, FileInfo } from "./AuroraTypes";
 import Stream from "stream";
 import { Aurora } from "./Aurora";
 import { HeatshrinkDecoder } from "heatshrink-ts";
 
+type ReadCommandResult = CommandResult<FileInfo> & { output: string };
 const COMMAND_COMPRESSION_WINDOW_SIZE = 8;
 const COMMAND_COMPRESSION_LOOKAHEAD_SIZE = 4;
 const AuroraCmdReadFile = async function (
@@ -15,7 +15,7 @@ const AuroraCmdReadFile = async function (
     writeStream: boolean,
     compress: boolean,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): Promise<unknown> {
+): Promise<ReadCommandResult> {
     console.debug("start AuroraCmdReadFile.");
     console.debug("srcPath:", srcPath);
     console.debug("writeStream:", writeStream);
@@ -28,11 +28,10 @@ const AuroraCmdReadFile = async function (
     let crc: any;
     let stream: Stream.Readable | undefined;
 
-    return await this.queueCmd(
+    return await this.queueCmd<ReadCommandResult>(
         `sd-file-read ${srcFileName} ${srcFileDir} ${compress ? "1" : "0"}`,
         connectorType,
-        // @ts-ignore
-        (cmd: CommandResult<unknown>) => {
+        (cmd: ReadCommandResult) => {
             cmd.outputStream!.on("data", (chunk) => {
                 //crc = crc32.unsigned(chunk, crc);
                 crc = crc32.unsigned(chunk);
@@ -48,10 +47,10 @@ const AuroraCmdReadFile = async function (
                 outputChunks.push(chunk);
             });
         }
-    ).then((cmdWithResponse: any) => {
+    ).then((cmdWithResponse: ReadCommandResult) => {
         return promisifyStream(stream!).then(() => {
             console.debug("Calculated Crc:", crc);
-            console.debug("Aurora crc:", cmdWithResponse.response.crc);
+            console.debug("Aurora crc:", cmdWithResponse.response!.crc);
             /*if (cmdWithResponse.response.crc != crc)
                 return Promise.reject("CRC failed.");*/
 
@@ -69,7 +68,6 @@ const AuroraCmdReadFile = async function (
 
                 decoder.process(new Uint8Array(compressedArray));
 
-                // @ts-ignore
                 const textDecoder = new TextDecoder();
                 cmdWithResponse.output = textDecoder.decode(
                     decoder.getOutput()

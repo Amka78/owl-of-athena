@@ -343,7 +343,6 @@ export class AuroraManager extends EventEmitter {
 
     private onEvent(event: AuroraEvent): void {
         console.debug("Aurora Event: %s", event.eventId);
-        // @ts-ignore
         console.debug("Aurora Event Name:", EventIdsToNames[event.eventId]);
 
         switch (event.eventId) {
