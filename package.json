@@ -3,12 +3,14 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
+    "build": "expo build:web",
     "ios": "expo start --ios",
     "web": "expo start:web --no-https",
     "eject": "expo eject",
     "tsc": "tsc",
     "lint": "tslint --fix './**/*.ts{,x}'",
     "test": "jest",
+    "upload": "npx netlify deploy --dir web-build",
     "coverage": "jest --coverage",
     "clean-install": "rm -rf node_modules && npm cache clean --force && npm install",
     "ncu": "npm-check-updates -u && npm install"
