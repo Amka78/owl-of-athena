@@ -179,4 +179,7 @@ export default {
 
     [MessageKeys.delete_dialog_message]:
         "本当に削除しても宜しいですか?　この処理は戻せません。",
+
+    [MessageKeys.top_tab_sleep_tracking_title]: "スリープトラッキング",
+    [MessageKeys.top_tab_journal_title]: "ジャーナル",
 };

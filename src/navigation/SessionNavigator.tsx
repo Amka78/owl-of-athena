@@ -15,8 +15,9 @@ import {
 import { IconButton } from "react-native-paper";
 import { HeaderBackButton } from "../components";
 import { Dimens, Message, MessageKeys, Colors } from "../constants";
-import { SessionListScreen, SessionScreen } from "../screens";
+import { SessionListScreen } from "../screens";
 import { CommonStyles } from "../styles";
+import SessionTabNavigator from "./SessionTabNavigator";
 const routeConfigMap: NavigationRouteConfigMap<
     NavigationStackOptions,
     NavigationStackProp<NavigationRoute<NavigationParams>, any>
@@ -72,7 +73,7 @@ const routeConfigMap: NavigationRouteConfigMap<
     },
     Detail: {
         path: "",
-        screen: SessionScreen,
+        screen: SessionTabNavigator,
         navigationOptions: ({ navigation }): any => {
             const { params } = navigation.state;
             return {

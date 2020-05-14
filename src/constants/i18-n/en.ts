@@ -185,4 +185,8 @@ export default {
 
     [MessageKeys.delete_dialog_message]:
         "Are you sure you want to delete this session? This action cannot be undone.",
+
+    [MessageKeys.top_tab_sleep_tracking_title]: "SLEEP TRACKING",
+
+    [MessageKeys.top_tab_journal_title]: "JOURNAL",
 };

@@ -8,17 +8,17 @@ export default StyleSheet.create({
         flex: 1,
         left: 0,
         top: 0,
-        width: Layout.window.width
+        width: Layout.window.width,
     },
     centeredColumnList: {
         alignItems: "center",
         flex: 1,
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
     },
     centeredContent: {
         alignItems: "center",
         flex: 1,
-        justifyContent: "center"
+        justifyContent: "center",
     },
     standardView: {
         alignItems: "center",
@@ -26,11 +26,11 @@ export default StyleSheet.create({
         marginLeft: Dimens.content_margin_horizontal,
         marginRight: Dimens.content_margin_horizontal,
         flex: 1,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     footerButton: {
         alignItems: "center",
-        paddingBottom: 4
+        paddingBottom: 4,
     },
     form: {
         borderColor: "white",
@@ -39,20 +39,20 @@ export default StyleSheet.create({
         justifyContent: "center",
         left: 10,
         position: "absolute",
-        right: 10
+        right: 10,
     },
     headerStyle: {
-        backgroundColor: Colors.navy
+        backgroundColor: Colors.navy,
     },
     headerTitleContainerStyle: {
         alignContent: "center",
         borderColor: Colors.blue,
         borderBottomWidth: 3,
         justifyContent: "center",
-        marginRight: Dimens.content_margin_horizontal
+        marginRight: Dimens.content_margin_horizontal,
     },
     headerLeftContainerStyle: {
-        width: Dimens.content_margin_horizontal
+        width: Dimens.content_margin_horizontal,
     },
     input: {
         borderBottomWidth: 1,
@@ -60,10 +60,10 @@ export default StyleSheet.create({
         borderWidth: 0,
         height: 40,
         marginLeft: 25,
-        width: "85%"
+        width: "85%",
     },
     rootContainer: {
         backgroundColor: Colors.navy,
-        flex: 1
-    }
+        flex: 1,
+    },
 });
