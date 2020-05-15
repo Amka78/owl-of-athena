@@ -13,10 +13,10 @@ import {
     FlatButton,
     LabeledRadioButton,
     StandardView,
-    TextBox
+    TextBox,
 } from "../components";
 import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
-import { MessageKeys } from "../constants";
+import { MessageKeys, Message } from "../constants";
 
 export const AccountScreen: FunctionComponent = () => {
     useCheckLogging();
@@ -58,7 +58,7 @@ export const AccountScreen: FunctionComponent = () => {
         birthday: birthDay.toJSON().split("T")[0],
         first_name: firstName,
         last_name: lastName,
-        gender: male
+        gender: male,
     });
 
     return (
@@ -82,11 +82,12 @@ export const AccountScreen: FunctionComponent = () => {
                 ></TextBox>
             </View>
             <DatePicker
+                format={Message.get(MessageKeys.date_format)}
                 onChange={(date: Date): void => {
                     setBirthDay(date);
                 }}
                 selected={birthDay}
-                label={"account_input_birthday"}
+                label={{ key: "account_input_birthday" }}
             ></DatePicker>
             <View style={{ flex: 1 }}></View>
             <RadioButton.Group
@@ -100,7 +101,7 @@ export const AccountScreen: FunctionComponent = () => {
                         flex: 1,
                         flexDirection: "row",
                         alignContent: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                     }}
                 >
                     <LabeledRadioButton

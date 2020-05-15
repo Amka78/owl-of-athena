@@ -8,16 +8,14 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
     props: DatePickerProps
 ) => {
     return (
-        <View>
-            <TextBox
-                onFocus={() => {
-                    console.log(props);
-                    DatePickerAndroid.open({
-                        date: new Date(),
-                        mode: "calendar"
-                    });
-                }}
-            ></TextBox>
-        </View>
+        <TextBox
+            onFocus={() => {
+                console.log(props);
+                DatePickerAndroid.open({
+                    date: new Date(),
+                    mode: "calendar",
+                });
+            }}
+        ></TextBox>
     );
 };
