@@ -199,4 +199,7 @@ export const MessageKeys = {
     top_tab_sleep_tracking_title: "top_tab_sleep_tracking_title",
     top_tab_journal_title: "top_tab_journal_title",
     //#endregion
+
+    //#region date format
+    date_format: "date_format",
 };

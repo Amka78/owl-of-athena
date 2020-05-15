@@ -182,4 +182,6 @@ export default {
 
     [MessageKeys.top_tab_sleep_tracking_title]: "スリープトラッキング",
     [MessageKeys.top_tab_journal_title]: "ジャーナル",
+
+    [MessageKeys.date_format]: "YYYY年MM月DD日  ",
 };

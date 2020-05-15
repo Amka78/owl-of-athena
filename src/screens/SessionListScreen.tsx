@@ -318,7 +318,9 @@ export const SessionListScreen: FunctionComponent = () => {
                                 )}
                                 titleStyle={{ color: Colors.white }}
                                 title={sessionAt.format("dddd")}
-                                description={sessionAt.format("MM,DD,YYYY")}
+                                description={sessionAt.format(
+                                    Message.get(MessageKeys.date_format)
+                                )}
                                 descriptionStyle={{ color: Colors.gray }}
                                 style={{
                                     width: Layout.window.fixedWidth,
@@ -358,7 +360,11 @@ export const SessionListScreen: FunctionComponent = () => {
                                             sessionIndex: index,
                                             sessionTitle: moment(
                                                 value.sessionAt
-                                            ).format("MM.DD.YYYY"),
+                                            ).format(
+                                                Message.get(
+                                                    MessageKeys.date_format
+                                                )
+                                            ),
                                         });
                                     };
                                     asyncFunction();

@@ -189,4 +189,6 @@ export default {
     [MessageKeys.top_tab_sleep_tracking_title]: "SLEEP TRACKING",
 
     [MessageKeys.top_tab_journal_title]: "JOURNAL",
+
+    [MessageKeys.date_format]: "MM,DD,YYYY",
 };
