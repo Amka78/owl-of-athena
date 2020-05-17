@@ -25,7 +25,7 @@
     "d3-selection-multi": "^1.0.1",
     "drivelist": "^8.0.10",
     "eject-media": "0.0.3",
-    "expo": "^37.0.10",
+    "expo": "^37.0.0",
     "expo-av": "~8.1.0",
     "expo-localization": "~8.1.0",
     "flat": "^5.0.0",
@@ -88,12 +88,12 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "expo-react-native-adapter": "^3.0.1",
-    "jest": "26.0.1",
+    "jest": "25.3.0",
     "jest-enzyme": "^7.1.2",
     "jest-expo": "^37.0.0",
     "prettier": "^2.0.5",
     "react-native-debugger": "^1.1.0",
-    "ts-jest": "26.0.0",
+    "ts-jest": "25.4.0",
     "typescript": "^3.9.2"
   },
   "jest": {
