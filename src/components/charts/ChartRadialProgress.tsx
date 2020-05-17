@@ -4,16 +4,16 @@ import * as d3 from "d3";
 import { Colors } from "../../constants";
 
 export type ChartRadialProgressProps = ChartProps & {
-    startAngle: number;
+    startAngle?: number;
     bgColor: string;
     fgColor: string;
-    valueLabelColor: string;
-    valueLabelSize: number;
-    outerRadius: number;
-    innerRadius: number;
+    valueLabelColor?: string;
+    valueLabelSize?: number;
+    outerRadius?: number;
+    innerRadius?: number;
     value: number;
-    minValue: number;
-    maxValue: number;
+    minValue?: number;
+    maxValue?: number;
     valueLabel: string;
 };
 
@@ -38,7 +38,7 @@ export default class ChartRadialProgress extends Chart<
 
         const outerRadius = this.props.outerRadius
             ? this.props.outerRadius
-            : width / 2;
+            : width! / 2;
         const innerRadius = this.props.innerRadius
             ? this.props.innerRadius
             : outerRadius - 2;
@@ -46,7 +46,7 @@ export default class ChartRadialProgress extends Chart<
         this.arc = d3.arc();
 
         this.arc
-            .startAngle(this.getRadiansFromDegrees(startAngle))
+            .startAngle(this.getRadiansFromDegrees(startAngle!))
             .innerRadius(innerRadius)
             .outerRadius(outerRadius);
 
@@ -68,8 +68,8 @@ export default class ChartRadialProgress extends Chart<
             .attr("y", outerRadius)
             .attr("text-anchor", "middle")
             .attr("dominant-baseline", "middle")
-            .style("fill", valueLabelColor)
-            .style("font-size", valueLabelSize);
+            .style("fill", valueLabelColor!)
+            .style("font-size", valueLabelSize!);
 
         this.updateChart();
     }
@@ -89,10 +89,10 @@ export default class ChartRadialProgress extends Chart<
             "d",
             this.arc!.endAngle(
                 this.getRadiansFromProgress(
-                    startAngle,
+                    startAngle!,
                     value,
-                    minValue,
-                    maxValue
+                    minValue!,
+                    maxValue!
                 )
             ) as any
         );

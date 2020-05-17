@@ -20,7 +20,7 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
         height,
         scaleXDomain,
         isFilterEnabled,
-        sessionDetail
+        sessionDetail,
     } = props;
     const chartSleepHeight = height - 100;
     const chartMovementHeight = height - chartSleepHeight;

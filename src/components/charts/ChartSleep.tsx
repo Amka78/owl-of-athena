@@ -126,17 +126,17 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             (_d, i) => ChartSleep.sleepStageColors[i]
         );
 
-        this.horizontalDividerTop!.attr("stroke", axisXColor)
+        this.horizontalDividerTop!.attr("stroke", axisXColor!)
             .attr("x1", 0)
             .attr("x2", chartWidth)
             .attr("y1", 0)
             .attr("y2", 0);
 
-        this.horizontalDividerBottom!.attr("stroke", axisXColor)
+        this.horizontalDividerBottom!.attr("stroke", axisXColor!)
             .attr("x1", 0)
             .attr("x2", chartWidth)
-            .attr("y1", chartHeight - axisMargin.bottom)
-            .attr("y2", chartHeight - axisMargin.bottom);
+            .attr("y1", chartHeight - axisMargin!.bottom)
+            .attr("y2", chartHeight - axisMargin!.bottom);
     }
 
     updateChart(): void {
@@ -152,13 +152,13 @@ export default class ChartSleep extends Chart<ChartSleepProps> {
             sleep.unshift(
                 Object.assign({}, sleep[0], {
                     time: 0,
-                    eventAt: scaleXDomain[0],
+                    eventAt: scaleXDomain![0],
                 })
             );
             sleep.push(
                 Object.assign({}, sleep[sleep.length - 1], {
-                    eventAt: scaleXDomain[1],
-                    time: scaleXDomain[1] - scaleXDomain[0],
+                    eventAt: scaleXDomain![1],
+                    time: scaleXDomain![1] - scaleXDomain![0],
                 })
             );
         }

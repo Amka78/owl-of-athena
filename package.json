@@ -88,12 +88,12 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.2",
     "expo-react-native-adapter": "^3.0.1",
-    "jest": "^26.0.1",
+    "jest": "26.0.1",
     "jest-enzyme": "^7.1.2",
     "jest-expo": "^37.0.0",
     "prettier": "^2.0.5",
     "react-native-debugger": "^1.1.0",
-    "ts-jest": "^25.5.1",
+    "ts-jest": "26.0.0",
     "typescript": "^3.9.2"
   },
   "jest": {

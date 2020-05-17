@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import sortBy from "lodash/sortBy";
 import * as d3 from "d3";
 import PropTypes from "prop-types";
@@ -13,32 +13,32 @@ export type Margin = {
 
 export type ChartProps = {
     containerStyle?: ViewStyle;
-    margin: Margin;
-    transition: number;
-    clipToRange: boolean;
+    margin?: Margin;
+    transition?: number;
+    clipToRange?: boolean;
     title?: string;
-    titleSize: number;
-    titleColor: string;
-    axisMargin: Margin;
-    axisXEnabled: boolean;
-    axisYEnabled: boolean;
-    axisXColor: string;
-    axisXLabelSize: number;
-    axisXLabelColor: string;
-    axisXLabelPadding: number;
-    axisYLabelSize: number;
-    axisYColor: string;
-    axisYLabelColor: string;
-    axisYLabelPadding: number;
-    scaleXDomain: (any | number | Date | { valueOf(): number })[];
-    scaleYDomain: (any | number | Date | { valueOf(): number })[];
+    titleSize?: number;
+    titleColor?: string;
+    axisMargin?: Margin;
+    axisXEnabled?: boolean;
+    axisYEnabled?: boolean;
+    axisXColor?: string;
+    axisXLabelSize?: number;
+    axisXLabelColor?: string;
+    axisXLabelPadding?: number;
+    axisYLabelSize?: number;
+    axisYColor?: string;
+    axisYLabelColor?: string;
+    axisYLabelPadding?: number;
+    scaleXDomain?: (any | number | Date | { valueOf(): number })[];
+    scaleYDomain?: (any | number | Date | { valueOf(): number })[];
     data?: any;
-    dataBins: number[];
-    dataBinThreshold: number;
-    width: number;
-    height: number;
-    zoomX: number;
-    zoomY: number;
+    dataBins?: number[];
+    dataBinThreshold?: number;
+    width?: number;
+    height?: number;
+    zoomX?: number;
+    zoomY?: number;
     [stringIndex: string]: any;
 };
 
@@ -82,10 +82,10 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         const style = Object.assign(
             {},
             {
-                marginLeft: this.props.margin.left,
-                marginRight: this.props.margin.right,
-                marginTop: this.props.margin.top,
-                marginBottom: this.props.margin.bottom,
+                marginLeft: this.props.margin?.left,
+                marginRight: this.props.margin?.right,
+                marginTop: this.props.margin?.top,
+                marginBottom: this.props.margin?.bottom,
             },
             this.props.containerStyle
         );
@@ -97,7 +97,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
                 }}
                 width={this.getChartWidth()}
                 height={this.getChartHeight()}
-                style={style}
+                style={style as CSSProperties}
             >
                 {this.props.children}
             </svg>
@@ -155,9 +155,9 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         }
 
         this.title!.attr("x", this.getChartWidth() / 2)
-            .attr("y", margin.top)
-            .attr("font-size", titleSize)
-            .attr("fill", titleColor)
+            .attr("y", margin!.top)
+            .attr("font-size", titleSize!)
+            .attr("fill", titleColor!)
             .text(title!);
     }
 
@@ -177,10 +177,10 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     enableBrush(extentX: number, extentY: number): void {
         this.brush = d3.brushX();
 
-        const extentStart: [number, number] = [this.props.axisMargin.left, 0];
+        const extentStart: [number, number] = [this.props.axisMargin!.left, 0];
         const extentStop: [number, number] = [
-            this.getChartWidth() - this.props.axisMargin.right,
-            this.getChartHeight() - this.props.axisMargin.bottom,
+            this.getChartWidth() - this.props.axisMargin!.right,
+            this.getChartHeight() - this.props.axisMargin!.bottom,
         ];
 
         if (Array.isArray(extentX)) {
@@ -229,12 +229,14 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         const { axisXEnabled, axisYEnabled } = this.props;
 
         if (axisXEnabled) {
+            // @ts-ignore
             this.axisX = xAxis ? xAxis : d3.axisBottom(this.scaleX!);
 
             this.axisGroupX = this.svg!.append("g");
         }
 
         if (axisYEnabled) {
+            // @ts-ignore
             this.axisY = yAxis ? yAxis : d3.axisLeft(this.scaleY!);
 
             this.axisGroupY = this.svg!.append("g");
@@ -259,35 +261,35 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         if (axisXEnabled) {
             this.axisGroupX!.call(this.axisX!);
 
-            this.axisGroupX!.selectAll("line").attr("stroke", axisXColor);
+            this.axisGroupX!.selectAll("line").attr("stroke", axisXColor!);
 
-            this.axisGroupX!.select("path").attr("stroke", axisXColor);
+            this.axisGroupX!.select("path").attr("stroke", axisXColor!);
 
             this.axisGroupX!.attr(
                 "transform",
-                `translate(0,${this.getChartHeight() - axisMargin.bottom})`
+                `translate(0,${this.getChartHeight() - axisMargin!.bottom})`
             )
                 .selectAll("text")
-                .attr("font-size", axisXLabelSize)
-                .attr("fill", axisXLabelColor)
+                .attr("font-size", axisXLabelSize!)
+                .attr("fill", axisXLabelColor!)
                 .attr("transform", `translate(0, ${axisXLabelPadding})`);
         }
 
         if (axisYEnabled) {
             this.axisGroupY!.call(this.axisY!);
 
-            this.axisGroupY!.selectAll("line").attr("stroke", axisYColor);
+            this.axisGroupY!.selectAll("line").attr("stroke", axisYColor!);
 
-            this.axisGroupY!.select("path").attr("stroke", axisYColor);
+            this.axisGroupY!.select("path").attr("stroke", axisYColor!);
 
             this.axisGroupY!.attr(
                 "transform",
-                `translate(${axisMargin.left}, 0)`
+                `translate(${axisMargin!.left}, 0)`
             )
                 .selectAll("text")
                 .attr("dy", ".3em")
-                .attr("font-size", axisYLabelSize)
-                .attr("fill", axisYLabelColor)
+                .attr("font-size", axisYLabelSize!)
+                .attr("fill", axisYLabelColor!)
                 .attr("transform", `translate(-${axisYLabelPadding}, 0)`);
         }
     }
@@ -299,12 +301,12 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         this.scaleY!.range(this.getChartRangeY()).nice();
 
-        if (scaleXDomain.length == 2) {
-            this.scaleX!.domain(scaleXDomain);
+        if (scaleXDomain?.length == 2) {
+            this.scaleX!.domain(scaleXDomain!);
         }
 
-        if (scaleYDomain.length == 2) {
-            this.scaleY!.domain(scaleYDomain);
+        if (scaleYDomain?.length == 2) {
+            this.scaleY!.domain(scaleYDomain!);
         }
     }
 
@@ -335,20 +337,23 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     }
 
     getCurrentBin(): number {
-        const { scaleXDomain, dataBins, dataBinThreshold } = this.props;
+        const { scaleXDomain, dataBins } = this.props;
 
-        if (!dataBins.length) return 0;
+        const dataBinThreshold = this.props.dataBinThreshold!;
 
-        const minutesVisible = (scaleXDomain[1] - scaleXDomain[0]) / 1000 / 60;
+        if (!dataBins?.length) return 0;
 
-        if (minutesVisible < dataBinThreshold) return 0;
+        const minutesVisible =
+            (scaleXDomain![1] - scaleXDomain![0]) / 1000 / 60;
+
+        if (minutesVisible < dataBinThreshold!) return 0;
 
         if (dataBins.length == 1) return dataBins[0];
 
         const bins = sortBy(dataBins);
 
         for (let i = 1; i < bins.length; i++) {
-            if (minutesVisible / bins[i] < dataBinThreshold) {
+            if (minutesVisible / bins[i] < dataBinThreshold!) {
                 return bins[i - 1];
             }
         }
@@ -358,27 +363,31 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
     getChartWidth(): number {
         return (
-            this.props.width - this.props.margin.left - this.props.margin.right
+            this.props.width! -
+            this.props.margin!.left -
+            this.props.margin!.right
         );
     }
 
     getChartHeight(): number {
         return (
-            this.props.height - this.props.margin.top - this.props.margin.bottom
+            this.props.height! -
+            this.props.margin!.top -
+            this.props.margin!.bottom
         );
     }
 
     getChartRangeX(): number[] {
         return [
-            this.props.axisMargin.left,
-            this.getChartWidth() - this.props.axisMargin.right,
+            this.props.axisMargin!.left,
+            this.getChartWidth() - this.props.axisMargin!.right,
         ];
     }
 
     getChartRangeY(): number[] {
         return [
-            this.getChartHeight() - this.props.axisMargin.bottom,
-            this.props.axisMargin.top,
+            this.getChartHeight() - this.props.axisMargin!.bottom,
+            this.props.axisMargin!.top,
         ];
     }
 

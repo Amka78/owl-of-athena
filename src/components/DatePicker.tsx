@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { DatePickerAndroid, View } from "react-native";
+import { DatePickerAndroid } from "react-native";
 
 import { TextBox } from "./TextBox";
 import { DatePickerProps } from "./DatePickerProps";
@@ -9,7 +9,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
 ) => {
     return (
         <TextBox
-            onFocus={() => {
+            onFocus={(): void => {
                 console.log(props);
                 DatePickerAndroid.open({
                     date: new Date(),
