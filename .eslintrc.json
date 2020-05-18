@@ -2,16 +2,15 @@
     "env": {
         "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "jest": true,
+        "serviceworker": true
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
         "plugin:prettier/recommended",
         "prettier",
-        "prettier/@typescript-eslint",
         "prettier/react"
     ],
     "globals": {
@@ -20,7 +19,7 @@
         "require": false,
         "module": false
     },
-    "parser": "@typescript-eslint/parser",
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -31,21 +30,36 @@
     "plugins": [
         "react",
         "prettier",
-        "@typescript-eslint",
         "react-hooks"
     ],
     "rules": {
         "prettier/prettier": ["error", { "tabWidth" : 4, "useTab": false }],
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/interface-name-prefix": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/camelcase": "off",
-        "@typescript-eslint/ban-ts-ignore": "off",
-        "@typescript-eslint/no-explicit-any": "off",
         "react/display-name": [0, { "ignoreTranspilerName": true }],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
     },
+    "overrides": [
+        {
+          "files": ["*.ts",".tsx"],
+          "extends": [
+              "plugin:@typescript-eslint/eslint-recommended",
+              "plugin:@typescript-eslint/recommended",
+              "prettier/@typescript-eslint"
+          ],
+          "plugins": [
+              "@typescript-eslint"
+          ],
+          "parser": "@typescript-eslint/parser",
+          "rules": {
+              "@typescript-eslint/no-use-before-define": "off",
+              "@typescript-eslint/interface-name-prefix": "off",
+              "@typescript-eslint/no-non-null-assertion": "off",
+              "@typescript-eslint/camelcase": "off",
+              "@typescript-eslint/ban-ts-ignore": "off",
+              "@typescript-eslint/no-explicit-any": "off"
+          }
+        }
+      ],
     "settings": {
         "react": {
             "createClass": "createReactClass", // Regex for Component Factory to use,
