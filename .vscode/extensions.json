@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+      "joelday.docthis",
+      "dsznajder.es7-react-js-snippets",
+      "oderwat.indent-rainbow",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "orta.vscode-jest",
+    ]
+  }
+  
