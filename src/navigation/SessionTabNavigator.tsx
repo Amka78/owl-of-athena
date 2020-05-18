@@ -3,14 +3,13 @@ import {
     NavigationParams,
     NavigationRoute,
     NavigationRouteConfigMap,
-    NavigationTabRouterConfig,
 } from "react-navigation";
 import {
     createMaterialTopTabNavigator,
     NavigationMaterialTabOptions,
     NavigationTabProp,
 } from "react-navigation-tabs";
-import { Colors, Message, MessageKeys, Layout } from "../constants";
+import { Colors, Message, MessageKeys } from "../constants";
 import { SessionScreen, SessionNotesScreen } from "../screens";
 //#endregion
 
