@@ -1,3 +1,4 @@
+//#region Import modules
 import React, { FunctionComponent, useEffect, useState } from "react";
 import { View } from "react-native";
 import { MainContainer } from "../navigation";
@@ -11,11 +12,10 @@ import { NavigationState } from "react-navigation";
 import { cacheSessions } from "../actions";
 import { useSessionListSelector, useUserSelector } from "../hooks";
 import { useDispatch } from "react-redux";
-import {
-    AuroraRestClientInstance,
-    SessionRestClientInstance,
-} from "../clients";
+import { SessionRestClientInstance } from "../clients";
 import { AuroraManagerEventList } from "../managers/AuroraManager";
+import { onConnectionChange } from "../service/MainScreenService";
+////#endregion
 export const MainScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
@@ -40,29 +40,20 @@ export const MainScreen: FunctionComponent = () => {
         };
         f();
 
+        const onConnectionChangeHandler = (
+            connectionState: ConnectionStates
+        ): void => {
+            onConnectionChange(connectionState, connect, setConnect);
+        };
         AuroraManagerInstance.on(
             AuroraManagerEventList.onConnectionChange,
-            (connectionState: ConnectionStates) => {
-                if (
-                    connectionState === ConnectionStates.CONNECTED ||
-                    connectionState === ConnectionStates.IDLE ||
-                    connectionState === ConnectionStates.DISCONNECTED
-                )
-                    if (
-                        connect === ConnectionStates.DISCONNECTED &&
-                        connectionState === ConnectionStates.IDLE
-                    ) {
-                        setConnect(ConnectionStates.CONNECTED);
-                    } else {
-                        setConnect(connectionState);
-                    }
-            }
+            onConnectionChangeHandler
         );
         const cleanup = (): void => {
             unmounted = true;
         };
         return cleanup();
-    }, [dispatch, sessionList, userInfo]);
+    }, [connect, dispatch, sessionList, userInfo]);
     return (
         <View style={{ flex: 1 }}>
             <MainContainer
