@@ -10,13 +10,13 @@ import { LoadingDialog } from "../components";
 
 export const useLogin = (
     login: Login
-): { loading: boolean; onPress: () => Promise<void>; generalError: string } => {
+): { onPress: () => Promise<void>; generalError: string } => {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
     const onPress = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: { key: MessageKeys.login_loading_message }
+            dialogTitle: { key: MessageKeys.login_loading_message },
         });
         try {
             console.debug("useLogin start", login);

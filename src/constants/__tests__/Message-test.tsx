@@ -24,7 +24,7 @@ describe("Message Test", () => {
         expect(embedMessage).toBe("testは必須入力です。");
 
         embedMessage = Message.get(Message.get(MessageKeys.required), [
-            MessageKeys.account_signout
+            MessageKeys.account_signout,
         ]);
         expect(embedMessage).toBe("サインアウトは必須入力です。");
         Message.setLocale("en-US");

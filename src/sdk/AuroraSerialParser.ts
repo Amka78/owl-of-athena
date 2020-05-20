@@ -1,10 +1,11 @@
-import EventEmitter from "events";
+import { EventEmitter } from "events";
 import {
     LogNamesToTypeIds,
     STREAM_ID_MAX,
     EVENT_ID_MAX,
     StreamIdsToNames,
-    EventIdsToNames
+    EventIdsToNames,
+    EventIds,
 } from "./AuroraConstants";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import moment from "moment";
@@ -16,9 +17,8 @@ enum CmdStates {
     CMD_RESPONSE = 2,
     CMD_OUTPUT = 3,
     CMD_INPUT = 4,
-    CMD_ERROR = 5
+    CMD_ERROR = 5,
 }
-
 export default class AuroraSerialParser extends EventEmitter {
     private cmdResponseParser: AuroraCmdResponseParser;
     private cmdWatchdogTimer?: NodeJS.Timeout;
@@ -201,7 +201,7 @@ export default class AuroraSerialParser extends EventEmitter {
                 if (match) {
                     this.cmd = {
                         command: match[1],
-                        error: false
+                        error: false,
                     };
 
                     this.cmdState = CmdStates.CMD_HEADER;
@@ -304,7 +304,7 @@ export default class AuroraSerialParser extends EventEmitter {
         this.cmd!.error = true;
         this.cmd!.response = {
             error: -64,
-            message
+            message,
         };
 
         this.emit("cmdResponse", this.cmd);
@@ -326,7 +326,7 @@ export default class AuroraSerialParser extends EventEmitter {
                     typeId: LogNamesToTypeIds[logParts[1].toUpperCase()],
                     type: logParts[1].toUpperCase(),
                     time: +moment(logParts[2], "HH:mm:ss.SSS", true),
-                    message: logParts[3]
+                    message: logParts[3],
                 });
 
                 return;
@@ -342,9 +342,9 @@ export default class AuroraSerialParser extends EventEmitter {
                 if (!isNaN(eventId) && eventId <= EVENT_ID_MAX) {
                     this.emit("auroraEvent", {
                         eventId,
-                        event: EventIdsToNames[eventId],
+                        event: EventIdsToNames[eventId as EventIds],
                         flags: +eventParts[2],
-                        time: Date.now()
+                        time: Date.now(),
                     });
 
                     return;
@@ -361,7 +361,7 @@ export default class AuroraSerialParser extends EventEmitter {
                         streamId,
                         stream: StreamIdsToNames[streamId],
                         data: dataParts[3].split(",").map(Number),
-                        time: Date.now()
+                        time: Date.now(),
                     });
 
                     return;

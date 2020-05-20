@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 export const useTextBox = (
     initialValue: string
@@ -12,6 +12,6 @@ export const useTextBox = (
     return {
         onChangeText,
         set,
-        value
+        value,
     };
 };

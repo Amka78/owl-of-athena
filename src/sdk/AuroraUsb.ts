@@ -10,7 +10,7 @@ const DISCONNECT_RETRY_DELAY_MS = 3000;
 export class AuroraUsb extends EventEmitter {
     // @ts-ignore
     static discoverAuroraPorts(): Promise<any[]> {
-        return promisify(SerialPort.list, SerialPort)().then(ports => {
+        return promisify(SerialPort.list, SerialPort)().then((ports) => {
             const auroraPorts = [];
 
             // @ts-ignore
@@ -243,7 +243,7 @@ export class AuroraUsb extends EventEmitter {
                 }
             };
 
-            this.serialParser.once("cmdResponse", cmdResponse => {
+            this.serialParser.once("cmdResponse", (cmdResponse) => {
                 this.removeListener("connectionStateChange", onDisconnect);
 
                 if (
@@ -264,7 +264,7 @@ export class AuroraUsb extends EventEmitter {
 
             cmd = cmd.trim() + "\r";
 
-            this.write(cmd).catch(error => {
+            this.write(cmd).catch((error) => {
                 this.serialParser.removeAllListeners("cmdResponse");
                 this.removeListener("connectionStateChange", onDisconnect);
 
@@ -358,11 +358,11 @@ export class AuroraUsb extends EventEmitter {
         port: string
     ): Promise<SerialPort | string> {
         return new Promise((resolve, reject) => {
-            const serialPort = new SerialPort(port, error => {
+            const serialPort = new SerialPort(port, (error) => {
                 if (error) return reject(error);
 
                 //flush any bytes in buffer that haven't been read
-                serialPort.flush(error => {
+                serialPort.flush((error) => {
                     if (error) return reject(error);
 
                     if (this.disconnectPending)
@@ -378,10 +378,10 @@ export class AuroraUsb extends EventEmitter {
 
     private async write(data: string | number[]): Promise<string | number[]> {
         return new Promise((resolve, reject) => {
-            this.serialPort!.write(data, writeError => {
+            this.serialPort!.write(data, (writeError) => {
                 if (writeError) return reject(writeError);
 
-                this.serialPort!.drain(drainError => {
+                this.serialPort!.drain((drainError) => {
                     if (drainError) return reject(drainError);
 
                     resolve(data);
