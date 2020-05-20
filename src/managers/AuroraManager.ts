@@ -5,6 +5,7 @@ import {
     AuroraProfile,
     CommandResult,
     AuroraSessionJson,
+    DirectoryInfo,
 } from "../sdk/AuroraTypes";
 import { AuroraEventList } from "../sdk/Aurora";
 import {
@@ -235,13 +236,13 @@ export class AuroraManager extends EventEmitter {
 
             const dirName = sessionFileInfo.file.replace("/session.txt", "");
             console.debug("Start reading session.");
-            const sessionDirReadCmd = await AuroraInstance.queueCmd(
-                `sd-dir-read ${dirName} 1`
-            );
+            const sessionDirReadCmd = await AuroraInstance.queueCmd<
+                CommandResult<Array<DirectoryInfo>>
+            >(`sd-dir-read ${dirName} 1`);
             const session = await AuroraSessionReader.read(
                 dirName,
                 result.output,
-                sessionDirReadCmd.response as any
+                sessionDirReadCmd.response
             );
             readSessionContent.set(sessions[0].file, session);
         }

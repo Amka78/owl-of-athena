@@ -3,11 +3,12 @@ import AuroraSessionParser from "./AuroraSessionParser";
 import moment from "moment";
 import stream from "stream";
 import { promisifyStream } from "./util";
+import { DirectoryInfo } from "./AuroraTypes";
 export default class AuroraSessionReader {
     public static async read(
         sessionDirName: string,
         sessionRaw: string,
-        sessionDirFilesForCheck?: any
+        sessionDirFilesForCheck?: Array<DirectoryInfo>
     ): Promise<any> {
         const session = {
             name: sessionDirName.split("/").pop(),
