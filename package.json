@@ -20,6 +20,7 @@
     "@expo/vector-icons": "^10.0.0",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "art": "^0.10.3",
+    "babel-eslint": "^10.1.0",
     "binary-parser": "github:iwinks/binary-parser",
     "d3": "^5.16.0",
     "d3-selection-multi": "^1.0.1",
