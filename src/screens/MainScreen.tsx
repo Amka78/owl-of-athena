@@ -1,21 +1,23 @@
 //#region Import modules
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
-import { MainContainer } from "../navigation";
-import { FlatButton, LoadingDialog, ConfirmDialog } from "../components";
+import { NavigationState } from "react-navigation";
+import { useNavigation } from "react-navigation-hooks";
+import { useDispatch } from "react-redux";
+
+import { cacheSessions } from "../actions";
+import { SessionRestClientInstance } from "../clients";
+import { ConfirmDialog, FlatButton, LoadingDialog } from "../components";
 import { Colors, MessageKeys } from "../constants";
+import { useSessionListSelector, useUserSelector } from "../hooks";
 import { AuroraManagerInstance } from "../managers";
+import { AuroraManagerEventList } from "../managers/AuroraManager";
+import { MainContainer } from "../navigation";
 import { ConnectionStates } from "../sdk";
 import { AuroraOSInfo, AuroraSession } from "../sdk/models";
-import { useNavigation } from "react-navigation-hooks";
-import { NavigationState } from "react-navigation";
-import { cacheSessions } from "../actions";
-import { useSessionListSelector, useUserSelector } from "../hooks";
-import { useDispatch } from "react-redux";
-import { SessionRestClientInstance } from "../clients";
-import { AuroraManagerEventList } from "../managers/AuroraManager";
 import { onConnectionChange } from "../service/MainScreenService";
-////#endregion
+//#endregion
+
 export const MainScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
@@ -25,6 +27,12 @@ export const MainScreen: FunctionComponent = () => {
         ConnectionStates.DISCONNECTED
     );
     const [error, setError] = useState<string>("");
+    const onConnectionChangeEventHandler = useRef(
+        (connectionState: ConnectionStates): void => {
+            console.debug("Called onConnectionChangeHandler");
+            onConnectionChange(connectionState, connect, setConnect);
+        }
+    );
 
     useEffect(() => {
         let unmounted = false;
@@ -40,15 +48,6 @@ export const MainScreen: FunctionComponent = () => {
         };
         f();
 
-        const onConnectionChangeHandler = (
-            connectionState: ConnectionStates
-        ): void => {
-            onConnectionChange(connectionState, connect, setConnect);
-        };
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onConnectionChange,
-            onConnectionChangeHandler
-        );
         const cleanup = (): void => {
             unmounted = true;
         };
@@ -100,6 +99,20 @@ export const MainScreen: FunctionComponent = () => {
                                 sessionList.unshift(...pushedSessionList);
 
                                 dispatch(cacheSessions(sessionList));
+                            },
+                            () => {
+                                setConnect(ConnectionStates.CONNECTED);
+                                AuroraManagerInstance.on(
+                                    AuroraManagerEventList.onConnectionChange,
+                                    onConnectionChangeEventHandler.current
+                                );
+                            },
+                            () => {
+                                AuroraManagerInstance.off(
+                                    AuroraManagerEventList.onConnectionChange,
+                                    onConnectionChangeEventHandler.current
+                                );
+                                setConnect(ConnectionStates.DISCONNECTED);
                             }
                         );
                     } catch (e) {
@@ -122,15 +135,16 @@ export const MainScreen: FunctionComponent = () => {
 
 async function executeConfiguring(
     connectStatus: ConnectionStates,
-    pushedSessionCallback: (sessionList: Array<AuroraSession>) => void
+    pushedSessionCallback: (sessionList: Array<AuroraSession>) => void,
+    connectedCallback: () => void,
+    disconnectedCallback: () => void
 ): Promise<void> {
     let result = undefined;
 
     try {
         if (connectStatus === ConnectionStates.CONNECTING) {
             result = (await AuroraManagerInstance.connect()) as AuroraOSInfo;
-
-            console.debug("Aurora connected result:", result);
+            connectedCallback();
 
             if (result.batteryLevel < 25) {
                 ConfirmDialog.show({
@@ -188,6 +202,8 @@ async function executeConfiguring(
             }
         } else {
             result = await AuroraManagerInstance.disconnect();
+
+            disconnectedCallback();
         }
         console.debug("Succeed configuring aurora.", result);
     } catch (e) {

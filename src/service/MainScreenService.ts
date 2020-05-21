@@ -1,7 +1,5 @@
-import {
-    ConnectionStates,
-    ConnectionStatesToNames,
-} from "../sdk/AuroraConstants";
+import { ConnectionStates } from "../sdk/AuroraConstants";
+
 /**
  * Processing of Aurora connection change.
  *
@@ -15,18 +13,12 @@ export function onConnectionChange(
     currentConnectionState: ConnectionStates,
     setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>
 ): void {
-    console.debug(
-        `currenctConnectionState:${ConnectionStatesToNames[currentConnectionState]}`
-    );
     if (
         currentConnectionState === ConnectionStates.DISCONNECTED &&
         followingConnectionState === ConnectionStates.IDLE
     ) {
         setConnect(ConnectionStates.CONNECTED);
-    } else if (
-        currentConnectionState === ConnectionStates.CONNECTED &&
-        followingConnectionState === ConnectionStates.DISCONNECTED
-    ) {
+    } else if (followingConnectionState === ConnectionStates.DISCONNECTED) {
         setConnect(ConnectionStates.DISCONNECTED);
     }
 }
