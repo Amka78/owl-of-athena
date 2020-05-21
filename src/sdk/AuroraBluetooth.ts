@@ -1,18 +1,19 @@
 //#region Import modules
 import { EventEmitter } from "events";
 import { Dictionary, keyBy } from "lodash";
-import { sleep, promisify } from "./util";
+import noble, { Characteristic, Peripheral } from "noble";
+
 import { AuroraBluetoothParser } from "./AuroraBluetoothParser";
 import {
+    BLE_CMD_MAX_PACKET_LENGTH,
     BleAuroraChars,
     BleAuroraService,
-    BLE_CMD_MAX_PACKET_LENGTH,
     BleCmdStates,
     ConnectionStates,
     DeviceEventList,
 } from "./AuroraConstants";
-import { BluetoothStream, AuroraEvent, CommandResult } from "./AuroraTypes";
-import noble, { Peripheral, Characteristic } from "noble";
+import { AuroraEvent, BluetoothStream, CommandResult } from "./AuroraTypes";
+import { promisify, sleep } from "./util";
 //#endregion
 
 const INIT_DELAY_MS = 5000;
@@ -137,6 +138,7 @@ export class AuroraBluetooth extends EventEmitter {
 
             return this.peripheral;
         } catch (error) {
+            console.error(`Occured connection error ${error}`);
             this.setConnectionState(ConnectionStates.DISCONNECTED);
 
             return Promise.reject(error);
@@ -214,6 +216,7 @@ export class AuroraBluetooth extends EventEmitter {
         return promisify(this.peripheral!.disconnect, this.peripheral!)().then(
             () => {
                 //in case disconnected event hasn't fired yet, we fire it here
+                console.debug("failed connection.");
                 this.setConnectionState(ConnectionStates.DISCONNECTED);
             }
         );
@@ -511,6 +514,7 @@ export class AuroraBluetooth extends EventEmitter {
         console.debug("onPeripheralDisconnect called.");
 
         if (this.disconnectPending || !this.reconnect(this.peripheral!)) {
+            console.debug("Called peripheral disconnect.");
             this.setConnectionState(ConnectionStates.DISCONNECTED);
         }
     };

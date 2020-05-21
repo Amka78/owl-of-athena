@@ -1,38 +1,39 @@
-import { AuroraUsb } from "./AuroraUsb";
-import { AuroraBluetooth } from "./AuroraBluetooth";
 import DriveList from "drivelist";
 import ejectMedia from "eject-media";
-import * as AuroraConstants from "./AuroraConstants";
 import { EventEmitter } from "events";
-import Stream from "stream";
-import { sleep, promisify, versionToString, stringToVersion } from "./util";
-//import usbDetect from "usb-detection";
-import {
-    AuroraResponse,
-    CommandResult,
-    Command,
-    CommandResolverType,
-    EventResponse,
-} from "./AuroraTypes";
-import { AuroraEvent } from "../model/AuroraEvent";
-import { isDesktop } from "./Platform";
-import AuroraCmdPlayLedEffect from "./AuroraCmdPlayLedEffect";
-import AuroraCmdWriteFile from "./AuroraCmdWriteFile";
-import AuroraCmdSyncTime from "./AuroraCmdSyncTime";
-import AuroraCmdGetSessions from "./AuroraCmdGetSessions";
-import { AuroraOSInfo } from "./models/AuroraOSInfo";
-import { Event } from "./models/Event";
 import _ from "lodash";
-import AuroraCmdReadFile from "./AuroraCmdReadFile";
+import Stream from "stream";
+
+import { AuroraEvent } from "../model/AuroraEvent";
+import { AuroraBluetooth } from "./AuroraBluetooth";
 import AuroraCmdDownloadFile from "./AuroraCmdDownloadFile";
 import AuroraCmdDownloadStream from "./AuroraCmdDownloadStream";
-import AuroraCmdGetProfiles from "./AuroraCmdGetProfiles";
-import AuroraCmdSetProfiles from "./AuroraCmdSetProfiles";
-import AuroraCmdFlashFile from "./AuroraCmdFlashFile";
-import AuroraCmdPlayBuzzSong from "./AuroraCmdPlayBuzzSong";
-import AuroraCmdUploadFile from "./AuroraCmdWriteFile";
 import AuroraCmdFileInfo from "./AuroraCmdFileInfo";
+import AuroraCmdFlashFile from "./AuroraCmdFlashFile";
+import AuroraCmdGetProfiles from "./AuroraCmdGetProfiles";
+import AuroraCmdGetSessions from "./AuroraCmdGetSessions";
 import AuroraCmdGetUnSyncedSessions from "./AuroraCmdGetUnsyncedSessions";
+import AuroraCmdPlayBuzzSong from "./AuroraCmdPlayBuzzSong";
+import AuroraCmdPlayLedEffect from "./AuroraCmdPlayLedEffect";
+import AuroraCmdReadFile from "./AuroraCmdReadFile";
+import AuroraCmdSetProfiles from "./AuroraCmdSetProfiles";
+import AuroraCmdSyncTime from "./AuroraCmdSyncTime";
+import AuroraCmdUploadFile from "./AuroraCmdUploadFile";
+import AuroraCmdWriteFile from "./AuroraCmdWriteFile";
+import * as AuroraConstants from "./AuroraConstants";
+import {
+    Command,
+    CommandResolverType,
+    CommandResult,
+    EventResponse,
+} from "./AuroraTypes";
+import { AuroraUsb } from "./AuroraUsb";
+import { AuroraOSInfo } from "./models/AuroraOSInfo";
+import { Event } from "./models/Event";
+import { isDesktop } from "./Platform";
+import { promisify, sleep, stringToVersion, versionToString } from "./util";
+
+//import usbDetect from "usb-detection";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
 const MSD_SCAN_RETRY_DELAY_MS = 2000;
 const MSD_CONNECT_DELAY_SEC = 30;
@@ -771,10 +772,13 @@ class Aurora extends EventEmitter {
         if (isDesktop) {
             this.unwatchUsb();
 
+            // @ts-ignore
             usbDetect.on(
                 `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
                 this.onAuroraUsbAttached
             );
+
+            // @ts-ignore
             usbDetect.on(
                 `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
                 this.onAuroraUsbDetached
@@ -797,6 +801,7 @@ class Aurora extends EventEmitter {
         }
     };
 
+    // @ts-ignore
     private onAuroraUsbAttached = async (device: {
         productId: number;
     }): Promise<void> => {
@@ -824,6 +829,7 @@ class Aurora extends EventEmitter {
         }
     };
 
+    // @ts-ignore
     private msdSetAttached = (msdDrive: boolean): void => {
         if (!this.msdDrive && msdDrive) {
             this.msdAttaching = false;

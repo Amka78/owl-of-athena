@@ -1,7 +1,9 @@
+//#region Import modules
 import Constants from "expo-constants";
 
 import { BaseUrl } from "../";
 import { IWinksRestAPI } from "../BaseUrl";
+//#endregion
 
 describe("BaseUtil Test", () => {
     it.each([

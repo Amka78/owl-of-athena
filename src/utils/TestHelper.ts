@@ -1,17 +1,14 @@
+import "../components";
+
 import { shallow, ShallowWrapper } from "enzyme";
 import toJson from "enzyme-to-json";
 import {
     GestureResponderEvent,
     NativeSyntheticEvent,
-    TextInputEndEditingEventData
+    TextInputEndEditingEventData,
 } from "react-native";
-
 import { NavigationScreenProp } from "react-navigation";
-import //ButtonProps
-/*IHeaderSearchBarProps,
-    IListItemProps,
-    ITextBoxProps*/
-"../components";
+
 import { ButtonProps } from "../components/Button";
 
 // @ts-ignore
