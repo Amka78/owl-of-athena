@@ -244,7 +244,7 @@ export class AuroraManager extends EventEmitter {
                 result.output,
                 sessionDirReadCmd.response
             );
-            readSessionContent.set(sessions[0].file, session);
+            readSessionContent.set(sessionFileInfo.file, session);
         }
 
         return readSessionContent;
