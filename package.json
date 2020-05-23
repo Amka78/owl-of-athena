@@ -11,6 +11,8 @@
     "lint": "tslint --fix './**/*.ts{,x}'",
     "test": "jest",
     "upload": "npx netlify deploy --dir web-build",
+    "upload-nightly": "npx netlify deploy --dir web-build --site=6cae492d-4f2c-474f-8a5c-5a3aa1da2d45 --prod",
+    "upload-staging": "npx netlify deploy --dir web-build --site=0f596f14-3130-4b11-9bc8-61fa84cce680 --prod",
     "upload-prod": "npx netlify deploy --dir web-build --prod",
     "coverage": "jest --coverage",
     "clean-install": "rm -rf node_modules && npm cache clean --force && npm install",
