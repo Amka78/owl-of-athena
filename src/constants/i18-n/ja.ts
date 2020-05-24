@@ -34,7 +34,8 @@ export default {
     [MessageKeys.input_password_confirm]: input_password_confirm,
     [MessageKeys.input_birthday]: input_birthday,
     // aurora strings
-    [MessageKeys.aurora_connected]: "Aurora接続中.",
+    [MessageKeys.aurora_connected]:
+        "Aurora:接続中 バージョン:{0} バッテリー{1}%",
     [MessageKeys.aurora_disconnected]: "Aurora切断済み.",
     [MessageKeys.aurora_unsynced_sessions_dialog_title]:
         "同期されていないセッションを見つけました。",

@@ -31,6 +31,7 @@ export enum AuroraManagerEventList {
     onWaking = "onWaking",
     onAwake = "onAwake",
     onPushedSession = "onPushedSession",
+    onBatteryChange = "onBatteryChange",
 }
 export class AuroraManager extends EventEmitter {
     private connected: boolean;
@@ -347,6 +348,10 @@ export class AuroraManager extends EventEmitter {
         switch (event.eventId) {
             case EventIds.BATTERY_MONITOR: {
                 AuroraManagerInstance.batteryLevel = event.flags;
+                AuroraManagerInstance.emit(
+                    AuroraManagerEventList.onBatteryChange,
+                    AuroraManagerInstance.batteryLevel
+                );
                 break;
             }
             case EventIds.BUTTON_MONITOR: {

@@ -35,7 +35,8 @@ export default {
     [MessageKeys.input_password_confirm]: input_password_confirm,
     [MessageKeys.input_birthday]: input_birthday,
     // aurora strings
-    [MessageKeys.aurora_connected]: "Aurora connected.",
+    [MessageKeys.aurora_connected]:
+        "AuroraStatus:Connected Version:{0} Battery:{1}%",
     [MessageKeys.aurora_disconnected]: "Aurora disconnected.",
     [MessageKeys.aurora_unsynced_sessions_dialog_title]:
         "Unsynced Sessions Found",

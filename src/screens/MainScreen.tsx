@@ -26,11 +26,18 @@ export const MainScreen: FunctionComponent = () => {
     const [connect, setConnect] = useState<ConnectionStates>(
         ConnectionStates.DISCONNECTED
     );
+    const [batteryLevel, setBatteryLevel] = useState<number>(0);
     const [error, setError] = useState<string>("");
+    const firmwareVersion = useRef<string>("");
     const onConnectionChangeEventHandler = useRef(
         (connectionState: ConnectionStates): void => {
             console.debug("Called onConnectionChangeHandler");
             onConnectionChange(connectionState, connect, setConnect);
+        }
+    );
+    const onBatteryLevelChangeEventHandler = useRef(
+        (batteryLevel: number): void => {
+            setBatteryLevel(batteryLevel);
         }
     );
 
@@ -100,17 +107,27 @@ export const MainScreen: FunctionComponent = () => {
 
                                 dispatch(cacheSessions(sessionList));
                             },
-                            () => {
+                            (osInfo: AuroraOSInfo) => {
                                 setConnect(ConnectionStates.CONNECTED);
+                                firmwareVersion.current = osInfo.version.toString();
+                                setBatteryLevel(osInfo.batteryLevel);
                                 AuroraManagerInstance.on(
                                     AuroraManagerEventList.onConnectionChange,
                                     onConnectionChangeEventHandler.current
+                                );
+                                AuroraManagerInstance.on(
+                                    AuroraManagerEventList.onBatteryChange,
+                                    onBatteryLevelChangeEventHandler.current
                                 );
                             },
                             () => {
                                 AuroraManagerInstance.off(
                                     AuroraManagerEventList.onConnectionChange,
                                     onConnectionChangeEventHandler.current
+                                );
+                                AuroraManagerInstance.off(
+                                    AuroraManagerEventList.onBatteryChange,
+                                    onBatteryLevelChangeEventHandler.current
                                 );
                                 setConnect(ConnectionStates.DISCONNECTED);
                             }
@@ -126,7 +143,13 @@ export const MainScreen: FunctionComponent = () => {
                 {error !== ""
                     ? { key: error }
                     : connect === ConnectionStates.CONNECTED
-                    ? { key: MessageKeys.aurora_connected }
+                    ? {
+                          key: MessageKeys.aurora_connected,
+                          restParam: [
+                              firmwareVersion.current?.toString(),
+                              batteryLevel,
+                          ],
+                      }
                     : { key: MessageKeys.aurora_disconnected }}
             </FlatButton>
         </View>
@@ -136,7 +159,7 @@ export const MainScreen: FunctionComponent = () => {
 async function executeConfiguring(
     connectStatus: ConnectionStates,
     pushedSessionCallback: (sessionList: Array<AuroraSession>) => void,
-    connectedCallback: () => void,
+    connectedCallback: (osInfo: AuroraOSInfo) => void,
     disconnectedCallback: () => void
 ): Promise<void> {
     let result = undefined;
@@ -144,7 +167,7 @@ async function executeConfiguring(
     try {
         if (connectStatus === ConnectionStates.CONNECTING) {
             result = (await AuroraManagerInstance.connect()) as AuroraOSInfo;
-            connectedCallback();
+            connectedCallback(result);
 
             if (result.batteryLevel < 25) {
                 ConfirmDialog.show({
