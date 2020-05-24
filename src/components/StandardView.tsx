@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
+
 import { CommonStyles } from "../styles";
 
 type StandardViewProps = {
