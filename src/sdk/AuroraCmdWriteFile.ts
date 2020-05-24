@@ -1,10 +1,11 @@
-import Stream from "stream";
 import crc32 from "buffer-crc32";
+import Stream from "stream";
+
 import { ConnectorTypes } from "./AuroraConstants";
-import { CommandResult, WriteFileResponse } from "./AuroraTypes";
+import { CommandResult, FileInfo } from "./AuroraTypes";
 
 const checkCrcSupportedOSVersion = 30000;
-const AuroraCmdUploadFile = async function(
+const AuroraCmdUploadFile = async function (
     this: any,
     destPath: string,
     dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
@@ -12,7 +13,7 @@ const AuroraCmdUploadFile = async function(
     rename = false,
     osVersion = 3000,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
-): Promise<unknown> {
+): Promise<CommandResult<FileInfo>> {
     //const destPathSegments = destPath.split("/");
 
     /*const destFileName = destPathSegments.pop();
@@ -41,7 +42,7 @@ const AuroraCmdUploadFile = async function(
     }
 
     stream.pause();
-    stream.on("data", chunk => {
+    stream.on("data", (chunk) => {
         //crc = crc32.unsigned(chunk);
         // @ts-ignore
         crc = crc32.unsigned(chunk);
