@@ -1,26 +1,28 @@
-import { AuroraInstance, SleepStates } from "../sdk";
 import { EventEmitter } from "events";
-import { AuroraOSInfo, Profile, Settings } from "../sdk/models";
-import {
-    AuroraProfile,
-    CommandResult,
-    AuroraSessionJson,
-    DirectoryInfo,
-} from "../sdk/AuroraTypes";
+import { Audio } from "expo-av";
+
+import { AuroraManagerInstance } from ".";
+import { SessionRestClientInstance } from "../clients";
+import { AuroraInstance, SleepStates } from "../sdk";
 import { AuroraEventList } from "../sdk/Aurora";
 import {
-    EventIds,
     CommandNames,
+    ConnectionStates,
+    EventIds,
     EventIdsToNames,
     SleepStatesToNames,
-    ConnectionStates,
 } from "../sdk/AuroraConstants";
-import { Audio } from "expo-av";
-import { AuroraSession } from "../sdk/models";
-import { AuroraManagerInstance } from ".";
-import { AuroraEvent, FileInfo } from "../sdk/AuroraTypes";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-import { SessionRestClientInstance } from "../clients";
+import {
+    AuroraEvent,
+    AuroraProfile,
+    AuroraSessionJson,
+    CommandResult,
+    DirectoryInfo,
+    FileInfo,
+} from "../sdk/AuroraTypes";
+import { AuroraOSInfo, AuroraSession, Profile, Settings } from "../sdk/models";
+
 export enum AuroraManagerEventList {
     onConnectionChange = "onConnectionChange",
     onSleepStateChange = "onSleepStateChnage",
@@ -37,6 +39,7 @@ export class AuroraManager extends EventEmitter {
     private batteryLevel: number;
     private alarmSound: Audio.Sound;
     private remStimSound: Audio.Sound;
+    private currentProfile?: string;
     constructor() {
         super();
         this.connected = false;
@@ -123,26 +126,20 @@ export class AuroraManager extends EventEmitter {
                     require(`../../assets/audio/${settings.remStimAudioPath}`)
                 );
             }
-            console.debug("Start write files.");
-            await AuroraInstance.writeFile(
+            const writeFileResult = await AuroraInstance.writeFile(
                 "profiles/default.prof",
                 writingProfile.raw,
                 true,
                 this.osInfo!.version
             );
-            console.debug("Completed write files.");
 
-            console.debug("Start prop unload.");
-            await AuroraInstance.queueCmd<CommandResult<undefined>>(
-                "prof-unload"
-            );
-            console.debug("Completed prof unload.");
+            await AuroraInstance.queueCmd("prof-unload");
 
-            console.debug("Start prof load.");
-            await AuroraInstance.queueCmd<CommandResult<undefined>>(
-                "prof-load default.prof"
+            this.currentProfile = writeFileResult.response?.file.replace(
+                "profiles/",
+                ""
             );
-            console.debug("Completed prop load.");
+            await AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`);
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
             console.log(e);
@@ -308,7 +305,9 @@ export class AuroraManager extends EventEmitter {
                 //all we really need to is restart profile
                 //since the events will get resubscribed to below
                 //and backup alarm should still be running
-                await AuroraInstance.queueCmd("prof-load default.prof");
+                await AuroraInstance.queueCmd(
+                    `prof-load ${this.currentProfile!}`
+                );
             } else {
                 //TODO: make sure backup alarm is still running?
                 //aurora
@@ -321,25 +320,24 @@ export class AuroraManager extends EventEmitter {
 
         //enable the events we need, even though we might
         //already be subscribed
+        const enableEventList = this.createEventList();
+        await AuroraInstance.enableEvents(enableEventList);
+
+        //good as time as any to make sure clock is still in sync with device timeurora
+        await AuroraInstance.syncTime();
+
+        await AuroraInstance.queueCmd("log-level-display");
+        await AuroraInstance.queueCmd("log-output-display");
+    }
+
+    private createEventList(): Array<EventIds> {
         const enableEventList = new Array<EventIds>();
         enableEventList.push(EventIds.BUTTON_MONITOR);
         enableEventList.push(EventIds.BATTERY_MONITOR);
         enableEventList.push(EventIds.SMART_ALARM);
         enableEventList.push(EventIds.CLOCK_ALARM_FIRE);
         enableEventList.push(EventIds.STIM_PRESENTED);
-        console.debug("Execute enable events command.");
-        const enableEventConmmandResult = await AuroraInstance.enableEvents(
-            enableEventList
-        );
-        console.debug(
-            "Completed enable events command:",
-            enableEventConmmandResult
-        );
-
-        console.debug("Execute sync time command.");
-        //good as time as any to make sure clock is still in sync with device timeurora
-        const syncTimeResult = await AuroraInstance.syncTime();
-        console.debug("Completed sync time command:", syncTimeResult);
+        return enableEventList;
     }
 
     private onEvent(event: AuroraEvent): void {
