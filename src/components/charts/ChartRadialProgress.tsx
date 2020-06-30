@@ -1,9 +1,14 @@
-import PropTypes from "prop-types";
-import Chart, { ChartProps } from "./Chart";
+//#region Import modules
 import * as d3 from "d3";
-import { Colors } from "../../constants";
+import React, { FC } from "react";
+import { Path, Text } from "react-native-svg";
 
-export type ChartRadialProgressProps = ChartProps & {
+import { Colors } from "../../constants";
+import { ChartCore, ChartCoreProps } from "./ChartCore";
+//#endregion
+
+//#region Export Types
+export type ChartRadialProgressProps = ChartCoreProps & {
     startAngle?: number;
     bgColor: string;
     fgColor: string;
@@ -16,149 +21,86 @@ export type ChartRadialProgressProps = ChartProps & {
     maxValue?: number;
     valueLabel: string;
 };
+//#endregion
 
-export default class ChartRadialProgress extends Chart<
-    ChartRadialProgressProps
-> {
-    private arc?: d3.Arc<any, d3.DefaultArcObject>;
-    private arcBg?: d3.Selection<any, unknown, null, undefined>;
-    private arcFg?: d3.Selection<any, unknown, null, undefined>;
-    private label?: d3.Selection<any, unknown, null, undefined>;
-    buildChart(): void {
-        super.buildChart();
+export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
+    props: ChartRadialProgressProps
+) => {
+    const valueLabelColor = props.valueLabelColor
+        ? props.valueLabelColor
+        : Colors.white;
 
-        const {
-            width,
-            startAngle,
-            bgColor,
-            fgColor,
-            valueLabelColor,
-            valueLabelSize,
-        } = this.props;
+    const valueLabelSize = props.valueLabelSize ? props.valueLabelSize : 12;
 
-        const outerRadius = this.props.outerRadius
-            ? this.props.outerRadius
-            : width! / 2;
-        const innerRadius = this.props.innerRadius
-            ? this.props.innerRadius
-            : outerRadius - 2;
+    const minValue = props.minValue ? props.minValue : 0;
 
-        this.arc = d3.arc();
+    const maxValue = props.maxValue ? props.maxValue : 100;
 
-        this.arc
-            .startAngle(this.getRadiansFromDegrees(startAngle!))
-            .innerRadius(innerRadius)
-            .outerRadius(outerRadius);
+    const startAngle = props.startAngle ? props.startAngle : 0;
 
-        this.arcBg = this.graphGroup!.append("path");
+    const outerRadius = props.outerRadius ? props.outerRadius : props.width / 2;
+    const innerRadius = props.innerRadius ? props.innerRadius : outerRadius - 2;
 
-        this.arcBg
-            .attr("d", this.arc.endAngle(2 * Math.PI) as any)
-            .attr("transform", `translate(${outerRadius},${outerRadius})`)
-            .attr("fill", bgColor);
+    const arc = d3.arc();
 
-        this.arcFg = this.graphGroup!.append("path");
+    arc.startAngle(getRadiansFromDegrees(startAngle))
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius);
 
-        this.arcFg
-            .attr("transform", `translate(${outerRadius},${outerRadius})`)
-            .style("fill", fgColor);
+    return (
+        <ChartCore {...props}>
+            <Path
+                // @ts-ignore
+                d={arc.endAngle(2 * Math.PI)()}
+                transform={`translate(${outerRadius}, ${outerRadius})`}
+                stroke={props.bgColor}
+            ></Path>
+            <Text
+                x={outerRadius}
+                y={outerRadius}
+                alignmentBaseline={"middle"}
+                textAnchor={"middle"}
+                fill={valueLabelColor}
+                fontSize={valueLabelSize}
+            >
+                {props.valueLabel}
+            </Text>
+            <Path
+                //@ts-ignore
+                d={arc.endAngle(
+                    getRadiansFromProgress(
+                        startAngle,
+                        props.value,
+                        minValue,
+                        maxValue
+                    )
+                )()}
+                transform={`translate(${outerRadius}, ${outerRadius})`}
+                fill={props.fgColor}
+            ></Path>
+        </ChartCore>
+    );
+};
 
-        this.label = this.graphGroup!.append("text")
-            .attr("x", outerRadius)
-            .attr("y", outerRadius)
-            .attr("text-anchor", "middle")
-            .attr("dominant-baseline", "middle")
-            .style("fill", valueLabelColor!)
-            .style("font-size", valueLabelSize!);
+//#region Internal Functions
+const getRadiansFromDegrees = (angle: number): number => {
+    return (angle * Math.PI) / 180;
+};
 
-        this.updateChart();
-    }
-
-    updateChart(): void {
-        super.updateChart();
-
-        const {
-            startAngle,
-            value,
-            minValue,
-            maxValue,
-            valueLabel,
-        } = this.props;
-
-        this.arcFg!.transition().attr(
-            "d",
-            this.arc!.endAngle(
-                this.getRadiansFromProgress(
-                    startAngle!,
-                    value,
-                    minValue!,
-                    maxValue!
-                )
-            ) as any
-        );
-
-        this.label!.text(valueLabel);
-    }
-
-    getRadiansFromDegrees(angle: number): number {
-        return (angle * Math.PI) / 180;
-    }
-
-    getRadiansFromProgress(
-        startAngle: number,
-        value: number,
-        minValue: number,
-        maxValue: number
-    ): number {
-        return (
-            this.getRadiansFromDegrees(startAngle) +
-            2 *
-                Math.PI *
-                Math.min(
-                    maxValue,
-                    Math.max(minValue, value / (maxValue - minValue))
-                )
-        );
-    }
-
-    static propTypes = {
-        ...Chart.propTypes,
-
-        labelText: PropTypes.string,
-        labelStyle: PropTypes.object,
-
-        value: PropTypes.number.isRequired,
-        minValue: PropTypes.number.isRequired,
-        maxValue: PropTypes.number.isRequired,
-
-        innerRadius: PropTypes.number,
-        outerRadius: PropTypes.number,
-
-        startAngle: PropTypes.number,
-
-        bgColor: PropTypes.string,
-        fgColor: PropTypes.string,
-    };
-
-    static defaultProps = {
-        ...Chart.defaultProps,
-
-        axisYEnabled: false,
-        axisXEnabled: false,
-
-        margin: { top: 0, right: 0, bottom: 0, left: 0 },
-
-        valueLabel: "",
-        valueLabelColor: "#ffffff",
-        valueLabelSize: 12,
-
-        clipToRange: false,
-
-        value: 0,
-        minValue: 0,
-        maxValue: 100,
-        bgColor: "rgba(255,255,255,.5)",
-        fgColor: Colors.teal,
-        startAngle: 0,
-    };
-}
+const getRadiansFromProgress = (
+    startAngle: number,
+    value: number,
+    minValue: number,
+    maxValue: number
+): number => {
+    return (
+        getRadiansFromDegrees(startAngle) +
+        2 *
+            Math.PI *
+            Math.min(
+                maxValue,
+                Math.max(minValue, value / (maxValue - minValue))
+            )
+    );
+};
+//#endregion

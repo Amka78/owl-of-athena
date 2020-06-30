@@ -30,22 +30,20 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
             <ChartSleep
                 width={width}
                 height={chartSleepHeight}
-                margin={{ left: 0, top: 0, right: 0, bottom: 0 }}
                 sleep={sleepEvents.slice()}
                 dataBins={isFilterEnabled ? [0, 5, 10, 15, 20] : []}
                 dataBinThreshold={24}
-                scaleXDomain={scaleXDomain}
+                xScaleDomain={scaleXDomain}
                 tickInterval={Layout.isSmallDevice ? "hour" : "default"}
                 totalSleepHour={props.totalSleepHour}
             />
             <ChartMovement
                 width={width}
                 height={chartMovementHeight}
-                margin={{ left: 0, top: 0, right: 0, bottom: 0 }}
                 movement={movementEvents.slice()}
                 dataBins={isFilterEnabled ? [0, 5, 10, 15, 20] : []}
                 dataBinThreshold={24}
-                scaleXDomain={scaleXDomain}
+                xScaleDomain={scaleXDomain}
             />
         </View>
     );
