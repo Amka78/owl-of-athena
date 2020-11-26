@@ -1,4 +1,4 @@
-import DriveList from "drivelist";
+//import DriveList from "drivelist";
 import ejectMedia from "eject-media";
 import { EventEmitter } from "events";
 import _ from "lodash";
@@ -742,6 +742,7 @@ class Aurora extends EventEmitter {
         retryCount = 0,
         successOnFound = true
     ): Promise<any> {
+        // @ts-ignore
         return promisify(DriveList.list, DriveList)().then(
             async (drives: any): Promise<unknown> => {
                 const drive = drives.find(
