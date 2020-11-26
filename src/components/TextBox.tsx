@@ -15,7 +15,7 @@ const textInputStyle = {
     marginBottom: Dimens.button_margin_bottom,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.input_text_size,
-    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2
+    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
 };
 export const TextBox: FunctionComponent<TextBoxProps> = (
     props: TextBoxProps
@@ -43,8 +43,8 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
                 colors: {
                     text: Colors.cyan,
                     placeholder: Colors.white,
-                    primary: Colors.cyan
-                }
+                    primary: Colors.cyan,
+                },
             }}
         ></TextInput>
     );

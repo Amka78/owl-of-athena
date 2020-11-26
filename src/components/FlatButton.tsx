@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from "react";
-import { Button as PaperButton } from "react-native-paper";
-import { Message, Colors, Dimens, Fonts } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
 import { TextStyle, ViewStyle } from "react-native";
+import { Button as PaperButton } from "react-native-paper";
+
+import { Colors, Dimens, Fonts, Message } from "../constants";
+import { MessageLocalizationParam } from "../constants/Message";
 
 type FlatButtonProps = {
     children: MessageLocalizationParam;
@@ -14,11 +15,11 @@ type FlatButtonProps = {
 const labelStyle: TextStyle = {
     color: Colors.white,
     fontFamily: Fonts.primarySemiBold,
-    fontSize: Dimens.button_flat_text_size
+    fontSize: Dimens.button_flat_text_size,
 };
 const contentStyle: ViewStyle = {
     marginBottom: Dimens.button_flat_margin_bottom,
-    height: Dimens.button_flat_height
+    height: Dimens.button_flat_height,
 };
 export const FlatButton: FunctionComponent<FlatButtonProps> = (
     props: FlatButtonProps
