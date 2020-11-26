@@ -3,7 +3,7 @@ import { persistReducer, persistStore, Persistor } from "redux-persist";
 import logger from "redux-logger";
 
 import { AuroraReducers, AuthReducers } from "./reducers";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import SessionReducers from "./reducers/SessionReducers";
 
 const persitConfig = {
