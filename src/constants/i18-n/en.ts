@@ -192,4 +192,10 @@ export default {
     [MessageKeys.top_tab_journal_title]: "JOURNAL",
 
     [MessageKeys.date_format]: "MM,DD,YYYY",
+
+    [MessageKeys.standalone_mode_confirm_title]:
+        "Aurora API Connection failed.",
+
+    [MessageKeys.standalone_mode_confirm_message]:
+        "Could not connect to the Aurora API. So Do you want to run Aurora in standalone mode?",
 };

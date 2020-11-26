@@ -185,4 +185,10 @@ export default {
     [MessageKeys.top_tab_journal_title]: "ジャーナル",
 
     [MessageKeys.date_format]: "YYYY年MM月DD日  ",
+
+    [MessageKeys.standalone_mode_confirm_title]:
+        "Aurora APIへの接続に失敗しました。",
+
+    [MessageKeys.standalone_mode_confirm_message]:
+        "Aurora APIに接続できませんでした。スタンドアローンモードでオーロラを動かしますか?",
 };

@@ -33,6 +33,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { FilterByDateValues } from "../state/SessionState";
 import { AuroraSessionJson } from "../sdk/AuroraTypes";
 import { AuroraManagerInstance } from "../managers";
+import { GuestUser } from "../types";
 
 export type ListItemProps = {
     color: string;
@@ -216,9 +217,8 @@ export const SessionListScreen: FunctionComponent = () => {
                                     props: ListItemProps
                                 ): React.ReactNode => (
                                     <ChartRadialProgress
-                                        {...props}
-                                        width={40}
-                                        height={40}
+                                        width={38}
+                                        height={38}
                                         value={
                                             value.sleepScore == 117
                                                 ? 72
@@ -251,17 +251,19 @@ export const SessionListScreen: FunctionComponent = () => {
                                             size={25}
                                             color={Colors.white}
                                             onPress={(): void => {
-                                                const asyncFunc = async (): Promise<
-                                                    void
-                                                > => {
+                                                const asyncFunc = async (): Promise<void> => {
                                                     const updateInfo: Partial<AuroraSessionJson> = {
                                                         starred: !value.starred,
                                                     };
 
-                                                    await SessionRestClientInstance.updateById(
-                                                        value.id,
-                                                        updateInfo
-                                                    );
+                                                    if (
+                                                        user?.id !== GuestUser
+                                                    ) {
+                                                        await SessionRestClientInstance.updateById(
+                                                            value.id,
+                                                            updateInfo
+                                                        );
+                                                    }
 
                                                     value.starred = !value.starred;
                                                     dispatch(
@@ -288,9 +290,14 @@ export const SessionListScreen: FunctionComponent = () => {
                                                     },
                                                     isCancelable: true,
                                                     onConfirm: async () => {
-                                                        await SessionRestClientInstance.deleteById(
-                                                            value.id
-                                                        );
+                                                        if (
+                                                            user?.id !==
+                                                            GuestUser
+                                                        ) {
+                                                            await SessionRestClientInstance.deleteById(
+                                                                value.id
+                                                            );
+                                                        }
 
                                                         if (
                                                             AuroraManagerInstance.isConnected()
@@ -327,9 +334,7 @@ export const SessionListScreen: FunctionComponent = () => {
                                     justifyContent: "center",
                                 }}
                                 onPress={(): void => {
-                                    const asyncFunction = async (): Promise<
-                                        void
-                                    > => {
+                                    const asyncFunction = async (): Promise<void> => {
                                         dispatch(selectSession(value));
 
                                         let sessionDetail;

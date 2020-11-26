@@ -1,22 +1,24 @@
 import { useEffect } from "react";
 
-import { useTokenSelector } from ".";
+import { useTokenSelector, useUserSelector } from ".";
 import { useNavigation } from "react-navigation-hooks";
 import {
     AuroraRestClientInstance,
     SessionRestClientInstance,
 } from "../clients";
+import { GuestUser } from "../types";
 
 export const useCheckLogging = (): void => {
     const { navigate } = useNavigation();
 
     const token = useTokenSelector();
+    const user = useUserSelector();
     useEffect(() => {
         let unmounted = false;
         const f = async (): Promise<void> => {
             if (!unmounted) {
                 console.debug("useCheckLogging start");
-                if (!token) {
+                if (!token && user?.id !== GuestUser) {
                     navigate("Welcome");
                 } else {
                     if (!AuroraRestClientInstance.getTokenCallback) {

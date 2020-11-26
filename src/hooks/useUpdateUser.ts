@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { User } from "../types";
+import { User, GuestUser } from "../types";
 import { AuroraRestClientInstance } from "../clients";
 export const useUpdateUser = (
     loadingInitialValue: boolean,
@@ -14,7 +14,7 @@ export const useUpdateUser = (
     const onPress = useCallback(async () => {
         setLoading(true);
         try {
-            if (validate(user, setGeneralError)) {
+            if (user.id !== GuestUser && validate(user, setGeneralError)) {
                 await AuroraRestClientInstance.updateUser(user as User);
             }
         } catch (e) {
@@ -27,7 +27,7 @@ export const useUpdateUser = (
     return {
         loading,
         onPress,
-        generalError
+        generalError,
     };
 };
 

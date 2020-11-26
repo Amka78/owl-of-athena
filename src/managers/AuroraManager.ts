@@ -98,7 +98,23 @@ export class AuroraManager extends EventEmitter {
         settings: Settings
     ): Promise<void> {
         try {
-            const writingProfile = new Profile(profile.content!);
+            let writingProfile;
+
+            if (profile?.content) {
+                writingProfile = new Profile(profile.content);
+            } else {
+                // @ts-ignore
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
+                const defaultProfileTxt = require("../../assets/DefaultProfileContent.txt");
+                console.debug(defaultProfileTxt);
+                const response = await fetch(defaultProfileTxt);
+                console.debug(`response:${response}`);
+                const profileContent = await response.text();
+
+                console.debug(`profileContent: ${profileContent}`);
+
+                writingProfile = new Profile(profileContent);
+            }
 
             writingProfile.wakeupTime = this.getMsAfterMidnight(
                 settings.alarmHour,
@@ -249,7 +265,8 @@ export class AuroraManager extends EventEmitter {
     }
 
     public async pushSessions(
-        sessions: Array<FileInfo>
+        sessions: Array<FileInfo>,
+        guestLogin: boolean
     ): Promise<Array<AuroraSession>> {
         const sessionList = await this.readSessionContent(sessions);
 
@@ -266,7 +283,7 @@ export class AuroraManager extends EventEmitter {
             let newSession: AuroraSession | undefined;
 
             try {
-                if (sessionInfo.name.indexOf("@") == -1) {
+                if (sessionInfo.name.indexOf("@") == -1 && !guestLogin) {
                     await SessionRestClientInstance.getById(
                         sessionInfo.name
                     ).catch(async () => {

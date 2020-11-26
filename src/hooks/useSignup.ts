@@ -37,7 +37,7 @@ export const useSignup = (
             ) {
                 await AuroraRestClientInstance.signup({
                     email: signup.email,
-                    password: signup.password
+                    password: signup.password,
                 });
                 navigate("Login");
             }
@@ -58,7 +58,7 @@ export const useSignup = (
         generalError,
         emailError,
         passwordError,
-        passwordConfirmError
+        passwordConfirmError,
     };
 };
 
@@ -79,7 +79,7 @@ function validate(
     if (signup.password === "") {
         setPasswordError(
             Message.get(MessageKeys.required, [
-                MessageKeys.signup_input_password
+                MessageKeys.signup_input_password,
             ])
         );
         return false;
@@ -87,7 +87,7 @@ function validate(
     if (signup.passwordConfirm === "") {
         setPasswordConfirmError(
             Message.get(MessageKeys.required, [
-                MessageKeys.signup_input_password_confirm
+                MessageKeys.signup_input_password_confirm,
             ])
         );
         return false;

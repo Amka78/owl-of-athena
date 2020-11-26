@@ -11,16 +11,17 @@ export default function AuthReducers(
             return Object.assign({}, state, {
                 user: action.payload.data,
                 token: action.payload.token,
-                lastUsedEmail: action.payload.data.providers.email.provider_key
+                lastUsedEmail:
+                    action.payload.data.providers?.email.provider_key,
             });
         case ActionTypes.LOGOUT:
             return Object.assign({}, state, {
                 user: undefined,
-                token: undefined
+                token: undefined,
             });
         case ActionTypes.UPDATE_USER:
             return Object.assign({}, state, {
-                user: action.payload.data
+                user: action.payload.data,
             });
         default:
             return state;

@@ -16,6 +16,7 @@ import { MainContainer } from "../navigation";
 import { ConnectionStates } from "../sdk";
 import { AuroraOSInfo, AuroraSession } from "../sdk/models";
 import { onConnectionChange } from "../service/MainScreenService";
+import { GuestUser } from "../types";
 //#endregion
 
 export const MainScreen: FunctionComponent = () => {
@@ -45,7 +46,7 @@ export const MainScreen: FunctionComponent = () => {
         let unmounted = false;
         const f = async (): Promise<void> => {
             if (!unmounted && userInfo !== undefined) {
-                if (sessionList.length <= 0) {
+                if (sessionList.length <= 0 && userInfo!.id !== GuestUser) {
                     const remoteSessionList = await SessionRestClientInstance.getAll(
                         userInfo!.id
                     );
@@ -102,6 +103,7 @@ export const MainScreen: FunctionComponent = () => {
                             connect === ConnectionStates.CONNECTED
                                 ? ConnectionStates.DISCONNECTING
                                 : ConnectionStates.CONNECTING,
+                            userInfo?.id === GuestUser,
                             (pushedSessionList: Array<AuroraSession>) => {
                                 sessionList.unshift(...pushedSessionList);
 
@@ -158,6 +160,7 @@ export const MainScreen: FunctionComponent = () => {
 
 async function executeConfiguring(
     connectStatus: ConnectionStates,
+    isGuest: boolean,
     pushedSessionCallback: (sessionList: Array<AuroraSession>) => void,
     connectedCallback: (osInfo: AuroraOSInfo) => void,
     disconnectedCallback: () => void
@@ -211,7 +214,8 @@ async function executeConfiguring(
                             });
                             try {
                                 const result = await AuroraManagerInstance.pushSessions(
-                                    unsyncedSessions
+                                    unsyncedSessions,
+                                    isGuest
                                 );
 
                                 pushedSessionCallback(result);

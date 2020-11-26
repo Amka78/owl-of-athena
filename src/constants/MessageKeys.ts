@@ -202,4 +202,10 @@ export const MessageKeys = {
 
     //#region date format
     date_format: "date_format",
+    //#endregion
+
+    //#region standalone mode confirm dialog
+    standalone_mode_confirm_title: "standalone_mode_confirm_title",
+    standalone_mode_confirm_message: "standalone_mode_confirm_message",
+    //#endregion
 };

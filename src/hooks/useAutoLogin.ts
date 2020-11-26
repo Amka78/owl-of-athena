@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { useTokenSelector, useUserSelector } from "../hooks";
 
 import { updateUser } from "../actions";
+import { GuestUser } from "../types";
 export const useAutoLogin = (): void => {
     const { navigate } = useNavigation();
 
@@ -29,6 +30,8 @@ export const useAutoLogin = (): void => {
                         token;
                     SessionRestClientInstance.getTokenCallback = (): string =>
                         token;
+                    navigate("Main");
+                } else if (user?.id === GuestUser) {
                     navigate("Main");
                 }
             }

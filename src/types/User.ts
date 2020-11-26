@@ -7,13 +7,13 @@ export type User = {
 
     last_name?: string;
 
-    birthday?: string;
+    birthday: string;
 
-    gender: string;
+    gender?: string;
 
     created_at: string;
 
     updatedAt: string;
 
-    providers: ProviderCollection;
+    providers?: ProviderCollection;
 };

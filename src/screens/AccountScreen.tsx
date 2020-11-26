@@ -15,13 +15,20 @@ import {
     StandardView,
     TextBox,
 } from "../components";
-import { useLogout, useUpdateUser, useCheckLogging } from "../hooks";
+import {
+    useLogout,
+    useUpdateUser,
+    useCheckLogging,
+    useUserSelector,
+} from "../hooks";
 import { MessageKeys, Message } from "../constants";
+import { GuestUser } from "../types";
 
 export const AccountScreen: FunctionComponent = () => {
     useCheckLogging();
     const dispatch = useDispatch();
 
+    const userInfo = useUserSelector();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [male, setMale] = useState("");
@@ -34,13 +41,19 @@ export const AccountScreen: FunctionComponent = () => {
             if (!unmounted)
                 try {
                     console.debug("useGetUser useEffect start");
-                    const result = await AuroraRestClientInstance.getAuthUser();
-                    console.debug("authenticatedUser", result);
-                    dispatch(updateUser(result));
-                    setFirstName(result.first_name!);
-                    setLastName(result.last_name!);
-                    setMale(result.gender);
-                    setBirthDay(new Date(result.birthday!));
+                    let currentUser;
+
+                    if (userInfo?.id === GuestUser) {
+                        currentUser = userInfo;
+                    } else {
+                        currentUser = await AuroraRestClientInstance.getAuthUser();
+                    }
+                    console.debug("authenticatedUser", currentUser);
+                    dispatch(updateUser(currentUser));
+                    setFirstName(currentUser.first_name!);
+                    setLastName(currentUser.last_name!);
+                    setMale(currentUser.gender ? currentUser.gender : "male");
+                    setBirthDay(new Date(currentUser.birthday!));
                 } catch (ex) {
                     console.debug(ex);
                 }
@@ -50,12 +63,13 @@ export const AccountScreen: FunctionComponent = () => {
             unmounted = true;
         };
         return cleanup;
-    }, [dispatch]);
+    }, [dispatch, userInfo]);
 
     const useLogoutHook = useLogout();
 
     const useUpdateUserHook = useUpdateUser(false, {
-        birthday: birthDay.toJSON().split("T")[0],
+        birthday:
+            birthDay.toJSON() !== null ? birthDay.toJSON().split("T")[0] : "",
         first_name: firstName,
         last_name: lastName,
         gender: male,

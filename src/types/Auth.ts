@@ -4,3 +4,5 @@ export type Auth = {
     user: User;
     token: string;
 };
+
+export const GuestUser = "GuestUser";

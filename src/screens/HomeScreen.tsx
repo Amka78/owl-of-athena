@@ -22,6 +22,7 @@ import { cacheSettings, updateProfiles } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
+import { GuestUser } from "../types";
 
 type WakeLockSentinel = {
     addEventListener(
@@ -77,13 +78,17 @@ export const HomeScreen: FunctionComponent = () => {
                 let auroraProfiles = profiles;
 
                 console.log("Current profiles:", auroraProfiles);
-                if (auroraProfiles.length <= 0) {
+                if (auroraProfiles.length <= 0 && user!.id !== GuestUser) {
                     console.log(
                         "Cached profile is not exist, so loading remote profile start."
                     );
-                    auroraProfiles = await AuroraRestClientInstance.getAuroraProfiles();
-                    console.log("Current remote profile:", auroraProfiles);
-                    dispatch(updateProfiles(auroraProfiles));
+                    try {
+                        auroraProfiles = await AuroraRestClientInstance.getAuroraProfiles();
+                        console.log("Current remote profile:", auroraProfiles);
+                        dispatch(updateProfiles(auroraProfiles));
+                    } catch (e) {
+                        navigate("Logout");
+                    }
                 }
 
                 if (auroraProfiles.length > 0) {

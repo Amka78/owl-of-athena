@@ -2,11 +2,16 @@
 import React, { FunctionComponent, useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { StandardView } from "../components";
-import { useCheckLogging, useSelectedSessionSelector } from "../hooks";
+import {
+    useCheckLogging,
+    useSelectedSessionSelector,
+    useUserSelector,
+} from "../hooks";
 import { Colors } from "../constants";
 import { SessionRestClientInstance } from "../clients";
 import { useDispatch } from "react-redux";
 import { updateSession } from "../actions/SessionsActions";
+import { GuestUser } from "../types";
 //#endregion
 
 //#region Component
@@ -14,6 +19,7 @@ export const SessionNotesScreen: FunctionComponent = () => {
     useCheckLogging();
 
     const dispatch = useDispatch();
+    const userInfo = useUserSelector();
     const selectedSession = useSelectedSessionSelector();
     const [notes, setNotes] = useState(selectedSession!.notes);
 
@@ -22,10 +28,12 @@ export const SessionNotesScreen: FunctionComponent = () => {
             <TextInput
                 onBlur={(): void => {
                     if (notes !== selectedSession!.notes) {
-                        SessionRestClientInstance.updateById(
-                            selectedSession!.id,
-                            { notes }
-                        );
+                        if (userInfo?.id !== GuestUser) {
+                            SessionRestClientInstance.updateById(
+                                selectedSession!.id,
+                                { notes }
+                            );
+                        }
                         selectedSession!.notes = notes;
                         dispatch(updateSession(selectedSession!));
                     }
