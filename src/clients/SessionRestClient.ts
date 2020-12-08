@@ -12,6 +12,7 @@ import {
     AuroraSessionJson,
     AuroraStreamJson,
     AuroraEventJson,
+    AuroraSessionCSV,
 } from "../sdk/AuroraTypes";
 import { EventIds } from "../sdk/AuroraConstants";
 
@@ -34,13 +35,11 @@ export class SessionRestClient extends RestClient {
     /**
      * Register a session.
      *
-     * @param {AuroraSessionJson} sessionJson
+     * @param {AuroraSessionCSV} sessionJson
      * @returns {Promise<AuroraSession>}
      * @memberof SessionRestClient
      */
-    public async create(
-        sessionJson: AuroraSessionJson
-    ): Promise<AuroraSession> {
+    public async create(sessionJson: AuroraSessionCSV): Promise<AuroraSession> {
         const response = await this.post(
             "users/me/aurora-sessions",
             sessionJson

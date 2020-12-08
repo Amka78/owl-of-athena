@@ -4,6 +4,7 @@ import { ActionTypes } from "../constants";
 import { FilterCondition } from "../state/SessionState";
 
 export type CacheAction = ReturnType<typeof cacheSessions>;
+export type CacheDetailsAction = ReturnType<typeof cacheSessionDetails>;
 export type SelectAction = ReturnType<typeof selectSession>;
 export type SelectDetailAction = ReturnType<typeof selectSessionDetail>;
 export type InitializeSession = ReturnType<typeof initializeSession>;
@@ -12,6 +13,7 @@ export type UpdateSession = ReturnType<typeof updateSession>;
 export type DeleteSession = ReturnType<typeof deleteSession>;
 export type SessionActions =
     | CacheAction
+    | CacheDetailsAction
     | SelectAction
     | SelectDetailAction
     | InitializeSession
@@ -24,6 +26,15 @@ export const cacheSessions = (sessionList: Array<AuroraSession>) => ({
         sessionList,
     },
     type: ActionTypes.CACHE_SESSIONS,
+});
+
+export const cacheSessionDetails = (
+    sessionDetailList: Array<AuroraSessionDetail>
+) => ({
+    payload: {
+        sessionDetailList,
+    },
+    type: ActionTypes.CACHE_SESSION_DETAILS,
 });
 
 export const updateFilter = (filter: Partial<FilterCondition>) => ({

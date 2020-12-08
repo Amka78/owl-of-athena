@@ -86,14 +86,19 @@ export type WriteFileResponse = {
     size: string;
 };
 
+type AuroraSessionCore = {
+    app_platform: string;
+    app_version: number;
+    incomplete: boolean;
+};
+
 export type AuroraSessionJson = {
+    type: "json";
     id: string;
     user_id: string;
     aurora_profile_id: string;
     aurora_profile_name: string;
     firmware_version: number;
-    app_platform: string;
-    app_version: number;
     sleep_onset: number;
     session_duration: number;
     sleep_duration: number;
@@ -103,7 +108,6 @@ export type AuroraSessionJson = {
     deep_duration: number;
     rem_duration: number;
     sleep_score: number;
-    incomplete: boolean;
     starred: boolean;
     notes?: string;
     asleep_at: number;
@@ -112,6 +116,36 @@ export type AuroraSessionJson = {
     session_at: number;
     session_url: string;
     session_txt: string;
+} & AuroraSessionCore;
+
+export type AuroraSessionCSV = {
+    type: "csv";
+    aslesspAt: number;
+    auroraDir: string;
+    awakeAt: number;
+    awakening: number;
+    content: string;
+    profile: AuroraProfile;
+    date: number;
+    duration: number;
+    events: Array<AuroraEvent>;
+    incomplete: boolean;
+    name: string;
+    session_txt: string;
+    sleepDuration: SleepDuration;
+    sleepOnset: number;
+    sleepScore: number;
+    streams: Array<AuroraStreamJson>;
+    version: number;
+} & AuroraSessionCore;
+
+type SleepDuration = {
+    total: number;
+    rem: number;
+    unknown: number;
+    awkake: number;
+    light: number;
+    deep: number;
 };
 
 export type FileInfo = {

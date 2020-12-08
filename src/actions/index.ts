@@ -4,6 +4,7 @@ import { ProfilesActions, updateProfiles } from "./ProfilesAction";
 import {
     SessionActions,
     cacheSessions,
+    cacheSessionDetails,
     selectSession,
     selectSessionDetail,
 } from "./SessionsActions";
@@ -16,6 +17,7 @@ export {
     SettingsActions,
     ProfilesActions,
     cacheSessions,
+    cacheSessionDetails,
     cacheSettings,
     updateProfiles,
     selectSession,

@@ -5,16 +5,24 @@ import { NavigationState } from "react-navigation";
 import { useNavigation } from "react-navigation-hooks";
 import { useDispatch } from "react-redux";
 
-import { cacheSessions } from "../actions";
+import { cacheSessions, cacheSessionDetails } from "../actions";
 import { SessionRestClientInstance } from "../clients";
 import { ConfirmDialog, FlatButton, LoadingDialog } from "../components";
 import { Colors, MessageKeys } from "../constants";
-import { useSessionListSelector, useUserSelector } from "../hooks";
+import {
+    useSessionListSelector,
+    useUserSelector,
+    useSessionDetailListSelector,
+} from "../hooks";
 import { AuroraManagerInstance } from "../managers";
 import { AuroraManagerEventList } from "../managers/AuroraManager";
 import { MainContainer } from "../navigation";
 import { ConnectionStates } from "../sdk";
-import { AuroraOSInfo, AuroraSession } from "../sdk/models";
+import {
+    AuroraOSInfo,
+    AuroraSession,
+    AuroraSessionDetail,
+} from "../sdk/models";
 import { onConnectionChange } from "../service/MainScreenService";
 import { GuestUser } from "../types";
 //#endregion
@@ -23,6 +31,7 @@ export const MainScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const sessionList = useSessionListSelector();
+    const sessionDetailList = useSessionDetailListSelector();
     const userInfo = useUserSelector();
     const [connect, setConnect] = useState<ConnectionStates>(
         ConnectionStates.DISCONNECTED
@@ -104,10 +113,19 @@ export const MainScreen: FunctionComponent = () => {
                                 ? ConnectionStates.DISCONNECTING
                                 : ConnectionStates.CONNECTING,
                             userInfo?.id === GuestUser,
-                            (pushedSessionList: Array<AuroraSession>) => {
-                                sessionList.unshift(...pushedSessionList);
+                            (
+                                session: [
+                                    Array<AuroraSession>,
+                                    Array<AuroraSessionDetail>
+                                ]
+                            ) => {
+                                sessionList.unshift(...session[0]);
+                                sessionDetailList.unshift(...session[1]);
 
                                 dispatch(cacheSessions(sessionList));
+                                dispatch(
+                                    cacheSessionDetails(sessionDetailList)
+                                );
                             },
                             (osInfo: AuroraOSInfo) => {
                                 setConnect(ConnectionStates.CONNECTED);
@@ -161,7 +179,9 @@ export const MainScreen: FunctionComponent = () => {
 async function executeConfiguring(
     connectStatus: ConnectionStates,
     isGuest: boolean,
-    pushedSessionCallback: (sessionList: Array<AuroraSession>) => void,
+    pushedSessionCallback: (
+        session: [Array<AuroraSession>, Array<AuroraSessionDetail>]
+    ) => void,
     connectedCallback: (osInfo: AuroraOSInfo) => void,
     disconnectedCallback: () => void
 ): Promise<void> {

@@ -33,6 +33,9 @@ export default function SessionReducers(
         case ActionTypes.CACHE_SESSIONS: {
             return cacheSessions(state, action);
         }
+        case ActionTypes.CACHE_SESSION_DETAILS: {
+            return cacheSessionDetails(state, action);
+        }
         case ActionTypes.UPDATE_FILTER: {
             return updateFilter(action, state);
         }
@@ -281,6 +284,29 @@ function cacheSessions(
             state.filterCondition
         ),
         sessionList: action.payload.sessionList,
+    });
+}
+//#endregion
+
+/**
+ * Save the session detail list.
+ *
+ * @param {SessionState} state
+ * @param {{
+ *         payload: { sessionDetailList: AuroraSessionDetail[] };
+ *         type: "CACHE_SESSION_DETAILS";
+ *     }} action
+ * @returns {SessionState}
+ */
+function cacheSessionDetails(
+    state: SessionState,
+    action: {
+        payload: { sessionDetailList: AuroraSessionDetail[] };
+        type: "CACHE_SESSION_DETAILS";
+    }
+): SessionState {
+    return Object.assign({}, state, {
+        sessionDetailList: action.payload.sessionDetailList,
     });
 }
 //#endregion

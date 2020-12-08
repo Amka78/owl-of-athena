@@ -25,8 +25,9 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
     const chartSleepHeight = height - 100;
     const chartMovementHeight = height - chartSleepHeight;
     const { sleepEvents, movementEvents } = sessionDetail;
-    return (
-        <View style={{ position: "absolute" }}>
+
+    const chartSleep =
+        sleepEvents.length > 0 ? (
             <ChartSleep
                 width={width}
                 height={chartSleepHeight}
@@ -37,6 +38,9 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
                 tickInterval={Layout.isSmallDevice ? "hour" : "default"}
                 totalSleepHour={props.totalSleepHour}
             />
+        ) : undefined;
+    const chartMovement =
+        movementEvents.length > 0 ? (
             <ChartMovement
                 width={width}
                 height={chartMovementHeight}
@@ -45,6 +49,11 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
                 dataBinThreshold={24}
                 xScaleDomain={scaleXDomain}
             />
+        ) : undefined;
+    return (
+        <View style={{ position: "absolute" }}>
+            {chartSleep}
+            {chartMovement}
         </View>
     );
 };

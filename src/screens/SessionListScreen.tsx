@@ -351,7 +351,10 @@ export const SessionListScreen: FunctionComponent = () => {
                                             );
                                         }
 
-                                        if (!sessionDetail) {
+                                        if (
+                                            !sessionDetail &&
+                                            user?.id !== GuestUser
+                                        ) {
                                             sessionDetail = await SessionRestClientInstance.getDetailsById(
                                                 value.id
                                             );

@@ -14,14 +14,21 @@ import {
 } from "../sdk/AuroraConstants";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
 import {
-    AuroraEvent,
     AuroraProfile,
     AuroraSessionJson,
     CommandResult,
     DirectoryInfo,
     FileInfo,
+    AuroraSessionCSV,
 } from "../sdk/AuroraTypes";
-import { AuroraOSInfo, AuroraSession, Profile, Settings } from "../sdk/models";
+import {
+    AuroraEvent,
+    AuroraOSInfo,
+    AuroraSession,
+    Profile,
+    Settings,
+    AuroraSessionDetail,
+} from "../sdk/models";
 
 export enum AuroraManagerEventList {
     onConnectionChange = "onConnectionChange",
@@ -152,10 +159,11 @@ export class AuroraManager extends EventEmitter {
 
             await AuroraInstance.queueCmd("prof-unload");
 
-            this.currentProfile = writeFileResult.response?.file.replace(
+            /*this.currentProfile = writeFileResult.response?.file.replace(
                 "profiles/",
                 ""
-            );
+            );*/
+            this.currentProfile = "default.prof";
             await AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`);
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
@@ -267,13 +275,14 @@ export class AuroraManager extends EventEmitter {
     public async pushSessions(
         sessions: Array<FileInfo>,
         guestLogin: boolean
-    ): Promise<Array<AuroraSession>> {
+    ): Promise<[Array<AuroraSession>, Array<AuroraSessionDetail>]> {
         const sessionList = await this.readSessionContent(sessions);
 
         const pushedSessionList = new Array<AuroraSession>();
+        const pushedSessionDetailList = new Array<AuroraSessionDetail>();
         for (const value of sessionList) {
             const sessionInfo = value[1];
-            const uploadSession: Partial<AuroraSessionJson> = {
+            const uploadSession: AuroraSessionCSV = {
                 ...sessionInfo,
             };
             uploadSession.app_version = this.osInfo!.version;
@@ -283,19 +292,27 @@ export class AuroraManager extends EventEmitter {
             let newSession: AuroraSession | undefined;
 
             try {
-                if (sessionInfo.name.indexOf("@") == -1 && !guestLogin) {
-                    await SessionRestClientInstance.getById(
-                        sessionInfo.name
-                    ).catch(async () => {
+                if (!guestLogin) {
+                    console.debug("guest process called.");
+                    if (sessionInfo.name.indexOf("@") == -1) {
+                        await SessionRestClientInstance.getById(
+                            sessionInfo.name
+                        ).catch(async () => {
+                            newSession = await SessionRestClientInstance.create(
+                                uploadSession
+                            );
+                        });
+                    } else {
                         newSession = await SessionRestClientInstance.create(
-                            uploadSession as AuroraSessionJson
+                            uploadSession
                         );
-                    });
+                    }
                 } else {
-                    newSession = await SessionRestClientInstance.create(
-                        uploadSession as AuroraSessionJson
-                    );
+                    newSession = new AuroraSession(uploadSession);
+                    newSession!.id = sessionInfo.name.replace("@", "-");
                 }
+
+                console.debug(`uploadSession:${uploadSession}`);
                 if (newSession!.id != sessionInfo.name) {
                     await AuroraInstance.queueCmd(
                         `sd-rename sessions/${sessionInfo.name} sessions/${
@@ -304,11 +321,23 @@ export class AuroraManager extends EventEmitter {
                     );
                 }
                 pushedSessionList.push(newSession!);
+                pushedSessionDetailList.push(
+                    new AuroraSessionDetail(
+                        newSession!.id,
+                        // @ts-ignore
+                        uploadSession.streams as any,
+                        new Array<AuroraEvent>(),
+                        new Array<AuroraEvent>(),
+                        new Array<AuroraEvent>(),
+                        new Array<AuroraEvent>(),
+                        new Array<AuroraEvent>()
+                    )
+                );
             } catch (e) {
                 await AuroraInstance.queueCmd(`sd-dir-del ${sessionInfo[0]}`);
             }
         }
-        return pushedSessionList;
+        return [pushedSessionList, pushedSessionDetailList];
     }
 
     private async setupAurora(): Promise<void> {

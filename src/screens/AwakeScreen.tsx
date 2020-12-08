@@ -12,12 +12,13 @@ import { useNavigation } from "react-navigation-hooks";
 import {
     useCheckLogging,
     useSessionListSelector,
+    useSessionDetailListSelector,
     useUserSelector,
 } from "../hooks";
 import { MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";
 import { useDispatch } from "react-redux";
-import { cacheSessions, selectSession } from "../actions";
+import { cacheSessions, selectSession, cacheSessionDetails } from "../actions";
 import { SleepStates } from "../sdk/AuroraConstants";
 import { GuestUser } from "../types";
 export const AwakeScreen: FunctionComponent = () => {
@@ -26,6 +27,7 @@ export const AwakeScreen: FunctionComponent = () => {
     const { navigate } = useNavigation();
     const userInfo = useUserSelector();
     const sessionList = useSessionListSelector();
+    const sessionDetailList = useSessionDetailListSelector();
     return (
         <StandardView>
             <ContentTitle>{{ key: MessageKeys.awake_title }}</ContentTitle>
@@ -57,9 +59,11 @@ export const AwakeScreen: FunctionComponent = () => {
                                 userInfo?.id === GuestUser
                             );
 
-                            sessionList.unshift(...pushedSession);
+                            sessionList.unshift(...pushedSession[0]);
+                            sessionDetailList.unshift(...pushedSession[1]);
                             dispatch(cacheSessions(sessionList));
-                            dispatch(selectSession(pushedSession[0]));
+                            dispatch(cacheSessionDetails(sessionDetailList));
+                            dispatch(selectSession(pushedSession[0][0]));
                         }
                         AuroraManagerInstance.setSleepState(SleepStates.INIT);
                         navigate("Home");
