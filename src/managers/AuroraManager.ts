@@ -150,15 +150,22 @@ export class AuroraManager extends EventEmitter {
                     require(`../../assets/audio/${settings.remStimAudioPath}`)
                 );
             }
+
+            await AuroraInstance.queueCmd(
+                `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
+            );
             const writeFileResult = await AuroraInstance.writeFile(
                 "profiles/default.prof",
                 writingProfile.raw,
-                true,
+                false,
                 this.osInfo!.version
             );
 
             await AuroraInstance.queueCmd("prof-unload");
 
+            /*:TODO I don't know why, but the session will not be recorded 
+                    unless the default.prof is read, so it is fixed at default.prof.
+            */
             /*this.currentProfile = writeFileResult.response?.file.replace(
                 "profiles/",
                 ""
