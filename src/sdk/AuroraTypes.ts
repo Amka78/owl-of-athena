@@ -120,7 +120,7 @@ export type AuroraSessionJson = {
 
 export type AuroraSessionCSV = {
     type: "csv";
-    aslesspAt: number;
+    asleespAt: number;
     auroraDir: string;
     awakeAt: number;
     awakening: number;
@@ -143,7 +143,7 @@ type SleepDuration = {
     total: number;
     rem: number;
     unknown: number;
-    awkake: number;
+    awake: number;
     light: number;
     deep: number;
 };

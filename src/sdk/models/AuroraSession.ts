@@ -59,13 +59,13 @@ export class AuroraSession {
             this.sleepOnset = src.sleepOnset;
             this.sleepDuration = src.sleepDuration.total;
             this.noSignalDuration = src.sleepDuration.unknown;
-            this.awakeDuration = src.sleepDuration.awkake;
+            this.awakeDuration = src.sleepDuration.awake;
             this.lightDuration = src.sleepDuration.light;
             this.deepDuration = src.sleepDuration.deep;
             this.remDuration = src.sleepDuration.rem;
             this.sleepScore = src.sleepScore;
             this.starred = false;
-            this.asleepAt = src.aslesspAt;
+            this.asleepAt = src.asleespAt;
             this.awakeAt = src.awakeAt;
         }
     }
