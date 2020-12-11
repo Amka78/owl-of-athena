@@ -96,6 +96,7 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
         props.totalSleepHour
     );
     const yAxisLabels = buildYAxisLabels(yScale);
+    // @ts-ignore
     const line = d3
         .line<AuroraEvent>()
         .curve(d3.curveStepAfter)
