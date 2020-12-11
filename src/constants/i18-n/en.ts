@@ -54,6 +54,7 @@ export default {
         "Aurora’s advanced software will help you improve dream recall, achieve sounder sleep,and accelerate your journey towards maximizing your potential. Sweet dreams!",
     [MessageKeys.welcome_login_button]: login,
     [MessageKeys.welcome_signup_button]: signup,
+    [MessageKeys.welcome_standalone_button]: "StandAlone",
     // login fragment
     [MessageKeys.login_title]: login,
     [MessageKeys.login_input_email]: input_email,

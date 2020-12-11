@@ -49,6 +49,7 @@ export const MessageKeys = {
     welcome_text: "welcome_text",
     welcome_login_button: "welcome_login_button",
     welcome_signup_button: "welcome_signup_button",
+    welcome_standalone_button: "welcome_standalone_button",
     //#endregion
 
     //#region login fragment

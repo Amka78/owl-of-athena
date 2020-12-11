@@ -54,6 +54,7 @@ export default {
         "このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!",
     [MessageKeys.welcome_login_button]: login,
     [MessageKeys.welcome_signup_button]: signup,
+    [MessageKeys.welcome_standalone_button]: "スタンドアローン",
     // login fragment
     [MessageKeys.login_title]: login,
     [MessageKeys.login_input_email]: input_email,

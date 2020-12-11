@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WelcomeScreenTemplate UnitTest renders correctly 1`] = `
+<Component>
+  <Component>
+    <Component
+      key="test"
+    />
+  </Component>
+  <Component>
+    <Component
+      key="test"
+    />
+  </Component>
+  <View>
+    <Component
+      onPress={[Function]}
+    >
+      <Component
+        key="test"
+      />
+    </Component>
+    <Component
+      onPress={[Function]}
+    >
+      <Component
+        key="test"
+      />
+    </Component>
+    <Component
+      onPress={[Function]}
+    >
+      <Component
+        key="test"
+      />
+    </Component>
+  </View>
+</Component>
+`;
