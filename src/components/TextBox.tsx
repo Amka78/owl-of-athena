@@ -24,6 +24,7 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
         <TextInput
             {...props}
             mode={"flat"}
+            selectionColor={Colors.white}
             style={textInputStyle}
             underlineColor={Colors.white}
             placeholder={

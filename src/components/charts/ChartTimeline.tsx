@@ -147,14 +147,17 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         const placement = d.placement || eventPlacement;
 
         const props = {
+            // @ts-ignore
             x: this.scaleX!(d.date) - iconSize / 2,
             y: 0,
         };
 
         props.y =
             placement == "below"
-                ? this.scaleY!(-tickSize) + 4
-                : this.scaleY!(tickSize) - iconSize - 4;
+                ? // @ts-ignore
+                  this.scaleY!(-tickSize) + 4
+                : // @ts-ignore
+                  this.scaleY!(tickSize) - iconSize - 4;
 
         return props;
     };
@@ -177,13 +180,18 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         };
 
         if (placement == "below") {
+            // @ts-ignore
             props.y1 = this.scaleY!(0);
+            // @ts-ignore
             props.y2 = this.scaleY!(-tickSize);
         } else {
+            // @ts-ignore
             props.y1 = this.scaleY!(-1);
+            // @ts-ignore
             props.y2 = this.scaleY!(tickSize);
         }
 
+        // @ts-ignore
         return props;
     };
 
@@ -208,6 +216,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         if (d.icon) {
             if (labelPosition != "center") {
+                // @ts-ignore
                 props.x +=
                     (iconSize / 2 + 10) * (labelPosition == "left" ? -1 : 1);
                 props.y += iconSize / 2;

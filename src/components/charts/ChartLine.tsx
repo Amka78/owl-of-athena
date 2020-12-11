@@ -40,6 +40,7 @@ export default class ChartLine extends Chart<ChartProps> {
         for (let i = 0; i < this.props.data.length; i++) {
             this.lines![i] = d3.line();
 
+            // @ts-ignore
             this.lines[i]
                 .x((_d, i) => this.scaleX!(i * 128))
                 .y((d) => this.scaleY!(d as any));
