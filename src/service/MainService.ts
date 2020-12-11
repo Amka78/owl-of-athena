@@ -1,5 +1,8 @@
+//#region Import Modules
 import { ConnectionStates } from "../sdk/AuroraConstants";
+//#endregion
 
+//#region Service
 /**
  * Processing of Aurora connection change.
  *
@@ -8,11 +11,11 @@ import { ConnectionStates } from "../sdk/AuroraConstants";
  * @param {ConnectionStates} currentConnectionState
  * @param {React.Dispatch<React.SetStateAction<ConnectionStates>>} setConnect
  */
-export function onConnectionChange(
+export const onConnectionChange = (
     followingConnectionState: ConnectionStates,
     currentConnectionState: ConnectionStates,
     setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>
-): void {
+): void => {
     if (
         currentConnectionState === ConnectionStates.DISCONNECTED &&
         followingConnectionState === ConnectionStates.IDLE
@@ -21,4 +24,5 @@ export function onConnectionChange(
     } else if (followingConnectionState === ConnectionStates.DISCONNECTED) {
         setConnect(ConnectionStates.DISCONNECTED);
     }
-}
+};
+//#endregion

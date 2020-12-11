@@ -5,7 +5,7 @@ import {
     Button,
     StandardView,
     ContentTitle,
-    ContentText
+    ContentText,
 } from "../components";
 import { useCheckLogging, useSettingsSelector } from "../hooks";
 import { MessageKeys } from "../constants";

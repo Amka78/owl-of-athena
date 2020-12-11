@@ -23,7 +23,7 @@ import {
     AuroraSession,
     AuroraSessionDetail,
 } from "../sdk/models";
-import { onConnectionChange } from "../service/MainScreenService";
+import { onConnectionChange } from "../service/MainService";
 import { GuestUser } from "../types";
 //#endregion
 

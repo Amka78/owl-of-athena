@@ -1,4 +1,4 @@
-import { onConnectionChange } from "../MainScreenService";
+import { onConnectionChange } from "../MainService";
 import { ConnectionStates } from "../../sdk/AuroraConstants";
 
 describe("MainScreen-test", () => {
