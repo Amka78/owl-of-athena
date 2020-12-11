@@ -23,6 +23,7 @@
     "@expo/webpack-config": "^0.12.16",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
+    "@types/lodash": "^4.14.165",
     "babel-eslint": "^10.1.0",
     "binary-parser": "github:iwinks/binary-parser",
     "d3": "^6.2.0",
