@@ -3,7 +3,7 @@ import { useNavigation } from "react-navigation-hooks";
 import { useDispatch } from "react-redux";
 import { useUserSelector } from "../hooks";
 import { logout } from "../actions";
-import { initializeAurora } from "../actions/ProfilesAction";
+import { initializeAurora } from "../actions/ProfilesActions";
 import { initializeSession } from "../actions/SessionsActions";
 import { GuestUser } from "../types";
 

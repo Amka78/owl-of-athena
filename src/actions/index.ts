@@ -1,6 +1,7 @@
 import { AuthActions, login, logout, updateUser } from "./AuthActions";
 import { SettingsActions, cacheSettings } from "./SettingsActions";
-import { ProfilesActions, updateProfiles } from "./ProfilesAction";
+import { ProfilesActions, updateProfiles } from "./ProfilesActions";
+import { AppActions, setWakeLock } from "./AppActions";
 import {
     SessionActions,
     cacheSessions,
@@ -10,6 +11,7 @@ import {
 } from "./SessionsActions";
 export {
     AuthActions,
+    AppActions,
     login,
     logout,
     updateUser,
@@ -22,4 +24,5 @@ export {
     updateProfiles,
     selectSession,
     selectSessionDetail,
+    setWakeLock,
 };
