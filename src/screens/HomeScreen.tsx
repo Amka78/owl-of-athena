@@ -18,28 +18,13 @@ import {
 } from "../hooks";
 import { AuroraManagerInstance, AuroraManagetEventList } from "../managers";
 import { MessageKeys, Dimens } from "../constants";
-import { cacheSettings, updateProfiles } from "../actions";
+import { cacheSettings, updateProfiles, setWakeLock } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
-import { GuestUser } from "../types";
-
-type WakeLockSentinel = {
-    addEventListener(
-        event: string,
-        listener: (...args: any[]) => void,
-        opts?: { once: boolean }
-    ): any;
-    release(): void;
-};
-type WakeLock = {
-    request: (target: string) => Promise<WakeLockSentinel>;
-};
-type ExperimentalNavigator = Navigator & {
-    wakeLock: WakeLock;
-};
-declare const navigator: ExperimentalNavigator;
-
+import { GuestUser, WakeLockSentinel } from "../types";
+import { WakeLockService } from "../service";
+import { useWakeLockSelector } from "../hooks/useWakeLockSelector";
 export const HomeScreen: FunctionComponent = () => {
     useCheckLogging();
     const { navigate } = useNavigation();
@@ -48,10 +33,10 @@ export const HomeScreen: FunctionComponent = () => {
     const settings = useSettingsSelector();
     const user = useUserSelector();
     const profiles = useProfilesSelector();
+    const wakeLock = useWakeLockSelector();
     const [errorText, setErrorText] = useState<string>("");
 
     const selectedProfile = useRef<AuroraProfile | undefined>(undefined);
-    const wakeLockContainer = useRef<WakeLockSentinel | undefined>(undefined);
 
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
@@ -61,14 +46,24 @@ export const HomeScreen: FunctionComponent = () => {
         );
         AuroraManagerInstance.on(
             AuroraManagetEventList.onSleeping,
-            onSleeping(wakeLockContainer, navigate)
+            onSleeping(
+                (currentWakeLock: WakeLockSentinel) => {
+                    dispatch(setWakeLock(currentWakeLock));
+                },
+                () => {
+                    dispatch(setWakeLock(undefined));
+                },
+                () => {
+                    navigate("Sleeping");
+                }
+            )
         );
         AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
-            wakeLockContainer.current?.release();
+            wakeLock?.release();
             navigate("Awake");
         });
         AuroraManagerInstance.on(AuroraManagetEventList.onWaking, () => {
-            wakeLockContainer.current?.release();
+            wakeLock?.release();
             navigate("Waking");
         });
         let unmounted = false;
@@ -142,6 +137,7 @@ export const HomeScreen: FunctionComponent = () => {
         settings.profileTitle,
         settings.savedAt,
         user,
+        wakeLock,
     ]);
     return (
         <StandardView>
@@ -222,21 +218,19 @@ export const HomeScreen: FunctionComponent = () => {
 };
 
 function onSleeping(
-    wakeLockContainer: React.MutableRefObject<WakeLockSentinel | undefined>,
-    navigate: any
+    succeedWakeLockCallback: (wakeLock: WakeLockSentinel) => void,
+    releaseWakeLockCallback: () => void,
+    postSleepingCallback: () => void
 ): (...args: any[]) => void {
     return async (): Promise<void> => {
         try {
-            const wakeLockSentinel = await navigator.wakeLock.request("screen");
-
-            wakeLockContainer.current = wakeLockSentinel;
-            wakeLockSentinel.addEventListener("release", () => {
-                console.log("Screen Wake Lock was released");
-            });
-            console.log("Screen Wake Lock is active");
+            WakeLockService.requestWakeLock(
+                succeedWakeLockCallback,
+                releaseWakeLockCallback
+            );
+            postSleepingCallback();
         } catch (err) {
             console.error(`${err.name}, ${err.message}`);
         }
-        navigate("Sleeping");
     };
 }

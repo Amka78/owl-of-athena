@@ -124,7 +124,7 @@ export const MessageKeys = {
     session_list_title: "session_list_title",
     //#endregion
 
-    //#region  session fragment
+    //#region session fragment
     session_asleep_time_label: "session_asleep_time_label",
     session_awake_time_label: "session_awake_time_label",
     session_sleep_score_label: "session_sleep_score_label",
@@ -155,6 +155,8 @@ export const MessageKeys = {
 
     //#region sleeping fragment
     sleeping_title: "sleeping_title",
+    sleeping_wakelock: "sleeping_wakelock",
+    sleeping_wakeunlock: "sleeping_wakeunlock",
     sleeping_wakeup_button: "sleeping_wakeup_button",
     //#endregion
 

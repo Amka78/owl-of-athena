@@ -13,6 +13,7 @@ const INITIALIZE_SESSION = "INITIALIZE_SESSION" as const;
 const UPDATE_FILTER = "UPDATE_FILTER" as const;
 const DELETE_SESSION = "DELETE_SESSION" as const;
 const UPDATE_SESSION = "UPDATE_SESSION" as const;
+const WAKELOCK = "WAKE_LOCK" as const;
 export default {
     INIT,
     INITIALIZE_AURORA,
@@ -29,4 +30,5 @@ export default {
     UPDATE_SESSION,
     CACHE_SETTINGS,
     CACHE_PROFILES,
+    WAKELOCK,
 };

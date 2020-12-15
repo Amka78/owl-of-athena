@@ -144,6 +144,10 @@ export default {
     [MessageKeys.account_success_message]: "アカウントの保存に成功しました。.",
     // sleeping fragment
     [MessageKeys.sleeping_title]: "よい夢を...",
+    [MessageKeys.sleeping_wakelock]:
+        "画面はロックされています。スマートフォンのバッテリー残量に注意してください。",
+    [MessageKeys.sleeping_wakeunlock]:
+        "画面のロックが解除されました。OOAの機能が正常に動作しない可能性があります。このメッセージをクリックして画面を再ロックしてください。",
     [MessageKeys.sleeping_wakeup_button]: "起きる",
     // waking fragment
     [MessageKeys.waking_title]: "起きてください!",

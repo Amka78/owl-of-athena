@@ -4,13 +4,14 @@ import { Message, Colors, Dimens, Fonts } from "../constants";
 import { MessageLocalizationParam } from "../constants/Message";
 type ContentTextProps = {
     children: MessageLocalizationParam;
+    onPress?: () => void;
     style?: TextStyle;
 };
 export const ContentText: FunctionComponent<ContentTextProps> = (
     props: ContentTextProps
 ) => {
     return (
-        <Text style={[textStyle, props.style]}>
+        <Text style={[textStyle, props.style]} onPress={props.onPress}>
             {Message.get(props.children.key, props.children.restParam)}
         </Text>
     );
@@ -19,5 +20,5 @@ const textStyle: TextStyle = {
     color: Colors.cyan,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.content_text_size,
-    flex: 1
+    flex: 1,
 };

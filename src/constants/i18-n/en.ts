@@ -147,6 +147,10 @@ export default {
     [MessageKeys.account_success_message]: "Account saved successfully.",
     // sleeping fragment
     [MessageKeys.sleeping_title]: "Sweet dreams...",
+    [MessageKeys.sleeping_wakelock]:
+        "The screen is locked. Please pay attention to the battery life of your smartphone.",
+    [MessageKeys.sleeping_wakeunlock]:
+        "The screen has been unlocked, OOA function may not be working properly. Please click on this message to re-lock your screen.",
     [MessageKeys.sleeping_wakeup_button]: "Wake Up",
     // waking fragment
     [MessageKeys.waking_title]: "Time to wake up!",
