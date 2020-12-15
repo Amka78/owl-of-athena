@@ -5,7 +5,7 @@ import { ActionTypes } from "../constants";
 import { AuroraProfile } from "../sdk/AuroraTypes";
 const initialState: AuroraState = {
     userSettings: new Settings({}),
-    profileList: new Array<AuroraProfile>()
+    profileList: new Array<AuroraProfile>(),
 };
 
 export default function AuroraReducers(
@@ -15,16 +15,16 @@ export default function AuroraReducers(
     switch (action.type) {
         case ActionTypes.CACHE_SETTINGS:
             return Object.assign({}, state, {
-                userSettings: action.payload.data
+                userSettings: action.payload.data,
             });
         case ActionTypes.CACHE_PROFILES:
             return Object.assign({}, state, {
-                profileList: action.payload.data
+                profileList: action.payload.data,
             });
         case ActionTypes.INITIALIZE_AURORA:
             return Object.assign({}, state, {
                 userSettings: new Settings({}),
-                profileList: new Array<AuroraProfile>()
+                profileList: new Array<AuroraProfile>(),
             });
         default:
             return state;
