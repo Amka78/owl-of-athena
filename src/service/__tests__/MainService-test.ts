@@ -1,7 +1,7 @@
 import { onConnectionChange } from "../MainService";
 import { ConnectionStates } from "../../sdk/AuroraConstants";
 
-describe("MainScreen-test", () => {
+describe("MainService-test", () => {
     it.each([
         [
             ConnectionStates.IDLE,

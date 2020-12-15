@@ -14,15 +14,15 @@ import { ConnectionStates } from "../sdk/AuroraConstants";
 export const onConnectionChange = (
     followingConnectionState: ConnectionStates,
     currentConnectionState: ConnectionStates,
-    setConnect: React.Dispatch<React.SetStateAction<ConnectionStates>>
+    connnectionChangeCallback: (state: ConnectionStates) => void
 ): void => {
     if (
         currentConnectionState === ConnectionStates.DISCONNECTED &&
         followingConnectionState === ConnectionStates.IDLE
     ) {
-        setConnect(ConnectionStates.CONNECTED);
+        connnectionChangeCallback(ConnectionStates.CONNECTED);
     } else if (followingConnectionState === ConnectionStates.DISCONNECTED) {
-        setConnect(ConnectionStates.DISCONNECTED);
+        connnectionChangeCallback(ConnectionStates.DISCONNECTED);
     }
 };
 //#endregion

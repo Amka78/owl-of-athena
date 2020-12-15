@@ -42,7 +42,13 @@ export const MainScreen: FunctionComponent = () => {
     const onConnectionChangeEventHandler = useRef(
         (connectionState: ConnectionStates): void => {
             console.debug("Called onConnectionChangeHandler");
-            onConnectionChange(connectionState, connect, setConnect);
+            onConnectionChange(
+                connectionState,
+                connect,
+                (state: ConnectionStates) => {
+                    setConnect(state);
+                }
+            );
         }
     );
     const onBatteryLevelChangeEventHandler = useRef(
