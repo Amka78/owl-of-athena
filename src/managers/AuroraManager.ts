@@ -151,17 +151,28 @@ export class AuroraManager extends EventEmitter {
                 );
             }
 
-            await AuroraInstance.queueCmd(
-                `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
-            );
-            const writeFileResult = await AuroraInstance.writeFile(
-                "profiles/default.prof",
-                writingProfile.raw,
-                false,
-                this.osInfo!.version
-            );
-
             await AuroraInstance.queueCmd("prof-unload");
+            try {
+                const readProfileResult = await AuroraInstance.readFile(
+                    "profiles/default.prof",
+                    false,
+                    false
+                );
+                if (!readProfileResult.error) {
+                    await AuroraInstance.queueCmd(
+                        `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
+                    );
+                }
+            } catch (e) {
+                console.debug(e);
+            } finally {
+                await AuroraInstance.writeFile(
+                    "profiles/default.prof",
+                    writingProfile.raw,
+                    false,
+                    this.osInfo!.version
+                );
+            }
 
             /*:TODO I don't know why, but the session will not be recorded 
                     unless the default.prof is read, so it is fixed at default.prof.
