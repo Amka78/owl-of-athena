@@ -36,36 +36,50 @@ export const HomeScreen: FunctionComponent = () => {
     const wakeLock = useWakeLockSelector();
     const [errorText, setErrorText] = useState<string>("");
 
+    const onSleepingEvent = useRef(
+        onSleeping(
+            (currentWakeLock: WakeLockSentinel) => {
+                dispatch(setWakeLock(currentWakeLock));
+            },
+            () => {
+                dispatch(setWakeLock(undefined));
+            },
+            () => {
+                navigate("Sleeping");
+            }
+        )
+    );
+    const wakeEvent = useRef(() => {
+        wakeLock?.release();
+        navigate("Awake");
+    });
     const selectedProfile = useRef<AuroraProfile | undefined>(undefined);
-
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
-        AuroraManagerInstance.removeListener(
+        AuroraManagerInstance.off(
             AuroraManagetEventList.onSleeping,
-            onSleeping
+            onSleepingEvent.current
         );
         AuroraManagerInstance.on(
             AuroraManagetEventList.onSleeping,
-            onSleeping(
-                (currentWakeLock: WakeLockSentinel) => {
-                    dispatch(setWakeLock(currentWakeLock));
-                },
-                () => {
-                    dispatch(setWakeLock(undefined));
-                },
-                () => {
-                    navigate("Sleeping");
-                }
-            )
+            onSleepingEvent.current
         );
-        AuroraManagerInstance.on(AuroraManagetEventList.onAwake, () => {
-            wakeLock?.release();
-            navigate("Awake");
-        });
-        AuroraManagerInstance.on(AuroraManagetEventList.onWaking, () => {
-            wakeLock?.release();
-            navigate("Waking");
-        });
+        AuroraManagerInstance.off(
+            AuroraManagetEventList.onAwake,
+            wakeEvent.current
+        );
+        AuroraManagerInstance.on(
+            AuroraManagetEventList.onAwake,
+            wakeEvent.current
+        );
+        AuroraManagerInstance.off(
+            AuroraManagetEventList.onWaking,
+            wakeEvent.current
+        );
+        AuroraManagerInstance.on(
+            AuroraManagetEventList.onWaking,
+            wakeEvent.current
+        );
         let unmounted = false;
         console.log("Loading profiles start");
         const f = async (): Promise<void> => {
@@ -126,6 +140,7 @@ export const HomeScreen: FunctionComponent = () => {
         f();
         const cleanup = (): void => {
             unmounted = true;
+            console.debug("HomeScreen cleen up called.");
         };
         return cleanup();
     }, [
