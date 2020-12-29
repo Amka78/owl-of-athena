@@ -6,10 +6,10 @@ import {
     NavigationRouteConfigMap,
 } from "react-navigation";
 import {
-    createBottomTabNavigator,
-    NavigationBottomTabOptions,
+    createMaterialBottomTabNavigator,
+    NavigationMaterialBottomTabOptions,
     NavigationTabProp,
-} from "react-navigation-tabs";
+} from "react-navigation-material-bottom-tabs";
 
 import { Colors } from "../constants";
 import HomeNavigator from "./HomeNavigator";
@@ -17,7 +17,7 @@ import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
 
 const routeConfigMap: NavigationRouteConfigMap<
-    NavigationBottomTabOptions,
+    NavigationMaterialBottomTabOptions,
     NavigationTabProp<NavigationRoute<NavigationParams>, any>
 > = {
     Route1: {
@@ -49,19 +49,11 @@ const routeConfigMap: NavigationRouteConfigMap<
     },
 };
 
-const bottomTabNavigationConfig = {
-    tabBarOptions: {
-        activeTintColor: Colors.cyan,
-        inactiveTintColor: Colors.navy_darker,
-        style: { backgroundColor: Colors.navy },
-    },
-    initialRouteName: "Route1",
-};
-
-const MainTabNavigator = createBottomTabNavigator(
-    routeConfigMap,
-    bottomTabNavigationConfig
-);
+const MainTabNavigator = createMaterialBottomTabNavigator(routeConfigMap, {
+    activeColor: Colors.cyan,
+    inactiveColor: Colors.white,
+    barStyle: { backgroundColor: Colors.navy },
+});
 
 export default MainTabNavigator;
 
