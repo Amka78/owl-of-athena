@@ -1,6 +1,6 @@
 import React from "react";
-import { Image, View } from "react-native";
-import { Button, TouchableRipple, IconButton } from "react-native-paper";
+import { View } from "react-native";
+import { IconButton } from "react-native-paper";
 import {
     NavigationParams,
     NavigationRoute,
@@ -10,17 +10,13 @@ import {
     createBottomTabNavigator,
     NavigationBottomTabOptions,
     NavigationTabProp,
-    BottomTabBar,
 } from "react-navigation-tabs";
 
 import { Colors } from "../constants";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
-import {
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { ButtonComponentProps } from "react-navigation-tabs/lib/typescript/src/types";
 
 const routeConfigMap: NavigationRouteConfigMap<
