@@ -1,3 +1,4 @@
+//#region Import Modules
 import React, { FunctionComponent, useState } from "react";
 import { Menu } from "react-native-paper";
 import { DatePickerProps } from "./DatePickerProps";
@@ -6,7 +7,9 @@ import Calendar from "rc-calendar";
 import "rc-calendar/assets/index.css";
 import moment from "moment";
 import { TouchableOpacity } from "react-native-gesture-handler";
+//#endregion
 
+//#region Component
 export const DatePicker: FunctionComponent<DatePickerProps> = (
     props: DatePickerProps
 ) => {
@@ -56,3 +59,4 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
         </Menu>
     );
 };
+//#endregion

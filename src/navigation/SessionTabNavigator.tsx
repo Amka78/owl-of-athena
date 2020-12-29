@@ -10,7 +10,7 @@ import {
     NavigationTabProp,
 } from "react-navigation-tabs";
 import { Colors, Message, MessageKeys } from "../constants";
-import { SessionScreen, SessionNotesScreen } from "../screens";
+import { SessionScreen, SessionNoteScreen } from "../screens";
 //#endregion
 
 //#region Route config
@@ -30,7 +30,7 @@ const routeConfigMap: NavigationRouteConfigMap<
             title: Message.get(MessageKeys.top_tab_journal_title),
         },
         path: "",
-        screen: SessionNotesScreen,
+        screen: SessionNoteScreen,
     },
 };
 //#endregion

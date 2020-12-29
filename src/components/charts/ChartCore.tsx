@@ -9,6 +9,7 @@ import { AuroraEvent } from "../../sdk/models";
 import { Margin } from "./Chart";
 //#endregion
 
+//#region Export Types
 export type Axis = {
     color: string;
     label?: string;
@@ -16,7 +17,6 @@ export type Axis = {
     padding?: number;
     scale?: number | Date;
 };
-//#region Export Types
 export type ChartCoreProps = {
     children?: React.ReactNode;
     defs?: React.ReactNode;

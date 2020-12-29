@@ -1,15 +1,31 @@
+//#region Import Modules
 import { useCallback, useState } from "react";
+import { Linking } from "react-native";
 import { useNavigation } from "react-navigation-hooks";
 
+import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";
 import { Signup } from "../types";
-import { AuroraRestClientInstance } from "../clients/";
+import {
+    useCheckBox,
+    useCheckBoxReturn,
+    useTextBox,
+    useTextBoxReturn,
+} from "./";
+import { validate } from "../services/SignupService";
+//#endregion
+
+//#region Hooks
 export const useSignup = (
-    loadingInitialValue: boolean,
-    signup: Signup
+    loadingInitialValue: boolean
 ): {
     loading: boolean;
-    onPress: () => Promise<void>;
+    emailHooks: useTextBoxReturn;
+    passwordHooks: useTextBoxReturn;
+    passwordConfirmHooks: useTextBoxReturn;
+    checkBoxHooks: useCheckBoxReturn;
+    onSignupPress: () => Promise<void>;
+    onLinkTextPress: () => void;
     generalError?: string;
     emailError?: string;
     passwordError?: string;
@@ -23,16 +39,36 @@ export const useSignup = (
         ""
     );
     const [generalError, setGeneralError] = useState<string>("");
-    const onPress = useCallback(async () => {
+    const emailHooks = useTextBox("");
+    const passwordHooks = useTextBox("");
+    const passwordConfirmHooks = useTextBox("");
+    const checkBoxHooks = useCheckBox(false);
+
+    const onSignupPress = useCallback(async () => {
         console.debug("useSignup called.");
+
+        const signup: Signup = {
+            email: emailHooks.value,
+            password: passwordHooks.value,
+            passwordConfirm: passwordConfirmHooks.value,
+            agreeToTerm: checkBoxHooks.status == "checked",
+        };
         try {
             if (
                 validate(
                     signup,
-                    setEmailError,
-                    setPasswordError,
-                    setPasswordConfirmError,
-                    setGeneralError
+                    (err: string) => {
+                        setEmailError(err);
+                    },
+                    (err: string) => {
+                        setPasswordError(err);
+                    },
+                    (err: string) => {
+                        setPasswordConfirmError(err);
+                    },
+                    (err: string) => {
+                        setGeneralError(err);
+                    }
                 )
             ) {
                 await AuroraRestClientInstance.signup({
@@ -51,57 +87,30 @@ export const useSignup = (
             }
             setLoading(false);
         }
-    }, [signup, navigate]);
+    }, [
+        checkBoxHooks.status,
+        emailHooks.value,
+        passwordConfirmHooks.value,
+        passwordHooks.value,
+        navigate,
+    ]);
+
+    const onLinkTextPress = useCallback((): void => {
+        Linking.openURL("https://sleepwithaurora.com/shop/order-terms");
+    }, []);
+
     return {
         loading,
-        onPress,
+        emailHooks,
+        passwordHooks,
+        passwordConfirmHooks,
+        checkBoxHooks,
+        onSignupPress,
+        onLinkTextPress,
         generalError,
         emailError,
         passwordError,
         passwordConfirmError,
     };
 };
-
-function validate(
-    signup: Signup,
-    setEmailError: React.Dispatch<React.SetStateAction<string>>,
-    setPasswordError: React.Dispatch<React.SetStateAction<string>>,
-    setPasswordConfirmError: React.Dispatch<React.SetStateAction<string>>,
-    setGeneralError: React.Dispatch<React.SetStateAction<string>>
-): boolean {
-    if (signup.email === "") {
-        setEmailError(
-            Message.get(MessageKeys.required, [MessageKeys.signup_input_email])
-        );
-
-        return false;
-    }
-    if (signup.password === "") {
-        setPasswordError(
-            Message.get(MessageKeys.required, [
-                MessageKeys.signup_input_password,
-            ])
-        );
-        return false;
-    }
-    if (signup.passwordConfirm === "") {
-        setPasswordConfirmError(
-            Message.get(MessageKeys.required, [
-                MessageKeys.signup_input_password_confirm,
-            ])
-        );
-        return false;
-    }
-
-    if (signup.password !== signup.passwordConfirm) {
-        setPasswordConfirmError(Message.get(MessageKeys.passwords_must_match));
-        return false;
-    }
-
-    if (signup.agreeToTerm === false) {
-        setGeneralError(Message.get(MessageKeys.must_agree_to_term_of_use));
-        return false;
-    }
-
-    return true;
-}
+//#endregion

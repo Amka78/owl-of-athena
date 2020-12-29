@@ -1,9 +1,12 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { Text, StyleSheet, TextStyle, View } from "react-native";
 import { Colors, Fonts } from "../constants";
 export type TimeViewMode = "meridian" | "time";
+//#endregion
 
-type TimeViewProps = {
+//#region Types
+export type TimeViewProps = {
     timeViewStyle?: TextStyle;
     timeStyle?: TextStyle;
     timeMeridianStyle?: TextStyle;
@@ -11,6 +14,9 @@ type TimeViewProps = {
     minutes: number;
     mode: TimeViewMode;
 };
+//#endregion
+
+//#region Component
 export const TimeView: FunctionComponent<TimeViewProps> = (
     props: TimeViewProps
 ) => {
@@ -23,31 +29,32 @@ export const TimeView: FunctionComponent<TimeViewProps> = (
                 <Text style={[style.alarmMeridian, props.timeMeridianStyle]}>
                     {props.hours > 12 ? "pm" : "am"}
                 </Text>
-            ) : (
-                undefined
-            )}
+            ) : undefined}
         </View>
     );
 };
+//#endregion
 
+//#region Styles
 const style = StyleSheet.create({
     alarmView: {
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        flex: 1
+        flex: 1,
     },
     alarmTime: {
         color: Colors.cyan,
         fontFamily: Fonts.primarySemiBold,
-        fontSize: 20
+        fontSize: 20,
     },
     alarmMeridian: {
         color: Colors.cyan,
         fontFamily: Fonts.primaryRegular,
-        fontSize: 20
-    }
+        fontSize: 20,
+    },
 });
+//#endregion
 
 function getTimeText(props: TimeViewProps): string {
     let timeText: string;

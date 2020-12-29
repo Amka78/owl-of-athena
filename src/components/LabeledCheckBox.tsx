@@ -1,34 +1,44 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, View, TextStyle, ViewStyle } from "react-native";
+import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { Checkbox } from "react-native-paper";
-import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
+
+import { Colors, Dimens, Fonts, Layout } from "../constants";
+//#endregion
+
+//#region Types
 export type CheckBoxStatus = "checked" | "unchecked" | "indeterminate";
 
 export type LabelPlace = "left" | "right";
 export type LabeledCheckBoxProps = {
     container?: ViewStyle;
-    labelPlace: LabelPlace;
-    label?: MessageLocalizationParam;
+    labelPlace?: LabelPlace;
+    label?: string;
     labelStyle?: TextStyle;
-    description?: MessageLocalizationParam;
+    onLabelPress?: () => void;
+    description?: string;
     descriptionStyle?: TextStyle;
     status: CheckBoxStatus;
     onPress?: () => void;
 };
+//#endregion
 
+//#region Component
 export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
     props: LabeledCheckBoxProps
 ) => {
     const labelComponent = (
-        <Text style={[style.text, props.labelStyle]}>
-            {Message.get(props.label!.key, props.label!.restParam)}
+        <Text
+            onPress={props.onLabelPress}
+            style={[style.text, props.labelStyle]}
+        >
+            {props.label}
         </Text>
     );
 
     const descriptionComponent = props.description ? (
         <Text style={[style.text, props.descriptionStyle]}>
-            {Message.get(props.description!.key, props.description!.restParam)}
+            {props.description}
         </Text>
     ) : undefined;
 
@@ -59,7 +69,9 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
         </View>
     );
 };
+//#endregion
 
+//#region Styles
 const style = StyleSheet.create({
     container: {
         flex: 1,
@@ -76,3 +88,4 @@ const style = StyleSheet.create({
         fontSize: Dimens.option_text_size,
     },
 });
+//#endregion

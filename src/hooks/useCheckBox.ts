@@ -1,5 +1,12 @@
-import { useCallback, useState, useMemo } from "react";
+//#region Import Modules
+import { useCallback, useMemo, useState } from "react";
+//#endregion
 
+//#region Types
+export type useCheckBoxReturn = ReturnType<typeof useCheckBox>;
+//#endregion
+
+//#region Hook
 export const useCheckBox = (
     initialCheck: boolean
 ): {
@@ -16,6 +23,7 @@ export const useCheckBox = (
 
     return {
         onPress,
-        status
+        status,
     };
 };
+//#endregion

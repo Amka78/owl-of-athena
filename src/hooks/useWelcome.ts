@@ -7,7 +7,7 @@ import { useAutoLogin } from "./useAutoLogin";
 import { useDispatch } from "react-redux";
 import { MessageKeys } from "../constants";
 import { LoadingDialog } from "../components";
-import { createGuestUser } from "../service/WelcomeService";
+import { createGuestUser } from "../services/WelcomeService";
 //#endregion
 
 //#region Hooks

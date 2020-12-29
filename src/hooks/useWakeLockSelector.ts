@@ -1,11 +1,9 @@
 import { useSelector } from "react-redux";
 
 import { RootState } from "../state";
-import { WakeLockSentinel } from "../types";
 
-const clientSelector = (state: RootState): WakeLockSentinel | undefined =>
-    state.app.wakeLock;
+const clientSelector = (state: RootState): boolean => state.app.wakeLock;
 
-export const useWakeLockSelector = (): WakeLockSentinel | undefined => {
+export const useWakeLockSelector = (): boolean => {
     return useSelector(clientSelector);
 };

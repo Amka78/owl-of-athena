@@ -1,19 +1,9 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
+import { Message, MessageKeys } from "../constants";
 import { useWelcome } from "../hooks/useWelcome";
-import { MessageKeys } from "../constants";
-import { WelcomeScreenTemplate } from "./template/WelcomeScreenTemplate";
-//#endregion
-
-//#region Constraint
-const WelcomScreenMessages = {
-    contentTitle: { key: MessageKeys.welcome_title },
-    contentText: { key: MessageKeys.welcome_text },
-    standaloneButton: { key: MessageKeys.welcome_standalone_button },
-    loginButton: { key: MessageKeys.welcome_login_button },
-    signupButton: { key: MessageKeys.welcome_signup_button },
-};
+import { WelcomeScreenTemplate } from "./templates/WelcomeScreenTemplate";
 //#endregion
 
 //#region Component
@@ -21,14 +11,24 @@ export const WelcomeScreen: FunctionComponent = () => {
     const useWelcomeHook = useWelcome();
     return (
         <WelcomeScreenTemplate
-            contentTitleText={WelcomScreenMessages.contentTitle}
-            contentText={WelcomScreenMessages.contentText}
-            standaloneButtonText={WelcomScreenMessages.standaloneButton}
-            standaloneButtonPress={useWelcomeHook.onStandalonePress}
-            loginButtonText={WelcomScreenMessages.loginButton}
-            loginButtonPress={useWelcomeHook.onLoginPress}
-            signupButtonText={WelcomScreenMessages.signupButton}
-            signupButtonPress={useWelcomeHook.onSignupPress}
+            contentTitle={{
+                children: Message.get(MessageKeys.welcome_title),
+            }}
+            contentText={{
+                children: Message.get(MessageKeys.welcome_text),
+            }}
+            standaloneButton={{
+                children: Message.get(MessageKeys.welcome_standalone_button),
+                onPress: useWelcomeHook.onStandalonePress,
+            }}
+            loginButton={{
+                children: Message.get(MessageKeys.welcome_login_button),
+                onPress: useWelcomeHook.onLoginPress,
+            }}
+            signupButton={{
+                children: Message.get(MessageKeys.welcome_signup_button),
+                onPress: useWelcomeHook.onSignupPress,
+            }}
         ></WelcomeScreenTemplate>
     );
 };

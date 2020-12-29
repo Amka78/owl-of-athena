@@ -2,7 +2,7 @@ import { AppState } from "../state";
 import { AppActions } from "../actions";
 import { ActionTypes } from "../constants";
 const initialState: AppState = {
-    wakeLock: undefined,
+    wakeLock: false,
 };
 
 export default function AppReducers(

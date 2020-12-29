@@ -1,3 +1,4 @@
+//#region Import Modules
 import { Login, Auth, GuestUser } from "../types";
 import { login as loginAction } from "../actions";
 import { useCallback, useState } from "react";
@@ -8,18 +9,32 @@ import { useDispatch } from "react-redux";
 import { Message, MessageKeys } from "../constants";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components";
+import { useTextBox, useTextBoxReturn } from "./";
+//#endregion
 
-export const useLogin = (
-    login: Login
-): { onPress: () => Promise<void>; generalError: string } => {
+//#region Hooks
+export const useLogin = (): {
+    email: useTextBoxReturn;
+    password: useTextBoxReturn;
+    onLoginPress: () => Promise<void>;
+    generalError: string;
+    onForgotPasswordButtonPress: () => void;
+    onSignupButtonPress: () => void;
+} => {
+    const email = useTextBox("");
+    const password = useTextBox("");
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
-    const onPress = useCallback(async () => {
+    const onLoginPress = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: { key: MessageKeys.login_loading_message },
+            dialogTitle: MessageKeys.login_loading_message,
         });
         try {
+            const login: Login = {
+                email: email.value,
+                password: password.value,
+            };
             console.debug("useLogin start", login);
             const result = await AuroraRestClientInstance.login(login);
             console.debug("loggedin user", result);
@@ -34,8 +49,8 @@ export const useLogin = (
             LoadingDialog.close();
 
             ConfirmDialog.show({
-                title: { key: MessageKeys.standalone_mode_confirm_title },
-                message: { key: MessageKeys.standalone_mode_confirm_message },
+                title: MessageKeys.standalone_mode_confirm_title,
+                message: MessageKeys.standalone_mode_confirm_message,
                 isCancelable: true,
                 onConfirm: () => {
                     const currentDate = Date.now().toLocaleString();
@@ -62,10 +77,29 @@ export const useLogin = (
         } finally {
             LoadingDialog.close();
         }
-    }, [dispatch, login, navigate]);
-    return { onPress, generalError };
+    }, [dispatch, email.value, navigate, password.value]);
+
+    const onForgotPasswordButtonPress = useCallback(() => {
+        navigate("ForgotPassword");
+    }, [navigate]);
+
+    const onSignupButtonPress = useCallback(() => {
+        navigate("Signup");
+    }, [navigate]);
+    return {
+        email,
+        password,
+        onLoginPress,
+        generalError,
+        onForgotPasswordButtonPress,
+        onSignupButtonPress,
+    };
 };
+//#endregion
+
+//#region Function
 function postLoginAction(dispatch: Dispatch<any>, navigate: any, result: Auth) {
     dispatch(loginAction(result.user, result.token));
     navigate("Main");
 }
+//#endregion

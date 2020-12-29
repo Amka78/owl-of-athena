@@ -3,36 +3,26 @@
 exports[`WelcomeScreenTemplate UnitTest renders correctly 1`] = `
 <Component>
   <Component>
-    <Component
-      key="test"
-    />
+    test
   </Component>
   <Component>
-    <Component
-      key="test"
-    />
+    test
   </Component>
   <View>
     <Component
       onPress={[Function]}
     >
-      <Component
-        key="test"
-      />
+      test
     </Component>
     <Component
       onPress={[Function]}
     >
-      <Component
-        key="test"
-      />
+      test
     </Component>
     <Component
       onPress={[Function]}
     >
-      <Component
-        key="test"
-      />
+      test
     </Component>
   </View>
 </Component>

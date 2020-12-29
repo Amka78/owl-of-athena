@@ -1,10 +1,6 @@
 import AuroraManagerInstance, {
     AuroraManager,
-    AuroraManagerEventList
+    AuroraManagerEventList,
 } from "./AuroraManager";
 
-export {
-    AuroraManagerInstance,
-    AuroraManager,
-    AuroraManagerEventList as AuroraManagetEventList
-};
+export { AuroraManagerInstance, AuroraManager, AuroraManagerEventList };

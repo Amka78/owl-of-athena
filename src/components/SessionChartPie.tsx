@@ -1,8 +1,12 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
+//import { NewChartPie as ChartPie } from "./charts";
 import { ChartPie } from "./charts";
 import { Colors, Message, MessageKeys } from "../constants";
 import { AuroraSession } from "../sdk/models";
+//#endregion
 
+//#region Types
 export type SessionChartPieProps = {
     categoryLabelSize: number;
     categoryLabelPadding: number;
@@ -18,6 +22,9 @@ type Duration = {
     hours: number;
     minutes: number;
 };
+//#endregion
+
+//#region  Constant
 const stages = [
     {
         label: MessageKeys.session_light_pie_chart_label,
@@ -45,6 +52,9 @@ const stages = [
         color: Colors.black,
     },
 ];
+//#endregion
+
+//#region Component
 export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
     props: SessionChartPieProps
 ) => {
@@ -77,9 +87,12 @@ export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
         />
     );
 };
+//#endregion
 
+//#region Function
 const getDuration = (ms: number): Duration => {
     const minutes = Math.ceil((ms / (1000 * 60)) % 60);
     const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
     return { hours, minutes };
 };
+//#endregion

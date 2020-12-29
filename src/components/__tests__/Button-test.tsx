@@ -1,21 +1,20 @@
+//#region Import Modules
 import "jest-enzyme";
 import "react-native";
 
 import { ShallowWrapper } from "enzyme";
 import React from "react";
-import { Button, ButtonProps } from "../Button";
-import { Message, MessageKeys } from "../../constants";
-import { TestHelper } from "../../utils/TestHelper";
 
+import { TestHelper } from "../../utils/TestHelper";
+import { Button, ButtonProps } from "../Button";
+//#endregion
+
+//#region Tests
 let component: ShallowWrapper<ButtonProps, unknown, unknown>;
 
 describe("Button UnitTest", () => {
-    it.each(["ja-JP", "en-US"])("renders correctly", (locale: string) => {
-        Message.setLocale(locale);
-
-        component = TestHelper.createMock(
-            <Button>{{ key: MessageKeys.login }}</Button>
-        );
+    it("renders correctly", () => {
+        component = TestHelper.createMock(<Button>{"test"}</Button>);
 
         expect(TestHelper.toJson(component)).toMatchSnapshot();
     });
@@ -78,3 +77,4 @@ describe("Button UnitTest", () => {
     });
     */
 });
+//#endregion

@@ -1,5 +1,12 @@
+//#region Import Modules
 import { useState } from "react";
+//#endregion
 
+//#region Types
+export type useTextBoxReturn = ReturnType<typeof useTextBox>;
+//#endregion
+
+//#region Hooks
 export const useTextBox = (
     initialValue: string
 ): { onChangeText: (e: string) => void; value: string; set: any } => {
@@ -15,3 +22,4 @@ export const useTextBox = (
         value,
     };
 };
+//#endregionp

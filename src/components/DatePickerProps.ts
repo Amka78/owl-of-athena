@@ -1,7 +1,5 @@
-import { MessageLocalizationParam } from "../constants/Message";
-
 export type DatePickerProps = {
-    label?: MessageLocalizationParam;
+    label?: string;
     selected?: Date;
     format?: string;
     onChange: (date: Date) => void;

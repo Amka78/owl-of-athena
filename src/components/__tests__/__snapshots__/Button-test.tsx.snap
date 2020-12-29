@@ -21,31 +21,6 @@ exports[`Button UnitTest renders correctly 1`] = `
     }
   }
 >
-  ログイン
-</withTheme(Button)>
-`;
-
-exports[`Button UnitTest renders correctly 2`] = `
-<withTheme(Button)
-  disabled={false}
-  labelStyle={
-    Object {
-      "color": "#070724",
-      "fontFamily": "calibre_app_semibold",
-      "fontSize": 24,
-    }
-  }
-  mode="contained"
-  style={
-    Object {
-      "backgroundColor": "#00ffe6",
-      "borderRadius": 16,
-      "height": 50,
-      "marginBottom": 16,
-      "width": 654,
-    }
-  }
->
-  Log In
+  test
 </withTheme(Button)>
 `;

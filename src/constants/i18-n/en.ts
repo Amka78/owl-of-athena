@@ -1,4 +1,8 @@
+//#region Import Moduels
 import { MessageKeys } from "../MessageKeys";
+//#endregion
+
+//#region Constant
 const login = "Log In";
 const signup = "Sign Up";
 const input_email = "EMAIL ADDRESS";
@@ -9,8 +13,11 @@ const input_first_name = "FIRST NAME";
 const input_last_name = "LAST NAME";
 const input_birthday = "BIRTHDAY";
 const update = "Update";
+//#endregion
 
+//#region Export
 export default {
+    [MessageKeys.ok]: "OK",
     [MessageKeys.app_name]: "Aurora",
     [MessageKeys.save]: "SAVE",
     [MessageKeys.cancel]: "CANCEL",
@@ -204,3 +211,4 @@ export default {
     [MessageKeys.standalone_mode_confirm_message]:
         "Could not connect to the Aurora API. So Do you want to run Aurora in standalone mode?",
 };
+//#endregion

@@ -1,11 +1,14 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { Text, View, StyleSheet, TextStyle } from "react-native";
 import { TimeView } from ".";
-import { Colors, Message } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
+import { Colors } from "../constants";
 import { TimeViewMode } from "../components/TimeView";
+//#endregion
+
+//#region Types
 export type LabeledTimeViewProps = {
-    label: MessageLocalizationParam;
+    label: string;
     hours: number;
     minutes: number;
     mode: TimeViewMode;
@@ -13,14 +16,15 @@ export type LabeledTimeViewProps = {
     timeStyle?: TextStyle;
     timeMeridianStyle?: TextStyle;
 };
+//#endregion
+
+//#region Component
 export const LabeledTimeView: FunctionComponent<LabeledTimeViewProps> = (
     props: LabeledTimeViewProps
 ) => {
     return (
         <View style={{ alignItems: "center" }}>
-            <Text style={[style.label, props.labelStyle]}>
-                {Message.get(props.label.key, props.label.restParam)}
-            </Text>
+            <Text style={[style.label, props.labelStyle]}>{props.label}</Text>
             <TimeView
                 hours={props.hours}
                 minutes={props.minutes}
@@ -31,7 +35,10 @@ export const LabeledTimeView: FunctionComponent<LabeledTimeViewProps> = (
         </View>
     );
 };
+//#endregion
 
+//#region Styles
 const style = StyleSheet.create({
     label: { color: Colors.cyan, fontSize: 20 },
 });
+//#endregion

@@ -1,79 +1,32 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
-import {
-    Button,
-    StandardView,
-    ContentTitle,
-    ContentText,
-    ConfirmDialog,
-    LoadingDialog,
-} from "../components";
 
-import { useNavigation } from "react-navigation-hooks";
-import {
-    useCheckLogging,
-    useSessionListSelector,
-    useSessionDetailListSelector,
-    useUserSelector,
-} from "../hooks";
-import { MessageKeys } from "../constants";
-import { AuroraManagerInstance } from "../managers";
-import { useDispatch } from "react-redux";
-import { cacheSessions, selectSession, cacheSessionDetails } from "../actions";
-import { SleepStates } from "../sdk/AuroraConstants";
-import { GuestUser } from "../types";
+import { Message, MessageKeys } from "../constants";
+import { useAwake } from "../hooks/useAwake";
+import { AwakeScreenTemplate } from "./templates/AwakeScreenTemplate";
+//#endregion
+
+//#region Component
 export const AwakeScreen: FunctionComponent = () => {
-    useCheckLogging();
-    const dispatch = useDispatch();
-    const { navigate } = useNavigation();
-    const userInfo = useUserSelector();
-    const sessionList = useSessionListSelector();
-    const sessionDetailList = useSessionDetailListSelector();
+    const awakeHook = useAwake();
+
     return (
-        <StandardView>
-            <ContentTitle>{{ key: MessageKeys.awake_title }}</ContentTitle>
-            <ContentText>{{ key: MessageKeys.awake_text }}</ContentText>
-            <Button
-                onPress={(): void => {
-                    ConfirmDialog.show({
-                        title: { key: MessageKeys.wip_dialog_title },
-                        message: { key: MessageKeys.wip_dialog_message },
-                        isCancelable: false,
-                    });
-                }}
-            >
-                {{ key: MessageKeys.awake_questionnaire_continue_button }}
-            </Button>
-            <Button
-                onPress={async (): Promise<void> => {
-                    LoadingDialog.show({
-                        dialogTitle: {
-                            key: MessageKeys.home_go_to_sleep_loading_message,
-                        },
-                    });
-                    try {
-                        const unsyncedSession = await AuroraManagerInstance.getUnsyncedSessions();
-
-                        if (unsyncedSession.length > 0) {
-                            const pushedSession = await AuroraManagerInstance.pushSessions(
-                                unsyncedSession,
-                                userInfo?.id === GuestUser
-                            );
-
-                            sessionList.unshift(...pushedSession[0]);
-                            sessionDetailList.unshift(...pushedSession[1]);
-                            dispatch(cacheSessions(sessionList));
-                            dispatch(cacheSessionDetails(sessionDetailList));
-                            dispatch(selectSession(pushedSession[0][0]));
-                        }
-                        AuroraManagerInstance.setSleepState(SleepStates.INIT);
-                        navigate("Home");
-                    } finally {
-                        LoadingDialog.close();
-                    }
-                }}
-            >
-                {{ key: MessageKeys.awake_questionnaire_skip_button }}
-            </Button>
-        </StandardView>
+        <AwakeScreenTemplate
+            contentTitle={{ children: Message.get(MessageKeys.awake_title) }}
+            contentText={{ children: Message.get(MessageKeys.awake_text) }}
+            questionnaireButton={{
+                onPress: awakeHook.questionnaireButtonPress,
+                children: Message.get(
+                    MessageKeys.awake_questionnaire_continue_button
+                ),
+            }}
+            skipButton={{
+                onPress: awakeHook.skipButtonPress,
+                children: Message.get(
+                    MessageKeys.awake_questionnaire_skip_button
+                ),
+            }}
+        ></AwakeScreenTemplate>
     );
 };
+//#endregion

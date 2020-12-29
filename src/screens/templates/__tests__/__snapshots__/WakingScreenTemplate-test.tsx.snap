@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WakingScreenTemplate UnitTest renders correctly 1`] = `
+<Component>
+  <Component>
+    test
+  </Component>
+  <Component
+    hours={0}
+    minutes={0}
+    mode="meridian"
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <Component
+      onPress={[Function]}
+    >
+      test
+    </Component>
+    <Component>
+      test
+    </Component>
+  </View>
+</Component>
+`;

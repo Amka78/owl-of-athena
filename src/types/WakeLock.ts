@@ -5,6 +5,7 @@ export type WakeLockSentinel = {
         opts?: { once: boolean }
     ): any;
     release(): void;
+    released: boolean;
 };
 type WakeLock = {
     request: (target: string) => Promise<WakeLockSentinel>;

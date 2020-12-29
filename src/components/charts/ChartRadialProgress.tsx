@@ -1,4 +1,4 @@
-//#region Import modules
+//#region Import Modules
 import * as d3 from "d3";
 import React, { FC } from "react";
 import { Path, Text } from "react-native-svg";
@@ -7,7 +7,7 @@ import { Colors } from "../../constants";
 import { ChartCore, ChartCoreProps } from "./ChartCore";
 //#endregion
 
-//#region Export Types
+//#region Types
 export type ChartRadialProgressProps = ChartCoreProps & {
     startAngle?: number;
     bgColor: string;
@@ -23,6 +23,7 @@ export type ChartRadialProgressProps = ChartCoreProps & {
 };
 //#endregion
 
+//#region Component
 export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
     props: ChartRadialProgressProps
 ) => {
@@ -81,8 +82,9 @@ export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
         </ChartCore>
     );
 };
+//#endregion
 
-//#region Internal Functions
+//#region Functions
 const getRadiansFromDegrees = (angle: number): number => {
     return (angle * Math.PI) / 180;
 };

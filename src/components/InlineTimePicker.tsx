@@ -1,14 +1,17 @@
+//#region Import Modules
+import { Ionicons } from "@expo/vector-icons";
 import React, { Component } from "react";
 import {
+    StyleSheet,
     Text,
+    TextStyle,
     TouchableOpacity,
     View,
-    StyleSheet,
     ViewStyle,
-    TextStyle
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+//#endregion
 
+//#region Types
 type TimePickerStyle = {
     textColor?: string;
     backgroundColor?: string;
@@ -20,20 +23,7 @@ type TimePickerStyle = {
     iconSize?: number;
 };
 
-const TimePickerDefaultStyle: TimePickerStyle = {
-    textColor: "#ddd",
-    backgroundColor: "#777",
-    containerBackgroudColor: "#555",
-    activeColor: "#000",
-    borderColor: "#555",
-    fontSize: 35,
-    borderRadius: 4,
-    iconSize: 35
-};
-
-type TimePickerMode = "full" | "minute";
-
-type InlineTimePickerProps = {
+export type InlineTimePickerProps = {
     style?: TimePickerStyle;
     initialTime?: Date | { hours: number; minutes: number; seconds: number };
     onChangeTime?: (hours?: number, minutes?: number, seconds?: number) => void;
@@ -48,7 +38,10 @@ type InlineTimePickerState = {
     meridian: "AM" | "PM";
     updating?: Text;
 };
+type TimePickerMode = "full" | "minute";
+//#endregion
 
+//#region Component
 export class InlineTimePicker extends Component<
     InlineTimePickerProps,
     InlineTimePickerState
@@ -73,7 +66,7 @@ export class InlineTimePicker extends Component<
             minutes: 0,
             seconds: 0,
             meridian: "AM",
-            updating: undefined
+            updating: undefined,
         };
         this.hoursText = undefined;
         this.minutesText = undefined;
@@ -86,7 +79,7 @@ export class InlineTimePicker extends Component<
         }
 
         this.style = TimePickerDefaultStyle;
-        if (this.props.style) {
+        if (this.props?.style) {
             this.style = this.props.style!;
 
             this.setStyle();
@@ -122,7 +115,7 @@ export class InlineTimePicker extends Component<
             hours: calculatedHours,
             minutes: initialDate.getMinutes(),
             seconds: initialDate.getSeconds(),
-            meridian: currentHours > 12 ? "PM" : "AM"
+            meridian: currentHours > 12 ? "PM" : "AM",
         });
     }
 
@@ -143,21 +136,21 @@ export class InlineTimePicker extends Component<
                                 <TouchableOpacity
                                     style={{
                                         justifyContent: "center",
-                                        marginRight: 10
+                                        marginRight: 10,
                                     }}
                                     onPress={(): void => {
                                         this.setState({
                                             meridian:
                                                 this.state.meridian === "AM"
                                                     ? "PM"
-                                                    : "AM"
+                                                    : "AM",
                                         });
                                     }}
                                 >
                                     <Text
                                         style={[
                                             styles.text,
-                                            this.getTextStyle()
+                                            this.getTextStyle(),
                                         ]}
                                     >
                                         {this.state.meridian}
@@ -222,7 +215,7 @@ export class InlineTimePicker extends Component<
                                 style={[
                                     styles.text,
                                     this.getTextStyle(),
-                                    styles.increment
+                                    styles.increment,
                                 ]}
                                 onPress={(): void => this.increment(1)}
                                 onLongPress={(): void => this.longIncrement(10)}
@@ -238,7 +231,7 @@ export class InlineTimePicker extends Component<
                                 style={[
                                     styles.text,
                                     this.getTextStyle(),
-                                    styles.increment
+                                    styles.increment,
                                 ]}
                                 onPress={(): void => this.increment(-1)}
                                 onLongPress={(): void =>
@@ -305,7 +298,7 @@ export class InlineTimePicker extends Component<
             newHours = this.calculate12Hours(currentHours);
             this.setState({
                 hours: newHours,
-                meridian: this.getMeridian(newHours)
+                meridian: this.getMeridian(newHours),
             });
         }
     };
@@ -404,14 +397,14 @@ export class InlineTimePicker extends Component<
                 backgroundColor: isActive
                     ? this.style.activeColor
                     : this.style.backgroundColor,
-                borderWidth: isActive ? 2 : 1
-            }
+                borderWidth: isActive ? 2 : 1,
+            },
         });
     }
 
     private getContainerColor = (): ViewStyle => {
         return {
-            backgroundColor: this.style.containerBackgroudColor
+            backgroundColor: this.style.containerBackgroudColor,
         };
     };
 
@@ -425,11 +418,23 @@ export class InlineTimePicker extends Component<
             borderRadius: this.style.borderRadius,
             color: this.style.textColor,
             backgroundColor: this.style.backgroundColor,
-            borderColor: this.style.borderColor
+            borderColor: this.style.borderColor,
         };
     };
 }
+//#endregion
 
+//#region Styles
+const TimePickerDefaultStyle: TimePickerStyle = {
+    textColor: "#ddd",
+    backgroundColor: "#777",
+    containerBackgroudColor: "#555",
+    activeColor: "#000",
+    borderColor: "#555",
+    fontSize: 35,
+    borderRadius: 4,
+    iconSize: 35,
+};
 const styles = StyleSheet.create({
     container: {
         margin: 5,
@@ -441,16 +446,16 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "center",
         alignContent: "center",
-        borderRadius: 4
+        borderRadius: 4,
     },
     timeContainer: {
         flexDirection: "row",
-        margin: 5
+        margin: 5,
     },
     center: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
     },
     text: {
         borderWidth: 1,
@@ -458,22 +463,23 @@ const styles = StyleSheet.create({
         textAlign: "center",
         justifyContent: "space-around",
         alignItems: "center",
-        alignContent: "center"
+        alignContent: "center",
     },
     increment: {
         marginRight: 5,
-        padding: 7
+        padding: 7,
     },
     colon: {
         fontSize: 35,
-        marginHorizontal: 3
+        marginHorizontal: 3,
     },
     meridian: {
         position: "absolute",
         top: 0,
-        left: 5
+        left: 5,
     },
     meridian_text: {
-        fontSize: 16
-    }
+        fontSize: 16,
+    },
 });
+//#endregion

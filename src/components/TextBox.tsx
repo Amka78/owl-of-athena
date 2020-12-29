@@ -1,22 +1,19 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
-import { Dimens, Fonts, Message, Layout, Colors } from "../constants";
 
-import { MessageLocalizationParam } from "../constants/Message";
+import { Colors, Dimens, Fonts, Layout } from "../constants";
+//#endregion
+
+//#region Types
 export type TextBoxProps = TextInputProps & {
     error?: boolean;
-    label?: MessageLocalizationParam;
-    localizedPlaceholder?: MessageLocalizationParam;
+    label?: string;
 };
+//#endregion
 
-const textInputStyle = {
-    backgroundColor: "transparent",
-    marginBottom: Dimens.button_margin_bottom,
-    fontFamily: Fonts.primaryRegular,
-    fontSize: Dimens.input_text_size,
-    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
-};
+//#region Component
 export const TextBox: FunctionComponent<TextBoxProps> = (
     props: TextBoxProps
 ) => {
@@ -27,19 +24,6 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
             selectionColor={Colors.white}
             style={textInputStyle}
             underlineColor={Colors.white}
-            placeholder={
-                props.localizedPlaceholder
-                    ? Message.get(
-                          props.localizedPlaceholder!.key,
-                          props.localizedPlaceholder!.restParam
-                      )
-                    : props.placeholder
-            }
-            label={
-                props.label
-                    ? Message.get(props.label.key, props.label.restParam)
-                    : undefined
-            }
             theme={{
                 colors: {
                     text: Colors.cyan,
@@ -50,3 +34,14 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
         ></TextInput>
     );
 };
+//#endregion
+
+//#region Styles
+const textInputStyle = {
+    backgroundColor: "transparent",
+    marginBottom: Dimens.button_margin_bottom,
+    fontFamily: Fonts.primaryRegular,
+    fontSize: Dimens.input_text_size,
+    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
+};
+//#endregion

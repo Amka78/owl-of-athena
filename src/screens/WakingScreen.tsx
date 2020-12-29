@@ -1,39 +1,31 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
-import { View } from "react-native";
-import {
-    TimeView,
-    Button,
-    StandardView,
-    ContentTitle,
-    ContentText,
-} from "../components";
-import { useCheckLogging, useSettingsSelector } from "../hooks";
-import { MessageKeys } from "../constants";
-import { AuroraManagerInstance } from "../managers";
-import { SleepStates } from "../sdk";
+
+import { Message, MessageKeys } from "../constants";
+import { useWaking } from "../hooks/useWaking ";
+import { WakingScreenTemplate } from "./templates/WakingScreenTemplate";
+//#endregion
+
+//#region Components
 export const WakingScreen: FunctionComponent = () => {
-    useCheckLogging();
-    const settings = useSettingsSelector();
+    const wakingHook = useWaking();
     return (
-        <StandardView>
-            <ContentTitle>{{ key: MessageKeys.waking_title }}</ContentTitle>
-            <TimeView
-                hours={settings.alarmHour}
-                minutes={settings.alarmMinute}
-                mode={"meridian"}
-            ></TimeView>
-            <View style={{ alignItems: "center" }}>
-                <Button
-                    onPress={(): void => {
-                        AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
-                    }}
-                >
-                    {{ key: MessageKeys.waking_wakeup_button }}
-                </Button>
-                <ContentText>
-                    {{ key: MessageKeys.waking_tip_text }}
-                </ContentText>
-            </View>
-        </StandardView>
+        <WakingScreenTemplate
+            contentTitle={{
+                children: Message.get(MessageKeys.waking_title),
+            }}
+            timeView={{
+                hours: wakingHook.settings.alarmHour,
+                minutes: wakingHook.settings.alarmMinute,
+            }}
+            wakeupButton={{
+                onPress: wakingHook.wakeupButtonPress,
+                children: Message.get(MessageKeys.waking_wakeup_button),
+            }}
+            contentText={{
+                children: Message.get(MessageKeys.waking_tip_text),
+            }}
+        ></WakingScreenTemplate>
     );
 };
+//#endregion

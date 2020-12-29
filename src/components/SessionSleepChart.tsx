@@ -1,9 +1,12 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 import { ChartSleep, ChartMovement } from "../components/charts";
 import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
 import { Layout } from "../constants";
+//#endregion
 
+//#region Types
 export type SessionSleepChartProps = {
     width: number;
     height: number;
@@ -12,6 +15,9 @@ export type SessionSleepChartProps = {
     sessionDetail: AuroraSessionDetail;
     totalSleepHour: number;
 };
+//#endregion
+
+//#region Component
 export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
     props: SessionSleepChartProps
 ) => {
@@ -57,3 +63,4 @@ export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
         </View>
     );
 };
+//#endregion

@@ -1,36 +1,33 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 
-import {
-    Button,
-    ContentText,
-    ContentTitle,
-    ErrorText,
-    StandardView,
-    TextBox
-} from "../components";
-import { useForgotPassword, useTextBox } from "../hooks";
-import { MessageKeys } from "../constants";
-export const ForgotPasswordScreen: FunctionComponent = () => {
-    const emailHooks = useTextBox("");
-    const forgotPassword = useForgotPassword(false, emailHooks.value);
-    return (
-        <StandardView>
-            <ContentTitle>
-                {{ key: MessageKeys.forgot_password_title }}
-            </ContentTitle>
-            <ContentText>
-                {{ key: MessageKeys.forgot_password_text }}
-            </ContentText>
-            <TextBox
-                {...emailHooks}
-                label={{ key: MessageKeys.forgot_password_input_email }}
-                keyboardType={"email-address"}
-            ></TextBox>
+import { Message, MessageKeys } from "../constants";
+import { useForgotPassword } from "../hooks";
+import { ForgotPasswordScreenTemplate } from "./templates/ForgotPasswordScreenTemplate";
+//#endregion
 
-            <ErrorText>{{ key: forgotPassword.generalError }}</ErrorText>
-            <Button {...forgotPassword}>
-                {{ key: MessageKeys.forgot_password_button }}
-            </Button>
-        </StandardView>
+//#region Component
+export const ForgotPasswordScreen: FunctionComponent = () => {
+    const forgotPassword = useForgotPassword(false);
+    return (
+        <ForgotPasswordScreenTemplate
+            contentTitle={{
+                children: Message.get(MessageKeys.forgot_password_title),
+            }}
+            contentText={{
+                children: Message.get(MessageKeys.forgot_password_text),
+            }}
+            emailAddress={{
+                ...forgotPassword.emailAddress,
+            }}
+            errorText={{
+                children: Message.get(forgotPassword.generalError),
+            }}
+            forgotPasswordButton={{
+                children: Message.get(MessageKeys.forgot_password_button),
+                onPress: forgotPassword.onForgotPasswordPress,
+            }}
+        ></ForgotPasswordScreenTemplate>
     );
 };
+//#endregion

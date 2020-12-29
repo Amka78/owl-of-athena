@@ -10,20 +10,17 @@ let component: ShallowWrapper<unknown, unknown, unknown>;
 
 describe("WelcomeScreenTemplate UnitTest", () => {
     it("renders correctly", () => {
-        const testKey = { key: "test" };
+        const testKey = "test";
         const testEvent: () => void = () => {
             return;
         };
         component = TestHelper.createMock(
             <WelcomeScreenTemplate
-                contentTitleText={testKey}
-                contentText={testKey}
-                standaloneButtonText={testKey}
-                standaloneButtonPress={testEvent}
-                loginButtonText={testKey}
-                loginButtonPress={testEvent}
-                signupButtonText={testKey}
-                signupButtonPress={testEvent}
+                contentTitle={{ children: testKey }}
+                contentText={{ children: testKey }}
+                standaloneButton={{ children: testKey, onPress: testEvent }}
+                loginButton={{ children: testKey, onPress: testEvent }}
+                signupButton={{ children: testKey, onPress: testEvent }}
             ></WelcomeScreenTemplate>
         );
 

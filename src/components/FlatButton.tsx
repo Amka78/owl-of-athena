@@ -1,17 +1,21 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 import { Button as PaperButton } from "react-native-paper";
 
-import { Colors, Dimens, Fonts, Message } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
+import { Colors, Dimens, Fonts } from "../constants";
+//#endregion
 
-type FlatButtonProps = {
-    children: MessageLocalizationParam;
+//#region Types
+export type FlatButtonProps = {
+    children: string;
     labelStyle?: TextStyle;
     contentStyle?: ViewStyle;
     onPress?: () => void;
 };
+//#endregion
 
+//#region Constant
 const labelStyle: TextStyle = {
     color: Colors.white,
     fontFamily: Fonts.primarySemiBold,
@@ -21,6 +25,9 @@ const contentStyle: ViewStyle = {
     marginBottom: Dimens.button_flat_margin_bottom,
     height: Dimens.button_flat_height,
 };
+//#endregionk
+
+//#region Component
 export const FlatButton: FunctionComponent<FlatButtonProps> = (
     props: FlatButtonProps
 ) => {
@@ -31,7 +38,8 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (
             labelStyle={[labelStyle, props.labelStyle]}
             contentStyle={[contentStyle, props.contentStyle]}
         >
-            {Message.get(props.children.key, props.children.restParam)}
+            {props.children}
         </PaperButton>
     );
 };
+//#endregion

@@ -1,20 +1,24 @@
+//#region Import Modules
 import React from "react";
-import { Message, Colors, Fonts } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
+import { Colors, Fonts } from "../constants";
 import { Dialog, ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
+//#endregion
 
+//#region Types
 type LoadingDialogState = {
     settings?: LoadingDialogSettings;
 };
 
 type LoadingDialogSettings = {
     onDissmiss?: () => void;
-    dialogTitle: MessageLocalizationParam;
+    dialogTitle: string;
 };
 
 type LoadingDialogProps = {};
+//#endregion
 
+//#region Component
 export class LoadingDialog extends React.Component<
     LoadingDialogProps,
     LoadingDialogState
@@ -32,7 +36,7 @@ export class LoadingDialog extends React.Component<
     constructor(props: LoadingDialogProps) {
         super(props);
         this.state = {
-            settings: undefined
+            settings: undefined,
         };
     }
 
@@ -42,12 +46,9 @@ export class LoadingDialog extends React.Component<
 
     public render(): JSX.Element | null {
         return this.state.settings ? (
-            <Dialog visible={true} style={style.dialogContainer}>
-                <Dialog.Title style={style.dialogTitle}>
-                    {Message.get(
-                        this.state.settings!.dialogTitle.key,
-                        this.state.settings!.dialogTitle.restParam
-                    )}
+            <Dialog visible={true} style={styles.dialogContainer}>
+                <Dialog.Title style={styles.dialogTitle}>
+                    {this.state.settings.dialogTitle}
                 </Dialog.Title>
                 <Dialog.Content>
                     <ActivityIndicator></ActivityIndicator>
@@ -56,14 +57,17 @@ export class LoadingDialog extends React.Component<
         ) : null;
     }
 }
+//#endregion
 
-const style = StyleSheet.create({
+//#region Styles
+const styles = StyleSheet.create({
     dialogContainer: {
         alignSelf: "center",
-        backgroundColor: Colors.navy_darker
+        backgroundColor: Colors.navy_darker,
     },
     dialogTitle: {
         color: Colors.cyan,
-        fontFamily: Fonts.primarySemiBold
-    }
+        fontFamily: Fonts.primarySemiBold,
+    },
 });
+//#endregion

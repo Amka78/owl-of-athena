@@ -1,13 +1,16 @@
+//#region Import Modules
 import React from "react";
 import { Message, Colors, Fonts, MessageKeys } from "../constants";
-import { MessageLocalizationParam } from "../constants/Message";
 import { Dialog } from "react-native-paper";
 import { FlatButton } from "./FlatButton";
 import { ContentText } from "./ContentText";
 import { StyleSheet } from "react-native";
+//#endregion
+
+//#region Types
 type ConfirmDialogSettings = {
-    title: MessageLocalizationParam;
-    message: MessageLocalizationParam;
+    title: string;
+    message: string;
     isCancelable?: boolean;
     onConfirm?: () => void;
     onDissmiss?: () => void;
@@ -17,7 +20,9 @@ type ConfirmDialogProps = {};
 type ConfirmDialogState = {
     dialogSettings?: ConfirmDialogSettings;
 };
+//#endregion
 
+//#region Component
 export class ConfirmDialog extends React.Component<
     ConfirmDialogProps,
     ConfirmDialogState
@@ -31,7 +36,7 @@ export class ConfirmDialog extends React.Component<
     constructor(props: ConfirmDialogProps) {
         super(props);
         this.state = {
-            dialogSettings: undefined
+            dialogSettings: undefined,
         };
     }
 
@@ -56,10 +61,7 @@ export class ConfirmDialog extends React.Component<
                 style={style.dialogContainer}
             >
                 <Dialog.Title style={style.dialogTitle}>
-                    {Message.get(
-                        this.state.dialogSettings.title.key,
-                        this.state.dialogSettings.title.restParam
-                    )}
+                    {this.state.dialogSettings.title}
                 </Dialog.Title>
                 <Dialog.Content>
                     <ContentText>
@@ -72,11 +74,9 @@ export class ConfirmDialog extends React.Component<
                             labelStyle={style.dialogButton}
                             onPress={this.onCancelPressed()}
                         >
-                            {{ key: MessageKeys.cancel }}
+                            {Message.get(MessageKeys.cancel)}
                         </FlatButton>
-                    ) : (
-                        undefined
-                    )}
+                    ) : undefined}
                     <FlatButton
                         labelStyle={style.dialogButton}
                         onPress={(): void => {
@@ -86,7 +86,7 @@ export class ConfirmDialog extends React.Component<
                             this.setState({ dialogSettings: undefined });
                         }}
                     >
-                        {{ key: "ok" }}
+                        {Message.get(MessageKeys.ok)}
                     </FlatButton>
                 </Dialog.Actions>
             </Dialog>
@@ -99,16 +99,19 @@ export class ConfirmDialog extends React.Component<
         };
     }
 }
+//#endregion
 
+//#region Styles
 const style = StyleSheet.create({
     dialogContainer: {
-        backgroundColor: Colors.navy_darker
+        backgroundColor: Colors.navy_darker,
     },
     dialogTitle: {
         color: Colors.cyan,
-        fontFamily: Fonts.primarySemiBold
+        fontFamily: Fonts.primarySemiBold,
     },
     dialogButton: {
-        color: Colors.cyan
-    }
+        color: Colors.cyan,
+    },
 });
+//#endregion

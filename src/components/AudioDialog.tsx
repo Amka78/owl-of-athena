@@ -7,7 +7,8 @@ import { Dialog, RadioButton } from "react-native-paper";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { FlatButton } from "./FlatButton";
 import { Audio } from "expo-av";
-////#endregion
+//#endregion
+
 type AudioDialogSettings = {
     onConfirm: (showName: AudioList, fileName: string) => void;
     onDissmiss?: () => void;
@@ -112,7 +113,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
                                         <LabeledRadioButton
                                             key={index}
                                             value={value.showName}
-                                            label={{ key: value.showName }}
+                                            label={Message.get(value.showName)}
                                             onLabelPress={this.onLabelPressed(
                                                 value
                                             )}
@@ -128,13 +129,13 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
                         labelStyle={style.dialogButton}
                         onPress={this.onCancelButtonPressed()}
                     >
-                        {{ key: MessageKeys.cancel }}
+                        {Message.get(MessageKeys.cancel)}
                     </FlatButton>
                     <FlatButton
                         labelStyle={style.dialogButton}
                         onPress={this.onConfirmButtonPressed()}
                     >
-                        {{ key: MessageKeys.save }}
+                        {Message.get(MessageKeys.save)}
                     </FlatButton>
                 </Dialog.Actions>
             </Dialog>

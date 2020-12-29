@@ -2,6 +2,7 @@ export const MessageKeys = {
     //#region common
     login: "login",
     save: "save",
+    ok: "ok",
     cancel: "cancel",
     app_name: "app_name",
     signup: "signup",

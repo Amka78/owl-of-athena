@@ -3,6 +3,7 @@
 exports[`TextBoxEx UnitTest renders correctly 1`] = `
 <withTheme(TextInput)
   mode="flat"
+  selectionColor="#ffffff"
   style={
     Object {
       "backgroundColor": "transparent",
@@ -28,6 +29,7 @@ exports[`TextBoxEx UnitTest renders correctly 1`] = `
 exports[`TextBoxEx UnitTest renders correctly 2`] = `
 <withTheme(TextInput)
   mode="flat"
+  selectionColor="#ffffff"
   style={
     Object {
       "backgroundColor": "transparent",
