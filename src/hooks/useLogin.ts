@@ -49,8 +49,10 @@ export const useLogin = (): {
             LoadingDialog.close();
 
             ConfirmDialog.show({
-                title: MessageKeys.standalone_mode_confirm_title,
-                message: MessageKeys.standalone_mode_confirm_message,
+                title: Message.get(MessageKeys.standalone_mode_confirm_title),
+                message: Message.get(
+                    MessageKeys.standalone_mode_confirm_message
+                ),
                 isCancelable: true,
                 onConfirm: () => {
                     const currentDate = Date.now().toLocaleString();
