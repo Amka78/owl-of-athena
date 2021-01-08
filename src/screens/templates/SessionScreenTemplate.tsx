@@ -96,6 +96,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                         categoryLabelPadding={
                             Dimens.session_chart_pie_category_label_padding
                         }
+                        percentLabelSize={Dimens.session_percent_label_size}
                         height={Layout.window.height / 2.3}
                         width={Layout.window.fixedWidth}
                         outerRadius={Dimens.session_chart_pie_outer_radius}

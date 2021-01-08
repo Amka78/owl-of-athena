@@ -77,7 +77,7 @@ export default {
     session_radial_progress_chart_font_size: Layout.isSmallDevice ? 25 : 50,
     session_time_text_size: Layout.isSmallDevice ? 15 : 30,
     session_alarm_meridian_text_size: Layout.isSmallDevice ? 11 : 22,
-    session_percent_label_size: Layout.isSmallDevice ? 6 : 15,
+    session_percent_label_size: Layout.isWidthSmallDevice ? 6 : 15,
     session_category_label_size: Layout.isSmallDevice ? 10 : 20,
     session_chart_pie_outer_radius: Layout.isSmallDevice ? 63 : 146,
     session_chart_pie_inner_radius: Layout.isSmallDevice ? 40 : 80,
