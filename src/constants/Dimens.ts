@@ -92,5 +92,5 @@ export default {
 
     session_list_item_title_text_size: 20,
     session_list_item_subtitle_text_size: 15,
-    session_list_item_text_margin_left: 18
+    session_list_item_text_margin_left: 18,
 };
