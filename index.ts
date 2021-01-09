@@ -1,8 +1,12 @@
-import { AppRegistry } from "react-native";
+import { AppRegistry, Platform } from "react-native";
 import App from "./App";
+// @ts-ignore
+import { name as appName } from "./app.json";
 
-declare let document: any;
-AppRegistry.registerComponent("Aurora-Web", () => App);
-AppRegistry.runApplication("Aurora-Web", {
-    rootTag: document.querySelector("main"),
-});
+AppRegistry.registerComponent(appName, () => App);
+
+if (Platform.OS === "web") {
+    AppRegistry.runApplication(appName, {
+        rootTag: document.getElementById("root"),
+    });
+}

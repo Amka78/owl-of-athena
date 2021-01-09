@@ -45,7 +45,7 @@ const routeConfigMap: NavigationRouteConfigMap<
         navigationOptions: {
             title: "",
             tabBarButtonComponent: (props: ButtonComponentProps) =>
-                createTabBarIcon(props, "settings"),
+                createTabBarIcon(props, "cog"),
         },
         path: "account-settings",
         screen: SettingNavigator,
