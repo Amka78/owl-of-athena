@@ -1,4 +1,5 @@
 //import DriveList from "drivelist";
+//#region Import Modules
 import ejectMedia from "eject-media";
 import { EventEmitter } from "events";
 import _ from "lodash";
@@ -29,9 +30,11 @@ import {
 } from "./AuroraTypes";
 import { AuroraUsb } from "./AuroraUsb";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
+import { AuroraEventList } from "./AuroraEventList";
 import { Event } from "./models/Event";
 import { isDesktop } from "./Platform";
 import { promisify, sleep, stringToVersion, versionToString } from "./util";
+//#endregion
 
 //import usbDetect from "usb-detection";
 const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
@@ -52,21 +55,7 @@ type PlayBuzzSong = typeof AuroraCmdPlayBuzzSong;
 type UploadFile = typeof AuroraCmdUploadFile;
 type ReadFileInfo = typeof AuroraCmdFileInfo;
 type GetUnsyncedSessions = typeof AuroraCmdGetUnSyncedSessions;
-enum AuroraEventList {
-    usbConnectionChange = "usbConnectionChange",
-    bluetoothConnectionChange = "bluetoothConnectionChange",
-    findBluetoothDevice = "findBluetoothDevice",
-    cmdBegin = "cmdBegin",
-    cmdEnd = "cmdEnd",
-    msdAttachmentChange = "msdAttachmentChange",
-    flashConnectionChange = "flashConnectionChange",
-    cmdInputRequested = "cmdInputRequested",
-    cmdOutputReady = "cmdOutputReady",
-    log = "log",
-    streamData = "streamData",
-    auroraEvent = "auroraEvent",
-    auroraError = "auroraError",
-}
+
 class Aurora extends EventEmitter {
     private auroraUsb: AuroraUsb;
     private bluetooth: AuroraBluetooth;

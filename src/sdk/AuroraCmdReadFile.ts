@@ -6,7 +6,7 @@ import Stream from "stream";
 import { Aurora } from "./Aurora";
 import { HeatshrinkDecoder } from "heatshrink-ts";
 
-type ReadCommandResult = CommandResult<FileInfo> & { output: string };
+export type ReadCommandResult = CommandResult<FileInfo> & { output: string };
 const COMMAND_COMPRESSION_WINDOW_SIZE = 8;
 const COMMAND_COMPRESSION_LOOKAHEAD_SIZE = 4;
 const AuroraCmdReadFile = async function (

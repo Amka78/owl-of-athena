@@ -41,7 +41,7 @@ const style = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        flex: 1,
+        //flex: 1,
     },
     alarmTime: {
         color: Colors.cyan,

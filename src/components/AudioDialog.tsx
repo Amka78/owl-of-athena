@@ -1,12 +1,13 @@
 //#region "Import Modules"
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { Message, MessageKeys, Colors, Fonts } from "../constants";
 
 import { Dialog, RadioButton } from "react-native-paper";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { FlatButton } from "./FlatButton";
 import { Audio } from "expo-av";
+import { AuroraSound } from "../types";
 //#endregion
 
 type AudioDialogSettings = {
@@ -17,6 +18,10 @@ type AudioDialogSettings = {
 type AudioType = {
     showName: AudioList;
     fileName: string;
+};
+
+type AudioDialogProps = {
+    auroraSoundList: Array<AuroraSound>;
 };
 
 type AudioDialogState = {
@@ -36,9 +41,12 @@ export enum AudioList {
     SINGING_BIRDS = "Singing Birds",
 }
 
-export class AudioDialog extends React.Component<{}, AudioDialogState> {
+export class AudioDialog extends React.Component<
+    AudioDialogProps,
+    AudioDialogState
+> {
     public static Instance?: AudioDialog;
-    private audioList: Array<AudioType> = [
+    private soundList: Array<AudioType> = [
         { showName: AudioList.A_NEY_DAY, fileName: "a_new_day.m4a" },
         { showName: AudioList.BUGLE_CALL, fileName: "bugle_call.m4a" },
         { showName: AudioList.CLASSIC, fileName: "classic.m4a" },
@@ -67,8 +75,8 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
         });
     }
 
-    constructor() {
-        super({});
+    constructor(props: AudioDialogProps) {
+        super(props);
         this.state = {
             dialogSettings: undefined,
             selectedShowName: AudioList.NONE,
@@ -86,7 +94,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
     }
 
     public findAudio(value: string): AudioType | undefined {
-        return this.audioList.find((sound: AudioType) => {
+        return this.soundList.find((sound: AudioType) => {
             return sound.showName == value;
         });
     }
@@ -107,7 +115,7 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
                         value={this.getSelectedAudio()}
                     >
                         <View style={style.audioRadioButtonList}>
-                            {this.audioList.map(
+                            {this.soundList.map(
                                 (value: AudioType, index: number) => {
                                     return (
                                         <LabeledRadioButton
@@ -200,11 +208,12 @@ export class AudioDialog extends React.Component<{}, AudioDialogState> {
     private onLabelPressed(value: AudioType): () => void {
         return async (): Promise<void> => {
             await this.stopSound(this.sound);
-            this.sound = new Audio.Sound();
-            await this.sound.loadAsync(
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                require(`../../assets/audio/${value.fileName}`)
-            );
+            this.sound = this.props.auroraSoundList.find(
+                (sound: AuroraSound) => {
+                    return sound.fileName == value.fileName;
+                }
+            )!.sound;
+
             await this.sound.playAsync();
         };
     }

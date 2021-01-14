@@ -9,7 +9,6 @@ const AuroraCmdUploadFile = async function (
     this: any,
     destPath: string,
     dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
-    // @ts-ignore
     rename = false,
     osVersion = 3000,
     connectorType: ConnectorTypes = ConnectorTypes.ANY

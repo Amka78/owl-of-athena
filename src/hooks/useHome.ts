@@ -15,7 +15,7 @@ import { cacheSettings, updateProfiles, setWakeLock } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
-import { GuestUser, WakeLockSentinel } from "../types";
+import { GuestUser } from "../types";
 import { MessageKeys as MessageKeysType } from "../constants/Message";
 import { Message, MessageKeys } from "../constants";
 import { WakeLockService } from "../services";

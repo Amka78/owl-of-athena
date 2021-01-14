@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+//#region Import Modules
 import { EventEmitter } from "events";
 import { Audio } from "expo-av";
 
-import { AuroraManagerInstance } from ".";
 import { SessionRestClientInstance } from "../clients";
+import { AuroraManagerInstance } from ".";
 import { AuroraInstance, SleepStates } from "../sdk";
-import { AuroraEventList } from "../sdk/Aurora";
+import { AuroraEventList } from "../sdk/AuroraEventList";
 import {
     CommandNames,
     ConnectionStates,
@@ -15,20 +17,21 @@ import {
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
 import {
     AuroraProfile,
-    AuroraSessionJson,
+    AuroraSessionCSV,
     CommandResult,
     DirectoryInfo,
     FileInfo,
-    AuroraSessionCSV,
 } from "../sdk/AuroraTypes";
 import {
     AuroraEvent,
     AuroraOSInfo,
     AuroraSession,
+    AuroraSessionDetail,
     Profile,
     Settings,
-    AuroraSessionDetail,
 } from "../sdk/models";
+import { AuroraSound } from "../types";
+//#endregion
 
 export enum AuroraManagerEventList {
     onConnectionChange = "onConnectionChange",
@@ -40,27 +43,32 @@ export enum AuroraManagerEventList {
     onPushedSession = "onPushedSession",
     onBatteryChange = "onBatteryChange",
 }
+
 export class AuroraManager extends EventEmitter {
     private connected: boolean;
     private currentSleepState: SleepStates;
     private osInfo?: AuroraOSInfo;
     private batteryLevel: number;
-    private alarmSound: Audio.Sound;
-    private remStimSound: Audio.Sound;
+    private alarmSound?: Audio.Sound;
+    private remStimSound?: Audio.Sound;
     private currentProfile?: string;
+
+    private soundList?: Array<AuroraSound>;
     constructor() {
         super();
         this.connected = false;
         this.currentSleepState = SleepStates.INIT;
         this.batteryLevel = 0;
-        this.alarmSound = new Audio.Sound();
-        this.remStimSound = new Audio.Sound();
 
         AuroraInstance.on(AuroraEventList.auroraEvent, this.onEvent);
         AuroraInstance.on(
             AuroraEventList.bluetoothConnectionChange,
             this.onBluetoothConnectionChange
         );
+    }
+
+    public setAuroraSeound(soundList: Array<AuroraSound>): void {
+        this.soundList = soundList;
     }
 
     public isConnected(): boolean {
@@ -110,9 +118,7 @@ export class AuroraManager extends EventEmitter {
             if (profile?.content) {
                 writingProfile = new Profile(profile.content);
             } else {
-                // @ts-ignore
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                const defaultProfileTxt = require("../../assets/DefaultProfileContent.txt");
+                const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
                 console.debug(defaultProfileTxt);
                 const response = await fetch(defaultProfileTxt);
                 console.debug(`response:${response}`);
@@ -132,23 +138,17 @@ export class AuroraManager extends EventEmitter {
             writingProfile.dslEnabled = settings.dslEnabled;
 
             if (settings.alarmAudioPath) {
-                if (this.alarmSound._loaded) {
-                    await this.alarmSound.unloadAsync();
-                }
-                await this.alarmSound.loadAsync(
-                    // eslint-disable-next-line @typescript-eslint/no-var-requires
-                    require(`../../assets/audio/${settings.alarmAudioPath}`)
-                );
+                this.alarmSound = this.soundList.find((value: AuroraSound) => {
+                    return value.fileName === settings.alarmAudioPath;
+                })?.sound;
             }
 
             if (settings.remStimAudioPath) {
-                if (this.remStimSound._loaded) {
-                    await this.remStimSound.unloadAsync();
-                }
-                await this.remStimSound.loadAsync(
-                    // eslint-disable-next-line @typescript-eslint/no-var-requires
-                    require(`../../assets/audio/${settings.remStimAudioPath}`)
-                );
+                this.remStimSound = this.soundList.find(
+                    (value: AuroraSound) => {
+                        return value.fileName === settings.remStimAudioPath;
+                    }
+                )?.sound;
             }
 
             await AuroraInstance.queueCmd("prof-unload");
@@ -216,26 +216,26 @@ export class AuroraManager extends EventEmitter {
                     break;
                 }
                 case SleepStates.CONFIGURING: {
-                    if (this.alarmSound._loaded) {
+                    if (this.alarmSound !== undefined) {
                         this.alarmSound.stopAsync();
                     }
-                    if (this.remStimSound._loaded) {
+                    if (this.remStimSound !== undefined) {
                         this.remStimSound.stopAsync();
                     }
                     break;
                 }
                 case SleepStates.WAKING: {
                     console.debug("start onWaking.");
-                    if (this.alarmSound._loaded) {
+                    if (this.alarmSound !== undefined) {
                         this.alarmSound.setIsLoopingAsync(true).then(() => {
-                            this.alarmSound.playAsync();
+                            this.alarmSound!.playAsync();
                         });
                     }
                     this.emit(AuroraManagerEventList.onWaking);
                     break;
                 }
                 case SleepStates.AWAKE: {
-                    if (this.alarmSound._loaded) {
+                    if (this.alarmSound !== undefined) {
                         this.alarmSound.stopAsync();
                     }
                     this.emit(AuroraManagerEventList.onAwake);
@@ -448,7 +448,7 @@ export class AuroraManager extends EventEmitter {
                     AuroraManagerInstance.currentSleepState ===
                     SleepStates.SLEEPING
                 ) {
-                    if (AuroraManagerInstance.remStimSound._loaded) {
+                    if (AuroraManagerInstance.remStimSound !== undefined) {
                         AuroraManagerInstance.remStimSound.playAsync();
                     }
                 }
@@ -465,4 +465,5 @@ export class AuroraManager extends EventEmitter {
         );
     }
 }
+
 export default new AuroraManager();
