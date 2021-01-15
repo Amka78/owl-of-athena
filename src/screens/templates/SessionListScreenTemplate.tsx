@@ -5,6 +5,7 @@ import {
     Picker,
     PickerItemProps,
     PickerProps,
+    Platform,
     StyleSheet,
     Text,
     TextProps,
@@ -185,7 +186,7 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
 const styles = StyleSheet.create({
     menuContainer: {
         backgroundColor: Colors.purple,
-        flex: 1,
+        flex: Platform.OS !== "web" ? 0.4 : undefined,
         width: Layout.window.fixedWidth,
     },
     pickerContainer: {
