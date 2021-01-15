@@ -1,6 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { RadioButton } from "react-native-paper";
 
 import { Colors } from "../constants";
@@ -8,6 +8,8 @@ import { Colors } from "../constants";
 
 //#region Types
 export type LabeledRadioButtonProps = {
+    containerStyle?: ViewStyle;
+    textStyle?: TextStyle;
     value: string;
     label: string;
     onLabelPress?: () => void;
@@ -19,13 +21,16 @@ export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
     props: LabeledRadioButtonProps
 ) => {
     return (
-        <View style={styles.radioButtonContainer}>
+        <View style={[styles.radioButtonContainer, props.containerStyle]}>
             <RadioButton
                 value={props.value}
                 color={Colors.cyan}
                 uncheckedColor={Colors.cyan}
             />
-            <Text style={{ color: Colors.white }} onPress={props.onLabelPress}>
+            <Text
+                style={[styles.text, props.textStyle]}
+                onPress={props.onLabelPress}
+            >
                 {props.label}
             </Text>
         </View>
@@ -37,9 +42,13 @@ export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
 const styles = StyleSheet.create({
     radioButtonContainer: {
         flex: 1,
+        height: 40,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+    },
+    text: {
+        color: Colors.white,
     },
 });
 //#endregion

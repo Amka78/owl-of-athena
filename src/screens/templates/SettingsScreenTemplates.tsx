@@ -1,6 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 import {
     Button,

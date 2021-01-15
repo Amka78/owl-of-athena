@@ -1,13 +1,13 @@
 //#region "Import Modules"
-import React from "react";
-import { View, StyleSheet, Platform } from "react-native";
-import { Message, MessageKeys, Colors, Fonts } from "../constants";
-
-import { Dialog, RadioButton } from "react-native-paper";
-import { LabeledRadioButton } from "./LabeledRadioButton";
-import { FlatButton } from "./FlatButton";
 import { Audio } from "expo-av";
+import React from "react";
+import { Platform, StyleSheet } from "react-native";
+import { Dialog, RadioButton } from "react-native-paper";
+
+import { Colors, Fonts, Message, MessageKeys } from "../constants";
 import { AuroraSound } from "../types";
+import { FlatButton } from "./FlatButton";
+import { LabeledRadioButton } from "./LabeledRadioButton";
 //#endregion
 
 type AudioDialogSettings = {
@@ -104,43 +104,41 @@ export class AudioDialog extends React.Component<
             <Dialog
                 visible={true}
                 onDismiss={this.onDialogDismissed()}
-                style={style.dialogContainer}
+                style={styles.dialogContainer}
             >
-                <Dialog.Title style={style.dialogTitle}>
+                <Dialog.Title style={styles.dialogTitle}>
                     {Message.get(MessageKeys.alarm_sound_dialog_title)}
                 </Dialog.Title>
-                <Dialog.Content>
+                <Dialog.Content style={styles.audioRadioButtonList}>
                     <RadioButton.Group
                         onValueChange={this.onRadioButtonSelected()}
                         value={this.getSelectedAudio()}
                     >
-                        <View style={style.audioRadioButtonList}>
-                            {this.soundList.map(
-                                (value: AudioType, index: number) => {
-                                    return (
-                                        <LabeledRadioButton
-                                            key={index}
-                                            value={value.showName}
-                                            label={Message.get(value.showName)}
-                                            onLabelPress={this.onLabelPressed(
-                                                value
-                                            )}
-                                        ></LabeledRadioButton>
-                                    );
-                                }
-                            )}
-                        </View>
+                        {this.soundList.map(
+                            (value: AudioType, index: number) => {
+                                return (
+                                    <LabeledRadioButton
+                                        key={index}
+                                        value={value.showName}
+                                        label={Message.get(value.showName)}
+                                        onLabelPress={this.onLabelPressed(
+                                            value
+                                        )}
+                                    ></LabeledRadioButton>
+                                );
+                            }
+                        )}
                     </RadioButton.Group>
                 </Dialog.Content>
                 <Dialog.Actions>
                     <FlatButton
-                        labelStyle={style.dialogButton}
+                        labelStyle={styles.dialogButton}
                         onPress={this.onCancelButtonPressed()}
                     >
                         {Message.get(MessageKeys.cancel)}
                     </FlatButton>
                     <FlatButton
-                        labelStyle={style.dialogButton}
+                        labelStyle={styles.dialogButton}
                         onPress={this.onConfirmButtonPressed()}
                     >
                         {Message.get(MessageKeys.save)}
@@ -233,7 +231,7 @@ export class AudioDialog extends React.Component<
     }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     audioRadioButtonList: {
         flex: 1,
         alignItems: "flex-start",
@@ -241,6 +239,7 @@ const style = StyleSheet.create({
     },
     dialogContainer: {
         backgroundColor: Colors.navy_darker,
+        height: Platform.OS !== "web" ? "70%" : undefined,
     },
     dialogTitle: {
         color: Colors.cyan,

@@ -1,10 +1,10 @@
 //#region Import Modules
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { Colors, Dimens, Fonts, Layout } from "../constants";
+import { Colors, Dimens, Fonts } from "../constants";
 //#endregion
 
 //#region Types
@@ -20,20 +20,25 @@ export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = 
     props: LabeledSelectorMenuProps
 ) => {
     return (
-        <TouchableOpacity style={style.container} onPress={props.onPress}>
-            <Text style={style.label}>{props.label}</Text>
-            <View style={style.optionContainer}>
-                <Text style={style.option}>{props.value}</Text>
-                <MaterialCommunityIcons
-                    name={"chevron-right"}
-                    color={Colors.purple}
-                    size={20}
-                    style={{
-                        marginLeft: 0,
-                    }}
-                ></MaterialCommunityIcons>
-            </View>
-        </TouchableOpacity>
+        <View style={style.container}>
+            <TouchableOpacity
+                style={style.tochableOpacity}
+                onPress={props.onPress}
+            >
+                <Text style={style.label}>{props.label}</Text>
+                <View style={style.optionContainer}>
+                    <Text style={style.option}>{props.value}</Text>
+                    <MaterialCommunityIcons
+                        name={"chevron-right"}
+                        color={Colors.purple}
+                        size={20}
+                        style={{
+                            marginLeft: 0,
+                        }}
+                    ></MaterialCommunityIcons>
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 //#endregion
@@ -41,11 +46,11 @@ export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = 
 //#region Styles
 const style = StyleSheet.create({
     container: {
-        flex: 1,
+        //flex: 1,
+    },
+    tochableOpacity: {
         flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
+        alignItems: Platform.OS !== "web" ? "center" : undefined,
     },
     label: {
         color: Colors.cyan,
@@ -56,12 +61,12 @@ const style = StyleSheet.create({
     },
     option: {
         color: Colors.purple,
-        flex: 1,
         marginLeft: 0,
-        marginBottom: Dimens.option_margin_bottom,
     },
     optionContainer: {
+        flex: 1,
         flexDirection: "row",
+        justifyContent: "flex-end",
         marginBottom: Dimens.option_margin_bottom,
     },
 });

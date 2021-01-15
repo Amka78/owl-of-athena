@@ -439,9 +439,6 @@ const styles = StyleSheet.create({
     container: {
         margin: 5,
         marginLeft: 7,
-        //width: "auto",
-        flex: 1,
-        height: 70,
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "center",

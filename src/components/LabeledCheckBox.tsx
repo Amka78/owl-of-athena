@@ -30,14 +30,14 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
     const labelComponent = (
         <Text
             onPress={props.onLabelPress}
-            style={[style.text, props.labelStyle]}
+            style={[styles.text, props.labelStyle]}
         >
             {props.label}
         </Text>
     );
 
     const descriptionComponent = props.description ? (
-        <Text style={[style.text, props.descriptionStyle]}>
+        <Text style={[styles.text, props.descriptionStyle]}>
             {props.description}
         </Text>
     ) : undefined;
@@ -55,9 +55,16 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
         </View>
     );
     return (
-        <View style={[style.container, props.container]}>
+        <View style={[styles.container, props.container]}>
             {props.labelPlace === "left" ? labelContainerComponent : undefined}
-            <View style={{ marginBottom: Dimens.option_margin_bottom }}>
+
+            <View
+                style={{
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                    flex: 1,
+                }}
+            >
                 <Checkbox
                     {...props}
                     color={Colors.white}
@@ -72,18 +79,17 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
 //#endregion
 
 //#region Styles
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        //flex: 1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
+        marginBottom: Dimens.option_margin_bottom,
     },
     text: {
         color: Colors.cyan,
-        flex: 1,
-        marginBottom: Dimens.option_margin_bottom,
         fontFamily: Fonts.primaryRegular,
         fontSize: Dimens.option_text_size,
     },
