@@ -16,6 +16,7 @@ import {
     TextBoxProps,
 } from "../../components";
 import { LabeledRadioButtonProps } from "../../components/LabeledRadioButton";
+
 //#endregion
 
 //#region Types
@@ -46,24 +47,19 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
 ) => {
     return (
         <StandardView>
-            <View style={styles.itemContainer}>
-                <TextBox {...props.firstName}></TextBox>
-            </View>
-            <View style={styles.itemContainer}>
-                <TextBox {...props.lastName}></TextBox>
-            </View>
+            <TextBox {...props.firstName}></TextBox>
+            <TextBox {...props.lastName}></TextBox>
             <DatePicker {...props.birthDay}></DatePicker>
-            <View style={styles.itemContainer}></View>
-            <RadioButton.Group {...props.gender}>
-                <View style={styles.radioButtonContainer}>
+            <View style={styles.radioButtonContainer}>
+                <RadioButton.Group {...props.gender}>
                     <LabeledRadioButton
                         {...props.maleRadioButton}
                     ></LabeledRadioButton>
                     <LabeledRadioButton
                         {...props.femaleRadioButton}
                     ></LabeledRadioButton>
-                </View>
-            </RadioButton.Group>
+                </RadioButton.Group>
+            </View>
             <ErrorText>{""}</ErrorText>
             <Button {...props.saveButton}></Button>
             <FlatButton {...props.logoutButton}></FlatButton>
@@ -72,13 +68,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
 };
 
 const styles = StyleSheet.create({
-    itemContainer: {
-        flex: 1,
-    },
     radioButtonContainer: {
-        flex: 1,
-        flexDirection: "row",
-        alignContent: "center",
-        justifyContent: "center",
+        flex: 0.4,
     },
 });
