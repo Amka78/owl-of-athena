@@ -74,10 +74,7 @@ function createTabBarIcon(
                 justifyContent: "center",
             }}
         >
-            <TouchableWithoutFeedback
-                style={{ flex: 1 }}
-                onPress={props.onPress}
-            >
+            <TouchableWithoutFeedback onPress={props.onPress}>
                 <IconButton
                     icon={iconImagePath}
                     onPress={props.onPress}
