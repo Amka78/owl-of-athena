@@ -21,6 +21,8 @@ import { Portal, Provider } from "react-native-paper";
 import { Audio } from "expo-av";
 import { AuroraSound } from "./src/types";
 import { AuroraManagerInstance } from "./src/managers";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { style } from "d3";
 //#endregion
 
 //#region Typ
@@ -52,6 +54,10 @@ export default class App extends React.Component<AppProps, AppState> {
 
     public render(): JSX.Element {
         const persistedRedux = reduxStore();
+        const rootWidth =
+            Layout.isLargeDevice && Platform.OS === "web"
+                ? Layout.maxWidth
+                : Layout.window.width;
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return (
                 <AppLoading
@@ -62,30 +68,38 @@ export default class App extends React.Component<AppProps, AppState> {
             );
         } else {
             return (
-                <ReduxProvider store={persistedRedux.store}>
-                    <PersistGate
-                        loading={undefined}
-                        persistor={persistedRedux.persistor}
-                    >
-                        <Provider>
-                            <Portal>
-                                <View style={styles.container}>
-                                    {Platform.OS === "ios" && (
-                                        <StatusBar barStyle="default" />
-                                    )}
-                                    <RootContainer />
-                                    <AudioDialog
-                                        auroraSoundList={this.SoundList}
-                                    ></AudioDialog>
-                                    <ProfilesDialog></ProfilesDialog>
-                                    <LoadingDialog></LoadingDialog>
-                                    <ConfirmDialog></ConfirmDialog>
-                                    <UpdateSnackBar></UpdateSnackBar>
-                                </View>
-                            </Portal>
-                        </Provider>
-                    </PersistGate>
-                </ReduxProvider>
+                <SafeAreaProvider>
+                    <ReduxProvider store={persistedRedux.store}>
+                        <PersistGate
+                            loading={undefined}
+                            persistor={persistedRedux.persistor}
+                        >
+                            <Provider>
+                                <Portal>
+                                    <SafeAreaView
+                                        mode={"margin"}
+                                        style={[
+                                            styles.container,
+                                            { width: rootWidth },
+                                        ]}
+                                    >
+                                        {Platform.OS === "ios" && (
+                                            <StatusBar barStyle="default" />
+                                        )}
+                                        <RootContainer />
+                                        <AudioDialog
+                                            auroraSoundList={this.SoundList}
+                                        ></AudioDialog>
+                                        <ProfilesDialog></ProfilesDialog>
+                                        <LoadingDialog></LoadingDialog>
+                                        <ConfirmDialog></ConfirmDialog>
+                                        <UpdateSnackBar></UpdateSnackBar>
+                                    </SafeAreaView>
+                                </Portal>
+                            </Provider>
+                        </PersistGate>
+                    </ReduxProvider>
+                </SafeAreaProvider>
             );
         }
     }
@@ -168,16 +182,8 @@ export default class App extends React.Component<AppProps, AppState> {
 
 const styles = StyleSheet.create({
     container: {
-        alignSelf: "center",
+        alignSelf: Platform.OS === "web" ? "center" : undefined,
         backgroundColor: Colors.navy,
         flex: 1,
-        flexShrink: Layout.window.height,
-        height: Platform.OS === "web" ? "100%" : undefined,
-        position: "absolute",
-        minHeight: Layout.window.height,
-        width:
-            Layout.isLargeDevice && Platform.OS === "web"
-                ? Layout.maxWidth
-                : Layout.window.width,
     },
 });
