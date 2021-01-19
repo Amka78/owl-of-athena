@@ -4,7 +4,7 @@ Cross-platform EEG Headband client software.
 ### What is Owl of Athena?
 
 Have you heard of [iWinks' Aurora EEG headband](https://sleepwithaurora.com/) for lucid dreaming?  
-The device and Windows and IOS apps have been released after an Indigogo fundraiser four years ago.  
+The device and Windows and IOS apps have been released after an Kickstarter fundraiser four years ago.  
 However, the promised Android version has yet to be released, and iWinks doesn't seem to be particularly active these days.  
 I'm an Android user and I can't use Aurora as it is now. So I decided to make an open source version of Aurora client software using [SDK]() published by iWinks.  
 The app is built in React Native and currently only works on the web, but I hope to eventually make it work in a variety of environments including Android, IOS and Windows.
@@ -35,9 +35,18 @@ Programmers and non-programmers alike are welcome to help in various ways.
 
       ```
       npm install
-### How to Run
+### How to Run(Web)
 
 1. Go to the root directory and execute the following command.
 
       ```
       npm run web
+
+### How to Run(Expo)
+
+1. Go to the root directory and execute the following command.
+
+    ```
+    npm start
+
+2. Load Expo URL in your terminal or emulator.
