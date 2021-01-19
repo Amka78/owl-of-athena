@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
 import { EventEmitter } from "events";
 import { Audio } from "expo-av";
@@ -31,6 +30,7 @@ import {
     Settings,
 } from "../sdk/models";
 import { AuroraSound } from "../types";
+import { Platform } from "react-native";
 //#endregion
 
 export enum AuroraManagerEventList {
@@ -113,76 +113,88 @@ export class AuroraManager extends EventEmitter {
         settings: Settings
     ): Promise<void> {
         try {
-            let writingProfile;
+            if (Platform.OS === "web") {
+                let writingProfile;
 
-            if (profile?.content) {
-                writingProfile = new Profile(profile.content);
-            } else {
-                const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
-                console.debug(defaultProfileTxt);
-                const response = await fetch(defaultProfileTxt);
-                console.debug(`response:${response}`);
-                const profileContent = await response.text();
+                if (profile?.content) {
+                    writingProfile = new Profile(profile.content);
+                } else {
+                    const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
+                    console.debug(defaultProfileTxt);
+                    const response = await fetch(defaultProfileTxt);
+                    console.debug(`response:${response}`);
+                    const profileContent = await response.text();
 
-                console.debug(`profileContent: ${profileContent}`);
+                    console.debug(`profileContent: ${profileContent}`);
 
-                writingProfile = new Profile(profileContent);
-            }
+                    writingProfile = new Profile(profileContent);
+                }
 
-            writingProfile.wakeupTime = this.getMsAfterMidnight(
-                settings.alarmHour,
-                settings.alarmMinute
-            );
-            writingProfile.saEnabled = settings.smartAlarmEnabled;
-            writingProfile.stimEnabled = settings.remStimEnabled;
-            writingProfile.dslEnabled = settings.dslEnabled;
-
-            if (settings.alarmAudioPath) {
-                this.alarmSound = this.soundList.find((value: AuroraSound) => {
-                    return value.fileName === settings.alarmAudioPath;
-                })?.sound;
-            }
-
-            if (settings.remStimAudioPath) {
-                this.remStimSound = this.soundList.find(
-                    (value: AuroraSound) => {
-                        return value.fileName === settings.remStimAudioPath;
-                    }
-                )?.sound;
-            }
-
-            await AuroraInstance.queueCmd("prof-unload");
-            try {
-                const readProfileResult = await AuroraInstance.readFile(
-                    "profiles/default.prof",
-                    false,
-                    false
+                writingProfile.wakeupTime = this.getMsAfterMidnight(
+                    settings.alarmHour,
+                    settings.alarmMinute
                 );
-                if (!readProfileResult.error) {
-                    await AuroraInstance.queueCmd(
-                        `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
+                writingProfile.saEnabled = settings.smartAlarmEnabled;
+                writingProfile.stimEnabled = settings.remStimEnabled;
+                writingProfile.dslEnabled = settings.dslEnabled;
+
+                if (this.soundList) {
+                    if (settings.alarmAudioPath) {
+                        this.alarmSound = this.soundList.find(
+                            (value: AuroraSound) => {
+                                return (
+                                    value.fileName === settings.alarmAudioPath
+                                );
+                            }
+                        )?.sound;
+                    }
+
+                    if (settings.remStimAudioPath) {
+                        this.remStimSound = this.soundList.find(
+                            (value: AuroraSound) => {
+                                return (
+                                    value.fileName === settings.remStimAudioPath
+                                );
+                            }
+                        )?.sound;
+                    }
+                }
+
+                await AuroraInstance.queueCmd("prof-unload");
+                try {
+                    const readProfileResult = await AuroraInstance.readFile(
+                        "profiles/default.prof",
+                        false,
+                        false
+                    );
+                    if (!readProfileResult.error) {
+                        await AuroraInstance.queueCmd(
+                            `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
+                        );
+                    }
+                } catch (e) {
+                    console.debug(e);
+                } finally {
+                    await AuroraInstance.writeFile(
+                        "profiles/default.prof",
+                        writingProfile.raw,
+                        false,
+                        this.osInfo!.version
                     );
                 }
-            } catch (e) {
-                console.debug(e);
-            } finally {
-                await AuroraInstance.writeFile(
-                    "profiles/default.prof",
-                    writingProfile.raw,
-                    false,
-                    this.osInfo!.version
-                );
-            }
 
-            /*:TODO I don't know why, but the session will not be recorded 
+                /*:TODO I don't know why, but the session will not be recorded 
                     unless the default.prof is read, so it is fixed at default.prof.
             */
-            /*this.currentProfile = writeFileResult.response?.file.replace(
+                /*this.currentProfile = writeFileResult.response?.file.replace(
                 "profiles/",
                 ""
             );*/
-            this.currentProfile = "default.prof";
-            await AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`);
+                this.currentProfile = "default.prof";
+                await AuroraInstance.queueCmd(
+                    `prof-load ${this.currentProfile}`
+                );
+            }
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
             console.log(e);
@@ -259,7 +271,7 @@ export class AuroraManager extends EventEmitter {
     }
 
     public async getUnsyncedSessions(): Promise<Array<FileInfo>> {
-        return await AuroraInstance.getUsyncedSessions("*@*");
+        return await AuroraInstance.getUnsyncedSessions("*@*");
     }
 
     public async readSessionContent(

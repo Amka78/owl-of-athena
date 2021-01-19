@@ -33,18 +33,16 @@ class Aurora extends EventEmitter {
         connectorType = AuroraConstants.ConnectorTypes.ANY,
         onCmdBegin?: (cmd: T) => void,
         onCmdEnd?: () => void
-    ): Promise<T> {
+    ): Promise<void> {
         console.debug(`commandStr:${commandStr}`);
         console.debug(`connectorType:${connectorType}`);
         console.debug(`onCmdBegin:${onCmdBegin}`);
         console.debug(`onCmdEnd:${onCmdEnd}`);
 
-        return new Promise((resolve, reject) => {
-            return;
-        });
+        return;
     }
 
-    public async ReadFile(
+    public async readFile(
         srcPath: string,
         writeStream: boolean,
         compress: boolean,
@@ -61,7 +59,7 @@ class Aurora extends EventEmitter {
         };
     }
 
-    public async WriteFile(
+    public async writeFile(
         destPath: string,
         dataOrReadStream: string,
         rename = false,

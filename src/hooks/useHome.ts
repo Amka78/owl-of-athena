@@ -19,6 +19,7 @@ import { GuestUser } from "../types";
 import { MessageKeys as MessageKeysType } from "../constants/Message";
 import { Message, MessageKeys } from "../constants";
 import { WakeLockService } from "../services";
+import { Platform } from "react-native";
 //#endregion
 
 //#region Hooks
@@ -214,10 +215,12 @@ function onSleeping(
 ): (...args: any[]) => void {
     return async (): Promise<void> => {
         try {
-            await WakeLockService.request(
-                succeedWakeLockCallback,
-                releaseWakeLockCallback
-            );
+            if (Platform.OS === "web") {
+                await WakeLockService.request(
+                    succeedWakeLockCallback,
+                    releaseWakeLockCallback
+                );
+            }
             postSleepingCallback();
         } catch (err) {
             console.error(`${err.name}, ${err.message}`);

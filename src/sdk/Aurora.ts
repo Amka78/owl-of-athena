@@ -510,6 +510,61 @@ class Aurora extends EventEmitter {
         );
     }
 
+    public get playLedEffect(): PlayLedEffect {
+        return AuroraCmdPlayLedEffect;
+    }
+
+    public get writeFile(): WriteFile {
+        return AuroraCmdWriteFile;
+    }
+
+    public get readFileInfo(): ReadFileInfo {
+        return AuroraCmdFileInfo;
+    }
+
+    public get syncTime(): SyncTime {
+        return AuroraCmdSyncTime;
+    }
+
+    public get getUnsyncedSessions(): GetUnsyncedSessions {
+        return AuroraCmdGetUnSyncedSessions;
+    }
+
+    public get getSessions(): GetSessions {
+        return AuroraCmdGetSessions;
+    }
+
+    public get readFile(): ReadFile {
+        return AuroraCmdReadFile;
+    }
+
+    public get downloadFile(): DownloadFile {
+        return AuroraCmdDownloadFile;
+    }
+
+    public get uploadFile(): UploadFile {
+        return AuroraCmdUploadFile;
+    }
+
+    public get flashFile(): FlashFile {
+        return AuroraCmdFlashFile;
+    }
+
+    public get getProfiles(): GetProfiles {
+        return AuroraCmdGetProfiles;
+    }
+
+    public get setProfiles(): SetProfiles {
+        return AuroraCmdSetProfiles;
+    }
+
+    public get downloadStream(): DownloadStream {
+        return AuroraCmdDownloadStream;
+    }
+
+    public get playBuzzSong(): PlayBuzzSong {
+        return AuroraCmdPlayBuzzSong;
+    }
     //this command is really only useful to reconcile differences between
     //the old version of os-info and new ones
     //TODO: remove once all in-field units are upgraded to firmware >= 2.1.0
@@ -669,62 +724,6 @@ class Aurora extends EventEmitter {
                     ? this.auroraUsb
                     : this.bluetooth;
         }
-    }
-
-    public get playLedEffect(): PlayLedEffect {
-        return AuroraCmdPlayLedEffect;
-    }
-
-    public get writeFile(): WriteFile {
-        return AuroraCmdWriteFile;
-    }
-
-    public get readFileInfo(): ReadFileInfo {
-        return AuroraCmdFileInfo;
-    }
-
-    public get syncTime(): SyncTime {
-        return AuroraCmdSyncTime;
-    }
-
-    public get getUsyncedSessions(): GetUnsyncedSessions {
-        return AuroraCmdGetUnSyncedSessions;
-    }
-
-    public get getSessions(): GetSessions {
-        return AuroraCmdGetSessions;
-    }
-
-    public get readFile(): ReadFile {
-        return AuroraCmdReadFile;
-    }
-
-    public get downloadFile(): DownloadFile {
-        return AuroraCmdDownloadFile;
-    }
-
-    public get uploadFile(): UploadFile {
-        return AuroraCmdUploadFile;
-    }
-
-    public get flashFile(): FlashFile {
-        return AuroraCmdFlashFile;
-    }
-
-    public get getProfiles(): GetProfiles {
-        return AuroraCmdGetProfiles;
-    }
-
-    public get setProfiles(): SetProfiles {
-        return AuroraCmdSetProfiles;
-    }
-
-    public get downloadStream(): DownloadStream {
-        return AuroraCmdDownloadStream;
-    }
-
-    public get playBuzzSong(): PlayBuzzSong {
-        return AuroraCmdPlayBuzzSong;
     }
 
     public async findMsdDrive(

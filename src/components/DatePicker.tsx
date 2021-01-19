@@ -7,7 +7,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { DatePickerProps } from "./DatePickerProps";
 import { TextBox } from "./TextBox";
-
 //#endregion
 
 //#region Component
