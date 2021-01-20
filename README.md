@@ -47,6 +47,6 @@ Programmers and non-programmers alike are welcome to help in various ways.
 1. Go to the root directory and execute the following command.
 
     ```
-    npm start
+    npm run expo 
 
 2. Load Expo URL in your terminal or emulator.

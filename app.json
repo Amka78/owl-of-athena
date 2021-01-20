@@ -18,13 +18,16 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.owlofathena"
     },
     "description": "Aurora Client for community user.",
     "splash": {
-
       "resizeMode": "cover",
       "image": "./assets/images/iwinks-logo-loading.png"
+    },
+    "android": {
+      "package": "com.owlofathena"
     }
   }
 }
