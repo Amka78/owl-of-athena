@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
-
+apply plugin: 'kotlin-android'
+apply plugin: 'maven'
 import com.android.build.OutputFile
 
 /**
@@ -76,6 +77,20 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
+buildscript {
+  // Simple helper that allows the root project to override versions declared by this library.
+  ext.safeExtGet = { prop, fallback ->
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${safeExtGet("kotlinVersion", "1.3.50")}")
+  }
+}
 
 project.ext.react = [
     enableHermes: false
