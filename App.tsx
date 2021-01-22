@@ -4,7 +4,7 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { Asset } from "expo-asset";
 import React from "react";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { Platform, StatusBar, StyleSheet } from "react-native";
 import { Provider as ReduxProvider } from "react-redux";
 import { RootContainer } from "./src/navigation";
 import reduxStore from "./src/store";
@@ -22,10 +22,9 @@ import { Audio } from "expo-av";
 import { AuroraSound } from "./src/types";
 import { AuroraManagerInstance } from "./src/managers";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import { style } from "d3";
 //#endregion
 
-//#region Typ
+//#region Types
 type AppProps = {
     skipLoadingScreen: boolean;
 };
