@@ -167,6 +167,9 @@ android {
         }
     }
 
+    dexOptions {
+        javaMaxHeapSize "3g"
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -179,10 +182,11 @@ android {
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
 
-        }
+        } 
     }
 }
 
+ 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
