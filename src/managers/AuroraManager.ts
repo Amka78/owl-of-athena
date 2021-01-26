@@ -67,7 +67,7 @@ export class AuroraManager extends EventEmitter {
         );
     }
 
-    public setAuroraSeound(soundList: Array<AuroraSound>): void {
+    public setAuroraSound(soundList: Array<AuroraSound>): void {
         this.soundList = soundList;
     }
 
@@ -201,13 +201,6 @@ export class AuroraManager extends EventEmitter {
             this.setSleepState(SleepStates.INIT);
             this.emit("onError", e);
         }
-    }
-
-    public getMsAfterMidnight(alarmHour: number, alarmMinute: number): number {
-        const msAfterMidNight =
-            alarmHour! * 60 * 60 * 1000 + alarmMinute! * 60 * 1000;
-        console.debug(msAfterMidNight);
-        return msAfterMidNight;
     }
 
     public setSleepState(followingSleepState: SleepStates): void {
@@ -368,6 +361,13 @@ export class AuroraManager extends EventEmitter {
             }
         }
         return [pushedSessionList, pushedSessionDetailList];
+    }
+
+    private getMsAfterMidnight(alarmHour: number, alarmMinute: number): number {
+        const msAfterMidNight =
+            alarmHour! * 60 * 60 * 1000 + alarmMinute! * 60 * 1000;
+        console.debug(msAfterMidNight);
+        return msAfterMidNight;
     }
 
     private async setupAurora(): Promise<void> {

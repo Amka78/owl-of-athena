@@ -142,7 +142,10 @@ export default class App extends React.Component<AppProps, AppState> {
 
     public handleFinishLoading = (): void => {
         this.createSoundList();
-        AuroraManagerInstance.setAuroraSeound(this.SoundList);
+
+        if (Platform.OS === "web") {
+            AuroraManagerInstance.setAuroraSound(this.SoundList);
+        }
 
         this.setState({ isLoadingComplete: true });
     };
