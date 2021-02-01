@@ -2,7 +2,7 @@
 import { Auth } from "../types";
 import { login as loginAction } from "../actions";
 import { useCallback } from "react";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import { useAutoLogin } from "./useAutoLogin";
 import { useDispatch } from "react-redux";
 import { MessageKeys } from "../constants";

@@ -1,91 +1,64 @@
+//#region Import Modules
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { View } from "react-native";
-import { IconButton } from "react-native-paper";
-import {
-    NavigationParams,
-    NavigationRoute,
-    NavigationRouteConfigMap,
-} from "react-navigation";
-import {
-    createBottomTabNavigator,
-    NavigationBottomTabOptions,
-    NavigationTabProp,
-} from "react-navigation-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { Colors } from "../constants";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { ButtonComponentProps } from "react-navigation-tabs/lib/typescript/src/types";
+//#endregion
 
-const routeConfigMap: NavigationRouteConfigMap<
-    NavigationBottomTabOptions,
-    NavigationTabProp<NavigationRoute<NavigationParams>, any>
-> = {
-    Route1: {
-        navigationOptions: {
-            title: "",
-            tabBarButtonComponent: (props: ButtonComponentProps) =>
-                createTabBarIcon(props, "alarm-check"),
-        },
-        path: "",
-        screen: HomeNavigator,
-    },
-    Route2: {
-        navigationOptions: {
-            title: "",
-            tabBarButtonComponent: (props: ButtonComponentProps) =>
-                createTabBarIcon(props, "blur"),
-        },
-        path: "sessions",
-        screen: SessionNavigator,
-    },
-    Route3: {
-        navigationOptions: {
-            title: "",
-            tabBarButtonComponent: (props: ButtonComponentProps) =>
-                createTabBarIcon(props, "cog"),
-        },
-        path: "account-settings",
-        screen: SettingNavigator,
-    },
-};
+//#region Component
+const BottomTab = createBottomTabNavigator();
 
-const MainTabNavigator = createBottomTabNavigator(routeConfigMap, {
-    tabBarOptions: {
-        activeTintColor: Colors.cyan,
-        inactiveTintColor: Colors.white,
-        tabStyle: { backgroundColor: Colors.navy_darker },
-    },
-});
-
-export default MainTabNavigator;
-
-function createTabBarIcon(
-    props: ButtonComponentProps,
-    iconImagePath: string
-): JSX.Element {
+const MainTabNavigator = (): JSX.Element => {
     return (
-        <View
-            style={{
-                backgroundColor: Colors.navy_darker,
-                flex: 1,
-                justifyContent: "center",
+        <BottomTab.Navigator
+            initialRouteName={"Home"}
+            tabBarOptions={{
+                activeTintColor: Colors.cyan,
+                inactiveTintColor: Colors.white,
+                tabStyle: { backgroundColor: Colors.navy_darker },
             }}
         >
-            <TouchableWithoutFeedback onPress={props.onPress}>
-                <IconButton
-                    icon={iconImagePath}
-                    onPress={props.onPress}
-                    style={{
-                        alignSelf: "center",
-                    }}
-                    color={props.focused ? Colors.cyan : Colors.white}
-                >
-                    {""}
-                </IconButton>
-            </TouchableWithoutFeedback>
-        </View>
+            <BottomTab.Screen
+                name="Home"
+                component={HomeNavigator}
+                options={{
+                    title: "",
+                    tabBarIcon: getTabBarIcon("alarm-check"),
+                }}
+            ></BottomTab.Screen>
+            <BottomTab.Screen
+                name="Session"
+                component={SessionNavigator}
+                options={{
+                    title: "",
+                    tabBarIcon: getTabBarIcon("blur"),
+                }}
+            ></BottomTab.Screen>
+            <BottomTab.Screen
+                name="Settings"
+                component={SettingNavigator}
+                options={{
+                    title: "",
+                    tabBarIcon: getTabBarIcon("cog"),
+                }}
+            ></BottomTab.Screen>
+        </BottomTab.Navigator>
     );
-}
+};
+//#endregion
+
+//#region Function
+const getTabBarIcon = (name: string) => ({
+    color,
+    size,
+}: {
+    color: string;
+    size: number;
+}) => <MaterialCommunityIcons name={name} color={color} size={size} />;
+//#endregion
+
+export default MainTabNavigator;

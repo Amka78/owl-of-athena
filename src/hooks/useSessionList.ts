@@ -1,7 +1,6 @@
 //#region Import Modules
-import moment from "moment";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import {
@@ -27,6 +26,7 @@ import {
     useTokenSelector,
     useUserSelector,
 } from "./";
+import { useCheckLogging } from "./useCheckLogging";
 //#endregion
 
 //#region Hooks
@@ -40,6 +40,8 @@ export const useSessinList = (): {
     onStarPress: (value: AuroraSession) => Promise<void>;
     onDeletePress: (value: AuroraSession) => Promise<void>;
     onMenuPress: (value: AuroraSession, index: number) => Promise<void>;
+    onPressedRefresh: () => void;
+    onPressedFilter: () => void;
 } => {
     const dispatch = useDispatch();
     const user = useUserSelector();
@@ -48,31 +50,27 @@ export const useSessinList = (): {
     const sessionDetailList = useSessionDetailListSelector();
     const { navigate, setParams } = useNavigation();
     const [showFilter, setShowFilter] = useState<boolean>(false);
-    const token = useTokenSelector();
+    useCheckLogging();
     useEffect(() => {
-        if (!token) {
-            navigate("Welcome");
-        }
-        setParams({
-            onPressedRefresh: async () => {
-                LoadingDialog.show({
-                    dialogTitle: Message.get(MessageKeys.session_reloading),
-                });
-                const sessions = await SessionRestClientInstance.getAll(
-                    user!.id
-                );
-                dispatch(cacheSessions(sessions));
-                LoadingDialog.close();
-            },
-            onPressedFilter: async () => {
-                setShowFilter(!showFilter);
-            },
-        });
+        setParams({});
         const cleanup = (): void => {
             return;
         };
         return cleanup;
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showFilter]);
+
+    const onPressedRefresh = useCallback(async () => {
+        LoadingDialog.show({
+            dialogTitle: Message.get(MessageKeys.session_reloading),
+        });
+        const sessions = await SessionRestClientInstance.getAll(user!.id);
+        dispatch(cacheSessions(sessions));
+        LoadingDialog.close();
+    }, [dispatch, user]);
+
+    const onPressedFilter = useCallback(async () => {
+        setShowFilter(!showFilter);
     }, [showFilter]);
 
     const onPickerValueChange = useCallback(
@@ -176,9 +174,6 @@ export const useSessinList = (): {
 
             navigate("Detail", {
                 sessionIndex: index,
-                sessionTitle: moment(value.sessionAt).format(
-                    Message.get(MessageKeys.date_format)
-                ),
             });
         },
         [dispatch, navigate, sessionDetailList, user?.id]
@@ -193,6 +188,8 @@ export const useSessinList = (): {
         onStarPress,
         onDeletePress,
         onMenuPress,
+        onPressedRefresh,
+        onPressedFilter,
     };
 };
 //#endregion

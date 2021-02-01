@@ -1,7 +1,10 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import React, { FunctionComponent, useLayoutEffect } from "react";
+import { IconButton } from "react-native-paper";
 
-import { Message, MessageKeys } from "../constants";
+import { Colors, Message, MessageKeys } from "../constants";
 import { useSessinList } from "../hooks/useSessionList";
 import { FilterByDateValues } from "../state/SessionState";
 import { SessionListScreenTemplate } from "./templates/SessionListScreenTemplate";
@@ -10,7 +13,37 @@ import { SessionListScreenTemplate } from "./templates/SessionListScreenTemplate
 //#region Component
 export const SessionListScreen: FunctionComponent = () => {
     const sessionListHook = useSessinList();
+    const { setOptions } = useNavigation();
 
+    useLayoutEffect(() => {
+        setOptions({
+            headerLeft: () => {
+                return (
+                    <IconButton
+                        icon={"refresh"}
+                        size={40}
+                        color={Colors.white}
+                        onPress={sessionListHook.onPressedRefresh}
+                    ></IconButton>
+                );
+            },
+            headerRight: (props: StackHeaderLeftButtonProps) => {
+                return (
+                    <IconButton
+                        {...props}
+                        icon={"filter-variant"}
+                        size={40}
+                        color={Colors.white}
+                        onPress={sessionListHook.onPressedFilter}
+                    ></IconButton>
+                );
+            },
+        });
+    }, [
+        sessionListHook.onPressedFilter,
+        sessionListHook.onPressedRefresh,
+        setOptions,
+    ]);
     return (
         <SessionListScreenTemplate
             showFilter={sessionListHook.showFilter}

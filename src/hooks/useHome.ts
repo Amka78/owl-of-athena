@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Settings } from "../sdk/models";
 import { AuroraManagerInstance, AuroraManagerEventList } from "../managers";
 import { ConfirmDialog, LoadingDialog } from "../components";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import {
     useCheckLogging,
     useUserSelector,
@@ -40,18 +40,20 @@ export const useHome = (): {
     const [errorText, setErrorText] = useState<string>("");
 
     const onSleepingEvent = useRef(
-        onSleeping(
-            () => {
-                dispatch(setWakeLock(true));
-            },
-            () => {
-                dispatch(setWakeLock(false));
-                WakeLockService.release();
-            },
-            () => {
-                navigate("Sleeping");
-            }
-        )
+        Platform.OS === "web"
+            ? onSleeping(
+                  () => {
+                      dispatch(setWakeLock(true));
+                  },
+                  () => {
+                      dispatch(setWakeLock(false));
+                      WakeLockService.release();
+                  },
+                  () => {
+                      navigate("Sleeping");
+                  }
+              )
+            : undefined
     );
 
     const wakeEvent = useRef(() => {
@@ -69,30 +71,33 @@ export const useHome = (): {
     const selectedProfile = useRef<AuroraProfile | undefined>(undefined);
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onSleeping,
-            onSleepingEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onSleeping,
-            onSleepingEvent.current
-        );
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onAwake,
-            wakeEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onAwake,
-            wakeEvent.current
-        );
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onWaking,
-            wakingEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onWaking,
-            wakingEvent.current
-        );
+
+        if (Platform.OS === "web") {
+            AuroraManagerInstance.off(
+                AuroraManagerEventList.onSleeping,
+                onSleepingEvent.current
+            );
+            AuroraManagerInstance.on(
+                AuroraManagerEventList.onSleeping,
+                onSleepingEvent.current
+            );
+            AuroraManagerInstance.off(
+                AuroraManagerEventList.onAwake,
+                wakeEvent.current
+            );
+            AuroraManagerInstance.on(
+                AuroraManagerEventList.onAwake,
+                wakeEvent.current
+            );
+            AuroraManagerInstance.off(
+                AuroraManagerEventList.onWaking,
+                wakingEvent.current
+            );
+            AuroraManagerInstance.on(
+                AuroraManagerEventList.onWaking,
+                wakingEvent.current
+            );
+        }
         let unmounted = false;
         console.log("Loading profiles start");
         const f = async (): Promise<void> => {
@@ -215,12 +220,10 @@ function onSleeping(
 ): (...args: any[]) => void {
     return async (): Promise<void> => {
         try {
-            if (Platform.OS === "web") {
-                await WakeLockService.request(
-                    succeedWakeLockCallback,
-                    releaseWakeLockCallback
-                );
-            }
+            await WakeLockService.request(
+                succeedWakeLockCallback,
+                releaseWakeLockCallback
+            );
             postSleepingCallback();
         } catch (err) {
             console.error(`${err.name}, ${err.message}`);

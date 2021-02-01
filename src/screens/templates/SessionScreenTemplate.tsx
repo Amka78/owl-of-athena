@@ -42,6 +42,42 @@ export type SessionScreenTemplateProps = {
 export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps> = (
     props: SessionScreenTemplateProps
 ) => {
+    useLayoutEffect(() => {
+        setOptions({
+            headerLeft: (props: StackHeaderLeftButtonProps) => undefined,
+            /*   <
+                        <IconButton
+                                {...props}
+                                icon={"refresh"}
+                                size={40}
+                                color={Colors.white}
+                                /*onPress={(): void => { // @ts-ignore
+                                    if (route.params?.onPressedRefresh) {
+                                        // @ts-ignore
+                                        route.params?.onPressedRefresh();
+                                    }
+                                }}*/
+            /*></IconButton> */
+        });
+        /*  setOptions({
+                    headerRight: (props: StackHeaderLeftButtonProps) => {
+                        return (<IconButton
+                                {...props}
+                                icon={"filter-variant"}
+                                size={40}
+                                color={Colors.white}
+                                onPress={(): void => {
+                                    // @ts-ignore
+                                    if (route.params?.onPressedFilter) {
+                                        // @ts-ignore
+                                        route.params?.onPressedFilter();
+                                    }
+                                }}
+                            ></IconButton>
+                        );
+                    },
+    }); */
+    }, [setOptions]);
     return (
         <StandardView>
             <View style={styles.sessionInfoHeader}>

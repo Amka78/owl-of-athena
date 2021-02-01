@@ -9,6 +9,7 @@ import {
     ContentTextProps,
     ContentTitle,
     ContentTitleProps,
+    FlexSpacer,
     StandardView,
 } from "../../components";
 //#endregion
@@ -29,8 +30,16 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
 ) => {
     return (
         <StandardView>
-            <ContentTitle {...props.contentTitle}></ContentTitle>
-            <ContentText {...props.contentText}></ContentText>
+            <FlexSpacer></FlexSpacer>
+            <ContentTitle
+                {...props.contentTitle}
+                style={{ flex: 1 }}
+            ></ContentTitle>
+            <ContentText
+                {...props.contentText}
+                style={{ flex: 1 }}
+            ></ContentText>
+            <FlexSpacer></FlexSpacer>
             <View>
                 <Button {...props.standaloneButton}></Button>
                 <Button {...props.loginButton}></Button>

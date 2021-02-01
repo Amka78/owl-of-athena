@@ -1,6 +1,6 @@
 //#region Import Modules
+import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useNavigation } from "react-navigation-hooks";
 import { useDispatch } from "react-redux";
 
 import { cacheSettings } from "../actions";
@@ -12,10 +12,8 @@ import {
     useSettingsSelector,
     useUserSelector,
 } from "../hooks";
-import { AuroraManagerInstance } from "../managers";
-import { SleepStates } from "../sdk";
-import { Settings } from "../sdk/models";
 import { AuroraProfile } from "../sdk/AuroraTypes";
+import { Settings } from "../sdk/models";
 //#endregion
 
 //#region Types

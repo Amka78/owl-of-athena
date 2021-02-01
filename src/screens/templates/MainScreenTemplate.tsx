@@ -1,11 +1,11 @@
 //#region Import modules
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
-import { NavigationState } from "react-navigation";
+import { NavigationState } from "@react-navigation/native";
 
 import { FlatButton } from "../../components";
 import { FlatButtonProps } from "../../components/FlatButton";
-import { MainContainer } from "../../navigation";
+import MainTabNavigator from "../../navigation/MainTabNavigator";
 //#endregion
 
 //#region Types
@@ -27,11 +27,7 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
 ) => {
     return (
         <View style={{ flex: 1 }}>
-            <MainContainer
-                onNavigationStateChange={
-                    props.mainContainer.onNavagationStateChange
-                }
-            ></MainContainer>
+            <MainTabNavigator></MainTabNavigator>
             <FlatButton {...props.AuroraConnectionStatesBar}></FlatButton>
         </View>
     );

@@ -10,7 +10,6 @@ import { DatePickerProps } from "./DatePickerProps";
 import { ErrorText, ErrorTextProps } from "./ErrorText";
 import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
-import { HeaderBackButton } from "./HeaderBackButton";
 import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
 import { LabeledCheckBox, LabeledCheckBoxProps } from "./LabeledCheckBox";
 import { LabeledRadioButton } from "./LabeledRadioButton";
@@ -51,7 +50,6 @@ export {
     ErrorText,
     ErrorTextProps,
     FlexSpacer,
-    HeaderBackButton,
     InlineTimePicker,
     InlineTimePickerProps,
     LabeledRadioButton,

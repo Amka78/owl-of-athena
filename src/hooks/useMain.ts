@@ -1,7 +1,7 @@
 //#region Import Modules
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NavigationState } from "react-navigation";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { cacheSessionDetails, cacheSessions } from "../actions";
@@ -26,18 +26,12 @@ import {
 
 //#region Hooks
 export const useMain = (): {
-    onNavigationStateChange: (
-        _prevNavigationState: NavigationState,
-        _nextNavigationState: NavigationState,
-        action: any
-    ) => void;
     connect: ConnectionStates;
     onConnectionStatesPress: () => void;
     batteryLevel: number;
     currentFirmwareVersion: string;
     error: string;
 } => {
-    const { navigate } = useNavigation();
     const dispatch = useDispatch();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
@@ -86,19 +80,6 @@ export const useMain = (): {
         return cleanup();
     }, [connect, dispatch, sessionList, userInfo]);
 
-    const onNavigationStateChange = useCallback(
-        (
-            _prevNavigationState: NavigationState,
-            _nextNavigationState: NavigationState,
-            action: any
-        ): void => {
-            if (action.routeName === "Logout") {
-                navigate("Unauthenticated");
-            }
-        },
-        [navigate]
-    );
-
     const onConnectionStatesPress = useCallback(async (): Promise<void> => {
         console.debug("Start configuring aurora.");
 
@@ -126,6 +107,7 @@ export const useMain = (): {
                 },
                 (osInfo: AuroraOSInfo) => {
                     setConnect(ConnectionStates.CONNECTED);
+                    console.debug(`AuroraOSInfo:${osInfo}`);
                     firmwareVersion.current = osInfo.version.toString();
                     setBatteryLevel(osInfo.batteryLevel);
                     AuroraManagerInstance.on(
@@ -159,7 +141,6 @@ export const useMain = (): {
 
     const currentFirmwareVersion = firmwareVersion.current;
     return {
-        onNavigationStateChange,
         connect,
         onConnectionStatesPress,
         batteryLevel,

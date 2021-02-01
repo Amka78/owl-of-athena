@@ -8,7 +8,7 @@ import {
 } from "./";
 import { ConfirmDialog, LoadingDialog } from "../components";
 import { SleepStates } from "../sdk";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";

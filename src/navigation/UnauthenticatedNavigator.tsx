@@ -1,71 +1,46 @@
+//#region Import Modules
+import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { Platform } from "react-native";
-import {
-    NavigationParams,
-    NavigationRoute,
-    NavigationRouteConfigMap,
-    //NavigationScreenConfigProps
-} from "react-navigation";
-import {
-    createStackNavigator,
-    StackHeaderLeftButtonProps,
-    NavigationStackOptions,
-    NavigationStackProp,
-} from "react-navigation-stack";
 
-import { HeaderBackButton } from "../components";
-import { Dimens } from "../constants";
+import { Colors } from "../constants";
 import { LoginScreen, SignupScreen, WelcomeScreen } from "../screens";
-import { CommonStyles } from "../styles";
 import { ForgotPasswordScreen } from "../screens/ForgotPassswordScreen";
+import { CommonStyles } from "../styles";
+//#endregion
 
-const routeConfigMap: NavigationRouteConfigMap<
-    NavigationStackOptions,
-    NavigationStackProp<NavigationRoute<NavigationParams>, any>
-> = {
-    ForgotPassword: {
-        path: "forgot-password",
-        screen: ForgotPasswordScreen,
-    },
-    Signup: {
-        path: "signup",
-        screen: SignupScreen,
-    },
-    Login: {
-        path: "login",
-        screen: LoginScreen,
-    },
-    Welcome: {
-        path: "",
-        screen: WelcomeScreen,
-        navigationOptions: {
-            headerLeft: undefined,
-            headerTitleContainerStyle: {
-                ...CommonStyles.headerTitleContainerStyle,
-                marginLeft: Dimens.content_margin_horizontal,
-            },
-        },
-    },
-};
+//#region Component
+const Stack = createStackNavigator();
 
-const UnauthenticatedNavigator = createStackNavigator(routeConfigMap, {
-    defaultNavigationOptions: () =>
-        /*configProps: NavigationScreenConfigProps<
-            NavigationStackProp<NavigationRoute<NavigationParams>>
-        >*/
-        {
-            return {
-                headerLeft: (
-                    props: StackHeaderLeftButtonProps
-                ): React.ReactNode => <HeaderBackButton {...props} />,
+const UnauthenticatedNavigator = (): JSX.Element => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerTitleAlign: "center",
+                headerTintColor: Colors.cyan,
                 headerStyle: CommonStyles.headerStyle,
-                headerTitleContainerStyle:
-                    CommonStyles.headerTitleContainerStyle,
-                headerLeftContainerStyle: CommonStyles.headerLeftContainerStyle,
-            };
-        },
-    headerMode: Platform.OS === "web" ? "screen" : "float",
-    initialRouteName: "Welcome",
-});
+                headerTitle: "",
+            }}
+            initialRouteName={"Welcome"}
+        >
+            <Stack.Screen
+                name={"ForgotPassword"}
+                component={ForgotPasswordScreen}
+            ></Stack.Screen>
+            <Stack.Screen
+                name={"Signup"}
+                component={SignupScreen}
+            ></Stack.Screen>
+            <Stack.Screen name={"Login"} component={LoginScreen}></Stack.Screen>
+            <Stack.Screen
+                name={"Welcome"}
+                component={WelcomeScreen}
+                options={{
+                    headerShown: false,
+                }}
+            ></Stack.Screen>
+        </Stack.Navigator>
+    );
+};
+//#endregion
 
 export default UnauthenticatedNavigator;

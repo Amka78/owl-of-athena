@@ -16,16 +16,8 @@ export default StyleSheet.create({
     },
     headerStyle: {
         backgroundColor: Colors.navy,
-    },
-    headerTitleContainerStyle: {
-        alignContent: "center",
-        borderColor: Colors.blue,
-        borderBottomWidth: 3,
-        justifyContent: "center",
-        marginRight: Dimens.content_margin_horizontal,
-    },
-    headerLeftContainerStyle: {
-        width: Dimens.content_margin_horizontal,
+        borderBottomColor: Colors.white,
+        borderBottomWidth: 1,
     },
     rootContainer: {
         backgroundColor: Colors.navy,

@@ -1,7 +1,7 @@
 //#region Import Modules
 import { useCallback, useState } from "react";
 import { Linking } from "react-native";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 
 import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";

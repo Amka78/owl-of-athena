@@ -2,7 +2,7 @@
 import { Login, Auth, GuestUser } from "../types";
 import { login as loginAction } from "../actions";
 import { useCallback, useState } from "react";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";

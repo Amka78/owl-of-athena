@@ -1,38 +1,24 @@
-import {
-    createSwitchNavigator,
-    NavigationRoute,
-    NavigationRouteConfigMap,
-    NavigationSwitchRouterConfig,
-    NavigationSwitchProp,
-    CreateNavigatorConfig
-} from "react-navigation";
+//#region Import Modules
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
 
-import UnauthenticatedNavigator from "./UnauthenticatedNavigator";
 import { MainScreen } from "../screens";
+import UnauthenticatedNavigator from "./UnauthenticatedNavigator";
+//#endregion
 
-const routeConfitMap: NavigationRouteConfigMap<
-    {},
-    NavigationSwitchProp<NavigationRoute>
-> = {
-    Main: {
-        path: "main",
-        screen: MainScreen
-    },
-    Unauthenticated: {
-        path: "",
-        screen: UnauthenticatedNavigator
-    }
+//#region Component
+const Stack = createStackNavigator();
+const InitialNavigator = (): JSX.Element => {
+    return (
+        <Stack.Navigator initialRouteName="Unauthenticated" headerMode={"none"}>
+            <Stack.Screen name={"Main"} component={MainScreen}></Stack.Screen>
+            <Stack.Screen
+                name={"Unauthenticated"}
+                component={UnauthenticatedNavigator}
+            ></Stack.Screen>
+        </Stack.Navigator>
+    );
 };
-
-const stackConfig: CreateNavigatorConfig<
-    {},
-    NavigationSwitchRouterConfig,
-    {},
-    NavigationSwitchProp
-> = {
-    initialRouteName: "Unauthenticated"
-};
-
-const InitialNavigator = createSwitchNavigator(routeConfitMap, stackConfig);
+//#endregion
 
 export default InitialNavigator;

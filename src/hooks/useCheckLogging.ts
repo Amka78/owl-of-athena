@@ -1,13 +1,16 @@
+//#region Import Modules
 import { useEffect } from "react";
 
 import { useTokenSelector, useUserSelector } from ".";
-import { useNavigation } from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 import {
     AuroraRestClientInstance,
     SessionRestClientInstance,
 } from "../clients";
 import { GuestUser } from "../types";
+//#endregion
 
+//#region Hooks
 export const useCheckLogging = (): void => {
     const { navigate } = useNavigation();
 
@@ -42,3 +45,4 @@ export const useCheckLogging = (): void => {
 
     return;
 };
+//#endregion

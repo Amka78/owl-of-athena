@@ -1,49 +1,46 @@
 //#region Import modules
-import {
-    NavigationParams,
-    NavigationRoute,
-    NavigationRouteConfigMap,
-} from "react-navigation";
-import {
-    createMaterialTopTabNavigator,
-    NavigationMaterialTabOptions,
-    NavigationTabProp,
-} from "react-navigation-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import * as React from "react";
+
 import { Colors, Message, MessageKeys } from "../constants";
-import { SessionScreen, SessionNoteScreen } from "../screens";
+import { SessionNoteScreen, SessionScreen } from "../screens";
 //#endregion
 
-//#region Route config
-const routeConfigMap: NavigationRouteConfigMap<
-    NavigationMaterialTabOptions,
-    NavigationTabProp<NavigationRoute<NavigationParams>, any>
-> = {
-    Route1: {
-        navigationOptions: {
-            title: Message.get(MessageKeys.top_tab_sleep_tracking_title),
-        },
-        path: "",
-        screen: SessionScreen,
-    },
-    Route2: {
-        navigationOptions: {
-            title: Message.get(MessageKeys.top_tab_journal_title),
-        },
-        path: "",
-        screen: SessionNoteScreen,
-    },
+//#region Component
+const MaterialTab = createMaterialTopTabNavigator();
+
+const SessionTabNavigator = (): JSX.Element => {
+    return (
+        <MaterialTab.Navigator
+            tabBarOptions={{
+                activeTintColor: Colors.first_accent_color,
+                inactiveTintColor: Colors.cyan,
+                style: { backgroundColor: Colors.navy },
+                pressColor: Colors.first_accent_color,
+                labelStyle: { fontWeight: "bold" },
+            }}
+        >
+            <MaterialTab.Screen
+                name={"SleepTracking"}
+                component={SessionScreen}
+                options={{
+                    title: Message.get(
+                        MessageKeys.top_tab_sleep_tracking_title
+                    ),
+                }}
+            ></MaterialTab.Screen>
+            <MaterialTab.Screen
+                name={"Journal"}
+                component={SessionNoteScreen}
+                options={{
+                    title: Message.get(
+                        Message.get(MessageKeys.top_tab_journal_title)
+                    ),
+                }}
+            ></MaterialTab.Screen>
+        </MaterialTab.Navigator>
+    );
 };
 //#endregion
 
-//#region Navigator
-const SessionTabNavigator = createMaterialTopTabNavigator(routeConfigMap, {
-    tabBarOptions: {
-        activeTintColor: Colors.first_accent_color,
-        inactiveTintColor: Colors.cyan,
-        style: { backgroundColor: Colors.navy },
-        pressColor: Colors.first_accent_color,
-        labelStyle: { fontWeight: "bold" },
-    },
-});
-//#endregion
 export default SessionTabNavigator;

@@ -1,27 +1,29 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
+import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
 import { Asset } from "expo-asset";
+import { Audio } from "expo-av";
+import * as Font from "expo-font";
 import React from "react";
 import { Platform, StatusBar, StyleSheet } from "react-native";
+import { Portal, Provider } from "react-native-paper";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { Provider as ReduxProvider } from "react-redux";
-import { RootContainer } from "./src/navigation";
-import reduxStore from "./src/store";
-import { Colors, Layout } from "./src/constants";
+import { PersistGate } from "redux-persist/integration/react";
+
 import {
     AudioDialog,
-    ProfilesDialog,
-    LoadingDialog,
     ConfirmDialog,
+    LoadingDialog,
+    ProfilesDialog,
     UpdateSnackBar,
 } from "./src/components";
-import { PersistGate } from "redux-persist/integration/react";
-import { Portal, Provider } from "react-native-paper";
-import { Audio } from "expo-av";
-import { AuroraSound } from "./src/types";
+import { Colors, Layout } from "./src/constants";
 import { AuroraManagerInstance } from "./src/managers";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { InitialNavigator } from "./src/navigation";
+import reduxStore from "./src/store";
+import { AuroraSound } from "./src/types";
 //#endregion
 
 //#region Types
@@ -32,6 +34,9 @@ type AppProps = {
 type AppState = {
     isLoadingComplete: boolean;
 };
+//#endregion
+
+//#region Component
 export default class App extends React.Component<AppProps, AppState> {
     private aNewDaySound = new Audio.Sound();
     private bungleCallSound = new Audio.Sound();
@@ -75,25 +80,27 @@ export default class App extends React.Component<AppProps, AppState> {
                         >
                             <Provider>
                                 <Portal>
-                                    <SafeAreaView
-                                        mode={"margin"}
-                                        style={[
-                                            styles.container,
-                                            { width: rootWidth },
-                                        ]}
-                                    >
-                                        {Platform.OS === "ios" && (
-                                            <StatusBar barStyle="default" />
-                                        )}
-                                        <RootContainer />
-                                        <AudioDialog
-                                            auroraSoundList={this.SoundList}
-                                        ></AudioDialog>
-                                        <ProfilesDialog></ProfilesDialog>
-                                        <LoadingDialog></LoadingDialog>
-                                        <ConfirmDialog></ConfirmDialog>
-                                        <UpdateSnackBar></UpdateSnackBar>
-                                    </SafeAreaView>
+                                    <NavigationContainer>
+                                        <SafeAreaView
+                                            mode={"margin"}
+                                            style={[
+                                                styles.container,
+                                                { width: rootWidth },
+                                            ]}
+                                        >
+                                            {Platform.OS === "ios" && (
+                                                <StatusBar barStyle="default" />
+                                            )}
+                                            <InitialNavigator></InitialNavigator>
+                                            <AudioDialog
+                                                auroraSoundList={this.SoundList}
+                                            ></AudioDialog>
+                                            <ProfilesDialog></ProfilesDialog>
+                                            <LoadingDialog></LoadingDialog>
+                                            <ConfirmDialog></ConfirmDialog>
+                                            <UpdateSnackBar></UpdateSnackBar>
+                                        </SafeAreaView>
+                                    </NavigationContainer>
                                 </Portal>
                             </Provider>
                         </PersistGate>
@@ -102,7 +109,9 @@ export default class App extends React.Component<AppProps, AppState> {
             );
         }
     }
+    //#endregion
 
+    //#region Function
     public loadResourcesAsync = async (): Promise<void> => {
         Promise.all([
             Font.loadAsync({
@@ -180,8 +189,10 @@ export default class App extends React.Component<AppProps, AppState> {
             sound: this.singingBirdsSound,
         });
     }
+    //#endregion
 }
 
+//#region Sytles
 const styles = StyleSheet.create({
     container: {
         alignSelf: Platform.OS === "web" ? "center" : undefined,
@@ -189,3 +200,4 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+//#endregion
