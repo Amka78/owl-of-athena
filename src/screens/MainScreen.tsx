@@ -12,9 +12,6 @@ export const MainScreen: FunctionComponent = () => {
     const mainHook = useMain();
     return (
         <MainScreenTemplate
-            mainContainer={{
-                onNavagationStateChange: mainHook.onNavigationStateChange,
-            }}
             AuroraConnectionStatesBar={{
                 children:
                     mainHook.error !== ""
