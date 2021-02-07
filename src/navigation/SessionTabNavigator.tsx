@@ -3,7 +3,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import * as React from "react";
 
 import { Colors, Message, MessageKeys } from "../constants";
-import { SessionNoteScreen, SessionScreen } from "../screens";
+import { SessionNoteScreen, SessionScreen } from "../components/pages";
 //#endregion
 
 //#region Component

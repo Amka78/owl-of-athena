@@ -16,7 +16,6 @@ import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
 import { GuestUser } from "../types";
-import { MessageKeys as MessageKeysType } from "../constants/Message";
 import { Message, MessageKeys } from "../constants";
 import { WakeLockService } from "../services";
 import { Platform } from "react-native";
@@ -27,7 +26,7 @@ export const useHome = (): {
     settings: Settings;
     timeViewPress: () => void;
     goToSleepPress: () => void;
-    errorText: MessageKeysType;
+    errorText: string;
 } => {
     useCheckLogging();
     const { navigate } = useNavigation();

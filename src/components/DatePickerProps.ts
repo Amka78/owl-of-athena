@@ -2,5 +2,5 @@ export type DatePickerProps = {
     label?: string;
     selected?: Date;
     format?: string;
-    onChange: (date: Date) => void;
+    onChange?: (date: Date) => void;
 };

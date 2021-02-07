@@ -12,7 +12,10 @@ import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
 import { LabeledCheckBox, LabeledCheckBoxProps } from "./LabeledCheckBox";
-import { LabeledRadioButton } from "./LabeledRadioButton";
+import {
+    LabeledRadioButton,
+    LabeledRadioButtonProps,
+} from "./LabeledRadioButton";
 import {
     LabeledSelectorMenu,
     LabeledSelectorMenuProps,
@@ -53,6 +56,7 @@ export {
     InlineTimePicker,
     InlineTimePickerProps,
     LabeledRadioButton,
+    LabeledRadioButtonProps,
     LabeledSelectorMenu,
     LabeledSelectorMenuProps,
     LabeledCheckBox,

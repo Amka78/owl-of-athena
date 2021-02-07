@@ -19,11 +19,12 @@ import {
     ProfilesDialog,
     UpdateSnackBar,
 } from "./src/components";
-import { Colors, Layout } from "./src/constants";
+import { Colors, Layout, Message } from "./src/constants";
 import { AuroraManagerInstance } from "./src/managers";
 import { InitialNavigator } from "./src/navigation";
 import reduxStore from "./src/store";
 import { AuroraSound } from "./src/types";
+import * as Localization from "expo-localization";
 //#endregion
 
 //#region Types
@@ -54,6 +55,10 @@ export default class App extends React.Component<AppProps, AppState> {
 
     constructor(props: AppProps) {
         super(props);
+    }
+
+    public componentDidMount(): void {
+        Message.setLocale(Localization.locale);
     }
 
     public render(): JSX.Element {

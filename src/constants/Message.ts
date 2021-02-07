@@ -1,4 +1,3 @@
-import * as Localization from "expo-localization";
 import i18n from "i18n-js";
 import { MessageKeys } from "./";
 import en from "./i18-n/en";
@@ -6,7 +5,6 @@ import ja from "./i18-n/ja";
 
 i18n.fallbacks = true;
 i18n.translations = { ja, en };
-i18n.locale = Localization.locale;
 i18n.defaultLocale = "en-US";
 export type MessageKeys = typeof MessageKeys | string;
 export type MessageLocalizationParam = {

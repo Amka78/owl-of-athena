@@ -3,8 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
 import { Colors } from "../constants";
-import { LoginScreen, SignupScreen, WelcomeScreen } from "../screens";
-import { ForgotPasswordScreen } from "../screens/ForgotPassswordScreen";
+import { LoginScreen, SignupScreen, WelcomeScreen } from "../components/pages";
+import { ForgotPasswordScreen } from "../components/pages/ForgotPassswordScreen";
 import { CommonStyles } from "../styles";
 //#endregion
 

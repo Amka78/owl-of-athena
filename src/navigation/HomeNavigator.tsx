@@ -10,7 +10,7 @@ import {
     SettingsScreen,
     SleepingScreen,
     WakingScreen,
-} from "../screens";
+} from "../components/pages";
 import { CommonStyles } from "../styles";
 //#endregion
 

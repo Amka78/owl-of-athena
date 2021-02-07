@@ -18,7 +18,9 @@
     "upload-prod": "npx netlify deploy --dir web-build --prod",
     "coverage": "jest --coverage",
     "clean-install": "rm -rf node_modules && npm cache clean --force && npm install",
-    "ncu": "npm-check-updates -u && npm install"
+    "ncu": "npm-check-updates -u && npm install",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.0",
@@ -61,6 +63,7 @@
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-svg": "12.1.0",
+    "react-native-tab-view": "^2.15.2",
     "react-native-unimodules": "~0.12.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.2",
@@ -73,8 +76,12 @@
     "webpack-bundle-analyzer": "^4.1.0"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0",
+    "@babel/core": "~7.12.10",
     "@expo/config": "^3.3.22",
+    "@storybook/addon-actions": "^6.1.15",
+    "@storybook/addon-essentials": "^6.1.15",
+    "@storybook/addon-links": "^6.1.15",
+    "@storybook/react": "^6.1.15",
     "@types/binary-parser": "^1.5.0",
     "@types/buffer-crc32": "^0.2.0",
     "@types/d3": "^5.7.2",
@@ -99,6 +106,7 @@
     "@typescript-eslint/parser": "^4.8.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "~25.2.6",
+    "babel-loader": "^8.2.2",
     "babel-preset-expo": "8.3.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",

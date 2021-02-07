@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { Colors, Message, MessageKeys } from "../constants";
 import { useSelectedSessionSelector } from "../hooks";
-import { SessionListScreen } from "../screens";
+import { SessionListScreen } from "../components/pages";
 import { CommonStyles } from "../styles";
 import SessionTabNavigator from "./SessionTabNavigator";
 //#endregion

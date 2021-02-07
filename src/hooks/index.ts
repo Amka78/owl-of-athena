@@ -7,6 +7,7 @@ import { useFilterConditionSelector } from "./useFilteredConditionSelector";
 import { useFilteredSessionListSelector } from "./useFilteredSessionListSelector";
 import { useForgotPassword } from "./useForgotPassword";
 import { useGetUser } from "./useGetUser";
+import { useLocale } from "./useLocale";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
 import { useProfilesSelector } from "./useProfilesSelector";
@@ -33,6 +34,7 @@ export {
     useDatePicker,
     useForgotPassword,
     useGetUser,
+    useLocale,
     useLogin,
     useLogout,
     useSignup,

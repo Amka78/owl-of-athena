@@ -62,7 +62,7 @@ export const useAwake = (): {
         } finally {
             LoadingDialog.close();
         }
-    }, []);
+    }, [dispatch, navigate, sessionDetailList, sessionList, userInfo?.id]);
     return { questionnaireButtonPress, skipButtonPress };
 };
 //#endregion

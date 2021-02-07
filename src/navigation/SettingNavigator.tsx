@@ -4,7 +4,7 @@ import * as React from "react";
 import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../constants";
-import { AccountScreen } from "../screens";
+import { AccountScreen } from "../components/pages";
 import { CommonStyles } from "../styles";
 //#endregion
 
