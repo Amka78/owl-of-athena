@@ -3,6 +3,7 @@ import Colors from "./Colors";
 import Dimens from "./Dimens";
 import Fonts from "./Fonts";
 import Layout from "./Layout";
+import { Theme, ThemeType } from "./Theme";
 import Message from "./Message";
 import { MessageKeys } from "./MessageKeys";
 import StorageKeys from "./StorageKeys";
@@ -15,5 +16,7 @@ export {
     Layout,
     Message,
     MessageKeys,
-    StorageKeys
+    StorageKeys,
+    Theme,
+    ThemeType,
 };

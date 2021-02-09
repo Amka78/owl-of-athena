@@ -9,6 +9,9 @@ import {
     View,
     ViewStyle,
 } from "react-native";
+import { useTheme } from "react-native-paper";
+
+import { ThemeType } from "../../constants";
 //#endregion
 
 //#region Types
@@ -29,6 +32,7 @@ export type InlineTimePickerProps = {
     onChangeTime?: (hours?: number, minutes?: number, seconds?: number) => void;
     mode24hours?: boolean;
     mode?: TimePickerMode;
+    theme?: ThemeType;
 };
 
 type InlineTimePickerState = {
@@ -40,9 +44,15 @@ type InlineTimePickerState = {
 };
 type TimePickerMode = "full" | "minute";
 //#endregion
+export const InlineTimePicker = (props: InlineTimePickerProps): JSX.Element => {
+    const theme = useTheme();
+    return (
+        <InlineTimePickerCore {...props} theme={theme}></InlineTimePickerCore>
+    );
+};
 
 //#region Component
-export class InlineTimePicker extends Component<
+class InlineTimePickerCore extends Component<
     InlineTimePickerProps,
     InlineTimePickerState
 > {
@@ -75,15 +85,14 @@ export class InlineTimePicker extends Component<
 
         this.mode = "full";
         if (this.props.mode) {
-            this.mode = this.props.mode!;
+            this.mode = this.props.mode;
         }
 
-        this.style = TimePickerDefaultStyle;
         if (this.props?.style) {
-            this.style = this.props.style!;
-
-            this.setStyle();
+            this.style = this.props.style;
         }
+
+        this.setStyle(this.props.theme);
     }
 
     public async componentDidMount(): Promise<void> {
@@ -95,9 +104,9 @@ export class InlineTimePicker extends Component<
                     initialDate.getFullYear(),
                     initialDate.getMonth(),
                     initialDate.getDate(),
-                    this.props.initialTime!.hours,
-                    this.props.initialTime!.minutes,
-                    this.props.initialTime!.seconds
+                    this.props.initialTime.hours,
+                    this.props.initialTime.minutes,
+                    this.props.initialTime.seconds
                 );
             } else {
                 initialDate = this.props.initialTime;
@@ -150,6 +159,10 @@ export class InlineTimePicker extends Component<
                                     <Text
                                         style={[
                                             styles.text,
+                                            {
+                                                color: this.props.theme?.colors
+                                                    ?.text,
+                                            },
                                             this.getTextStyle(),
                                         ]}
                                     >
@@ -252,23 +265,32 @@ export class InlineTimePicker extends Component<
         );
     }
 
-    private setStyle(): void {
-        console.debug("currentStyle:", this.style);
+    private setStyle(theme?: ThemeType): void {
+        if (!this.style) {
+            this.style = {};
+        }
         if (!this.style.activeColor) {
-            this.style.activeColor = TimePickerDefaultStyle.activeColor;
+            this.style.activeColor = theme?.colors?.accent
+                ? theme.colors?.accent
+                : TimePickerDefaultStyle.activeColor;
         }
         if (!this.style.backgroundColor) {
-            this.style.backgroundColor = TimePickerDefaultStyle.backgroundColor;
+            this.style.backgroundColor = theme?.colors?.background
+                ? theme?.colors?.background
+                : TimePickerDefaultStyle.backgroundColor;
         }
         if (!this.style.borderColor) {
-            this.style.borderColor = TimePickerDefaultStyle.borderColor;
+            this.style.borderColor = theme?.colors?.text
+                ? theme?.colors?.text
+                : TimePickerDefaultStyle.borderColor;
         }
         if (!this.style.borderRadius) {
             this.style.borderRadius = TimePickerDefaultStyle.borderRadius;
         }
         if (!this.style.containerBackgroudColor) {
-            this.style.containerBackgroudColor =
-                TimePickerDefaultStyle.containerBackgroudColor;
+            this.style.containerBackgroudColor = theme?.colors?.background
+                ? theme?.colors?.background
+                : TimePickerDefaultStyle.containerBackgroudColor;
         }
         if (!this.style.fontSize) {
             this.style.fontSize = TimePickerDefaultStyle.fontSize;
@@ -277,7 +299,9 @@ export class InlineTimePicker extends Component<
             this.style.iconSize = TimePickerDefaultStyle.iconSize;
         }
         if (!this.style.textColor) {
-            this.style.textColor = TimePickerDefaultStyle.textColor;
+            this.style.textColor = theme?.colors?.accent
+                ? theme?.colors?.text
+                : TimePickerDefaultStyle.textColor;
         }
     }
     private invokeOnChangeTime = (): void => {
@@ -409,7 +433,9 @@ export class InlineTimePicker extends Component<
     };
 
     private getTextColor = (): TextStyle => {
-        return { color: this.style.textColor };
+        return {
+            color: this.style.textColor,
+        };
     };
 
     private getTextStyle = (): TextStyle => {

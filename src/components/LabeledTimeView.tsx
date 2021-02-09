@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { Text, View, StyleSheet, TextStyle } from "react-native";
 import { TimeView } from ".";
 import { Colors } from "../constants";
-import { TimeViewMode } from "../components/TimeView";
+import { TimeViewMode } from "./atoms/TimeView";
 //#endregion
 
 //#region Types

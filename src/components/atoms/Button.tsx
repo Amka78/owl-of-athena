@@ -1,8 +1,9 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { Button as PaperButton } from "react-native-paper";
-import { Colors, Dimens, Fonts, Layout } from "../constants";
 import { TextStyle, ViewStyle } from "react-native";
+import { Button as PaperButton, useTheme } from "react-native-paper";
+
+import { Dimens, Fonts, Layout, ThemeType } from "../../constants";
 //#endregion
 
 //#region Types
@@ -10,18 +11,25 @@ export type ButtonProps = {
     children: string;
     disabled?: boolean;
     onPress?: () => void;
+    labelStyle?: TextStyle;
+    style?: ViewStyle;
 };
 //#endregion
 
 //#region Component
 export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
+    const theme: ThemeType = useTheme();
+
     return (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <PaperButton
+            {...props}
             disabled={props.disabled !== undefined ? props.disabled! : false}
-            onPress={props.onPress}
             mode={"contained"}
-            labelStyle={labelStyle}
-            style={containerStyle}
+            labelStyle={[labelStyle, props.labelStyle]}
+            style={[containerStyle, props.style]}
+            theme={theme}
         >
             {props.children}
         </PaperButton>
@@ -31,12 +39,10 @@ export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 
 //#region Styles
 const labelStyle: TextStyle = {
-    color: Colors.navy,
     fontFamily: Fonts.primarySemiBold,
     fontSize: Dimens.button_text_size,
 };
 const containerStyle: ViewStyle = {
-    backgroundColor: Colors.teal,
     borderRadius: Dimens.button_radius,
     marginBottom: Dimens.button_margin_bottom,
     height: Dimens.button_height,

@@ -2,8 +2,8 @@
 import React from "react";
 import { Message, Colors, Fonts, MessageKeys } from "../constants";
 import { Dialog } from "react-native-paper";
-import { FlatButton } from "./FlatButton";
-import { ContentText } from "./ContentText";
+import { FlatButton } from "./atoms/FlatButton";
+import { ContentText } from "./atoms/ContentText";
 import { StyleSheet } from "react-native";
 //#endregion
 

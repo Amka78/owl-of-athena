@@ -1,7 +1,8 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { Text, TextStyle } from "react-native";
-import { Colors, Dimens, Fonts } from "../constants";
+import { Dimens, Fonts, ThemeType } from "../../constants";
+import { useTheme } from "react-native-paper";
 //#endregion
 
 //#region Types
@@ -16,8 +17,13 @@ export type ContentTextProps = {
 export const ContentText: FunctionComponent<ContentTextProps> = (
     props: ContentTextProps
 ) => {
+    const theme: ThemeType | undefined = useTheme();
+
     return (
-        <Text style={[textStyle, props.style]} onPress={props.onPress}>
+        <Text
+            style={[textStyle, { color: theme?.colors?.accent }, props.style]}
+            onPress={props.onPress}
+        >
             {props.children}
         </Text>
     );
@@ -26,7 +32,6 @@ export const ContentText: FunctionComponent<ContentTextProps> = (
 
 //#region Styles
 const textStyle: TextStyle = {
-    color: Colors.cyan,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.content_text_size,
     flex: 1,

@@ -6,7 +6,7 @@ import {
     LabeledTimeViewProps,
     LabeledSelectorMenuProps,
 } from "..";
-import { FlatButtonProps } from "../FlatButton";
+import { FlatButtonProps } from "../atoms/FlatButton";
 type TemplateButtonProps = Pick<ButtonProps, "onPress">;
 
 type TemplateTextBoxProps = Pick<TextBoxProps, "value" | "onChangeText">;

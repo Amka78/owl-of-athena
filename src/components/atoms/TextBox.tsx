@@ -1,15 +1,18 @@
 //#region Import Modules
+import { useTheme } from "react-native-paper";
 import React, { FunctionComponent } from "react";
 import { TextInputProps } from "react-native";
 import { TextInput } from "react-native-paper";
 
-import { Colors, Dimens, Fonts, Layout } from "../constants";
+import { Colors, Dimens, Fonts, Layout } from "../../constants";
 //#endregion
 
 //#region Types
-export type TextBoxProps = TextInputProps & {
+export type TextBoxProps = Omit<TextInputProps, "selectionColor"> & {
     error?: boolean;
     label?: string;
+    selectionColor?: string;
+    underlineColor?: string;
 };
 //#endregion
 
@@ -17,20 +20,19 @@ export type TextBoxProps = TextInputProps & {
 export const TextBox: FunctionComponent<TextBoxProps> = (
     props: TextBoxProps
 ) => {
+    const theme = useTheme();
     return (
         <TextInput
             {...props}
             mode={"flat"}
-            selectionColor={Colors.white}
+            selectionColor={
+                props.selectionColor ? props.selectionColor : Colors.white
+            }
             style={textInputStyle}
-            underlineColor={Colors.white}
-            theme={{
-                colors: {
-                    text: Colors.cyan,
-                    placeholder: Colors.white,
-                    primary: Colors.cyan,
-                },
-            }}
+            underlineColor={
+                props.underlineColor ? props.underlineColor : Colors.white
+            }
+            theme={theme}
         ></TextInput>
     );
 };
@@ -38,7 +40,6 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
 
 //#region Styles
 const textInputStyle = {
-    backgroundColor: "transparent",
     marginBottom: Dimens.button_margin_bottom,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.input_text_size,

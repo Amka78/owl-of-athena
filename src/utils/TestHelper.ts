@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { NavigationScreenProp } from "react-navigation";
 
-import { ButtonProps } from "../components/Button";
+import { ButtonProps } from "../components/atoms/Button";
 
 // @ts-ignore
 export const FakeGestureResponderEvent: GestureResponderEvent = {};

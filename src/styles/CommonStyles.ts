@@ -8,7 +8,6 @@ import { Colors, Dimens } from "../constants";
 export default StyleSheet.create({
     standardView: {
         alignItems: "center",
-        backgroundColor: Colors.navy,
         marginLeft: Dimens.content_margin_horizontal,
         marginRight: Dimens.content_margin_horizontal,
         flex: 1,
@@ -20,7 +19,6 @@ export default StyleSheet.create({
         borderBottomWidth: 1,
     },
     rootContainer: {
-        backgroundColor: Colors.navy,
         flex: 1,
     },
 });

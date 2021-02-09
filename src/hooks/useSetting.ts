@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { cacheSettings } from "../actions";
 import { AudioDialog, ProfilesDialog } from "../components";
-import { CheckBoxStatus } from "../components/LabeledCheckBox";
+import { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
 import {
     useCheckLogging,
     useProfilesSelector,

@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { Checkbox } from "react-native-paper";
 
-import { Colors, Dimens, Fonts, Layout } from "../constants";
+import { Colors, Dimens, Fonts, Layout } from "../../constants";
 //#endregion
 
 //#region Types

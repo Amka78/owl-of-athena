@@ -4,7 +4,7 @@ import React, { FunctionComponent } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { Colors, Dimens, Fonts } from "../constants";
+import { Colors, Dimens, Fonts } from "../../constants";
 //#endregion
 
 //#region Types

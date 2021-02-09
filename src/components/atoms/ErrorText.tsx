@@ -1,8 +1,9 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, TextStyle } from "react-native";
+import { Text, TextStyle } from "react-native";
+import { useTheme } from "react-native-paper";
 
-import { Colors, Dimens, Fonts } from "../constants";
+import { Dimens, Fonts } from "../../constants";
 //#endregion
 
 //#region Types
@@ -16,19 +17,19 @@ export type ErrorTextProps = {
 export const ErrorText: FunctionComponent<ErrorTextProps> = (
     props: ErrorTextProps
 ) => {
-    return <Text style={createTextStyle(props.style)}>{props.children}</Text>;
+    const theme = useTheme();
+    return (
+        <Text style={[textStyle, { color: theme?.colors?.error }, props.style]}>
+            {props.children}
+        </Text>
+    );
 };
 //#endregion
 
 //#region Styles
 const textStyle: TextStyle = {
-    color: Colors.red,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.error_text_size,
     marginBottom: Dimens.error_text_margin_bottom,
 };
 //#endregion
-
-function createTextStyle(propsStyle?: TextStyle): TextStyle {
-    return StyleSheet.flatten([propsStyle, textStyle]);
-}

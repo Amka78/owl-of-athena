@@ -2,7 +2,7 @@
 import React, { FunctionComponent, useState } from "react";
 import { Menu } from "react-native-paper";
 import { DatePickerProps } from "./DatePickerProps";
-import { TextBox } from "../components";
+import { TextBox } from "..";
 import Calendar from "rc-calendar";
 import "rc-calendar/assets/index.css";
 import moment from "moment";

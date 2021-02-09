@@ -6,7 +6,7 @@ import { ShallowWrapper } from "enzyme";
 import React from "react";
 
 import { TestHelper } from "../../utils/TestHelper";
-import { Button, ButtonProps } from "../Button";
+import { Button, ButtonProps } from "../atoms/Button";
 //#endregion
 
 //#region Tests

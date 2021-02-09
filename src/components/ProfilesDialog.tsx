@@ -3,8 +3,8 @@ import { View, StyleSheet } from "react-native";
 import { Message, MessageKeys, Colors, Fonts } from "../constants";
 
 import { Dialog, RadioButton } from "react-native-paper";
-import { LabeledRadioButton } from "./LabeledRadioButton";
-import { FlatButton } from "./FlatButton";
+import { LabeledRadioButton } from "./molecules/LabeledRadioButton";
+import { FlatButton } from "./atoms/FlatButton";
 import { AuroraProfile } from "../sdk/AuroraTypes";
 type ProfilesDialogSettings = {
     profileList: Array<AuroraProfile>;
@@ -34,7 +34,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
         this.Instance!.setState({
             dialogSettings: args,
             selectedProfileId: selectedProfile.id!,
-            selectedProfileTitle: selectedProfile.title!
+            selectedProfileTitle: selectedProfile.title!,
         });
     }
 
@@ -44,7 +44,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
         this.state = {
             selectedProfileId: "",
             selectedProfileTitle: "",
-            dialogSettings: undefined
+            dialogSettings: undefined,
         };
     }
 
@@ -118,7 +118,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
             );
             this.setState({
                 selectedProfileId: selectedProfile!.id!,
-                selectedProfileTitle: selectedProfile!.title!
+                selectedProfileTitle: selectedProfile!.title!,
             });
         };
     }
@@ -148,16 +148,16 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
 
 const style = StyleSheet.create({
     dialogContainer: {
-        backgroundColor: Colors.navy_darker
+        backgroundColor: Colors.navy_darker,
     },
     dialogTitle: {
         color: Colors.cyan,
-        fontFamily: Fonts.primarySemiBold
+        fontFamily: Fonts.primarySemiBold,
     },
     profileRadioButtonList: {
         flex: 1,
         alignItems: "flex-start",
-        justifyContent: "center"
+        justifyContent: "center",
     },
-    dialogButton: { color: Colors.cyan }
+    dialogButton: { color: Colors.cyan },
 });

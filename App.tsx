@@ -25,6 +25,7 @@ import { InitialNavigator } from "./src/navigation";
 import reduxStore from "./src/store";
 import { AuroraSound } from "./src/types";
 import * as Localization from "expo-localization";
+import { Theme } from "./src/constants/Theme";
 //#endregion
 
 //#region Types
@@ -83,7 +84,7 @@ export default class App extends React.Component<AppProps, AppState> {
                             loading={undefined}
                             persistor={persistedRedux.persistor}
                         >
-                            <Provider>
+                            <Provider theme={Theme}>
                                 <Portal>
                                     <NavigationContainer>
                                         <SafeAreaView

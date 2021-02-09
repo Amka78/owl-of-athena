@@ -1,11 +1,13 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { Text, StyleSheet, TextStyle, View } from "react-native";
-import { Colors, Fonts } from "../constants";
-export type TimeViewMode = "meridian" | "time";
+import { StyleSheet, Text, TextStyle, View } from "react-native";
+import { useTheme } from "react-native-paper";
+
+import { Fonts } from "../../constants";
 //#endregion
 
 //#region Types
+export type TimeViewMode = "meridian" | "time";
 export type TimeViewProps = {
     timeViewStyle?: TextStyle;
     timeStyle?: TextStyle;
@@ -20,13 +22,26 @@ export type TimeViewProps = {
 export const TimeView: FunctionComponent<TimeViewProps> = (
     props: TimeViewProps
 ) => {
+    const theme = useTheme();
     return (
         <View style={[style.alarmView, props.timeViewStyle]}>
-            <Text style={[style.alarmTime, props.timeStyle]}>
+            <Text
+                style={[
+                    style.alarmTime,
+                    { color: theme.colors?.accent },
+                    props.timeStyle,
+                ]}
+            >
                 {getTimeText(props)}
             </Text>
             {props.mode === "meridian" ? (
-                <Text style={[style.alarmMeridian, props.timeMeridianStyle]}>
+                <Text
+                    style={[
+                        style.alarmMeridian,
+                        { color: theme.colors?.accent },
+                        props.timeMeridianStyle,
+                    ]}
+                >
                     {props.hours > 12 ? "pm" : "am"}
                 </Text>
             ) : undefined}
@@ -41,15 +56,12 @@ const style = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        //flex: 1,
     },
     alarmTime: {
-        color: Colors.cyan,
         fontFamily: Fonts.primarySemiBold,
         fontSize: 20,
     },
     alarmMeridian: {
-        color: Colors.cyan,
         fontFamily: Fonts.primaryRegular,
         fontSize: 20,
     },

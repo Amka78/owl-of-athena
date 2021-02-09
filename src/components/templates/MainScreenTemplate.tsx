@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { FlatButton } from "..";
-import { FlatButtonProps } from "../FlatButton";
+import { FlatButtonProps } from "../atoms/FlatButton";
 import MainTabNavigator from "../../navigation/MainTabNavigator";
 import { useLocale } from "../../hooks";
 //#endregion

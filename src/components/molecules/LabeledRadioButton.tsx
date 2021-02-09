@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { Colors } from "../constants";
+import { Colors } from "../../constants";
 //#endregion
 
 //#region Types

@@ -11,12 +11,13 @@ import {
     LabeledSelectorMenu,
     StandardView,
 } from "..";
-import { Colors, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import {
     TemplateButtonProps,
     TemplateSelectorMenuProps,
 } from "./TempatedProps";
+
 //#endregion
 
 //#region Types
@@ -43,13 +44,6 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
             <InlineTimePicker
                 {...props.inlineTimePicker}
                 mode="minute"
-                style={{
-                    activeColor: Colors.navy_darker,
-                    backgroundColor: Colors.navy,
-                    borderColor: Colors.white,
-                    containerBackgroudColor: Colors.navy,
-                    textColor: Colors.cyan,
-                }}
             ></InlineTimePicker>
             <View>
                 <LabeledSelectorMenu
