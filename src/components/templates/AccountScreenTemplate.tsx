@@ -3,18 +3,10 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import {
-    Button,
-    DatePicker,
-    DatePickerProps,
-    ErrorText,
-    FlatButton,
-    LabeledRadioButton,
-    StandardView,
-    TextBox,
-} from "..";
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
+import { Button, ErrorText, FlatButton, StandardView, TextBox } from "../atoms";
+import { DatePicker, DatePickerProps, LabeledRadioButton } from "../molecules";
 import {
     TemplateButtonProps,
     TemplateRadioButtonProps,

@@ -5,8 +5,8 @@ import React, { FunctionComponent, useCallback, useState } from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { DatePickerProps } from "./DatePickerProps";
 import { TextBox } from "../atoms/TextBox";
+import { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component

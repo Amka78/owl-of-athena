@@ -13,7 +13,8 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton, List } from "react-native-paper";
 
-import { LabeledCheckBox, LabeledCheckBoxProps, StandardView } from "..";
+import { StandardView } from "../atoms";
+import { LabeledCheckBox, LabeledCheckBoxProps } from "../molecules";
 import { ChartRadialProgress } from "../charts";
 import { Colors, Layout, Message, MessageKeys } from "../../constants";
 import { AuroraSession } from "../../sdk/models";

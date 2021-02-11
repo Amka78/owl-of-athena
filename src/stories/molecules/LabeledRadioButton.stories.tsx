@@ -10,7 +10,8 @@ export default {
     title: "Molecules/LabeledRadioButton",
     component: LabeledRadioButton,
     argTypes: {
-        backgroundColor: { control: "color" },
+        radioButtonColor: { control: "color" },
+        radioButtonUncheckedColor: { control: "color" },
     },
 } as Meta;
 

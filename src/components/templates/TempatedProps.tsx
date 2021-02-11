@@ -1,12 +1,17 @@
+//#region Import Modules
 import { PickerItemProps } from "react-native";
-import {
-    ButtonProps,
-    TextBoxProps,
-    LabeledRadioButtonProps,
-    LabeledTimeViewProps,
-    LabeledSelectorMenuProps,
-} from "..";
+
+import { ButtonProps, TextBoxProps } from "../atoms";
 import { FlatButtonProps } from "../atoms/FlatButton";
+import {
+    LabeledRadioButtonProps,
+    LabeledSelectorMenuProps,
+    LabeledTimeViewProps,
+} from "../molecules";
+
+//#endregion
+
+//#region Types
 type TemplateButtonProps = Pick<ButtonProps, "onPress">;
 
 type TemplateTextBoxProps = Pick<TextBoxProps, "value" | "onChangeText">;
@@ -23,6 +28,9 @@ type TemplateSelectorMenuProps = Pick<
     LabeledSelectorMenuProps,
     "onPress" | "value"
 >;
+//#endregion
+
+//#region Export
 export {
     TemplateButtonProps,
     TemplateTextBoxProps,
@@ -32,3 +40,4 @@ export {
     TemplateSelectorMenuProps,
     TemplateTimeViewProps,
 };
+//#endregion

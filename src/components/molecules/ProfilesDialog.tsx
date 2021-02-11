@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Message, MessageKeys, Colors, Fonts } from "../constants";
+import { Message, MessageKeys, Colors, Fonts } from "../../constants";
 
 import { Dialog, RadioButton } from "react-native-paper";
-import { LabeledRadioButton } from "./molecules/LabeledRadioButton";
-import { FlatButton } from "./atoms/FlatButton";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import { LabeledRadioButton } from "./LabeledRadioButton";
+import { FlatButton } from "../atoms";
+import { AuroraProfile } from "../../sdk/AuroraTypes";
 type ProfilesDialogSettings = {
     profileList: Array<AuroraProfile>;
     selectedProfileId: string;
@@ -54,7 +54,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
 
     private closeDialog(): void {
         if (this.state.dialogSettings!.onDissmiss) {
-            this.state.dialogSettings!.onDissmiss!();
+            this.state.dialogSettings!.onDissmiss();
         }
         this.setState({ dialogSettings: undefined });
     }

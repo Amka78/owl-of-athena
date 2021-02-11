@@ -1,9 +1,9 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, useTheme } from "react-native-paper";
 
-import { Colors, Dimens, Fonts, Layout } from "../../constants";
+import { Dimens, Fonts, Layout } from "../../constants";
 //#endregion
 
 //#region Types
@@ -19,6 +19,8 @@ export type LabeledCheckBoxProps = {
     description?: string;
     descriptionStyle?: TextStyle;
     status: CheckBoxStatus;
+    checkBoxColor?: string;
+    checkBoxUncheckedColor?: string;
     onPress?: () => void;
 };
 //#endregion
@@ -27,17 +29,28 @@ export type LabeledCheckBoxProps = {
 export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
     props: LabeledCheckBoxProps
 ) => {
+    const theme = useTheme();
     const labelComponent = (
         <Text
             onPress={props.onLabelPress}
-            style={[styles.text, props.labelStyle]}
+            style={[
+                styles.text,
+                { color: theme.colors?.accent },
+                props.labelStyle,
+            ]}
         >
             {props.label}
         </Text>
     );
 
     const descriptionComponent = props.description ? (
-        <Text style={[styles.text, props.descriptionStyle]}>
+        <Text
+            style={[
+                styles.text,
+                { color: theme.colors?.accent },
+                props.descriptionStyle,
+            ]}
+        >
             {props.description}
         </Text>
     ) : undefined;
@@ -67,8 +80,16 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
             >
                 <Checkbox
                     {...props}
-                    color={Colors.white}
-                    uncheckedColor={Colors.white}
+                    color={
+                        props.checkBoxColor
+                            ? props.checkBoxColor
+                            : theme.colors?.text
+                    }
+                    uncheckedColor={
+                        props.checkBoxUncheckedColor
+                            ? props.checkBoxUncheckedColor
+                            : theme.colors?.text
+                    }
                     onPress={props.onPress}
                 ></Checkbox>
             </View>
@@ -89,7 +110,6 @@ const styles = StyleSheet.create({
         marginBottom: Dimens.option_margin_bottom,
     },
     text: {
-        color: Colors.cyan,
         fontFamily: Fonts.primaryRegular,
         fontSize: Dimens.option_text_size,
     },

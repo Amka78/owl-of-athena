@@ -6,11 +6,13 @@ import {
     Button,
     InlineTimePicker,
     InlineTimePickerProps,
+    StandardView,
+} from "../atoms";
+import {
     LabeledCheckBox,
     LabeledCheckBoxProps,
     LabeledSelectorMenu,
-    StandardView,
-} from "..";
+} from "../molecules";
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import {

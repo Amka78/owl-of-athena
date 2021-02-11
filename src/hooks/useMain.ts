@@ -1,12 +1,10 @@
 //#region Import Modules
 import { useCallback, useEffect, useRef, useState } from "react";
-import { NavigationState } from "react-navigation";
-import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { cacheSessionDetails, cacheSessions } from "../actions";
 import { SessionRestClientInstance } from "../clients";
-import { ConfirmDialog, LoadingDialog } from "../components";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
@@ -22,6 +20,7 @@ import {
     useSessionListSelector,
     useUserSelector,
 } from "./";
+
 //#endregion
 
 //#region Hooks
@@ -64,9 +63,9 @@ export const useMain = (): {
         let unmounted = false;
         const f = async (): Promise<void> => {
             if (!unmounted && userInfo !== undefined) {
-                if (sessionList.length <= 0 && userInfo!.id !== GuestUser) {
+                if (sessionList.length <= 0 && userInfo.id !== GuestUser) {
                     const remoteSessionList = await SessionRestClientInstance.getAll(
-                        userInfo!.id
+                        userInfo.id
                     );
                     dispatch(cacheSessions(remoteSessionList));
                 }

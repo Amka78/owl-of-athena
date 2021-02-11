@@ -25,7 +25,7 @@ export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
         // @ts-ignore
         <PaperButton
             {...props}
-            disabled={props.disabled !== undefined ? props.disabled! : false}
+            disabled={props.disabled !== undefined ? props.disabled : false}
             mode={"contained"}
             labelStyle={[labelStyle, props.labelStyle]}
             style={[containerStyle, props.style]}

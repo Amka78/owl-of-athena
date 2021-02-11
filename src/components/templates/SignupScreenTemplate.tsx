@@ -2,19 +2,21 @@
 import React, { FunctionComponent } from "react";
 
 import {
+    LabeledCheckBox,
+    LabeledCheckBoxProps,
+    ValidatableTextBox,
+    ValidatableTextBoxProps,
+} from "../molecules";
+import { Colors, Message, MessageKeys } from "../../constants";
+import { useLocale } from "../../hooks";
+import {
     Button,
     ContentTitle,
     ContentTitleProps,
     ErrorText,
     ErrorTextProps,
-    LabeledCheckBox,
-    LabeledCheckBoxProps,
     StandardView,
-    ValidatableTextBox,
-    ValidatableTextBoxProps,
-} from "..";
-import { Colors, Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+} from "../atoms";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 

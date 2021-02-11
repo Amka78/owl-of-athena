@@ -6,7 +6,7 @@ import {
     useSessionListSelector,
     useSessionDetailListSelector,
 } from "./";
-import { ConfirmDialog, LoadingDialog } from "../components";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { SleepStates } from "../sdk";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";

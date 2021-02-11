@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
-import { StandardView } from "..";
+import { StandardView } from "../atoms";
 import { Colors } from "../../constants";
 //#endregion
 

@@ -10,7 +10,7 @@ import {
     StandardView,
     TimeView,
     TimeViewProps,
-} from "..";
+} from "../atoms";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";

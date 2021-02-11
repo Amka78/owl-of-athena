@@ -4,14 +4,13 @@ import { StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import {
-    FlexSpacer,
     SessionChartPie,
     SessionChartPieProps,
     SessionSleepChart,
     SessionSleepChartProps,
-    SessionTimeView,
-    StandardView,
 } from "..";
+import { SessionTimeView } from "../organisms";
+import { FlexSpacer, StandardView } from "../atoms";
 import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
 import { Colors, Dimens, Layout, Message, MessageKeys } from "../../constants";
 import { CurrentChart } from "../../types/CurrentChart";

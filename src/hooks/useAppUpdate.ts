@@ -1,17 +1,17 @@
-//#region Import modules
-import React, { useEffect, FunctionComponent } from "react";
-import { Snackbar } from "react-native-paper";
-import { Message, MessageKeys } from "../constants";
+//#region Import Modules
+import React, { useCallback, useEffect, useState } from "react";
 //#endregion
 
-//#region Export functions
-export const UpdateSnackBar: FunctionComponent = () => {
+//#region Hooks
+export const useAppUpdate = (): {
+    reloadPageCallback: () => void;
+    showReload: boolean;
+} => {
     //#region useState
     const [showReload, setShowReload] = React.useState(false);
-    const [
-        waitingWorker,
-        setWaitingWorker,
-    ] = React.useState<ServiceWorker | null>(null);
+    const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(
+        null
+    );
     //#endregion
 
     //#region useEffect
@@ -33,25 +33,11 @@ export const UpdateSnackBar: FunctionComponent = () => {
     }, []);
     //#endregion
 
-    const reloadPageCallback = (): void => {
+    const reloadPageCallback = useCallback((): void => {
         waitingWorker?.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
         window.location.reload(true);
-    };
-
-    //#region components
-    return (
-        <Snackbar
-            visible={showReload}
-            onDismiss={reloadPageCallback}
-            action={{
-                label: Message.get(MessageKeys.update_snack_bar_action_label),
-                onPress: reloadPageCallback,
-            }}
-        >
-            {Message.get(MessageKeys.update_snack_bar_title)}
-        </Snackbar>
-    );
-    //#endregion
+    }, [waitingWorker]);
+    return { reloadPageCallback, showReload };
 };
 //#endregion

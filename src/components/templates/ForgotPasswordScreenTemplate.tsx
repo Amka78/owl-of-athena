@@ -9,7 +9,7 @@ import {
     ErrorTextProps,
     StandardView,
     TextBox,
-} from "..";
+} from "../atoms";
 import { Message, MessageKeys } from "../../constants";
 import { useLocale, useTextBoxReturn } from "../../hooks";
 import { TemplateButtonProps } from "./TempatedProps";

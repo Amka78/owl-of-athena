@@ -1,31 +1,28 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
-import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
 import { Asset } from "expo-asset";
 import { Audio } from "expo-av";
 import * as Font from "expo-font";
+import * as Localization from "expo-localization";
 import React from "react";
-import { Platform, StatusBar, StyleSheet } from "react-native";
-import { Portal, Provider } from "react-native-paper";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { Platform, StatusBar } from "react-native";
 import { Provider as ReduxProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
+import { Container } from "./src/components";
 import {
     AudioDialog,
     ConfirmDialog,
     LoadingDialog,
     ProfilesDialog,
-    UpdateSnackBar,
-} from "./src/components";
-import { Colors, Layout, Message } from "./src/constants";
+} from "./src/components/molecules";
+import { UpdateSnackBar } from "./src/components/atoms";
+import { Message } from "./src/constants";
 import { AuroraManagerInstance } from "./src/managers";
 import { InitialNavigator } from "./src/navigation";
 import reduxStore from "./src/store";
 import { AuroraSound } from "./src/types";
-import * as Localization from "expo-localization";
-import { Theme } from "./src/constants/Theme";
 //#endregion
 
 //#region Types
@@ -64,10 +61,6 @@ export default class App extends React.Component<AppProps, AppState> {
 
     public render(): JSX.Element {
         const persistedRedux = reduxStore();
-        const rootWidth =
-            Layout.isLargeDevice && Platform.OS === "web"
-                ? Layout.maxWidth
-                : Layout.window.width;
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return (
                 <AppLoading
@@ -78,40 +71,26 @@ export default class App extends React.Component<AppProps, AppState> {
             );
         } else {
             return (
-                <SafeAreaProvider>
-                    <ReduxProvider store={persistedRedux.store}>
-                        <PersistGate
-                            loading={undefined}
-                            persistor={persistedRedux.persistor}
-                        >
-                            <Provider theme={Theme}>
-                                <Portal>
-                                    <NavigationContainer>
-                                        <SafeAreaView
-                                            mode={"margin"}
-                                            style={[
-                                                styles.container,
-                                                { width: rootWidth },
-                                            ]}
-                                        >
-                                            {Platform.OS === "ios" && (
-                                                <StatusBar barStyle="default" />
-                                            )}
-                                            <InitialNavigator></InitialNavigator>
-                                            <AudioDialog
-                                                auroraSoundList={this.SoundList}
-                                            ></AudioDialog>
-                                            <ProfilesDialog></ProfilesDialog>
-                                            <LoadingDialog></LoadingDialog>
-                                            <ConfirmDialog></ConfirmDialog>
-                                            <UpdateSnackBar></UpdateSnackBar>
-                                        </SafeAreaView>
-                                    </NavigationContainer>
-                                </Portal>
-                            </Provider>
-                        </PersistGate>
-                    </ReduxProvider>
-                </SafeAreaProvider>
+                <ReduxProvider store={persistedRedux.store}>
+                    <PersistGate
+                        loading={undefined}
+                        persistor={persistedRedux.persistor}
+                    >
+                        <Container>
+                            {Platform.OS === "ios" && (
+                                <StatusBar barStyle="default" />
+                            )}
+                            <InitialNavigator></InitialNavigator>
+                            <AudioDialog
+                                auroraSoundList={this.SoundList}
+                            ></AudioDialog>
+                            <ProfilesDialog></ProfilesDialog>
+                            <LoadingDialog></LoadingDialog>
+                            <ConfirmDialog></ConfirmDialog>
+                            <UpdateSnackBar></UpdateSnackBar>
+                        </Container>
+                    </PersistGate>
+                </ReduxProvider>
             );
         }
     }
@@ -197,13 +176,3 @@ export default class App extends React.Component<AppProps, AppState> {
     }
     //#endregion
 }
-
-//#region Sytles
-const styles = StyleSheet.create({
-    container: {
-        alignSelf: Platform.OS === "web" ? "center" : undefined,
-        backgroundColor: Colors.navy,
-        flex: 1,
-    },
-});
-//#endregion

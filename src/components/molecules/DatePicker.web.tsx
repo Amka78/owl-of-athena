@@ -1,12 +1,14 @@
 //#region Import Modules
-import React, { FunctionComponent, useState } from "react";
-import { Menu } from "react-native-paper";
-import { DatePickerProps } from "./DatePickerProps";
-import { TextBox } from "..";
-import Calendar from "rc-calendar";
 import "rc-calendar/assets/index.css";
+
 import moment from "moment";
+import Calendar from "rc-calendar";
+import React, { FunctionComponent, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Menu } from "react-native-paper";
+
+import { TextBox } from "../atoms";
+import { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component
@@ -20,7 +22,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
             defaultValue={selectedDate}
             showDateInput={false}
             onChange={(date: moment.Moment | null): void => {
-                if (date) {
+                if (date && props.onChange) {
                     props.onChange(date.toDate());
                 }
             }}

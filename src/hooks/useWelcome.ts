@@ -5,8 +5,8 @@ import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useAutoLogin } from "./useAutoLogin";
 import { useDispatch } from "react-redux";
-import { MessageKeys } from "../constants";
-import { LoadingDialog } from "../components";
+import { MessageKeys, Message } from "../constants";
+import { LoadingDialog } from "../components/molecules";
 import { createGuestUser } from "../services/WelcomeService";
 //#endregion
 
@@ -22,7 +22,7 @@ export const useWelcome = (): {
 
     const onStandalonePress = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: { key: MessageKeys.login_loading_message },
+            dialogTitle: Message.get(MessageKeys.login_loading_message),
         });
 
         try {

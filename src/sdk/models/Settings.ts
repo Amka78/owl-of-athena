@@ -1,4 +1,4 @@
-import { SoundList } from "../../components";
+import { SoundList } from "../../components/molecules";
 
 export class Settings {
     public userId?: string;

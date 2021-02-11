@@ -11,7 +11,7 @@ import {
     StandardView,
     TimeView,
     TimeViewProps,
-} from "..";
+} from "../atoms";
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import { TemplateButtonProps } from "./TempatedProps";

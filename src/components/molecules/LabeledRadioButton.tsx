@@ -1,9 +1,7 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
-import { RadioButton } from "react-native-paper";
-
-import { Colors } from "../../constants";
+import { RadioButton, useTheme } from "react-native-paper";
 //#endregion
 
 //#region Types
@@ -12,6 +10,8 @@ export type LabeledRadioButtonProps = {
     textStyle?: TextStyle;
     value: string;
     label: string;
+    radioButtonColor?: string;
+    radioButtonUncheckedColor?: string;
     onLabelPress?: () => void;
 };
 //#endregion
@@ -20,15 +20,24 @@ export type LabeledRadioButtonProps = {
 export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
     props: LabeledRadioButtonProps
 ) => {
+    const theme = useTheme();
     return (
         <View style={[styles.radioButtonContainer, props.containerStyle]}>
             <RadioButton
                 value={props.value}
-                color={Colors.cyan}
-                uncheckedColor={Colors.cyan}
+                color={
+                    props.radioButtonColor
+                        ? props.radioButtonColor
+                        : theme.colors.accent
+                }
+                uncheckedColor={
+                    props.radioButtonUncheckedColor
+                        ? props.radioButtonUncheckedColor
+                        : theme.colors.accent
+                }
             />
             <Text
-                style={[styles.text, props.textStyle]}
+                style={[{ color: theme.colors.text }, props.textStyle]}
                 onPress={props.onLabelPress}
             >
                 {props.label}
@@ -46,9 +55,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
-    },
-    text: {
-        color: Colors.white,
     },
 });
 //#endregion

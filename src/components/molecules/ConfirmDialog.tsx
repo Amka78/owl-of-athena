@@ -1,10 +1,10 @@
 //#region Import Modules
 import React from "react";
-import { Message, Colors, Fonts, MessageKeys } from "../constants";
-import { Dialog } from "react-native-paper";
-import { FlatButton } from "./atoms/FlatButton";
-import { ContentText } from "./atoms/ContentText";
 import { StyleSheet } from "react-native";
+import { Dialog } from "react-native-paper";
+
+import { Colors, Fonts, Message, MessageKeys } from "../../constants";
+import { ContentText, FlatButton } from "../atoms";
 //#endregion
 
 //#region Types

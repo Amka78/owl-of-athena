@@ -1,6 +1,6 @@
 //#region Import Modules
 import React from "react";
-import { Colors, Fonts } from "../constants";
+import { Colors, Fonts } from "../../constants";
 import { Dialog, ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
 //#endregion

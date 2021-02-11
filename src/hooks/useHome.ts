@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Settings } from "../sdk/models";
 import { AuroraManagerInstance, AuroraManagerEventList } from "../managers";
-import { ConfirmDialog, LoadingDialog } from "../components";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { useNavigation } from "@react-navigation/native";
 import {
     useCheckLogging,

@@ -4,10 +4,10 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Dialog, RadioButton } from "react-native-paper";
 
-import { Colors, Fonts, Message, MessageKeys } from "../constants";
-import { AuroraSound } from "../types";
-import { FlatButton } from "./atoms/FlatButton";
-import { LabeledRadioButton } from "./molecules/LabeledRadioButton";
+import { Colors, Fonts, Message, MessageKeys } from "../../constants";
+import { AuroraSound } from "../../types";
+import { FlatButton } from "../atoms";
+import { LabeledRadioButton } from "./LabeledRadioButton";
 //#endregion
 
 type AudioDialogSettings = {
@@ -70,7 +70,7 @@ export class AudioDialog extends React.Component<
 
         AudioDialog.Instance!.setState({
             dialogSettings: args,
-            selectedFileName: foundAudio!.fileName!,
+            selectedFileName: foundAudio!.fileName,
             selectedShowName: foundAudio!.showName,
         });
     }

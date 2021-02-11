@@ -1,5 +1,6 @@
 //#region Import Modules
 import { useAutoLogin } from "./useAutoLogin";
+import { useAppUpdate } from "./useAppUpdate";
 import { useCheckBox, useCheckBoxReturn } from "./useCheckBox";
 import { useCheckLogging } from "./useCheckLogging";
 import { useDatePicker } from "./useDatePicker";
@@ -28,6 +29,7 @@ import { useWakeLockSelector } from "./useWakeLockSelector";
 //#region Exports
 export {
     useAutoLogin,
+    useAppUpdate,
     useCheckBox,
     useCheckBoxReturn,
     useCheckLogging,

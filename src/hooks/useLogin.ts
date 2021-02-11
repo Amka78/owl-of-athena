@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { Message, MessageKeys } from "../constants";
 import { AuroraRestClientInstance } from "../clients";
-import { ConfirmDialog, LoadingDialog } from "../components";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { useTextBox, useTextBoxReturn } from "./";
 //#endregion
 
