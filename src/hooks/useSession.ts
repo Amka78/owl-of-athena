@@ -48,18 +48,18 @@ export const useSession = (): {
     radialProgress = 0;
 
     if (selectedSession) {
-        asleepAt = moment(selectedSession!.asleepAt).utc();
-        awakeAt = moment(selectedSession!.awakeAt).utc();
-        sleepDuration = getDuration(selectedSession!.sleepDuration);
-        remDuration = getDuration(selectedSession!.remDuration);
-        deepDuration = getDuration(selectedSession!.deepDuration);
+        asleepAt = moment(selectedSession.asleepAt).utc();
+        awakeAt = moment(selectedSession.awakeAt).utc();
+        sleepDuration = getDuration(selectedSession.sleepDuration);
+        remDuration = getDuration(selectedSession.remDuration);
+        deepDuration = getDuration(selectedSession.deepDuration);
         radialProgress =
             selectedSession.sleepScore == 117 ? 72 : selectedSession.sleepScore;
     }
 
     const scaleXDomain = [
-        selectedSession!.sessionAt - 300000,
-        selectedSession!.sessionAt + selectedSession!.sessionDuration + 300000,
+        selectedSession.sessionAt - 300000,
+        selectedSession.sessionAt + selectedSession.sessionDuration + 300000,
     ];
 
     const chartSelectButtonPress = useCallback((): void => {

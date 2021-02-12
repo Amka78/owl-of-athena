@@ -20,6 +20,8 @@ export default StyleSheet.create({
     },
     rootContainer: {
         flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
     },
 });
 //#endregion

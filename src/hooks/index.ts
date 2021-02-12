@@ -24,6 +24,7 @@ import { useTokenSelector } from "./useTokenSelector";
 import { useAcount } from "./useAccount";
 import { useUserSelector } from "./useUserSelector";
 import { useWakeLockSelector } from "./useWakeLockSelector";
+import { useWindowDimensions } from "./useWindowDimensions";
 //#endregion
 
 //#region Exports
@@ -55,5 +56,6 @@ export {
     useRadioGroup,
     useUserSelector,
     useWakeLockSelector,
+    useWindowDimensions,
 };
 //#endregion

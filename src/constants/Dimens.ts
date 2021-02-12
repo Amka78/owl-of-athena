@@ -31,10 +31,12 @@ export default {
     button_text_size: 24,
     button_height: 50,
     button_margin_bottom: 16,
+    button_margin: 8,
     button_radius: 16,
     button_flat_text_size: 14,
     button_flat_margin_bottom: 12,
     button_flat_height: 28,
+    button_max_width: 300,
 
     input_text_size: 12,
     input_margin_bottom: 16,

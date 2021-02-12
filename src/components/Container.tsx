@@ -5,7 +5,8 @@ import { Platform, StyleSheet } from "react-native";
 import { Portal, Provider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { Theme, Layout } from "../constants";
+import { Theme } from "../constants";
+import { useWindowDimensions } from "../hooks";
 //#endregion
 
 //#region Types
@@ -18,11 +19,7 @@ export type ContainerProps = {
 export const Container: FunctionComponent<ContainerProps> = (
     props: ContainerProps
 ) => {
-    const rootWidth =
-        Layout.isLargeDevice && Platform.OS === "web"
-            ? Layout.maxWidth
-            : Layout.window.width;
-
+    const dimens = useWindowDimensions();
     return (
         <Provider theme={Theme}>
             <Portal>
@@ -30,7 +27,10 @@ export const Container: FunctionComponent<ContainerProps> = (
                     <SafeAreaProvider>
                         <SafeAreaView
                             mode={"margin"}
-                            style={[styles.container, { width: rootWidth }]}
+                            style={[
+                                styles.container,
+                                { width: dimens.width, height: dimens.height },
+                            ]}
                         >
                             {props.children}
                         </SafeAreaView>

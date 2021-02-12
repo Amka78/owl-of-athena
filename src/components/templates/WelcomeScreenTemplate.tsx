@@ -11,8 +11,8 @@ import {
     FlexSpacer,
     StandardView,
 } from "../atoms";
-import { Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+import { Dimens, Message, MessageKeys } from "../../constants";
+import { useLocale, useWindowDimensions } from "../../hooks";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -32,25 +32,45 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
     props: WelcomeScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+    const allowTwoButtonWidth = dimens.width > Dimens.button_max_width * 2;
     return (
-        <StandardView>
-            <FlexSpacer></FlexSpacer>
-            <ContentTitle {...props.contentTitle} style={{ flex: 1 }}>
+        <StandardView standardViewStyle={{ maxWidth: 600, maxHeight: 600 }}>
+            <ContentTitle {...props.contentTitle}>
                 {Message.get(MessageKeys.welcome_title)}
             </ContentTitle>
-            <ContentText {...props.contentText} style={{ flex: 1 }}>
+            <ContentText {...props.contentText}>
                 {Message.get(MessageKeys.welcome_text)}
             </ContentText>
-            <FlexSpacer></FlexSpacer>
-            <View>
+            <View style={{ alignItems: "center" }}>
+                <View
+                    style={{
+                        flexDirection: allowTwoButtonWidth ? "row" : "column",
+                    }}
+                >
+                    <Button
+                        {...props.loginButton}
+                        style={{
+                            marginRight: allowTwoButtonWidth
+                                ? Dimens.button_margin
+                                : undefined,
+                        }}
+                    >
+                        {Message.get(MessageKeys.welcome_login_button)}
+                    </Button>
+                    <Button
+                        {...props.signupButton}
+                        style={{
+                            marginLeft: allowTwoButtonWidth
+                                ? Dimens.button_margin
+                                : undefined,
+                        }}
+                    >
+                        {Message.get(MessageKeys.welcome_signup_button)}
+                    </Button>
+                </View>
                 <Button {...props.standaloneButton}>
                     {Message.get(MessageKeys.welcome_standalone_button)}
-                </Button>
-                <Button {...props.loginButton}>
-                    {Message.get(MessageKeys.welcome_login_button)}
-                </Button>
-                <Button {...props.signupButton}>
-                    {Message.get(MessageKeys.welcome_signup_button)}
                 </Button>
             </View>
         </StandardView>

@@ -104,7 +104,7 @@ export const useHome = (): {
                 let auroraProfiles = profiles;
 
                 console.log("Current profiles:", auroraProfiles);
-                if (auroraProfiles.length <= 0 && user!.id !== GuestUser) {
+                if (auroraProfiles.length <= 0 && user.id !== GuestUser) {
                     console.log(
                         "Cached profile is not exist, so loading remote profile start."
                     );
@@ -149,7 +149,7 @@ export const useHome = (): {
                             settings.profileTitle = selectedProfile.current.title!;
                         }
                     }
-                    settings.userId = user!.id;
+                    settings.userId = user.id;
                     dispatch(cacheSettings(settings));
                 }
             }
