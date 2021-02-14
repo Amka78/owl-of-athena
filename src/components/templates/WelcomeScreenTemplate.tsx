@@ -32,7 +32,7 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
 ) => {
     useLocale(props.locale);
     const dimens = useWindowDimensions();
-    const allowTwoButtonWidth = dimens.width > Dimens.button_max_width * 2;
+
     return (
         <StandardView
             standardViewStyle={{
@@ -49,13 +49,13 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
             <View style={{ alignItems: "center" }}>
                 <View
                     style={{
-                        flexDirection: allowTwoButtonWidth ? "row" : "column",
+                        flexDirection: dimens.isLargeWidth ? "row" : "column",
                     }}
                 >
                     <Button
                         {...props.loginButton}
                         style={{
-                            marginRight: allowTwoButtonWidth
+                            marginRight: dimens.isLargeWidth
                                 ? Dimens.button_margin
                                 : undefined,
                         }}
@@ -65,7 +65,7 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
                     <Button
                         {...props.signupButton}
                         style={{
-                            marginLeft: allowTwoButtonWidth
+                            marginLeft: dimens.isLargeWidth
                                 ? Dimens.button_margin
                                 : undefined,
                         }}

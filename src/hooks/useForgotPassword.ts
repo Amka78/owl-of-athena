@@ -2,6 +2,7 @@
 import { useCallback, useState } from "react";
 import { useTextBox, useTextBoxReturn } from "./";
 import { Message, MessageKeys } from "../constants";
+import { useNavigation } from "@react-navigation/native";
 //#endregion
 
 //#region Hooks
@@ -10,10 +11,12 @@ export const useForgotPassword = (
 ): {
     loading: boolean;
     onForgotPasswordPress: () => Promise<void>;
+    onCancelPress: () => void;
     emailAddress: useTextBoxReturn;
     generalError: string;
 } => {
     const emailAddress = useTextBox("");
+    const { navigate } = useNavigation();
     const [loading, setLoading] = useState(loadingInitialValue);
     // const { auroraClient } = useClientSelector();
     const [generalError, setGeneralError] = useState("");
@@ -28,6 +31,17 @@ export const useForgotPassword = (
 
         setLoading(false);
     }, [emailAddress.value]);
-    return { loading, onForgotPasswordPress, emailAddress, generalError };
+
+    const onCancelPress = useCallback(() => {
+        navigate("Login");
+    }, [navigate]);
+
+    return {
+        loading,
+        onForgotPasswordPress,
+        onCancelPress,
+        emailAddress,
+        generalError,
+    };
 };
 //#endregion

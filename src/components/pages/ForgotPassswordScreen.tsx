@@ -19,6 +19,9 @@ export const ForgotPasswordScreen: FunctionComponent = () => {
             forgotPasswordButton={{
                 onPress: forgotPassword.onForgotPasswordPress,
             }}
+            cancelButton={{
+                onPress: forgotPassword.onCancelPress,
+            }}
         ></ForgotPasswordScreenTemplate>
     );
 };

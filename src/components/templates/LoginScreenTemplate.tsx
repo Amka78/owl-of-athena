@@ -47,7 +47,6 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
             headerShown: !dimens.isDesktop && !dimens.isSmallHeight,
         });
     }, [dimens.isDesktop, dimens.isSmallHeight, setOptions]);
-    const allowTwoButtonWidth = dimens.width > Dimens.button_max_width * 2;
 
     const contentTitle = dimens.isDesktop ? (
         <ContentTitle>{Message.get(MessageKeys.login_title)}</ContentTitle>
@@ -57,7 +56,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
         <Button
             {...props.loginButton}
             style={{
-                marginRight: allowTwoButtonWidth
+                marginRight: dimens.isLargeWidth
                     ? Dimens.button_margin
                     : undefined,
             }}
@@ -69,7 +68,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
         <Button
             {...props.forgotPasswordButton}
             style={{
-                marginLeft: allowTwoButtonWidth
+                marginLeft: dimens.isLargeWidth
                     ? Dimens.button_margin
                     : undefined,
             }}
@@ -94,7 +93,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
     );
 
     let buttonView;
-    if (allowTwoButtonWidth) {
+    if (dimens.isLargeWidth) {
         buttonView = (
             <View>
                 <View style={{ flexDirection: "row" }}>

@@ -10,6 +10,7 @@ export const useWindowDimensions = (): {
     height: number;
     width: number;
     isDesktop: boolean;
+    isLargeWidth: boolean;
     isSmallHeight: boolean;
 } => {
     const dimension = useDimensions();
@@ -18,6 +19,7 @@ export const useWindowDimensions = (): {
         dimension.height >= Dimens.inner_screen_max_height &&
         dimension.width >= Dimens.inner_screen_max_width;
     const isSmallHeight = dimension.height < 360;
-    return { ...dimension, isDesktop, isSmallHeight };
+    const isLargeWidth = dimension.width > Dimens.button_max_width * 2;
+    return { ...dimension, isDesktop, isLargeWidth, isSmallHeight };
 };
 //#endregion
