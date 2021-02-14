@@ -2,17 +2,16 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
+import { Dimens, Message, MessageKeys } from "../../constants";
+import { useLocale, useWindowDimensions } from "../../hooks";
 import {
     Button,
     ContentText,
     ContentTextProps,
     ContentTitle,
     ContentTitleProps,
-    FlexSpacer,
     StandardView,
 } from "../atoms";
-import { Dimens, Message, MessageKeys } from "../../constants";
-import { useLocale, useWindowDimensions } from "../../hooks";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -35,7 +34,12 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
     const dimens = useWindowDimensions();
     const allowTwoButtonWidth = dimens.width > Dimens.button_max_width * 2;
     return (
-        <StandardView standardViewStyle={{ maxWidth: 600, maxHeight: 600 }}>
+        <StandardView
+            standardViewStyle={{
+                maxWidth: Dimens.inner_screen_max_width,
+                maxHeight: Dimens.inner_screen_max_height,
+            }}
+        >
             <ContentTitle {...props.contentTitle}>
                 {Message.get(MessageKeys.welcome_title)}
             </ContentTitle>

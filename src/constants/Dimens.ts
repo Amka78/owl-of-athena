@@ -39,6 +39,7 @@ export default {
     button_max_width: 300,
 
     input_text_size: 12,
+    input_text_max_width: 600,
     input_margin_bottom: 16,
 
     checkbox_text_size: 12,
@@ -95,4 +96,7 @@ export default {
     session_list_item_title_text_size: 20,
     session_list_item_subtitle_text_size: 15,
     session_list_item_text_margin_left: 18,
+
+    inner_screen_max_height: 650,
+    inner_screen_max_width: 650,
 };

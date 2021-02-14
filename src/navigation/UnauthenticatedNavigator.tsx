@@ -1,25 +1,30 @@
 //#region Import Modules
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+    createStackNavigator,
+    StackNavigationOptions,
+} from "@react-navigation/stack";
 import * as React from "react";
 
-import { Colors } from "../constants";
 import { LoginScreen, SignupScreen, WelcomeScreen } from "../components/pages";
 import { ForgotPasswordScreen } from "../components/pages/ForgotPassswordScreen";
+import { Colors } from "../constants";
 import { CommonStyles } from "../styles";
 //#endregion
 
 //#region Component
-const Stack = createStackNavigator();
+export const Stack = createStackNavigator();
 
-const UnauthenticatedNavigator = (): JSX.Element => {
+export const UnauthenticatedNavigatorScreenOptions: StackNavigationOptions = {
+    headerTitleAlign: "center",
+    headerTintColor: Colors.cyan,
+    headerStyle: CommonStyles.headerStyle,
+    headerTitle: "",
+};
+
+export const UnauthenticatedNavigator = (): JSX.Element => {
     return (
         <Stack.Navigator
-            screenOptions={{
-                headerTitleAlign: "center",
-                headerTintColor: Colors.cyan,
-                headerStyle: CommonStyles.headerStyle,
-                headerTitle: "",
-            }}
+            screenOptions={UnauthenticatedNavigatorScreenOptions}
             initialRouteName={"Welcome"}
         >
             <Stack.Screen
@@ -42,5 +47,3 @@ const UnauthenticatedNavigator = (): JSX.Element => {
     );
 };
 //#endregion
-
-export default UnauthenticatedNavigator;

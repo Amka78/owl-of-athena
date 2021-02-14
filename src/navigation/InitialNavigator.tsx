@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 
 import { MainScreen } from "../components/pages";
-import UnauthenticatedNavigator from "./UnauthenticatedNavigator";
+import { UnauthenticatedNavigator } from "./UnauthenticatedNavigator";
 //#endregion
 
 //#region Component
