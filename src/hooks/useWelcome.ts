@@ -1,26 +1,28 @@
 //#region Import Modules
-import { Auth } from "../types";
-import { login as loginAction } from "../actions";
-import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useAutoLogin } from "./useAutoLogin";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { MessageKeys, Message } from "../constants";
+
+import { login as loginAction } from "../actions";
 import { LoadingDialog } from "../components/molecules";
+import { Message, MessageKeys } from "../constants";
 import { createGuestUser } from "../services/WelcomeService";
+import { Auth } from "../types";
+import { useAutoLogin } from "./useAutoLogin";
 //#endregion
 
 //#region Hooks
 export const useWelcome = (): {
-    onStandalonePress: () => Promise<void>;
-    onLoginPress: () => Promise<void>;
-    onSignupPress: () => Promise<void>;
+    onStandalonePress: () => void;
+    onLoginPress: () => void;
+    onCancelPress: () => void;
+    onSignupPress: () => void;
 } => {
     useAutoLogin();
     const { navigate } = useNavigation();
     const dispatch = useDispatch();
 
-    const onStandalonePress = useCallback(async () => {
+    const onStandalonePress = useCallback(() => {
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.login_loading_message),
         });
@@ -36,11 +38,14 @@ export const useWelcome = (): {
         }
     }, [dispatch, navigate]);
 
-    const onLoginPress = useCallback(async () => {
+    const onLoginPress = useCallback(() => {
         navigate("Login");
     }, [navigate]);
 
-    const onSignupPress = useCallback(async () => {
+    const onCancelPress = useCallback(() => {
+        navigate("");
+    }, [navigate]);
+    const onSignupPress = useCallback(() => {
         navigate("Signup");
     }, [navigate]);
     return { onStandalonePress, onLoginPress, onSignupPress };

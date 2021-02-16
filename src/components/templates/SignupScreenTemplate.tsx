@@ -1,22 +1,28 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { View } from "react-native";
 
+import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import {
-    LabeledCheckBox,
-    LabeledCheckBoxProps,
-    ValidatableTextBox,
-    ValidatableTextBoxProps,
-} from "../molecules";
-import { Colors, Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
 import {
-    Button,
-    ContentTitle,
     ContentTitleProps,
     ErrorText,
     ErrorTextProps,
     StandardView,
 } from "../atoms";
+import {
+    ConvertibleContentTitle,
+    LabeledCheckBox,
+    LabeledCheckBoxProps,
+    LeftSideButton,
+    RightSideButton,
+    ValidatableTextBox,
+    ValidatableTextBoxProps,
+} from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -29,6 +35,7 @@ export type SignupScreenTemplateProps = {
     labeledCheckBox: LabeledCheckBoxProps;
     errorText: ErrorTextProps;
     signupButton: TemplateButtonProps;
+    cancelButton: TemplateButtonProps;
     locale?: string;
 };
 //#endregion
@@ -38,37 +45,97 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
     props: SignupScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+    useConvertibleHeader(
+        MessageKeys.signup_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
+
+    const signupButton = (
+        <LeftSideButton
+            {...props.signupButton}
+            isLargeWidth={dimens.isLargeWidth}
+        >
+            {Message.get(MessageKeys.signup_button)}
+        </LeftSideButton>
+    );
+    const cancelButton = (
+        <RightSideButton
+            {...props.cancelButton}
+            isLargeWidth={dimens.isLargeWidth}
+        >
+            {Message.get(MessageKeys.cancel)}
+        </RightSideButton>
+    );
+
+    let bottomButtons;
+    if (dimens.isDesktop || dimens.isSmallHeight) {
+        bottomButtons = (
+            <View style={{ flexDirection: "row" }}>
+                {signupButton}
+                {cancelButton}
+            </View>
+        );
+    } else {
+        bottomButtons = signupButton;
+    }
+
+    const textBoxMarginBottom = dimens.isSmallHeight
+        ? 0
+        : Dimens.button_margin_bottom;
+    const textBoxHeight = dimens.isSmallHeight ? 45 : undefined;
     return (
-        <StandardView>
-            <ContentTitle {...props.contentTitle}>
+        <StandardView
+            standardViewStyle={{
+                maxWidth: Dimens.inner_screen_max_width,
+                maxHeight: Dimens.inner_screen_max_height,
+            }}
+        >
+            <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
                 {Message.get(MessageKeys.signup_title)}
-            </ContentTitle>
+            </ConvertibleContentTitle>
             <ValidatableTextBox
                 {...props.emailTextBox}
                 keyboardType={"email-address"}
                 label={Message.get(MessageKeys.signup_input_email)}
+                style={{
+                    height: textBoxHeight,
+                    marginBottom: textBoxMarginBottom,
+                }}
             ></ValidatableTextBox>
             <ValidatableTextBox
                 {...props.passwordTextBox}
                 secureTextEntry={true}
                 label={Message.get(MessageKeys.signup_input_password)}
+                style={{
+                    height: textBoxHeight,
+                    marginBottom: textBoxMarginBottom,
+                }}
             ></ValidatableTextBox>
             <ValidatableTextBox
                 {...props.passwordConfirmTextBox}
                 secureTextEntry={true}
                 label={Message.get(MessageKeys.signup_input_password_confirm)}
+                style={{
+                    height: textBoxHeight,
+                    marginBottom: textBoxMarginBottom,
+                }}
             ></ValidatableTextBox>
             <LabeledCheckBox
                 {...props.labeledCheckBox}
+                checkBoxStyle={{
+                    flex: dimens.height > dimens.width ? 0.5 : 0.8,
+                }}
                 label={Message.get(MessageKeys.signup_terms)}
                 labelPlace={"right"}
                 labelStyle={{ color: Colors.cyan }}
-                container={{ justifyContent: "center" }}
+                textContainerStyle={{
+                    flex: dimens.height > dimens.width ? 1.5 : 1.2,
+                }}
             ></LabeledCheckBox>
             <ErrorText {...props.errorText}></ErrorText>
-            <Button {...props.signupButton}>
-                {Message.get(MessageKeys.signup_button)}
-            </Button>
+            {bottomButtons}
         </StandardView>
     );
 };

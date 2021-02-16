@@ -1,14 +1,14 @@
 //#region Import Modules
-import { Login, Auth, GuestUser } from "../types";
-import { login as loginAction } from "../actions";
-import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
-import { Dispatch } from "redux";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Message, MessageKeys } from "../constants";
+import { Dispatch } from "redux";
+
+import { login as loginAction } from "../actions";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import { Message, MessageKeys } from "../constants";
+import { Auth, GuestUser, Login } from "../types";
 import { useTextBox, useTextBoxReturn } from "./";
 //#endregion
 
@@ -17,9 +17,10 @@ export const useLogin = (): {
     email: useTextBoxReturn;
     password: useTextBoxReturn;
     onLoginPress: () => Promise<void>;
+    onCancelPress: () => void;
     generalError: string;
-    onForgotPasswordButtonPress: () => void;
-    onSignupButtonPress: () => void;
+    onForgotPasswordPress: () => void;
+    onSignupPress: () => void;
 } => {
     const email = useTextBox("");
     const password = useTextBox("");
@@ -28,7 +29,7 @@ export const useLogin = (): {
     const [generalError, setGeneralError] = useState("");
     const onLoginPress = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: MessageKeys.login_loading_message,
+            dialogTitle: Message.get(MessageKeys.login_loading_message),
         });
         try {
             const login: Login = {
@@ -81,20 +82,25 @@ export const useLogin = (): {
         }
     }, [dispatch, email.value, navigate, password.value]);
 
-    const onForgotPasswordButtonPress = useCallback(() => {
+    const onCancelPress = useCallback(() => {
+        navigate("Welcome");
+    }, [navigate]);
+
+    const onForgotPasswordPress = useCallback(() => {
         navigate("ForgotPassword");
     }, [navigate]);
 
-    const onSignupButtonPress = useCallback(() => {
+    const onSignupPress = useCallback(() => {
         navigate("Signup");
     }, [navigate]);
     return {
         email,
         password,
         onLoginPress,
+        onCancelPress,
         generalError,
-        onForgotPasswordButtonPress,
-        onSignupButtonPress,
+        onForgotPasswordPress,
+        onSignupPress,
     };
 };
 //#endregion

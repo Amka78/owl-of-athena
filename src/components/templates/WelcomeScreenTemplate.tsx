@@ -12,6 +12,7 @@ import {
     ContentTitleProps,
     StandardView,
 } from "../atoms";
+import { LeftSideButton, RightSideButton } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -49,29 +50,28 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
             <View style={{ alignItems: "center" }}>
                 <View
                     style={{
-                        flexDirection: dimens.isLargeWidth ? "row" : "column",
+                        flexDirection:
+                            dimens.isHorizontal || dimens.isLargeWidth
+                                ? "row"
+                                : "column",
                     }}
                 >
-                    <Button
+                    <LeftSideButton
                         {...props.loginButton}
-                        style={{
-                            marginRight: dimens.isLargeWidth
-                                ? Dimens.button_margin
-                                : undefined,
-                        }}
+                        isLargeWidth={
+                            dimens.isHorizontal || dimens.isLargeWidth
+                        }
                     >
                         {Message.get(MessageKeys.welcome_login_button)}
-                    </Button>
-                    <Button
+                    </LeftSideButton>
+                    <RightSideButton
                         {...props.signupButton}
-                        style={{
-                            marginLeft: dimens.isLargeWidth
-                                ? Dimens.button_margin
-                                : undefined,
-                        }}
+                        isLargeWidth={
+                            dimens.isHorizontal || dimens.isLargeWidth
+                        }
                     >
                         {Message.get(MessageKeys.welcome_signup_button)}
-                    </Button>
+                    </RightSideButton>
                 </View>
                 <Button {...props.standaloneButton}>
                     {Message.get(MessageKeys.welcome_standalone_button)}

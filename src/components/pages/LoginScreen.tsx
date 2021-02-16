@@ -23,11 +23,14 @@ export const LoginScreen: FunctionComponent = () => {
             loginButton={{
                 onPress: loginHook.onLoginPress,
             }}
+            cancelButton={{
+                onPress: loginHook.onCancelPress,
+            }}
             forgotPasswordButton={{
-                onPress: loginHook.onForgotPasswordButtonPress,
+                onPress: loginHook.onForgotPasswordPress,
             }}
             signupButton={{
-                onPress: loginHook.onSignupButtonPress,
+                onPress: loginHook.onSignupPress,
             }}
         ></LoginScreenTemplate>
     );

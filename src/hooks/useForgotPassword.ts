@@ -1,8 +1,9 @@
 //#region Import Modules
-import { useCallback, useState } from "react";
-import { useTextBox, useTextBoxReturn } from "./";
-import { Message, MessageKeys } from "../constants";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useState } from "react";
+
+import { Message, MessageKeys } from "../constants";
+import { useTextBox, useTextBoxReturn } from "./";
 //#endregion
 
 //#region Hooks
@@ -33,7 +34,7 @@ export const useForgotPassword = (
     }, [emailAddress.value]);
 
     const onCancelPress = useCallback(() => {
-        navigate("Login");
+        navigate("Welcome");
     }, [navigate]);
 
     return {

@@ -3,7 +3,8 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
 import { Checkbox, useTheme } from "react-native-paper";
 
-import { Dimens, Fonts, Layout } from "../../constants";
+import { Dimens, Fonts } from "../../constants";
+import { useWindowDimensions } from "../../hooks";
 //#endregion
 
 //#region Types
@@ -19,6 +20,8 @@ export type LabeledCheckBoxProps = {
     description?: string;
     descriptionStyle?: TextStyle;
     status: CheckBoxStatus;
+    checkBoxStyle?: ViewStyle;
+    textContainerStyle?: ViewStyle;
     checkBoxColor?: string;
     checkBoxUncheckedColor?: string;
     onPress?: () => void;
@@ -30,6 +33,13 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
     props: LabeledCheckBoxProps
 ) => {
     const theme = useTheme();
+    const dimens = useWindowDimensions();
+
+    let width = dimens.width;
+
+    if (width > Dimens.checkbox_max_width) {
+        width = Dimens.checkbox_max_width;
+    }
     const labelComponent = (
         <Text
             onPress={props.onLabelPress}
@@ -55,29 +65,17 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
         </Text>
     ) : undefined;
 
-    const labelContainerComponent = (
-        <View
-            style={{
-                alignItems: "flex-start",
-                justifyContent: "center",
-                flex: 1,
-            }}
-        >
+    const textContainerComponent = (
+        <View style={[styles.textContainer, props.textContainerStyle]}>
             {labelComponent}
             {props.description ? descriptionComponent : undefined}
         </View>
     );
     return (
-        <View style={[styles.container, props.container]}>
-            {props.labelPlace === "left" ? labelContainerComponent : undefined}
+        <View style={[styles.container, { width }, props.container]}>
+            {props.labelPlace === "left" ? textContainerComponent : undefined}
 
-            <View
-                style={{
-                    alignItems: "flex-end",
-                    justifyContent: "center",
-                    flex: 1,
-                }}
-            >
+            <View style={[styles.checkBoxStyle, props.checkBoxStyle]}>
                 <Checkbox
                     {...props}
                     color={
@@ -93,7 +91,7 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
                     onPress={props.onPress}
                 ></Checkbox>
             </View>
-            {props.labelPlace === "right" ? labelContainerComponent : undefined}
+            {props.labelPlace === "right" ? textContainerComponent : undefined}
         </View>
     );
 };
@@ -102,16 +100,23 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
 //#region Styles
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
+        //flex: 1,
         marginBottom: Dimens.option_margin_bottom,
     },
     text: {
         fontFamily: Fonts.primaryRegular,
         fontSize: Dimens.option_text_size,
+    },
+    checkBoxStyle: {
+        alignItems: "flex-end",
+        flex: 1,
+        justifyContent: "center",
+    },
+    textContainer: {
+        alignItems: "flex-start",
+        flex: 1,
+        justifyContent: "center",
     },
 });
 //#endregion

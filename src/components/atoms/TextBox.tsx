@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { TextInputProps } from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
 
-import { Colors, Dimens, Fonts, Layout } from "../../constants";
+import { Colors, Dimens, Fonts } from "../../constants";
 import { useWindowDimensions } from "../../hooks";
 //#endregion
 
@@ -51,6 +51,5 @@ const textInputStyle = {
     marginBottom: Dimens.button_margin_bottom,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.input_text_size,
-    width: Layout.window.fixedWidth - Dimens.content_margin_horizontal * 2,
 };
 //#endregion

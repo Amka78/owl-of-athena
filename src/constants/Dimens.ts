@@ -33,10 +33,10 @@ export default {
     button_margin_bottom: 16,
     button_margin: 8,
     button_radius: 16,
+    button_max_width: 270,
     button_flat_text_size: 14,
     button_flat_margin_bottom: 12,
     button_flat_height: 28,
-    button_max_width: 300,
 
     input_text_size: 12,
     input_text_max_width: 600,
@@ -51,6 +51,7 @@ export default {
     checkbox_padding_right: 24,
     checkbox_margin_top: 16,
     checkbox_margin_bottom: 8,
+    checkbox_max_width: 600,
 
     option_text_size: 14,
     option_height: 20,
@@ -99,4 +100,6 @@ export default {
 
     inner_screen_max_height: 650,
     inner_screen_max_width: 650,
+
+    forgot_password_title_font_size: 16,
 };

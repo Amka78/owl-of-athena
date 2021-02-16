@@ -1,13 +1,14 @@
 //#region Import Modules
-import { useNavigation } from "@react-navigation/native";
-import React, { FunctionComponent, useLayoutEffect } from "react";
+import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
-import { useLocale, useWindowDimensions } from "../../hooks";
 import {
-    Button,
-    ContentTitle,
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
+import {
     ContentTitleProps,
     ErrorText,
     ErrorTextProps,
@@ -16,6 +17,11 @@ import {
     TextBox,
     TextBoxProps,
 } from "../atoms";
+import {
+    ConvertibleContentTitle,
+    LeftSideButton,
+    RightSideButton,
+} from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -26,6 +32,7 @@ export type LoginScreenTemplateProps = {
     password: TextBoxProps;
     errorText: ErrorTextProps;
     loginButton: TemplateButtonProps;
+    cancelButton: TemplateButtonProps;
     forgotPasswordButton: TemplateButtonProps;
     signupButton: TemplateButtonProps;
     locale?: string;
@@ -38,47 +45,29 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
 ) => {
     useLocale(props.locale);
 
-    const { setOptions } = useNavigation();
-
     const dimens = useWindowDimensions();
-    useLayoutEffect(() => {
-        setOptions({
-            headerTitle: Message.get(MessageKeys.login_title),
-            headerShown: !dimens.isDesktop && !dimens.isSmallHeight,
-        });
-    }, [dimens.isDesktop, dimens.isSmallHeight, setOptions]);
 
-    const contentTitle = dimens.isDesktop ? (
-        <ContentTitle>{Message.get(MessageKeys.login_title)}</ContentTitle>
-    ) : undefined;
+    useConvertibleHeader(
+        MessageKeys.login_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
 
     const loginButton = (
-        <Button
+        <LeftSideButton
             {...props.loginButton}
-            style={{
-                marginRight: dimens.isLargeWidth
-                    ? Dimens.button_margin
-                    : undefined,
-            }}
+            isLargeWidth={dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.login_button)}
-        </Button>
+        </LeftSideButton>
     );
-    const forgotPasswordButton = (
-        <Button
-            {...props.forgotPasswordButton}
-            style={{
-                marginLeft: dimens.isLargeWidth
-                    ? Dimens.button_margin
-                    : undefined,
-            }}
-            labelStyle={{
-                alignSelf: "center",
-                fontSize: 20,
-            }}
+    const cancelButton = (
+        <RightSideButton
+            {...props.cancelButton}
+            isLargeWidth={dimens.isLargeWidth}
         >
-            {Message.get(MessageKeys.login_forgot_password_button)}
-        </Button>
+            {Message.get(MessageKeys.cancel)}
+        </RightSideButton>
     );
     const forgotPasswordFlatButton = (
         <FlatButton {...props.forgotPasswordButton}>
@@ -93,14 +82,17 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
     );
 
     let buttonView;
-    if (dimens.isLargeWidth) {
+    if (dimens.isDesktop || dimens.isSmallHeight) {
         buttonView = (
             <View>
                 <View style={{ flexDirection: "row" }}>
                     {loginButton}
-                    {forgotPasswordButton}
+                    {cancelButton}
                 </View>
-                <View style={{ alignItems: "flex-end" }}>
+                <View
+                    style={{ flexDirection: "row", justifyContent: "flex-end" }}
+                >
+                    {forgotPasswordFlatButton}
                     {signupFlatButton}
                 </View>
             </View>
@@ -123,7 +115,9 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
                 maxWidth: Dimens.inner_screen_max_width,
             }}
         >
-            {contentTitle}
+            <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
+                {Message.get(MessageKeys.login_title)}
+            </ConvertibleContentTitle>
             <TextBox
                 {...props.email}
                 label={Message.get(MessageKeys.login_input_email)}

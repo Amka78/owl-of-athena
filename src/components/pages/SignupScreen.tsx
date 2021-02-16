@@ -30,6 +30,9 @@ export const SignupScreen: FunctionComponent = () => {
             signupButton={{
                 onPress: signupHooks.onSignupPress,
             }}
+            cancelButton={{
+                onPress: signupHooks.onCancelPress,
+            }}
         ></SignupScreenTemplate>
     );
 };

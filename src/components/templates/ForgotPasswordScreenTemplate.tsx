@@ -1,12 +1,10 @@
 //#region Import Modules
-import { useNavigation } from "@react-navigation/native";
 import React, { FunctionComponent, useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { View } from "react-native";
 
 import {
-    Button,
     ContentText,
-    ContentTitle,
     ErrorText,
     ErrorTextProps,
     FlexSpacer,
@@ -14,8 +12,18 @@ import {
     TextBox,
 } from "../atoms";
 import { Dimens, Message, MessageKeys } from "../../constants";
-import { useLocale, useTextBoxReturn, useWindowDimensions } from "../../hooks";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useTextBoxReturn,
+    useWindowDimensions,
+} from "../../hooks";
 import { TemplateButtonProps } from "./TempatedProps";
+import {
+    ConvertibleContentTitle,
+    LeftSideButton,
+    RightSideButton,
+} from "../molecules";
 //#endregion
 
 //#region Type
@@ -33,45 +41,39 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
     props: ForgotPasswordScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const { setOptions } = useNavigation();
     const dimens = useWindowDimensions();
+    const { setOptions } = useNavigation();
+
+    useConvertibleHeader(
+        MessageKeys.forgot_password_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
+
     useLayoutEffect(() => {
         setOptions({
-            headerTitle: Message.get(MessageKeys.forgot_password_title),
-            headerShown: !dimens.isDesktop && !dimens.isSmallHeight,
+            headerTitleStyle: {
+                fontSize: Dimens.forgot_password_title_font_size,
+            },
         });
-    }, [dimens.isDesktop, dimens.isSmallHeight, setOptions]);
-
-    const contentTitle = dimens.isDesktop ? (
-        <ContentTitle>
-            {Message.get(MessageKeys.forgot_password_title)}
-        </ContentTitle>
-    ) : undefined;
+    }, [setOptions]);
 
     const forgotPasswordButton = (
-        <Button
+        <LeftSideButton
             {...props.forgotPasswordButton}
-            style={{
-                marginRight: dimens.isLargeWidth
-                    ? Dimens.button_margin
-                    : undefined,
-            }}
+            isLargeWidth={dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.forgot_password_button)}
-        </Button>
+        </LeftSideButton>
     );
 
     const cancelButton = (
-        <Button
+        <RightSideButton
             {...props.cancelButton}
-            style={{
-                marginLeft: dimens.isLargeWidth
-                    ? Dimens.button_margin
-                    : undefined,
-            }}
+            isLargeWidth={dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.cancel)}
-        </Button>
+        </RightSideButton>
     );
 
     let bottomButtons;
@@ -93,7 +95,9 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
                 maxWidth: Dimens.inner_screen_max_width,
             }}
         >
-            {contentTitle}
+            <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
+                {Message.get(MessageKeys.forgot_password_title)}
+            </ConvertibleContentTitle>
             <FlexSpacer></FlexSpacer>
             <ContentText>
                 {Message.get(MessageKeys.forgot_password_text)}

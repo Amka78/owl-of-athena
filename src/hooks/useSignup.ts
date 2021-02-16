@@ -1,10 +1,11 @@
 //#region Import Modules
+import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { Linking } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";
+import { validate } from "../services/SignupService";
 import { Signup } from "../types";
 import {
     useCheckBox,
@@ -12,7 +13,6 @@ import {
     useTextBox,
     useTextBoxReturn,
 } from "./";
-import { validate } from "../services/SignupService";
 //#endregion
 
 //#region Hooks
@@ -25,6 +25,7 @@ export const useSignup = (
     passwordConfirmHooks: useTextBoxReturn;
     checkBoxHooks: useCheckBoxReturn;
     onSignupPress: () => Promise<void>;
+    onCancelPress: () => void;
     onLinkTextPress: () => void;
     generalError?: string;
     emailError?: string;
@@ -95,6 +96,10 @@ export const useSignup = (
         navigate,
     ]);
 
+    const onCancelPress = useCallback((): void => {
+        navigate("Welcome");
+    }, [navigate]);
+
     const onLinkTextPress = useCallback((): void => {
         Linking.openURL("https://sleepwithaurora.com/shop/order-terms");
     }, []);
@@ -106,6 +111,7 @@ export const useSignup = (
         passwordConfirmHooks,
         checkBoxHooks,
         onSignupPress,
+        onCancelPress,
         onLinkTextPress,
         generalError,
         emailError,
