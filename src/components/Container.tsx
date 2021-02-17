@@ -1,5 +1,10 @@
 //#region Import Modules
-import { NavigationContainer } from "@react-navigation/native";
+import {
+    NavigationContainer,
+    LinkingOptions,
+    PathConfig,
+    PathConfigMap,
+} from "@react-navigation/native";
 import React, { FunctionComponent } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Portal, Provider } from "react-native-paper";
@@ -20,10 +25,57 @@ export const Container: FunctionComponent<ContainerProps> = (
     props: ContainerProps
 ) => {
     const dimens = useWindowDimensions();
+    const config = {
+        screens: {
+            Unauthenticated: {
+                screens: {
+                    Welcome: "",
+                    Login: "login",
+                    Signup: "signup",
+                    ForgotPassword: "forgot-password",
+                },
+            },
+            Main: {
+                screens: {
+                    Home: {
+                        screens: {
+                            Home: "home",
+                            Settings: "sleep-settings",
+                            Sleeping: "sleeping",
+                            Awake: "awake",
+                            Waking: "waking",
+                        }
+                    },
+                    Session: {
+                        screens: {
+                            List: "sessions/list",
+                            Detail: {
+                                screens: {
+                                    SleepTracking: "sessions/detail/sleep-tracking",
+                                    Journal: "sessions/detail/journal",
+                                }
+                            } 
+                        }
+                    },
+                    Settings: {
+                        screens: {
+                            Account: "settings/account"
+                        }
+                    } 
+                },
+            },
+        },
+    };
+
+    const linking: LinkingOptions = {
+        prefixes: ["https://owl-of-athena", "owl-of-athena://"],
+        config,
+    };
+
     return (
         <Provider theme={Theme}>
             <Portal>
-                <NavigationContainer>
+                <NavigationContainer linking={linking}>
                     <SafeAreaProvider>
                         <SafeAreaView
                             mode={"margin"}
