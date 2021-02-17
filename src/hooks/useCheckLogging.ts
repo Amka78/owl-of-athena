@@ -41,7 +41,7 @@ export const useCheckLogging = (): void => {
             unmounted = true;
         };
         return cleanup;
-    }, [navigate, token]);
+    }, [navigate, token, user?.id]);
 
     return;
 };
