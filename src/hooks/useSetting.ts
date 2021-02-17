@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { cacheSettings } from "../actions";
-import { AudioDialog, ProfilesDialog } from "../components";
+import { AudioDialog, ProfilesDialog, SoundList } from "../components/molecules";
 import { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
 import {
     useCheckLogging,
