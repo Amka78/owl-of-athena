@@ -1,14 +1,17 @@
 //#region Import Modules
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { HomeIcon, SessionsIcon, SettingsIcon } from "../components/atoms";
 import { Colors } from "../constants";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
 //#endregion
 
+//#region Types
+type TabBarIconProps = { focused: boolean; size: number; color: string };
+//#endregion
 //#region Component
 const BottomTab = createBottomTabNavigator();
 
@@ -27,15 +30,19 @@ const MainTabNavigator = (): JSX.Element => {
                 component={HomeNavigator}
                 options={{
                     title: "",
-                    tabBarIcon: getTabBarIcon("alarm-check"),
+                    tabBarIcon: (props: TabBarIconProps) => {
+                        return <HomeIcon {...props}></HomeIcon>;
+                    },
                 }}
             ></BottomTab.Screen>
             <BottomTab.Screen
-                name="Session"
+                name="Sessions"
                 component={SessionNavigator}
                 options={{
                     title: "",
-                    tabBarIcon: getTabBarIcon("blur"),
+                    tabBarIcon: (props: TabBarIconProps) => {
+                        return <SessionsIcon {...props}></SessionsIcon>;
+                    },
                 }}
             ></BottomTab.Screen>
             <BottomTab.Screen
@@ -43,22 +50,14 @@ const MainTabNavigator = (): JSX.Element => {
                 component={SettingNavigator}
                 options={{
                     title: "",
-                    tabBarIcon: getTabBarIcon("cog"),
+                    tabBarIcon: (props: TabBarIconProps) => {
+                        return <SettingsIcon {...props}></SettingsIcon>;
+                    },
                 }}
             ></BottomTab.Screen>
         </BottomTab.Navigator>
     );
 };
-//#endregion
-
-//#region Function
-const getTabBarIcon = (name: string) => ({
-    color,
-    size,
-}: {
-    color: string;
-    size: number;
-}) => <MaterialCommunityIcons name={name} color={color} size={size} />;
 //#endregion
 
 export default MainTabNavigator;

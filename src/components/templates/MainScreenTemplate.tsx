@@ -4,7 +4,8 @@ import { View } from "react-native";
 
 import { FlatButton, FlatButtonProps } from "../atoms";
 import MainTabNavigator from "../../navigation/MainTabNavigator";
-import { useLocale } from "../../hooks";
+import { useLocale, useWindowDimensions } from "../../hooks";
+import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 //#endregion
 
 //#region Types
@@ -19,10 +20,21 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
     props: MainScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+
+    const statusBar = !dimens.isDesktop ? (
+        <FlatButton {...props.AuroraConnectionStatesBar}></FlatButton>
+    ) : undefined;
+
+    const coreNavigator = dimens.isHorizontal ? (
+        <MainDrawerNavigator></MainDrawerNavigator>
+    ) : (
+        <MainTabNavigator></MainTabNavigator>
+    );
     return (
         <View style={{ flex: 1 }}>
-            <MainTabNavigator></MainTabNavigator>
-            <FlatButton {...props.AuroraConnectionStatesBar}></FlatButton>
+            {coreNavigator}
+            {statusBar}
         </View>
     );
 };

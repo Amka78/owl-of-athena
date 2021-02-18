@@ -44,24 +44,25 @@ export const Container: FunctionComponent<ContainerProps> = (
                             Sleeping: "sleeping",
                             Awake: "awake",
                             Waking: "waking",
-                        }
+                        },
                     },
-                    Session: {
+                    Sessions: {
                         screens: {
                             List: "sessions/list",
                             Detail: {
                                 screens: {
-                                    SleepTracking: "sessions/detail/sleep-tracking",
+                                    SleepTracking:
+                                        "sessions/detail/sleep-tracking",
                                     Journal: "sessions/detail/journal",
-                                }
-                            } 
-                        }
+                                },
+                            },
+                        },
                     },
                     Settings: {
                         screens: {
-                            Account: "settings/account"
-                        }
-                    } 
+                            Account: "settings/account",
+                        },
+                    },
                 },
             },
         },

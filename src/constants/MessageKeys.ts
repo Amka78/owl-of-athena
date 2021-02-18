@@ -212,4 +212,9 @@ export const MessageKeys = {
     standalone_mode_confirm_title: "standalone_mode_confirm_title",
     standalone_mode_confirm_message: "standalone_mode_confirm_message",
     //#endregion
+
+    //#region drawer items label
+    drawer_items_main: "drawer_items_main",
+    drawer_items_sessions: "drawer_items_sessions",
+    drawer_items_account: "drawer_items_account",
 };

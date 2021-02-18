@@ -210,5 +210,8 @@ export default {
 
     [MessageKeys.standalone_mode_confirm_message]:
         "Could not connect to the Aurora API. So Do you want to run Aurora in standalone mode?",
+    [MessageKeys.drawer_items_main]: "Main",
+    [MessageKeys.drawer_items_sessions]: "Sessions",
+    [MessageKeys.drawer_items_account]: "Account",
 };
 //#endregion
