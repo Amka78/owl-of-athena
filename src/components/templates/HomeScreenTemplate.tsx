@@ -12,7 +12,11 @@ import {
     TimeViewProps,
 } from "../atoms";
 import { Dimens, Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
 import { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -32,8 +36,20 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
     props: HomeScreenTemplateProps
 ) => {
     useLocale(props.locale);
+
+    const dimens = useWindowDimensions();
+    useConvertibleHeader(
+        MessageKeys.home_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
     return (
-        <StandardView>
+        <StandardView
+            standardViewStyle={{
+                width: Dimens.inner_screen_max_width,
+                height: Dimens.inner_screen_max_height,
+            }}
+        >
             <TouchableWithoutFeedback {...props.timeViewField}>
                 <View>
                     <TimeView

@@ -41,7 +41,6 @@ const HomeNavigator = (): JSX.Element => {
                 component={HomeScreen}
                 options={{
                     headerLeft: voidLeftHeader,
-                    headerTitle: Message.get(MessageKeys.home_title),
                 }}
             ></Stack.Screen>
             <Stack.Screen
