@@ -22,9 +22,9 @@ export const useLogout = (): { onPress: () => Promise<void> } => {
             dispatch(initializeSession());
         }
         dispatch(logout());
+        navigate("Unauthenticated", { screen: "Welcome" });
+    }, [dispatch, navigate, user?.id]);
 
-        navigate("Logout");
-    }, [dispatch, navigate, user]);
     return { onPress };
 };
 //#endregion

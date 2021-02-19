@@ -1,18 +1,19 @@
 //#region Import Modules
-import React, { useState } from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import React from "react";
+
+import {
+    HomeIcon,
+    LogoutIcon,
+    MenuIcon,
+    SessionsIcon,
+    SettingsIcon,
+} from "../components/atoms";
+import { Colors, Message, MessageKeys } from "../constants";
+import { useMainDrawerNavigator } from "../hooks";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
-import { Colors, Message, MessageKeys } from "../constants";
-import { useWindowDimensions } from "../hooks";
-import { useNavigation, DrawerActions } from "@react-navigation/native";
-import {
-    HomeIcon,
-    SessionsIcon,
-    SettingsIcon,
-    MenuIcon,
-} from "../components/atoms";
 //#endregion
 
 //#region Type
@@ -27,17 +28,12 @@ type DrawerIconProps = {
 const Drawer = createDrawerNavigator();
 
 const MainDrawerNavigator = (): JSX.Element => {
-    const dimens = useWindowDimensions();
-    const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(dimens.isDesktop);
-    const [drawerTypeState, setDrawerTypeState] = useState<string>(
-        dimens.isDesktop ? "permanent" : "slide"
-    );
-    const { dispatch } = useNavigation();
+    const mainDrawerHook = useMainDrawerNavigator();
     return (
         <Drawer.Navigator
             initialRouteName={"Sleep Process"}
-            openByDefault={dimens.isDesktop}
-            drawerType={drawerTypeState as any}
+            openByDefault={mainDrawerHook.isDesktop}
+            drawerType={mainDrawerHook.drawerType}
             drawerStyle={{ backgroundColor: Colors.blue }}
             drawerContentOptions={{
                 activeBackgroundColor: Colors.navy_darker,
@@ -48,27 +44,26 @@ const MainDrawerNavigator = (): JSX.Element => {
                 headerLeft: () => {
                     return (
                         <MenuIcon
-                            color={isDrawerOpen ? Colors.cyan : Colors.white}
+                            color={
+                                mainDrawerHook.isDrawerOpen
+                                    ? Colors.cyan
+                                    : Colors.white
+                            }
                             size={40}
-                            onPress={() => {
-                                if (isDrawerOpen) {
-                                    if (drawerTypeState === "permanent") {
-                                        setDrawerTypeState("slide");
-                                        setIsDrawerOpen(false);
-                                    }
-                                } else {
-                                    if (dimens.isDesktop) {
-                                        setDrawerTypeState("permanent");
-                                    }
-                                    setIsDrawerOpen(true);
-                                }
-
-                                dispatch(DrawerActions.toggleDrawer());
-                            }}
+                            onPress={mainDrawerHook.onDrawerMenuPress}
                         ></MenuIcon>
                     );
                 },
-                headerShown: dimens.isDesktop,
+                headerRight: () => {
+                    return (
+                        <LogoutIcon
+                            color={Colors.white}
+                            size={40}
+                            onPress={mainDrawerHook.onLogoutPress}
+                        ></LogoutIcon>
+                    );
+                },
+                headerShown: mainDrawerHook.isDesktop,
                 headerTitle: "",
                 headerStyle: { backgroundColor: Colors.blue },
             }}
@@ -80,7 +75,7 @@ const MainDrawerNavigator = (): JSX.Element => {
                     drawerIcon: (props: DrawerIconProps) => {
                         return <HomeIcon {...props}></HomeIcon>;
                     },
-                    drawerLabel: dimens.isDesktop
+                    drawerLabel: mainDrawerHook.isDesktop
                         ? Message.get(MessageKeys.drawer_items_main)
                         : "",
                 }}
@@ -92,7 +87,7 @@ const MainDrawerNavigator = (): JSX.Element => {
                     drawerIcon: (props: DrawerIconProps) => {
                         return <SessionsIcon {...props}></SessionsIcon>;
                     },
-                    drawerLabel: dimens.isDesktop
+                    drawerLabel: mainDrawerHook.isDesktop
                         ? Message.get(MessageKeys.drawer_items_sessions)
                         : "",
                 }}
@@ -104,7 +99,7 @@ const MainDrawerNavigator = (): JSX.Element => {
                     drawerIcon: (props: DrawerIconProps) => {
                         return <SettingsIcon {...props}></SettingsIcon>;
                     },
-                    drawerLabel: dimens.isDesktop
+                    drawerLabel: mainDrawerHook.isDesktop
                         ? Message.get(MessageKeys.drawer_items_account)
                         : "",
                 }}

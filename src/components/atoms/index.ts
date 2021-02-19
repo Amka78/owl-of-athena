@@ -8,6 +8,7 @@ import { FlatButton, FlatButtonProps } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { HomeIcon } from "./HomeIcon";
 import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
+import { LogoutIcon } from "./LogoutIcon";
 import { SessionsIcon } from "./SessionsIcon";
 import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
@@ -35,6 +36,7 @@ export {
     HomeIcon,
     InlineTimePicker,
     InlineTimePickerProps,
+    LogoutIcon,
     MenuIcon,
     FlatButton,
     TextBox,

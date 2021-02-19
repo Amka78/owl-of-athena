@@ -9,6 +9,7 @@ import { useFilterConditionSelector } from "./useFilteredConditionSelector";
 import { useFilteredSessionListSelector } from "./useFilteredSessionListSelector";
 import { useForgotPassword } from "./useForgotPassword";
 import { useGetUser } from "./useGetUser";
+import { useMainDrawerNavigator } from "./useMainDrawerNavigator";
 import { useLocale } from "./useLocale";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
@@ -50,6 +51,7 @@ export {
     useSelectedSessionSelector,
     useSelectedSessionDetailSelector,
     useSettingsSelector,
+    useMainDrawerNavigator,
     useTokenSelector,
     useProfilesSelector,
     useTextBox,
