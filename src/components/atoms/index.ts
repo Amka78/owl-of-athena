@@ -1,5 +1,6 @@
 //#region Import Moddules
 import { Button, ButtonProps } from "./Button";
+import { BluetoothIcon } from "./BluetoothIcon";
 import { CheckBox, CheckBoxProps } from "./CheckBox";
 import { ContentText, ContentTextProps } from "./ContentText";
 import { ContentTitle, ContentTitleProps } from "./ContentTitle";
@@ -21,6 +22,7 @@ import { UpdateSnackBar, UpdateSnackBarProps } from "./UpdateSnackBar";
 export {
     Button,
     ButtonProps,
+    BluetoothIcon,
     TimeView,
     TimeViewProps,
     CheckBox,

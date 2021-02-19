@@ -2,6 +2,8 @@
 import { useCallback, useState } from "react";
 import { useCheckLogging, useLogout, useWindowDimensions } from "./";
 import { useNavigation, DrawerActions } from "@react-navigation/native";
+import { useMain } from "./useMain";
+import { ConnectionStates } from "../sdk";
 //#endregion
 
 //#region Type
@@ -15,10 +17,14 @@ export const useMainDrawerNavigator = (): {
     isDrawerOpen: boolean;
     onDrawerMenuPress: () => void;
     onLogoutPress: () => Promise<void>;
+    onBluetoothConnectPress: () => void;
+    batteryLevel: number;
+    bluetoothConnect: ConnectionStates;
 } => {
     useCheckLogging();
     const dimens = useWindowDimensions();
     const logout = useLogout();
+    const main = useMain();
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(dimens.isDesktop);
     const [drawerType, setDrawerType] = useState<DrawerType>(
         dimens.isDesktop ? "permanent" : "slide"
@@ -45,12 +51,20 @@ export const useMainDrawerNavigator = (): {
 
     const onLogoutPress = logout.onPress;
 
+    const onBluetoothConnectPress = main.onConnectionStatesPress;
+
+    const batteryLevel = main.batteryLevel;
+
+    const bluetoothConnect = main.connect;
     return {
         isDesktop,
         drawerType,
         isDrawerOpen,
         onDrawerMenuPress,
         onLogoutPress,
+        onBluetoothConnectPress,
+        batteryLevel,
+        bluetoothConnect,
     };
 };
 //#endregion

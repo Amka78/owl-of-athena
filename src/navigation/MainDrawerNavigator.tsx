@@ -1,8 +1,10 @@
 //#region Import Modules
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
+import { View } from "react-native";
 
 import {
+    BluetoothIcon,
     HomeIcon,
     LogoutIcon,
     MenuIcon,
@@ -56,11 +58,26 @@ const MainDrawerNavigator = (): JSX.Element => {
                 },
                 headerRight: () => {
                     return (
-                        <LogoutIcon
-                            color={Colors.white}
-                            size={40}
-                            onPress={mainDrawerHook.onLogoutPress}
-                        ></LogoutIcon>
+                        <View
+                            style={{
+                                flexDirection: "row",
+                                justifyContent: "flex-end",
+                            }}
+                        >
+                            <BluetoothIcon
+                                size={40}
+                                connectionStates={
+                                    mainDrawerHook.bluetoothConnect
+                                }
+                                onPress={mainDrawerHook.onBluetoothConnectPress}
+                                style={{ marginRight: 10 }}
+                            ></BluetoothIcon>
+                            <LogoutIcon
+                                color={Colors.white}
+                                size={40}
+                                onPress={mainDrawerHook.onLogoutPress}
+                            ></LogoutIcon>
+                        </View>
                     );
                 },
                 headerShown: mainDrawerHook.isDesktop,
