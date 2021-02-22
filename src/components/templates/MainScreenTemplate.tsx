@@ -2,10 +2,10 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { FlatButton, FlatButtonProps } from "../atoms";
-import MainTabNavigator from "../../navigation/MainTabNavigator";
 import { useLocale, useWindowDimensions } from "../../hooks";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
+import MainTabNavigator from "../../navigation/MainTabNavigator";
+import { FlatButton, FlatButtonProps } from "../atoms";
 //#endregion
 
 //#region Types

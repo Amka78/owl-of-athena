@@ -1,15 +1,15 @@
 //#region Import Modules
 import { createStackNavigator } from "@react-navigation/stack";
-import { View } from "react-native";
 import moment from "moment";
 import * as React from "react";
+import { View } from "react-native";
 
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import { SessionListScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useSelectedSessionSelector, useWindowDimensions } from "../hooks";
-import { SessionListScreen } from "../components/pages";
 import { CommonStyles } from "../styles";
 import SessionTabNavigator from "./SessionTabNavigator";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 //#endregion
 
 //#region Component

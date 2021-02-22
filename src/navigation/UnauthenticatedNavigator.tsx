@@ -5,12 +5,11 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { View } from "react-native";
-import { Portal } from "react-native-paper";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { LoginScreen, SignupScreen, WelcomeScreen } from "../components/pages";
 import { ForgotPasswordScreen } from "../components/pages/ForgotPassswordScreen";
-import { Colors, Dimens } from "../constants";
+import { Colors } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { CommonStyles } from "../styles";
 //#endregion

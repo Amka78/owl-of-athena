@@ -3,8 +3,12 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+import { Dimens, Message, MessageKeys } from "../../constants";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
 import { Button, ErrorText, FlatButton, StandardView, TextBox } from "../atoms";
 import { DatePicker, DatePickerProps, LabeledRadioButton } from "../molecules";
 import {
@@ -36,8 +40,27 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
     props: AccountScreenTemplateProps
 ) => {
     useLocale(props.locale);
+
+    const dimens = useWindowDimensions();
+    useConvertibleHeader(
+        Message.get(MessageKeys.account_title),
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
+
+    const logoutButton = dimens.isDesktop ? undefined : (
+        <FlatButton {...props.logoutButton}>
+            {Message.get(MessageKeys.account_signout)}
+        </FlatButton>
+    );
     return (
-        <StandardView>
+        <StandardView
+            standardViewStyle={{
+                width: Dimens.inner_screen_max_width,
+                height: Dimens.inner_screen_max_height,
+                justifyContent: dimens.isDesktop ? "center" : "space-between",
+            }}
+        >
             <TextBox
                 {...props.firstName}
                 label={Message.get(MessageKeys.account_input_first_name)}
@@ -68,9 +91,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
             <Button {...props.saveButton}>
                 {Message.get(MessageKeys.account_button)}
             </Button>
-            <FlatButton {...props.logoutButton}>
-                {Message.get(MessageKeys.account_signout)}
-            </FlatButton>
+            {logoutButton}
         </StandardView>
     );
 };

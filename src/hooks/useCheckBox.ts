@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from "react";
 //#endregion
 
 //#region Types
-export type useCheckBoxReturn = ReturnType<typeof useCheckBox>;
+export type checkBoxCoreFunctions = ReturnType<typeof useCheckBox>;
 //#endregion
 
 //#region Hook

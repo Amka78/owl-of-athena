@@ -7,12 +7,8 @@ import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";
 import { validate } from "../services/SignupService";
 import { Signup } from "../types";
-import {
-    useCheckBox,
-    useCheckBoxReturn,
-    useTextBox,
-    useTextBoxReturn,
-} from "./";
+import { useCheckBox, useTextBox, useTextBoxReturn } from "./";
+import { checkBoxCoreFunctions } from "../hooks/useCheckBox";
 //#endregion
 
 //#region Hooks
@@ -23,7 +19,7 @@ export const useSignup = (
     emailHooks: useTextBoxReturn;
     passwordHooks: useTextBoxReturn;
     passwordConfirmHooks: useTextBoxReturn;
-    checkBoxHooks: useCheckBoxReturn;
+    checkBoxHooks: checkBoxCoreFunctions;
     onSignupPress: () => Promise<void>;
     onCancelPress: () => void;
     onLinkTextPress: () => void;

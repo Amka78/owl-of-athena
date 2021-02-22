@@ -11,12 +11,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { Container } from "./src/components";
-import {
-    AudioDialog,
-    ConfirmDialog,
-    LoadingDialog,
-    ProfilesDialog,
-} from "./src/components/molecules";
+import { AudioDialog, ProfilesDialog } from "./src/components/molecules";
 import { UpdateSnackBar } from "./src/components/atoms";
 import { Message } from "./src/constants";
 import { AuroraManagerInstance } from "./src/managers";
@@ -85,8 +80,6 @@ export default class App extends React.Component<AppProps, AppState> {
                                 auroraSoundList={this.SoundList}
                             ></AudioDialog>
                             <ProfilesDialog></ProfilesDialog>
-                            <LoadingDialog></LoadingDialog>
-                            <ConfirmDialog></ConfirmDialog>
                             <UpdateSnackBar></UpdateSnackBar>
                         </Container>
                     </PersistGate>

@@ -1,11 +1,11 @@
 //#region Import Modules
 import { EventEmitter } from "events";
 import { Audio } from "expo-av";
+import { Platform } from "react-native";
 
-import { SessionRestClientInstance } from "../clients";
 import { AuroraManagerInstance } from ".";
+import { SessionRestClientInstance } from "../clients";
 import { AuroraInstance, SleepStates } from "../sdk";
-import { AuroraEventList } from "../sdk/AuroraEventList";
 import {
     CommandNames,
     ConnectionStates,
@@ -13,6 +13,7 @@ import {
     EventIdsToNames,
     SleepStatesToNames,
 } from "../sdk/AuroraConstants";
+import { AuroraEventList } from "../sdk/AuroraEventList";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
 import {
     AuroraProfile,
@@ -30,19 +31,8 @@ import {
     Settings,
 } from "../sdk/models";
 import { AuroraSound } from "../types";
-import { Platform } from "react-native";
+import { AuroraManagerEventList } from "./AuroraManagerEventList";
 //#endregion
-
-export enum AuroraManagerEventList {
-    onConnectionChange = "onConnectionChange",
-    onSleepStateChange = "onSleepStateChnage",
-    onFoundUnsyncedSession = "onFoundUnsyncedSession",
-    onSleeping = "onSleeping",
-    onWaking = "onWaking",
-    onAwake = "onAwake",
-    onPushedSession = "onPushedSession",
-    onBatteryChange = "onBatteryChange",
-}
 
 export class AuroraManager extends EventEmitter {
     private connected: boolean;

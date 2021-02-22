@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { View } from "react-native";
 
-import { Colors, Message, MessageKeys } from "../constants";
-import { AccountScreen } from "../components/pages";
-import { CommonStyles } from "../styles";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import { AccountScreen } from "../components/pages";
+import { Colors, Message, MessageKeys } from "../constants";
 import { useWindowDimensions } from "../hooks";
+import { CommonStyles } from "../styles";
 //#endregion
 
 //#region Component
