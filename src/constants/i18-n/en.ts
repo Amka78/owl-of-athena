@@ -213,5 +213,7 @@ export default {
     [MessageKeys.drawer_items_main]: "Main",
     [MessageKeys.drawer_items_sessions]: "Sessions",
     [MessageKeys.drawer_items_account]: "Account",
+
+    [MessageKeys.connection_error]: "Connection Error",
 };
 //#endregion

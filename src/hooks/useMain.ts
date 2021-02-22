@@ -26,7 +26,7 @@ import {
 //#region Hooks
 export const useMain = (): {
     connect: ConnectionStates;
-    onConnectionStatesPress: () => void;
+    onConnectionStatesPress: () => Promise<void>;
     batteryLevel: number;
     currentFirmwareVersion: string;
     error: string;

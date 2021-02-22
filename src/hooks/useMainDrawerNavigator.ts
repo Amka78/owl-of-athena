@@ -4,6 +4,8 @@ import { useCheckLogging, useLogout, useWindowDimensions } from "./";
 import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { useMain } from "./useMain";
 import { ConnectionStates } from "../sdk";
+import { ConfirmDialog } from "../components/molecules";
+import { Message, MessageKeys } from "../constants";
 //#endregion
 
 //#region Type
@@ -51,7 +53,16 @@ export const useMainDrawerNavigator = (): {
 
     const onLogoutPress = logout.onPress;
 
-    const onBluetoothConnectPress = main.onConnectionStatesPress;
+    const onBluetoothConnectPress = useCallback(async () => {
+        await main.onConnectionStatesPress();
+
+        if (main.error !== "") {
+            ConfirmDialog.show({
+                title: Message.get(MessageKeys.connection_error),
+                message: main.error,
+            });
+        }
+    }, [main]);
 
     const batteryLevel = main.batteryLevel;
 

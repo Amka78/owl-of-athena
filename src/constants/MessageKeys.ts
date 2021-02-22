@@ -217,4 +217,6 @@ export const MessageKeys = {
     drawer_items_main: "drawer_items_main",
     drawer_items_sessions: "drawer_items_sessions",
     drawer_items_account: "drawer_items_account",
+
+    connection_error: "connection_error",
 };

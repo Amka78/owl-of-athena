@@ -200,4 +200,6 @@ export default {
     [MessageKeys.drawer_items_main]: "メイン",
     [MessageKeys.drawer_items_sessions]: "セッションズ",
     [MessageKeys.drawer_items_account]: "アカウント",
+
+    [MessageKeys.connection_error]: "接続エラー",
 };
