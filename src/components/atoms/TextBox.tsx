@@ -13,6 +13,7 @@ export type TextBoxProps = Omit<TextInputProps, "selectionColor"> & {
     label?: string;
     selectionColor?: string;
     underlineColor?: string;
+    maxWidth?: number;
 };
 //#endregion
 
@@ -22,10 +23,15 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
 ) => {
     const theme = useTheme();
     const dimens = useWindowDimensions();
-    let width = dimens.width - Dimens.content_margin_horizontal * 2;
 
-    if (width > Dimens.input_text_max_width) {
-        width = Dimens.input_text_max_width;
+    let width = dimens.width - Dimens.content_margin_horizontal * 2;
+    let maxWidth = props.maxWidth;
+
+    if (!maxWidth) {
+        maxWidth = Dimens.input_text_max_width;
+    }
+    if (width > maxWidth) {
+        width = maxWidth;
     }
     return (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

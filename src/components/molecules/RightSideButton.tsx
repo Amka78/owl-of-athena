@@ -18,7 +18,7 @@ export const RightSideButton: FunctionComponent<RightSideButtonProps> = (
             {...props}
             style={{
                 marginLeft: props.isLargeWidth
-                    ? Dimens.button_margin
+                    ? Dimens.items_margin
                     : undefined,
             }}
         ></Button>

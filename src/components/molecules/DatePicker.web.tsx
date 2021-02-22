@@ -49,6 +49,8 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
                                 : selectedDate.toString()
                         }
                         editable={false}
+                        style={props.style}
+                        maxWidth={props.maxWidth}
                     ></TextBox>
                 </TouchableOpacity>
             }
