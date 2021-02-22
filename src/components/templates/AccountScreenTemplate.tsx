@@ -3,14 +3,19 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import { Button, ErrorText, FlatButton, StandardView, TextBox } from "../atoms";
-import { DatePicker, DatePickerProps, LabeledRadioButton } from "../molecules";
+import { Button, ErrorText, FlatButton, TextBox } from "../atoms";
+import {
+    DatePicker,
+    DatePickerProps,
+    InternalView,
+    LabeledRadioButton,
+} from "../molecules";
 import {
     TemplateButtonProps,
     TemplateRadioButtonProps,
@@ -54,13 +59,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
         </FlatButton>
     );
     return (
-        <StandardView
-            standardViewStyle={{
-                width: Dimens.inner_screen_max_width,
-                height: Dimens.inner_screen_max_height,
-                justifyContent: dimens.isDesktop ? "center" : "space-between",
-            }}
-        >
+        <InternalView>
             <TextBox
                 {...props.firstName}
                 label={Message.get(MessageKeys.account_input_first_name)}
@@ -92,7 +91,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
                 {Message.get(MessageKeys.account_button)}
             </Button>
             {logoutButton}
-        </StandardView>
+        </InternalView>
     );
 };
 

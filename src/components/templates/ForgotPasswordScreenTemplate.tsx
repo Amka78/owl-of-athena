@@ -8,7 +8,6 @@ import {
     ErrorText,
     ErrorTextProps,
     FlexSpacer,
-    StandardView,
     TextBox,
 } from "../atoms";
 import { Dimens, Message, MessageKeys } from "../../constants";
@@ -21,6 +20,7 @@ import {
 import { TemplateButtonProps } from "./TempatedProps";
 import {
     ConvertibleContentTitle,
+    InternalView,
     LeftSideButton,
     RightSideButton,
 } from "../molecules";
@@ -89,12 +89,7 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
     }
 
     return (
-        <StandardView
-            standardViewStyle={{
-                maxHeight: Dimens.inner_screen_max_height,
-                maxWidth: Dimens.inner_screen_max_width,
-            }}
-        >
+        <InternalView>
             <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
                 {Message.get(MessageKeys.forgot_password_title)}
             </ConvertibleContentTitle>
@@ -109,7 +104,7 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
             ></TextBox>
             <ErrorText {...props.errorText}></ErrorText>
             {bottomButtons}
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

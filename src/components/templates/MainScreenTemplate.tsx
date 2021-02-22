@@ -1,7 +1,6 @@
 //#region Import modules
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
-import { Colors, Dimens } from "../../constants";
 
 import { useLocale, useWindowDimensions } from "../../hooks";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
@@ -41,7 +40,11 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
         <MainTabNavigator></MainTabNavigator>
     );
     return (
-        <View style={{ flex: 1 }}>
+        <View
+            style={{
+                flex: 1,
+            }}
+        >
             {coreNavigator}
             {statusBar}
         </View>

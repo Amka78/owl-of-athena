@@ -1,13 +1,19 @@
+//#region Import Modules
 import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { CommonStyles } from "../../styles";
+//#endregion
 
+//#region Type
 type StandardViewProps = {
     children: React.ReactNode;
-    standardViewStyle?: ViewStyle;
+    standardViewStyle?: ViewStyle | any[] | undefined;
 };
+//#endregion
+
+//#region Component
 export const StandardView: FunctionComponent<StandardViewProps> = (
     props: StandardViewProps
 ) => {
@@ -31,3 +37,4 @@ export const StandardView: FunctionComponent<StandardViewProps> = (
         </View>
     );
 };
+//#endregion

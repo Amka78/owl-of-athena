@@ -8,14 +8,10 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import {
-    ContentTitleProps,
-    ErrorText,
-    ErrorTextProps,
-    StandardView,
-} from "../atoms";
+import { ContentTitleProps, ErrorText, ErrorTextProps } from "../atoms";
 import {
     ConvertibleContentTitle,
+    InternalView,
     LabeledCheckBox,
     LabeledCheckBoxProps,
     LeftSideButton,
@@ -86,12 +82,7 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
         : Dimens.button_margin_bottom;
     const textBoxHeight = dimens.isSmallHeight ? 45 : undefined;
     return (
-        <StandardView
-            standardViewStyle={{
-                maxWidth: Dimens.inner_screen_max_width,
-                maxHeight: Dimens.inner_screen_max_height,
-            }}
-        >
+        <InternalView>
             <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
                 {Message.get(MessageKeys.signup_title)}
             </ConvertibleContentTitle>
@@ -136,7 +127,7 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
             ></LabeledCheckBox>
             <ErrorText {...props.errorText}></ErrorText>
             {bottomButtons}
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

@@ -7,10 +7,10 @@ import {
     ErrorText,
     ErrorTextProps,
     FlatButton,
-    StandardView,
     TimeView,
     TimeViewProps,
 } from "../atoms";
+import { InternalView } from "../molecules";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
@@ -44,12 +44,7 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
         dimens.isSmallHeight
     );
     return (
-        <StandardView
-            standardViewStyle={{
-                width: Dimens.inner_screen_max_width,
-                height: Dimens.inner_screen_max_height,
-            }}
-        >
+        <InternalView>
             <TouchableWithoutFeedback {...props.timeViewField}>
                 <View>
                     <TimeView
@@ -76,7 +71,7 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
                     {Message.get(MessageKeys.home_go_to_sleep_button)}
                 </Button>
             </View>
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

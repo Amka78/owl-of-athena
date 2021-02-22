@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import { useLocale, useWindowDimensions } from "../../hooks";
 import {
     Button,
@@ -10,9 +10,8 @@ import {
     ContentTextProps,
     ContentTitle,
     ContentTitleProps,
-    StandardView,
 } from "../atoms";
-import { LeftSideButton, RightSideButton } from "../molecules";
+import { InternalView, LeftSideButton, RightSideButton } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -35,12 +34,7 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
     const dimens = useWindowDimensions();
 
     return (
-        <StandardView
-            standardViewStyle={{
-                maxWidth: Dimens.inner_screen_max_width,
-                maxHeight: Dimens.inner_screen_max_height,
-            }}
-        >
+        <InternalView>
             <ContentTitle {...props.contentTitle}>
                 {Message.get(MessageKeys.welcome_title)}
             </ContentTitle>
@@ -77,7 +71,7 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
                     {Message.get(MessageKeys.welcome_standalone_button)}
                 </Button>
             </View>
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

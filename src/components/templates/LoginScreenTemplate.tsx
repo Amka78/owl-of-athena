@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
     useLocale,
@@ -13,12 +13,12 @@ import {
     ErrorText,
     ErrorTextProps,
     FlatButton,
-    StandardView,
     TextBox,
     TextBoxProps,
 } from "../atoms";
 import {
     ConvertibleContentTitle,
+    InternalView,
     LeftSideButton,
     RightSideButton,
 } from "../molecules";
@@ -109,12 +109,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
         );
     }
     return (
-        <StandardView
-            standardViewStyle={{
-                maxHeight: Dimens.inner_screen_max_height,
-                maxWidth: Dimens.inner_screen_max_width,
-            }}
-        >
+        <InternalView>
             <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
                 {Message.get(MessageKeys.login_title)}
             </ConvertibleContentTitle>
@@ -130,7 +125,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
             ></TextBox>
             <ErrorText {...props.errorText}></ErrorText>
             {buttonView}
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

@@ -1,18 +1,22 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { View } from "react-native";
 
+import { Dimens, Message, MessageKeys } from "../../constants";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
 import {
     Button,
     ContentText,
     ContentTextProps,
-    ContentTitle,
     ContentTitleProps,
-    StandardView,
     TimeView,
     TimeViewProps,
 } from "../atoms";
-import { Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+import { ConvertibleContentTitle, InternalView } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -31,17 +35,38 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
     props: SleepingScreenTemplateProps
 ) => {
     useLocale(props.locale);
+
+    const dimens = useWindowDimensions();
+    useConvertibleHeader(
+        MessageKeys.sleeping_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
     return (
-        <StandardView>
-            <ContentTitle {...props.contentTitle}>
+        <InternalView>
+            <ConvertibleContentTitle
+                {...props.contentTitle}
+                isDesktop={dimens.isDesktop}
+            >
                 {Message.get(MessageKeys.sleeping_title)}
-            </ContentTitle>
+            </ConvertibleContentTitle>
             <ContentText {...props.contentText}></ContentText>
-            <TimeView {...props.timeView} mode={"meridian"}></TimeView>
+            <View style={{ flex: 1 }}>
+                <TimeView
+                    {...props.timeView}
+                    mode={"meridian"}
+                    timeStyle={{
+                        fontSize: Dimens.home_alarm_time_text_size,
+                    }}
+                    timeMeridianStyle={{
+                        fontSize: Dimens.home_alarm_meridian_text_size,
+                    }}
+                ></TimeView>
+            </View>
             <Button {...props.wakeupButton}>
                 {Message.get(MessageKeys.sleeping_wakeup_button)}
             </Button>
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

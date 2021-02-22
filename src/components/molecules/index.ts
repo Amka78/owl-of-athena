@@ -7,6 +7,7 @@ import {
 } from "./ConvertibleContentTitle";
 import { DatePicker } from "./DatePicker";
 import { DatePickerProps } from "./DatePickerProps";
+import { InternalView } from "./InternalView";
 import { LabeledCheckBox, LabeledCheckBoxProps } from "./LabeledCheckBox";
 import {
     LabeledRadioButton,
@@ -37,6 +38,7 @@ export {
     LoadingDialog,
     DatePicker,
     DatePickerProps,
+    InternalView,
     LabeledRadioButton,
     LabeledRadioButtonProps,
     LabeledSelectorMenu,

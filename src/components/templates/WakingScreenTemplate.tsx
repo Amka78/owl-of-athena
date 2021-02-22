@@ -2,18 +2,21 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
+import { Dimens, Message, MessageKeys } from "../../constants";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
 import {
     Button,
     ContentText,
     ContentTextProps,
-    ContentTitle,
     ContentTitleProps,
-    StandardView,
     TimeView,
     TimeViewProps,
 } from "../atoms";
-import { Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
+import { ConvertibleContentTitle, InternalView } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
@@ -32,12 +35,33 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
     props: WakingScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+
+    useConvertibleHeader(
+        MessageKeys.waking_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
     return (
-        <StandardView>
-            <ContentTitle {...props.contentTitle}>
+        <InternalView>
+            <ConvertibleContentTitle
+                {...props.contentTitle}
+                isDesktop={dimens.isDesktop}
+            >
                 {Message.get(MessageKeys.waking_title)}
-            </ContentTitle>
-            <TimeView {...props.timeView} mode={"meridian"}></TimeView>
+            </ConvertibleContentTitle>
+            <View style={{ flex: 1 }}>
+                <TimeView
+                    {...props.timeView}
+                    mode={"meridian"}
+                    timeStyle={{
+                        fontSize: Dimens.home_alarm_time_text_size,
+                    }}
+                    timeMeridianStyle={{
+                        fontSize: Dimens.home_alarm_meridian_text_size,
+                    }}
+                ></TimeView>
+            </View>
             <View style={{ alignItems: "center" }}>
                 <Button {...props.wakeupButton}>
                     {Message.get(MessageKeys.waking_wakeup_button)}
@@ -46,7 +70,7 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
                     {Message.get(MessageKeys.waking_tip_text)}
                 </ContentText>
             </View>
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion

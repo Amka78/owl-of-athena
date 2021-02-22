@@ -2,13 +2,9 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
+import { Button, InlineTimePicker, InlineTimePickerProps } from "../atoms";
 import {
-    Button,
-    InlineTimePicker,
-    InlineTimePickerProps,
-    StandardView,
-} from "../atoms";
-import {
+    InternalView,
     LabeledCheckBox,
     LabeledCheckBoxProps,
     LabeledSelectorMenu,
@@ -19,7 +15,6 @@ import {
     TemplateButtonProps,
     TemplateSelectorMenuProps,
 } from "./TempatedProps";
-
 //#endregion
 
 //#region Types
@@ -42,7 +37,7 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
 ) => {
     useLocale(props.locale);
     return (
-        <StandardView>
+        <InternalView>
             <InlineTimePicker
                 {...props.inlineTimePicker}
                 mode="minute"
@@ -83,7 +78,7 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
             <Button {...props.saveButton}>
                 {Message.get(MessageKeys.save)}
             </Button>
-        </StandardView>
+        </InternalView>
     );
 };
 //#endregion
