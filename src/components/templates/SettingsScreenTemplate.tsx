@@ -2,19 +2,26 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Button, InlineTimePicker, InlineTimePickerProps } from "../atoms";
+import { Dimens, Message, MessageKeys } from "../../constants";
+import {
+    useConvertibleHeader,
+    useLocale,
+    useWindowDimensions,
+} from "../../hooks";
+import { InlineTimePicker, InlineTimePickerProps } from "../atoms";
 import {
     InternalView,
     LabeledCheckBox,
     LabeledCheckBoxProps,
     LabeledSelectorMenu,
+    LeftSideButton,
+    RightSideButton,
 } from "../molecules";
-import { Message, MessageKeys } from "../../constants";
-import { useLocale } from "../../hooks";
 import {
     TemplateButtonProps,
     TemplateSelectorMenuProps,
 } from "./TempatedProps";
+
 //#endregion
 
 //#region Types
@@ -27,6 +34,7 @@ export type SettingsScreenTemplateProps = {
     remStimEnabled: LabeledCheckBoxProps;
     remStimAudioMenu: TemplateSelectorMenuProps;
     saveButton: TemplateButtonProps;
+    cancelButton: TemplateButtonProps;
     locale?: string;
 };
 //#endregion
@@ -36,13 +44,54 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
     props: SettingsScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+    useConvertibleHeader(
+        MessageKeys.settings_title,
+        dimens.isDesktop,
+        dimens.isSmallHeight
+    );
+
+    const saveButton = (
+        <LeftSideButton
+            {...props.saveButton}
+            isLargeWidth={dimens.isLargeWidth}
+        >
+            {Message.get(MessageKeys.save)}
+        </LeftSideButton>
+    );
+
+    const cancelButton = (
+        <RightSideButton
+            {...props.cancelButton}
+            isLargeWidth={dimens.isLargeWidth}
+        >
+            {Message.get(MessageKeys.cancel)}
+        </RightSideButton>
+    );
+
+    let bottomButtons;
+    if (dimens.isDesktop || dimens.isSmallHeight) {
+        bottomButtons = (
+            <View style={{ flexDirection: "row" }}>
+                {saveButton}
+                {cancelButton}
+            </View>
+        );
+    } else {
+        bottomButtons = saveButton;
+    }
     return (
         <InternalView>
             <InlineTimePicker
                 {...props.inlineTimePicker}
                 mode="minute"
             ></InlineTimePicker>
-            <View>
+            <View
+                style={{
+                    marginLeft: Dimens.content_margin_horizontal,
+                    marginRight: Dimens.content_margin_horizontal,
+                }}
+            >
                 <LabeledSelectorMenu
                     {...props.smartAlarmAudioMenu}
                     label={Message.get(MessageKeys.settings_option_alarm_audio)}
@@ -75,9 +124,7 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
                     )}
                 ></LabeledSelectorMenu>
             </View>
-            <Button {...props.saveButton}>
-                {Message.get(MessageKeys.save)}
-            </Button>
+            {bottomButtons}
         </InternalView>
     );
 };

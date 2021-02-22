@@ -4,13 +4,16 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { cacheSettings } from "../actions";
-import { AudioDialog, ProfilesDialog, SoundList } from "../components/molecules";
+import {
+    AudioDialog,
+    ProfilesDialog,
+    SoundList,
+} from "../components/molecules";
 import { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
 import {
     useCheckLogging,
     useProfilesSelector,
     useSettingsSelector,
-    useUserSelector,
 } from "../hooks";
 import { AuroraProfile } from "../sdk/AuroraTypes";
 import { Settings } from "../sdk/models";
@@ -50,6 +53,7 @@ export const useSetting = (): {
     remStimAudio: AudioState;
     remStimAudioMenuOnPress: () => void;
     saveButtonPress: () => void;
+    cancelButtonPress: () => void;
     profiles?: AuroraProfile[];
 } => {
     useCheckLogging();
@@ -57,12 +61,11 @@ export const useSetting = (): {
     const { navigate } = useNavigation();
     const settings = useSettingsSelector();
     const profiles = useProfilesSelector();
-    const user = useUserSelector();
 
     const dispatch = useDispatch();
     const [datePickerState, setDatePickerState] = useState<DatePickerState>({
-        hours: settings.alarmHour!,
-        minutes: settings.alarmMinute!,
+        hours: settings.alarmHour,
+        minutes: settings.alarmMinute,
     });
 
     const [profileState, setProfileState] = useState<ProfileState>({
@@ -152,7 +155,7 @@ export const useSetting = (): {
             },
             remStimAudio.name
         );
-    }, []);
+    }, [remStimAudio.name]);
 
     const saveButtonPress = useCallback((): void => {
         const settings = new Settings({});
@@ -172,7 +175,7 @@ export const useSetting = (): {
         settings.savedAt = new Date();
 
         console.log("updated Settings:", settings);
-        dispatch(cacheSettings(settings, user!.id));
+        dispatch(cacheSettings(settings));
 
         navigate("Home");
     }, [
@@ -189,8 +192,12 @@ export const useSetting = (): {
         smartAlarmAudio.name,
         smartAlarmAudio.path,
         smartAlarmEnabled,
-        user,
     ]);
+
+    const cancelButtonPress = useCallback(() => {
+        navigate("Home");
+    }, [navigate]);
+
     return {
         datePickerState,
         inlineTimePickerOnChangeTime,
@@ -207,6 +214,7 @@ export const useSetting = (): {
         remStimAudio,
         remStimAudioMenuOnPress,
         saveButtonPress,
+        cancelButtonPress,
     };
 };
 //#endregion

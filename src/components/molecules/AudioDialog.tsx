@@ -1,13 +1,13 @@
 //#region "Import Modules"
 import { Audio } from "expo-av";
 import React from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Platform, StyleSheet, ViewStyle } from "react-native";
 import { Dialog, RadioButton } from "react-native-paper";
 
-import { Colors, Fonts, Message, MessageKeys } from "../../constants";
+import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { AuroraSound } from "../../types";
 import { FlatButton } from "../atoms";
-import { LabeledRadioButton } from "./LabeledRadioButton";
+import { LabeledRadioButton } from "../molecules";
 //#endregion
 
 type AudioDialogSettings = {
@@ -22,6 +22,7 @@ type AudioType = {
 
 type AudioDialogProps = {
     auroraSoundList: Array<AuroraSound>;
+    dialogContainer?: ViewStyle;
 };
 
 type AudioDialogState = {
@@ -100,11 +101,21 @@ export class AudioDialog extends React.Component<
     }
 
     public render(): JSX.Element | null {
+        let width = this.props.dialogContainer?.width;
+        if (width && width > Dimens.inner_screen_max_width) {
+            width = Dimens.inner_screen_max_width;
+        } else if (width && typeof width === "number") {
+            width = width - Dimens.content_margin_horizontal * 2;
+        }
         return this.state.dialogSettings !== undefined ? (
             <Dialog
                 visible={true}
                 onDismiss={this.onDialogDismissed()}
-                style={styles.dialogContainer}
+                style={[
+                    styles.dialogContainer,
+                    this.props.dialogContainer,
+                    { width },
+                ]}
             >
                 <Dialog.Title style={styles.dialogTitle}>
                     {Message.get(MessageKeys.alarm_sound_dialog_title)}
@@ -238,6 +249,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     dialogContainer: {
+        alignSelf: "center",
         backgroundColor: Colors.navy_darker,
         height: Platform.OS !== "web" ? "70%" : undefined,
     },

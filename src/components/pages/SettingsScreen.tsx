@@ -42,6 +42,9 @@ export const SettingsScreen: FunctionComponent = () => {
             saveButton={{
                 onPress: settingsHook.saveButtonPress,
             }}
+            cancelButton={{
+                onPress: settingsHook.cancelButtonPress,
+            }}
         ></SettingsScreenTemplate>
     );
 };

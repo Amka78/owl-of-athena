@@ -3,7 +3,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { View } from "react-native";
 
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import {
+    AudioDialog,
+    ConfirmDialog,
+    LoadingDialog,
+    ProfilesDialog,
+} from "../components/molecules";
 import {
     AwakeScreen,
     HomeScreen,
@@ -11,8 +16,9 @@ import {
     SleepingScreen,
     WakingScreen,
 } from "../components/pages";
-import { Colors, Message, MessageKeys } from "../constants";
+import { Colors } from "../constants";
 import { useWindowDimensions } from "../hooks";
+import { SoundManagerInstance } from "../managers";
 import { CommonStyles } from "../styles";
 //#endregion
 
@@ -37,7 +43,6 @@ const HomeNavigator = (): JSX.Element => {
                     component={AwakeScreen}
                     options={{
                         headerLeft: voidLeftHeader,
-                        headerTitle: Message.get(MessageKeys.awake_title),
                     }}
                 ></Stack.Screen>
                 <Stack.Screen
@@ -50,16 +55,12 @@ const HomeNavigator = (): JSX.Element => {
                 <Stack.Screen
                     name={"Settings"}
                     component={SettingsScreen}
-                    options={{
-                        headerTitle: Message.get(MessageKeys.settings_title),
-                    }}
                 ></Stack.Screen>
                 <Stack.Screen
                     name={"Sleeping"}
                     component={SleepingScreen}
                     options={{
                         headerLeft: voidLeftHeader,
-                        headerTitle: Message.get(MessageKeys.sleeping_title),
                     }}
                 ></Stack.Screen>
                 <Stack.Screen
@@ -67,7 +68,6 @@ const HomeNavigator = (): JSX.Element => {
                     component={WakingScreen}
                     options={{
                         headerLeft: voidLeftHeader,
-                        headerTitle: Message.get(MessageKeys.waking_title),
                     }}
                 ></Stack.Screen>
             </Stack.Navigator>
@@ -75,6 +75,11 @@ const HomeNavigator = (): JSX.Element => {
             <ConfirmDialog
                 dialogContainer={{ width: dimens.width }}
             ></ConfirmDialog>
+            <AudioDialog
+                auroraSoundList={SoundManagerInstance.getData()}
+                dialogContainer={{ width: dimens.width }}
+            ></AudioDialog>
+            <ProfilesDialog></ProfilesDialog>
         </View>
     );
 };
