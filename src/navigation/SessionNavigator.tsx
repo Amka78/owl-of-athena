@@ -1,13 +1,15 @@
 //#region Import Modules
 import { createStackNavigator } from "@react-navigation/stack";
+import { View } from "react-native";
 import moment from "moment";
 import * as React from "react";
 
 import { Colors, Message, MessageKeys } from "../constants";
-import { useSelectedSessionSelector } from "../hooks";
+import { useSelectedSessionSelector, useWindowDimensions } from "../hooks";
 import { SessionListScreen } from "../components/pages";
 import { CommonStyles } from "../styles";
 import SessionTabNavigator from "./SessionTabNavigator";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 //#endregion
 
 //#region Component
@@ -20,28 +22,37 @@ const SessionNavigator = (): JSX.Element => {
               Message.get(MessageKeys.date_format)
           )
         : "";
+    const dimens = useWindowDimensions();
     return (
-        <Stack.Navigator
-            screenOptions={{
-                headerTitleAlign: "center",
-                headerTintColor: Colors.cyan,
-                headerStyle: CommonStyles.headerStyle,
-                headerTitle: "",
-            }}
-        >
-            <Stack.Screen
-                name={"List"}
-                component={SessionListScreen}
-                options={{
-                    headerTitle: Message.get(MessageKeys.session_list_title),
+        <View style={{ flex: 1 }}>
+            <Stack.Navigator
+                screenOptions={{
+                    headerTitleAlign: "center",
+                    headerTintColor: Colors.cyan,
+                    headerStyle: CommonStyles.headerStyle,
+                    headerTitle: "",
                 }}
-            ></Stack.Screen>
-            <Stack.Screen
-                name={"Detail"}
-                component={SessionTabNavigator}
-                options={{ title }}
-            ></Stack.Screen>
-        </Stack.Navigator>
+            >
+                <Stack.Screen
+                    name={"List"}
+                    component={SessionListScreen}
+                    options={{
+                        headerTitle: Message.get(
+                            MessageKeys.session_list_title
+                        ),
+                    }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name={"Detail"}
+                    component={SessionTabNavigator}
+                    options={{ title }}
+                ></Stack.Screen>
+            </Stack.Navigator>
+            <LoadingDialog></LoadingDialog>
+            <ConfirmDialog
+                dialogContainer={{ width: dimens.width }}
+            ></ConfirmDialog>
+        </View>
     );
 };
 //#endregion

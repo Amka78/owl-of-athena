@@ -1,9 +1,9 @@
 //#region Import Modules
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import { Dialog } from "react-native-paper";
 
-import { Colors, Fonts, Message, MessageKeys } from "../../constants";
+import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { ContentText, FlatButton } from "../atoms";
 //#endregion
 
@@ -16,7 +16,9 @@ type ConfirmDialogSettings = {
     onDissmiss?: () => void;
 };
 
-type ConfirmDialogProps = {};
+type ConfirmDialogProps = {
+    dialogContainer?: ViewStyle;
+};
 type ConfirmDialogState = {
     dialogSettings?: ConfirmDialogSettings;
 };
@@ -52,13 +54,23 @@ export class ConfirmDialog extends React.Component<
     }
 
     public render(): JSX.Element | null {
+        let width = this.props.dialogContainer?.width;
+        if (width && width > Dimens.inner_screen_max_width) {
+            width = Dimens.inner_screen_max_width;
+        } else if (width && typeof width === "number") {
+            width = width - Dimens.content_margin_horizontal * 2;
+        }
         return this.state.dialogSettings ? (
             <Dialog
                 visible={true}
                 onDismiss={async (): Promise<void> => {
                     this.closeDialog();
                 }}
-                style={style.dialogContainer}
+                style={[
+                    style.dialogContainer,
+                    this.props.dialogContainer,
+                    { width },
+                ]}
             >
                 <Dialog.Title style={style.dialogTitle}>
                     {this.state.dialogSettings.title}
@@ -104,7 +116,10 @@ export class ConfirmDialog extends React.Component<
 //#region Styles
 const style = StyleSheet.create({
     dialogContainer: {
+        alignSelf: "center",
         backgroundColor: Colors.navy_darker,
+        marginLeft: Dimens.content_margin_horizontal,
+        marginRight: Dimens.content_margin_horizontal,
     },
     dialogTitle: {
         color: Colors.cyan,

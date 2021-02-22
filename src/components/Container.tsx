@@ -1,13 +1,8 @@
 //#region Import Modules
-import {
-    NavigationContainer,
-    LinkingOptions,
-    PathConfig,
-    PathConfigMap,
-} from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import React, { FunctionComponent } from "react";
 import { Platform, StyleSheet } from "react-native";
-import { Portal, Provider } from "react-native-paper";
+import { Provider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { Theme } from "../constants";
@@ -75,21 +70,19 @@ export const Container: FunctionComponent<ContainerProps> = (
 
     return (
         <Provider theme={Theme}>
-            <Portal>
-                <NavigationContainer linking={linking}>
-                    <SafeAreaProvider>
-                        <SafeAreaView
-                            mode={"margin"}
-                            style={[
-                                styles.container,
-                                { width: dimens.width, height: dimens.height },
-                            ]}
-                        >
-                            {props.children}
-                        </SafeAreaView>
-                    </SafeAreaProvider>
-                </NavigationContainer>
-            </Portal>
+            <NavigationContainer linking={linking}>
+                <SafeAreaProvider>
+                    <SafeAreaView
+                        mode={"margin"}
+                        style={[
+                            styles.container,
+                            { width: dimens.width, height: dimens.height },
+                        ]}
+                    >
+                        {props.children}
+                    </SafeAreaView>
+                </SafeAreaProvider>
+            </NavigationContainer>
         </Provider>
     );
 };
