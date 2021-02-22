@@ -1,6 +1,7 @@
 //#region Import modules
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
+import { Colors, Dimens } from "../../constants";
 
 import { useLocale, useWindowDimensions } from "../../hooks";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
@@ -23,7 +24,15 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
     const dimens = useWindowDimensions();
 
     const statusBar = !dimens.isDesktop ? (
-        <FlatButton {...props.AuroraConnectionStatesBar}></FlatButton>
+        <FlatButton
+            {...props.AuroraConnectionStatesBar}
+            contentStyle={{
+                backgroundColor:
+                    props.AuroraConnectionStatesBar.contentStyle
+                        ?.backgroundColor,
+                marginBottom: 0,
+            }}
+        ></FlatButton>
     ) : undefined;
 
     const coreNavigator = dimens.isHorizontal ? (
