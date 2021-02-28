@@ -202,4 +202,6 @@ export default {
     [MessageKeys.drawer_items_account]: "アカウント",
 
     [MessageKeys.connection_error]: "接続エラー",
+
+    [MessageKeys.session_blank]: "表示するセッションを選択してください。",
 };

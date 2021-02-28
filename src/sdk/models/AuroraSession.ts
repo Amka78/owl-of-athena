@@ -67,6 +67,7 @@ export class AuroraSession {
             this.starred = false;
             this.asleepAt = src.asleespAt;
             this.awakeAt = src.awakeAt;
+            this.sessionAt = src.date;
         }
     }
 }

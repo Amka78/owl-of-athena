@@ -1,7 +1,8 @@
 //#region Import Modules
 import moment from "moment";
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import {
+    LayoutChangeEvent,
     Picker,
     PickerProps,
     Platform,
@@ -16,7 +17,7 @@ import { IconButton, List } from "react-native-paper";
 import { StandardView } from "../atoms";
 import { LabeledCheckBox, LabeledCheckBoxProps } from "../molecules";
 import { ChartRadialProgress } from "../charts";
-import { Colors, Layout, Message, MessageKeys } from "../../constants";
+import { Colors, Message, MessageKeys } from "../../constants";
 import { AuroraSession } from "../../sdk/models";
 import { TemplatePickerItemProps } from "./TempatedProps";
 import { useLocale } from "../../hooks";
@@ -54,10 +55,12 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
     props: SessionListScreenTemplateProps
 ) => {
     useLocale(props.locale);
+
+    const [screenWidth, setScreenWidth] = useState(0);
     let menu = undefined;
     if (props.showFilter) {
         menu = (
-            <View style={styles.menuContainer}>
+            <View style={[styles.menuContainer, { maxWidth: screenWidth }]}>
                 <View style={styles.pickerContainer}>
                     <Text
                         {...props.filterByDateLabel}
@@ -114,17 +117,19 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
         );
     }
     return props.sessionList ? (
-        <StandardView standardViewStyle={styles.standardView}>
+        <StandardView
+            standardViewStyle={styles.standardView}
+            onLayout={(evetnt: LayoutChangeEvent) => {
+                setScreenWidth(evetnt.nativeEvent.layout.width);
+            }}
+        >
             {props.showFilter ? menu : undefined}
-            <ScrollView style={{ flex: Layout.isSmallDevice ? 2 : 4 }}>
-                {props.sessionList.map(
-                    (value: AuroraSession, index: number) => {
-                        const sessionAt = moment(value.sessionAt);
-                        return (
-                            <View
-                                key={value.id}
-                                style={styles.sessionItemContainer}
-                            >
+            <ScrollView style={{ flex: 1 }}>
+                <List.Section style={{ flex: 1 }}>
+                    {props.sessionList.map(
+                        (value: AuroraSession, index: number) => {
+                            const sessionAt = moment(value.sessionAt);
+                            return (
                                 <List.Item
                                     key={value.id}
                                     left={(
@@ -186,15 +191,15 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                                         Message.get(MessageKeys.date_format)
                                     )}
                                     descriptionStyle={styles.menuDescription}
-                                    style={styles.menu}
+                                    style={{ width: screenWidth }}
                                     onPress={async () => {
                                         props.onMenuPress(value, index);
                                     }}
                                 ></List.Item>
-                            </View>
-                        );
-                    }
-                )}
+                            );
+                        }
+                    )}
+                </List.Section>
             </ScrollView>
         </StandardView>
     ) : null;
@@ -206,7 +211,6 @@ const styles = StyleSheet.create({
     menuContainer: {
         backgroundColor: Colors.purple,
         flex: Platform.OS !== "web" ? 0.4 : undefined,
-        width: Layout.window.fixedWidth,
     },
     pickerContainer: {
         flex: 1,
@@ -251,43 +255,11 @@ const styles = StyleSheet.create({
     showNotesLabel: { color: Colors.white, marginBottom: 0 },
     menuLabel: { color: Colors.white },
     menuDescription: { color: Colors.gray },
-    menu: {
-        width: Layout.window.fixedWidth,
-        justifyContent: "center",
-    },
     starIconContainer: {
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
     },
-    sessionInfoHeader: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "flex-start",
-        flex: 1,
-        width: Layout.window.fixedWidth,
-        marginTop: 30,
-    },
-    pieChartContainer: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        width: Layout.window.fixedWidth,
-        flex: 5,
-    },
-    sessionInfoFooter: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "flex-start",
-        flex: 1,
-        width: Layout.window.fixedWidth,
-    },
     standardView: { justifyContent: "flex-start" },
-    sessionItemContainer: {
-        alignItems: "center",
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        width: Layout.window.fixedWidth,
-    },
 });
 //#endregion

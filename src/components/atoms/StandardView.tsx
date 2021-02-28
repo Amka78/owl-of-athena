@@ -1,6 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { View, ViewStyle } from "react-native";
+import { LayoutChangeEvent, View, ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { CommonStyles } from "../../styles";
@@ -9,7 +9,9 @@ import { CommonStyles } from "../../styles";
 //#region Type
 type StandardViewProps = {
     children: React.ReactNode;
+    rootViewStyle?: ViewStyle | any[] | undefined;
     standardViewStyle?: ViewStyle | any[] | undefined;
+    onLayout?: (event: LayoutChangeEvent) => void;
 };
 //#endregion
 
@@ -23,7 +25,9 @@ export const StandardView: FunctionComponent<StandardViewProps> = (
             style={[
                 CommonStyles.rootContainer,
                 { backgroundColor: theme.colors?.background },
+                props.rootViewStyle,
             ]}
+            onLayout={props.onLayout}
         >
             <View
                 style={[

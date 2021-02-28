@@ -2,6 +2,7 @@
 import React, { FunctionComponent } from "react";
 
 import { useSession } from "../../hooks/useSession";
+import { SessionBlankScreenTemplate } from "../templates/SessionBlankScreenTemplate";
 import { SessionScreenTemplate } from "./../templates/SessionScreenTemplate";
 //#endregion
 
@@ -9,7 +10,7 @@ import { SessionScreenTemplate } from "./../templates/SessionScreenTemplate";
 export const SessionScreen: FunctionComponent = () => {
     const sessionHook = useSession();
 
-    return (
+    const selectedSession = (
         <SessionScreenTemplate
             asleepAtTimeLabel={{
                 hours: sessionHook.asleepAt!.hours(),
@@ -53,5 +54,8 @@ export const SessionScreen: FunctionComponent = () => {
             }}
         ></SessionScreenTemplate>
     );
+
+    const blank = <SessionBlankScreenTemplate></SessionBlankScreenTemplate>;
+    return sessionHook.selectedSession ? selectedSession : blank;
 };
 //#endregion

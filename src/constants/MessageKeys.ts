@@ -217,6 +217,9 @@ export const MessageKeys = {
     drawer_items_main: "drawer_items_main",
     drawer_items_sessions: "drawer_items_sessions",
     drawer_items_account: "drawer_items_account",
+    //#endregion
 
     connection_error: "connection_error",
+
+    session_blank: "session_blank",
 };

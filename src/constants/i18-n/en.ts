@@ -215,5 +215,7 @@ export default {
     [MessageKeys.drawer_items_account]: "Account",
 
     [MessageKeys.connection_error]: "Connection Error",
+
+    [MessageKeys.session_blank]: "Please select the sessions you wish to view.",
 };
 //#endregion

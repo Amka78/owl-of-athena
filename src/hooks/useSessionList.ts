@@ -24,6 +24,7 @@ import {
     useFilteredSessionListSelector,
     useSessionDetailListSelector,
     useUserSelector,
+    useWindowDimensions,
 } from "./";
 import { useCheckLogging } from "./useCheckLogging";
 //#endregion
@@ -47,17 +48,10 @@ export const useSessinList = (): {
     const filterCondition = useFilterConditionSelector();
     const sessionList = useFilteredSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
-    const { navigate, setParams } = useNavigation();
+    const { navigate } = useNavigation();
     const [showFilter, setShowFilter] = useState<boolean>(false);
+    const dimens = useWindowDimensions();
     useCheckLogging();
-    useEffect(() => {
-        setParams({});
-        const cleanup = (): void => {
-            return;
-        };
-        return cleanup;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [showFilter]);
 
     const onPressedRefresh = useCallback(async () => {
         LoadingDialog.show({
@@ -171,11 +165,20 @@ export const useSessinList = (): {
 
             dispatch(selectSessionDetail(sessionDetail));
 
-            navigate("Detail", {
-                sessionIndex: index,
-            });
+            if (!(dimens.isHorizontal && dimens.isDesktop)) {
+                navigate("Detail", {
+                    sessionIndex: index,
+                });
+            }
         },
-        [dispatch, navigate, sessionDetailList, user?.id]
+        [
+            dimens.isDesktop,
+            dimens.isHorizontal,
+            dispatch,
+            navigate,
+            sessionDetailList,
+            user?.id,
+        ]
     );
     return {
         showFilter,

@@ -1,6 +1,6 @@
 //#region "Import modules"
-import React, { FunctionComponent } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { FunctionComponent, useState } from "react";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import {
@@ -12,10 +12,10 @@ import {
 import { SessionTimeView } from "../organisms";
 import { FlexSpacer, StandardView } from "../atoms";
 import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
-import { Colors, Dimens, Layout, Message, MessageKeys } from "../../constants";
+import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { CurrentChart } from "../../types/CurrentChart";
 import { TemplateTimeViewProps } from "./TempatedProps";
-import { useLocale } from "../../hooks";
+import { useLocale, useWindowDimensions } from "../../hooks";
 //#endregion
 
 //#region Types
@@ -33,6 +33,11 @@ export type SessionScreenTemplateProps = {
     deepDurationLabel: TemplateTimeViewProps;
     locale?: string;
 };
+
+export type ScreenLayout = {
+    width: number;
+    height: number;
+};
 //#endregion
 
 //#region Component
@@ -40,32 +45,82 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
     props: SessionScreenTemplateProps
 ) => {
     useLocale(props.locale);
+    const dimens = useWindowDimensions();
+    const [screenLayout, setScreenLayout] = useState<ScreenLayout>({
+        width: 0,
+        height: 0,
+    });
+
+    const radicalProgressChartSize = dimens.isDesktop
+        ? Dimens.session_radial_progress_chart_size_desktop
+        : Dimens.session_radial_progress_chart_size_mobile;
+
+    const percentLabelSize = dimens.isDesktop
+        ? Dimens.session_percent_label_size_desktop
+        : Dimens.session_percent_label_size_mobile;
+
+    const categoryLabelSize = dimens.isDesktop
+        ? Dimens.session_category_label_size_desktop
+        : Dimens.session_category_label_size_mobile;
+
+    const chartPieOuterRadius = dimens.isDesktop
+        ? Dimens.session_chart_pie_outer_radius_desktop
+        : Dimens.session_chart_pie_outer_radius_mobile;
+
+    const chartPieInnerRadius = dimens.isDesktop
+        ? Dimens.session_chart_pie_inner_radius_desktop
+        : Dimens.session_chart_pie_inner_radius_mobile;
+
+    const chartPieCategoryPadding = dimens.isDesktop
+        ? Dimens.session_chart_pie_category_label_padding_desktop
+        : Dimens.session_chart_pie_category_label_padding_mobile;
     return (
-        <StandardView>
-            <View style={styles.sessionInfoHeader}>
+        <StandardView
+            standardViewStyle={{
+                alignItems: undefined,
+                borderColor: Colors.white,
+                borderLeftWidth: 1,
+            }}
+            onLayout={(event: LayoutChangeEvent) => {
+                setScreenLayout({
+                    width: event.nativeEvent.layout.width,
+                    height: event.nativeEvent.layout.height,
+                });
+            }}
+        >
+            <View
+                style={[
+                    styles.sessionInfoHeader,
+                    { width: screenLayout.width },
+                ]}
+            >
                 <SessionTimeView
                     {...props.asleepAtTimeLabel}
                     mode={"meridian"}
                     label={Message.get(MessageKeys.session_asleep_time_label)}
+                    isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
                 <ChartRadialProgress
                     {...props.chartRadialProgress}
-                    width={Dimens.session_radial_progress_chart_width}
-                    height={Dimens.session_radial_progress_chart_height}
+                    width={radicalProgressChartSize}
+                    height={radicalProgressChartSize}
                     fgColor={Colors.teal}
                     bgColor={Colors.semi_transparent}
                     valueLabelColor={Colors.teal}
                     valueLabelSize={
-                        Dimens.session_radial_progress_chart_font_size
+                        dimens.isDesktop
+                            ? Dimens.session_radial_progress_chart_font_size_desktop
+                            : Dimens.session_radial_progress_chart_font_size_mobile
                     }
                 />
                 <SessionTimeView
                     {...props.awakeTimeLabel}
                     mode={"meridian"}
                     label={Message.get(MessageKeys.session_awake_time_label)}
+                    isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
             </View>
-            <View style={styles.chartHeader}>
+            <View style={[styles.chartHeader, { width: screenLayout.width }]}>
                 <IconButton
                     {...props.leftSelectButton}
                     icon={"chevron-left"}
@@ -82,45 +137,59 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     style={{ marginRight: Dimens.session_margin_right }}
                 ></IconButton>
             </View>
-            <View style={styles.sessionContent}>
+            <View style={[styles.sessionContent]}>
                 {props.currentChart === "SleepChart" ? (
                     <SessionSleepChart
                         {...props.sessionSleepChart}
-                        height={Layout.window.height / 2.3}
-                        width={Dimens.session_chart_width}
+                        height={screenLayout.height / 2.3}
+                        width={
+                            screenLayout.width -
+                            (Dimens.session_margin_left +
+                                Dimens.session_margin_right)
+                        }
                     ></SessionSleepChart>
                 ) : (
                     <SessionChartPie
                         {...props.sessionChartPie}
-                        categoryLabelSize={Dimens.session_category_label_size}
-                        categoryLabelPadding={
-                            Dimens.session_chart_pie_category_label_padding
+                        categoryLabelSize={categoryLabelSize}
+                        categoryLabelPadding={chartPieCategoryPadding}
+                        percentLabelSize={percentLabelSize}
+                        height={screenLayout.height / 2.3}
+                        width={
+                            screenLayout.width -
+                            (Dimens.session_margin_left +
+                                Dimens.session_margin_right)
                         }
-                        percentLabelSize={Dimens.session_percent_label_size}
-                        height={Layout.window.height / 2.3}
-                        width={Layout.window.fixedWidth}
-                        outerRadius={Dimens.session_chart_pie_outer_radius}
-                        innerRadius={Dimens.session_chart_pie_inner_radius}
+                        outerRadius={chartPieOuterRadius}
+                        innerRadius={chartPieInnerRadius}
                     ></SessionChartPie>
                 )}
             </View>
-            <View style={styles.sessionInfoFooter}>
+            <View
+                style={[
+                    styles.sessionInfoFooter,
+                    { width: screenLayout.width },
+                ]}
+            >
                 <SessionTimeView
                     {...props.sleepDurationLabel}
                     label={Message.get(
                         MessageKeys.session_sleep_duration_label
                     )}
                     mode={"time"}
+                    isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
                 <SessionTimeView
                     {...props.remDurationLabel}
                     label={Message.get(MessageKeys.session_rem_duration_label)}
                     mode={"time"}
+                    isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
                 <SessionTimeView
                     {...props.deepDurationLabel}
                     label={Message.get(MessageKeys.session_deep_duration_label)}
                     mode={"time"}
+                    isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
             </View>
         </StandardView>
@@ -135,27 +204,17 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignItems: "flex-start",
         flex: 1,
-        width: Layout.window.fixedWidth,
         marginTop: 30,
-    },
-    pieChartContainer: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        width: Layout.window.fixedWidth,
-        flex: 5,
     },
     sessionInfoFooter: {
         flexDirection: "row",
         justifyContent: "space-around",
         alignItems: "flex-start",
         flex: 1,
-        width: Layout.window.fixedWidth,
     },
     chartHeader: {
         flex: 1,
         flexDirection: "row",
-        width: Layout.window.fixedWidth,
     },
     sessionContent: {
         flex: 5,
