@@ -16,6 +16,7 @@ import {
 import { AuroraEventList } from "../sdk/AuroraEventList";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
 import {
+    AuroraEventJson,
     AuroraProfile,
     AuroraSessionCSV,
     CommandResult,
@@ -32,6 +33,17 @@ import {
 } from "../sdk/models";
 import { AuroraSound } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
+import {
+    cloneDeep,
+    meanBy,
+    minBy,
+    maxBy,
+    remove,
+    isEmpty,
+    sortedIndexBy,
+    sumBy,
+    sortBy,
+} from "lodash";
 //#endregion
 
 export class AuroraManager extends EventEmitter {
@@ -322,7 +334,7 @@ export class AuroraManager extends EventEmitter {
                     }
                 } else {
                     newSession = new AuroraSession(uploadSession);
-                    newSession!.id = sessionInfo.name.replace("@", "-");
+                    newSession.id = sessionInfo.name.replace("@", "-");
                 }
 
                 console.debug(`uploadSession:${uploadSession}`);
@@ -334,34 +346,221 @@ export class AuroraManager extends EventEmitter {
                     );
                 }
                 pushedSessionList.push(newSession!);
+
                 pushedSessionDetailList.push(
                     new AuroraSessionDetail(
                         newSession!.id,
-                        // @ts-ignore
                         uploadSession.streams as any,
-                        new Array<AuroraEvent>(),
-                        new Array<AuroraEvent>(),
-                        new Array<AuroraEvent>(),
-                        new Array<AuroraEvent>(),
-                        new Array<AuroraEvent>()
+                        this.aggregateSessionDetail(
+                            cloneDeep(uploadSession.events),
+                            [0, 15, 30, 45, 60],
+                            "sum"
+                        ),
+                        this.aggregateSessionDetail(
+                            cloneDeep(uploadSession.events),
+                            [0, 15, 30, 45, 60],
+                            "sum"
+                        ),
+                        this.aggregateSessionDetail(
+                            cloneDeep(uploadSession.events),
+                            [0, 5, 10, 15, 20],
+                            "average"
+                        ),
+                        this.aggregateSessionDetail(
+                            cloneDeep(uploadSession.events),
+                            [0, 5, 10, 15, 20, 25],
+                            "duration"
+                        ),
+                        this.aggregateSessionDetail(
+                            cloneDeep(uploadSession.events),
+                            [0, 15, 30, 45, 60],
+                            "count"
+                        )
                     )
                 );
             } catch (e) {
+                console.debug(`session parse error:${e}`);
                 await AuroraInstance.queueCmd(`sd-dir-del ${sessionInfo[0]}`);
             }
         }
         return [pushedSessionList, pushedSessionDetailList];
     }
 
+    private aggregateSessionDetail(
+        events: Array<AuroraEventJson>,
+        bins: Array<number>,
+        groupByType: string
+    ): Array<AuroraEvent> {
+        /*const eventsInBins: Array<{
+            event: AuroraEventJson;
+            eventIndex: number;
+        }>[][] = [];*/
+        const eventsInBins: any = bins.map(() => ({}));
+
+        events.forEach((event: AuroraEventJson, eventIndex: number) => {
+            events[eventIndex].bins = [];
+
+            bins.forEach((bin: number, binIndex: number) => {
+                if (!bin) return;
+
+                const eventBinIndex = Math.floor(event.time / 1000 / 60 / bin);
+
+                if (!Array.isArray(eventsInBins[binIndex][eventBinIndex])) {
+                    eventsInBins[binIndex][eventBinIndex] = [];
+                }
+
+                eventsInBins[binIndex][eventBinIndex].push({
+                    event,
+                    eventIndex,
+                });
+            });
+
+            if (groupByType === "count") {
+                event.flags = 1;
+            }
+        });
+
+        let groupBy: any = undefined;
+        switch (groupByType) {
+            case "mode":
+                groupBy = this.modeBy;
+                break;
+            case "min":
+                groupBy = minBy;
+                break;
+            case "max":
+                groupBy = maxBy;
+                break;
+
+            case "count":
+            case "sum":
+                groupBy = sumBy;
+                break;
+
+            default:
+                groupBy = meanBy;
+        }
+
+        eventsInBins.forEach((eventsInBin, binIndex) => {
+            for (const binOfEvents of Object.values(eventsInBin)) {
+                const sortedEvents = sortBy(
+                    binOfEvents,
+                    ({ event }) => event.time
+                );
+
+                //special case
+                if (groupByType == "duration") {
+                    events[sortedEvents[0].eventIndex].bins[
+                        bins[binIndex]
+                    ] = this.calculateDuration(sortedEvents, bins[binIndex]);
+                } else {
+                    const meanTime = meanBy(
+                        binOfEvents,
+                        ({ event }) => event.time
+                    );
+                    const sortedEventIndex = sortedIndexBy(
+                        sortedEvents,
+                        // @ts-ignore
+                        { event: { time: meanTime } },
+                        ({ event }) => event.time
+                    );
+                    const eventIndex =
+                        sortedEvents[sortedEventIndex].eventIndex;
+                    events[eventIndex].bins[bins[binIndex]] = groupBy(
+                        sortedEvents,
+                        ({ event }: { event: any }) => event.flags
+                    );
+                }
+            }
+        });
+
+        //if we don't need the whole result
+        if (!bins.includes(0)) {
+            //remove any events that aren't in at least one bin
+            remove(events, (event) => isEmpty(event.bins));
+        }
+
+        const auroraEvent = new Array<AuroraEvent>();
+
+        events.forEach((value: AuroraEventJson) => {
+            auroraEvent.push(new AuroraEvent(value));
+        });
+        return auroraEvent;
+    }
+
+    private modeBy(values: any, predicate: any): any {
+        const freq: any = {};
+        let mode = null;
+
+        for (const val of values) {
+            const v = predicate(val);
+
+            freq[v] = (freq[v] || 0) + 1;
+
+            if (!freq[mode] || freq[v] > freq[mode]) {
+                mode = v;
+            }
+        }
+
+        return mode;
+    }
+
+    private calculateDuration(
+        events: Array<{ event: AuroraEventJson; eventIndex: number }>,
+        binDuration: number
+    ) {
+        let totalDuration = 0;
+        let maxDuration = 0;
+        let maxFlags = events[0].event.flags;
+        const totalDurations = new Array<number>();
+
+        if (events.length == 1) {
+            return maxFlags;
+        }
+
+        if (events.length == 2) {
+            return events[1].event.flags;
+        }
+
+        for (let i = 1; i < events.length; i++) {
+            const lastEventDuration =
+                events[i].event.time - events[i - 1].event.time;
+            const lastEventFlags = events[i - 1].event.flags;
+
+            totalDurations[lastEventFlags] =
+                (typeof totalDurations[lastEventFlags] == "undefined"
+                    ? 0
+                    : totalDurations[lastEventFlags]) + lastEventDuration;
+            totalDuration += lastEventDuration;
+
+            if (totalDurations[lastEventFlags] > maxDuration) {
+                maxDuration = totalDurations[lastEventFlags];
+                maxFlags = lastEventFlags;
+            }
+        }
+
+        const lastEventFlags = events[events.length - 1].event.flags;
+        totalDurations[lastEventFlags] =
+            (typeof totalDurations[lastEventFlags] == "undefined"
+                ? 0
+                : totalDurations[lastEventFlags]) +
+            binDuration * 60 * 1000 -
+            totalDuration;
+
+        return totalDurations[lastEventFlags] > maxDuration
+            ? lastEventFlags
+            : maxFlags;
+    }
+
     private getMsAfterMidnight(alarmHour: number, alarmMinute: number): number {
         const msAfterMidNight =
-            alarmHour! * 60 * 60 * 1000 + alarmMinute! * 60 * 1000;
+            alarmHour * 60 * 60 * 1000 + alarmMinute * 60 * 1000;
         console.debug(msAfterMidNight);
         return msAfterMidNight;
     }
 
     private async setupAurora(): Promise<void> {
-        this.batteryLevel = this.osInfo!.batteryLevel!;
+        this.batteryLevel = this.osInfo!.batteryLevel;
 
         //a crash (in which case no profile would be loaded) or
         //the aurora service restarting after kill (in which case

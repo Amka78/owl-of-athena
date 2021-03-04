@@ -128,7 +128,7 @@ export type AuroraSessionCSV = {
     profile: AuroraProfile;
     date: number;
     duration: number;
-    events: Array<AuroraEvent>;
+    events: Array<AuroraEventJson>;
     incomplete: boolean;
     name: string;
     session_txt: string;
