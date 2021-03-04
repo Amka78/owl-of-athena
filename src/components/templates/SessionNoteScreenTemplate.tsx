@@ -4,6 +4,7 @@ import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
 import { StandardView } from "../atoms";
 import { Colors } from "../../constants";
+import { useScreenDimensions } from "../../hooks";
 //#endregion
 
 //#region Types
@@ -17,11 +18,18 @@ export type SessionNoteTemplateProps = Pick<
 export const SessionNoteScreenTemplate: FunctionComponent<SessionNoteTemplateProps> = (
     props: SessionNoteTemplateProps
 ) => {
+    const screenDimens = useScreenDimensions();
     return (
-        <StandardView standardViewStyle={styles.sessionNoteView}>
+        <StandardView
+            standardViewStyle={styles.sessionNoteView}
+            onLayout={screenDimens.onLayout}
+        >
             <TextInput
                 {...props}
-                style={styles.defaultTextareaStyle}
+                style={[
+                    styles.defaultTextareaStyle,
+                    { width: screenDimens.width },
+                ]}
                 multiline={true}
             />
         </StandardView>

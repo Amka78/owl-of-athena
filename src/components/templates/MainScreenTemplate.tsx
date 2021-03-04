@@ -6,6 +6,7 @@ import { useLocale, useWindowDimensions } from "../../hooks";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import MainTabNavigator from "../../navigation/MainTabNavigator";
 import { FlatButton, FlatButtonProps } from "../atoms";
+import { ConfirmDialog, LoadingDialog } from "../molecules";
 //#endregion
 
 //#region Types
@@ -46,6 +47,8 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
             }}
         >
             {coreNavigator}
+            <ConfirmDialog></ConfirmDialog>
+            <LoadingDialog></LoadingDialog>
             {statusBar}
         </View>
     );

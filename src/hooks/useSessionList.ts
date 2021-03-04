@@ -1,6 +1,6 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
@@ -40,8 +40,8 @@ export const useSessinList = (): {
     onStarPress: (value: AuroraSession) => Promise<void>;
     onDeletePress: (value: AuroraSession) => Promise<void>;
     onMenuPress: (value: AuroraSession, index: number) => Promise<void>;
-    onPressedRefresh: () => void;
-    onPressedFilter: () => void;
+    onRefreshPress: () => void;
+    onFilterPress: () => void;
 } => {
     const dispatch = useDispatch();
     const user = useUserSelector();
@@ -190,8 +190,8 @@ export const useSessinList = (): {
         onStarPress,
         onDeletePress,
         onMenuPress,
-        onPressedRefresh,
-        onPressedFilter,
+        onRefreshPress: onPressedRefresh,
+        onFilterPress: onPressedFilter,
     };
 };
 //#endregion

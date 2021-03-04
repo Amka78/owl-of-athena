@@ -10,12 +10,14 @@ import { SignupScreen } from "./SignupScreen";
 import { WakingScreen } from "./WakingScreen";
 import { WelcomeScreen } from "./WelcomeScreen";
 import { MainScreen } from "./MainScreen";
+import { SessionDesktopScreen } from "./SessionDesktopScreen";
 import { SessionNoteScreen } from "./SessionNoteScreen";
 
 export {
     AccountScreen,
     AwakeScreen,
     HomeScreen,
+    SessionDesktopScreen,
     SessionListScreen,
     SessionScreen,
     SessionNoteScreen,

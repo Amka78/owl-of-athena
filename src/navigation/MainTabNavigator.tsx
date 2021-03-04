@@ -3,7 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 
 import { HomeIcon, SessionsIcon, SettingsIcon } from "../components/atoms";
+import { SessionDesktopScreen } from "../components/pages";
 import { Colors } from "../constants";
+import { useWindowDimensions } from "../hooks";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
@@ -16,6 +18,7 @@ type TabBarIconProps = { focused: boolean; size: number; color: string };
 const BottomTab = createBottomTabNavigator();
 
 const MainTabNavigator = (): JSX.Element => {
+    const dimens = useWindowDimensions();
     return (
         <BottomTab.Navigator
             initialRouteName={"Home"}
@@ -37,7 +40,9 @@ const MainTabNavigator = (): JSX.Element => {
             ></BottomTab.Screen>
             <BottomTab.Screen
                 name="Sessions"
-                component={SessionNavigator}
+                component={
+                    dimens.isDesktop ? SessionDesktopScreen : SessionNavigator
+                }
                 options={{
                     title: "",
                     tabBarIcon: (props: TabBarIconProps) => {

@@ -13,6 +13,7 @@ import { useMainDrawerNavigator } from "./useMainDrawerNavigator";
 import { useLocale } from "./useLocale";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
+import { useScreenDimensions } from "./useScreenDimensions";
 import { useProfilesSelector } from "./useProfilesSelector";
 import { useRadioGroup } from "./useRadioGroup";
 import { useSelectedSessionDetailSelector } from "./useSelectedSessionDetailSelector";
@@ -45,6 +46,7 @@ export {
     useSignup,
     useFilterConditionSelector,
     useFilteredSessionListSelector,
+    useScreenDimensions,
     useSessionListSelector,
     useSessionDetailListSelector,
     useSelectedSessionSelector,

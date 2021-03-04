@@ -35,10 +35,6 @@ const SettingNavigator = (): JSX.Element => {
                     }}
                 ></Stack.Screen>
             </Stack.Navigator>
-            <LoadingDialog></LoadingDialog>
-            <ConfirmDialog
-                dialogContainer={{ width: dimens.width }}
-            ></ConfirmDialog>
         </View>
     );
 };

@@ -14,6 +14,7 @@ import { SessionsIcon } from "./SessionsIcon";
 import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
 import { TextBox, TextBoxProps } from "./TextBox";
+import { TemplateIcon } from "./TemplateIcon";
 import { TimeView, TimeViewProps } from "./TimeView";
 import { MenuIcon } from "./MenuIcon";
 import { UpdateSnackBar, UpdateSnackBarProps } from "./UpdateSnackBar";
@@ -46,6 +47,7 @@ export {
     SessionsIcon,
     SettingsIcon,
     StandardView,
+    TemplateIcon,
     UpdateSnackBar,
     UpdateSnackBarProps,
 };

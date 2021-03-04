@@ -71,10 +71,6 @@ const HomeNavigator = (): JSX.Element => {
                     }}
                 ></Stack.Screen>
             </Stack.Navigator>
-            <LoadingDialog></LoadingDialog>
-            <ConfirmDialog
-                dialogContainer={{ width: dimens.width }}
-            ></ConfirmDialog>
             <AudioDialog
                 auroraSoundList={SoundManagerInstance.getData()}
                 dialogContainer={{ width: dimens.width }}

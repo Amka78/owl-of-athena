@@ -15,7 +15,11 @@ import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { CurrentChart } from "../../types/CurrentChart";
 import { TemplateTimeViewProps } from "./TempatedProps";
-import { useLocale, useWindowDimensions } from "../../hooks";
+import {
+    useLocale,
+    useScreenDimensions,
+    useWindowDimensions,
+} from "../../hooks";
 //#endregion
 
 //#region Types
@@ -34,10 +38,6 @@ export type SessionScreenTemplateProps = {
     locale?: string;
 };
 
-export type ScreenLayout = {
-    width: number;
-    height: number;
-};
 //#endregion
 
 //#region Component
@@ -46,10 +46,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
 ) => {
     useLocale(props.locale);
     const dimens = useWindowDimensions();
-    const [screenLayout, setScreenLayout] = useState<ScreenLayout>({
-        width: 0,
-        height: 0,
-    });
+    const screenDimens = useScreenDimensions();
 
     const radicalProgressChartSize = dimens.isDesktop
         ? Dimens.session_radial_progress_chart_size_desktop
@@ -78,20 +75,13 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
         <StandardView
             standardViewStyle={{
                 alignItems: undefined,
-                borderColor: Colors.white,
-                borderLeftWidth: 1,
             }}
-            onLayout={(event: LayoutChangeEvent) => {
-                setScreenLayout({
-                    width: event.nativeEvent.layout.width,
-                    height: event.nativeEvent.layout.height,
-                });
-            }}
+            onLayout={screenDimens.onLayout}
         >
             <View
                 style={[
                     styles.sessionInfoHeader,
-                    { width: screenLayout.width },
+                    { width: screenDimens.width },
                 ]}
             >
                 <SessionTimeView
@@ -120,7 +110,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     isDesktop={dimens.isDesktop}
                 ></SessionTimeView>
             </View>
-            <View style={[styles.chartHeader, { width: screenLayout.width }]}>
+            <View style={[styles.chartHeader, { width: screenDimens.width }]}>
                 <IconButton
                     {...props.leftSelectButton}
                     icon={"chevron-left"}
@@ -141,9 +131,9 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                 {props.currentChart === "SleepChart" ? (
                     <SessionSleepChart
                         {...props.sessionSleepChart}
-                        height={screenLayout.height / 2.3}
+                        height={screenDimens.height / 2.3}
                         width={
-                            screenLayout.width -
+                            screenDimens.width -
                             (Dimens.session_margin_left +
                                 Dimens.session_margin_right)
                         }
@@ -154,9 +144,9 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                         categoryLabelSize={categoryLabelSize}
                         categoryLabelPadding={chartPieCategoryPadding}
                         percentLabelSize={percentLabelSize}
-                        height={screenLayout.height / 2.3}
+                        height={screenDimens.height / 2.3}
                         width={
-                            screenLayout.width -
+                            screenDimens.width -
                             (Dimens.session_margin_left +
                                 Dimens.session_margin_right)
                         }
@@ -168,7 +158,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
             <View
                 style={[
                     styles.sessionInfoFooter,
-                    { width: screenLayout.width },
+                    { width: screenDimens.width },
                 ]}
             >
                 <SessionTimeView

@@ -11,6 +11,7 @@ import {
     SessionsIcon,
     SettingsIcon,
 } from "../components/atoms";
+import { SessionDesktopScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
 import HomeNavigator from "./HomeNavigator";
@@ -99,7 +100,11 @@ const MainDrawerNavigator = (): JSX.Element => {
             />
             <Drawer.Screen
                 name="Sessions"
-                component={SessionNavigator}
+                component={
+                    mainDrawerHook.isDesktop
+                        ? SessionDesktopScreen
+                        : SessionNavigator
+                }
                 options={{
                     drawerIcon: (props: DrawerIconProps) => {
                         return <SessionsIcon {...props}></SessionsIcon>;

@@ -1,44 +1,19 @@
 //#region Import Modules
-import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
-import React, { FunctionComponent, useLayoutEffect } from "react";
+import React, { FunctionComponent } from "react";
 
 import { useSessinList } from "../../hooks/useSessionList";
 import { FilterByDateValues } from "../../state/SessionState";
-import { FilterIcon, RefreshIcon } from "../molecules";
-import { SessionListScreenTemplate } from "./../templates/SessionListScreenTemplate";
+import { SessionDesktopScreenTemplate } from "./../templates/SessionDesktopScreenTemplate";
 //#endregion
 
 //#region Component
-export const SessionListScreen: FunctionComponent = () => {
+export const SessionDesktopScreen: FunctionComponent = () => {
     const sessionListHook = useSessinList();
-    const { setOptions } = useNavigation();
 
-    useLayoutEffect(() => {
-        setOptions({
-            headerLeft: () => {
-                return (
-                    <RefreshIcon
-                        onPress={sessionListHook.onRefreshPress}
-                    ></RefreshIcon>
-                );
-            },
-            headerRight: (props: StackHeaderLeftButtonProps) => {
-                return (
-                    <FilterIcon
-                        {...props}
-                        onPress={sessionListHook.onFilterPress}
-                    ></FilterIcon>
-                );
-            },
-        });
-    }, [
-        sessionListHook.onFilterPress,
-        sessionListHook.onRefreshPress,
-        setOptions,
-    ]);
     return (
-        <SessionListScreenTemplate
+        <SessionDesktopScreenTemplate
+            onFilterPress={sessionListHook.onFilterPress}
+            onRefreshPress={sessionListHook.onRefreshPress}
             showFilter={sessionListHook.showFilter}
             picker={{
                 selectedValue: sessionListHook.filterCondition.byDate,
@@ -69,7 +44,7 @@ export const SessionListScreen: FunctionComponent = () => {
             onStarPress={sessionListHook.onStarPress}
             onDeletePress={sessionListHook.onDeletePress}
             onMenuPress={sessionListHook.onMenuPress}
-        ></SessionListScreenTemplate>
+        ></SessionDesktopScreenTemplate>
     );
 };
 //#endregion

@@ -7,6 +7,7 @@ import {
 } from "./ConvertibleContentTitle";
 import { DatePicker } from "./DatePicker";
 import { DatePickerProps } from "./DatePickerProps";
+import { FilterIcon } from "./FilterIcon";
 import { InternalView } from "./InternalView";
 import { LabeledCheckBox, LabeledCheckBoxProps } from "./LabeledCheckBox";
 import {
@@ -21,6 +22,7 @@ import { LabeledTimeView, LabeledTimeViewProps } from "./LabeledTimeView";
 import { LeftSideButton, LeftSideButtonProps } from "./LeftSideButton";
 import { LoadingDialog } from "./LoadingDialog";
 import { ProfilesDialog } from "./ProfilesDialog";
+import { RefreshIcon } from "./RefreshIcon";
 import { RightSideButton, RightSideButtonProps } from "./RightSideButton";
 import {
     ValidatableTextBox,
@@ -38,6 +40,7 @@ export {
     LoadingDialog,
     DatePicker,
     DatePickerProps,
+    FilterIcon,
     InternalView,
     LabeledRadioButton,
     LabeledRadioButtonProps,
@@ -50,6 +53,7 @@ export {
     LeftSideButton,
     LeftSideButtonProps,
     ProfilesDialog,
+    RefreshIcon,
     RightSideButton,
     RightSideButtonProps,
     ValidatableTextBox,

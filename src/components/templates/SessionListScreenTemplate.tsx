@@ -20,7 +20,7 @@ import { ChartRadialProgress } from "../charts";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { AuroraSession } from "../../sdk/models";
 import { TemplatePickerItemProps } from "./TempatedProps";
-import { useLocale } from "../../hooks";
+import { useLocale, useScreenDimensions } from "../../hooks";
 //#endregion
 
 //#region Types
@@ -56,11 +56,11 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
 ) => {
     useLocale(props.locale);
 
-    const [screenWidth, setScreenWidth] = useState(0);
+    const screenDimens = useScreenDimensions();
     let menu = undefined;
     if (props.showFilter) {
         menu = (
-            <View style={[styles.menuContainer, { maxWidth: screenWidth }]}>
+            <View style={[styles.menuContainer, { width: screenDimens.width }]}>
                 <View style={styles.pickerContainer}>
                     <Text
                         {...props.filterByDateLabel}
@@ -119,9 +119,7 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
     return props.sessionList ? (
         <StandardView
             standardViewStyle={styles.standardView}
-            onLayout={(evetnt: LayoutChangeEvent) => {
-                setScreenWidth(evetnt.nativeEvent.layout.width);
-            }}
+            onLayout={screenDimens.onLayout}
         >
             {props.showFilter ? menu : undefined}
             <ScrollView style={{ flex: 1 }}>
@@ -191,7 +189,7 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                                         Message.get(MessageKeys.date_format)
                                     )}
                                     descriptionStyle={styles.menuDescription}
-                                    style={{ width: screenWidth }}
+                                    style={{ width: screenDimens.width }}
                                     onPress={async () => {
                                         props.onMenuPress(value, index);
                                     }}
