@@ -1,19 +1,21 @@
+/* eslint-disable react/prop-types */
 //#region Import Modules
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
 import { View } from "react-native";
 
+import { BluetoothIcon, LogoutIcon } from "../components/atoms";
 import {
-    BluetoothIcon,
+    ConfirmDialog,
     HomeIcon,
-    LogoutIcon,
     MenuIcon,
     SessionsIcon,
     SettingsIcon,
-} from "../components/atoms";
+} from "../components/molecules";
 import { SessionDesktopScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
+import { ConnectionStates } from "../sdk";
 import HomeNavigator from "./HomeNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
@@ -25,19 +27,29 @@ type DrawerIconProps = {
     focused: boolean;
     size: number;
 };
+
+export type MainDrawerNavigatorProps = {
+    onBluetoothConnectPress: () => Promise<string>;
+    bluetoothConnect: ConnectionStates;
+};
 //#endregion
 
 //#region Compnent
 const Drawer = createDrawerNavigator();
 
-const MainDrawerNavigator = (): JSX.Element => {
+const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
     const mainDrawerHook = useMainDrawerNavigator();
     return (
         <Drawer.Navigator
             initialRouteName={"Sleep Process"}
-            openByDefault={mainDrawerHook.isDesktop}
+            openByDefault={
+                mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal
+            }
             drawerType={mainDrawerHook.drawerType}
-            drawerStyle={{ backgroundColor: Colors.blue }}
+            drawerStyle={{
+                backgroundColor: Colors.blue,
+                width: mainDrawerHook.isDesktop ? undefined : 60,
+            }}
             drawerContentOptions={{
                 activeBackgroundColor: Colors.navy_darker,
                 activeTintColor: Colors.cyan,
@@ -52,7 +64,6 @@ const MainDrawerNavigator = (): JSX.Element => {
                                     ? Colors.cyan
                                     : Colors.white
                             }
-                            size={40}
                             onPress={mainDrawerHook.onDrawerMenuPress}
                         ></MenuIcon>
                     );
@@ -67,10 +78,19 @@ const MainDrawerNavigator = (): JSX.Element => {
                         >
                             <BluetoothIcon
                                 size={40}
-                                connectionStates={
-                                    mainDrawerHook.bluetoothConnect
-                                }
-                                onPress={mainDrawerHook.onBluetoothConnectPress}
+                                connectionStates={props.bluetoothConnect}
+                                onPress={async () => {
+                                    const result = await props.onBluetoothConnectPress();
+
+                                    if (result !== "") {
+                                        ConfirmDialog.show({
+                                            title: Message.get(
+                                                MessageKeys.connection_error
+                                            ),
+                                            message: result,
+                                        });
+                                    }
+                                }}
                                 style={{ marginRight: 10 }}
                             ></BluetoothIcon>
                             <LogoutIcon
@@ -101,7 +121,7 @@ const MainDrawerNavigator = (): JSX.Element => {
             <Drawer.Screen
                 name="Sessions"
                 component={
-                    mainDrawerHook.isDesktop
+                    mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal
                         ? SessionDesktopScreen
                         : SessionNavigator
                 }

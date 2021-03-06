@@ -1,5 +1,6 @@
 //#region Import Modules
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
 import { cacheSessionDetails, cacheSessions } from "../actions";
@@ -26,7 +27,10 @@ import {
 //#region Hooks
 export const useMain = (): {
     connect: ConnectionStates;
-    onConnectionStatesPress: () => Promise<void>;
+    onConnectionStatesPress: () => Promise<string>;
+    onHomePress: () => void;
+    onSessionsPress: () => void;
+    onSettingsPress: () => void;
     batteryLevel: number;
     currentFirmwareVersion: string;
     error: string;
@@ -41,6 +45,7 @@ export const useMain = (): {
     const [batteryLevel, setBatteryLevel] = useState<number>(0);
     const [error, setError] = useState<string>("");
     const firmwareVersion = useRef<string>("");
+    const { navigate } = useNavigation();
     const onConnectionChangeEventHandler = useRef(
         (connectionState: ConnectionStates): void => {
             console.debug("Called onConnectionChangeHandler");
@@ -79,9 +84,10 @@ export const useMain = (): {
         return cleanup();
     }, [connect, dispatch, sessionList, userInfo]);
 
-    const onConnectionStatesPress = useCallback(async (): Promise<void> => {
+    const onConnectionStatesPress = useCallback(async (): Promise<string> => {
         console.debug("Start configuring aurora.");
 
+        let error = "";
         try {
             LoadingDialog.show({
                 dialogTitle: Message.get(
@@ -132,16 +138,34 @@ export const useMain = (): {
             );
         } catch (e) {
             setError(e);
+            error = e;
             console.error(e);
         } finally {
             LoadingDialog.close();
         }
+
+        return error;
     }, [connect, dispatch, sessionDetailList, sessionList, userInfo?.id]);
+
+    const onHomePress = useCallback(() => {
+        navigate("Home");
+    }, [navigate]);
+
+    const onSessionsPress = useCallback(() => {
+        navigate("Sessions");
+    }, [navigate]);
+
+    const onSettingsPress = useCallback(() => {
+        navigate("Settings");
+    }, [navigate]);
 
     const currentFirmwareVersion = firmwareVersion.current;
     return {
         connect,
         onConnectionStatesPress,
+        onHomePress,
+        onSessionsPress,
+        onSettingsPress,
         batteryLevel,
         currentFirmwareVersion,
         error,

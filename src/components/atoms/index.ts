@@ -7,16 +7,12 @@ import { ContentTitle, ContentTitleProps } from "./ContentTitle";
 import { ErrorText, ErrorTextProps } from "./ErrorText";
 import { FlatButton, FlatButtonProps } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
-import { HomeIcon } from "./HomeIcon";
 import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
 import { LogoutIcon } from "./LogoutIcon";
-import { SessionsIcon } from "./SessionsIcon";
-import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
 import { TextBox, TextBoxProps } from "./TextBox";
 import { TemplateIcon } from "./TemplateIcon";
 import { TimeView, TimeViewProps } from "./TimeView";
-import { MenuIcon } from "./MenuIcon";
 import { UpdateSnackBar, UpdateSnackBarProps } from "./UpdateSnackBar";
 //#endregion
 
@@ -36,16 +32,12 @@ export {
     ErrorTextProps,
     FlatButtonProps,
     FlexSpacer,
-    HomeIcon,
     InlineTimePicker,
     InlineTimePickerProps,
     LogoutIcon,
-    MenuIcon,
     FlatButton,
     TextBox,
     TextBoxProps,
-    SessionsIcon,
-    SettingsIcon,
     StandardView,
     TemplateIcon,
     UpdateSnackBar,

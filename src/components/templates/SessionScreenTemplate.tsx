@@ -131,7 +131,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                 {props.currentChart === "SleepChart" ? (
                     <SessionSleepChart
                         {...props.sessionSleepChart}
-                        height={screenDimens.height / 2.3}
+                        height={screenDimens.height / 2}
                         width={
                             screenDimens.width -
                             (Dimens.session_margin_left +
@@ -144,7 +144,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                         categoryLabelSize={categoryLabelSize}
                         categoryLabelPadding={chartPieCategoryPadding}
                         percentLabelSize={percentLabelSize}
-                        height={screenDimens.height / 2.3}
+                        height={screenDimens.height / 2}
                         width={
                             screenDimens.width -
                             (Dimens.session_margin_left +

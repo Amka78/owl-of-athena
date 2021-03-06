@@ -1,14 +1,9 @@
 //#region Import Modules
 import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
+import React from "react";
 import { View } from "react-native";
 
-import {
-    AudioDialog,
-    ConfirmDialog,
-    LoadingDialog,
-    ProfilesDialog,
-} from "../components/molecules";
+import { AudioDialog, ProfilesDialog } from "../components/molecules";
 import {
     AwakeScreen,
     HomeScreen,
@@ -28,6 +23,7 @@ const Stack = createStackNavigator();
 const HomeNavigator = (): JSX.Element => {
     const voidLeftHeader = (): JSX.Element => <View></View>;
     const dimens = useWindowDimensions();
+
     return (
         <View style={{ flex: 1 }}>
             <Stack.Navigator
