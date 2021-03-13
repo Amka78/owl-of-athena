@@ -4,10 +4,11 @@ import moment from "moment";
 import * as React from "react";
 
 import { SessionListScreen } from "../components/pages";
-import { Colors, Message, MessageKeys } from "../constants";
-import { useSelectedSessionSelector, useWindowDimensions } from "../hooks";
-import { CommonStyles } from "../styles";
+import { Message, MessageKeys } from "../constants";
+import { useWindowDimensions } from "../hooks";
+import { useSelectedSessionSelector } from "../hooks/sessions";
 import SessionTabNavigator from "./SessionTabNavigator";
+import { StackCommonScreenOptions } from "./StackSettings";
 //#endregion
 
 //#region Component
@@ -23,20 +24,15 @@ const SessionNavigator = (): JSX.Element => {
         : "";
 
     return (
-        <Stack.Navigator
-            screenOptions={{
-                headerTitleAlign: "center",
-                headerTintColor: Colors.cyan,
-                headerStyle: CommonStyles.headerStyle,
-                headerTitle: "",
-            }}
-        >
+        <Stack.Navigator screenOptions={StackCommonScreenOptions}>
             <Stack.Screen
                 name={"List"}
                 component={SessionListScreen}
                 options={{
                     headerTitle: !dimens.isDesktop
-                        ? Message.get(MessageKeys.session_list_title)
+                        ? Message.get(MessageKeys.select_list_title, [
+                              MessageKeys.session,
+                          ])
                         : "",
                 }}
             ></Stack.Screen>

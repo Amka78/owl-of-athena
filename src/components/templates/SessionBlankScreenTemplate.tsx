@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+
 import { Message, MessageKeys } from "../../constants";
 import { ContentText, StandardView } from "../atoms";
 //#endregion
@@ -7,7 +8,10 @@ import { ContentText, StandardView } from "../atoms";
 //#region Component
 export const SessionBlankScreenTemplate: FunctionComponent = () => {
     return (
-        <StandardView>
+        <StandardView
+            rootViewStyle={{ alignItems: "flex-start" }}
+            standardViewStyle={{ marginLeft: 40, marginTop: 40 }}
+        >
             <ContentText>{Message.get(MessageKeys.session_blank)}</ContentText>
         </StandardView>
     );

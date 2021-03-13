@@ -1,11 +1,12 @@
 //#region Import Modules
-import { useCallback } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { useUserSelector } from "../hooks";
+
 import { logout } from "../actions";
-import { initializeAurora } from "../actions/ProfilesActions";
+import { initialize } from "../actions/ProfilesActions";
 import { initializeSession } from "../actions/SessionsActions";
+import { useUserSelector } from "../hooks";
 import { GuestUser } from "../types";
 //#endregion
 
@@ -18,7 +19,7 @@ export const useLogout = (): { onPress: () => Promise<void> } => {
         console.debug("useSignout start");
 
         if (user?.id !== GuestUser) {
-            dispatch(initializeAurora());
+            dispatch(initialize());
             dispatch(initializeSession());
         }
         dispatch(logout());

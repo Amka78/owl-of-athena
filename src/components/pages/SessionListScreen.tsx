@@ -3,9 +3,9 @@ import { useNavigation } from "@react-navigation/native";
 import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
 import React, { FunctionComponent, useLayoutEffect } from "react";
 
-import { useSessinList } from "../../hooks/useSessionList";
+import { useSessinList } from "../../hooks/sessions/useSessionList";
 import { FilterByDateValues } from "../../state/SessionState";
-import { FilterIcon, RefreshIcon } from "../molecules";
+import { FilterIcon, RefreshIcon } from "../atoms";
 import { SessionListScreenTemplate } from "./../templates/SessionListScreenTemplate";
 //#endregion
 
@@ -40,30 +40,23 @@ export const SessionListScreen: FunctionComponent = () => {
     return (
         <SessionListScreenTemplate
             showFilter={sessionListHook.showFilter}
-            picker={{
-                selectedValue: sessionListHook.filterCondition.byDate,
-                onValueChange: sessionListHook.onPickerValueChange,
-            }}
-            anyTimePickerItem={{
-                value: FilterByDateValues.ANY_TIME,
-            }}
-            pastWeekPickerItem={{
-                value: FilterByDateValues.PAST_WEEK,
-            }}
-            pastMonthPickerItem={{
-                value: FilterByDateValues.PAST_MONTH,
-            }}
-            showStarredCheckBox={{
-                status: sessionListHook.filterCondition.showStarred
+            filterMenuProps={{
+                anyTimePickerValue: FilterByDateValues.ANY_TIME,
+                pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
+                pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
+                showStarredCheckBoxStatus: sessionListHook.filterCondition
+                    .showStarred
                     ? "checked"
                     : "unchecked",
-                onPress: sessionListHook.onShowStarredPress,
-            }}
-            showNoteCheckBox={{
-                status: sessionListHook.filterCondition.showNotes
+
+                onShowStarredCheckBoxPress: sessionListHook.onShowStarredPress,
+                showNoteCheckBoxStatus: sessionListHook.filterCondition
+                    .showNotes
                     ? "checked"
                     : "unchecked",
-                onPress: sessionListHook.onShowNotesPress,
+                selectedPickerValue: sessionListHook.filterCondition.byDate,
+                onPickerValueChange: sessionListHook.onPickerValueChange,
+                onShowNoteCheckBoxPress: sessionListHook.onShowNotesPress,
             }}
             sessionList={sessionListHook.sessionList}
             onStarPress={sessionListHook.onStarPress}

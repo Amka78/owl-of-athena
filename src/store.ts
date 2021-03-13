@@ -1,11 +1,16 @@
 //#region Import Modules
-import { applyMiddleware, combineReducers, createStore, Store } from "redux";
-import { persistReducer, persistStore, Persistor } from "redux-persist";
-import logger from "redux-logger";
-
-import { AuroraReducers, AuthReducers, AppReducers } from "./reducers";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SessionReducers from "./reducers/SessionReducers";
+import { applyMiddleware, combineReducers, createStore, Store } from "redux";
+import logger from "redux-logger";
+import { Persistor, persistReducer, persistStore } from "redux-persist";
+
+import {
+    AppReducers,
+    AuroraReducers,
+    AuthReducers,
+    ProfileReducers,
+    SessionReducers,
+} from "./reducers";
 //#endregion
 
 const persitConfig = {
@@ -18,6 +23,7 @@ const appReducer = combineReducers({
     aurora: AuroraReducers,
     session: SessionReducers,
     auth: AuthReducers,
+    profile: ProfileReducers,
 });
 
 const persistedReducer = persistReducer(persitConfig, appReducer);

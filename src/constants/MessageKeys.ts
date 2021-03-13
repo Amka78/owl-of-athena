@@ -9,9 +9,13 @@ export const MessageKeys = {
     male: "male",
     female: "female",
     update: "update",
+    session: "session",
     sessions: "sessions",
+    profile: "profile",
+    profiles: "profiles",
     long_dash: "long_dash",
     pipe_separator: "pipe_separator",
+    reloading: "reloading",
     //#endregion
 
     //#region sleep stages
@@ -122,7 +126,7 @@ export const MessageKeys = {
     //#endregion
 
     //#region session picker fragment
-    session_list_title: "session_list_title",
+    select_list_title: "session_list_title",
     //#endregion
 
     //#region session fragment
@@ -140,7 +144,6 @@ export const MessageKeys = {
     session_rem_pie_chart_label: "session_rem_pie_chart_label",
     session_awake_pie_chart_label: "session_awake_pie_chart_label",
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
-    session_reloading: "session_reloading",
     //#endregion
 
     //#region account fragment
@@ -202,6 +205,8 @@ export const MessageKeys = {
     //#region top tab titles
     top_tab_sleep_tracking_title: "top_tab_sleep_tracking_title",
     top_tab_journal_title: "top_tab_journal_title",
+    top_tab_profile_edit_title: "top_tab_profile_edit_title",
+    top_tab_profile_preview_title: "top_tab_profile_preview_title",
     //#endregion
 
     //#region date format
@@ -216,7 +221,24 @@ export const MessageKeys = {
     //#region drawer items label
     drawer_items_main: "drawer_items_main",
     drawer_items_sessions: "drawer_items_sessions",
+    drawer_items_profiles: "drawer_items_profiles",
     drawer_items_account: "drawer_items_account",
+    //#endregion
+
+    //#region profile filter menu
+    profile_filter_menu_header_label: "profile_filter_menu_header_label",
+    profile_filter_menu_official_check_box_label:
+        "profile_filter_menu_official_check_box_label",
+    profile_filter_menu_official_check_box_description:
+        "profile_filter_menu_official_check_box_description",
+    profile_filter_menu_private_check_box_label:
+        "profile_filter_menu_private_check_box_label",
+    profile_filter_menu_private_check_box_description:
+        "profile_filter_menu_private_check_box_description",
+    profile_filter_menu_community_check_box_label:
+        "profile_filter_menu_community_check_box_label",
+    profile_filter_menu_community_check_box_description:
+        "profile_filter_menu_community_check_box_description",
     //#endregion
 
     connection_error: "connection_error",

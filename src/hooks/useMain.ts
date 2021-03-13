@@ -1,6 +1,6 @@
 //#region Import Modules
-import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { cacheSessionDetails, cacheSessions } from "../actions";
@@ -21,7 +21,6 @@ import {
     useSessionListSelector,
     useUserSelector,
 } from "./";
-
 //#endregion
 
 //#region Hooks
@@ -29,6 +28,7 @@ export const useMain = (): {
     connect: ConnectionStates;
     onConnectionStatesPress: () => Promise<string>;
     onHomePress: () => void;
+    onProfilesPress: () => void;
     onSessionsPress: () => void;
     onSettingsPress: () => void;
     batteryLevel: number;
@@ -151,6 +151,10 @@ export const useMain = (): {
         navigate("Home");
     }, [navigate]);
 
+    const onProfilesPress = useCallback(() => {
+        navigate("Profiles");
+    }, [navigate]);
+
     const onSessionsPress = useCallback(() => {
         navigate("Sessions");
     }, [navigate]);
@@ -164,6 +168,7 @@ export const useMain = (): {
         connect,
         onConnectionStatesPress,
         onHomePress,
+        onProfilesPress,
         onSessionsPress,
         onSettingsPress,
         batteryLevel,

@@ -1,20 +1,19 @@
 //#region Import modules
-import React, { FunctionComponent, useState, useLayoutEffect } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { View } from "react-native";
 
-import { useLocale, useWindowDimensions } from "../../hooks";
-import { useNavigation, DrawerActions } from "@react-navigation/native";
 import { Colors, Message, MessageKeys } from "../../constants";
+import { useLocale, useWindowDimensions } from "../../hooks";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
-import { FlatButton } from "../atoms";
+import { ConnectionStates } from "../../sdk";
 import {
-    ConfirmDialog,
+    FlatButton,
     HomeIcon,
-    LoadingDialog,
+    ProfilesIcon,
     SessionsIcon,
     SettingsIcon,
-} from "../molecules";
-import { ConnectionStates } from "../../sdk";
+} from "../atoms";
+import { ConfirmDialog, LoadingDialog } from "../molecules";
 //#endregion
 
 //#region Types
@@ -25,13 +24,14 @@ export type MainScreenTemplateProps = {
     error: string;
     batteryLevel: number;
     onHomePress: () => void;
+    onProfilesPress: () => void;
     onSessionsPress: () => void;
     onSettingsPress: () => void;
     locale?: string;
 };
 //#endregion
 
-type BottomMenus = "home" | "sessions" | "settings";
+type BottomMenus = "home" | "profiles" | "sessions" | "settings";
 
 //#region Component
 export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
@@ -39,7 +39,6 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
 ) => {
     useLocale(props.locale);
     const dimens = useWindowDimensions();
-    const { dispatch } = useNavigation();
     const [selectedMenu, setSelectedMenu] = useState<BottomMenus>("home");
 
     const statusBar = !dimens.isDesktop ? (
@@ -87,6 +86,13 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
                     props.onHomePress();
                 }}
             ></HomeIcon>
+            <ProfilesIcon
+                color={selectedMenu === "profiles" ? Colors.cyan : Colors.white}
+                onPress={() => {
+                    setSelectedMenu("profiles");
+                    props.onProfilesPress();
+                }}
+            ></ProfilesIcon>
             <SessionsIcon
                 color={selectedMenu === "sessions" ? Colors.cyan : Colors.white}
                 onPress={() => {

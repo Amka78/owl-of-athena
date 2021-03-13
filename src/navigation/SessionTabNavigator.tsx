@@ -2,8 +2,9 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import * as React from "react";
 
-import { Colors, Message, MessageKeys } from "../constants";
 import { SessionNoteScreen, SessionScreen } from "../components/pages";
+import { Message, MessageKeys } from "../constants";
+import { MaterialTabbarCommonOptions } from "./MaterialTabbarSettings";
 //#endregion
 
 //#region Component
@@ -11,15 +12,7 @@ const MaterialTab = createMaterialTopTabNavigator();
 
 const SessionTabNavigator = (): JSX.Element => {
     return (
-        <MaterialTab.Navigator
-            tabBarOptions={{
-                activeTintColor: Colors.first_accent_color,
-                inactiveTintColor: Colors.cyan,
-                style: { backgroundColor: Colors.navy },
-                pressColor: Colors.first_accent_color,
-                labelStyle: { fontWeight: "bold" },
-            }}
-        >
+        <MaterialTab.Navigator tabBarOptions={MaterialTabbarCommonOptions}>
             <MaterialTab.Screen
                 name={"SleepTracking"}
                 component={SessionScreen}
@@ -41,6 +34,6 @@ const SessionTabNavigator = (): JSX.Element => {
         </MaterialTab.Navigator>
     );
 };
-//#endregion
 
 export default SessionTabNavigator;
+//#endregion

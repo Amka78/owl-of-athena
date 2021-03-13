@@ -4,6 +4,9 @@ const signup = "サインアップ";
 const input_email = "Eメールアドレス";
 const input_password = "パスワード";
 const input_password_confirm = "パスワード再入力";
+const profile = "プロファイル";
+const profiles = "プロファイルズ";
+const session = "セッション";
 const sessions = "セッションズ";
 const input_first_name = "名";
 const input_last_name = "姓";
@@ -18,9 +21,13 @@ export default {
     [MessageKeys.male]: "男性",
     [MessageKeys.female]: "女性",
     [MessageKeys.update]: update,
+    [MessageKeys.session]: session,
     [MessageKeys.sessions]: sessions,
+    [MessageKeys.profile]: profile,
+    [MessageKeys.profiles]: profiles,
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
+    [MessageKeys.reloading]: "{0} 再読み込み中...",
     // sleep stages
     [MessageKeys.stage_awake]: "起床中",
     [MessageKeys.stage_rem]: "REM",
@@ -121,7 +128,7 @@ export default {
         "ノートを記述しているセッションのみ表示します。",
 
     // session picker fragment
-    [MessageKeys.session_list_title]: "セッションを選んでください。",
+    [MessageKeys.select_list_title]: "{0}を選んでください。",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "入眠",
     [MessageKeys.session_awake_time_label]: "起床",
@@ -132,7 +139,6 @@ export default {
     [MessageKeys.session_movement_label]: "ムーブメント",
     [MessageKeys.session_notes_label]: "ノート",
     [MessageKeys.session_notes_hint_text]: "タップして、ノートを追加します。",
-    [MessageKeys.session_reloading]: "セッション再読み込み中...",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
     [MessageKeys.account_input_first_name]: input_first_name,
@@ -181,13 +187,15 @@ export default {
         "新しいバージョンが存在します。アップデートしてください。",
     [MessageKeys.update_snack_bar_action_label]: "更新",
 
-    [MessageKeys.delete_dialog_title]: "セッションを削除しますか?",
+    [MessageKeys.delete_dialog_title]: "{0}を削除しますか?",
 
     [MessageKeys.delete_dialog_message]:
         "本当に削除しても宜しいですか?　この処理は戻せません。",
 
     [MessageKeys.top_tab_sleep_tracking_title]: "スリープトラッキング",
     [MessageKeys.top_tab_journal_title]: "ジャーナル",
+    [MessageKeys.top_tab_profile_edit_title]: "編集",
+    [MessageKeys.top_tab_profile_preview_title]: "プレビュー",
 
     [MessageKeys.date_format]: "YYYY年MM月DD日  ",
 
@@ -198,9 +206,24 @@ export default {
         "Aurora APIに接続できませんでした。スタンドアローンモードでオーロラを動かしますか?",
 
     [MessageKeys.drawer_items_main]: "メイン",
-    [MessageKeys.drawer_items_sessions]: "セッションズ",
+    [MessageKeys.drawer_items_sessions]: sessions,
+    [MessageKeys.drawer_items_profiles]: profiles,
     [MessageKeys.drawer_items_account]: "アカウント",
 
+    [MessageKeys.profile_filter_menu_header_label]:
+        "プロファイルタイプで絞り込む。",
+    [MessageKeys.profile_filter_menu_official_check_box_label]:
+        "オフィシャルを見る。",
+    [MessageKeys.profile_filter_menu_official_check_box_description]:
+        "iWinks公式プロファイル",
+    [MessageKeys.profile_filter_menu_community_check_box_label]:
+        "コミュニティを見る。",
+    [MessageKeys.profile_filter_menu_community_check_box_description]:
+        "コミュニティ認証済みプロファイル",
+    [MessageKeys.profile_filter_menu_private_check_box_label]:
+        "プライベートを見る。",
+    [MessageKeys.profile_filter_menu_private_check_box_description]:
+        "貴方のプライベートプロファイル",
     [MessageKeys.connection_error]: "接続エラー",
 
     [MessageKeys.session_blank]: "表示するセッションを選択してください。",

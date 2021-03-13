@@ -1,6 +1,7 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { TemplateIcon, TemplateIconProps } from "../atoms/TemplateIcon";
+
+import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types

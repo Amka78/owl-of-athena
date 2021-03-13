@@ -1,2 +1,7 @@
-import { SessionTimeView, SessionTimeViewProps } from "./SessionTimeView";
-export { SessionTimeView, SessionTimeViewProps };
+//#region Import Modules
+import { SessionListMenu } from "./sessions/SessionListMenu";
+//#endregion
+
+//#region Export
+export { SessionListMenu };
+//#endregion

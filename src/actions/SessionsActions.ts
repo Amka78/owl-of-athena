@@ -1,8 +1,11 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+//#region Import Modules
 import { ActionTypes } from "../constants";
+import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
 import { FilterCondition } from "../state/SessionState";
+//#endregion
 
+//#region Types
 export type CacheAction = ReturnType<typeof cacheSessions>;
 export type CacheDetailsAction = ReturnType<typeof cacheSessionDetails>;
 export type SelectAction = ReturnType<typeof selectSession>;
@@ -20,7 +23,9 @@ export type SessionActions =
     | UpdateFilter
     | DeleteSession
     | UpdateSession;
+//#endregion
 
+//#region Functions
 export const cacheSessions = (sessionList: Array<AuroraSession>) => ({
     payload: {
         sessionList,
@@ -41,7 +46,7 @@ export const updateFilter = (filter: Partial<FilterCondition>) => ({
     payload: {
         filter,
     },
-    type: ActionTypes.UPDATE_FILTER,
+    type: ActionTypes.UPDATE_SESSION_FILTER,
 });
 
 export const selectSession = (session: AuroraSession) => ({
@@ -75,3 +80,4 @@ export const selectSessionDetail = (sessionDetail: AuroraSessionDetail) => ({
 export const initializeSession = () => ({
     type: ActionTypes.INITIALIZE_SESSION,
 });
+//#endregion

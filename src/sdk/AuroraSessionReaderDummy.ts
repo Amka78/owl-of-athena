@@ -1,10 +1,7 @@
-import { DirectoryInfo } from "./AuroraTypes";
-
 export default class AuroraSessionReader {
     public static async read(
         sessionDirName: string,
-        sessionRaw: string,
-        sessionDirFilesForCheck?: Array<DirectoryInfo>
+        sessionRaw: string
     ): Promise<any> {
         const session = {
             name: sessionDirName.split("/").pop(),

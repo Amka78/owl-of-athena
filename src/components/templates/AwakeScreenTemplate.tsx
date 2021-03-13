@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
     useLocale,

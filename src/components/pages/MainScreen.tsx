@@ -1,9 +1,7 @@
 //#region Import modules
 import React, { FunctionComponent } from "react";
 
-import { Colors, Message, MessageKeys } from "../../constants";
 import { useMain } from "../../hooks/useMain";
-import { ConnectionStates } from "../../sdk";
 import { MainScreenTemplate } from "./../templates/MainScreenTemplate";
 //#endregion
 
@@ -18,6 +16,7 @@ export const MainScreen: FunctionComponent = () => {
             error={mainHook.error}
             onBluetoothConnectPress={mainHook.onConnectionStatesPress}
             onHomePress={mainHook.onHomePress}
+            onProfilesPress={mainHook.onProfilesPress}
             onSessionsPress={mainHook.onSessionsPress}
             onSettingsPress={mainHook.onSettingsPress}
         ></MainScreenTemplate>

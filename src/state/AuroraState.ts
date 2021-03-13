@@ -1,7 +1,9 @@
+//#region Import Modules
 import { Settings } from "../sdk/models";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+//#endregion
 
+//#region Export
 export type AuroraState = {
     userSettings: Settings;
-    profileList: Array<AuroraProfile>;
 };
+//#endregion

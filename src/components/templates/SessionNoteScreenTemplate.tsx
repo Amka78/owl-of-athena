@@ -2,9 +2,9 @@
 import React, { FunctionComponent } from "react";
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
-import { StandardView } from "../atoms";
 import { Colors } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
+import { StandardView } from "../atoms";
 //#endregion
 
 //#region Types

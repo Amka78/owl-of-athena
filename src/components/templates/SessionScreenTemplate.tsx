@@ -1,6 +1,6 @@
 //#region "Import modules"
-import React, { FunctionComponent, useState } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import React, { FunctionComponent } from "react";
+import { StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
 import {
@@ -9,17 +9,17 @@ import {
     SessionSleepChart,
     SessionSleepChartProps,
 } from "..";
-import { SessionTimeView } from "../organisms";
-import { FlexSpacer, StandardView } from "../atoms";
-import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
-import { CurrentChart } from "../../types/CurrentChart";
-import { TemplateTimeViewProps } from "./TempatedProps";
 import {
     useLocale,
     useScreenDimensions,
     useWindowDimensions,
 } from "../../hooks";
+import { CurrentChart } from "../../types/CurrentChart";
+import { FlexSpacer, StandardView } from "../atoms";
+import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
+import { SessionTimeView } from "../molecules";
+import { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types

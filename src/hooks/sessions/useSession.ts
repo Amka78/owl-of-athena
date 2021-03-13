@@ -2,13 +2,14 @@
 import moment, { Moment } from "moment";
 import { useCallback, useState } from "react";
 
-import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import { useCheckLogging } from "..";
+import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
+import { CurrentChart } from "../../types/CurrentChart";
 import {
-    useCheckLogging,
     useSelectedSessionDetailSelector,
     useSelectedSessionSelector,
 } from "./";
-import { CurrentChart } from "../types/CurrentChart";
+
 //#endregion
 
 //#region Types
@@ -44,6 +45,7 @@ export const useSession = (): {
     let remDuration: Duration | undefined;
     let deepDuration: Duration | undefined;
     let radialProgress: number;
+    let scaleXDomain: number[] | undefined;
 
     radialProgress = 0;
 
@@ -55,12 +57,13 @@ export const useSession = (): {
         deepDuration = getDuration(selectedSession.deepDuration);
         radialProgress =
             selectedSession.sleepScore == 117 ? 72 : selectedSession.sleepScore;
+        scaleXDomain = [
+            selectedSession.sessionAt! - 300000,
+            selectedSession.sessionAt! +
+                selectedSession.sessionDuration! +
+                300000,
+        ];
     }
-
-    const scaleXDomain = [
-        selectedSession.sessionAt - 300000,
-        selectedSession.sessionAt + selectedSession.sessionDuration + 300000,
-    ];
 
     const chartSelectButtonPress = useCallback((): void => {
         currentChart === "SleepChart"

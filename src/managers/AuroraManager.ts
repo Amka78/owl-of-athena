@@ -1,6 +1,17 @@
 //#region Import Modules
 import { EventEmitter } from "events";
 import { Audio } from "expo-av";
+import {
+    cloneDeep,
+    isEmpty,
+    maxBy,
+    meanBy,
+    minBy,
+    remove,
+    sortBy,
+    sortedIndexBy,
+    sumBy,
+} from "lodash";
 import { Platform } from "react-native";
 
 import { AuroraManagerInstance } from ".";
@@ -33,17 +44,6 @@ import {
 } from "../sdk/models";
 import { AuroraSound } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
-import {
-    cloneDeep,
-    meanBy,
-    minBy,
-    maxBy,
-    remove,
-    isEmpty,
-    sortedIndexBy,
-    sumBy,
-    sortBy,
-} from "lodash";
 //#endregion
 
 export class AuroraManager extends EventEmitter {
@@ -116,21 +116,7 @@ export class AuroraManager extends EventEmitter {
     ): Promise<void> {
         try {
             if (Platform.OS === "web") {
-                let writingProfile;
-
-                if (profile?.content) {
-                    writingProfile = new Profile(profile.content);
-                } else {
-                    const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
-                    console.debug(defaultProfileTxt);
-                    const response = await fetch(defaultProfileTxt);
-                    console.debug(`response:${response}`);
-                    const profileContent = await response.text();
-
-                    console.debug(`profileContent: ${profileContent}`);
-
-                    writingProfile = new Profile(profileContent);
-                }
+                const writingProfile = new Profile(profile.content);
 
                 writingProfile.wakeupTime = this.getMsAfterMidnight(
                     settings.alarmHour,

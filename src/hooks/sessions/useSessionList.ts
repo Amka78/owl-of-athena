@@ -4,29 +4,29 @@ import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import {
+    useCheckLogging,
+    useFilterConditionSelector,
+    useSessionDetailListSelector,
+    useUserSelector,
+    useWindowDimensions,
+} from "..";
+import {
     cacheSessions,
     deleteSession,
     selectSession,
     selectSessionDetail,
     updateFilter,
     updateSession,
-} from "../actions/SessionsActions";
-import { SessionRestClientInstance } from "../clients";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
-import { Message, MessageKeys } from "../constants";
-import { AuroraManagerInstance } from "../managers";
-import { AuroraSessionJson } from "../sdk/AuroraTypes";
-import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
-import { FilterByDateValues, FilterCondition } from "../state/SessionState";
-import { GuestUser } from "../types";
-import {
-    useFilterConditionSelector,
-    useFilteredSessionListSelector,
-    useSessionDetailListSelector,
-    useUserSelector,
-    useWindowDimensions,
-} from "./";
-import { useCheckLogging } from "./useCheckLogging";
+} from "../../actions/SessionsActions";
+import { SessionRestClientInstance } from "../../clients";
+import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
+import { Message, MessageKeys } from "../../constants";
+import { AuroraManagerInstance } from "../../managers";
+import { AuroraSessionJson } from "../../sdk/AuroraTypes";
+import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
+import { FilterByDateValues, FilterCondition } from "../../state/SessionState";
+import { GuestUser } from "../../types";
+import { useFilteredSessionListSelector, useSelectedSessionSelector } from "./";
 //#endregion
 
 //#region Hooks
@@ -37,6 +37,7 @@ export const useSessinList = (): {
     onShowStarredPress: () => void;
     onShowNotesPress: () => void;
     sessionList: AuroraSession[];
+    selectedSession?: AuroraSession;
     onStarPress: (value: AuroraSession) => Promise<void>;
     onDeletePress: (value: AuroraSession) => Promise<void>;
     onMenuPress: (value: AuroraSession, index: number) => Promise<void>;
@@ -48,6 +49,7 @@ export const useSessinList = (): {
     const filterCondition = useFilterConditionSelector();
     const sessionList = useFilteredSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
+    const selectedSession = useSelectedSessionSelector();
     const { navigate } = useNavigation();
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const dimens = useWindowDimensions();
@@ -55,7 +57,9 @@ export const useSessinList = (): {
 
     const onPressedRefresh = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.session_reloading),
+            dialogTitle: Message.get(MessageKeys.reloading, [
+                MessageKeys.sessions,
+            ]),
         });
         const sessions = await SessionRestClientInstance.getAll(user!.id);
         dispatch(cacheSessions(sessions));
@@ -131,7 +135,9 @@ export const useSessinList = (): {
     const onDeletePress = useCallback(
         async (value: AuroraSession): Promise<void> => {
             ConfirmDialog.show({
-                title: Message.get(MessageKeys.delete_dialog_title),
+                title: Message.get(MessageKeys.delete_dialog_title, [
+                    MessageKeys.session,
+                ]),
 
                 message: Message.get(MessageKeys.delete_dialog_message),
 
@@ -187,6 +193,7 @@ export const useSessinList = (): {
         onShowStarredPress,
         onShowNotesPress,
         sessionList,
+        selectedSession,
         onStarPress,
         onDeletePress,
         onMenuPress,

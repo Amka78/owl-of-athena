@@ -8,10 +8,10 @@ import {
     useCheckLogging,
     useUserSelector,
     useSettingsSelector,
-    useProfilesSelector,
+    useProfileListSelector,
     useWakeLockSelector,
 } from "./";
-import { cacheSettings, updateProfiles, setWakeLock } from "../actions";
+import { cacheSettings, cacheProfiles, setWakeLock } from "../actions";
 import { useDispatch } from "react-redux";
 import { AuroraRestClientInstance } from "../clients";
 import { AuroraProfile } from "../sdk/AuroraTypes";
@@ -34,7 +34,7 @@ export const useHome = (): {
 
     const settings = useSettingsSelector();
     const user = useUserSelector();
-    const profiles = useProfilesSelector();
+    const profiles = useProfileListSelector();
     const wakeLock = useWakeLockSelector();
     const [errorText, setErrorText] = useState<string>("");
 
@@ -111,10 +111,36 @@ export const useHome = (): {
                     try {
                         auroraProfiles = await AuroraRestClientInstance.getAuroraProfiles();
                         console.log("Current remote profile:", auroraProfiles);
-                        dispatch(updateProfiles(auroraProfiles));
+                        dispatch(cacheProfiles(auroraProfiles));
                     } catch (e) {
                         navigate("Logout");
                     }
+                }
+
+                if (auroraProfiles.length <= 0) {
+                    console.log(
+                        "At the first start-up, the initial values are read."
+                    );
+                    const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
+                    console.debug(defaultProfileTxt);
+                    const response = await fetch(defaultProfileTxt);
+                    console.debug(`response:${response}`);
+                    const profileContent = await response.text();
+
+                    const profile: AuroraProfile = {
+                        content: profileContent,
+                        id: "F356372",
+                        name: "Default Profile",
+                        starred: false,
+                        key: "F36372",
+                        title: "Default Profile",
+                        type: "official",
+                        active: true,
+                        description: "Default Profile",
+                        updatedAt: new Date(),
+                    };
+
+                    auroraProfiles.push(profile);
                 }
 
                 if (auroraProfiles.length > 0) {
@@ -123,7 +149,7 @@ export const useHome = (): {
                     if (settings.profileId) {
                         selectedProfile.current = auroraProfiles.find(
                             (value: AuroraProfile) => {
-                                return value.id! === settings.profileId;
+                                return value.id === settings.profileId;
                             }
                         );
                     }
@@ -146,7 +172,8 @@ export const useHome = (): {
                             selectedProfile.current = profiles[0];
 
                             settings.profileId = selectedProfile.current.id;
-                            settings.profileTitle = selectedProfile.current.title!;
+                            settings.profileTitle =
+                                selectedProfile.current.title;
                         }
                     }
                     settings.userId = user.id;

@@ -1,8 +1,11 @@
+//#region Import Modules
 import { AuroraBluetooth } from "./AuroraBluetooth";
 import { AuroraUsb } from "./AuroraUsb";
 import { ConnectorTypes, EventIds } from "./AuroraConstants";
 import Stream from "stream";
+//#endregion
 
+//#region Types
 export type AuroraResponse = {
     origin?: string;
     error: boolean;
@@ -32,14 +35,15 @@ export type AuroraEvent = {
 
 export type AuroraProfile = {
     active?: boolean;
-    content?: string;
-    name?: string;
-    id?: string;
-    key?: string;
-    type?: string;
+    content: string;
+    name: string;
+    id: string;
+    key: string;
+    type: "community" | "official" | "private";
     description?: string;
-    title?: string;
+    title: string;
     updatedAt?: Date;
+    starred: boolean;
 };
 
 export type BluetoothStream = {
@@ -183,3 +187,4 @@ export type AuroraEventJson = {
     id: number;
     time: number;
 };
+//#endregion

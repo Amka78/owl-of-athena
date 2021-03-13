@@ -1,14 +1,15 @@
 //#region  "Import modules"
+import _ from "lodash";
+import moment from "moment";
+
+import { SessionActions, UpdateFilter } from "../actions/SessionsActions";
+import { ActionTypes } from "../constants";
+import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
 import {
-    SessionState,
     FilterByDateValues,
     FilterCondition,
+    SessionState,
 } from "../state/SessionState";
-import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
-import { ActionTypes } from "../constants";
-import { SessionActions } from "../actions/SessionsActions";
-import moment from "moment";
-import _ from "lodash";
 //#endregion
 
 //#region "Public functions"
@@ -36,7 +37,7 @@ export default function SessionReducers(
         case ActionTypes.CACHE_SESSION_DETAILS: {
             return cacheSessionDetails(state, action);
         }
-        case ActionTypes.UPDATE_FILTER: {
+        case ActionTypes.UPDATE_SESSION_FILTER: {
             return updateFilter(action, state);
         }
         case ActionTypes.SELECT_SESSION: {
@@ -236,13 +237,7 @@ function selectSession(
  * @param {SessionState} state
  * @returns {SessionState}
  */
-function updateFilter(
-    action: {
-        payload: { filter: Partial<FilterCondition> };
-        type: "UPDATE_FILTER";
-    },
-    state: SessionState
-): SessionState {
+function updateFilter(action: UpdateFilter, state: SessionState): SessionState {
     if (action.payload.filter.byDate !== undefined) {
         state.filterCondition.byDate = action.payload.filter.byDate;
     }

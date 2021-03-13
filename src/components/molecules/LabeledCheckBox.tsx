@@ -12,13 +12,13 @@ export type CheckBoxStatus = "checked" | "unchecked" | "indeterminate";
 
 export type LabelPlace = "left" | "right";
 export type LabeledCheckBoxProps = {
-    container?: ViewStyle;
+    container?: ViewStyle | any[];
     labelPlace?: LabelPlace;
     label?: string;
-    labelStyle?: TextStyle;
+    labelStyle?: TextStyle | any[];
     onLabelPress?: () => void;
     description?: string;
-    descriptionStyle?: TextStyle;
+    descriptionStyle?: TextStyle | any[];
     status: CheckBoxStatus;
     checkBoxStyle?: ViewStyle;
     textContainerStyle?: ViewStyle;

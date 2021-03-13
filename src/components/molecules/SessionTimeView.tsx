@@ -1,8 +1,8 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
+import { LabeledTimeView, LabeledTimeViewProps } from ".";
 import { Dimens } from "../../constants";
-import { LabeledTimeView, LabeledTimeViewProps } from "../molecules";
 //#endregion
 
 //#region Types

@@ -2,14 +2,11 @@
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { updateSession } from "../actions/SessionsActions";
-import { SessionRestClientInstance } from "../clients";
-import { GuestUser } from "../types";
-import {
-    useCheckLogging,
-    useSelectedSessionSelector,
-    useUserSelector,
-} from "./";
+import { useCheckLogging, useUserSelector } from "..";
+import { updateSession } from "../../actions/SessionsActions";
+import { SessionRestClientInstance } from "../../clients";
+import { GuestUser } from "../../types";
+import { useSelectedSessionSelector } from "./useSelectedSessionSelector";
 //#endregion
 
 //#region Hooks

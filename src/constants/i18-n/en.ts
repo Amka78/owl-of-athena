@@ -8,7 +8,10 @@ const signup = "Sign Up";
 const input_email = "EMAIL ADDRESS";
 const input_password = "PASSWORD";
 const input_password_confirm = "REENTER PASSWORD";
+const session = "session";
 const sessions = "sessions";
+const profile = "profile";
+const profiles = "profiles";
 const input_first_name = "FIRST NAME";
 const input_last_name = "LAST NAME";
 const input_birthday = "BIRTHDAY";
@@ -26,9 +29,13 @@ export default {
     male: "Male",
     [MessageKeys.female]: "Female",
     [MessageKeys.update]: update,
+    [MessageKeys.session]: session,
     [MessageKeys.sessions]: sessions,
+    [MessageKeys.profile]: profile,
+    [MessageKeys.profiles]: profiles,
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
+    [MessageKeys.reloading]: "{0} Reloading...",
     // sleep stages
     [MessageKeys.stage_awake]: "Awake",
     [MessageKeys.stage_rem]: "REM",
@@ -126,7 +133,7 @@ export default {
     [MessageKeys.sessions_check_show_notes_description]:
         "Only sessions with notes",
     // session picker fragment
-    [MessageKeys.session_list_title]: "Choose a session",
+    [MessageKeys.select_list_title]: "Choose a {0}",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "asleep at",
     [MessageKeys.session_awake_time_label]: "awake at",
@@ -142,7 +149,6 @@ export default {
     [MessageKeys.session_rem_pie_chart_label]: "REM - {0}",
     [MessageKeys.session_awake_pie_chart_label]: "Awake - {0}",
     [MessageKeys.session_no_signal_pie_chart_label]: "No Signal - {0}",
-    [MessageKeys.session_reloading]: "Session Reload...",
     // account fragment
     [MessageKeys.account_title]: "Account",
     [MessageKeys.account_input_first_name]: input_first_name,
@@ -200,8 +206,9 @@ export default {
         "Are you sure you want to delete this session? This action cannot be undone.",
 
     [MessageKeys.top_tab_sleep_tracking_title]: "SLEEP TRACKING",
-
     [MessageKeys.top_tab_journal_title]: "JOURNAL",
+    [MessageKeys.top_tab_profile_edit_title]: "EDIT",
+    [MessageKeys.top_tab_profile_preview_title]: "PREVIEW",
 
     [MessageKeys.date_format]: "MM,DD,YYYY",
 
@@ -211,8 +218,21 @@ export default {
     [MessageKeys.standalone_mode_confirm_message]:
         "Could not connect to the Aurora API. So Do you want to run Aurora in standalone mode?",
     [MessageKeys.drawer_items_main]: "Main",
-    [MessageKeys.drawer_items_sessions]: "Sessions",
+    [MessageKeys.drawer_items_sessions]: sessions,
+    [MessageKeys.drawer_items_profiles]: profiles,
     [MessageKeys.drawer_items_account]: "Account",
+
+    [MessageKeys.profile_filter_menu_header_label]: "Filter by Profile Type",
+    [MessageKeys.profile_filter_menu_official_check_box_label]: "Show Official",
+    [MessageKeys.profile_filter_menu_official_check_box_description]:
+        "Official iWinks' profiles.",
+    [MessageKeys.profile_filter_menu_community_check_box_label]:
+        "Show Community",
+    [MessageKeys.profile_filter_menu_community_check_box_description]:
+        "Community submitted profiles.",
+    [MessageKeys.profile_filter_menu_private_check_box_label]: "Show Private",
+    [MessageKeys.profile_filter_menu_private_check_box_description]:
+        "Your private profiles.",
 
     [MessageKeys.connection_error]: "Connection Error",
 

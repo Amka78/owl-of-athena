@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import { RootState } from "../state";
+import { RootState } from "../../state";
 
 const clientSelector = (state: RootState): any | undefined =>
     state.session.selectedSessionDetail;

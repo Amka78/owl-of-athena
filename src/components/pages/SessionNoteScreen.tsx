@@ -1,7 +1,7 @@
 //#region Inport modules
 import React, { FunctionComponent } from "react";
 
-import { useSessionNote } from "../../hooks/useSessionNote";
+import { useSessionNote } from "../../hooks/sessions/useSessionNote";
 import { SessionNoteScreenTemplate } from "./../templates/SessionNoteScreenTemplate";
 //#endregion
 

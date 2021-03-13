@@ -1,54 +1,54 @@
-//#region
+//#region Import Modules
 import React, { FunctionComponent } from "react";
-import { View } from "react-native";
+
 import SessionTabNavigator from "../../navigation/SessionTabNavigator";
+import { AuroraSession } from "../../sdk/models";
+import { FilterIcon, FlexSpacer, RefreshIcon } from "../atoms";
+import { ConvertibleListForm } from "../molecules";
+import { SessionBlankScreenTemplate } from "./SessionBlankScreenTemplate";
 import {
     SessionListScreenTemplate,
     SessionListScreenTemplateProps,
 } from "./SessionListScreenTemplate";
-import { Colors } from "../../constants";
-import { FilterIcon, RefreshIcon } from "../molecules";
-import { FlexSpacer } from "../atoms";
+//#endregion
 
+//#region Types
 export type SessionDesktopScreenTemplateProps = SessionListScreenTemplateProps & {
     onRefreshPress: () => void;
     onFilterPress: () => void;
+    selected?: AuroraSession;
 };
+//#endregion
+
+//#region Component
 export const SessionDesktopScreenTemplate: FunctionComponent<SessionDesktopScreenTemplateProps> = (
     props: SessionDesktopScreenTemplateProps
 ) => {
-    const sessionList = (
-        <View style={{ flex: 1 }}>
-            <View
-                style={{
-                    backgroundColor: Colors.navy,
-                    borderBottomColor: Colors.white,
-                    borderBottomWidth: 1,
-                    flexDirection: "row",
-                    justifyContent: "space-around",
-                }}
-            >
-                <RefreshIcon onPress={props.onRefreshPress}></RefreshIcon>
-                <FlexSpacer></FlexSpacer>
-                <FilterIcon onPress={props.onFilterPress}></FilterIcon>
-            </View>
-            <SessionListScreenTemplate {...props}></SessionListScreenTemplate>
-        </View>
-    );
-
-    const sessionNavigator = <SessionTabNavigator></SessionTabNavigator>;
     return (
-        <View style={{ flexDirection: "row", flex: 1 }}>
-            <View style={{ flex: 3 }}>{sessionList}</View>
-            <View
-                style={{
-                    flex: 7,
-                    borderLeftColor: Colors.white,
-                    borderLeftWidth: 1,
-                }}
-            >
-                {sessionNavigator}
-            </View>
-        </View>
+        <ConvertibleListForm
+            listMenu={[
+                <RefreshIcon
+                    key={0}
+                    onPress={props.onRefreshPress}
+                ></RefreshIcon>,
+                <FlexSpacer key={1}></FlexSpacer>,
+                <FilterIcon key={2} onPress={props.onFilterPress}></FilterIcon>,
+            ]}
+            listScreen={
+                props.sessionList ? (
+                    <SessionListScreenTemplate
+                        {...props}
+                    ></SessionListScreenTemplate>
+                ) : undefined
+            }
+            itemScreen={
+                props.selected ? (
+                    <SessionTabNavigator></SessionTabNavigator>
+                ) : (
+                    <SessionBlankScreenTemplate></SessionBlankScreenTemplate>
+                )
+            }
+        ></ConvertibleListForm>
     );
 };
+//#endregion

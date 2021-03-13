@@ -4,19 +4,25 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
 import { View } from "react-native";
 
-import { BluetoothIcon, LogoutIcon } from "../components/atoms";
 import {
-    ConfirmDialog,
+    BluetoothIcon,
     HomeIcon,
+    LogoutIcon,
     MenuIcon,
+    ProfilesIcon,
     SessionsIcon,
     SettingsIcon,
-} from "../components/molecules";
-import { SessionDesktopScreen } from "../components/pages";
+} from "../components/atoms";
+import { ConfirmDialog } from "../components/molecules";
+import {
+    ProfileDesktopScreen,
+    SessionDesktopScreen,
+} from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
 import { ConnectionStates } from "../sdk";
 import HomeNavigator from "./HomeNavigator";
+import ProfileNavigator from "./ProfileNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
 //#endregion
@@ -115,6 +121,22 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
                     },
                     drawerLabel: mainDrawerHook.isDesktop
                         ? Message.get(MessageKeys.drawer_items_main)
+                        : "",
+                }}
+            />
+            <Drawer.Screen
+                name="Profiles"
+                component={
+                    mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal
+                        ? ProfileDesktopScreen
+                        : ProfileNavigator
+                }
+                options={{
+                    drawerIcon: (props: DrawerIconProps) => {
+                        return <ProfilesIcon {...props}></ProfilesIcon>;
+                    },
+                    drawerLabel: mainDrawerHook.isDesktop
+                        ? Message.get(MessageKeys.drawer_items_profiles)
                         : "",
                 }}
             />
