@@ -117,6 +117,7 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
             }}
         >
             <MainDrawerNavigator
+                batteryLevel={props.batteryLevel}
                 onBluetoothConnectPress={props.onBluetoothConnectPress}
                 bluetoothConnect={props.bluetoothConnect}
             ></MainDrawerNavigator>

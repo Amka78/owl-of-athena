@@ -5,6 +5,7 @@ import React from "react";
 import { View } from "react-native";
 
 import {
+    BatteryIcon,
     BluetoothIcon,
     HomeIcon,
     LogoutIcon,
@@ -36,6 +37,7 @@ type DrawerIconProps = {
 
 export type MainDrawerNavigatorProps = {
     onBluetoothConnectPress: () => Promise<string>;
+    batteryLevel: number;
     bluetoothConnect: ConnectionStates;
 };
 //#endregion
@@ -75,6 +77,16 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
                     );
                 },
                 headerRight: () => {
+                    let batteryIcon = undefined;
+                    if (props.bluetoothConnect === ConnectionStates.CONNECTED) {
+                        batteryIcon = (
+                            <BatteryIcon
+                                isUSBConnected={false}
+                                batteryLevel={props.batteryLevel}
+                                style={{ marginRight: 10 }}
+                            ></BatteryIcon>
+                        );
+                    }
                     return (
                         <View
                             style={{
@@ -82,8 +94,8 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
                                 justifyContent: "flex-end",
                             }}
                         >
+                            {batteryIcon}
                             <BluetoothIcon
-                                size={40}
                                 connectionStates={props.bluetoothConnect}
                                 onPress={async () => {
                                     const result = await props.onBluetoothConnectPress();
@@ -101,7 +113,6 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
                             ></BluetoothIcon>
                             <LogoutIcon
                                 color={Colors.white}
-                                size={40}
                                 onPress={mainDrawerHook.onLogoutPress}
                             ></LogoutIcon>
                         </View>
