@@ -6,7 +6,7 @@ import { Colors } from "../../constants";
 //#endregion
 
 //#region Types
-export type TemplateIconProps = IconProps & { disabled: boolean };
+export type TemplateIconProps = IconProps & { disabled?: boolean };
 //#endregion
 
 //#region Component
@@ -19,7 +19,7 @@ export const TemplateIcon: FunctionComponent<TemplateIconProps> = (
             {...props}
             color={props.color ? props.color : color}
             size={props.size ? props.size : 40}
-            onPress={props.disabled ? undefined : props.onPress}
+            onPress={props.disabled === true ? undefined : props.onPress}
         ></MaterialCommunityIcons>
     );
 };
