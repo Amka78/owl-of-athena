@@ -1,5 +1,3 @@
-import Layout from "./Layout";
-
 const session_margin_left = 30;
 const session_margin_right = 30;
 
@@ -108,4 +106,6 @@ export default {
     inner_screen_max_width: 650,
 
     forgot_password_title_font_size: 16,
+
+    menu_icon_size: 40,
 };

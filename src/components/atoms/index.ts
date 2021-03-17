@@ -1,6 +1,7 @@
 //#region Import Moddules
-import { HomeIcon } from "../atoms/HomeIcon";
-import { MenuIcon } from "../atoms/MenuIcon";
+import { BatteryIcon } from "./BatteryIcon";
+import { HomeIcon } from "./HomeIcon";
+import { MenuIcon } from "./MenuIcon";
 import { BluetoothIcon } from "./BluetoothIcon";
 import { Button, ButtonProps } from "./Button";
 import { CheckBox, CheckBoxProps } from "./CheckBox";
@@ -33,6 +34,7 @@ import { UpdateSnackBar, UpdateSnackBarProps } from "./UpdateSnackBar";
 
 //#region Export
 export {
+    BatteryIcon,
     Button,
     ButtonProps,
     BluetoothIcon,
