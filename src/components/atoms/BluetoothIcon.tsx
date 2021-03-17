@@ -2,8 +2,8 @@
 import React, { FunctionComponent } from "react";
 import { IconProps } from "react-native-vector-icons/Icon";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { ConnectionStates } from "../../sdk";
-import { Colors } from "../../constants";
+import { ConnectionStates } from "../../sdk/AuroraConstants";
+import { Colors, Dimens } from "../../constants";
 //#endregion
 
 //#region Types
@@ -37,6 +37,7 @@ export const BluetoothIcon: FunctionComponent<BluetoothIconProps> = (
     return (
         <MaterialCommunityIcons
             {...props}
+            size={props.size ? props.size : Dimens.menu_icon_size}
             color={stateColor}
             name={stateIcon}
         ></MaterialCommunityIcons>
