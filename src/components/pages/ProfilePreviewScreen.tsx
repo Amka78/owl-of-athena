@@ -1,10 +1,17 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { View } from "react-native";
+
+import { useProfilePreview } from "../../hooks/profiles/useProfilePreview";
+import { ProfilePreviewScreenTemplate } from "../templates/ProfilePreviewScreenTemplate";
 //#endregion
 
 //#region Component
 export const ProfilePreviewScreen: FunctionComponent = () => {
-    return <View></View>;
+    const { content } = useProfilePreview();
+    return (
+        <ProfilePreviewScreenTemplate
+            content={content}
+        ></ProfilePreviewScreenTemplate>
+    );
 };
 //#endregion
