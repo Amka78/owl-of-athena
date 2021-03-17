@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect } from "react";
@@ -11,12 +12,19 @@ export const useConvertibleHeader = (
     isDesktop: boolean,
     isSmallHeight: boolean
 ): void => {
-    const { setOptions } = useNavigation();
+    let navigation: any = undefined;
+    try {
+        navigation = useNavigation();
+    } catch (ex) {
+        console.debug(ex);
+    }
     useLayoutEffect(() => {
-        setOptions({
-            headerTitle: Message.get(headerTitleKey),
-            headerShown: !isDesktop && !isSmallHeight,
-        });
-    }, [isDesktop, isSmallHeight, headerTitleKey, setOptions]);
+        if (navigation !== undefined) {
+            navigation.setOptions({
+                headerTitle: Message.get(headerTitleKey),
+                headerShown: !isDesktop && !isSmallHeight,
+            });
+        }
+    }, [isDesktop, isSmallHeight, headerTitleKey, navigation]);
 };
 //#endregion
