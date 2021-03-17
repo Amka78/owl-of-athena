@@ -12,7 +12,7 @@ import {
 import { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
 import {
     useCheckLogging,
-    useProfilesSelector,
+    useProfileListSelector,
     useSettingsSelector,
 } from "../hooks";
 import { AuroraProfile } from "../sdk/AuroraTypes";
@@ -60,7 +60,7 @@ export const useSetting = (): {
 
     const { navigate } = useNavigation();
     const settings = useSettingsSelector();
-    const profiles = useProfilesSelector();
+    const profiles = useProfileListSelector();
 
     const dispatch = useDispatch();
     const [datePickerState, setDatePickerState] = useState<DatePickerState>({
