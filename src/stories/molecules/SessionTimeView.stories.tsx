@@ -4,10 +4,10 @@ import React from "react";
 import {
     SessionTimeView,
     SessionTimeViewProps,
-} from "../../components/organisms/SessionTimeView";
+} from "../../components/molecules/SessionTimeView";
 
 export default {
-    title: "Organisms/SessionTimeView",
+    title: "Molecules/SessionTimeView",
     component: SessionTimeView,
 } as Meta;
 
