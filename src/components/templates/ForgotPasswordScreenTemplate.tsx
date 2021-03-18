@@ -1,15 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent, useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import React, { FunctionComponent, useLayoutEffect } from "react";
 import { View } from "react-native";
 
-import {
-    ContentText,
-    ErrorText,
-    ErrorTextProps,
-    FlexSpacer,
-    TextBox,
-} from "../atoms";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
@@ -17,13 +10,20 @@ import {
     useTextBoxReturn,
     useWindowDimensions,
 } from "../../hooks";
-import { TemplateButtonProps } from "./TempatedProps";
+import {
+    ContentText,
+    ErrorText,
+    ErrorTextProps,
+    FlexSpacer,
+    LeftSideButton,
+    TextBox,
+} from "../atoms";
 import {
     ConvertibleContentTitle,
     InternalView,
-    LeftSideButton,
     RightSideButton,
 } from "../molecules";
+import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Type

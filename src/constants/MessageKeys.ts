@@ -2,6 +2,8 @@ export const MessageKeys = {
     //#region common
     login: "login",
     save: "save",
+    save_as_new: "save_as_new",
+    overwrite_save: "overwrite_save",
     ok: "ok",
     cancel: "cancel",
     app_name: "app_name",

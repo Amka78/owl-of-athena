@@ -8,13 +8,17 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import { ContentTitleProps, ErrorText, ErrorTextProps } from "../atoms";
+import {
+    ContentTitleProps,
+    ErrorText,
+    ErrorTextProps,
+    LeftSideButton,
+} from "../atoms";
 import {
     ConvertibleContentTitle,
     InternalView,
     LabeledCheckBox,
     LabeledCheckBoxProps,
-    LeftSideButton,
     RightSideButton,
     ValidatableTextBox,
     ValidatableTextBoxProps,

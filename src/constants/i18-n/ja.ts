@@ -15,6 +15,8 @@ const update = "更新";
 export default {
     [MessageKeys.app_name]: "Aurora",
     [MessageKeys.save]: "保存",
+    [MessageKeys.save_as_new]: "新規保存",
+    [MessageKeys.overwrite_save]: "上書き保存",
     [MessageKeys.cancel]: "キャンセル",
     [MessageKeys.signup]: signup,
     [MessageKeys.login]: login,

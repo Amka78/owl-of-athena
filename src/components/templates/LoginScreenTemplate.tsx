@@ -13,13 +13,13 @@ import {
     ErrorText,
     ErrorTextProps,
     FlatButton,
+    LeftSideButton,
     TextBox,
     TextBoxProps,
 } from "../atoms";
 import {
     ConvertibleContentTitle,
     InternalView,
-    LeftSideButton,
     RightSideButton,
 } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";

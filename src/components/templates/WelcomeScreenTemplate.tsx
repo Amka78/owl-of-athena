@@ -10,8 +10,9 @@ import {
     ContentTextProps,
     ContentTitle,
     ContentTitleProps,
+    LeftSideButton,
 } from "../atoms";
-import { InternalView, LeftSideButton, RightSideButton } from "../molecules";
+import { InternalView, RightSideButton } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 

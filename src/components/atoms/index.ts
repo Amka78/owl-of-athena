@@ -14,6 +14,7 @@ import { FilterIcon } from "./FilterIcon";
 import { FlatButton, FlatButtonProps } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
+import { LeftSideButton } from "./LeftSideButton";
 import { ListItem } from "./ListItem";
 import { LogoutIcon } from "./LogoutIcon";
 import { MenuContainer } from "./MenuContainer";
@@ -56,6 +57,7 @@ export {
     HomeIcon,
     InlineTimePicker,
     InlineTimePickerProps,
+    LeftSideButton,
     ListItem,
     LogoutIcon,
     MenuIcon,

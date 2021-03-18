@@ -19,7 +19,6 @@ import {
     LabeledSelectorMenuProps,
 } from "./LabeledSelectorMenu";
 import { LabeledTimeView, LabeledTimeViewProps } from "./LabeledTimeView";
-import { LeftSideButton, LeftSideButtonProps } from "./LeftSideButton";
 import { LoadingDialog } from "./LoadingDialog";
 import { MenuCheckBox } from "./MenuCheckBox";
 import { ProfilesDialog } from "./ProfilesDialog";
@@ -51,8 +50,6 @@ export {
     LabeledCheckBoxProps,
     LabeledTimeView,
     LabeledTimeViewProps,
-    LeftSideButton,
-    LeftSideButtonProps,
     MenuCheckBox,
     ProfilesDialog,
     RightSideButton,

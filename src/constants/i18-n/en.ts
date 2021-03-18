@@ -23,6 +23,8 @@ export default {
     [MessageKeys.ok]: "OK",
     [MessageKeys.app_name]: "Aurora",
     [MessageKeys.save]: "SAVE",
+    [MessageKeys.save_as_new]: "Save As New",
+    [MessageKeys.overwrite_save]: "Overwrite Save",
     [MessageKeys.cancel]: "CANCEL",
     [MessageKeys.signup]: signup,
     [MessageKeys.login]: login,

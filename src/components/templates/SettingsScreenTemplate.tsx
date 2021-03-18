@@ -8,20 +8,22 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import { InlineTimePicker, InlineTimePickerProps } from "../atoms";
+import {
+    InlineTimePicker,
+    InlineTimePickerProps,
+    LeftSideButton,
+} from "../atoms";
 import {
     InternalView,
     LabeledCheckBox,
     LabeledCheckBoxProps,
     LabeledSelectorMenu,
-    LeftSideButton,
     RightSideButton,
 } from "../molecules";
 import {
     TemplateButtonProps,
     TemplateSelectorMenuProps,
 } from "./TempatedProps";
-
 //#endregion
 
 //#region Types

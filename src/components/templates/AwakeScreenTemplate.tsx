@@ -8,11 +8,15 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import { ContentText, ContentTextProps, ContentTitleProps } from "../atoms";
+import {
+    ContentText,
+    ContentTextProps,
+    ContentTitleProps,
+    LeftSideButton,
+} from "../atoms";
 import {
     ConvertibleContentTitle,
     InternalView,
-    LeftSideButton,
     RightSideButton,
 } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
