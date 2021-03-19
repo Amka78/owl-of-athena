@@ -81,9 +81,7 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
         bottomButtons = signupButton;
     }
 
-    const textBoxMarginBottom = dimens.isSmallHeight
-        ? 0
-        : Dimens.button_margin_bottom;
+    const textBoxMarginBottom = dimens.isSmallHeight ? 0 : Dimens.button_margin;
     const textBoxHeight = dimens.isSmallHeight ? 45 : undefined;
     return (
         <InternalView>

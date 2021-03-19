@@ -51,7 +51,8 @@ const labelStyle: TextStyle = {
 };
 const containerStyle: ViewStyle = {
     borderRadius: Dimens.button_radius,
-    marginBottom: Dimens.button_margin_bottom,
+    marginTop: Dimens.button_margin,
+    marginBottom: Dimens.button_margin,
     height: Dimens.button_height,
 };
 //#endregion

@@ -54,7 +54,7 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
 
 //#region Styles
 const textInputStyle = {
-    marginBottom: Dimens.button_margin_bottom,
+    marginBottom: Dimens.button_margin,
     fontFamily: Fonts.primaryRegular,
     fontSize: Dimens.input_text_size,
 };

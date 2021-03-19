@@ -28,7 +28,7 @@ export default {
 
     button_text_size: 24,
     button_height: 50,
-    button_margin_bottom: 16,
+    button_margin: 16,
     button_radius: 16,
     button_max_width: 270,
     button_flat_text_size: 14,
