@@ -1,5 +1,6 @@
 //#region Import Moddules
 import { BatteryIcon } from "./BatteryIcon";
+import { InfoIcon } from "./InfoIcon";
 import { HomeIcon } from "./HomeIcon";
 import { MenuIcon } from "./MenuIcon";
 import { BluetoothIcon } from "./BluetoothIcon";
@@ -55,6 +56,7 @@ export {
     FlatButtonProps,
     FlexSpacer,
     HomeIcon,
+    InfoIcon,
     InlineTimePicker,
     InlineTimePickerProps,
     LeftSideButton,
