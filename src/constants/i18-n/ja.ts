@@ -226,6 +226,9 @@ export default {
         "プライベートを見る。",
     [MessageKeys.profile_filter_menu_private_check_box_description]:
         "貴方のプライベートプロファイル",
+
+    [MessageKeys.save_to_aurora]: "Auroraに保存",
+    [MessageKeys.show_advanced_options]: "詳細オプションを見る",
     [MessageKeys.connection_error]: "接続エラー",
 
     [MessageKeys.session_blank]: "表示するセッションを選択してください。",

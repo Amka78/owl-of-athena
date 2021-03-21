@@ -236,6 +236,8 @@ export default {
     [MessageKeys.profile_filter_menu_private_check_box_description]:
         "Your private profiles.",
 
+    [MessageKeys.save_to_aurora]: "Save to Aurora",
+    [MessageKeys.show_advanced_options]: "Show Advanced Options",
     [MessageKeys.connection_error]: "Connection Error",
 
     [MessageKeys.session_blank]: "Please select the sessions you wish to view.",

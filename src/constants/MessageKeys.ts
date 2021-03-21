@@ -243,6 +243,8 @@ export const MessageKeys = {
         "profile_filter_menu_community_check_box_description",
     //#endregion
 
+    save_to_aurora: "save_to_aurora",
+    show_advanced_options: "show_advanced_options",
     connection_error: "connection_error",
 
     session_blank: "session_blank",

@@ -15,17 +15,6 @@ export type FlatButtonProps = {
 };
 //#endregion
 
-//#region Constant
-const labelStyle: TextStyle = {
-    fontFamily: Fonts.primarySemiBold,
-    fontSize: Dimens.button_flat_text_size,
-};
-const contentStyle: ViewStyle = {
-    marginBottom: Dimens.button_flat_margin_bottom,
-    height: Dimens.button_flat_height,
-};
-//#endregionk
-
 //#region Component
 export const FlatButton: FunctionComponent<FlatButtonProps> = (
     props: FlatButtonProps
@@ -45,5 +34,17 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (
             {props.children}
         </PaperButton>
     );
+};
+//#endregion
+
+//#region Styles
+const labelStyle: TextStyle = {
+    fontFamily: Fonts.primarySemiBold,
+    fontSize: Dimens.button_flat_text_size,
+};
+const contentStyle: ViewStyle = {
+    marginTop: Dimens.button_margin,
+    marginBottom: Dimens.button_flat_margin,
+    height: Dimens.button_flat_height,
 };
 //#endregion

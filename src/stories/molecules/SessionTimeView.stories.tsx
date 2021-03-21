@@ -7,7 +7,7 @@ import {
 } from "../../components/molecules/SessionTimeView";
 
 export default {
-    title: "MOLECULES/SessionTimeView",
+    title: "Molecules/SessionTimeView",
     component: SessionTimeView,
 } as Meta;
 

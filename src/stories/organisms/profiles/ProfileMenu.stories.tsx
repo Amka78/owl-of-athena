@@ -10,7 +10,7 @@ import {
 
 //#region Story
 export default {
-    title: "Organisms/UnsavedProfileMenu",
+    title: "Organisms/ProfileMenu",
     component: ProfileMenu,
 } as Meta;
 

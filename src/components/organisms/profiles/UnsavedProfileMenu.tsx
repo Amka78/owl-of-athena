@@ -8,6 +8,7 @@ import { FlatButton, LeftSideButton } from "../../atoms";
 
 //#region Types
 export type UnsavedProfileMenuProps = {
+    style?: ViewStyle;
     isUserProfile: boolean;
     isLargeWidth: boolean;
     onSaveAsNewPress: () => void;
@@ -47,7 +48,7 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
     );
 
     return (
-        <View style={menuStyle}>
+        <View style={[menuStyle, props.style]}>
             {saveButton}
             {overwriteSaveButton}
             {cancelButton}

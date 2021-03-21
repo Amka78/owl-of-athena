@@ -10,7 +10,7 @@ import {
 
 //#region Stories
 export default {
-    title: "Organisms/SessionTimeView",
+    title: "Molecules/LabeledTimeView",
     component: LabeledTimeView,
 } as Meta;
 

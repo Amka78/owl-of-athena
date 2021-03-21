@@ -32,7 +32,7 @@ export default {
     button_radius: 16,
     button_max_width: 270,
     button_flat_text_size: 14,
-    button_flat_margin_bottom: 12,
+    button_flat_margin: 12,
     button_flat_height: 28,
 
     items_margin: 8,
@@ -108,4 +108,5 @@ export default {
     forgot_password_title_font_size: 16,
 
     menu_icon_size: 40,
+    menu_list_margin: 10,
 };
