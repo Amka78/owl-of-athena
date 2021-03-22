@@ -36,7 +36,7 @@ export const useProfileList = (): {
     const dispatch = useDispatch();
     const filterCondition = useFilterConditionSelector();
     const list = useFilteredProfileListSelector();
-    const userId = useUserSelector()!.id;
+    const user = useUserSelector();
     const { navigate } = useNavigation();
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const dimens = useWindowDimensions();
@@ -137,6 +137,8 @@ export const useProfileList = (): {
         },
         [dimens.isDesktop, dimens.isHorizontal, dispatch, navigate]
     );
+
+    const userId = user ? user.id : "";
     return {
         showFilter,
         filterCondition,
