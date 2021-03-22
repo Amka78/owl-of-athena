@@ -1,7 +1,7 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
-import { ContentTitle, ContentTitleProps } from "../atoms";
+import { ContentTitle, ContentTitleProps } from "../atoms/ContentTitle";
 //#endregion
 
 //#region Types

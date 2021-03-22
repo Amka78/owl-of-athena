@@ -7,7 +7,7 @@ import { login as loginAction } from "../actions";
 import { LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { createGuestUser } from "../services/WelcomeService";
-import { Auth } from "../types";
+import { Auth } from "../types/Auth";
 import { useAutoLogin } from "./useAutoLogin";
 //#endregion
 
@@ -48,6 +48,6 @@ export const useWelcome = (): {
     const onSignupPress = useCallback(() => {
         navigate("Signup");
     }, [navigate]);
-    return { onStandalonePress, onLoginPress, onSignupPress };
+    return { onStandalonePress, onLoginPress, onCancelPress, onSignupPress };
 };
 //#endregion

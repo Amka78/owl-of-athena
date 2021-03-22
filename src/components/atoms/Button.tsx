@@ -3,7 +3,8 @@ import React, { FunctionComponent } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 import { Button as PaperButton, useTheme } from "react-native-paper";
 
-import { Dimens, Fonts, ThemeType } from "../../constants";
+import { Dimens, Fonts } from "../../constants";
+import { ThemeType } from "../../constants/Theme";
 import { useWindowDimensions } from "../../hooks";
 //#endregion
 

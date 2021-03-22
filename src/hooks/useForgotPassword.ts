@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 
 import { Message, MessageKeys } from "../constants";
-import { useTextBox, useTextBoxReturn } from "./";
+import { useTextBox, useTextBoxReturn } from "./useTextBox";
 //#endregion
 
 //#region Hooks

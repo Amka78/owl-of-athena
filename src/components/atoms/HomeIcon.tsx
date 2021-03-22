@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
 //#region Import Modules
+import React, { FunctionComponent } from "react";
 import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#endregion
 

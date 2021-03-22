@@ -8,8 +8,9 @@ import { login as loginAction } from "../actions";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
-import { Auth, GuestUser, Login } from "../types";
-import { useTextBox, useTextBoxReturn } from "./";
+import { GuestUser, Login } from "../types";
+import { Auth } from "../types/Auth";
+import { useTextBox, useTextBoxReturn } from "./useTextBox";
 //#endregion
 
 //#region Hooks

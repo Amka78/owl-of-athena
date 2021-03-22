@@ -1,11 +1,14 @@
 import { ActionTypes } from "../constants";
 import { AuthState } from "../state";
-import { AuthActions } from "../actions";
+import { AuthActions } from "../actions/AuthActions";
 
 export default function AuthReducers(
-    state: AuthState = {},
+    state: AuthState,
     action: AuthActions
 ): AuthState {
+    if (state === undefined) {
+        state = {};
+    }
     switch (action.type) {
         case ActionTypes.LOGIN:
             return Object.assign({}, state, {

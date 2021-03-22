@@ -1,7 +1,8 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { Text, TextStyle } from "react-native";
-import { Dimens, Fonts, ThemeType } from "../../constants";
+import { Dimens, Fonts } from "../../constants";
+import { ThemeType } from "../../constants/Theme";
 import { useTheme } from "react-native-paper";
 //#endregion
 

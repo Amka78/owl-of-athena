@@ -8,12 +8,9 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import {
-    ContentText,
-    ContentTextProps,
-    ContentTitleProps,
-    LeftSideButton,
-} from "../atoms";
+import { ContentText, LeftSideButton } from "../atoms";
+import { ContentTextProps } from "../atoms/ContentText";
+import { ContentTitleProps } from "../atoms/ContentTitle";
 import {
     ConvertibleContentTitle,
     InternalView,

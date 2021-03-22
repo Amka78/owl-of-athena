@@ -1,14 +1,11 @@
 //#region Import Modules
 import { PickerItemProps } from "react-native";
-
-import { ButtonProps, TextBoxProps } from "../atoms";
+import { ButtonProps } from "../atoms/Button";
+import { TextBoxProps } from "../atoms/TextBox";
 import { FlatButtonProps } from "../atoms/FlatButton";
-import {
-    LabeledRadioButtonProps,
-    LabeledSelectorMenuProps,
-    LabeledTimeViewProps,
-} from "../molecules";
-
+import { LabeledTimeViewProps } from "../molecules/LabeledTimeView";
+import { LabeledRadioButtonProps } from "../molecules/LabeledRadioButton";
+import { LabeledSelectorMenuProps } from "../molecules/LabeledSelectorMenu";
 //#endregion
 
 //#region Types

@@ -1,13 +1,13 @@
 //#region  "Import modules"
 import _ from "lodash";
 
-import { ProfilesActions } from "../actions";
 import {
     CacheAction,
     DeleteAction,
     SelectAction,
     UpdateAction,
     UpdateFilterAction,
+    ProfilesActions,
 } from "../actions/ProfilesActions";
 import { ActionTypes } from "../constants";
 import { AuroraProfile } from "../sdk/AuroraTypes";
@@ -27,9 +27,12 @@ export const initialState: ProfileState = {
 };
 
 export default function ProfileReducers(
-    state: ProfileState = initialState,
+    state: ProfileState,
     action: ProfilesActions
 ): ProfileState {
+    if (state === undefined) {
+        state = initialState;
+    }
     switch (action.type) {
         case ActionTypes.CACHE_PROFILES: {
             return cache(state, action);

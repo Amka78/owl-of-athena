@@ -5,10 +5,11 @@ import { Linking } from "react-native";
 
 import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";
+import { checkBoxCoreFunctions } from "../hooks/useCheckBox";
 import { validate } from "../services/SignupService";
 import { Signup } from "../types";
-import { useCheckBox, useTextBox, useTextBoxReturn } from "./";
-import { checkBoxCoreFunctions } from "../hooks/useCheckBox";
+import { useCheckBox, useTextBox } from "./";
+import { useTextBoxReturn } from "./useTextBox";
 //#endregion
 
 //#region Hooks

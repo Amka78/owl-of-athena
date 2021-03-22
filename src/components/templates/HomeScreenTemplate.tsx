@@ -2,15 +2,10 @@
 import React, { FunctionComponent } from "react";
 import { TouchableWithoutFeedback, View } from "react-native";
 
-import {
-    Button,
-    ErrorText,
-    ErrorTextProps,
-    FlatButton,
-    TimeView,
-    TimeViewProps,
-} from "../atoms";
+import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
 import { InternalView } from "../molecules";
+import { ErrorTextProps } from "../atoms/ErrorText";
+import { TimeViewProps } from "../atoms/TimeView";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,

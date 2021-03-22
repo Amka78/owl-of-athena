@@ -1,5 +1,5 @@
 //#region Import Modules
-import { Auth, GuestUser } from "./Auth";
+import { GuestUser } from "./Auth";
 import { CreateUser, Login } from "./Login";
 import { Signup } from "./Signup";
 import { AuroraSound } from "./Sound";
@@ -9,7 +9,6 @@ import { ExperimentalNavigator, WakeLockSentinel } from "./WakeLock";
 
 //#region Types
 export {
-    Auth,
     AuroraSound,
     CreateUser,
     ExperimentalNavigator,

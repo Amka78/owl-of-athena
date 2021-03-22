@@ -7,23 +7,24 @@ import { Dimens, Message, MessageKeys } from "../../constants";
 import {
     useConvertibleHeader,
     useLocale,
-    useTextBoxReturn,
     useWindowDimensions,
 } from "../../hooks";
+import { useTextBoxReturn } from "../../hooks/useTextBox";
 import {
     ContentText,
     ErrorText,
-    ErrorTextProps,
     FlexSpacer,
     LeftSideButton,
     TextBox,
 } from "../atoms";
+import { ErrorTextProps } from "../atoms/ErrorText";
 import {
     ConvertibleContentTitle,
     InternalView,
     RightSideButton,
 } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
+
 //#endregion
 
 //#region Type

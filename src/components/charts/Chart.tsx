@@ -229,7 +229,6 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         const { axisXEnabled, axisYEnabled } = this.props;
 
         if (axisXEnabled) {
-            // @ts-ignore
             this.axisX = xAxis ? xAxis : d3.axisBottom(this.scaleX!);
 
             this.axisGroupX = this.svg!.append("g");

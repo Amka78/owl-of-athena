@@ -3,12 +3,7 @@ import React, { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
 
-import {
-    SessionChartPie,
-    SessionChartPieProps,
-    SessionSleepChart,
-    SessionSleepChartProps,
-} from "..";
+import { SessionChartPie, SessionSleepChart } from "..";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import {
     useLocale,
@@ -17,8 +12,13 @@ import {
 } from "../../hooks";
 import { CurrentChart } from "../../types/CurrentChart";
 import { FlexSpacer, StandardView } from "../atoms";
-import { ChartRadialProgress, ChartRadialProgressProps } from "../charts";
+import {
+    ChartRadialProgress,
+    ChartRadialProgressProps,
+} from "../charts/ChartRadialProgress";
 import { SessionTimeView } from "../molecules";
+import { SessionChartPieProps } from "../SessionChartPie";
+import { SessionSleepChartProps } from "../SessionSleepChart";
 import { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 

@@ -8,21 +8,18 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import {
-    ContentTitleProps,
-    ErrorText,
-    ErrorTextProps,
-    LeftSideButton,
-} from "../atoms";
+import { ErrorText, LeftSideButton } from "../atoms";
+import { ContentTitleProps } from "../atoms/ContentTitle";
+import { ErrorTextProps } from "../atoms/ErrorText";
 import {
     ConvertibleContentTitle,
     InternalView,
     LabeledCheckBox,
-    LabeledCheckBoxProps,
     RightSideButton,
     ValidatableTextBox,
-    ValidatableTextBoxProps,
 } from "../molecules";
+import { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
+import { ValidatableTextBoxProps } from "../molecules/ValidatableTextBox";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 

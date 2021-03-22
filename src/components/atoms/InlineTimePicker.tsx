@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useTheme } from "react-native-paper";
 
-import { ThemeType } from "../../constants";
+import { ThemeType } from "../../constants/Theme";
 //#endregion
 
 //#region Types
@@ -87,6 +87,8 @@ class InlineTimePickerCore extends Component<
         if (this.props.mode) {
             this.mode = this.props.mode;
         }
+
+        this.style = {};
 
         if (this.props?.style) {
             this.style = this.props.style;

@@ -4,14 +4,9 @@ import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useLocale, useWindowDimensions } from "../../hooks";
-import {
-    Button,
-    ContentText,
-    ContentTextProps,
-    ContentTitle,
-    ContentTitleProps,
-    LeftSideButton,
-} from "../atoms";
+import { Button, ContentText, ContentTitle, LeftSideButton } from "../atoms";
+import { ContentTextProps } from "../atoms/ContentText";
+import { ContentTitleProps } from "../atoms/ContentTitle";
 import { InternalView, RightSideButton } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion

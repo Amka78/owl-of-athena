@@ -8,15 +8,10 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import {
-    ContentTitleProps,
-    ErrorText,
-    ErrorTextProps,
-    FlatButton,
-    LeftSideButton,
-    TextBox,
-    TextBoxProps,
-} from "../atoms";
+import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
+import { TextBoxProps } from "../atoms/TextBox";
+import { ContentTitleProps } from "../atoms/ContentTitle";
+import { ErrorTextProps } from "../atoms/ErrorText";
 import {
     ConvertibleContentTitle,
     InternalView,

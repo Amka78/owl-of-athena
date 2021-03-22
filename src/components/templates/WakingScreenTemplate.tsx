@@ -8,14 +8,10 @@ import {
     useLocale,
     useWindowDimensions,
 } from "../../hooks";
-import {
-    Button,
-    ContentText,
-    ContentTextProps,
-    ContentTitleProps,
-    TimeView,
-    TimeViewProps,
-} from "../atoms";
+import { Button, ContentText, TimeView } from "../atoms";
+import { ContentTextProps } from "../atoms/ContentText";
+import { ContentTitleProps } from "../atoms/ContentTitle";
+import { TimeViewProps } from "../atoms/TimeView";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
 //#endregion

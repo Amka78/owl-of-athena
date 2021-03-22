@@ -1,24 +1,24 @@
 //#region Import Moddules
 import { BatteryIcon } from "./BatteryIcon";
-import { InfoIcon } from "./InfoIcon";
-import { HomeIcon } from "./HomeIcon";
-import { MenuIcon } from "./MenuIcon";
 import { BluetoothIcon } from "./BluetoothIcon";
-import { Button, ButtonProps } from "./Button";
-import { CheckBox, CheckBoxProps } from "./CheckBox";
+import { Button } from "./Button";
+import { CheckBox } from "./CheckBox";
 import { CommunityIcon } from "./CommunityIcon";
-import { ContentText, ContentTextProps } from "./ContentText";
-import { ContentTitle, ContentTitleProps } from "./ContentTitle";
+import { ContentText } from "./ContentText";
+import { ContentTitle } from "./ContentTitle";
 import { DeleteIcon } from "./DeleteIcon";
-import { ErrorText, ErrorTextProps } from "./ErrorText";
+import { ErrorText } from "./ErrorText";
 import { FilterIcon } from "./FilterIcon";
-import { FlatButton, FlatButtonProps } from "./FlatButton";
+import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
-import { InlineTimePicker, InlineTimePickerProps } from "./InlineTimePicker";
+import { HomeIcon } from "./HomeIcon";
+import { InfoIcon } from "./InfoIcon";
+import { InlineTimePicker } from "./InlineTimePicker";
 import { LeftSideButton } from "./LeftSideButton";
 import { ListItem } from "./ListItem";
 import { LogoutIcon } from "./LogoutIcon";
 import { MenuContainer } from "./MenuContainer";
+import { MenuIcon } from "./MenuIcon";
 import { OfficialIcon } from "./OfficialIcon";
 import { PrivateIcon } from "./PrivateIcon";
 import { ProfilesIcon } from "./ProfilesIcon";
@@ -29,36 +29,28 @@ import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
 import { StarIcon } from "./StarIcon";
 import { TemplateIcon } from "./TemplateIcon";
-import { TextBox, TextBoxProps } from "./TextBox";
-import { TimeView, TimeViewProps } from "./TimeView";
-import { UpdateSnackBar, UpdateSnackBarProps } from "./UpdateSnackBar";
+import { TextBox } from "./TextBox";
+import { TimeView } from "./TimeView";
+import { UpdateSnackBar } from "./UpdateSnackBar";
 //#endregion
 
 //#region Export
 export {
     BatteryIcon,
     Button,
-    ButtonProps,
     BluetoothIcon,
     CommunityIcon,
     DeleteIcon,
     FilterIcon,
     TimeView,
-    TimeViewProps,
     CheckBox,
-    CheckBoxProps,
     ContentText,
-    ContentTextProps,
     ContentTitle,
-    ContentTitleProps,
     ErrorText,
-    ErrorTextProps,
-    FlatButtonProps,
     FlexSpacer,
     HomeIcon,
     InfoIcon,
     InlineTimePicker,
-    InlineTimePickerProps,
     LeftSideButton,
     ListItem,
     LogoutIcon,
@@ -74,10 +66,8 @@ export {
     PrivateIcon,
     RefreshIcon,
     TextBox,
-    TextBoxProps,
     StandardView,
     TemplateIcon,
     UpdateSnackBar,
-    UpdateSnackBarProps,
 };
 //#endregion
