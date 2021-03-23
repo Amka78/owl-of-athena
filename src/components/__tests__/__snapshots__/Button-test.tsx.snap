@@ -4,20 +4,68 @@ exports[`Button UnitTest renders correctly 1`] = `
 <withTheme(Button)
   disabled={false}
   labelStyle={
-    Object {
-      "color": "#070724",
-      "fontFamily": "calibre_app_semibold",
-      "fontSize": 24,
-    }
+    Array [
+      Object {
+        "fontFamily": "calibre_app_semibold",
+        "fontSize": 24,
+      },
+      undefined,
+    ]
   }
   mode="contained"
   style={
+    Array [
+      Object {
+        "borderRadius": 16,
+        "height": 50,
+        "marginBottom": 16,
+        "marginTop": 16,
+      },
+      Object {
+        "width": 270,
+      },
+      undefined,
+    ]
+  }
+  theme={
     Object {
-      "backgroundColor": "#00ffe6",
-      "borderRadius": 16,
-      "height": 50,
-      "marginBottom": 16,
-      "width": 654,
+      "animation": Object {
+        "scale": 1,
+      },
+      "colors": Object {
+        "accent": "#03dac4",
+        "backdrop": "rgba(0, 0, 0, 0.5)",
+        "background": "#f6f6f6",
+        "disabled": "rgba(0, 0, 0, 0.26)",
+        "error": "#B00020",
+        "notification": "#f50057",
+        "onBackground": "#000000",
+        "onSurface": "#000000",
+        "placeholder": "rgba(0, 0, 0, 0.54)",
+        "primary": "#6200ee",
+        "surface": "#ffffff",
+        "text": "#000000",
+      },
+      "dark": false,
+      "fonts": Object {
+        "light": Object {
+          "fontFamily": "System",
+          "fontWeight": "300",
+        },
+        "medium": Object {
+          "fontFamily": "System",
+          "fontWeight": "500",
+        },
+        "regular": Object {
+          "fontFamily": "System",
+          "fontWeight": "400",
+        },
+        "thin": Object {
+          "fontFamily": "System",
+          "fontWeight": "100",
+        },
+      },
+      "roundness": 4,
     }
   }
 >

@@ -1,4 +1,5 @@
-import { Auth, Login, CreateUser, User } from "../types";
+import { Login, CreateUser, User } from "../types";
+import { Auth } from "../types/Auth";
 import RestClient from "./RestClient";
 
 import { BaseUrl } from "../utils";

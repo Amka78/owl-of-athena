@@ -3,26 +3,86 @@
 exports[`WelcomeScreenTemplate UnitTest renders correctly 1`] = `
 <Component>
   <Component>
-    test
+    Welcome to Aurora!
   </Component>
   <Component>
-    test
+    Aurora’s advanced software will help you improve dream recall, achieve sounder sleep,and accelerate your journey towards maximizing your potential. Sweet dreams!
   </Component>
-  <View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Component
+        isLargeWidth={true}
+        onPress={[Function]}
+      >
+        Log In
+      </Component>
+      <Component
+        isLargeWidth={true}
+        onPress={[Function]}
+      >
+        Sign Up
+      </Component>
+    </View>
     <Component
       onPress={[Function]}
     >
-      test
+      StandAlone
     </Component>
+  </View>
+</Component>
+`;
+
+exports[`WelcomeScreenTemplate UnitTest renders correctly 2`] = `
+<Component>
+  <Component>
+    Auroraにようこそ！
+  </Component>
+  <Component>
+    このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!
+  </Component>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Component
+        isLargeWidth={true}
+        onPress={[Function]}
+      >
+        ログイン
+      </Component>
+      <Component
+        isLargeWidth={true}
+        onPress={[Function]}
+      >
+        サインアップ
+      </Component>
+    </View>
     <Component
       onPress={[Function]}
     >
-      test
-    </Component>
-    <Component
-      onPress={[Function]}
-    >
-      test
+      スタンドアローン
     </Component>
   </View>
 </Component>

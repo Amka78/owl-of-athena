@@ -79,25 +79,38 @@ const createAuroraSessionForTest = (
     session.no_signal_duration
         ? session.no_signal_duration
         : (session.no_signal_duration = 4000);
-    session.notes ? session.notes : (session.notes = "test");
-    session.rem_duration ? session.rem_duration : (session.rem_duration = 4000);
-    session.session_at ? session.session_at : (session.session_at = 4000);
-    session.session_duration
+    session.notes = session.notes ? session.notes : (session.notes = "test");
+    session.rem_duration = session.rem_duration
+        ? session.rem_duration
+        : (session.rem_duration = 4000);
+    session.session_at = session.session_at
+        ? session.session_at
+        : (session.session_at = 4000);
+    session.session_duration = session.session_duration
         ? session.session_duration
         : (session.session_duration = 4000);
-    session.session_txt
+    session.session_txt = session.session_txt
         ? session.session_txt
         : (session.session_txt = "session_txt");
-    session.session_url
+    session.session_url = session.session_url
         ? session.session_url
         : (session.session_url = "session_url");
-    session.sleep_onset ? session.sleep_onset : (session.sleep_onset = 200);
-    session.sleep_duration
+    session.sleep_onset = session.sleep_onset
+        ? session.sleep_onset
+        : (session.sleep_onset = 200);
+    session.sleep_duration = session.sleep_duration
         ? session.sleep_duration
         : (session.sleep_duration = 4000);
-    session.sleep_score ? session.sleep_score : (session.sleep_score = 90);
-    session.starred ? session.starred : (session.starred = false);
-    session.user_id ? session.user_id : (session.user_id = "testId");
+    session.sleep_score = session.sleep_score
+        ? session.sleep_score
+        : (session.sleep_score = 90);
+    session.starred = session.starred
+        ? session.starred
+        : (session.starred = false);
+    session.user_id = session.user_id
+        ? session.user_id
+        : (session.user_id = "testId");
+    session.type = "json";
 
     return new AuroraSession(session as AuroraSessionJson);
 };

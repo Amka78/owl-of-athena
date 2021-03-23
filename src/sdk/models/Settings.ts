@@ -1,4 +1,4 @@
-import { SoundList } from "../../components/molecules";
+import { AudioList } from "../../components/molecules/AudioDialog";
 
 export class Settings {
     public userId?: string;
@@ -17,11 +17,11 @@ export class Settings {
 
     public dslEnabled: boolean;
 
-    public alarmAudio: SoundList;
+    public alarmAudio: AudioList;
 
     public alarmAudioPath?: string;
 
-    public remStimAudio: SoundList;
+    public remStimAudio: AudioList;
 
     public remStimAudioPath?: string;
 
@@ -55,11 +55,11 @@ export class Settings {
 
         settings.alarmAudio
             ? (this.alarmAudio = settings.alarmAudio)
-            : (this.alarmAudio = SoundList.NONE);
+            : (this.alarmAudio = AudioList.NONE);
         this.alarmAudioPath = settings.alarmAudioPath;
         settings.remStimAudio
             ? (this.remStimAudio = settings.remStimAudio)
-            : (this.remStimAudio = SoundList.NONE);
+            : (this.remStimAudio = AudioList.NONE);
         this.remStimAudioPath = settings.remStimAudioPath;
         this.savedAt = settings.savedAt;
     }

@@ -6,6 +6,7 @@ import { FlatButtonProps } from "../atoms/FlatButton";
 import { LabeledTimeViewProps } from "../molecules/LabeledTimeView";
 import { LabeledRadioButtonProps } from "../molecules/LabeledRadioButton";
 import { LabeledSelectorMenuProps } from "../molecules/LabeledSelectorMenu";
+import { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
 //#endregion
 
 //#region Types
@@ -13,7 +14,16 @@ type TemplateButtonProps = Pick<ButtonProps, "onPress">;
 
 type TemplateTextBoxProps = Pick<TextBoxProps, "value" | "onChangeText">;
 
+type TemplateValidateTextBoxProps = TemplateTextBoxProps & {
+    errorText?: string;
+};
+
 type TemplateRadioButtonProps = Pick<LabeledRadioButtonProps, "value">;
+
+type TemplateLabeledCheckBoxProps = Pick<
+    LabeledCheckBoxProps,
+    "onPress" | "status" | "onLabelPress"
+>;
 
 type TemplateFlatButtonProps = Pick<FlatButtonProps, "onPress">;
 
@@ -31,6 +41,8 @@ type TemplateSelectorMenuProps = Pick<
 export {
     TemplateButtonProps,
     TemplateTextBoxProps,
+    TemplateLabeledCheckBoxProps,
+    TemplateValidateTextBoxProps,
     TemplateRadioButtonProps,
     TemplateFlatButtonProps,
     TemplatePickerItemProps,

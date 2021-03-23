@@ -26,12 +26,12 @@ export const useCheckLogging = (): void => {
                 } else {
                     if (!AuroraRestClientInstance.getTokenCallback) {
                         AuroraRestClientInstance.getTokenCallback = (): string =>
-                            token;
+                            token!;
                     }
 
                     if (!SessionRestClientInstance.getTokenCallback) {
                         SessionRestClientInstance.getTokenCallback = (): string =>
-                            token;
+                            token!;
                     }
                 }
             }

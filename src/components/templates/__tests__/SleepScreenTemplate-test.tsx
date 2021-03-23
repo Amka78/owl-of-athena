@@ -7,24 +7,26 @@ import React from "react";
 import { Message } from "../../../constants";
 import { createMock, toJson } from "../../../utils/TestHelper";
 import {
-    WakingScreenTemplate,
-    WakingScreenTemplateProps,
-} from "../WakingScreenTemplate";
+    SleepingScreenTemplate,
+    SleepingScreenTemplateProps,
+} from "../SleepingScreenTemplate";
 
-let component: ShallowWrapper<WakingScreenTemplateProps, unknown, unknown>;
+let component: ShallowWrapper<SleepingScreenTemplateProps, unknown, unknown>;
 
-describe("WakingScreenTemplate UnitTest", () => {
+describe("SleepingScreenTemplate UnitTest", () => {
     it.each(["us", "ja"])("renders correctly", (locale: string) => {
         const testEvent: () => void = () => {
             return;
         };
         Message.setLocale(locale);
         component = createMock(
-            <WakingScreenTemplate
+            <SleepingScreenTemplate
                 timeView={{ hours: 0, minutes: 0 }}
+                onRelockPress={testEvent}
                 onWakeupPress={testEvent}
+                wakeLockMessage={"test"}
                 dimens={{ isDesktop: true }}
-            ></WakingScreenTemplate>
+            ></SleepingScreenTemplate>
         );
 
         expect(toJson(component)).toMatchSnapshot();

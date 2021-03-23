@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
+<Component>
+  <Component
+    isDesktop={true}
+  >
+    Sign Up
+  </Component>
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="EMAIL ADDRESS"
+    onChangeText={[Function]}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="PASSWORD"
+    onChangeText={[Function]}
+    secureTextEntry={true}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="REENTER PASSWORD"
+    onChangeText={[Function]}
+    secureTextEntry={true}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    checkBoxStyle={
+      Object {
+        "flex": 0.5,
+      }
+    }
+    label="I agree to the terms of use"
+    labelPlace="right"
+    labelStyle={
+      Object {
+        "color": "#bcfeff",
+      }
+    }
+    onLabelPress={[Function]}
+    onPress={[Function]}
+    status="checked"
+    textContainerStyle={
+      Object {
+        "flex": 1.5,
+      }
+    }
+  />
+  <Component>
+    test
+  </Component>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Component
+      isLargeWidth={true}
+      onPress={[Function]}
+    >
+      Sign Up
+    </Component>
+    <Component
+      isLargeWidth={true}
+      onPress={[Function]}
+    >
+      CANCEL
+    </Component>
+  </View>
+</Component>
+`;
+
+exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
+<Component>
+  <Component
+    isDesktop={true}
+  >
+    サインアップ
+  </Component>
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="Eメールアドレス"
+    onChangeText={[Function]}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="パスワード"
+    onChangeText={[Function]}
+    secureTextEntry={true}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    errorText="test"
+    helperText="test"
+    keyboardType="email-address"
+    label="パスワード再入力"
+    onChangeText={[Function]}
+    secureTextEntry={true}
+    style={
+      Object {
+        "height": 45,
+        "marginBottom": 0,
+      }
+    }
+    value="test"
+  />
+  <Component
+    checkBoxStyle={
+      Object {
+        "flex": 0.5,
+      }
+    }
+    label="私は利用規約を了承しました。"
+    labelPlace="right"
+    labelStyle={
+      Object {
+        "color": "#bcfeff",
+      }
+    }
+    onLabelPress={[Function]}
+    onPress={[Function]}
+    status="checked"
+    textContainerStyle={
+      Object {
+        "flex": 1.5,
+      }
+    }
+  />
+  <Component>
+    test
+  </Component>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Component
+      isLargeWidth={true}
+      onPress={[Function]}
+    >
+      サインアップ
+    </Component>
+    <Component
+      isLargeWidth={true}
+      onPress={[Function]}
+    >
+      キャンセル
+    </Component>
+  </View>
+</Component>
+`;

@@ -1,13 +1,13 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { IconProps } from "react-native-vector-icons/Icon";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { ConnectionStates } from "../../sdk/AuroraConstants";
+
 import { Colors, Dimens } from "../../constants";
+import { ConnectionStates } from "../../sdk/AuroraConstants";
+import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types
-export type BluetoothIconProps = Omit<IconProps, "name" | "color"> & {
+export type BluetoothIconProps = Omit<TemplateIconProps, "name" | "color"> & {
     connectionStates: ConnectionStates;
 };
 //#endregion
@@ -35,12 +35,12 @@ export const BluetoothIcon: FunctionComponent<BluetoothIconProps> = (
         stateColor = Colors.aurora_connected;
     }
     return (
-        <MaterialCommunityIcons
+        <TemplateIcon
             {...props}
             size={props.size ? props.size : Dimens.menu_icon_size}
             color={stateColor}
             name={stateIcon}
-        ></MaterialCommunityIcons>
+        ></TemplateIcon>
     );
 };
 //#endregion

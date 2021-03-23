@@ -5,7 +5,7 @@ import "react-native";
 import { ShallowWrapper } from "enzyme";
 import React from "react";
 
-import { TestHelper } from "../../utils/TestHelper";
+import { createMock, toJson } from "../../utils/TestHelper";
 import { Button, ButtonProps } from "../atoms/Button";
 //#endregion
 
@@ -14,9 +14,9 @@ let component: ShallowWrapper<ButtonProps, unknown, unknown>;
 
 describe("Button UnitTest", () => {
     it("renders correctly", () => {
-        component = TestHelper.createMock(<Button>{"test"}</Button>);
+        component = createMock(<Button>{"test"}</Button>);
 
-        expect(TestHelper.toJson(component)).toMatchSnapshot();
+        expect(toJson(component)).toMatchSnapshot();
     });
 
     /*

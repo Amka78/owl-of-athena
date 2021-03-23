@@ -9,7 +9,7 @@ export type LabeledRadioButtonProps = {
     containerStyle?: ViewStyle;
     textStyle?: TextStyle;
     value: string;
-    label: string;
+    label: React.ReactNode;
     radioButtonColor?: string;
     radioButtonUncheckedColor?: string;
     onLabelPress?: () => void;

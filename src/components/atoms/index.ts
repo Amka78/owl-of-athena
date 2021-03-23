@@ -28,7 +28,6 @@ import { SessionsIcon } from "./SessionsIcon";
 import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
 import { StarIcon } from "./StarIcon";
-import { TemplateIcon } from "./TemplateIcon";
 import { TextBox } from "./TextBox";
 import { TimeView } from "./TimeView";
 import { UpdateSnackBar } from "./UpdateSnackBar";
@@ -67,7 +66,6 @@ export {
     RefreshIcon,
     TextBox,
     StandardView,
-    TemplateIcon,
     UpdateSnackBar,
 };
 //#endregion

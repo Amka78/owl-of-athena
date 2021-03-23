@@ -3,25 +3,19 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useLocale } from "../../hooks";
 import { Button, ContentText, TimeView } from "../atoms";
-import { ContentTextProps } from "../atoms/ContentText";
-import { ContentTitleProps } from "../atoms/ContentTitle";
-import { TimeViewProps } from "../atoms/TimeView";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
+import { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
 export type SleepingScreenTemplateProps = {
-    contentTitle?: ContentTitleProps;
-    contentText: ContentTextProps;
-    timeView: Omit<TimeViewProps, "mode">;
-    wakeupButton: TemplateButtonProps;
+    wakeLockMessage: string;
+    onRelockPress: () => void;
+    timeView: TemplateTimeViewProps;
+    onWakeupPress: () => void;
+    dimens: { isDesktop: boolean };
     locale?: string;
 };
 //#endregion
@@ -32,21 +26,14 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
 ) => {
     useLocale(props.locale);
 
-    const dimens = useWindowDimensions();
-    useConvertibleHeader(
-        MessageKeys.sleeping_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
     return (
         <InternalView>
-            <ConvertibleContentTitle
-                {...props.contentTitle}
-                isDesktop={dimens.isDesktop}
-            >
+            <ConvertibleContentTitle isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.sleeping_title)}
             </ConvertibleContentTitle>
-            <ContentText {...props.contentText}></ContentText>
+            <ContentText onPress={props.onRelockPress}>
+                {props.wakeLockMessage}
+            </ContentText>
             <View style={{ flex: 1 }}>
                 <TimeView
                     {...props.timeView}
@@ -59,7 +46,7 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
                     }}
                 ></TimeView>
             </View>
-            <Button {...props.wakeupButton}>
+            <Button onPress={props.onWakeupPress}>
                 {Message.get(MessageKeys.sleeping_wakeup_button)}
             </Button>
         </InternalView>

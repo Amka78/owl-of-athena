@@ -3,14 +3,8 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useLocale } from "../../hooks";
 import { ErrorText, LeftSideButton } from "../atoms";
-import { ContentTitleProps } from "../atoms/ContentTitle";
-import { ErrorTextProps } from "../atoms/ErrorText";
 import {
     ConvertibleContentTitle,
     InternalView,
@@ -18,21 +12,27 @@ import {
     RightSideButton,
     ValidatableTextBox,
 } from "../molecules";
-import { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
-import { ValidatableTextBoxProps } from "../molecules/ValidatableTextBox";
-import { TemplateButtonProps } from "./TempatedProps";
+import {
+    TemplateLabeledCheckBoxProps,
+    TemplateValidateTextBoxProps,
+} from "./TempatedProps";
 //#endregion
 
 //#region Types
 export type SignupScreenTemplateProps = {
-    contentTitle?: ContentTitleProps;
-    emailTextBox: ValidatableTextBoxProps;
-    passwordTextBox: ValidatableTextBoxProps;
-    passwordConfirmTextBox: ValidatableTextBoxProps;
-    labeledCheckBox: LabeledCheckBoxProps;
-    errorText: ErrorTextProps;
-    signupButton: TemplateButtonProps;
-    cancelButton: TemplateButtonProps;
+    emailTextBox: TemplateValidateTextBoxProps;
+    passwordTextBox: TemplateValidateTextBoxProps;
+    passwordConfirmTextBox: TemplateValidateTextBoxProps;
+    labeledCheckBox: TemplateLabeledCheckBoxProps;
+    errorText?: string;
+    onSignupPress: () => void;
+    onCancelPress: () => void;
+    dimens: {
+        isDesktop: boolean;
+        isSmallHeight: boolean;
+        isLargeWidth: boolean;
+        isVertical: boolean;
+    };
     locale?: string;
 };
 //#endregion
@@ -42,32 +42,26 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
     props: SignupScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const dimens = useWindowDimensions();
-    useConvertibleHeader(
-        MessageKeys.signup_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
 
     const signupButton = (
         <LeftSideButton
-            {...props.signupButton}
-            isLargeWidth={dimens.isLargeWidth}
+            onPress={props.onSignupPress}
+            isLargeWidth={props.dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.signup_button)}
         </LeftSideButton>
     );
     const cancelButton = (
         <RightSideButton
-            {...props.cancelButton}
-            isLargeWidth={dimens.isLargeWidth}
+            onPress={props.onCancelPress}
+            isLargeWidth={props.dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.cancel)}
         </RightSideButton>
     );
 
     let bottomButtons;
-    if (dimens.isDesktop || dimens.isSmallHeight) {
+    if (props.dimens.isDesktop || props.dimens.isSmallHeight) {
         bottomButtons = (
             <View style={{ flexDirection: "row" }}>
                 {signupButton}
@@ -78,15 +72,18 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
         bottomButtons = signupButton;
     }
 
-    const textBoxMarginBottom = dimens.isSmallHeight ? 0 : Dimens.button_margin;
-    const textBoxHeight = dimens.isSmallHeight ? 45 : undefined;
+    const textBoxMarginBottom = props.dimens.isSmallHeight
+        ? 0
+        : Dimens.button_margin;
+    const textBoxHeight = props.dimens.isSmallHeight ? 45 : undefined;
     return (
         <InternalView>
-            <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
+            <ConvertibleContentTitle isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.signup_title)}
             </ConvertibleContentTitle>
             <ValidatableTextBox
                 {...props.emailTextBox}
+                helperText={props.errorText}
                 keyboardType={"email-address"}
                 label={Message.get(MessageKeys.signup_input_email)}
                 style={{
@@ -96,6 +93,8 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
             ></ValidatableTextBox>
             <ValidatableTextBox
                 {...props.passwordTextBox}
+                helperText={props.errorText}
+                keyboardType={"email-address"}
                 secureTextEntry={true}
                 label={Message.get(MessageKeys.signup_input_password)}
                 style={{
@@ -105,6 +104,8 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
             ></ValidatableTextBox>
             <ValidatableTextBox
                 {...props.passwordConfirmTextBox}
+                helperText={props.errorText}
+                keyboardType={"email-address"}
                 secureTextEntry={true}
                 label={Message.get(MessageKeys.signup_input_password_confirm)}
                 style={{
@@ -115,16 +116,17 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
             <LabeledCheckBox
                 {...props.labeledCheckBox}
                 checkBoxStyle={{
-                    flex: dimens.height > dimens.width ? 0.5 : 0.8,
+                    flex: props.dimens.isVertical ? 0.5 : 0.8,
                 }}
                 label={Message.get(MessageKeys.signup_terms)}
                 labelPlace={"right"}
                 labelStyle={{ color: Colors.cyan }}
                 textContainerStyle={{
-                    flex: dimens.height > dimens.width ? 1.5 : 1.2,
+                    flex: props.dimens.isVertical ? 1.5 : 1.2,
                 }}
             ></LabeledCheckBox>
-            <ErrorText {...props.errorText}></ErrorText>
+
+            <ErrorText>{props.errorText}</ErrorText>
             {bottomButtons}
         </InternalView>
     );

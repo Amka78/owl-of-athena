@@ -229,12 +229,15 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         const { axisXEnabled, axisYEnabled } = this.props;
 
         if (axisXEnabled) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             this.axisX = xAxis ? xAxis : d3.axisBottom(this.scaleX!);
 
             this.axisGroupX = this.svg!.append("g");
         }
 
         if (axisYEnabled) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this.axisY = yAxis ? yAxis : d3.axisLeft(this.scaleY!);
 

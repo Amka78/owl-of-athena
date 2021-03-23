@@ -4,8 +4,8 @@ import { useWindowDimensions as useDimensions } from "react-native";
 import { Dimens } from "../constants";
 //#endregion
 
-//#region Hooks
-export const useWindowDimensions = (): {
+//#region Types
+export type Dimensions = {
     fontScale: number;
     scale: number;
     height: number;
@@ -15,7 +15,9 @@ export const useWindowDimensions = (): {
     isSmallHeight: boolean;
     isVertical: boolean;
     isHorizontal: boolean;
-} => {
+};
+//#region Hooks
+export const useWindowDimensions = (): Dimensions => {
     const dimension = useDimensions();
 
     const isDesktop =

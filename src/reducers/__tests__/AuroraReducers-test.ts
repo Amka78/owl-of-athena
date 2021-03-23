@@ -1,15 +1,13 @@
 import AuroraReducer from "../AuroraReducers";
-import { SettingsActions } from "../../actions";
+import { SettingsActions } from "../../actions/SettingsActions";
 import { AuroraState } from "../../state";
 import { Settings } from "../../sdk/models";
-import { AuroraProfile } from "../../sdk/AuroraTypes";
 describe("AuroraReducers-test", () => {
     let firstResult: AuroraState;
     const initialSetting = new Settings({});
     const testUserId = "testid";
     beforeAll(() => {
         const state: AuroraState = {
-            profileList: new Array<AuroraProfile>(),
             userSettings: new Settings({}),
         };
 
@@ -37,6 +35,6 @@ describe("AuroraReducers-test", () => {
 
         const updateResult = AuroraReducer(firstResult, updateAction);
 
-        expect(updateResult.userSettings!.profileTitle).toBe("update");
+        expect(updateResult.userSettings.profileTitle).toBe("update");
     });
 });

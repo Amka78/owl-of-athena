@@ -3,25 +3,17 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useLocale } from "../../hooks";
 import { Button, ContentText, TimeView } from "../atoms";
-import { ContentTextProps } from "../atoms/ContentText";
-import { ContentTitleProps } from "../atoms/ContentTitle";
-import { TimeViewProps } from "../atoms/TimeView";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
+import { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
 export type WakingScreenTemplateProps = {
-    contentTitle?: ContentTitleProps;
-    timeView: Omit<TimeViewProps, "mode">;
-    wakeupButton: TemplateButtonProps;
-    contentText?: ContentTextProps;
+    timeView: TemplateTimeViewProps;
+    onWakeupPress: () => void;
+    dimens: { isDesktop: boolean };
     locale?: string;
 };
 //#endregion
@@ -31,19 +23,10 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
     props: WakingScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const dimens = useWindowDimensions();
 
-    useConvertibleHeader(
-        MessageKeys.waking_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
     return (
         <InternalView>
-            <ConvertibleContentTitle
-                {...props.contentTitle}
-                isDesktop={dimens.isDesktop}
-            >
+            <ConvertibleContentTitle isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.waking_title)}
             </ConvertibleContentTitle>
             <View style={{ flex: 1 }}>
@@ -59,10 +42,8 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
                 ></TimeView>
             </View>
             <View style={{ alignItems: "center" }}>
-                <Button {...props.wakeupButton}>
-                    {Message.get(MessageKeys.waking_wakeup_button)}
-                </Button>
-                <ContentText {...props.contentText}>
+                <Button>{Message.get(MessageKeys.waking_wakeup_button)}</Button>
+                <ContentText>
                     {Message.get(MessageKeys.waking_tip_text)}
                 </ContentText>
             </View>

@@ -4,26 +4,26 @@ import "react-native";
 import { ShallowWrapper } from "enzyme";
 import React from "react";
 import { WelcomeScreenTemplate } from "../WelcomeScreenTemplate";
-import { TestHelper } from "../../../utils/TestHelper";
+import { createMock, toJson } from "../../../utils/TestHelper";
+import { Message } from "../../../constants";
 
 let component: ShallowWrapper<unknown, unknown, unknown>;
 
 describe("WelcomeScreenTemplate UnitTest", () => {
-    it("renders correctly", () => {
-        const testKey = "test";
+    it.each(["us", "ja"])("renders correctly", (locale: string) => {
         const testEvent: () => void = () => {
             return;
         };
-        component = TestHelper.createMock(
+        Message.setLocale(locale);
+        component = createMock(
             <WelcomeScreenTemplate
-                contentTitle={{ children: testKey }}
-                contentText={{ children: testKey }}
-                standaloneButton={{ children: testKey, onPress: testEvent }}
-                loginButton={{ children: testKey, onPress: testEvent }}
-                signupButton={{ children: testKey, onPress: testEvent }}
+                onLoginPress={testEvent}
+                onSignupPress={testEvent}
+                onStandalonePress={testEvent}
+                dimens={{ isHorizontal: true, isLargeWidth: true }}
             ></WelcomeScreenTemplate>
         );
 
-        expect(TestHelper.toJson(component)).toMatchSnapshot();
+        expect(toJson(component)).toMatchSnapshot();
     });
 });

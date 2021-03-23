@@ -1,3 +1,3 @@
 export default {
-    lastUsedEmail: "lastUsedEmail"
+    lastUsedEmail: "lastUsedEmail",
 };

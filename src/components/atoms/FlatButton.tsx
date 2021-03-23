@@ -8,7 +8,7 @@ import { Dimens, Fonts } from "../../constants";
 
 //#region Types
 export type FlatButtonProps = {
-    children: string;
+    children: React.ReactNode;
     labelStyle?: TextStyle;
     contentStyle?: ViewStyle;
     onPress?: () => void;

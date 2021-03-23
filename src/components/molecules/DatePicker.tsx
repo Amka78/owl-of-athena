@@ -28,6 +28,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
     }, [showDateTimePicker]);
 
     const onChange = useCallback((event: Event, date?: Date) => {
+        console.debug(`event:${event}`);
         setShowDateTimePicker(false);
         setDate(moment(date));
     }, []);
@@ -48,7 +49,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (
                         mode={"date"}
                         is24Hour={true}
                         display="default"
-                        onChange={onChange}
+                        onChange={onChange as any}
                     ></DateTimePicker>
                 )}
             </View>

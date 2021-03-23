@@ -18,8 +18,8 @@ import { dispatch } from "react-redux";
 //#region Hooks
 export const useSleeping = (): {
     wakeLockTextKey: string;
-    contentTextPress: () => void;
-    wakeupButtonPress: () => void;
+    onRelockPress: () => void;
+    onWakeupPress: () => void;
     settings: Settings;
 } => {
     useCheckLogging();
@@ -50,6 +50,11 @@ export const useSleeping = (): {
     const wakeupButtonPress = useCallback((): void => {
         AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
     }, []);
-    return { wakeLockTextKey, contentTextPress, wakeupButtonPress, settings };
+    return {
+        wakeLockTextKey,
+        onRelockPress: contentTextPress,
+        onWakeupPress: wakeupButtonPress,
+        settings,
+    };
 };
 //#endregion

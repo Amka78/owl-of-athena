@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { useWindowDimensions } from "../../hooks";
 
 import { useWelcome } from "../../hooks/useWelcome";
 import { WelcomeScreenTemplate } from "./../templates/WelcomeScreenTemplate";
@@ -8,17 +9,13 @@ import { WelcomeScreenTemplate } from "./../templates/WelcomeScreenTemplate";
 //#region Component
 export const WelcomeScreen: FunctionComponent = () => {
     const useWelcomeHook = useWelcome();
+    const dimens = useWindowDimensions();
     return (
         <WelcomeScreenTemplate
-            standaloneButton={{
-                onPress: useWelcomeHook.onStandalonePress,
-            }}
-            loginButton={{
-                onPress: useWelcomeHook.onLoginPress,
-            }}
-            signupButton={{
-                onPress: useWelcomeHook.onSignupPress,
-            }}
+            onStandalonePress={useWelcomeHook.onStandalonePress}
+            onLoginPress={useWelcomeHook.onLoginPress}
+            onSignupPress={useWelcomeHook.onSignupPress}
+            dimens={dimens}
         ></WelcomeScreenTemplate>
     );
 };

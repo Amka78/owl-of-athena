@@ -1,12 +1,12 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { IconProps } from "react-native-vector-icons/Icon";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import { Dimens } from "../../constants";
+import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types
-export type LogoutIconProps = Omit<IconProps, "name">;
+export type LogoutIconProps = Omit<TemplateIconProps, "name">;
 //#endregion
 
 //#region Component
@@ -14,11 +14,11 @@ export const LogoutIcon: FunctionComponent<LogoutIconProps> = (
     props: LogoutIconProps
 ) => {
     return (
-        <MaterialCommunityIcons
+        <TemplateIcon
             {...props}
             size={props.size ? props.size : Dimens.menu_icon_size}
             name={"logout"}
-        ></MaterialCommunityIcons>
+        ></TemplateIcon>
     );
 };
 //#endregion

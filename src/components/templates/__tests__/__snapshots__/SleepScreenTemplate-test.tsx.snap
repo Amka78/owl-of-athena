@@ -1,11 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WakingScreenTemplate UnitTest renders correctly 1`] = `
+exports[`SleepingScreenTemplate UnitTest renders correctly 1`] = `
 <Component>
   <Component
     isDesktop={true}
   >
-    Time to wake up!
+    Sweet dreams...
+  </Component>
+  <Component
+    onPress={[Function]}
+  >
+    test
   </Component>
   <View
     style={
@@ -30,29 +35,25 @@ exports[`WakingScreenTemplate UnitTest renders correctly 1`] = `
       }
     />
   </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-      }
-    }
+  <Component
+    onPress={[Function]}
   >
-    <Component>
-      Wake Up
-    </Component>
-    <Component>
-      Tip: You can use the Aurora’s button to stop the alarm.
-    </Component>
-  </View>
+    Wake Up
+  </Component>
 </Component>
 `;
 
-exports[`WakingScreenTemplate UnitTest renders correctly 2`] = `
+exports[`SleepingScreenTemplate UnitTest renders correctly 2`] = `
 <Component>
   <Component
     isDesktop={true}
   >
-    起きてください!
+    よい夢を...
+  </Component>
+  <Component
+    onPress={[Function]}
+  >
+    test
   </Component>
   <View
     style={
@@ -77,19 +78,10 @@ exports[`WakingScreenTemplate UnitTest renders correctly 2`] = `
       }
     />
   </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-      }
-    }
+  <Component
+    onPress={[Function]}
   >
-    <Component>
-      起きる
-    </Component>
-    <Component>
-      Tip: アラームを止めるためにAuroraのボタンが使えます。
-    </Component>
-  </View>
+    起きる
+  </Component>
 </Component>
 `;

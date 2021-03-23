@@ -3,21 +3,17 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
-import { useLocale, useWindowDimensions } from "../../hooks";
+import { useLocale } from "../../hooks";
 import { Button, ContentText, ContentTitle, LeftSideButton } from "../atoms";
-import { ContentTextProps } from "../atoms/ContentText";
-import { ContentTitleProps } from "../atoms/ContentTitle";
 import { InternalView, RightSideButton } from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
 export type WelcomeScreenTemplateProps = {
-    contentTitle?: ContentTitleProps;
-    contentText?: ContentTextProps;
-    standaloneButton: TemplateButtonProps;
-    loginButton: TemplateButtonProps;
-    signupButton: TemplateButtonProps;
+    onStandalonePress: () => void;
+    onLoginPress: () => void;
+    onSignupPress: () => void;
+    dimens: { isLargeWidth: boolean; isHorizontal: boolean };
     locale?: string;
 };
 //#endregion
@@ -27,43 +23,35 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
     props: WelcomeScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const dimens = useWindowDimensions();
 
+    const isTwoColumnsBottoms =
+        props.dimens.isHorizontal || props.dimens.isLargeWidth;
     return (
         <InternalView>
-            <ContentTitle {...props.contentTitle}>
+            <ContentTitle>
                 {Message.get(MessageKeys.welcome_title)}
             </ContentTitle>
-            <ContentText {...props.contentText}>
-                {Message.get(MessageKeys.welcome_text)}
-            </ContentText>
+            <ContentText>{Message.get(MessageKeys.welcome_text)}</ContentText>
             <View style={{ alignItems: "center" }}>
                 <View
                     style={{
-                        flexDirection:
-                            dimens.isHorizontal || dimens.isLargeWidth
-                                ? "row"
-                                : "column",
+                        flexDirection: isTwoColumnsBottoms ? "row" : "column",
                     }}
                 >
                     <LeftSideButton
-                        {...props.loginButton}
-                        isLargeWidth={
-                            dimens.isHorizontal || dimens.isLargeWidth
-                        }
+                        onPress={props.onLoginPress}
+                        isLargeWidth={isTwoColumnsBottoms}
                     >
                         {Message.get(MessageKeys.welcome_login_button)}
                     </LeftSideButton>
                     <RightSideButton
-                        {...props.signupButton}
-                        isLargeWidth={
-                            dimens.isHorizontal || dimens.isLargeWidth
-                        }
+                        onPress={props.onSignupPress}
+                        isLargeWidth={isTwoColumnsBottoms}
                     >
                         {Message.get(MessageKeys.welcome_signup_button)}
                     </RightSideButton>
                 </View>
-                <Button {...props.standaloneButton}>
+                <Button onPress={props.onStandalonePress}>
                     {Message.get(MessageKeys.welcome_standalone_button)}
                 </Button>
             </View>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import * as d3 from "d3";
 import React from "react";
 import { G, Path, Rect, Text } from "react-native-svg";
@@ -125,6 +126,7 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
                             return (
                                 <Path
                                     key={index}
+                                    //@ts-ignore
                                     d={currentAngle()}
                                     fill={categoryColors[index]}
                                 ></Path>
