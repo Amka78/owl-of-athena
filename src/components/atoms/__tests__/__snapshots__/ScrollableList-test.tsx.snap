@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScrollableList UnitTest renders correctly 1`] = `
+<ScrollView
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <withTheme(List.Section)
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    [
+    <View />
+    ,
+    <View />
+    ]
+  </withTheme(List.Section)>
+</ScrollView>
+`;
