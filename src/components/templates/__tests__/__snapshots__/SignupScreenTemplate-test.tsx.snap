@@ -84,13 +84,13 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     }
   >
     <Component
-      isLargeWidth={true}
+      needMargin={true}
       onPress={[Function]}
     >
       Sign Up
     </Component>
     <Component
-      isLargeWidth={true}
+      needMargin={true}
       onPress={[Function]}
     >
       CANCEL
@@ -183,13 +183,13 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     }
   >
     <Component
-      isLargeWidth={true}
+      needMargin={true}
       onPress={[Function]}
     >
       サインアップ
     </Component>
     <Component
-      isLargeWidth={true}
+      needMargin={true}
       onPress={[Function]}
     >
       キャンセル

@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { useWindowDimensions } from "../../hooks";
 
 import { useHome } from "../../hooks/useHome";
 import { HomeScreenTemplate } from "./../templates/HomeScreenTemplate";
@@ -8,6 +9,7 @@ import { HomeScreenTemplate } from "./../templates/HomeScreenTemplate";
 //#region Component
 export const HomeScreen: FunctionComponent = () => {
     const homeHook = useHome();
+    const dimens = useWindowDimensions();
     return (
         <HomeScreenTemplate
             timeViewField={{
@@ -26,6 +28,7 @@ export const HomeScreen: FunctionComponent = () => {
             goToSleepButton={{
                 onPress: homeHook.goToSleepPress,
             }}
+            dimens={dimens}
         ></HomeScreenTemplate>
     );
 };

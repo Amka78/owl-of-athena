@@ -1,13 +1,14 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
-import { useForgotPassword } from "../../hooks";
+import { useForgotPassword, useWindowDimensions } from "../../hooks";
 import { ForgotPasswordScreenTemplate } from "../templates/ForgotPasswordScreenTemplate";
 //#endregion
 
 //#region Component
 export const ForgotPasswordScreen: FunctionComponent = () => {
     const forgotPassword = useForgotPassword(false);
+    const dimens = useWindowDimensions();
     return (
         <ForgotPasswordScreenTemplate
             emailAddress={{
@@ -22,6 +23,7 @@ export const ForgotPasswordScreen: FunctionComponent = () => {
             cancelButton={{
                 onPress: forgotPassword.onCancelPress,
             }}
+            dimens={dimens}
         ></ForgotPasswordScreenTemplate>
     );
 };

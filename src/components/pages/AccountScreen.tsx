@@ -1,13 +1,14 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
-import { useAcount } from "../../hooks";
+import { useAcount, useWindowDimensions } from "../../hooks";
 import { AccountScreenTemplate } from "./../templates/AccountScreenTemplate";
 //#endregion
 
 //#region Component
 export const AccountScreen: FunctionComponent = () => {
     const accountHook = useAcount();
+    const dimens = useWindowDimensions();
 
     return (
         <AccountScreenTemplate
@@ -39,6 +40,7 @@ export const AccountScreen: FunctionComponent = () => {
             logoutButton={{
                 onPress: accountHook.onLogoutPress,
             }}
+            dimens={dimens}
         ></AccountScreenTemplate>
     );
 };

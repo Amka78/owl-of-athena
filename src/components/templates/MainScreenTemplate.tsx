@@ -4,6 +4,7 @@ import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale, useWindowDimensions } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
 import {
@@ -27,6 +28,7 @@ export type MainScreenTemplateProps = {
     onProfilesPress: () => void;
     onSessionsPress: () => void;
     onSettingsPress: () => void;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -38,10 +40,9 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
     props: MainScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const dimens = useWindowDimensions();
     const [selectedMenu, setSelectedMenu] = useState<BottomMenus>("home");
 
-    const statusBar = !dimens.isDesktop ? (
+    const statusBar = !props.dimens.isDesktop ? (
         <FlatButton
             contentStyle={{
                 backgroundColor:
@@ -69,7 +70,7 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
         </FlatButton>
     ) : undefined;
 
-    const bottomTabBar = dimens.isVertical ? (
+    const bottomTabBar = props.dimens.isVertical ? (
         <View
             style={{
                 backgroundColor: Colors.navy,

@@ -4,6 +4,7 @@ import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, ContentTitle, LeftSideButton } from "../atoms";
 import { InternalView, RightSideButton } from "../molecules";
 //#endregion
@@ -13,7 +14,7 @@ export type WelcomeScreenTemplateProps = {
     onStandalonePress: () => void;
     onLoginPress: () => void;
     onSignupPress: () => void;
-    dimens: { isLargeWidth: boolean; isHorizontal: boolean };
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -40,18 +41,23 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
                 >
                     <LeftSideButton
                         onPress={props.onLoginPress}
-                        isLargeWidth={isTwoColumnsBottoms}
+                        screenWidth={props.dimens.width}
+                        needMargin={isTwoColumnsBottoms}
                     >
                         {Message.get(MessageKeys.welcome_login_button)}
                     </LeftSideButton>
                     <RightSideButton
                         onPress={props.onSignupPress}
-                        isLargeWidth={isTwoColumnsBottoms}
+                        screenWidth={props.dimens.width}
+                        needMargin={isTwoColumnsBottoms}
                     >
                         {Message.get(MessageKeys.welcome_signup_button)}
                     </RightSideButton>
                 </View>
-                <Button onPress={props.onStandalonePress}>
+                <Button
+                    onPress={props.onStandalonePress}
+                    screenWidth={props.dimens.width}
+                >
                     {Message.get(MessageKeys.welcome_standalone_button)}
                 </Button>
             </View>

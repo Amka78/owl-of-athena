@@ -4,6 +4,7 @@ import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
 import { TemplateTimeViewProps } from "./TempatedProps";
@@ -13,7 +14,7 @@ import { TemplateTimeViewProps } from "./TempatedProps";
 export type WakingScreenTemplateProps = {
     timeView: TemplateTimeViewProps;
     onWakeupPress: () => void;
-    dimens: { isDesktop: boolean };
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -42,7 +43,12 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
                 ></TimeView>
             </View>
             <View style={{ alignItems: "center" }}>
-                <Button>{Message.get(MessageKeys.waking_wakeup_button)}</Button>
+                <Button
+                    onPress={props.onWakeupPress}
+                    screenWidth={props.dimens.width}
+                >
+                    {Message.get(MessageKeys.waking_wakeup_button)}
+                </Button>
                 <ContentText>
                     {Message.get(MessageKeys.waking_tip_text)}
                 </ContentText>

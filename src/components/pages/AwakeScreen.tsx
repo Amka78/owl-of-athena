@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { useWindowDimensions } from "../../hooks";
 
 import { useAwake } from "../../hooks/useAwake";
 import { AwakeScreenTemplate } from "./../templates/AwakeScreenTemplate";
@@ -8,6 +9,7 @@ import { AwakeScreenTemplate } from "./../templates/AwakeScreenTemplate";
 //#region Component
 export const AwakeScreen: FunctionComponent = () => {
     const awakeHook = useAwake();
+    const dimens = useWindowDimensions();
 
     return (
         <AwakeScreenTemplate
@@ -17,6 +19,7 @@ export const AwakeScreen: FunctionComponent = () => {
             skipButton={{
                 onPress: awakeHook.skipButtonPress,
             }}
+            dimens={dimens}
         ></AwakeScreenTemplate>
     );
 };

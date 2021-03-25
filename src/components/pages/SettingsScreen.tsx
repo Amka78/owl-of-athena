@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
+import { useWindowDimensions } from "../../hooks";
 
 import { useSetting } from "../../hooks/useSetting";
 import { SettingsScreenTemplate } from "../templates/SettingsScreenTemplate";
@@ -8,6 +9,7 @@ import { SettingsScreenTemplate } from "../templates/SettingsScreenTemplate";
 //#region Component
 export const SettingsScreen: FunctionComponent = () => {
     const settingsHook = useSetting();
+    const dimens = useWindowDimensions();
     return (
         <SettingsScreenTemplate
             inlineTimePicker={{
@@ -45,6 +47,7 @@ export const SettingsScreen: FunctionComponent = () => {
             cancelButton={{
                 onPress: settingsHook.cancelButtonPress,
             }}
+            dimens={dimens}
         ></SettingsScreenTemplate>
     );
 };

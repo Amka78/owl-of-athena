@@ -13,6 +13,7 @@ exports[`Button UnitTest renders correctly 1`] = `
     ]
   }
   mode="contained"
+  screenWidth={200}
   style={
     Array [
       Object {
@@ -22,7 +23,7 @@ exports[`Button UnitTest renders correctly 1`] = `
         "marginTop": 16,
       },
       Object {
-        "width": 270,
+        "width": 104,
       },
       undefined,
     ]

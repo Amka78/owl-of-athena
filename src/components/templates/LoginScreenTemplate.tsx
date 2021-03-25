@@ -3,11 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useConvertibleHeader, useLocale } from "../../hooks";
 import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
 import { TextBoxProps } from "../atoms/TextBox";
 import { ContentTitleProps } from "../atoms/ContentTitle";
@@ -18,6 +14,7 @@ import {
     RightSideButton,
 } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types
@@ -30,6 +27,7 @@ export type LoginScreenTemplateProps = {
     cancelButton: TemplateButtonProps;
     forgotPasswordButton: TemplateButtonProps;
     signupButton: TemplateButtonProps;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -40,18 +38,17 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
 ) => {
     useLocale(props.locale);
 
-    const dimens = useWindowDimensions();
-
     useConvertibleHeader(
         MessageKeys.login_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
+        props.dimens.isDesktop,
+        props.dimens.isSmallHeight
     );
 
     const loginButton = (
         <LeftSideButton
             {...props.loginButton}
-            isLargeWidth={dimens.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.login_button)}
         </LeftSideButton>
@@ -59,7 +56,8 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
     const cancelButton = (
         <RightSideButton
             {...props.cancelButton}
-            isLargeWidth={dimens.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.cancel)}
         </RightSideButton>
@@ -77,7 +75,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
     );
 
     let buttonView;
-    if (dimens.isDesktop || dimens.isSmallHeight) {
+    if (props.dimens.isDesktop || props.dimens.isSmallHeight) {
         buttonView = (
             <View>
                 <View style={{ flexDirection: "row" }}>
@@ -105,7 +103,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
     }
     return (
         <InternalView>
-            <ConvertibleContentTitle isDesktop={dimens.isDesktop}>
+            <ConvertibleContentTitle isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.login_title)}
             </ConvertibleContentTitle>
             <TextBox

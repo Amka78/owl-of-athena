@@ -4,6 +4,7 @@ import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
 import { TemplateTimeViewProps } from "./TempatedProps";
@@ -15,7 +16,7 @@ export type SleepingScreenTemplateProps = {
     onRelockPress: () => void;
     timeView: TemplateTimeViewProps;
     onWakeupPress: () => void;
-    dimens: { isDesktop: boolean };
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -46,7 +47,10 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
                     }}
                 ></TimeView>
             </View>
-            <Button onPress={props.onWakeupPress}>
+            <Button
+                onPress={props.onWakeupPress}
+                screenWidth={props.dimens.width}
+            >
                 {Message.get(MessageKeys.sleeping_wakeup_button)}
             </Button>
         </InternalView>

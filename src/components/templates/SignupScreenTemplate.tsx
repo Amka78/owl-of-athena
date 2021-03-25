@@ -4,6 +4,7 @@ import { View } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { ErrorText, LeftSideButton } from "../atoms";
 import {
     ConvertibleContentTitle,
@@ -27,12 +28,7 @@ export type SignupScreenTemplateProps = {
     errorText?: string;
     onSignupPress: () => void;
     onCancelPress: () => void;
-    dimens: {
-        isDesktop: boolean;
-        isSmallHeight: boolean;
-        isLargeWidth: boolean;
-        isVertical: boolean;
-    };
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -46,7 +42,8 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
     const signupButton = (
         <LeftSideButton
             onPress={props.onSignupPress}
-            isLargeWidth={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
+            needMargin={props.dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.signup_button)}
         </LeftSideButton>
@@ -54,7 +51,8 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
     const cancelButton = (
         <RightSideButton
             onPress={props.onCancelPress}
-            isLargeWidth={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
+            needMargin={props.dimens.isLargeWidth}
         >
             {Message.get(MessageKeys.cancel)}
         </RightSideButton>

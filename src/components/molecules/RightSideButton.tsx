@@ -6,7 +6,7 @@ import { Button, ButtonProps } from "../atoms/Button";
 //#endregion
 
 //#region Types
-export type RightSideButtonProps = ButtonProps & { isLargeWidth: boolean };
+export type RightSideButtonProps = ButtonProps & { needMargin: boolean };
 //#endregion
 
 //#region Component
@@ -17,9 +17,7 @@ export const RightSideButton: FunctionComponent<RightSideButtonProps> = (
         <Button
             {...props}
             style={{
-                marginLeft: props.isLargeWidth
-                    ? Dimens.items_margin
-                    : undefined,
+                marginLeft: props.needMargin ? Dimens.items_margin : undefined,
             }}
         ></Button>
     );

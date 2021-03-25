@@ -1,13 +1,14 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 
-import { useLogin } from "../../hooks";
+import { useLogin, useWindowDimensions } from "../../hooks";
 import { LoginScreenTemplate } from "../templates/LoginScreenTemplate";
 //#endregion
 
 //#region Component
 export const LoginScreen: FunctionComponent = () => {
     const loginHook = useLogin();
+    const dimens = useWindowDimensions();
 
     return (
         <LoginScreenTemplate
@@ -32,6 +33,7 @@ export const LoginScreen: FunctionComponent = () => {
             signupButton={{
                 onPress: loginHook.onSignupPress,
             }}
+            dimens={dimens}
         ></LoginScreenTemplate>
     );
 };

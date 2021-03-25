@@ -4,11 +4,8 @@ import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useConvertibleHeader, useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ErrorText, FlatButton, TextBox } from "../atoms";
 import {
     DatePicker,
@@ -36,6 +33,7 @@ export type AccountScreenTemplateProps = {
     femaleRadioButton: TemplateRadioButtonProps;
     saveButton: TemplateButtonProps;
     logoutButton: TemplateButtonProps;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -46,35 +44,36 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
 ) => {
     useLocale(props.locale);
 
-    const dimens = useWindowDimensions();
     useConvertibleHeader(
         Message.get(MessageKeys.account_title),
-        dimens.isDesktop,
-        dimens.isSmallHeight
+        props.dimens.isDesktop,
+        props.dimens.isSmallHeight
     );
 
     const saveButton = (
-        <Button {...props.saveButton}>
+        <Button {...props.saveButton} screenWidth={props.dimens.width}>
             {Message.get(MessageKeys.account_button)}
         </Button>
     );
-    const logoutButton = dimens.isDesktop ? undefined : (
+    const logoutButton = props.dimens.isDesktop ? undefined : (
         <FlatButton {...props.logoutButton}>
             {Message.get(MessageKeys.account_signout)}
         </FlatButton>
     );
 
-    const splitWidth = dimens.isHorizontal
+    const splitWidth = props.dimens.isHorizontal
         ? Dimens.input_text_max_width / 2
         : undefined;
 
-    const itemMargin = dimens.isHorizontal ? Dimens.items_margin : undefined;
+    const itemMargin = props.dimens.isHorizontal
+        ? Dimens.items_margin
+        : undefined;
 
     return (
         <InternalView>
             <View
                 style={{
-                    flexDirection: dimens.isHorizontal ? "row" : "column",
+                    flexDirection: props.dimens.isHorizontal ? "row" : "column",
                     maxWidth: Dimens.inner_screen_max_width,
                 }}
             >
@@ -98,7 +97,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
             </View>
             <View
                 style={{
-                    flexDirection: dimens.isHorizontal ? "row" : "column",
+                    flexDirection: props.dimens.isHorizontal ? "row" : "column",
                     maxWidth: Dimens.inner_screen_max_width,
                 }}
             >

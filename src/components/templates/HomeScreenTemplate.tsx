@@ -7,12 +7,9 @@ import { InternalView } from "../molecules";
 import { ErrorTextProps } from "../atoms/ErrorText";
 import { TimeViewProps } from "../atoms/TimeView";
 import { Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useConvertibleHeader, useLocale } from "../../hooks";
 import { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types
@@ -22,6 +19,7 @@ export type HomeScreenTemplateProps = {
     profileButton: TemplateFlatButtonProps;
     errorText: ErrorTextProps;
     goToSleepButton: TemplateButtonProps;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -32,11 +30,10 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
 ) => {
     useLocale(props.locale);
 
-    const dimens = useWindowDimensions();
     useConvertibleHeader(
         MessageKeys.home_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
+        props.dimens.isDesktop,
+        props.dimens.isSmallHeight
     );
     return (
         <InternalView>
@@ -62,7 +59,10 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
             </FlatButton>
             <View style={{ alignItems: "center" }}>
                 <ErrorText {...props.errorText}></ErrorText>
-                <Button {...props.goToSleepButton}>
+                <Button
+                    {...props.goToSleepButton}
+                    screenWidth={props.dimens.width}
+                >
                     {Message.get(MessageKeys.home_go_to_sleep_button)}
                 </Button>
             </View>

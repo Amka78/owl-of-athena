@@ -3,11 +3,8 @@ import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useLocale,
-    useWindowDimensions,
-} from "../../hooks";
+import { useConvertibleHeader, useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { InlineTimePicker, LeftSideButton } from "../atoms";
 import { InlineTimePickerProps } from "../atoms/InlineTimePicker";
 import {
@@ -34,6 +31,7 @@ export type SettingsScreenTemplateProps = {
     remStimAudioMenu: TemplateSelectorMenuProps;
     saveButton: TemplateButtonProps;
     cancelButton: TemplateButtonProps;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion
@@ -43,17 +41,17 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
     props: SettingsScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const dimens = useWindowDimensions();
     useConvertibleHeader(
         MessageKeys.settings_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
+        props.dimens.isDesktop,
+        props.dimens.isSmallHeight
     );
 
     const saveButton = (
         <LeftSideButton
             {...props.saveButton}
-            isLargeWidth={dimens.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.save)}
         </LeftSideButton>
@@ -62,14 +60,15 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
     const cancelButton = (
         <RightSideButton
             {...props.cancelButton}
-            isLargeWidth={dimens.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.cancel)}
         </RightSideButton>
     );
 
     let bottomButtons;
-    if (dimens.isDesktop || dimens.isSmallHeight) {
+    if (props.dimens.isDesktop || props.dimens.isSmallHeight) {
         bottomButtons = (
             <View style={{ flexDirection: "row" }}>
                 {saveButton}

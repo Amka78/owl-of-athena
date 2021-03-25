@@ -6,7 +6,7 @@ import { Button, ButtonProps } from "./Button";
 //#endregion
 
 //#region Types
-export type LeftSideButtonProps = ButtonProps & { isLargeWidth: boolean };
+export type LeftSideButtonProps = ButtonProps & { needMargin: boolean };
 //#endregion
 
 //#region Component
@@ -17,9 +17,7 @@ export const LeftSideButton: FunctionComponent<LeftSideButtonProps> = (
         <Button
             {...props}
             style={{
-                marginRight: props.isLargeWidth
-                    ? Dimens.items_margin
-                    : undefined,
+                marginRight: props.needMargin ? Dimens.items_margin : undefined,
             }}
         ></Button>
     );
