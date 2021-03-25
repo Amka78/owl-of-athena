@@ -9,6 +9,8 @@ import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#region Types
 export type BluetoothIconProps = Omit<TemplateIconProps, "name" | "color"> & {
     connectionStates: ConnectionStates;
+    name?: string;
+    color?: string;
 };
 //#endregion
 
