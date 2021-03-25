@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BatteryIcon UnitTest renders correctly 1`] = `
+<Component
+  batteryLevel={100}
+  color="#00ffe6"
+  isUSBConnected={true}
+  name="battery-charging"
+  size={40}
+/>
+`;

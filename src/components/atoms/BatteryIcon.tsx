@@ -9,6 +9,8 @@ import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 export type BatteryIconProps = Omit<TemplateIconProps, "name" | "color"> & {
     batteryLevel: number;
     isUSBConnected: boolean;
+    name?: string;
+    color?: string;
 };
 //#endregion
 
@@ -29,7 +31,7 @@ export const BatteryIcon: FunctionComponent<BatteryIconProps> = (
     let color = Colors.aurora_connected;
 
     if (batteryLevel < 100) {
-        if (batteryLevel <= 10) {
+        if (batteryLevel < 10) {
             color = Colors.red;
             batterIcon = "battery-alert";
         } else {
