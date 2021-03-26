@@ -1,19 +1,18 @@
+//#region Import Modules
 import React from "react";
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from "@storybook/react/types-6-0";
 
-import {
-    WelcomeScreenTemplate,
-    WelcomeScreenTemplateProps,
-} from "../../components/templates/WelcomeScreenTemplate";
+import { WelcomeScreen, WelcomeScreenProps } from "./containered/WelcomeScreen";
+//#endregion
 
+//#region Story
 export default {
     title: "Templates/WelcomeScreen",
-    component: WelcomeScreenTemplate,
+    component: WelcomeScreen,
 } as Meta;
 
-const Template: Story<WelcomeScreenTemplateProps> = (args) => (
-    <WelcomeScreenTemplate {...args} />
+const Template: Story<WelcomeScreenProps> = (args) => (
+    <WelcomeScreen {...args} />
 );
 
 export const EnUSLocale = Template.bind({});
@@ -25,3 +24,4 @@ export const JaJPLocale = Template.bind({});
 JaJPLocale.args = {
     locale: "ja-JP",
 };
+//#endregion

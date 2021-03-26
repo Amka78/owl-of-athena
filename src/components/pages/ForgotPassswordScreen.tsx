@@ -1,14 +1,24 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import { useForgotPassword, useWindowDimensions } from "../../hooks";
 import { ForgotPasswordScreenTemplate } from "../templates/ForgotPasswordScreenTemplate";
+import { Dimens } from "../../constants";
 //#endregion
 
 //#region Component
 export const ForgotPasswordScreen: FunctionComponent = () => {
     const forgotPassword = useForgotPassword(false);
     const dimens = useWindowDimensions();
+    const { setOptions } = useNavigation();
+    useLayoutEffect(() => {
+        setOptions({
+            headerTitleStyle: {
+                fontSize: Dimens.forgot_password_title_font_size,
+            },
+        });
+    }, [setOptions]);
     return (
         <ForgotPasswordScreenTemplate
             emailAddress={{

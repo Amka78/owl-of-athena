@@ -1,19 +1,18 @@
+//#region Import Modules
+import { Meta, Story } from "@storybook/react/types-6-0";
 import React from "react";
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
-import { Story, Meta } from "@storybook/react/types-6-0";
 
-import {
-    WakingScreenTemplate,
-    WakingScreenTemplateProps,
-} from "../../components/templates/WakingScreenTemplate";
+import { WakingScreen, WakingScreenProps } from "./containered/WakingScreen";
+//#endregion
 
+//#region Story
 export default {
     title: "Templates/WakingScreen",
-    component: WakingScreenTemplate,
+    component: WakingScreen,
 } as Meta;
 
-const Template: Story<WakingScreenTemplateProps> = (args) => (
-    <WakingScreenTemplate {...args} />
+const Template: Story<WakingScreenProps> = (args) => (
+    <WakingScreen {...args} timeView={{ hours: 9, minutes: 0 }} />
 );
 
 export const EnUSLocale = Template.bind({});
@@ -25,3 +24,4 @@ export const JaJPLocale = Template.bind({});
 JaJPLocale.args = {
     locale: "ja-JP",
 };
+//#endregion

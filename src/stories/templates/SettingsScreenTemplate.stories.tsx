@@ -1,19 +1,21 @@
+//#region Import Modules
 import React from "react";
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from "@storybook/react/types-6-0";
 
 import {
-    SettingsScreenTemplate,
-    SettingsScreenTemplateProps,
-} from "../../components/templates/SettingsScreenTemplate";
+    SettingsScreen,
+    SettingsScreenProps,
+} from "./containered/SettingsScreen";
+//#endregion
 
+//#region Story
 export default {
     title: "Templates/SettingsScreen",
-    component: SettingsScreenTemplate,
+    component: SettingsScreen,
 } as Meta;
 
-const Template: Story<SettingsScreenTemplateProps> = (args) => (
-    <SettingsScreenTemplate {...args} />
+const Template: Story<SettingsScreenProps> = (args) => (
+    <SettingsScreen {...args} />
 );
 
 export const EnUSLocale = Template.bind({});
@@ -27,3 +29,4 @@ JaJPLocale.args = {
     locale: "ja-JP",
     profileMenu: { hasProfiles: false, value: "" },
 };
+//#endregion

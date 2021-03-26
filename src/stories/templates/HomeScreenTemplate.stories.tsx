@@ -1,19 +1,18 @@
+//#region Import Modules
 import React from "react";
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { Story, Meta } from "@storybook/react/types-6-0";
 
-import {
-    HomeScreenTemplate,
-    HomeScreenTemplateProps,
-} from "../../components/templates/HomeScreenTemplate";
+import { HomeScreen, HomeScreenProps } from "./containered/HomeScreen";
+//#endregion
 
+//#region Story
 export default {
     title: "Templates/HomeScreen",
-    component: HomeScreenTemplate,
+    component: HomeScreen,
 } as Meta;
 
-const Template: Story<HomeScreenTemplateProps> = (args) => (
-    <HomeScreenTemplate {...args} />
+const Template: Story<HomeScreenProps> = (args) => (
+    <HomeScreen {...args} timeView={{ hours: 9, minutes: 0 }} />
 );
 
 export const EnUSLocale = Template.bind({});
@@ -25,3 +24,4 @@ export const JaJPLocale = Template.bind({});
 JaJPLocale.args = {
     locale: "ja-JP",
 };
+//#endregion

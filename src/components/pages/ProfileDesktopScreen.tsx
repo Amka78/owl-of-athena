@@ -2,12 +2,14 @@
 import React, { FunctionComponent } from "react";
 
 import { ProfileDesktopScreenTemplate } from "../../components/templates/ProfileDesktopScreenTemplate";
+import { useWindowDimensions } from "../../hooks";
 import { useProfileList } from "../../hooks/profiles/useProfileList";
 //#endregion
 
 //#region Component
 export const ProfileDesktopScreen: FunctionComponent = () => {
     const profileListHook = useProfileList();
+    const dimens = useWindowDimensions();
 
     return (
         <ProfileDesktopScreenTemplate
@@ -34,6 +36,7 @@ export const ProfileDesktopScreen: FunctionComponent = () => {
                 onShowPrivateCheckBoxPress: profileListHook.onShowPrivatePress,
             }}
             list={profileListHook.list}
+            dimens={dimens}
             onStarPress={profileListHook.onStarPress}
             onDeletePress={profileListHook.onDeletePress}
             onMenuPress={profileListHook.onMenuPress}

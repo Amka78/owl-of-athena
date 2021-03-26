@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
+import { Dimensions } from "../../hooks/useWindowDimensions";
 import { AuroraProfile } from "../../sdk/AuroraTypes";
 import {
     CommunityIcon,
@@ -31,6 +32,7 @@ export type ProfileListScreenTemplateProps = {
     onStarPress: (value: AuroraProfile) => Promise<void>;
     onDeletePress: (value: AuroraProfile) => void;
     onMenuPress: (value: AuroraProfile, index: number) => void;
+    dimens: Dimensions;
     locale?: string;
 };
 //#endregion

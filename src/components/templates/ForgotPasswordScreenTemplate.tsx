@@ -1,9 +1,8 @@
 //#region Import Modules
-import { useNavigation } from "@react-navigation/native";
-import React, { FunctionComponent, useLayoutEffect } from "react";
+import React, { FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import { useTextBoxReturn } from "../../hooks/useTextBox";
 import { Dimensions } from "../../hooks/useWindowDimensions";
@@ -39,21 +38,12 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
     props: ForgotPasswordScreenTemplateProps
 ) => {
     useLocale(props.locale);
-    const { setOptions } = useNavigation();
 
     useConvertibleHeader(
         MessageKeys.forgot_password_title,
         props.dimens.isDesktop,
         props.dimens.isSmallHeight
     );
-
-    useLayoutEffect(() => {
-        setOptions({
-            headerTitleStyle: {
-                fontSize: Dimens.forgot_password_title_font_size,
-            },
-        });
-    }, [setOptions]);
 
     const forgotPasswordButton = (
         <LeftSideButton
