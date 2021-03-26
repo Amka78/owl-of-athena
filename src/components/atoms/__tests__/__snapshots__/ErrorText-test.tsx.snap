@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorText UnitTest Renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "fontFamily": "calibre_app_regular",
+        "fontSize": 13,
+        "marginBottom": 18,
+      },
+      Object {
+        "color": undefined,
+      },
+      undefined,
+    ]
+  }
+>
+  test
+</Text>
+`;
