@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
+import { Dimensions } from "../../../hooks/useWindowDimensions";
 import { FlatButton, LeftSideButton } from "../../atoms";
 //#endregion
 
@@ -10,7 +11,7 @@ import { FlatButton, LeftSideButton } from "../../atoms";
 export type UnsavedProfileMenuProps = {
     style?: ViewStyle;
     isUserProfile: boolean;
-    isLargeWidth: boolean;
+    dimens: Dimensions;
     onSaveAsNewPress: () => void;
     onOverwriteSavePress: () => void;
     onCancelPress: () => void;
@@ -24,7 +25,8 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
     const saveButton: React.ReactNode = (
         <LeftSideButton
             onPress={props.onSaveAsNewPress}
-            isLargeWidth={props.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.save_as_new)}
         </LeftSideButton>
@@ -35,7 +37,8 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
         | undefined = props.isUserProfile ? (
         <LeftSideButton
             onPress={props.onOverwriteSavePress}
-            isLargeWidth={props.isLargeWidth}
+            needMargin={props.dimens.isLargeWidth}
+            screenWidth={props.dimens.width}
         >
             {Message.get(MessageKeys.overwrite_save)}
         </LeftSideButton>

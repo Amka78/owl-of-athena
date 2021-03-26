@@ -3,6 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../../constants";
+import { Dimensions } from "../../../hooks/useWindowDimensions";
 import { Button, FlatButton } from "../../atoms";
 //#endregion
 
@@ -11,6 +12,7 @@ export type ProfileSecondMenuProps = {
     auroraConnected: boolean;
     selectedProfileHasUnsavedChanges: boolean;
     style?: ViewStyle;
+    dimens: Dimensions;
     onSaveToAuroraPress: () => void;
     onShowAdvancedOptionsPress: () => void;
 };
@@ -28,6 +30,7 @@ export const ProfileSecondMenu: FunctionComponent<ProfileSecondMenuProps> = (
                     props.selectedProfileHasUnsavedChanges
                 }
                 onPress={props.onSaveToAuroraPress}
+                screenWidth={props.dimens.width}
                 style={{ marginLeft: Dimens.button_margin }}
             >
                 {Message.get(MessageKeys.save_to_aurora)}

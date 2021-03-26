@@ -109,4 +109,6 @@ export default {
 
     menu_icon_size: 40,
     menu_list_margin: 10,
+
+    small_height: 420,
 };

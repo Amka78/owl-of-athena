@@ -6,6 +6,7 @@ import {
     UnsavedProfileMenu,
     UnsavedProfileMenuProps,
 } from "../../../components/organisms/profiles/UnsavedProfileMenu";
+import { getDimensions } from "../../WindowDimensionsForStoryBook";
 //#endregion
 
 //#region Story
@@ -15,7 +16,7 @@ export default {
 } as Meta;
 
 const Template: Story<UnsavedProfileMenuProps> = (args) => (
-    <UnsavedProfileMenu {...args} />
+    <UnsavedProfileMenu {...args} dimens={getDimensions()} />
 );
 
 export const Primary = Template.bind({});

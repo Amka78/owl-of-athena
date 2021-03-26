@@ -23,7 +23,7 @@ export const useWindowDimensions = (): Dimensions => {
     const isDesktop =
         dimension.height >= Dimens.inner_screen_max_height &&
         dimension.width >= Dimens.inner_screen_max_width;
-    const isSmallHeight = dimension.height <= 420;
+    const isSmallHeight = dimension.height <= Dimens.small_height;
     const isLargeWidth = dimension.width > Dimens.button_max_width * 2;
     const isVertical = dimension.width < dimension.height;
     const isHorizontal = !isVertical;
