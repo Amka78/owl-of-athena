@@ -1,14 +1,14 @@
 //#region Import Modules
 import { useTheme } from "react-native-paper";
 import React, { FunctionComponent } from "react";
-import { Text, TextStyle } from "react-native";
+import { Text, StyleProp, TextStyle } from "react-native";
 import { Dimens, Fonts } from "../../constants";
 //#endregion
 
 //#region Types
 export type ContentTitleProps = {
     children: string;
-    style?: TextStyle;
+    style?: StyleProp<TextStyle>;
 };
 //#endregion
 
