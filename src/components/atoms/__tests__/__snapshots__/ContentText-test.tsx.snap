@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentText UnitTest Renders correctly 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "fontFamily": "calibre_app_regular",
+        "fontSize": 16,
+      },
+      Object {
+        "color": undefined,
+      },
+      undefined,
+    ]
+  }
+>
+  test
+</Text>
+`;
