@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LogoutIcon UnitTest Renders correctly 1`] = `
+<Component
+  name="logout"
+  size={40}
+/>
+`;
