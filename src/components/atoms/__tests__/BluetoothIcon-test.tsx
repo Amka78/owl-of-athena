@@ -23,7 +23,7 @@ type TestPairs = {
 //#region Tests
 let component: ShallowWrapper<BluetoothIconProps, unknown, unknown>;
 describe("BluetoothIcon UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(
             <BluetoothIcon
                 connectionStates={ConnectionStates.CONNECTED}

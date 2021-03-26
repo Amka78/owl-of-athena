@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BatteryIcon UnitTest renders correctly 1`] = `
+exports[`BatteryIcon UnitTest Renders correctly 1`] = `
 <Component
   batteryLevel={100}
   color="#00ffe6"

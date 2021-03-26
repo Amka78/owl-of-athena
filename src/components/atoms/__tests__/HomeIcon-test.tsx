@@ -11,7 +11,7 @@ import { HomeIcon, HomeIconProps } from "../HomeIcon";
 //#region Test
 let component: ShallowWrapper<HomeIconProps, unknown, unknown>;
 describe("HomeIcon UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<HomeIcon></HomeIcon>);
 
         expect(toJson(component)).toMatchSnapshot();

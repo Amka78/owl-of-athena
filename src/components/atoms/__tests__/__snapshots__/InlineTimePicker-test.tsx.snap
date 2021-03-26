@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckBoxEx UnitTest Renders correctly 1`] = `
-<withTheme(Checkbox)
-  status="checked"
+exports[`InlineTimePicker UnitTest Renders correctly 1`] = `
+<InlineTimePickerCore
   theme={
     Object {
       "animation": Object {

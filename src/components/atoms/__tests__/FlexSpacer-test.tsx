@@ -11,7 +11,7 @@ import { FlexSpacer } from "../FlexSpacer";
 //#region Test
 let component: ShallowWrapper<unknown, unknown, unknown>;
 describe("FlexSpacer UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<FlexSpacer>{"test"}</FlexSpacer>);
 
         expect(toJson(component)).toMatchSnapshot();

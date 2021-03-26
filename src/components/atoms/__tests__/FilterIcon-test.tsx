@@ -11,7 +11,7 @@ import { FilterIcon, FilterIconProps } from "../FilterIcon";
 //#region Test
 let component: ShallowWrapper<FilterIconProps, unknown, unknown>;
 describe("FilterIcon UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<FilterIcon></FilterIcon>);
 
         expect(toJson(component)).toMatchSnapshot();

@@ -14,7 +14,7 @@ import { Dimens } from "../../../constants";
 let component: ShallowWrapper<ButtonProps, unknown, unknown>;
 
 describe("Button UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<Button screenWidth={200}>{"test"}</Button>);
 
         expect(toJson(component)).toMatchSnapshot();

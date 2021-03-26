@@ -12,7 +12,7 @@ import { Colors } from "../../../constants";
 //#region Test
 let component: ShallowWrapper<CheckBoxProps, unknown, unknown>;
 describe("CheckBoxEx UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<CheckBox status={"checked"}></CheckBox>);
 
         expect(toJson(component)).toMatchSnapshot();

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BluetoothIcon UnitTest renders correctly 1`] = `
+exports[`BluetoothIcon UnitTest Renders correctly 1`] = `
 <Component
   color="#00ffe6"
   connectionStates={4}

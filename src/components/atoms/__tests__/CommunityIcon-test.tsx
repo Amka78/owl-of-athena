@@ -11,7 +11,7 @@ import { CommunityIcon, CommunityIconProps } from "../CommunityIcon";
 //#region Test
 let component: ShallowWrapper<CommunityIconProps, unknown, unknown>;
 describe("CommunityIcon UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(<CommunityIcon></CommunityIcon>);
 
         expect(toJson(component)).toMatchSnapshot();

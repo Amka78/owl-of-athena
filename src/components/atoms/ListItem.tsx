@@ -16,14 +16,14 @@ export type ListItemComponentProps = {
 };
 
 export type ListItemProps = {
-    left: (props: ListItemComponentProps) => React.ReactNode;
-    right: (props: ListItemComponentProps) => React.ReactNode;
+    left?: (props: ListItemComponentProps) => React.ReactNode;
+    right?: (props: ListItemComponentProps) => React.ReactNode;
     style?: ViewStyle;
     title: string;
     titleStyle?: ViewStyle;
     description: string;
     descriptionStyle?: TextStyle;
-    onPress: () => void;
+    onPress?: () => void;
 };
 //#endregion
 

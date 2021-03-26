@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListItem UnitTest Renders correctly 1`] = `
+<withTheme(List.Item)
+  description="testDesc"
+  descriptionStyle={
+    Array [
+      Object {
+        "color": "#9B9B9B",
+      },
+      undefined,
+    ]
+  }
+  title="test"
+  titleStyle={
+    Array [
+      Object {
+        "color": "#ffffff",
+      },
+      undefined,
+    ]
+  }
+/>
+`;

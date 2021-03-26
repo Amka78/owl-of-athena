@@ -40,7 +40,7 @@ type TestPairs = {
 //#region Tests
 let component: ShallowWrapper<BatteryIconProps, unknown, unknown>;
 describe("BatteryIcon UnitTest", () => {
-    it("renders correctly", () => {
+    it("Renders correctly", () => {
         component = createMock(
             <BatteryIcon batteryLevel={100} isUSBConnected={true}></BatteryIcon>
         );
