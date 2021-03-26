@@ -3,11 +3,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { View } from "react-native";
 
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { AccountScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useWindowDimensions } from "../hooks";
-import { CommonStyles } from "../styles";
+import { headerStyle } from "./HeaderStyles";
+
 //#endregion
 
 //#region Component
@@ -21,7 +21,7 @@ const SettingNavigator = (): JSX.Element => {
             <Stack.Navigator
                 screenOptions={{
                     headerTitleAlign: "center",
-                    headerStyle: CommonStyles.headerStyle,
+                    headerStyle: headerStyle,
                     headerTintColor: Colors.cyan,
                 }}
                 initialRouteName={"Account"}

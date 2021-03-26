@@ -1,14 +1,14 @@
 //#region Import Modules
 import { StackNavigationOptions } from "@react-navigation/stack";
 import { Colors } from "../constants";
-import { CommonStyles } from "../styles";
+import { headerStyle } from "./HeaderStyles";
 //#endregion
 
 //#region Settings
 export const StackCommonScreenOptions: StackNavigationOptions = {
     headerTitleAlign: "center",
     headerTintColor: Colors.cyan,
-    headerStyle: CommonStyles.headerStyle,
+    headerStyle: headerStyle,
     headerTitle: "",
 };
 //#endregion

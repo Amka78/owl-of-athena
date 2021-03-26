@@ -14,7 +14,7 @@ import {
 import { Colors } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { SoundManagerInstance } from "../managers";
-import { CommonStyles } from "../styles";
+import { headerStyle } from "./HeaderStyles";
 //#endregion
 
 //#region Component
@@ -31,7 +31,7 @@ const HomeNavigator = (): JSX.Element => {
                 screenOptions={{
                     headerTitleAlign: "center",
                     headerTintColor: Colors.cyan,
-                    headerStyle: CommonStyles.headerStyle,
+                    headerStyle: headerStyle,
                 }}
             >
                 <Stack.Screen
