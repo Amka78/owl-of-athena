@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StandardView UnitTest Renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      },
+      Object {
+        "backgroundColor": "#070724",
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "space-between",
+          "marginLeft": 48,
+          "marginRight": 48,
+        },
+        Object {
+          "backgroundColor": "#070724",
+        },
+        undefined,
+      ]
+    }
+  >
+    <View />
+  </View>
+</View>
+`;

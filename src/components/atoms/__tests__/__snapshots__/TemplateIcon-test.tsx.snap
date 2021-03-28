@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TemplateIcon UnitTest renders correctly 1`] = `
+<Icon
+  allowFontScaling={false}
+  color="#ffffff"
+  name="test"
+  size={40}
+/>
+`;

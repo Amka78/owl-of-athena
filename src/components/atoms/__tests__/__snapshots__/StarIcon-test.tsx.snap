@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StarIcon UnitTest renders correctly 1`] = `
+<Component
+  name="star"
+  size={25}
+  starred={true}
+/>
+`;

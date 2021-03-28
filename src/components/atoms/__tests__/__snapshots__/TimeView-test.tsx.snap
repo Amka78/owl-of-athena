@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeView UnitTest renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+      undefined,
+    ]
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "calibre_app_semibold",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#03dac4",
+        },
+        undefined,
+      ]
+    }
+  >
+    12:50
+  </Text>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "calibre_app_regular",
+          "fontSize": 20,
+        },
+        Object {
+          "color": "#03dac4",
+        },
+        undefined,
+      ]
+    }
+  >
+    am
+  </Text>
+</View>
+`;

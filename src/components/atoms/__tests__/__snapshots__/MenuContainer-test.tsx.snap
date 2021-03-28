@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuContainer UnitTest renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#4a2fba",
+        "flex": 0.4,
+      },
+      undefined,
+    ]
+  }
+>
+  test
+</View>
+`;

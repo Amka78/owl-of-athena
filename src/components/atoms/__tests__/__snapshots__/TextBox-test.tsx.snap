@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextBoxEx UnitTest renders correctly 1`] = `
+exports[`TextBox UnitTest renders correctly 1`] = `
 <withTheme(TextInput)
   mode="flat"
   selectionColor="#ffffff"
