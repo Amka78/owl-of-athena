@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlatButton UnitTest Renders correctly 1`] = `
+<withTheme(Button)
+  contentStyle={
+    Array [
+      Object {
+        "height": 28,
+        "marginBottom": 12,
+        "marginTop": 16,
+      },
+      undefined,
+    ]
+  }
+  labelStyle={
+    Array [
+      Object {
+        "fontFamily": "calibre_app_semibold",
+        "fontSize": 14,
+      },
+      Object {
+        "color": undefined,
+      },
+      undefined,
+    ]
+  }
+  mode="text"
+>
+  test
+</withTheme(Button)>
+`;
