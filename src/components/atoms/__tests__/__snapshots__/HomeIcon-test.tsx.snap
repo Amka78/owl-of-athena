@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HomeIcon UnitTest renders correctly 1`] = `
+exports[`HomeIcon UnitTest Renders correctly 1`] = `
 <Component
   name="alarm-check"
 />
