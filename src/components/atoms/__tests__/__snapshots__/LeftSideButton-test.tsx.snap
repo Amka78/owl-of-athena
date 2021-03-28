@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeftSideButton UnitTest Renders correctly 1`] = `
+<Component
+  needMargin={true}
+  screenWidth={100}
+  style={
+    Object {
+      "marginRight": 8,
+    }
+  }
+>
+  test
+</Component>
+`;
