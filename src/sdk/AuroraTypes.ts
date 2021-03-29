@@ -38,12 +38,101 @@ export type AuroraProfile = {
     content: string;
     name: string;
     id: string;
-    key: string;
+    key?: string;
     type: "community" | "official" | "private";
     description?: string;
     title: string;
-    updatedAt?: Date;
-    starred: boolean;
+    created_at: number;
+    updated_at: number;
+    starred?: boolean;
+    created_by?: string;
+    parent_profile_id?: string;
+    min_firmware_version: number;
+    options: AuroraProfileOptions[] | string;
+};
+
+export type AuroraProfileOptions = {
+    name:
+        | "stim-enabled"
+        | "wakeup-time"
+        | "sa-enabled"
+        | "dsl-enabled"
+        | "file-output"
+        | "stim-led"
+        | "stim-buzz"
+        | "stim-delay"
+        | "stim-interval"
+        | "wakeup-window"
+        | "wakeup-led"
+        | "wakeup-buzz"
+        | "file-streams"
+        | "stream-debug";
+    title: string;
+    description: string;
+    group: "REM Stim Options" | "Alarm Options" | "Misc Options";
+    conditions?: any;
+    failedConditionMessage?: string;
+    value?: boolean | string | number | number[] | StimLedValue | SongValue;
+    advanced?: boolean;
+    developer?: boolean;
+    roles?: any;
+    field:
+        | CheckBoxField
+        | ToggleField
+        | TimeField
+        | LedEffectField
+        | BuzzSongField
+        | SliderField;
+};
+
+type SongValue = {
+    song?: string;
+};
+
+type StimLedValue = {
+    effect: string;
+    eyes: string;
+    color: string;
+    brightness: number;
+    blinkRate: number;
+    blinkCount: number;
+};
+
+type CheckBoxField = {
+    type: "checkboxes";
+    choices: string;
+    labelNone: string;
+};
+
+type SliderField = {
+    type: "slider";
+    format: "hours" | "minutes";
+    min: number;
+    max: number;
+    step: number;
+    labelMin?: string;
+};
+
+type BuzzSongField = {
+    type: "buzz-song";
+};
+
+type LedEffectField = {
+    type: "led-effect";
+};
+
+type ToggleField = {
+    type: "toggle";
+    valueEnabled?: string;
+    valueDisabled?: string;
+};
+
+type TimeField = {
+    type: "time";
+    clearable: boolean;
+    labelCleared: string;
+    minutesStep: number;
+    defaultTime: number;
 };
 
 export type BluetoothStream = {

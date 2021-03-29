@@ -1,24 +1,27 @@
 //#region Import Modules
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Settings } from "../sdk/models";
-import { AuroraManagerInstance, AuroraManagerEventList } from "../managers";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Platform } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { cacheProfiles, cacheSettings, setWakeLock } from "../actions";
+import { AuroraRestClientInstance } from "../clients";
+import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import { Message, MessageKeys } from "../constants";
+import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
+import { AuroraProfile } from "../sdk/AuroraTypes";
+import { Settings } from "../sdk/models";
+import { WakeLockService } from "../services";
+import { createOfficialProfile } from "../services/ProfileService";
+import { GuestUser } from "../types";
 import {
     useCheckLogging,
-    useUserSelector,
-    useSettingsSelector,
     useProfileListSelector,
+    useSettingsSelector,
+    useUserSelector,
     useWakeLockSelector,
 } from "./";
-import { cacheSettings, cacheProfiles, setWakeLock } from "../actions";
-import { useDispatch } from "react-redux";
-import { AuroraRestClientInstance } from "../clients";
-import { AuroraProfile } from "../sdk/AuroraTypes";
-import { GuestUser } from "../types";
-import { Message, MessageKeys } from "../constants";
-import { WakeLockService } from "../services";
-import { Platform } from "react-native";
+
 //#endregion
 
 //#region Hooks
@@ -121,26 +124,11 @@ export const useHome = (): {
                     console.log(
                         "At the first start-up, the initial values are read."
                     );
-                    const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
-                    console.debug(defaultProfileTxt);
-                    const response = await fetch(defaultProfileTxt);
-                    console.debug(`response:${response}`);
-                    const profileContent = await response.text();
 
-                    const profile: AuroraProfile = {
-                        content: profileContent,
-                        id: "F356372",
-                        name: "Default Profile",
-                        starred: false,
-                        key: "F36372",
-                        title: "Default Profile",
-                        type: "official",
-                        active: true,
-                        description: "Default Profile",
-                        updatedAt: new Date(),
-                    };
+                    const profile = await createOfficialProfile();
 
                     auroraProfiles.push(profile);
+                    dispatch(cacheProfiles(auroraProfiles));
                 }
 
                 if (auroraProfiles.length > 0) {

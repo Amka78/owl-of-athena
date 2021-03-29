@@ -2,7 +2,7 @@ const { defaults: tsJestConfig } = require("ts-jest/presets");
 
 module.exports = {
     ...tsJestConfig,
-    setupFilesAfterEnv: ["<rootDir>setup-tests.js"],
+    setupFilesAfterEnv: ["<rootDir>setup-tests.js", "<rootDir>setup-fetch.js"],
     preset: "jest-expo",
     transform: {
         ...tsJestConfig.transform,
