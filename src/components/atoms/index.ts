@@ -9,6 +9,7 @@ import { ContentTitle } from "./ContentTitle";
 import { DeleteIcon } from "./DeleteIcon";
 import { ErrorText } from "./ErrorText";
 import { FilterIcon } from "./FilterIcon";
+import { FieldStreamCheckBoxes } from "./FieldStreamCheckboxes";
 import { FieldSlider } from "./FieldSlider";
 import { FieldToggle } from "./FieldToggle";
 import { FlatButton } from "./FlatButton";
@@ -49,6 +50,7 @@ export {
     ContentText,
     ContentTitle,
     ErrorText,
+    FieldStreamCheckBoxes,
     FieldSlider,
     FieldToggle,
     FlexSpacer,

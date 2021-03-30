@@ -13,6 +13,7 @@ import { LabeledTimeView } from "./LabeledTimeView";
 import { LoadingDialog } from "./LoadingDialog";
 import { MenuCheckBox } from "./MenuCheckBox";
 import { ProfilesDialog } from "./ProfilesDialog";
+import { OptionCheckBoxes } from "./OptionCheckBoxes";
 import { OptionSlider } from "./OptionSlider";
 import { OptionToggle } from "./OptionToggle";
 import { RightSideButton } from "./RightSideButton";
@@ -36,6 +37,7 @@ export {
     LabeledCheckBox,
     LabeledTimeView,
     MenuCheckBox,
+    OptionCheckBoxes,
     OptionSlider,
     OptionToggle,
     ProfilesDialog,

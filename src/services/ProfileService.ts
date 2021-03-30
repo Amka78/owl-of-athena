@@ -293,12 +293,14 @@ export const defaultOptions: AuroraProfileOption[] = [
     saEnabled,
     dslEnabled,
     fileOutput,
+    stimDelay,
     stimLed,
     stimBuzz,
     stimInterval,
     wakeupWindow,
     wakeupLed,
     wakeupBuzz,
+    fileStream,
     streamDebug,
 ];
 //#endregion
