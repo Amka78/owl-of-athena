@@ -13,6 +13,8 @@ import { LabeledTimeView } from "./LabeledTimeView";
 import { LoadingDialog } from "./LoadingDialog";
 import { MenuCheckBox } from "./MenuCheckBox";
 import { ProfilesDialog } from "./ProfilesDialog";
+import { OptionSlider } from "./OptionSlider";
+import { OptionToggle } from "./OptionToggle";
 import { RightSideButton } from "./RightSideButton";
 import { SessionTimeView } from "./SessionTimeView";
 import { ValidatableTextBox } from "./ValidatableTextBox";
@@ -34,6 +36,8 @@ export {
     LabeledCheckBox,
     LabeledTimeView,
     MenuCheckBox,
+    OptionSlider,
+    OptionToggle,
     ProfilesDialog,
     RightSideButton,
     SessionTimeView,

@@ -9,6 +9,8 @@ import { ContentTitle } from "./ContentTitle";
 import { DeleteIcon } from "./DeleteIcon";
 import { ErrorText } from "./ErrorText";
 import { FilterIcon } from "./FilterIcon";
+import { FieldSlider } from "./FieldSlider";
+import { FieldToggle } from "./FieldToggle";
 import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { HomeIcon } from "./HomeIcon";
@@ -47,6 +49,8 @@ export {
     ContentText,
     ContentTitle,
     ErrorText,
+    FieldSlider,
+    FieldToggle,
     FlexSpacer,
     HomeIcon,
     EditIcon,

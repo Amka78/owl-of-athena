@@ -92,6 +92,37 @@ export type ToggleField = {
     valueDisabled?: string;
 };
 
+export type SliderField = {
+    type: "slider";
+    format: "hours" | "minutes";
+    min: number;
+    max: number;
+    step: number;
+    labelMin?: string;
+};
+
+export type CheckBoxField = {
+    type: "checkboxes";
+    choices: string;
+    labelNone: string;
+};
+
+export type BuzzSongField = {
+    type: "buzz-song";
+};
+
+export type LedEffectField = {
+    type: "led-effect";
+};
+
+export type TimeField = {
+    type: "time";
+    clearable: boolean;
+    labelCleared: string;
+    minutesStep: number;
+    defaultTime: number;
+};
+
 type SongValue = {
     song?: string;
 };
@@ -103,37 +134,6 @@ type StimLedValue = {
     brightness: number;
     blinkRate: number;
     blinkCount: number;
-};
-
-type CheckBoxField = {
-    type: "checkboxes";
-    choices: string;
-    labelNone: string;
-};
-
-type SliderField = {
-    type: "slider";
-    format: "hours" | "minutes";
-    min: number;
-    max: number;
-    step: number;
-    labelMin?: string;
-};
-
-type BuzzSongField = {
-    type: "buzz-song";
-};
-
-type LedEffectField = {
-    type: "led-effect";
-};
-
-type TimeField = {
-    type: "time";
-    clearable: boolean;
-    labelCleared: string;
-    minutesStep: number;
-    defaultTime: number;
 };
 
 export type BluetoothStream = {

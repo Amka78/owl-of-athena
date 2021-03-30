@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { InfoIcon } from "../../atoms";
-import { OptionToggle } from "./options/OptionToggle";
+import { OptionSlider, OptionToggle } from "../../molecules";
 //#endregion
 
 //#region Import Modules
@@ -36,7 +36,7 @@ export const ProfileOption: FunctionComponent<ProfileOptionProps> = (
 
 const optionComponents: any = {
     toggle: OptionToggle,
-    slider: OptionToggle,
+    slider: OptionSlider,
     checkboxes: OptionToggle,
     time: OptionToggle,
     "led-effect": OptionToggle,

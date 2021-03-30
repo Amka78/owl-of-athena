@@ -1,8 +1,9 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { StyleProp, ViewStyle } from "react-native";
-import { Switch } from "react-native-gesture-handler";
-import { ToggleField } from "../../../../sdk/AuroraTypes";
+import { Switch } from "react-native-paper";
+
+import { ToggleField } from "../../sdk/AuroraTypes";
 //#endregion
 
 //#region Types

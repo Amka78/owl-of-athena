@@ -1,20 +1,14 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
-import { ListItem } from "../../../atoms";
-import { ListItemComponentProps } from "../../../atoms/ListItem";
-import { ToggleField } from "../../../../sdk/AuroraTypes";
-import { FieldToggle } from "../fields/FieledToggle";
+
+import { FieldToggle, ListItem } from "../atoms";
+import { ListItemComponentProps } from "../atoms/ListItem";
+import { OptionProps } from "./OptionProps";
 //#endregion
 
 //#region Types
-export type OptionToggleProps = {
-    title: string;
-    description?: string;
-    left: (props: ListItemComponentProps) => React.ReactNode;
-    disabled: boolean;
-    field: ToggleField;
-    value: boolean | string;
-    onValueChange: () => void;
+export type OptionToggleProps = OptionProps & {
+    value: string | boolean;
 };
 //#endregion
 
