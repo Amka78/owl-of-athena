@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { ButtonProps } from "../components/atoms/Button";
+import { Dimensions } from "../hooks/useWindowDimensions";
 
 // @ts-ignore
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
@@ -22,6 +23,18 @@ export function createMock<P, S>(comp: any): ShallowWrapper<P, S> {
 export function toJson(wrapper: any) {
     return enzymetoJson(wrapper);
 }
+
+export const DesktopDimension: Dimensions = {
+    fontScale: 1,
+    height: 980,
+    isDesktop: true,
+    isHorizontal: true,
+    isVertical: false,
+    isLargeWidth: true,
+    isSmallHeight: false,
+    scale: 1,
+    width: 1200,
+};
 
 /**
  * TestIDを利用してComponetのPropsを取得します。

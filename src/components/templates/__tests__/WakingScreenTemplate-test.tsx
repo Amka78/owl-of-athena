@@ -5,7 +5,11 @@ import { ShallowWrapper } from "enzyme";
 import React from "react";
 
 import { Message } from "../../../constants";
-import { createMock, toJson } from "../../../utils/TestHelper";
+import {
+    createMock,
+    DesktopDimension,
+    toJson,
+} from "../../../utils/TestHelper";
 import {
     WakingScreenTemplate,
     WakingScreenTemplateProps,
@@ -23,7 +27,7 @@ describe("WakingScreenTemplate UnitTest", () => {
             <WakingScreenTemplate
                 timeView={{ hours: 0, minutes: 0 }}
                 onWakeupPress={testEvent}
-                dimens={{ isDesktop: true }}
+                dimens={DesktopDimension}
             ></WakingScreenTemplate>
         );
 

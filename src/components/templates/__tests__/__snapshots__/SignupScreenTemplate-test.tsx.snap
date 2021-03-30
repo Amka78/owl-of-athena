@@ -15,8 +15,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     onChangeText={[Function]}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -30,8 +30,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     secureTextEntry={true}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -45,8 +45,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     secureTextEntry={true}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -54,7 +54,7 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
   <Component
     checkBoxStyle={
       Object {
-        "flex": 0.5,
+        "flex": 0.8,
       }
     }
     label="I agree to the terms of use"
@@ -69,7 +69,7 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     status="checked"
     textContainerStyle={
       Object {
-        "flex": 1.5,
+        "flex": 1.2,
       }
     }
   />
@@ -86,12 +86,14 @@ exports[`SignupScreenTemplate UnitTest renders correctly 1`] = `
     <Component
       needMargin={true}
       onPress={[Function]}
+      screenWidth={1200}
     >
       Sign Up
     </Component>
     <Component
       needMargin={true}
       onPress={[Function]}
+      screenWidth={1200}
     >
       CANCEL
     </Component>
@@ -114,8 +116,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     onChangeText={[Function]}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -129,8 +131,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     secureTextEntry={true}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -144,8 +146,8 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     secureTextEntry={true}
     style={
       Object {
-        "height": 45,
-        "marginBottom": 0,
+        "height": undefined,
+        "marginBottom": 16,
       }
     }
     value="test"
@@ -153,7 +155,7 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
   <Component
     checkBoxStyle={
       Object {
-        "flex": 0.5,
+        "flex": 0.8,
       }
     }
     label="私は利用規約を了承しました。"
@@ -168,7 +170,7 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     status="checked"
     textContainerStyle={
       Object {
-        "flex": 1.5,
+        "flex": 1.2,
       }
     }
   />
@@ -185,12 +187,14 @@ exports[`SignupScreenTemplate UnitTest renders correctly 2`] = `
     <Component
       needMargin={true}
       onPress={[Function]}
+      screenWidth={1200}
     >
       サインアップ
     </Component>
     <Component
       needMargin={true}
       onPress={[Function]}
+      screenWidth={1200}
     >
       キャンセル
     </Component>

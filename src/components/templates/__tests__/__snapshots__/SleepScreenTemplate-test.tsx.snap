@@ -37,6 +37,7 @@ exports[`SleepingScreenTemplate UnitTest renders correctly 1`] = `
   </View>
   <Component
     onPress={[Function]}
+    screenWidth={1200}
   >
     Wake Up
   </Component>
@@ -80,6 +81,7 @@ exports[`SleepingScreenTemplate UnitTest renders correctly 2`] = `
   </View>
   <Component
     onPress={[Function]}
+    screenWidth={1200}
   >
     起きる
   </Component>

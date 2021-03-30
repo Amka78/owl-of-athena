@@ -39,6 +39,7 @@ exports[`WakingScreenTemplate UnitTest renders correctly 1`] = `
   >
     <Component
       onPress={[Function]}
+      screenWidth={1200}
     >
       Wake Up
     </Component>
@@ -88,6 +89,7 @@ exports[`WakingScreenTemplate UnitTest renders correctly 2`] = `
   >
     <Component
       onPress={[Function]}
+      screenWidth={1200}
     >
       起きる
     </Component>

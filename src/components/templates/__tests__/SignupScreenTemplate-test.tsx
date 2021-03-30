@@ -5,7 +5,11 @@ import { ShallowWrapper } from "enzyme";
 import React from "react";
 
 import { Message } from "../../../constants";
-import { createMock, toJson } from "../../../utils/TestHelper";
+import {
+    createMock,
+    DesktopDimension,
+    toJson,
+} from "../../../utils/TestHelper";
 import {
     SignupScreenTemplate,
     SignupScreenTemplateProps,
@@ -49,12 +53,7 @@ describe("SignupScreenTemplate UnitTest", () => {
                 onSignupPress={testEvent}
                 onCancelPress={testEvent}
                 errorText={"test"}
-                dimens={{
-                    isDesktop: true,
-                    isLargeWidth: true,
-                    isSmallHeight: true,
-                    isVertical: true,
-                }}
+                dimens={DesktopDimension}
             ></SignupScreenTemplate>
         );
 

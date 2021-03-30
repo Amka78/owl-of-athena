@@ -25,18 +25,21 @@ exports[`WelcomeScreenTemplate UnitTest renders correctly 1`] = `
       <Component
         needMargin={true}
         onPress={[Function]}
+        screenWidth={1200}
       >
         Log In
       </Component>
       <Component
         needMargin={true}
         onPress={[Function]}
+        screenWidth={1200}
       >
         Sign Up
       </Component>
     </View>
     <Component
       onPress={[Function]}
+      screenWidth={1200}
     >
       StandAlone
     </Component>
@@ -69,18 +72,21 @@ exports[`WelcomeScreenTemplate UnitTest renders correctly 2`] = `
       <Component
         needMargin={true}
         onPress={[Function]}
+        screenWidth={1200}
       >
         ログイン
       </Component>
       <Component
         needMargin={true}
         onPress={[Function]}
+        screenWidth={1200}
       >
         サインアップ
       </Component>
     </View>
     <Component
       onPress={[Function]}
+      screenWidth={1200}
     >
       スタンドアローン
     </Component>

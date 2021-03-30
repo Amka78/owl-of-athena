@@ -4,7 +4,11 @@ import "react-native";
 import { ShallowWrapper } from "enzyme";
 import React from "react";
 import { WelcomeScreenTemplate } from "../WelcomeScreenTemplate";
-import { createMock, toJson } from "../../../utils/TestHelper";
+import {
+    createMock,
+    DesktopDimension,
+    toJson,
+} from "../../../utils/TestHelper";
 import { Message } from "../../../constants";
 
 let component: ShallowWrapper<unknown, unknown, unknown>;
@@ -20,7 +24,7 @@ describe("WelcomeScreenTemplate UnitTest", () => {
                 onLoginPress={testEvent}
                 onSignupPress={testEvent}
                 onStandalonePress={testEvent}
-                dimens={{ isHorizontal: true, isLargeWidth: true }}
+                dimens={DesktopDimension}
             ></WelcomeScreenTemplate>
         );
 
