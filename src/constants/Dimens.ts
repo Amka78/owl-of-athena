@@ -2,6 +2,7 @@ const session_margin_left = 30;
 const session_margin_right = 30;
 
 export default {
+    //#region Common Dimensions
     toolbar_title_text_size: 14,
     toolbar_button_text_size: 14,
     toolbar_button_margin_horizontal: 8,
@@ -62,11 +63,23 @@ export default {
     circular_progress_diameter: 96,
     circular_progress_text_size: 32,
 
-    // home fragment dimensions
+    inner_screen_max_height: 650,
+    inner_screen_max_width: 650,
+
+    forgot_password_title_font_size: 16,
+
+    menu_icon_size: 40,
+    menu_list_margin: 10,
+
+    small_height: 420,
+    //#endregion
+
+    //#region HomeScreen Dimensions
     home_alarm_time_text_size: 48,
     home_alarm_meridian_text_size: 22,
+    //#endregion
 
-    // session fragment dimensions
+    //#region SessionScreen Dimensions
     session_label_text_size: 20,
     session_sleep_score_text_size: 48,
     session_notes_text_size: 20,
@@ -90,8 +103,9 @@ export default {
     session_chart_pie_inner_radius_mobile: 40,
     session_chart_pie_category_label_padding_desktop: 36,
     session_chart_pie_category_label_padding_mobile: 18,
+    //#endregion
 
-    // session list fragment dimensions
+    //#region SessionListScreen Dimensions
     session_list_item_padding: 12,
 
     session_list_section_height: 24,
@@ -101,14 +115,9 @@ export default {
     session_list_item_title_text_size: 20,
     session_list_item_subtitle_text_size: 15,
     session_list_item_text_margin_left: 18,
+    //#endregion
 
-    inner_screen_max_height: 650,
-    inner_screen_max_width: 650,
-
-    forgot_password_title_font_size: 16,
-
-    menu_icon_size: 40,
-    menu_list_margin: 10,
-
-    small_height: 420,
+    //#region ProfileScreen Dimensions
+    profile_list_option_list_margin: 32,
+    //#endregion
 };

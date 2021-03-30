@@ -1,5 +1,5 @@
 export const MessageKeys = {
-    //#region common
+    //#region Common
     login: "login",
     save: "save",
     save_as_new: "save_as_new",
@@ -20,14 +20,14 @@ export const MessageKeys = {
     reloading: "reloading",
     //#endregion
 
-    //#region sleep stages
+    //#region Sleep stages
     stage_awake: "stage_awake",
     stage_rem: "stage_rem",
     stage_light: "stage_light",
     stage_deep: "stage_deep",
     //#endregion
 
-    //#region form strings - uppercase since you can't style the hint/label separately
+    //#region Form strings - uppercase since you can't style the hint/label separately
     input_first_name: "input_first_name",
     input_last_name: "input_last_name",
     input_email: "input_email",
@@ -36,7 +36,7 @@ export const MessageKeys = {
     input_birthday: "input_birthday",
     //#endregion
 
-    //#region aurora strings
+    //#region Aurora strings
     aurora_connected: "aurora_connected",
     aurora_disconnected: "aurora_disconnected",
     aurora_unsynced_sessions_dialog_title:
@@ -51,7 +51,7 @@ export const MessageKeys = {
         "aurora_sync_successful_snackbar_action",
     //#endregion
 
-    //#region welcome fragment
+    //#region WelcomeScreen
     welcome_title: "welcome_title",
     welcome_text: "welcome_text",
     welcome_login_button: "welcome_login_button",
@@ -59,7 +59,7 @@ export const MessageKeys = {
     welcome_standalone_button: "welcome_standalone_button",
     //#endregion
 
-    //#region login fragment
+    //#region LoginScreen
     login_title: "login_title",
     login_input_email: "login_input_email",
     login_input_password: "login_input_password",
@@ -70,14 +70,14 @@ export const MessageKeys = {
     login_general_error_message: "login_general_error_message",
     //#endregion
 
-    //#region forgot-password fragment
+    //#region Forgot-passwordScreen
     forgot_password_title: "forgot_password_title",
     forgot_password_text: "forgot_password_text",
     forgot_password_input_email: "forgot_password_input_email",
     forgot_password_button: "forgot_password_button",
     //#endregion
 
-    //#region signup fragment
+    //#region SignupScreen
     signup_title: "signup_title",
     signup_input_email: "signup_input_email",
     signup_input_password: "signup_input_password",
@@ -87,7 +87,7 @@ export const MessageKeys = {
     signup_button: "signup_button",
     //#endregion
 
-    //#region home fragment
+    //#region HomeScreen
     home_default_profile: "home_default_profile",
     home_title: "home_title",
     home_edit_alarm_button: "home_edit_alarm_button",
@@ -100,7 +100,7 @@ export const MessageKeys = {
     home_go_to_sleep_error_message: "home_go_to_sleep_error_message",
     //#endregion
 
-    //#region settings fragment
+    //#region SettingsScreen
     settings_title: "settings_title",
     settings_option_profile: "settings_option_profile",
     settings_option_smart_alarm: "settings_option_smart_alarm",
@@ -111,7 +111,7 @@ export const MessageKeys = {
     settings_option_no_audio_selected: "settings_option_no_audio_selected",
     //#endregion
 
-    //#region  sessions fragment
+    //#region  SessionListScreen
     sessions_title: "sessions_title",
     sessions_toolbar_button_left: "sessions_toolbar_button_left",
     sessions_toolbar_button_right: "sessions_toolbar_button_right",
@@ -127,11 +127,11 @@ export const MessageKeys = {
         "sessions_check_show_notes_description",
     //#endregion
 
-    //#region session picker fragment
+    //#region Session picker fragment
     select_list_title: "session_list_title",
     //#endregion
 
-    //#region session fragment
+    //#region SessionScreen
     session_asleep_time_label: "session_asleep_time_label",
     session_awake_time_label: "session_awake_time_label",
     session_sleep_score_label: "session_sleep_score_label",
@@ -148,7 +148,7 @@ export const MessageKeys = {
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
     //#endregion
 
-    //#region account fragment
+    //#region AccountScreen
     account_title: "account_title",
     account_input_first_name: "account_input_first_name",
     account_input_last_name: "account_input_last_name",
@@ -159,20 +159,20 @@ export const MessageKeys = {
     account_success_message: "account_success_message",
     //#endregion
 
-    //#region sleeping fragment
+    //#region SleepingScreen
     sleeping_title: "sleeping_title",
     sleeping_wakelock: "sleeping_wakelock",
     sleeping_wakeunlock: "sleeping_wakeunlock",
     sleeping_wakeup_button: "sleeping_wakeup_button",
     //#endregion
 
-    //#region waking fragment
+    //#region WakingScreen
     waking_title: "waking_title",
     waking_wakeup_button: "waking_wakeup_button",
     waking_tip_text: "waking_tip_text",
     //#endregion
 
-    //#region awake fragment
+    //#region AwakeScreen
     awake_title: "awake_title",
     awake_text: "awake_text",
     awake_questionnaire_continue_button: "awake_questionnaire_continue_button",
@@ -189,45 +189,45 @@ export const MessageKeys = {
     email_already_registered: "email_already_registered",
     //#endregion
 
-    //#region alarm sound menu
+    //#region Alarm sound menu
     alarm_sound_dialog_title: "alarm_sound_dialog_title",
     profile_dialog_title: "profile_dialog_title",
     //#endregion
 
-    //#region update snack bar
+    //#region Update snack bar
     update_snack_bar_title: "update_snack_bar_title",
     update_snack_bar_action_label: "update_snack_bar_action_label",
     //#endregion
 
-    //#region delete confirm dialog
+    //#region Delete confirm dialog
     delete_dialog_title: "delete_dialog_title",
     delete_dialog_message: "delete_dialog_message",
     //#endregion
 
-    //#region top tab titles
+    //#region Top tab titles
     top_tab_sleep_tracking_title: "top_tab_sleep_tracking_title",
     top_tab_journal_title: "top_tab_journal_title",
     top_tab_profile_edit_title: "top_tab_profile_edit_title",
     top_tab_profile_preview_title: "top_tab_profile_preview_title",
     //#endregion
 
-    //#region date format
+    //#region Date format
     date_format: "date_format",
     //#endregion
 
-    //#region standalone mode confirm dialog
+    //#region Standalone mode confirm dialog
     standalone_mode_confirm_title: "standalone_mode_confirm_title",
     standalone_mode_confirm_message: "standalone_mode_confirm_message",
     //#endregion
 
-    //#region drawer items label
+    //#region Drawer items label
     drawer_items_main: "drawer_items_main",
     drawer_items_sessions: "drawer_items_sessions",
     drawer_items_profiles: "drawer_items_profiles",
     drawer_items_account: "drawer_items_account",
     //#endregion
 
-    //#region profile filter menu
+    //#region Profile filter menu
     profile_filter_menu_header_label: "profile_filter_menu_header_label",
     profile_filter_menu_official_check_box_label:
         "profile_filter_menu_official_check_box_label",
@@ -243,9 +243,14 @@ export const MessageKeys = {
         "profile_filter_menu_community_check_box_description",
     //#endregion
 
-    save_to_aurora: "save_to_aurora",
-    show_advanced_options: "show_advanced_options",
-    connection_error: "connection_error",
+    //#region ProfileScreens
+    profile_rem_stim_options: "profile_rem_stim_options",
+    profile_alarm_options: "profile_alarm_options",
+    profile_misc_options: "profile_misc_options",
+    profile_save_to_aurora: "save_to_aurora",
+    profile_show_advanced_options: "show_advanced_options",
+    //#endregion
 
+    connection_error: "connection_error",
     session_blank: "session_blank",
 };

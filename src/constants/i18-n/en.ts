@@ -224,6 +224,9 @@ export default {
     [MessageKeys.drawer_items_profiles]: profiles,
     [MessageKeys.drawer_items_account]: "Account",
 
+    [MessageKeys.profile_rem_stim_options]: "REM Stim Options",
+    [MessageKeys.profile_alarm_options]: "Alarm Options",
+    [MessageKeys.profile_misc_options]: "Misc Options",
     [MessageKeys.profile_filter_menu_header_label]: "Filter by Profile Type",
     [MessageKeys.profile_filter_menu_official_check_box_label]: "Show Official",
     [MessageKeys.profile_filter_menu_official_check_box_description]:
@@ -236,8 +239,8 @@ export default {
     [MessageKeys.profile_filter_menu_private_check_box_description]:
         "Your private profiles.",
 
-    [MessageKeys.save_to_aurora]: "Save to Aurora",
-    [MessageKeys.show_advanced_options]: "Show Advanced Options",
+    [MessageKeys.profile_save_to_aurora]: "Save to Aurora",
+    [MessageKeys.profile_show_advanced_options]: "Show Advanced Options",
     [MessageKeys.connection_error]: "Connection Error",
 
     [MessageKeys.session_blank]: "Please select the sessions you wish to view.",

@@ -21,8 +21,9 @@ export type ListItemProps = {
     style?: ViewStyle;
     title: string;
     titleStyle?: ViewStyle;
-    description: string;
+    description?: string;
     descriptionStyle?: TextStyle;
+    disabled?: boolean;
     onPress?: () => void;
 };
 //#endregion

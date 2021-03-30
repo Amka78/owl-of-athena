@@ -5,8 +5,10 @@ import { Dimens } from "../../constants";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import { Dimensions } from "../../hooks/useWindowDimensions";
 import { AuroraProfile } from "../../sdk/AuroraTypes";
+import { GroupedProfileOptionList } from "../../services/ProfileService";
 import { StandardView } from "../atoms";
 import { ProfileMenu } from "../organisms/profiles/ProfileMenu";
+import { ProfileOptionList } from "../organisms/profiles/ProfileOptionList";
 import { ProfileSecondMenu } from "../organisms/profiles/ProfileSecondMenu";
 import { UnsavedProfileMenu } from "../organisms/profiles/UnsavedProfileMenu";
 //#endregion
@@ -28,6 +30,7 @@ export type ProfileScreenTemplateProps = {
         onSaveToAuroraPress: () => void;
         onShowAdvancedOptionsPress: () => void;
     };
+    grouedOptionList: GroupedProfileOptionList;
     dimens: Dimensions;
     locale?: string;
 };
@@ -71,6 +74,10 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                     marginTop: Dimens.menu_list_margin,
                 }}
             ></ProfileSecondMenu>
+            <ProfileOptionList
+                groupedOptionList={props.grouedOptionList}
+                style={{ width: screenDimens.width }}
+            ></ProfileOptionList>
         </StandardView>
     );
 };

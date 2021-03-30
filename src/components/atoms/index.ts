@@ -12,7 +12,8 @@ import { FilterIcon } from "./FilterIcon";
 import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { HomeIcon } from "./HomeIcon";
-import { InfoIcon } from "./InfoIcon";
+import { EditIcon } from "./EditIcon";
+import { InfoIcon } from "./Infocon";
 import { InlineTimePicker } from "./InlineTimePicker";
 import { LeftSideButton } from "./LeftSideButton";
 import { ListItem } from "./ListItem";
@@ -48,6 +49,7 @@ export {
     ErrorText,
     FlexSpacer,
     HomeIcon,
+    EditIcon,
     InfoIcon,
     InlineTimePicker,
     LeftSideButton,

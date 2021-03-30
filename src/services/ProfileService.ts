@@ -1,8 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { AuroraProfile, AuroraProfileOptions } from "../sdk/AuroraTypes";
+//#region Import Modules
+import { AuroraProfile, AuroraProfileOption } from "../sdk/AuroraTypes";
 import groupBy from "lodash/groupBy";
+import { MessageKeys } from "../constants";
+//#endregion
 
-export type GroupedProfileOptions = [string, AuroraProfileOptions[]][];
+//#region Types
+export type GroupedProfileOptionList = [string, AuroraProfileOption[]][];
+//#endregion
+
+//#region Functions
 export const createOfficialProfile = async (): Promise<AuroraProfile> => {
     const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
     const response = await fetch(defaultProfileTxt);
@@ -23,26 +30,29 @@ export const createOfficialProfile = async (): Promise<AuroraProfile> => {
     return officialProfile;
 };
 
-export const groupingProfileOptions = (
-    optionsList: AuroraProfileOptions[]
-): GroupedProfileOptions => {
+export const groupingProfileOptionList = (
+    optionsList: AuroraProfileOption[]
+): GroupedProfileOptionList => {
     return Object.entries(groupBy(optionsList, "group"));
 };
+//#endregion
 
-export const stimEnabled: AuroraProfileOptions = {
+//#region Constants
+export const stimEnabled: AuroraProfileOption = {
     name: "stim-enabled",
     title: "REM Stimulation",
     description:
         "If enabled, Aurora will provide light and/or sound stimulation whenever REM is detected.\
                       Advanced configuration options allow more control over when and how stimulation is presented.",
     group: "REM Stim Options",
+    groupName: MessageKeys.profile_rem_stim_options,
     value: false,
     field: {
         type: "toggle",
     },
 };
 
-export const wakeupTime: AuroraProfileOptions = {
+export const wakeupTime: AuroraProfileOption = {
     name: "wakeup-time",
     title: "Alarm/Wakeup Time",
     description:
@@ -50,6 +60,7 @@ export const wakeupTime: AuroraProfileOptions = {
                         by Aurora Mobile but is provided here in case you do not have access to or do not wish to\
                         use Aurora Mobile.",
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     value: undefined,
     field: {
         type: "time",
@@ -60,7 +71,7 @@ export const wakeupTime: AuroraProfileOptions = {
     },
 };
 
-export const saEnabled: AuroraProfileOptions = {
+export const saEnabled: AuroraProfileOption = {
     name: "sa-enabled",
     title: "Smart Alarm",
     description:
@@ -69,6 +80,7 @@ export const saEnabled: AuroraProfileOptions = {
                       however you can trigger light and/or sound directly from the Aurora using\
                       the advanced configuration options.",
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     value: false,
     conditions: [{ "wakeup-time": ["!", null] }],
     failedConditionMessage: "You must configure a wakeup time first.",
@@ -77,7 +89,7 @@ export const saEnabled: AuroraProfileOptions = {
     },
 };
 
-export const dslEnabled: AuroraProfileOptions = {
+export const dslEnabled: AuroraProfileOption = {
     name: "dsl-enabled",
     title: "Dawn Simulating Light Therapy",
     description:
@@ -85,6 +97,7 @@ export const dslEnabled: AuroraProfileOptions = {
                       Blue light in the morning prepares the body to awaken, activating your natural circadian rhythm.\
                       This feature is generally used in conjunction with Aurora Mobile.",
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     value: false,
     conditions: [{ "wakeup-time": ["!", null] }],
     failedConditionMessage: "You must configure a wakeup time first.",
@@ -93,7 +106,7 @@ export const dslEnabled: AuroraProfileOptions = {
     },
 };
 
-export const fileOutput: AuroraProfileOptions = {
+export const fileOutput: AuroraProfileOption = {
     name: "file-output",
     title: "Save Data Streams to File",
     value: "0x04",
@@ -102,6 +115,7 @@ export const fileOutput: AuroraProfileOptions = {
                      This data can then be synced to the cloud using Aurora Desktop and made available for download.\
                      Additionally, this data is used to improve the accuracy and performance of Aurora's various algorithms./",
     group: "Misc Options",
+    groupName: MessageKeys.profile_misc_options,
     field: {
         type: "toggle",
         valueEnabled: "0x04",
@@ -109,7 +123,7 @@ export const fileOutput: AuroraProfileOptions = {
     },
 };
 
-export const stimLed: AuroraProfileOptions = {
+export const stimLed: AuroraProfileOption = {
     name: "stim-led",
     title: "LED REM Stimulation",
     description: "The LED stimulus presented during REM.",
@@ -122,6 +136,7 @@ export const stimLed: AuroraProfileOptions = {
         blinkCount: 5,
     },
     group: "REM Stim Options",
+    groupName: MessageKeys.profile_rem_stim_options,
     advanced: true,
     conditions: [{ "stim-enabled": true }],
     failedConditionMessage: "You must enable REM stimulations first.",
@@ -130,12 +145,13 @@ export const stimLed: AuroraProfileOptions = {
     },
 };
 
-export const stimBuzz: AuroraProfileOptions = {
+export const stimBuzz: AuroraProfileOption = {
     name: "stim-buzz",
     title: "Buzzer REM Stimulation",
     description: "The buzzer song played during REM.",
     value: { song: undefined },
     group: "REM Stim Options",
+    groupName: MessageKeys.profile_rem_stim_options,
     advanced: true,
     conditions: [{ "stim-enabled": true }],
     failedConditionMessage: "You must enable REM stimulations first.",
@@ -144,12 +160,13 @@ export const stimBuzz: AuroraProfileOptions = {
     },
 };
 
-export const stimDelay: AuroraProfileOptions = {
+export const stimDelay: AuroraProfileOption = {
     name: "stim-delay",
     title: "REM Stimulation Delay",
     description:
         "The initial amount of time to wait before presenting REM stimulations.",
     group: "REM Stim Options",
+    groupName: MessageKeys.profile_rem_stim_options,
     value: 4,
     advanced: true,
     conditions: [{ "stim-enabled": true }],
@@ -164,11 +181,12 @@ export const stimDelay: AuroraProfileOptions = {
     },
 };
 
-export const stimInterval: AuroraProfileOptions = {
+export const stimInterval: AuroraProfileOption = {
     name: "stim-interval",
     title: "REM Stim Repeat Interval",
     description: "Minimum amount of time between successive REM stimulations.",
     group: "REM Stim Options",
+    groupName: MessageKeys.profile_rem_stim_options,
     advanced: true,
     value: 5,
     conditions: [{ "stim-enabled": true }],
@@ -182,13 +200,14 @@ export const stimInterval: AuroraProfileOptions = {
     },
 };
 
-export const wakeupWindow: AuroraProfileOptions = {
+export const wakeupWindow: AuroraProfileOption = {
     name: "wakeup-window",
     title: "Smart Alarm / DSL Window",
     description:
         "Controls the amount of time before your scheduled alarm time to begin DSL therapy or to allow the\
                      smart alarm to awaken you.",
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     value: 30,
     advanced: true,
     conditions: [{ "wakeup-time": ["!", null] }],
@@ -202,13 +221,14 @@ export const wakeupWindow: AuroraProfileOptions = {
     },
 };
 
-export const wakeupLed: AuroraProfileOptions = {
+export const wakeupLed: AuroraProfileOption = {
     name: "wakeup-led",
     title: "LED Wakeup Alarm",
     description: "The LED stimulus presented at alarm time.",
     advanced: true,
     value: undefined,
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     conditions: [{ "wakeup-time": ["!", null] }],
     failedConditionMessage: "You must configure a wakeup time first.",
     field: {
@@ -216,13 +236,14 @@ export const wakeupLed: AuroraProfileOptions = {
     },
 };
 
-export const wakeupBuzz: AuroraProfileOptions = {
+export const wakeupBuzz: AuroraProfileOption = {
     name: "wakeup-buzz",
     title: "Buzzer Wakeup Alarm",
     description: "The buzzer song played at alarm time.",
     value: { song: undefined },
     advanced: true,
     group: "Alarm Options",
+    groupName: MessageKeys.profile_alarm_options,
     conditions: [{ "wakeup-time": ["!", null] }],
     failedConditionMessage: "You must configure a wakeup time first.",
     field: {
@@ -230,13 +251,14 @@ export const wakeupBuzz: AuroraProfileOptions = {
     },
 };
 
-export const fileStream: AuroraProfileOptions = {
+export const fileStream: AuroraProfileOption = {
     name: "file-streams",
     title: "Data Streams to Save to File",
     description:
         "Sensor data (streams) to save to file. Avoid enabling too many streams as it decreases battery life and increases sync time.",
     value: [0, 1, 10, 17, 18, 19, 20, 21, 22, 23, 24],
     group: "Misc Options",
+    groupName: MessageKeys.profile_misc_options,
     advanced: true,
     conditions: [{ "file-output": 2 }, { "file-output": 4 }],
     failedConditionMessage: "You must enable stream file saving first.",
@@ -247,7 +269,7 @@ export const fileStream: AuroraProfileOptions = {
     },
 };
 
-export const streamDebug: AuroraProfileOptions = {
+export const streamDebug: AuroraProfileOption = {
     name: "stream-debug",
     title: "Stream Debug Mode (Developers Only)",
     advanced: true,
@@ -258,13 +280,14 @@ export const streamDebug: AuroraProfileOptions = {
                       replace sleep stages predicted by the sleep staging algorithm with randomly\
                       chosen stages.",
     group: "Misc Options",
+    groupName: MessageKeys.profile_misc_options,
     roles: ["admin"],
     field: {
         type: "toggle",
     },
 };
 
-export const defaultOptions: AuroraProfileOptions[] = [
+export const defaultOptions: AuroraProfileOption[] = [
     stimEnabled,
     wakeupTime,
     saEnabled,
@@ -278,3 +301,4 @@ export const defaultOptions: AuroraProfileOptions[] = [
     wakeupBuzz,
     streamDebug,
 ];
+//#endregion

@@ -30,6 +30,6 @@ export default {
     text_color: white,
     alternate_text_color: midnignt_blue,
     semi_transparent: "#66000000",
-    pickerHeaderColor: "#19094c",
+    cardBackgroundColor: "#19094c",
     menuBackgroundColor: "#001232",
 };

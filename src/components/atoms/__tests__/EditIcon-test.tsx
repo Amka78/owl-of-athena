@@ -5,14 +5,14 @@ import { ShallowWrapper } from "enzyme";
 import React from "react";
 
 import { createMock, toJson } from "../../../utils/TestHelper";
-import { InfoIcon, InfoIconProps } from "../InfoIcon";
+import { EditIcon, EditIconProps } from "../EditIcon";
 //#endregion
 
 //#region Test
-let component: ShallowWrapper<InfoIconProps, unknown, unknown>;
-describe("InfoIcon UnitTest", () => {
+let component: ShallowWrapper<EditIconProps, unknown, unknown>;
+describe("EditIcon UnitTest", () => {
     it("Renders correctly", () => {
-        component = createMock(<InfoIcon></InfoIcon>);
+        component = createMock(<EditIcon></EditIcon>);
 
         expect(toJson(component)).toMatchSnapshot();
     });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`InfoIcon UnitTest Renders correctly 1`] = `
+exports[`EditIcon UnitTest Renders correctly 1`] = `
 <Component
   name="pencil"
 />

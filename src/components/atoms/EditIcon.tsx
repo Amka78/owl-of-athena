@@ -5,12 +5,12 @@ import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types
-export type InfoIconProps = Omit<TemplateIconProps, "name">;
+export type EditIconProps = Omit<TemplateIconProps, "name">;
 //#endregion
 
 //#region Component
-export const InfoIcon: FunctionComponent<InfoIconProps> = (
-    props: InfoIconProps
+export const EditIcon: FunctionComponent<EditIconProps> = (
+    props: EditIconProps
 ) => {
     return <TemplateIcon {...props} name={"pencil"}></TemplateIcon>;
 };

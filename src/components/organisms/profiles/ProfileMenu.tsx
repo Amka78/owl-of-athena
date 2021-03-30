@@ -4,14 +4,14 @@ import { Text, TextStyle, View, ViewStyle } from "react-native";
 
 import { Colors } from "../../../constants";
 import { AuroraProfile } from "../../../sdk/AuroraTypes";
-import { InfoIcon } from "../../atoms";
+import { EditIcon } from "../../atoms";
 //#endregion
 
 //#region Types
 export type ProfileMenuProps = {
     style?: ViewStyle;
     selectedProfile: AuroraProfile;
-    onInfoPress: () => void;
+    onEditPress: () => void;
 };
 //#endregion
 
@@ -21,7 +21,7 @@ export const ProfileMenu: FunctionComponent<ProfileMenuProps> = (
 ) => {
     return (
         <View style={[menuStyle, props.style]}>
-            <InfoIcon onPress={props.onInfoPress}></InfoIcon>
+            <EditIcon onPress={props.onEditPress}></EditIcon>
             <Text style={menuTitleStyle}>{props.selectedProfile.title}</Text>
         </View>
     );

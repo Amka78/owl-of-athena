@@ -1,7 +1,7 @@
 import {
     createOfficialProfile,
     defaultOptions,
-    groupingProfileOptions,
+    groupingProfileOptionList,
 } from "../ProfileService";
 describe("ProfileService-test", () => {
     it("Successful creation of an official profile.", async () => {
@@ -20,7 +20,7 @@ describe("ProfileService-test", () => {
     });
 
     it("Successful grouping profile options", () => {
-        const grouped = groupingProfileOptions(defaultOptions);
+        const grouped = groupingProfileOptionList(defaultOptions);
 
         expect(grouped.length).toBe(3);
         expect(grouped[0][0]).toBe("REM Stim Options");

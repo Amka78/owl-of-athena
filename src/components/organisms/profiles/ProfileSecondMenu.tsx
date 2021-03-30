@@ -33,13 +33,13 @@ export const ProfileSecondMenu: FunctionComponent<ProfileSecondMenuProps> = (
                 screenWidth={props.dimens.width}
                 style={{ marginLeft: Dimens.button_margin }}
             >
-                {Message.get(MessageKeys.save_to_aurora)}
+                {Message.get(MessageKeys.profile_save_to_aurora)}
             </Button>
             <FlatButton
                 onPress={props.onShowAdvancedOptionsPress}
                 contentStyle={{ marginRight: Dimens.button_flat_margin }}
             >
-                {Message.get(MessageKeys.show_advanced_options)}
+                {Message.get(MessageKeys.profile_show_advanced_options)}
             </FlatButton>
         </View>
     );

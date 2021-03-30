@@ -212,6 +212,9 @@ export default {
     [MessageKeys.drawer_items_profiles]: profiles,
     [MessageKeys.drawer_items_account]: "アカウント",
 
+    [MessageKeys.profile_rem_stim_options]: "レム睡眠誘発設定",
+    [MessageKeys.profile_alarm_options]: "アラーム設定",
+    [MessageKeys.profile_misc_options]: "その他設定",
     [MessageKeys.profile_filter_menu_header_label]:
         "プロファイルタイプで絞り込む。",
     [MessageKeys.profile_filter_menu_official_check_box_label]:
@@ -227,8 +230,8 @@ export default {
     [MessageKeys.profile_filter_menu_private_check_box_description]:
         "貴方のプライベートプロファイル",
 
-    [MessageKeys.save_to_aurora]: "Auroraに保存",
-    [MessageKeys.show_advanced_options]: "詳細オプションを見る",
+    [MessageKeys.profile_save_to_aurora]: "Auroraに保存",
+    [MessageKeys.profile_show_advanced_options]: "詳細オプションを見る",
     [MessageKeys.connection_error]: "接続エラー",
 
     [MessageKeys.session_blank]: "表示するセッションを選択してください。",

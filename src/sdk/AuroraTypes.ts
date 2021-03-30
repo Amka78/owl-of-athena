@@ -48,10 +48,10 @@ export type AuroraProfile = {
     created_by?: string;
     parent_profile_id?: string;
     min_firmware_version: number;
-    options: AuroraProfileOptions[] | string;
+    options: AuroraProfileOption[] | string;
 };
 
-export type AuroraProfileOptions = {
+export type AuroraProfileOption = {
     name:
         | "stim-enabled"
         | "wakeup-time"
@@ -70,6 +70,7 @@ export type AuroraProfileOptions = {
     title: string;
     description: string;
     group: "REM Stim Options" | "Alarm Options" | "Misc Options";
+    groupName: string;
     conditions?: any;
     failedConditionMessage?: string;
     value?: boolean | string | number | number[] | StimLedValue | SongValue;
@@ -83,6 +84,12 @@ export type AuroraProfileOptions = {
         | LedEffectField
         | BuzzSongField
         | SliderField;
+};
+
+export type ToggleField = {
+    type: "toggle";
+    valueEnabled?: string;
+    valueDisabled?: string;
 };
 
 type SongValue = {
@@ -119,12 +126,6 @@ type BuzzSongField = {
 
 type LedEffectField = {
     type: "led-effect";
-};
-
-type ToggleField = {
-    type: "toggle";
-    valueEnabled?: string;
-    valueDisabled?: string;
 };
 
 type TimeField = {
