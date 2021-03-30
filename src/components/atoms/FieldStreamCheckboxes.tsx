@@ -23,13 +23,21 @@ export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps
     props: FieldStreamCheckBoxesProps
 ) => {
     return (
-        <View style={{ flex: 1, width: 200 }}>
+        <View
+            style={{
+                flex: 1,
+                maxWidth: 500,
+                flexDirection: "row",
+                flexWrap: "wrap",
+            }}
+        >
             {streamOptions.map((value: { label: string; value: number }) => {
                 return (
                     <LabeledCheckBox
                         key={value.label}
                         label={value.label}
                         labelStyle={{ color: Colors.white }}
+                        labelPlace={"right"}
                         status={"checked"}
                     ></LabeledCheckBox>
                 );
