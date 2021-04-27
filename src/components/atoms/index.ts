@@ -11,6 +11,7 @@ import { ErrorText } from "./ErrorText";
 import { FilterIcon } from "./FilterIcon";
 import { FieldStreamCheckBoxes } from "./FieldStreamCheckboxes";
 import { FieldSlider } from "./FieldSlider";
+import { FieldTime } from "./FieldTime";
 import { FieldToggle } from "./FieldToggle";
 import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
@@ -52,6 +53,7 @@ export {
     ErrorText,
     FieldStreamCheckBoxes,
     FieldSlider,
+    FieldTime,
     FieldToggle,
     FlexSpacer,
     HomeIcon,

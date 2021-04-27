@@ -15,6 +15,7 @@ import { MenuCheckBox } from "./MenuCheckBox";
 import { ProfilesDialog } from "./ProfilesDialog";
 import { OptionCheckBoxes } from "./OptionCheckBoxes";
 import { OptionSlider } from "./OptionSlider";
+import { OptionTime } from "./OptionTime";
 import { OptionToggle } from "./OptionToggle";
 import { RightSideButton } from "./RightSideButton";
 import { SessionTimeView } from "./SessionTimeView";
@@ -39,6 +40,7 @@ export {
     MenuCheckBox,
     OptionCheckBoxes,
     OptionSlider,
+    OptionTime,
     OptionToggle,
     ProfilesDialog,
     RightSideButton,

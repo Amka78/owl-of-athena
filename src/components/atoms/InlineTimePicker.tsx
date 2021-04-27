@@ -2,7 +2,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { Component } from "react";
 import {
-    StyleSheet,
     Text,
     TextStyle,
     TouchableOpacity,
@@ -18,7 +17,6 @@ import { ThemeType } from "../../constants/Theme";
 type TimePickerStyle = {
     textColor?: string;
     backgroundColor?: string;
-    containerBackgroudColor?: string;
     activeColor?: string;
     borderColor?: string;
     fontSize?: number;
@@ -27,6 +25,7 @@ type TimePickerStyle = {
 };
 
 export type InlineTimePickerProps = {
+    containerStyle?: ViewStyle;
     style?: TimePickerStyle;
     initialTime?: Date | { hours: number; minutes: number; seconds: number };
     onChangeTime?: (hours?: number, minutes?: number, seconds?: number) => void;
@@ -44,14 +43,14 @@ type InlineTimePickerState = {
 };
 type TimePickerMode = "full" | "minute";
 //#endregion
+
+//#region Component
 export const InlineTimePicker = (props: InlineTimePickerProps): JSX.Element => {
     const theme = useTheme();
     return (
         <InlineTimePickerCore {...props} theme={theme}></InlineTimePickerCore>
     );
 };
-
-//#region Component
 class InlineTimePickerCore extends Component<
     InlineTimePickerProps,
     InlineTimePickerState
@@ -64,7 +63,7 @@ class InlineTimePickerCore extends Component<
 
     private secondsText?: Text;
 
-    private interval?: NodeJS.Timeout;
+    private interval?: number;
 
     private mode?: TimePickerMode;
     constructor(props: InlineTimePickerProps) {
@@ -139,130 +138,122 @@ class InlineTimePickerCore extends Component<
 
     public render(): JSX.Element {
         return (
-            <View>
-                <View style={[styles.container, this.getContainerColor()]}>
-                    <View style={styles.timeContainer}>
-                        {this.state.updating === undefined &&
-                            !this.props.mode24hours && (
-                                <TouchableOpacity
-                                    style={{
-                                        justifyContent: "center",
-                                        marginRight: 10,
-                                    }}
-                                    onPress={(): void => {
-                                        this.setState({
-                                            meridian:
-                                                this.state.meridian === "AM"
-                                                    ? "PM"
-                                                    : "AM",
-                                        });
-                                    }}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.text,
-                                            {
-                                                color: this.props.theme?.colors
-                                                    ?.text,
-                                            },
-                                            this.getTextStyle(),
-                                        ]}
-                                    >
-                                        {this.state.meridian}
-                                    </Text>
-                                </TouchableOpacity>
-                            )}
-                        <TouchableOpacity
-                            onPress={(): void => this.update(this.hoursText!)}
-                        >
-                            <Text
-                                style={[styles.text, this.getTextStyle()]}
-                                ref={(c): void => {
-                                    this.hoursText = c!;
-                                }}
-                            >
-                                {this.state.hours < 10 ? "0" : ""}
-                                {this.state.hours}
-                            </Text>
-                        </TouchableOpacity>
-                        <Text style={[styles.colon, this.getTextColor()]}>
-                            {":"}
-                        </Text>
-                        <TouchableOpacity
-                            onPress={(): void => this.update(this.minutesText!)}
-                        >
-                            <Text
-                                style={[styles.text, this.getTextStyle()]}
-                                ref={(c): void => {
-                                    this.minutesText = c!;
-                                }}
-                            >
-                                {this.state.minutes < 10 ? "0" : ""}
-                                {this.state.minutes}
-                            </Text>
-                        </TouchableOpacity>
-                        {this.mode === "full" && (
-                            <Text style={[styles.colon, this.getTextColor()]}>
-                                {":"}
-                            </Text>
-                        )}
-                        {this.mode === "full" && (
+            <View style={[containerStyle, this.props.containerStyle]}>
+                <View style={timeContainerStyle}>
+                    {this.state.updating === undefined &&
+                        !this.props.mode24hours && (
                             <TouchableOpacity
-                                onPress={(): void =>
-                                    this.update(this.secondsText!)
-                                }
+                                style={{
+                                    justifyContent: "center",
+                                    marginRight: 10,
+                                }}
+                                onPress={(): void => {
+                                    this.setState({
+                                        meridian:
+                                            this.state.meridian === "AM"
+                                                ? "PM"
+                                                : "AM",
+                                    });
+                                }}
                             >
                                 <Text
-                                    style={[styles.text, this.getTextStyle()]}
-                                    ref={(c): void => {
-                                        this.secondsText = c!;
-                                    }}
+                                    style={[
+                                        textStyle,
+                                        {
+                                            color: this.props.theme?.colors
+                                                ?.text,
+                                        },
+                                        this.getTextStyle(),
+                                    ]}
                                 >
-                                    {this.state.seconds < 10 ? "0" : ""}
-                                    {this.state.seconds}
+                                    {this.state.meridian}
                                 </Text>
                             </TouchableOpacity>
                         )}
-                    </View>
-                    {this.state.updating !== undefined && (
-                        <View style={styles.center}>
-                            <TouchableOpacity
-                                style={[
-                                    styles.text,
-                                    this.getTextStyle(),
-                                    styles.increment,
-                                ]}
-                                onPress={(): void => this.increment(1)}
-                                onLongPress={(): void => this.longIncrement(10)}
-                                onPressOut={(): void => this.longIncrement()}
+                    <TouchableOpacity
+                        onPress={(): void => this.update(this.hoursText!)}
+                    >
+                        <Text
+                            style={[textStyle, this.getTextStyle()]}
+                            ref={(c): void => {
+                                this.hoursText = c!;
+                            }}
+                        >
+                            {this.state.hours < 10 ? "0" : ""}
+                            {this.state.hours}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={[colonStyle, this.getTextColor()]}>{":"}</Text>
+                    <TouchableOpacity
+                        onPress={(): void => this.update(this.minutesText!)}
+                    >
+                        <Text
+                            style={[textStyle, this.getTextStyle()]}
+                            ref={(c): void => {
+                                this.minutesText = c!;
+                            }}
+                        >
+                            {this.state.minutes < 10 ? "0" : ""}
+                            {this.state.minutes}
+                        </Text>
+                    </TouchableOpacity>
+                    {this.mode === "full" && (
+                        <Text style={[colonStyle, this.getTextColor()]}>
+                            {":"}
+                        </Text>
+                    )}
+                    {this.mode === "full" && (
+                        <TouchableOpacity
+                            onPress={(): void => this.update(this.secondsText!)}
+                        >
+                            <Text
+                                style={[textStyle, this.getTextStyle()]}
+                                ref={(c): void => {
+                                    this.secondsText = c!;
+                                }}
                             >
-                                <Ionicons
-                                    name={"md-add"}
-                                    size={this.style.iconSize}
-                                    color={this.style.textColor}
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[
-                                    styles.text,
-                                    this.getTextStyle(),
-                                    styles.increment,
-                                ]}
-                                onPress={(): void => this.increment(-1)}
-                                onLongPress={(): void =>
-                                    this.longIncrement(-10)
-                                }
-                                onPressOut={(): void => this.longIncrement()}
-                            >
-                                <Ionicons
-                                    name={"md-remove"}
-                                    size={this.style.iconSize}
-                                    color={this.style.textColor}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                                {this.state.seconds < 10 ? "0" : ""}
+                                {this.state.seconds}
+                            </Text>
+                        </TouchableOpacity>
                     )}
                 </View>
+                {this.state.updating !== undefined && (
+                    <View style={centerStyle}>
+                        <TouchableOpacity
+                            style={[
+                                textStyle,
+                                this.getTextStyle(),
+                                incrementStyle,
+                            ]}
+                            onPress={(): void => this.increment(1)}
+                            onLongPress={(): void => this.longIncrement(10)}
+                            onPressOut={(): void => this.longIncrement()}
+                        >
+                            <Ionicons
+                                name={"md-add"}
+                                size={this.style.iconSize}
+                                color={this.style.textColor}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                textStyle,
+                                this.getTextStyle(),
+                                incrementStyle,
+                            ]}
+                            onPress={(): void => this.increment(-1)}
+                            onLongPress={(): void => this.longIncrement(-10)}
+                            onPressOut={(): void => this.longIncrement()}
+                        >
+                            <Ionicons
+                                name={"md-remove"}
+                                size={this.style.iconSize}
+                                color={this.style.textColor}
+                            />
+                        </TouchableOpacity>
+                    </View>
+                )}
             </View>
         );
     }
@@ -289,11 +280,6 @@ class InlineTimePickerCore extends Component<
         if (!this.style.borderRadius) {
             this.style.borderRadius = TimePickerDefaultStyle.borderRadius;
         }
-        if (!this.style.containerBackgroudColor) {
-            this.style.containerBackgroudColor = theme?.colors?.background
-                ? theme?.colors?.background
-                : TimePickerDefaultStyle.containerBackgroudColor;
-        }
         if (!this.style.fontSize) {
             this.style.fontSize = TimePickerDefaultStyle.fontSize;
         }
@@ -306,6 +292,7 @@ class InlineTimePickerCore extends Component<
                 : TimePickerDefaultStyle.textColor;
         }
     }
+
     private invokeOnChangeTime = (): void => {
         if (!this.props.onChangeTime) return;
         let h = this.state.hours;
@@ -428,12 +415,6 @@ class InlineTimePickerCore extends Component<
         });
     }
 
-    private getContainerColor = (): ViewStyle => {
-        return {
-            backgroundColor: this.style.containerBackgroudColor,
-        };
-    };
-
     private getTextColor = (): TextStyle => {
         return {
             color: this.style.textColor,
@@ -456,55 +437,61 @@ class InlineTimePickerCore extends Component<
 const TimePickerDefaultStyle: TimePickerStyle = {
     textColor: "#ddd",
     backgroundColor: "#777",
-    containerBackgroudColor: "#555",
     activeColor: "#000",
     borderColor: "#555",
     fontSize: 35,
     borderRadius: 4,
     iconSize: 35,
 };
-const styles = StyleSheet.create({
-    container: {
-        margin: 5,
-        marginLeft: 7,
-        flexDirection: "row",
-        justifyContent: "space-around",
-        alignItems: "center",
-        alignContent: "center",
-        borderRadius: 4,
-    },
-    timeContainer: {
-        flexDirection: "row",
-        margin: 5,
-    },
-    center: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    text: {
-        borderWidth: 1,
-        paddingHorizontal: 5,
-        textAlign: "center",
-        justifyContent: "space-around",
-        alignItems: "center",
-        alignContent: "center",
-    },
-    increment: {
-        marginRight: 5,
-        padding: 7,
-    },
-    colon: {
-        fontSize: 35,
-        marginHorizontal: 3,
-    },
-    meridian: {
-        position: "absolute",
-        top: 0,
-        left: 5,
-    },
-    meridian_text: {
-        fontSize: 16,
-    },
-});
+
+const containerStyle: ViewStyle = {
+    backgroundColor: "transparent",
+    margin: 5,
+    marginLeft: 7,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    alignContent: "center",
+    borderRadius: 4,
+};
+
+const timeContainerStyle: ViewStyle = {
+    flexDirection: "row",
+    marginRight: 5,
+};
+
+const centerStyle: ViewStyle = {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+};
+
+const textStyle: TextStyle = {
+    borderWidth: 1,
+    paddingHorizontal: 5,
+    textAlign: "center",
+    justifyContent: "space-around",
+    alignItems: "center",
+    alignContent: "center",
+};
+
+const incrementStyle: ViewStyle = {
+    marginRight: 5,
+    padding: 7,
+};
+
+const colonStyle: TextStyle = {
+    fontSize: 35,
+    marginHorizontal: 3,
+};
+
+const meridianStyle: TextStyle = {
+    position: "absolute",
+    top: 0,
+    left: 5,
+};
+
+const meridianTextStyle: TextStyle = {
+    fontSize: 16,
+};
 //#endregion

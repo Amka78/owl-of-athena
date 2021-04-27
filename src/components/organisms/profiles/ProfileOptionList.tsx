@@ -2,7 +2,8 @@
 import React, { FunctionComponent } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 import { Card, Divider } from "react-native-paper";
-import { Colors, Dimens, Message, MessageKeys } from "../../../constants";
+
+import { Colors, Dimens, Message } from "../../../constants";
 import { useLocale } from "../../../hooks";
 import { AuroraProfileOption as AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { GroupedProfileOptionList } from "../../../services/ProfileService";
@@ -31,20 +32,11 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
                     const title = value[0];
                     const options = value[1];
                     return (
-                        <Card
-                            key={title}
-                            style={{
-                                backgroundColor: Colors.cardBackgroundColor,
-                                marginTop:
-                                    Dimens.profile_list_option_list_margin,
-                            }}
-                        >
+                        <Card key={title} style={cardStyle}>
                             <Card.Title
                                 title={Message.get(options[0].groupName)}
-                                titleStyle={{ color: Colors.second_color }}
-                                style={{
-                                    backgroundColor: Colors.third_accent_color,
-                                }}
+                                titleStyle={cardTitleStyle}
+                                style={cardContainerStyle}
                             ></Card.Title>
 
                             {options.map(
@@ -52,10 +44,7 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
                                     const divider =
                                         index !== 0 ? (
                                             <Divider
-                                                style={{
-                                                    backgroundColor:
-                                                        Colors.third_accent_color,
-                                                }}
+                                                style={dividerStyle}
                                             ></Divider>
                                         ) : undefined;
                                     return (
@@ -82,4 +71,21 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
         </View>
     );
 };
+//#endregion
+
+//#region Styles
+const dividerStyle: ViewStyle = {
+    backgroundColor: Colors.third_accent_color,
+};
+
+const cardStyle: ViewStyle = {
+    backgroundColor: Colors.cardBackgroundColor,
+    marginTop: Dimens.profile_list_option_list_margin,
+};
+
+const cardContainerStyle = {
+    backgroundColor: Colors.third_accent_color,
+};
+
+const cardTitleStyle = { color: Colors.second_color };
 //#endregion

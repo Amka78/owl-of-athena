@@ -2,7 +2,12 @@
 import React, { FunctionComponent } from "react";
 import { AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { InfoIcon } from "../../atoms";
-import { OptionCheckBoxes, OptionSlider, OptionToggle } from "../../molecules";
+import {
+    OptionCheckBoxes,
+    OptionSlider,
+    OptionTime,
+    OptionToggle,
+} from "../../molecules";
 //#endregion
 
 //#region Import Modules
@@ -38,7 +43,7 @@ const optionComponents: any = {
     toggle: OptionToggle,
     slider: OptionSlider,
     checkboxes: OptionCheckBoxes,
-    time: OptionToggle,
+    time: OptionTime,
     "led-effect": OptionToggle,
     "buzz-song": OptionToggle,
 };
