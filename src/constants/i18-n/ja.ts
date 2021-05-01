@@ -30,6 +30,7 @@ export default {
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
     [MessageKeys.reloading]: "{0} 再読み込み中...",
+    [MessageKeys.preview]: "{0}を確認",
     // sleep stages
     [MessageKeys.stage_awake]: "起床中",
     [MessageKeys.stage_rem]: "REM",
@@ -42,6 +43,7 @@ export default {
     [MessageKeys.input_password]: input_password,
     [MessageKeys.input_password_confirm]: input_password_confirm,
     [MessageKeys.input_birthday]: input_birthday,
+    [MessageKeys.choose]: "{0}を選んでください。",
     // aurora strings
     [MessageKeys.aurora_connected]:
         "Aurora:接続中 バージョン:{0} バッテリー{1}%",
@@ -129,8 +131,6 @@ export default {
     [MessageKeys.sessions_check_show_notes_description]:
         "ノートを記述しているセッションのみ表示します。",
 
-    // session picker fragment
-    [MessageKeys.select_list_title]: "{0}を選んでください。",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "入眠",
     [MessageKeys.session_awake_time_label]: "起床",
@@ -235,4 +235,14 @@ export default {
     [MessageKeys.connection_error]: "接続エラー",
 
     [MessageKeys.session_blank]: "表示するセッションを選択してください。",
+
+    [MessageKeys.lef_effect]: "レッドエフェクト",
+    [MessageKeys.effect]: "エフェクト",
+
+    [MessageKeys.no_effect]: "効果なし",
+
+    [MessageKeys.set]: "セット",
+    [MessageKeys.blink]: "瞬き",
+    [MessageKeys.alternate]: "Alternate",
+    [MessageKeys.transition]: "Transition",
 };

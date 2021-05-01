@@ -22,9 +22,7 @@ const ProfileNavigator = (): JSX.Element => {
                 component={ProfileListScreen}
                 options={{
                     headerTitle: !dimens.isDesktop
-                        ? Message.get(MessageKeys.select_list_title, [
-                              MessageKeys.profile,
-                          ])
+                        ? Message.get(MessageKeys.choose, [MessageKeys.profile])
                         : "",
                 }}
             ></Stack.Screen>

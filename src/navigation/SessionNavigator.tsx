@@ -30,9 +30,7 @@ const SessionNavigator = (): JSX.Element => {
                 component={SessionListScreen}
                 options={{
                     headerTitle: !dimens.isDesktop
-                        ? Message.get(MessageKeys.select_list_title, [
-                              MessageKeys.session,
-                          ])
+                        ? Message.get(MessageKeys.choose, [MessageKeys.session])
                         : "",
                 }}
             ></Stack.Screen>

@@ -1,6 +1,7 @@
 //#region Import Modules
+import { Picker } from "@react-native-community/picker";
 import React, { FunctionComponent } from "react";
-import { Picker, Text, TextStyle, View, ViewStyle } from "react-native";
+import { Text, TextStyle, View, ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
 import { FilterByDateValues } from "../../../state/SessionState";
@@ -12,7 +13,7 @@ import { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
 //#region Types
 export type SessionListMenuProps = {
     containerStyle?: ViewStyle;
-    onPickerValueChange: (itemValue: FilterByDateValues) => void;
+    onPickerValueChange: (itemValue: React.ReactText) => void;
     selectedPickerValue: FilterByDateValues;
     anyTimePickerValue: FilterByDateValues;
     pastWeekPickerValue: FilterByDateValues;
@@ -37,8 +38,8 @@ export const SessionListMenu: FunctionComponent<SessionListMenuProps> = (
                 <Picker
                     selectedValue={props.selectedPickerValue}
                     onValueChange={props.onPickerValueChange}
-                    style={picker}
-                    itemStyle={pickerItem}
+                    style={pickerStyle}
+                    itemStyle={pickerItemStyle}
                 >
                     <Picker.Item
                         value={props.anyTimePickerValue}
@@ -98,7 +99,7 @@ const filterByDateLabel: TextStyle = {
     fontSize: 13,
 };
 
-const picker: ViewStyle = {
+const pickerStyle: ViewStyle = {
     backgroundColor: Colors.purple,
     borderLeftWidth: 0,
     borderRightWidth: 0,
@@ -106,7 +107,7 @@ const picker: ViewStyle = {
     borderBottomColor: Colors.cyan,
 };
 
-const pickerItem: TextStyle = {
+const pickerItemStyle: TextStyle = {
     textDecorationColor: Colors.white,
     borderColor: Colors.white,
 };

@@ -18,6 +18,7 @@ export const MessageKeys = {
     long_dash: "long_dash",
     pipe_separator: "pipe_separator",
     reloading: "reloading",
+    preview: "preview",
     //#endregion
 
     //#region Sleep stages
@@ -128,7 +129,7 @@ export const MessageKeys = {
     //#endregion
 
     //#region Session picker fragment
-    select_list_title: "session_list_title",
+    choose: "session_list_title",
     //#endregion
 
     //#region SessionScreen
@@ -253,4 +254,13 @@ export const MessageKeys = {
 
     connection_error: "connection_error",
     session_blank: "session_blank",
+
+    lef_effect: "led_effect",
+    effect: "effect",
+    no_effect: "no_effect",
+
+    set: "set",
+    blink: "blink",
+    alternate: "alternate",
+    transition: "transition",
 };

@@ -38,6 +38,8 @@ export default {
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
     [MessageKeys.reloading]: "{0} Reloading...",
+    [MessageKeys.choose]: "Choose a {0}",
+    [MessageKeys.preview]: "Preview {0}",
     // sleep stages
     [MessageKeys.stage_awake]: "Awake",
     [MessageKeys.stage_rem]: "REM",
@@ -134,8 +136,6 @@ export default {
     [MessageKeys.sessions_check_show_notes_label]: "Show Notes",
     [MessageKeys.sessions_check_show_notes_description]:
         "Only sessions with notes",
-    // session picker fragment
-    [MessageKeys.select_list_title]: "Choose a {0}",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "asleep at",
     [MessageKeys.session_awake_time_label]: "awake at",
@@ -244,5 +244,14 @@ export default {
     [MessageKeys.connection_error]: "Connection Error",
 
     [MessageKeys.session_blank]: "Please select the sessions you wish to view.",
+
+    [MessageKeys.lef_effect]: "Led Effect",
+    [MessageKeys.effect]: "Effect",
+    [MessageKeys.no_effect]: "No Effect",
+
+    [MessageKeys.set]: "Set",
+    [MessageKeys.blink]: "Blink",
+    [MessageKeys.alternate]: "Alternate",
+    [MessageKeys.transition]: "Transition",
 };
 //#endregion
