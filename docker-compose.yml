@@ -8,7 +8,7 @@ services:
       context: .
       args:
         BUILD_ENV: "development"
-    command: bash -c "export PATH=$ANDROID_SDK/platform-tools:$PATH && npm install && npm start"
+    command: bash -c "export PATH=$ANDROID_SDK/platform-tools:$PATH && bun install && bun run start"
     env_file:
       - .env
     ports:

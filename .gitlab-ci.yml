@@ -4,7 +4,7 @@ variables:
   EXPO_PASSWORD: "rolarola339"
 
 before_script:
-  - npm install
+  - bun install
  
 stages:
   - testing
@@ -13,7 +13,7 @@ stages:
 test:
   stage: testing
   script:
-    - npm run coverage
+    - bun run coverage
  
 #deploy:
 #  stage: deploy
