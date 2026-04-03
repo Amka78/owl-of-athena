@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SessionsIcon UnitTest renders correctly 1`] = `
-<Component
-  name="blur"
-/>
-`;
+exports[`SessionsIcon UnitTest renders correctly 1`] = `<Text />`;

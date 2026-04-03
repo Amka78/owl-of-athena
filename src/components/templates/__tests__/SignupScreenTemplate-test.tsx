@@ -1,62 +1,86 @@
-import "jest-enzyme";
-import "react-native";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { SignupScreenTemplate } from '../SignupScreenTemplate';
 
-import { ShallowWrapper } from "enzyme";
-import React from "react";
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-import { Message } from "../../../constants";
-import {
-    createMock,
-    DesktopDimension,
-    toJson,
-} from "../../../utils/TestHelper";
-import {
-    SignupScreenTemplate,
-    SignupScreenTemplateProps,
-} from "../SignupScreenTemplate";
-import {
-    TemplateLabeledCheckBoxProps,
-    TemplateValidateTextBoxProps,
-} from "../TempatedProps";
+const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
+    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
+    isVertical: true, isHorizontal: false,
+};
 
-let component: ShallowWrapper<SignupScreenTemplateProps, unknown, unknown>;
+const textBoxProps = { value: '', onChangeText: jest.fn() };
+const checkBoxProps = { status: 'unchecked' as const, onPress: jest.fn(), onLabelPress: jest.fn() };
 
-describe("SignupScreenTemplate UnitTest", () => {
-    it.each(["us", "ja"])("renders correctly", (locale: string) => {
-        const testEvent: () => void = () => {
-            return;
-        };
-        Message.setLocale(locale);
-
-        const textProps: TemplateValidateTextBoxProps = {
-            errorText: "test",
-            onChangeText: () => {
-                return;
-            },
-            value: "test",
-        };
-        const checkBoxProps: TemplateLabeledCheckBoxProps = {
-            status: "checked",
-            onLabelPress: () => {
-                return;
-            },
-            onPress: () => {
-                return;
-            },
-        };
-        component = createMock(
+describe('SignupScreenTemplate', () => {
+    it('renders correctly with en-US locale', () => {
+        const { toJSON } = renderWithProvider(
             <SignupScreenTemplate
-                emailTextBox={textProps}
-                passwordTextBox={textProps}
-                passwordConfirmTextBox={textProps}
+                emailTextBox={textBoxProps}
+                passwordTextBox={textBoxProps}
+                passwordConfirmTextBox={textBoxProps}
                 labeledCheckBox={checkBoxProps}
-                onSignupPress={testEvent}
-                onCancelPress={testEvent}
-                errorText={"test"}
-                dimens={DesktopDimension}
-            ></SignupScreenTemplate>
+                onSignupPress={jest.fn()}
+                onCancelPress={jest.fn()}
+                dimens={mobileDimens}
+                locale="en-US"
+            />
         );
+        expect(toJSON()).toMatchSnapshot();
+    });
 
-        expect(toJson(component)).toMatchSnapshot();
+    it('renders correctly with ja-JP locale', () => {
+        const { toJSON } = renderWithProvider(
+            <SignupScreenTemplate
+                emailTextBox={textBoxProps}
+                passwordTextBox={textBoxProps}
+                passwordConfirmTextBox={textBoxProps}
+                labeledCheckBox={checkBoxProps}
+                onSignupPress={jest.fn()}
+                onCancelPress={jest.fn()}
+                dimens={mobileDimens}
+                locale="ja-JP"
+            />
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('calls onSignupPress when signup button pressed', () => {
+        const onSignupPress = jest.fn();
+        const { getByText } = renderWithProvider(
+            <SignupScreenTemplate
+                emailTextBox={textBoxProps}
+                passwordTextBox={textBoxProps}
+                passwordConfirmTextBox={textBoxProps}
+                labeledCheckBox={checkBoxProps}
+                onSignupPress={onSignupPress}
+                onCancelPress={jest.fn()}
+                dimens={mobileDimens}
+                locale="en-US"
+            />
+        );
+        fireEvent.press(getByText(/sign up/i));
+        expect(onSignupPress).toHaveBeenCalledTimes(1);
+    });
+
+    it('shows error text when provided', () => {
+        const { getAllByText } = renderWithProvider(
+            <SignupScreenTemplate
+                emailTextBox={textBoxProps}
+                passwordTextBox={textBoxProps}
+                passwordConfirmTextBox={textBoxProps}
+                labeledCheckBox={checkBoxProps}
+                onSignupPress={jest.fn()}
+                onCancelPress={jest.fn()}
+                errorText="Email is invalid"
+                dimens={mobileDimens}
+                locale="en-US"
+            />
+        );
+        expect(getAllByText('Email is invalid').length).toBeGreaterThan(0);
     });
 });

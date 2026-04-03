@@ -1,0 +1,411 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileOption renders a toggle option correctly 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      field={
+        {
+          "type": "toggle",
+        }
+      }
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          false,
+          [
+            {
+              "paddingRight": 24,
+              "paddingVertical": 8,
+            },
+            undefined,
+          ],
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "marginVertical": 6,
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Text />
+        <View
+          style={
+            [
+              {
+                "paddingLeft": 16,
+              },
+              {
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="undefined-content"
+        >
+          <Text
+            numberOfLines={1}
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                  },
+                  [
+                    {
+                      "color": "#ffffff",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            REM Stimulation
+          </Text>
+        </View>
+        <RCTSwitch
+          accessibilityRole="switch"
+          disabled={false}
+          field={
+            {
+              "type": "toggle",
+            }
+          }
+          left={[Function]}
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTintColor="#00ffe6"
+          style={
+            [
+              {
+                "alignSelf": "flex-start",
+              },
+              [
+                {
+                  "alignSelf": "center",
+                  "marginLeft": 16,
+                  "marginRight": 0,
+                  "marginVertical": 0,
+                },
+                {
+                  "alignSelf": "center",
+                },
+              ],
+            ]
+          }
+          tintColor="#00ffe6"
+          title="REM Stimulation"
+          value={true}
+        />
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
+
+exports[`ProfileOption renders in failed state with failedConditionMessage 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      field={
+        {
+          "type": "toggle",
+        }
+      }
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          false,
+          [
+            {
+              "paddingRight": 24,
+              "paddingVertical": 8,
+            },
+            undefined,
+          ],
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "marginVertical": 6,
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          onPress={[MockFunction]}
+          selectable={false}
+          style={
+            [
+              {
+                "color": "#ffffff",
+                "fontSize": 40,
+              },
+              undefined,
+              {
+                "fontFamily": "material-community",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {},
+            ]
+          }
+        >
+          󰋽
+        </Text>
+        <View
+          style={
+            [
+              {
+                "paddingLeft": 16,
+              },
+              {
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="undefined-content"
+        >
+          <Text
+            numberOfLines={1}
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                  },
+                  [
+                    {
+                      "color": "#ffffff",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            REM Stimulation
+          </Text>
+          <Text
+            numberOfLines={2}
+            onTextLayout={[Function]}
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "color": "rgba(73, 69, 79, 1)",
+                  },
+                  [
+                    {
+                      "color": "#9B9B9B",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            Requires firmware &gt;= 2.0
+          </Text>
+        </View>
+        <RCTSwitch
+          accessibilityRole="switch"
+          description="Requires firmware >= 2.0"
+          disabled={true}
+          field={
+            {
+              "type": "toggle",
+            }
+          }
+          left={[Function]}
+          onChange={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          onTintColor="#00ffe6"
+          style={
+            [
+              {
+                "alignSelf": "flex-start",
+              },
+              [
+                {
+                  "alignSelf": "center",
+                  "marginLeft": 16,
+                  "marginRight": 0,
+                },
+                {
+                  "alignSelf": "center",
+                },
+              ],
+            ]
+          }
+          tintColor="#00ffe6"
+          title="REM Stimulation"
+          value={true}
+        />
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;

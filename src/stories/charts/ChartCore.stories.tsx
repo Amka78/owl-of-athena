@@ -1,0 +1,46 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, within } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+
+import { Theme } from "../../constants";
+import { ChartCore } from "../../components/charts/ChartCore";
+
+const meta = {
+    title: "Charts/ChartCore",
+    component: ChartCore,
+    tags: ["autodocs"],
+    decorators: [
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
+    ],
+} satisfies Meta<typeof ChartCore>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+    args: {
+        width: 400,
+        height: 200,
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const WithMargin: Story = {
+    args: {
+        width: 400,
+        height: 200,
+        svgStyle: { marginLeft: 16, marginRight: 16, marginTop: 8, marginBottom: 8 },
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

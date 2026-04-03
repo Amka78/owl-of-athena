@@ -1,48 +1,26 @@
 import "react-native";
-import "jest-enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import Enzyme from "enzyme";
+import "@testing-library/jest-native/extend-expect";
 
-/**
- * Set up DOM in node.js environment for Enzyme to mount to
- */
-const { JSDOM } = require("jsdom");
-
-const jsdom = new JSDOM("<!doctype html><html><body></body></html>", {
-    url: "http://localhost",
-});
-const { window } = jsdom;
-
-function copyProps(src, target) {
-    Object.defineProperties(target, {
-        ...Object.getOwnPropertyDescriptors(src),
-        ...Object.getOwnPropertyDescriptors(target),
-    });
-}
-
-global.window = window;
-global.document = window.document;
-global.navigator = {
-    userAgent: "node.js",
-};
-copyProps(window, global);
-
-/**
- * Set up Enzyme to mount to DOM, simulate events,
- * and inspect the DOM in tests.
- */
-Enzyme.configure({ adapter: new Adapter() });
-
-/**
- * Ignore some expected warnings
- * see: https://jestjs.io/docs/en/tutorial-react.html#snapshot-testing-with-mocks-enzyme-and-react-16
- * see https://github.com/Root-App/react-native-mock-render/issues/6
- */
+// Silence warnings from React Native in test environment
 const originalConsoleError = console.error;
-console.error = (message) => {
-    if (message.startsWith("Warning:")) {
+console.error = (message, ...args) => {
+    if (
+        typeof message === "string" &&
+        (message.startsWith("Warning:") ||
+            message.includes("ReactDOM.render is no longer supported"))
+    ) {
         return;
     }
+    originalConsoleError(message, ...args);
+};
 
-    originalConsoleError(message);
+const originalConsoleWarn = console.warn;
+console.warn = (message, ...args) => {
+    if (
+        typeof message === "string" &&
+        (message.includes("Animated:") || message.includes("AsyncStorage"))
+    ) {
+        return;
+    }
+    originalConsoleWarn(message, ...args);
 };

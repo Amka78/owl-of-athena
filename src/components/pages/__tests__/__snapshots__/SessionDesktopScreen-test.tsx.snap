@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SessionDesktopScreen UnitTest renders correctly 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "flex": 3,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "backgroundColor": "#070724",
+                "borderBottomColor": "#ffffff",
+                "borderBottomWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "space-around",
+              }
+            }
+          >
+            <Text />
+            <View
+              style={
+                {
+                  "flex": 1,
+                }
+              }
+            />
+            <Text />
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "borderLeftColor": "#ffffff",
+            "borderLeftWidth": 1,
+            "flex": 7,
+          }
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              {
+                "alignItems": "flex-start",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "flex": 1,
+                  "justifyContent": "space-between",
+                  "marginLeft": 48,
+                  "marginRight": 48,
+                },
+                {
+                  "backgroundColor": "#070724",
+                },
+                {
+                  "marginLeft": 40,
+                  "marginTop": 40,
+                },
+              ]
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "flex": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              Please select the sessions you wish to view.
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;

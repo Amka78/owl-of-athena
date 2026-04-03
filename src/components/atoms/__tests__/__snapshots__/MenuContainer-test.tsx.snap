@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MenuContainer UnitTest renders correctly 1`] = `
+exports[`MenuContainer UnitTest renders correctly with children 1`] = `
 <View
   style={
-    Array [
-      Object {
+    [
+      {
         "backgroundColor": "#4a2fba",
         "flex": 0.4,
       },
@@ -12,6 +12,8 @@ exports[`MenuContainer UnitTest renders correctly 1`] = `
     ]
   }
 >
-  test
+  <Text>
+    Menu Item
+  </Text>
 </View>
 `;

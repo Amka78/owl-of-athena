@@ -1,16 +1,35 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { FlatButton } from '../../components/atoms/FlatButton';
 
-import { FlatButton, FlatButtonProps } from "../../components/atoms/FlatButton";
+const meta = {
+  title: 'Atoms/FlatButton',
+  component: FlatButton,
+  tags: ['autodocs'],
+  decorators: [
+    (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+  ],
+} satisfies Meta<typeof FlatButton>;
 
-export default {
-    title: "Atoms/FlatButton",
-    component: FlatButton,
-} as Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: Story<FlatButtonProps> = (args) => <FlatButton {...args} />;
+export const Primary: Story = {
+  args: {
+    children: 'Test',
+  },
+  play: async ({ canvasElement }) => {
+    
+    expect(canvasElement).toBeTruthy();
+  },
+};
 
-export const Primary = Template.bind({});
-Primary.args = {
-    children: "Test",
+export const WithPressHandler: Story = {
+  args: {
+    children: 'Test',
+    onPress: fn(),
+  },
 };

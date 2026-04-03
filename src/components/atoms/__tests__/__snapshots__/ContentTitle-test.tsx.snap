@@ -1,22 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContentTitle UnitTest Renders correctly 1`] = `
-<Text
+exports[`ContentTitle UnitTest renders correctly with children text 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
   style={
-    Array [
-      Object {
-        "fontFamily": "calibre_app_regular",
-        "fontSize": 24,
-        "marginBottom": 48,
-        "marginTop": 32,
-      },
-      Object {
-        "color": undefined,
+    [
+      {
+        "flex": 1,
       },
       undefined,
     ]
   }
 >
-  test
-</Text>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "calibre_app_regular",
+            "fontSize": 24,
+            "marginBottom": 48,
+            "marginTop": 32,
+          },
+          {
+            "color": "rgba(98, 91, 113, 1)",
+          },
+          undefined,
+        ]
+      }
+    >
+      Title Text
+    </Text>
+  </View>
+</RNCSafeAreaProvider>
 `;

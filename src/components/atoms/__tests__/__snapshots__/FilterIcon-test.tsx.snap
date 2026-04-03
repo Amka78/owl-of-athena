@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FilterIcon UnitTest Renders correctly 1`] = `
-<Component
-  name="filter-variant"
-/>
-`;
+exports[`FilterIcon UnitTest renders correctly 1`] = `<Text />`;

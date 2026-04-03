@@ -1,11 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BatteryIcon UnitTest Renders correctly 1`] = `
-<Component
-  batteryLevel={100}
-  color="#00ffe6"
+exports[`BatteryIcon UnitTest renders correctly 1`] = `<Text />`;
+
+exports[`BatteryIcon UnitTest renders with USB connected 1`] = `
+<Text
+  allowFontScaling={false}
+  batteryLevel={80}
   isUSBConnected={true}
-  name="battery-charging"
-  size={40}
-/>
+  selectable={false}
+  style={
+    [
+      {
+        "color": "#00ffe6",
+        "fontSize": 40,
+      },
+      undefined,
+      {
+        "fontFamily": "material-community",
+        "fontStyle": "normal",
+        "fontWeight": "normal",
+      },
+      {},
+    ]
+  }
+>
+  󰂊
+</Text>
+`;
+
+exports[`BatteryIcon UnitTest renders without USB connected 1`] = `
+<Text
+  allowFontScaling={false}
+  batteryLevel={80}
+  isUSBConnected={false}
+  selectable={false}
+  style={
+    [
+      {
+        "color": "#00ffe6",
+        "fontSize": 40,
+      },
+      undefined,
+      {
+        "fontFamily": "material-community",
+        "fontStyle": "normal",
+        "fontWeight": "normal",
+      },
+      {},
+    ]
+  }
+>
+  󰂁
+</Text>
 `;

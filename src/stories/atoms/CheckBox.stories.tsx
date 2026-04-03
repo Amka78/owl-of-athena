@@ -1,20 +1,51 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { CheckBox } from '../../components/atoms/CheckBox';
 
-import { CheckBox, CheckBoxProps } from "../../components/atoms/CheckBox";
+const meta = {
+  title: 'Atoms/CheckBox',
+  component: CheckBox,
+  tags: ['autodocs'],
+  argTypes: {
+    color: { control: 'color' },
+    uncheckedColor: { control: 'color' },
+  },
+  decorators: [
+    (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+  ],
+} satisfies Meta<typeof CheckBox>;
 
-export default {
-    title: "Atoms/CheckBox",
-    component: CheckBox,
-    argTypes: {
-        color: { control: "color" },
-        uncheckedColor: { control: "color" },
-    },
-} as Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: Story<CheckBoxProps> = (args) => <CheckBox {...args} />;
+export const Primary: Story = {
+  args: {
+    status: 'checked',
+  },
+  play: async ({ canvasElement }) => {
+    
+    expect(canvasElement).toBeTruthy();
+  },
+};
 
-export const Primary = Template.bind({});
-Primary.args = {
-    status: "checked",
+export const Unchecked: Story = {
+  args: {
+    status: 'unchecked',
+  },
+};
+
+export const Indeterminate: Story = {
+  args: {
+    status: 'indeterminate',
+  },
+};
+
+export const WithPressHandler: Story = {
+  args: {
+    status: 'unchecked',
+    onPress: fn(),
+  },
 };

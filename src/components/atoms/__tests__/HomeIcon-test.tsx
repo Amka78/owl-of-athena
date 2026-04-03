@@ -1,20 +1,14 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { HomeIcon, HomeIconProps } from "../HomeIcon";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { HomeIcon } from '../HomeIcon';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<HomeIconProps, unknown, unknown>;
-describe("HomeIcon UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<HomeIcon></HomeIcon>);
-
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('HomeIcon UnitTest', () => {
+    it('renders correctly', () => {
+        const { toJSON } = render(<HomeIcon />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

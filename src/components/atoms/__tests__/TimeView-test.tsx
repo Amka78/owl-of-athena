@@ -1,22 +1,28 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { TimeView, TimeViewProps } from "../TimeView";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { TimeView } from '../TimeView';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<TimeViewProps, unknown, unknown>;
-describe("TimeView UnitTest", () => {
-    it("renders correctly", () => {
-        component = createMock(
-            <TimeView hours={12} minutes={50} mode={"meridian"}></TimeView>
-        );
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('TimeView UnitTest', () => {
+    it('renders correctly with mode="meridian"', () => {
+        const { toJSON } = renderWithProvider(
+            <TimeView mode="meridian" hours={8} minutes={30} />
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('renders correctly with mode="time"', () => {
+        const { toJSON } = renderWithProvider(
+            <TimeView mode="time" hours={2} minutes={15} />
+        );
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

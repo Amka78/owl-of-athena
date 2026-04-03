@@ -1,8 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DeleteIcon UnitTest Renders correctly 1`] = `
-<Component
-  name="delete"
-  size={25}
-/>
-`;
+exports[`DeleteIcon UnitTest renders correctly 1`] = `<Text />`;

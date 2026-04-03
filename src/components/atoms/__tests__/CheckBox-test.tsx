@@ -1,36 +1,38 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { CheckBox, CheckBoxProps } from "../CheckBox";
-import { Colors } from "../../../constants";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { CheckBox } from '../CheckBox';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<CheckBoxProps, unknown, unknown>;
-describe("CheckBoxEx UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<CheckBox status={"checked"}></CheckBox>);
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('CheckBox UnitTest', () => {
+    it('renders checked state', () => {
+        const { toJSON } = renderWithProvider(<CheckBox status="checked" />);
+        expect(toJSON()).toMatchSnapshot();
     });
 
-    it("If a colour has been set, this value should be reflected.", () => {
-        component = createMock(
-            <CheckBox
-                status={"unchecked"}
-                color={Colors.white}
-                uncheckedColor={Colors.red}
-            ></CheckBox>
+    it('renders unchecked state', () => {
+        const { toJSON } = renderWithProvider(<CheckBox status="unchecked" />);
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('renders indeterminate state', () => {
+        const { toJSON } = renderWithProvider(<CheckBox status="indeterminate" />);
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('calls onPress when pressed', () => {
+        const onPress = jest.fn();
+        const { getByRole } = renderWithProvider(
+            <CheckBox status="unchecked" onPress={onPress} />
         );
-
-        const props = component.props();
-
-        expect(props.color).toBe(Colors.white);
-        expect(props.uncheckedColor).toBe(Colors.red);
+        fireEvent.press(getByRole('checkbox'));
+        expect(onPress).toHaveBeenCalledTimes(1);
     });
 });
 //#endregion

@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SessionTimeView renders correctly in desktop mode 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 20,
+            },
+            {
+              "color": "rgba(98, 91, 113, 1)",
+            },
+            {
+              "fontSize": 30,
+            },
+          ]
+        }
+      >
+        Session
+      </Text>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "fontFamily": "calibre_app_semibold",
+                "fontSize": 20,
+              },
+              {
+                "color": "rgba(98, 91, 113, 1)",
+              },
+              {
+                "fontSize": 30,
+              },
+            ]
+          }
+        >
+          8h 0m
+        </Text>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
+
+exports[`SessionTimeView renders correctly in mobile mode 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 20,
+            },
+            {
+              "color": "rgba(98, 91, 113, 1)",
+            },
+            {
+              "fontSize": 15,
+            },
+          ]
+        }
+      >
+        Session
+      </Text>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "fontFamily": "calibre_app_semibold",
+                "fontSize": 20,
+              },
+              {
+                "color": "rgba(98, 91, 113, 1)",
+              },
+              {
+                "fontSize": 15,
+              },
+            ]
+          }
+        >
+          7:30
+        </Text>
+        <Text
+          style={
+            [
+              {
+                "fontFamily": "calibre_app_regular",
+                "fontSize": 20,
+              },
+              {
+                "color": "rgba(98, 91, 113, 1)",
+              },
+              {
+                "fontSize": 11,
+              },
+            ]
+          }
+        >
+          am
+        </Text>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;

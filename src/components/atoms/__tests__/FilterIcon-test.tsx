@@ -1,20 +1,14 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { FilterIcon, FilterIconProps } from "../FilterIcon";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { FilterIcon } from '../FilterIcon';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<FilterIconProps, unknown, unknown>;
-describe("FilterIcon UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<FilterIcon></FilterIcon>);
-
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('FilterIcon UnitTest', () => {
+    it('renders correctly', () => {
+        const { toJSON } = render(<FilterIcon />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

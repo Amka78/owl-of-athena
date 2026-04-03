@@ -1,22 +1,21 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { ListItem, ListItemProps } from "../ListItem";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { ListItem } from '../ListItem';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<ListItemProps, unknown, unknown>;
-describe("ListItem UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(
-            <ListItem title={"test"} description={"testDesc"}></ListItem>
-        );
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('ListItem UnitTest', () => {
+    it('renders correctly with title and description', () => {
+        const { toJSON } = renderWithProvider(
+            <ListItem title="Test Item" description="Description" />
+        );
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

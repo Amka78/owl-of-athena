@@ -1,26 +1,61 @@
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { LabeledCheckBox } from '../../components/molecules/LabeledCheckBox';
 
-import {
-    LabeledCheckBox,
-    LabeledCheckBoxProps,
-} from "../../components/molecules/LabeledCheckBox";
-export default {
-    title: "Molecules/LabeledCheckBox",
+const meta = {
+    title: 'Molecules/LabeledCheckBox',
     component: LabeledCheckBox,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
     argTypes: {
-        checkBoxColor: { control: "color" },
-        checkBoxUncheckedColor: { control: "color" },
+        checkBoxColor: { control: 'color' },
+        checkBoxUncheckedColor: { control: 'color' },
     },
-} as Meta;
+} satisfies Meta<typeof LabeledCheckBox>;
 
-const Template: Story<LabeledCheckBoxProps> = (args) => (
-    <LabeledCheckBox {...args} />
-);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-    label: "test",
-    labelPlace: "left",
-    status: "checked",
+export const Primary: Story = {
+    args: {
+        label: 'Accept terms',
+        labelPlace: 'right',
+        status: 'checked',
+        onPress: fn(),
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const Unchecked: Story = {
+    args: {
+        label: 'Unchecked item',
+        labelPlace: 'left',
+        status: 'unchecked',
+        onPress: fn(),
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const WithDescription: Story = {
+    args: {
+        label: 'Option',
+        description: 'This is a description',
+        labelPlace: 'right',
+        status: 'unchecked',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
 };

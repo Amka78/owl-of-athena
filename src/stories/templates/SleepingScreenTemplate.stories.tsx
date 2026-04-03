@@ -1,30 +1,75 @@
-//#region Import Modules
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { SleepingScreenTemplate } from '../../components/templates/SleepingScreenTemplate';
 
-import {
-    SleepingScreen,
-    SleepingScreenProps,
-} from "./containered/SleepingScreen";
-//#endregion
-
-//#region Story
-export default {
-    title: "Templates/SleepingScreen",
-    component: SleepingScreen,
-} as Meta;
-
-const Template: Story<SleepingScreenProps> = (args) => (
-    <SleepingScreen {...args} timeView={{ hours: 9, minutes: 0 }} />
-);
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
+const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
+    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
+    isVertical: true, isHorizontal: false,
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
+const desktopDimens = {
+    fontScale: 1, scale: 1, height: 1200, width: 1400,
+    isDesktop: true, isLargeWidth: true, isSmallHeight: false,
+    isVertical: false, isHorizontal: true,
 };
-//#endregion
+
+const meta = {
+    title: 'Templates/SleepingScreenTemplate',
+    component: SleepingScreenTemplate,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof SleepingScreenTemplate>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const EnUSLocale: Story = {
+    args: {
+        wakeLockMessage: 'Screen is locked',
+        onRelockPress: fn(),
+        timeView: { hours: 9, minutes: 0 },
+        onWakeupPress: fn(),
+        dimens: mobileDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const JaJPLocale: Story = {
+    args: {
+        wakeLockMessage: 'スクリーンはロックされています',
+        onRelockPress: fn(),
+        timeView: { hours: 9, minutes: 0 },
+        onWakeupPress: fn(),
+        dimens: mobileDimens,
+        locale: 'ja-JP',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    args: {
+        wakeLockMessage: 'Screen is locked',
+        onRelockPress: fn(),
+        timeView: { hours: 9, minutes: 0 },
+        onWakeupPress: fn(),
+        dimens: desktopDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

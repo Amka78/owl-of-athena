@@ -1,19 +1,28 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { ContentTitle } from '../../components/atoms/ContentTitle';
 
-import {
-    ContentTitle,
-    ContentTitleProps,
-} from "../../components/atoms/ContentTitle";
+const meta = {
+  title: 'Atoms/ContentTitle',
+  component: ContentTitle,
+  tags: ['autodocs'],
+  decorators: [
+    (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+  ],
+} satisfies Meta<typeof ContentTitle>;
 
-export default {
-    title: "Atoms/ContentTitle",
-    component: ContentTitle,
-} as Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: Story<ContentTitleProps> = (args) => <ContentTitle {...args} />;
-
-export const Primary = Template.bind({});
-Primary.args = {
-    children: "Test",
+export const Primary: Story = {
+  args: {
+    children: 'Test',
+  },
+  play: async ({ canvasElement }) => {
+    
+    expect(canvasElement).toBeTruthy();
+  },
 };

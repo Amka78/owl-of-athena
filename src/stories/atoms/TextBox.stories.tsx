@@ -1,20 +1,32 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { TextBox } from '../../components/atoms/TextBox';
 
-import { TextBox, TextBoxProps } from "../../components/atoms/TextBox";
+const meta = {
+  title: 'Atoms/TextBox',
+  component: TextBox,
+  tags: ['autodocs'],
+  argTypes: {
+    selectionColor: { control: 'color' },
+    underlineColor: { control: 'color' },
+  },
+  decorators: [
+    (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+  ],
+} satisfies Meta<typeof TextBox>;
 
-export default {
-    title: "Atoms/TextBox",
-    component: TextBox,
-    argTypes: {
-        selectionColor: { control: "color" },
-        underlineColor: { control: "color" },
-    },
-} as Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: Story<TextBoxProps> = (args) => <TextBox {...args} />;
-
-export const Primary = Template.bind({});
-Primary.args = {
-    label: "test",
+export const Primary: Story = {
+  args: {
+    label: 'test',
+  },
+  play: async ({ canvasElement }) => {
+    
+    expect(canvasElement).toBeTruthy();
+  },
 };

@@ -1,20 +1,29 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { UpdateSnackBar, UpdateSnackBarProps } from "../UpdateSnackBar";
+jest.mock('expo-av');
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { UpdateSnackBarCore } from '../UpdateSnackBar';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<UpdateSnackBarProps, unknown, unknown>;
-describe("UpdateSnackBar UnitTest", () => {
-    it("renders correctly", () => {
-        component = createMock(<UpdateSnackBar></UpdateSnackBar>);
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('UpdateSnackBar UnitTest', () => {
+    it('renders correctly with showReload=true', () => {
+        const { toJSON } = renderWithProvider(
+            <UpdateSnackBarCore showReload={true} />
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('renders correctly with showReload=false', () => {
+        const { toJSON } = renderWithProvider(
+            <UpdateSnackBarCore showReload={false} />
+        );
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

@@ -1,20 +1,23 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
 import React from "react";
+import { render } from "@testing-library/react-native";
 
-import { createMock, toJson } from "../../../utils/TestHelper";
 import { FlexSpacer } from "../FlexSpacer";
 //#endregion
 
 //#region Test
-let component: ShallowWrapper<unknown, unknown, unknown>;
 describe("FlexSpacer UnitTest", () => {
     it("Renders correctly", () => {
-        component = createMock(<FlexSpacer />);
+        const { toJSON } = render(<FlexSpacer />);
+        expect(toJSON()).toMatchSnapshot();
+    });
 
-        expect(toJson(component)).toMatchSnapshot();
+    it("Renders a View with flex:1 style", () => {
+        const { getByTestId, toJSON } = render(
+            <FlexSpacer testID="spacer" />
+        );
+        const json = toJSON() as any;
+        expect(json.props.style).toMatchObject({ flex: 1 });
     });
 });
 //#endregion

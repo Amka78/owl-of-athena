@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditIcon UnitTest Renders correctly 1`] = `
-<Component
-  name="pencil"
-/>
-`;
+exports[`EditIcon UnitTest renders correctly 1`] = `<Text />`;

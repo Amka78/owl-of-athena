@@ -1,10 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`BluetoothIcon UnitTest Renders correctly 1`] = `
-<Component
-  color="#00ffe6"
-  connectionStates={4}
-  name="bluetooth-connect"
-  size={40}
-/>
+exports[`BluetoothIcon UnitTest renders correctly with CONNECTED state 1`] = `<Text />`;
+
+exports[`BluetoothIcon UnitTest renders correctly with DISCONNECTED state 1`] = `
+<Text
+  allowFontScaling={false}
+  connectionStates={7}
+  selectable={false}
+  style={
+    [
+      {
+        "color": "#ffffff",
+        "fontSize": 40,
+      },
+      undefined,
+      {
+        "fontFamily": "material-community",
+        "fontStyle": "normal",
+        "fontWeight": "normal",
+      },
+      {},
+    ]
+  }
+>
+  󰂲
+</Text>
 `;

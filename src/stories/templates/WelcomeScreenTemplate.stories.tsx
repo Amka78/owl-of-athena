@@ -1,27 +1,72 @@
-//#region Import Modules
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { WelcomeScreenTemplate } from '../../components/templates/WelcomeScreenTemplate';
 
-import { WelcomeScreen, WelcomeScreenProps } from "./containered/WelcomeScreen";
-//#endregion
-
-//#region Story
-export default {
-    title: "Templates/WelcomeScreen",
-    component: WelcomeScreen,
-} as Meta;
-
-const Template: Story<WelcomeScreenProps> = (args) => (
-    <WelcomeScreen {...args} />
-);
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
+const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
+    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
+    isVertical: true, isHorizontal: false,
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
+const desktopDimens = {
+    fontScale: 1, scale: 1, height: 1200, width: 1400,
+    isDesktop: true, isLargeWidth: true, isSmallHeight: false,
+    isVertical: false, isHorizontal: true,
 };
-//#endregion
+
+const meta = {
+    title: 'Templates/WelcomeScreenTemplate',
+    component: WelcomeScreenTemplate,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof WelcomeScreenTemplate>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const EnUSLocale: Story = {
+    args: {
+        onStandalonePress: fn(),
+        onLoginPress: fn(),
+        onSignupPress: fn(),
+        dimens: mobileDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const JaJPLocale: Story = {
+    args: {
+        onStandalonePress: fn(),
+        onLoginPress: fn(),
+        onSignupPress: fn(),
+        dimens: mobileDimens,
+        locale: 'ja-JP',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    args: {
+        onStandalonePress: fn(),
+        onLoginPress: fn(),
+        onSignupPress: fn(),
+        dimens: desktopDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

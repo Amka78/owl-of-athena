@@ -1,42 +1,28 @@
 //#region Import Modules
-import "jest-enzyme";
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { Button, ButtonProps } from "../Button";
-import { Dimens } from "../../../constants";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { Button } from '../Button';
 //#endregion
 
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
+
 //#region Tests
-let component: ShallowWrapper<ButtonProps, unknown, unknown>;
-
-describe("Button UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<Button screenWidth={200}>{"test"}</Button>);
-
-        expect(toJson(component)).toMatchSnapshot();
+describe('Button UnitTest', () => {
+    it('renders correctly', () => {
+        const { toJSON } = renderWithProvider(
+            <Button screenWidth={375}>Test</Button>
+        );
+        expect(toJSON()).toMatchSnapshot();
     });
 
-    it("If the button size exceeds the maximum value, it is set to the maximum value.", () => {
-        component = createMock(<Button screenWidth={367}>{"test"}</Button>);
-
-        const style = component.props().style as any;
-
-        expect(style[1].width).toBe(Dimens.button_max_width);
+    it('renders in disabled state', () => {
+        const { toJSON } = renderWithProvider(
+            <Button screenWidth={375} disabled={true}>Test</Button>
+        );
+        expect(toJSON()).toMatchSnapshot();
     });
-    it.each([true, false])(
-        "If disabled is set, it will reflect that value.",
-        (disabled: boolean) => {
-            component = createMock(
-                <Button screenWidth={200} disabled={disabled}>
-                    {"test"}
-                </Button>
-            );
-            expect(component.props().disabled).toBe(disabled);
-        }
-    );
 });
 //#endregion

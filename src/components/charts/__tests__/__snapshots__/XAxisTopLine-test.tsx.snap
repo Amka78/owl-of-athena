@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`XAxisTopLine UnitTest renders correctly 1`] = `
+<RNSVGLine
+  fill={
+    {
+      "payload": 4278190080,
+      "type": 0,
+    }
+  }
+  propList={
+    [
+      "stroke",
+    ]
+  }
+  stroke={
+    {
+      "payload": 4294967295,
+      "type": 0,
+    }
+  }
+  x1={0}
+  x2={300}
+  y1={0}
+  y2={0}
+/>
+`;

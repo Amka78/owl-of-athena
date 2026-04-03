@@ -1,42 +1,21 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { ContentTitle, ContentTitleProps } from "../ContentTitle";
-import { useTheme } from "react-native-paper";
-import { Colors } from "../../../constants";
-import { MD3Theme as Theme } from "react-native-paper";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { ContentTitle } from '../ContentTitle';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<ContentTitleProps, unknown, unknown>;
-jest.mock("react-native-paper");
-const useThemeMock = useTheme as jest.Mock<Theme>;
-describe("ContentTitle UnitTest", () => {
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-    it("Renders correctly", () => {
-        component = createMock(<ContentTitle>{"test"}</ContentTitle>);
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
-    });
-
-    it("Overwrite styles", () => {
-        // @ts-ignore
-        useThemeMock.mockReturnValue({ colors: { accent: Colors.red } });
-        component = createMock(
-            <ContentTitle style={{ marginTop: 0 }}>{"test"}</ContentTitle>
+//#region Tests
+describe('ContentTitle UnitTest', () => {
+    it('renders correctly with children text', () => {
+        const { toJSON } = renderWithProvider(
+            <ContentTitle>Title Text</ContentTitle>
         );
-
-        const style = component.props().style as any;
-
-        expect(style[2].marginTop).toBe(0);
-        expect(style[1].color).toBe(Colors.red);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

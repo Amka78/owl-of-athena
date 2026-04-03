@@ -1,35 +1,104 @@
-//#region Import Modules
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { ProfileScreenTemplate } from '../../components/templates/ProfileScreenTemplate';
+import { defaultOptions, groupingProfileOptionList } from '../../services/ProfileService';
 
-import { ProfileScreen, ProfileScreenProps } from "./containered/ProfileScreen";
-import * as ProfileMenuStories from "../organisms/profiles/ProfileMenu.stories";
-import * as ProfileOptionListStories from "../organisms/profiles/ProfileOptionsList.stories";
-//#endregion
+const groupedOptionList = groupingProfileOptionList(defaultOptions);
 
-//#region Story
-export default {
-    title: "Templates/ProfileScreen",
-    component: ProfileScreen,
-} as Meta;
-
-const Template: Story<ProfileScreenProps> = (args) => (
-    <ProfileScreen
-        {...args}
-        selectedProfile={ProfileMenuStories.Primary.args!.selectedProfile!}
-        grouedOptionList={
-            ProfileOptionListStories.EnUSLocale.args!.groupedOptionList!
-        }
-    />
-);
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
+const sampleProfile = {
+    id: 'profile-001',
+    content: '',
+    name: 'default.prof',
+    title: 'Default Profile',
+    type: 'official' as const,
+    description: 'A sample profile.',
+    min_firmware_version: 20206,
+    created_at: 1504827468,
+    updated_at: 1504827468,
+    starred: false,
+    options: [],
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
+const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
+    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
+    isVertical: true, isHorizontal: false,
 };
-//#endregion
+
+const desktopDimens = {
+    fontScale: 1, scale: 1, height: 1200, width: 1400,
+    isDesktop: true, isLargeWidth: true, isSmallHeight: false,
+    isVertical: false, isHorizontal: true,
+};
+
+const meta = {
+    title: 'Templates/ProfileScreenTemplate',
+    component: ProfileScreenTemplate,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof ProfileScreenTemplate>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const EnUSLocale: Story = {
+    args: {
+        auroraConnected: true,
+        selectedProfileHasUnSavedChanges: false,
+        selectedProfile: sampleProfile,
+        isUserProfile: true,
+        unsavePrfileMenu: { onSaveAsNewPress: fn(), onOverwriteSavePress: fn(), onCancelPress: fn() },
+        profileMenu: { onInfoPress: fn() },
+        profileSecondMenu: { onSaveToAuroraPress: fn(), onShowAdvancedOptionsPress: fn() },
+        grouedOptionList: groupedOptionList,
+        dimens: mobileDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const JaJPLocale: Story = {
+    args: {
+        auroraConnected: false,
+        selectedProfileHasUnSavedChanges: true,
+        selectedProfile: sampleProfile,
+        isUserProfile: true,
+        unsavePrfileMenu: { onSaveAsNewPress: fn(), onOverwriteSavePress: fn(), onCancelPress: fn() },
+        profileMenu: { onInfoPress: fn() },
+        profileSecondMenu: { onSaveToAuroraPress: fn(), onShowAdvancedOptionsPress: fn() },
+        grouedOptionList: groupedOptionList,
+        dimens: mobileDimens,
+        locale: 'ja-JP',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    args: {
+        auroraConnected: true,
+        selectedProfileHasUnSavedChanges: false,
+        selectedProfile: sampleProfile,
+        isUserProfile: false,
+        unsavePrfileMenu: { onSaveAsNewPress: fn(), onOverwriteSavePress: fn(), onCancelPress: fn() },
+        profileMenu: { onInfoPress: fn() },
+        profileSecondMenu: { onSaveToAuroraPress: fn(), onShowAdvancedOptionsPress: fn() },
+        grouedOptionList: groupedOptionList,
+        dimens: desktopDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

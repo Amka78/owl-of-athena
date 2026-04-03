@@ -1,49 +1,125 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TimeView UnitTest renders correctly 1`] = `
-<View
+exports[`TimeView UnitTest renders correctly with mode="meridian" 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
   style={
-    Array [
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
+    [
+      {
+        "flex": 1,
       },
       undefined,
     ]
   }
 >
-  <Text
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
     style={
-      Array [
-        Object {
-          "fontFamily": "calibre_app_semibold",
-          "fontSize": 20,
-        },
-        Object {
-          "color": "#03dac4",
-        },
-        undefined,
-      ]
+      {
+        "flex": 1,
+      }
     }
   >
-    12:50
-  </Text>
-  <Text
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "calibre_app_semibold",
+              "fontSize": 20,
+            },
+            {
+              "color": "rgba(98, 91, 113, 1)",
+            },
+            undefined,
+          ]
+        }
+      >
+        8:30
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "calibre_app_regular",
+              "fontSize": 20,
+            },
+            {
+              "color": "rgba(98, 91, 113, 1)",
+            },
+            undefined,
+          ]
+        }
+      >
+        am
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
+
+exports[`TimeView UnitTest renders correctly with mode="time" 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
     style={
-      Array [
-        Object {
-          "fontFamily": "calibre_app_regular",
-          "fontSize": 20,
-        },
-        Object {
-          "color": "#03dac4",
-        },
-        undefined,
-      ]
+      {
+        "flex": 1,
+      }
     }
   >
-    am
-  </Text>
-</View>
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontFamily": "calibre_app_semibold",
+              "fontSize": 20,
+            },
+            {
+              "color": "rgba(98, 91, 113, 1)",
+            },
+            undefined,
+          ]
+        }
+      >
+        2h 15m
+      </Text>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
 `;

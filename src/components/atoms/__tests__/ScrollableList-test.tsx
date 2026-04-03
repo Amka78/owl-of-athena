@@ -1,25 +1,25 @@
 //#region Import Modules
-import { View } from "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { ScrollableList, ScrollableListProps } from "../ScrollableList";
+import React from 'react';
+import { Text } from 'react-native';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { ScrollableList } from '../ScrollableList';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<ScrollableListProps, unknown, unknown>;
-describe("ScrollableList UnitTest", () => {
-    it("renders correctly", () => {
-        component = createMock(
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
+
+//#region Tests
+describe('ScrollableList UnitTest', () => {
+    it('renders correctly with children', () => {
+        const { toJSON } = renderWithProvider(
             <ScrollableList>
-                [<View />,
-                <View />]
+                <Text>Item 1</Text>
+                <Text>Item 2</Text>
             </ScrollableList>
         );
-
-        expect(toJson(component)).toMatchSnapshot();
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

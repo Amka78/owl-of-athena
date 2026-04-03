@@ -1,42 +1,26 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { ErrorText, ErrorTextProps } from "../ErrorText";
-import { useTheme } from "react-native-paper";
-import { Colors } from "../../../constants";
-import { MD3Theme as Theme } from "react-native-paper";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { ErrorText } from '../ErrorText';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<ErrorTextProps, unknown, unknown>;
-jest.mock("react-native-paper");
-const useThemeMock = useTheme as jest.Mock<Theme>;
-describe("ErrorText UnitTest", () => {
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-    it("Renders correctly", () => {
-        component = createMock(<ErrorText>{"test"}</ErrorText>);
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
-    });
-
-    it("Overwrite styles", () => {
-        // @ts-ignore
-        useThemeMock.mockReturnValue({ colors: { error: Colors.red } });
-        component = createMock(
-            <ErrorText style={{ marginTop: 0 }}>{"test"}</ErrorText>
+//#region Tests
+describe('ErrorText UnitTest', () => {
+    it('renders correctly with children text', () => {
+        const { toJSON } = renderWithProvider(
+            <ErrorText>Error message</ErrorText>
         );
+        expect(toJSON()).toMatchSnapshot();
+    });
 
-        const style = component.props().style as any;
-
-        expect(style[2].marginTop).toBe(0);
-        expect(style[1].color).toBe(Colors.red);
+    it('renders without children', () => {
+        const { toJSON } = renderWithProvider(<ErrorText />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

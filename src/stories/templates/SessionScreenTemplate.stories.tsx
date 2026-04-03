@@ -1,27 +1,55 @@
-//#region Import Modules
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { SessionScreenTemplate } from '../../components/templates/SessionScreenTemplate';
 
-import { SessionScreen, SessionScreenProps } from "./containered/SessionScreen";
-//#endregion
+const meta = {
+    title: 'Templates/SessionScreenTemplate',
+    component: SessionScreenTemplate,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof SessionScreenTemplate>;
 
-//#region Story
-export default {
-    title: "Templates/SessionScreen",
-    component: SessionScreen,
-} as Meta;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-const Template: Story<SessionScreenProps> = (args) => (
-    <SessionScreen {...args} />
-);
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
+const defaultArgs = {
+    asleepAtTimeLabel: { hours: 23, minutes: 0 },
+    chartRadialProgress: { value: 75, valueLabel: '75' },
+    awakeTimeLabel: { hours: 7, minutes: 30 },
+    leftSelectButton: { onPress: fn() },
+    rightSelectButton: { onPress: fn() },
+    currentChart: 'SleepChart' as const,
+    sessionSleepChart: {
+        scaleXDomain: [],
+        isFilterEnabled: false,
+        sessionDetail: { sleepEvents: [], movementEvents: [] } as any,
+        totalSleepHour: 8,
+    },
+    sessionChartPie: {
+        session: null,
+    },
+    sleepDurationLabel: { hours: 8, minutes: 30 },
+    remDurationLabel: { hours: 1, minutes: 45 },
+    deepDurationLabel: { hours: 0, minutes: 45 },
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
+export const EnUSLocale: Story = {
+    args: { ...defaultArgs, locale: 'en-US' },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
 };
-//#endregion
+
+export const JaJPLocale: Story = {
+    args: { ...defaultArgs, locale: 'ja-JP' },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProfilesIcon UnitTest renders correctly 1`] = `
-<Component
-  name="format-list-checkbox"
-/>
-`;
+exports[`ProfilesIcon UnitTest renders correctly 1`] = `<Text />`;

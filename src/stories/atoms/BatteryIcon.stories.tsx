@@ -1,23 +1,37 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
-import React from "react";
-import {
-    BatteryIcon,
-    BatteryIconProps,
-} from "../../components/atoms/BatteryIcon";
-//#endregion
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect } from '@storybook/test';
+import { BatteryIcon } from '../../components/atoms/BatteryIcon';
 
-//#region Export
-export default {
-    title: "Atoms/BatteryIcon",
-    component: BatteryIcon,
-} as Meta;
+const meta = {
+  title: 'Atoms/BatteryIcon',
+  component: BatteryIcon,
+  tags: ['autodocs'],
+} satisfies Meta<typeof BatteryIcon>;
 
-const Template: Story<BatteryIconProps> = (args) => <BatteryIcon {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Primary: Story = {
+  args: {
     isUSBConnected: false,
     batteryLevel: 100,
+  },
+  play: async ({ canvasElement }) => {
+    
+    expect(canvasElement).toBeTruthy();
+  },
 };
-//#endregion
+
+export const USBConnected: Story = {
+  args: {
+    isUSBConnected: true,
+    batteryLevel: 50,
+  },
+};
+
+export const LowBattery: Story = {
+  args: {
+    isUSBConnected: false,
+    batteryLevel: 10,
+  },
+};

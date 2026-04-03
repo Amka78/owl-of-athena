@@ -1,20 +1,14 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { CommunityIcon, CommunityIconProps } from "../CommunityIcon";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { CommunityIcon } from '../CommunityIcon';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<CommunityIconProps, unknown, unknown>;
-describe("CommunityIcon UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<CommunityIcon></CommunityIcon>);
-
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('CommunityIcon UnitTest', () => {
+    it('renders correctly', () => {
+        const { toJSON } = render(<CommunityIcon />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

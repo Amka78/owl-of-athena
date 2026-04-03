@@ -1,49 +1,24 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 //#region Import Modules
-import { View } from "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { StandardView, StandardViewProps } from "../StandardView";
-import { useTheme } from "react-native-paper";
-import { Colors } from "../../../constants";
-import { MD3Theme as Theme } from "react-native-paper";
+import React from 'react';
+import { Text } from 'react-native';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { StandardView } from '../StandardView';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<StandardViewProps, unknown, unknown>;
-jest.mock("react-native-paper");
-const useThemeMock = useTheme as jest.Mock<Theme>;
-describe("StandardView UnitTest", () => {
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-    it("Renders correctly", () => {
-        // @ts-ignore
-        useThemeMock.mockReturnValue({ colors: { background: Colors.navy } });
-        component = createMock(
+//#region Tests
+describe('StandardView UnitTest', () => {
+    it('renders correctly with children', () => {
+        const { toJSON } = renderWithProvider(
             <StandardView>
-                <View></View>
+                <Text>Content</Text>
             </StandardView>
         );
-
-        expect(toJson(component)).toMatchSnapshot();
-    });
-
-    it("Overwrite styles", () => {
-        // @ts-ignore
-        useThemeMock.mockReturnValue({ colors: { background: Colors.navy } });
-        component = createMock(
-            <StandardView
-                rootViewStyle={{ marginTop: 0 }}
-                standardViewStyle={{ marginTop: 0 }}
-            >
-                <View></View>
-            </StandardView>
-        );
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

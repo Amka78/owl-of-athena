@@ -1,20 +1,14 @@
 //#region Import Modules
-import "react-native";
-
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { EditIcon, EditIconProps } from "../EditIcon";
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { EditIcon } from '../EditIcon';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<EditIconProps, unknown, unknown>;
-describe("EditIcon UnitTest", () => {
-    it("Renders correctly", () => {
-        component = createMock(<EditIcon></EditIcon>);
-
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('EditIcon UnitTest', () => {
+    it('renders correctly', () => {
+        const { toJSON } = render(<EditIcon />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

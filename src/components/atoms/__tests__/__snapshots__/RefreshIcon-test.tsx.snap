@@ -1,7 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RefreshIcon UnitTest renders correctly 1`] = `
-<Component
-  name="refresh"
-/>
-`;
+exports[`RefreshIcon UnitTest renders correctly 1`] = `<Text />`;

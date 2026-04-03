@@ -1,25 +1,84 @@
-//#region Import Modules
-import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, within } from '@storybook/test';
+import React from 'react';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../constants';
+import { SignupScreenTemplate } from '../../components/templates/SignupScreenTemplate';
 
-import { SignupScreen, SignupScreenProps } from "./containered/SignupScreen";
-//#endregion
-
-//#region Story
-export default {
-    title: "Templates/SignupScreen",
-    component: SignupScreen,
-} as Meta;
-
-const Template: Story<SignupScreenProps> = (args) => <SignupScreen {...args} />;
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
+const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
+    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
+    isVertical: true, isHorizontal: false,
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
+const desktopDimens = {
+    fontScale: 1, scale: 1, height: 1200, width: 1400,
+    isDesktop: true, isLargeWidth: true, isSmallHeight: false,
+    isVertical: false, isHorizontal: true,
 };
-//#endregion
+
+const textBoxProps = { value: '', onChangeText: fn() };
+const checkBoxProps = { status: 'unchecked' as const, onPress: fn(), onLabelPress: fn() };
+
+const meta = {
+    title: 'Templates/SignupScreenTemplate',
+    component: SignupScreenTemplate,
+    tags: ['autodocs'],
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof SignupScreenTemplate>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const EnUSLocale: Story = {
+    args: {
+        emailTextBox: textBoxProps,
+        passwordTextBox: textBoxProps,
+        passwordConfirmTextBox: textBoxProps,
+        labeledCheckBox: checkBoxProps,
+        onSignupPress: fn(),
+        onCancelPress: fn(),
+        dimens: mobileDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const JaJPLocale: Story = {
+    args: {
+        emailTextBox: textBoxProps,
+        passwordTextBox: textBoxProps,
+        passwordConfirmTextBox: textBoxProps,
+        labeledCheckBox: checkBoxProps,
+        onSignupPress: fn(),
+        onCancelPress: fn(),
+        dimens: mobileDimens,
+        locale: 'ja-JP',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    args: {
+        emailTextBox: textBoxProps,
+        passwordTextBox: textBoxProps,
+        passwordConfirmTextBox: textBoxProps,
+        labeledCheckBox: checkBoxProps,
+        onSignupPress: fn(),
+        onCancelPress: fn(),
+        dimens: desktopDimens,
+        locale: 'en-US',
+    },
+    play: async ({ canvasElement }) => {
+        const canvas = within(canvasElement);
+        expect(canvas.baseElement).toBeTruthy();
+    },
+};

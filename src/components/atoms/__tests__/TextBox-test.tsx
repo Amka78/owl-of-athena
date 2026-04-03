@@ -1,18 +1,20 @@
 //#region Import Modules
-import "react-native";
-import { ShallowWrapper } from "enzyme";
-import React from "react";
-import { createMock, toJson } from "../../../utils/TestHelper";
-import { TextBox, TextBoxProps } from "../TextBox";
+jest.mock('expo-av');
+import React from 'react';
+import { render } from '@testing-library/react-native';
+import { Provider } from 'react-native-paper';
+import { Theme } from '../../../constants';
+import { TextBox } from '../TextBox';
 //#endregion
 
-//#region Test
-let component: ShallowWrapper<TextBoxProps, unknown, unknown>;
-describe("TextBox UnitTest", () => {
-    it("renders correctly", () => {
-        component = createMock(<TextBox></TextBox>);
+const renderWithProvider = (ui: React.ReactElement) =>
+    render(<Provider theme={Theme}>{ui}</Provider>);
 
-        expect(toJson(component)).toMatchSnapshot();
+//#region Tests
+describe('TextBox UnitTest', () => {
+    it('renders correctly with label', () => {
+        const { toJSON } = renderWithProvider(<TextBox label="Username" />);
+        expect(toJSON()).toMatchSnapshot();
     });
 });
 //#endregion

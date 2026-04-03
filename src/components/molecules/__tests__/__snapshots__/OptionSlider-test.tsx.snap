@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OptionSlider renders correctly 1`] = `
+<RNCSafeAreaProvider
+  onInsetsChange={[Function]}
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": true,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      field={
+        {
+          "format": "minutes",
+          "max": 120,
+          "min": 0,
+          "step": 5,
+          "type": "slider",
+        }
+      }
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      onValueChange={[MockFunction]}
+      style={
+        [
+          false,
+          [
+            {
+              "paddingRight": 24,
+              "paddingVertical": 8,
+            },
+            undefined,
+          ],
+        ]
+      }
+      value={30}
+    >
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "marginVertical": 6,
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "center",
+              "marginLeft": 16,
+              "marginRight": 0,
+            }
+          }
+        >
+          <Text />
+        </View>
+        <View
+          style={
+            [
+              {
+                "paddingLeft": 16,
+              },
+              {
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="undefined-content"
+        >
+          <Text
+            numberOfLines={1}
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                  },
+                  [
+                    {
+                      "color": "#ffffff",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            Delay (minutes)
+          </Text>
+          <Text
+            numberOfLines={2}
+            onTextLayout={[Function]}
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "color": "rgba(73, 69, 79, 1)",
+                  },
+                  [
+                    {
+                      "color": "#9B9B9B",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            Set stimulation delay
+          </Text>
+        </View>
+        <View
+          onLayout={[Function]}
+          style={
+            [
+              [
+                {
+                  "height": 40,
+                },
+                [
+                  {
+                    "alignSelf": "center",
+                    "marginLeft": 16,
+                    "marginRight": 0,
+                  },
+                  {
+                    "alignSelf": "center",
+                  },
+                ],
+              ],
+              {
+                "justifyContent": "center",
+              },
+            ]
+          }
+        >
+          <RNCSlider
+            accessibilityState={
+              {
+                "disabled": false,
+              }
+            }
+            description="Set stimulation delay"
+            disabled={false}
+            field={
+              {
+                "format": "minutes",
+                "max": 120,
+                "min": 0,
+                "step": 5,
+                "type": "slider",
+              }
+            }
+            inverted={false}
+            left={[Function]}
+            lowerLimit={-9007199254740991}
+            maximumValue={120}
+            minimumValue={0}
+            onChange={[Function]}
+            onRNCSliderAccessibilityAction={null}
+            onRNCSliderSlidingComplete={null}
+            onRNCSliderSlidingStart={null}
+            onRNCSliderValueChange={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            step={5}
+            style={
+              [
+                {
+                  "width": 0,
+                  "zIndex": 1,
+                },
+                {
+                  "height": 40,
+                },
+                {
+                  "alignContent": "center",
+                  "alignItems": "center",
+                },
+              ]
+            }
+            tapToSeek={false}
+            title="Delay (minutes)"
+            upperLimit={9007199254740991}
+            value={30}
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</RNCSafeAreaProvider>
+`;
