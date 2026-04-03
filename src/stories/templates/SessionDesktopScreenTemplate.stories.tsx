@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
 import { SessionDesktopScreenTemplate } from '../../components/templates/SessionDesktopScreenTemplate';
-import { FilterByDateValues } from '../../state/SessionState';
+import { FilterByDateValues } from '../../store/sessionStore';
 
 jest.mock('../../navigation/SessionTabNavigator', () => {
     const React = require('react');

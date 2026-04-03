@@ -1,21 +1,16 @@
 import { renderHook } from "@testing-library/react-native";
-
-jest.mock("react-redux", () => ({
-    useSelector: jest.fn((selector: any) =>
-        selector({
-            app: { wakeLock: true },
-            auth: {},
-            aurora: {},
-            profile: {},
-            session: {},
-        })
-    ),
-    useDispatch: () => jest.fn(),
-}));
-
+import { useAppStore } from "../../store/appStore";
 import { useWakeLockSelector } from "../useWakeLockSelector";
 
 describe("useWakeLockSelector", () => {
+    beforeEach(() => {
+        useAppStore.setState({ wakeLock: true } as any);
+    });
+
+    afterEach(() => {
+        useAppStore.setState({ wakeLock: false } as any);
+    });
+
     it("returns wakeLock value from state", () => {
         const { result } = renderHook(() => useWakeLockSelector());
         expect(result.current).toBe(true);

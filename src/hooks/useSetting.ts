@@ -1,9 +1,8 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { cacheSettings } from "../actions";
+import { useAuroraStore } from "../store/auroraStore";
 import {
     AudioDialog,
     ProfilesDialog,
@@ -61,8 +60,7 @@ export const useSetting = (): {
     const { navigate } = useNavigation<any>();
     const settings = useSettingsSelector();
     const profiles = useProfileListSelector();
-
-    const dispatch = useDispatch();
+    const { cacheSettings } = useAuroraStore();
     const [datePickerState, setDatePickerState] = useState<DatePickerState>({
         hours: settings.alarmHour,
         minutes: settings.alarmMinute,
@@ -175,13 +173,13 @@ export const useSetting = (): {
         settings.savedAt = new Date();
 
         console.log("updated Settings:", settings);
-        dispatch(cacheSettings(settings));
+        cacheSettings(settings);
 
         navigate("Home");
     }, [
         datePickerState.hours,
         datePickerState.minutes,
-        dispatch,
+        cacheSettings,
         dslEnabled,
         navigate,
         profileState.profileId,

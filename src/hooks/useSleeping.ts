@@ -1,8 +1,6 @@
 //#region Import Modules
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-
-import { setWakeLock } from "../actions";
+import { useAppStore } from "../store/appStore";
 import { MessageKeys } from "../constants";
 import { useCheckLogging } from "../hooks";
 import { useWakeLockSelector } from "../hooks/useWakeLockSelector";
@@ -22,7 +20,7 @@ export const useSleeping = (): {
 } => {
     useCheckLogging();
 
-    const dispatch = useDispatch();
+    const { setWakeLock } = useAppStore();
     const wakeLock = useWakeLockSelector();
     const settings = useSettingsSelector();
     console.debug(`current Wakelock:${wakeLock}`);
@@ -35,15 +33,15 @@ export const useSleeping = (): {
         if (!wakeLock) {
             WakeLockService.request(
                 () => {
-                    dispatch(setWakeLock(true));
+                    setWakeLock(true);
                 },
                 () => {
-                    dispatch(setWakeLock(false));
+                    setWakeLock(false);
                     WakeLockService.release();
                 }
             );
         }
-    }, [dispatch, wakeLock]);
+    }, [setWakeLock, wakeLock]);
 
     const wakeupButtonPress = useCallback((): void => {
         AuroraManagerInstance.setSleepState(SleepStates.AWAKE);

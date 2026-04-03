@@ -1,4 +1,3 @@
-import ActionTypes from "./ActionTypes";
 import Colors from "./Colors";
 import Dimens from "./Dimens";
 import Fonts from "./Fonts";
@@ -9,7 +8,6 @@ import { MessageKeys } from "./MessageKeys";
 import StorageKeys from "./StorageKeys";
 
 export {
-    ActionTypes,
     Colors,
     Dimens,
     Fonts,

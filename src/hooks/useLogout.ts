@@ -1,12 +1,11 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
 
-import { logout } from "../actions";
-import { initialize } from "../actions/ProfilesActions";
-import { initializeSession } from "../actions/SessionsActions";
 import { useUserSelector } from "../hooks";
+import { useAuthStore } from "../store/authStore";
+import { useProfileStore } from "../store/profileStore";
+import { useSessionStore } from "../store/sessionStore";
 import { GuestUser } from "../types";
 //#endregion
 
@@ -14,17 +13,19 @@ import { GuestUser } from "../types";
 export const useLogout = (): { onPress: () => Promise<void> } => {
     const { navigate } = useNavigation<any>();
     const user = useUserSelector();
-    const dispatch = useDispatch();
+    const { logout } = useAuthStore();
+    const { initializeProfiles } = useProfileStore();
+    const { initializeSession } = useSessionStore();
     const onPress = useCallback(async () => {
         console.debug("useSignout start");
 
         if (user?.id !== GuestUser) {
-            dispatch(initialize());
-            dispatch(initializeSession());
+            initializeProfiles();
+            initializeSession();
         }
-        dispatch(logout());
+        logout();
         navigate("Unauthenticated", { screen: "Welcome" });
-    }, [dispatch, navigate, user?.id]);
+    }, [initializeProfiles, initializeSession, logout, navigate, user?.id]);
 
     return { onPress };
 };

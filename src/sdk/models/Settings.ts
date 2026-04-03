@@ -1,4 +1,4 @@
-import { AudioList } from "../../components/molecules/AudioDialog";
+import { AudioList } from "../../sdk/models/AudioList";
 
 export class Settings {
     public userId?: string;

@@ -5,7 +5,7 @@ import { Provider } from "react-native-paper";
 
 import { Theme } from "../../constants";
 import { SessionDesktopScreen } from "../../components/pages/SessionDesktopScreen";
-import { FilterByDateValues } from "../../state/SessionState";
+import { FilterByDateValues } from "../../store/sessionStore";
 
 jest.mock("../../hooks/sessions/useSessionList", () => ({
     useSessinList: () => ({
@@ -32,10 +32,6 @@ jest.mock("@react-navigation/native", () => ({
     useFocusEffect: jest.fn(),
 }));
 
-jest.mock("react-redux", () => ({
-    useSelector: jest.fn(() => ({})),
-    useDispatch: () => jest.fn(),
-}));
 
 const meta = {
     title: "Pages/SessionDesktopScreen",

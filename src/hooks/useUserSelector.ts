@@ -1,10 +1,5 @@
-import { useSelector } from "react-redux";
-
-import { RootState } from "../state";
+import { useAuthStore } from "../store/authStore";
 import { User } from "../types";
 
-const clientSelector = (state: RootState): User | undefined => state.auth.user;
-
-export const useUserSelector = (): User | undefined => {
-    return useSelector(clientSelector);
-};
+export const useUserSelector = (): User | undefined =>
+    useAuthStore((state) => state.user);

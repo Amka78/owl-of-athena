@@ -1,11 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSessionStore, SessionFilterCondition } from "../../store/sessionStore";
 
-import { RootState } from "../../state";
-import { FilterCondition } from "../../state/SessionState";
-
-const clientSelector = (state: RootState): FilterCondition =>
-    state.session.filterCondition;
-
-export const useFilterConditionSelector = (): FilterCondition => {
-    return useSelector(clientSelector);
-};
+export const useFilterConditionSelector = (): SessionFilterCondition =>
+    useSessionStore((state) => state.filterCondition);

@@ -1,4 +1,3 @@
-//#region Import Modules
 import { useEffect } from "react";
 
 import { useNavigation } from "@react-navigation/native";
@@ -6,18 +5,16 @@ import {
     AuroraRestClientInstance,
     SessionRestClientInstance,
 } from "../clients";
-import { useDispatch } from "react-redux";
+import { useAuthStore } from "../store/authStore";
 import { useTokenSelector, useUserSelector } from "../hooks";
 
-import { updateUser } from "../actions";
 import { GuestUser } from "../types";
-//#endregion
 
 //#region Hooks
 export const useAutoLogin = (): void => {
     const { navigate } = useNavigation<any>();
 
-    const dispatch = useDispatch();
+    const { updateUser } = useAuthStore();
     const user = useUserSelector();
     const token = useTokenSelector();
     useEffect(() => {
@@ -28,7 +25,7 @@ export const useAutoLogin = (): void => {
                 if (token) {
                     if (!user) {
                         const currentUser = await AuroraRestClientInstance.getAuthUser();
-                        dispatch(updateUser(currentUser));
+                        updateUser(currentUser);
                     }
                     AuroraRestClientInstance.getTokenCallback = (): string =>
                         token;
@@ -45,7 +42,7 @@ export const useAutoLogin = (): void => {
             unmounted = true;
         };
         return cleanup;
-    }, [dispatch, navigate, token, user]);
+    }, [navigate, token, user]);
 
     return;
 };

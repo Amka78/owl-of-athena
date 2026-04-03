@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../../../constants';
 import { SessionListMenu } from '../SessionListMenu';
-import { FilterByDateValues } from '../../../../state/SessionState';
+import { FilterByDateValues } from '../../../../store/sessionStore';
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

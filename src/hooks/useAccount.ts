@@ -2,9 +2,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { User, GuestUser } from "../types";
 import { AuroraRestClientInstance } from "../clients";
-import { useDispatch } from "react-redux";
+import { useAuthStore } from "../store/authStore";
 
-import { updateUser } from "../actions";
 import { useCheckLogging, useUserSelector, useLogout } from "./";
 //#endregion
 
@@ -24,7 +23,7 @@ export const useAcount = (): {
     generalError: string;
 } => {
     useCheckLogging();
-    const dispatch = useDispatch();
+    const { updateUser } = useAuthStore();
 
     const userInfo = useUserSelector();
     const [firstName, setFirstName] = useState("");
@@ -51,7 +50,7 @@ export const useAcount = (): {
                         currentUser = await AuroraRestClientInstance.getAuthUser();
                     }
                     console.debug("authenticatedUser", currentUser);
-                    dispatch(updateUser(currentUser));
+                    updateUser(currentUser);
                     setFirstName(currentUser.first_name!);
                     setLastName(currentUser.last_name!);
                     setGender(currentUser.gender ? currentUser.gender : "male");
@@ -65,7 +64,7 @@ export const useAcount = (): {
             unmounted = true;
         };
         return cleanup;
-    }, [dispatch, userInfo]);
+    }, [updateUser, userInfo]);
 
     const onFirstNameChangeText = useCallback((text: string): void => {
         setFirstName(text);

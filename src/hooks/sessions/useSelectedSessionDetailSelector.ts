@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
+import { useSessionStore } from "../../store/sessionStore";
+import { AuroraSessionDetail } from "../../sdk/models";
 
-import { RootState } from "../../state";
-
-const clientSelector = (state: RootState): any | undefined =>
-    state.session.selectedSessionDetail;
-
-export const useSelectedSessionDetailSelector = (): any | undefined => {
-    return useSelector(clientSelector);
-};
+export const useSelectedSessionDetailSelector = ():
+    | AuroraSessionDetail
+    | undefined => useSessionStore((state) => state.selectedSessionDetail);

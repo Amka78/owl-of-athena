@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
-import { FilterByDateValues } from "../../state/SessionState";
+import { FilterByDateValues } from "../../store/sessionStore";
 import { SessionDesktopScreenTemplate } from "./../templates/SessionDesktopScreenTemplate";
 //#endregion
 

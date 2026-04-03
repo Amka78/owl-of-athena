@@ -1,15 +1,5 @@
-//#region Import Modules
-import { useSelector } from "react-redux";
-
-import { RootState } from "../../state";
+import { useSessionStore } from "../../store/sessionStore";
 import { AuroraSession } from "../../sdk/models";
-//#endregion
 
-//#region Hooks
-const clientSelector = (state: RootState): AuroraSession | undefined =>
-    state.session.selectedSession;
-
-export const useSelectedSessionSelector = (): AuroraSession | undefined => {
-    return useSelector(clientSelector);
-};
-//#endregion
+export const useSelectedSessionSelector = (): AuroraSession | undefined =>
+    useSessionStore((state) => state.selectedSession);

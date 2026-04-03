@@ -12,6 +12,8 @@ module.exports = {
     ],
     moduleNameMapper: {
         "\\.svg$": "<rootDir>/__mocks__/svgMock.js",
+        "^@react-native-async-storage/async-storage$":
+            "@react-native-async-storage/async-storage/jest/async-storage-mock",
     },
     testPathIgnorePatterns: ["/node_modules/", "/android/", "/ios/"],
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],

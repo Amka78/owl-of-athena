@@ -1,7 +1,6 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import {
     useCheckLogging,
@@ -10,21 +9,13 @@ import {
     useUserSelector,
     useWindowDimensions,
 } from "..";
-import {
-    cacheSessions,
-    deleteSession,
-    selectSession,
-    selectSessionDetail,
-    updateFilter,
-    updateSession,
-} from "../../actions/SessionsActions";
 import { SessionRestClientInstance } from "../../clients";
 import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
 import { Message, MessageKeys } from "../../constants";
 import { AuroraManagerInstance } from "../../managers";
 import { AuroraSessionJson } from "../../sdk/AuroraTypes";
 import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
-import { FilterByDateValues, FilterCondition } from "../../state/SessionState";
+import { useSessionStore, SessionFilterCondition, FilterByDateValues } from "../../store/sessionStore";
 import { GuestUser } from "../../types";
 import { useFilteredSessionListSelector, useSelectedSessionSelector } from "./";
 //#endregion
@@ -32,7 +23,7 @@ import { useFilteredSessionListSelector, useSelectedSessionSelector } from "./";
 //#region Hooks
 export const useSessinList = (): {
     showFilter: boolean;
-    filterCondition: FilterCondition;
+    filterCondition: SessionFilterCondition;
     onPickerValueChange: (itemValue: FilterByDateValues) => void;
     onShowStarredPress: () => void;
     onShowNotesPress: () => void;
@@ -44,7 +35,14 @@ export const useSessinList = (): {
     onRefreshPress: () => void;
     onFilterPress: () => void;
 } => {
-    const dispatch = useDispatch();
+    const {
+        cacheSessions,
+        deleteSession,
+        selectSession,
+        selectSessionDetail,
+        updateFilter,
+        updateSession,
+    } = useSessionStore();
     const user = useUserSelector();
     const filterCondition = useFilterConditionSelector();
     const sessionList = useFilteredSessionListSelector();
@@ -62,9 +60,9 @@ export const useSessinList = (): {
             ]),
         });
         const sessions = await SessionRestClientInstance.getAll(user!.id);
-        dispatch(cacheSessions(sessions));
+        cacheSessions(sessions);
         LoadingDialog.close();
-    }, [dispatch, user]);
+    }, [cacheSessions, user]);
 
     const onPressedFilter = useCallback(async () => {
         setShowFilter(!showFilter);
@@ -72,26 +70,22 @@ export const useSessinList = (): {
 
     const onPickerValueChange = useCallback(
         (itemValue: FilterByDateValues): void => {
-            dispatch(updateFilter({ byDate: itemValue }));
+            updateFilter({ byDate: itemValue });
         },
-        [dispatch]
+        [updateFilter]
     );
 
     const onShowStarredPress = useCallback((): void => {
-        dispatch(
-            updateFilter({
-                showStarred: !filterCondition.showStarred,
-            })
-        );
-    }, [dispatch, filterCondition.showStarred]);
+        updateFilter({
+            showStarred: !filterCondition.showStarred,
+        });
+    }, [filterCondition.showStarred, updateFilter]);
 
     const onShowNotesPress = useCallback((): void => {
-        dispatch(
-            updateFilter({
-                showNotes: !filterCondition.showNotes,
-            })
-        );
-    }, [dispatch, filterCondition.showNotes]);
+        updateFilter({
+            showNotes: !filterCondition.showNotes,
+        });
+    }, [filterCondition.showNotes, updateFilter]);
 
     const onStarPress = useCallback(
         async (value: AuroraSession): Promise<void> => {
@@ -107,9 +101,9 @@ export const useSessinList = (): {
             }
 
             value.starred = !value.starred;
-            dispatch(updateSession(value));
+            updateSession(value);
         },
-        [dispatch, user?.id]
+        [updateSession, user?.id]
     );
 
     const onDeleteConfirmPress = useCallback(
@@ -127,9 +121,9 @@ export const useSessinList = (): {
                     console.error(e);
                 }
             }
-            dispatch(deleteSession(value.id));
+            deleteSession(value.id);
         },
-        [dispatch, user?.id]
+        [deleteSession, user?.id]
     );
 
     const onDeletePress = useCallback(
@@ -152,7 +146,7 @@ export const useSessinList = (): {
 
     const onMenuPress = useCallback(
         async (value: AuroraSession, index: number): Promise<void> => {
-            dispatch(selectSession(value));
+            selectSession(value);
 
             let sessionDetail;
             if (sessionDetailList.length > 0) {
@@ -169,7 +163,9 @@ export const useSessinList = (): {
                 );
             }
 
-            dispatch(selectSessionDetail(sessionDetail));
+            if (sessionDetail) {
+                selectSessionDetail(sessionDetail);
+            }
 
             if (!(dimens.isHorizontal && dimens.isDesktop)) {
                 navigate("Detail", {
@@ -180,8 +176,9 @@ export const useSessinList = (): {
         [
             dimens.isDesktop,
             dimens.isHorizontal,
-            dispatch,
             navigate,
+            selectSession,
+            selectSessionDetail,
             sessionDetailList,
             user?.id,
         ]

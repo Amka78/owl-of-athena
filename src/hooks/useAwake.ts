@@ -9,10 +9,9 @@ import {
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { SleepStates } from "../sdk";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import { useSessionStore } from "../store/sessionStore";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";
-import { cacheSessions, selectSession, cacheSessionDetails } from "../actions";
 import { GuestUser } from "../types";
 //#endregion
 
@@ -22,7 +21,7 @@ export const useAwake = (): {
     skipButtonPress: () => Promise<void>;
 } => {
     useCheckLogging();
-    const dispatch = useDispatch();
+    const { cacheSessions, cacheSessionDetails, selectSession } = useSessionStore();
     const { navigate } = useNavigation<any>();
     const userInfo = useUserSelector();
     const sessionList = useSessionListSelector();
@@ -53,16 +52,16 @@ export const useAwake = (): {
 
                 sessionList.unshift(...pushedSession[0]);
                 sessionDetailList.unshift(...pushedSession[1]);
-                dispatch(cacheSessions(sessionList));
-                dispatch(cacheSessionDetails(sessionDetailList));
-                dispatch(selectSession(pushedSession[0][0]));
+                cacheSessions(sessionList);
+                cacheSessionDetails(sessionDetailList);
+                selectSession(pushedSession[0][0]);
             }
             AuroraManagerInstance.setSleepState(SleepStates.INIT);
             navigate("Home");
         } finally {
             LoadingDialog.close();
         }
-    }, [dispatch, navigate, sessionDetailList, sessionList, userInfo?.id]);
+    }, [cacheSessions, cacheSessionDetails, navigate, selectSession, sessionDetailList, sessionList, userInfo?.id]);
     return { questionnaireButtonPress, skipButtonPress };
 };
 //#endregion

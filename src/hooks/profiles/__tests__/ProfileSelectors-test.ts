@@ -1,4 +1,9 @@
 import { renderHook } from "@testing-library/react-native";
+import { useProfileStore } from "../../../store/profileStore";
+import { useProfileListSelector } from "../useProfileListSelector";
+import { useFilteredProfileListSelector } from "../useFilteredProfileListSelector";
+import { useSelectedProfileSelector } from "../useSelectedProfileSelector";
+import { useFilterConditionSelector } from "../useFilteredConditionSelector";
 
 const mockProfile = { id: "p1", type: "official", name: "test.prof" };
 const mockFilterCondition = {
@@ -7,30 +12,25 @@ const mockFilterCondition = {
     showPrivate: true,
 };
 
-jest.mock("react-redux", () => ({
-    useSelector: jest.fn((selector: any) =>
-        selector({
-            profile: {
-                list: [mockProfile],
-                filteredList: [mockProfile],
-                selected: mockProfile,
-                filterCondition: mockFilterCondition,
-            },
-            auth: {},
-            aurora: {},
-            app: {},
-            session: {},
-        })
-    ),
-    useDispatch: () => jest.fn(),
-}));
-
-import { useProfileListSelector } from "../useProfileListSelector";
-import { useFilteredProfileListSelector } from "../useFilteredProfileListSelector";
-import { useSelectedProfileSelector } from "../useSelectedProfileSelector";
-import { useFilterConditionSelector } from "../useFilteredConditionSelector";
-
 describe("Profile selector hooks", () => {
+    beforeEach(() => {
+        useProfileStore.setState({
+            list: [mockProfile],
+            filteredList: [mockProfile],
+            selected: mockProfile,
+            filterCondition: mockFilterCondition,
+        } as any);
+    });
+
+    afterEach(() => {
+        useProfileStore.setState({
+            list: [],
+            filteredList: [],
+            selected: undefined,
+            filterCondition: mockFilterCondition,
+        } as any);
+    });
+
     it("useProfileListSelector returns profile list", () => {
         const { result } = renderHook(() => useProfileListSelector());
         expect(result.current).toEqual([mockProfile]);

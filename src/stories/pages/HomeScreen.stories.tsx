@@ -41,10 +41,6 @@ jest.mock("@react-navigation/native", () => ({
     useFocusEffect: jest.fn(),
 }));
 
-jest.mock("react-redux", () => ({
-    useSelector: jest.fn(() => ({})),
-    useDispatch: () => jest.fn(),
-}));
 
 const meta = {
     title: "Pages/HomeScreen",

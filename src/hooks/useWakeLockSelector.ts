@@ -1,9 +1,4 @@
-import { useSelector } from "react-redux";
+import { useAppStore } from "../store/appStore";
 
-import { RootState } from "../state";
-
-const clientSelector = (state: RootState): boolean => state.app.wakeLock;
-
-export const useWakeLockSelector = (): boolean => {
-    return useSelector(clientSelector);
-};
+export const useWakeLockSelector = (): boolean =>
+    useAppStore((state) => state.wakeLock);

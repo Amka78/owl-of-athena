@@ -4,7 +4,7 @@ import React, { FunctionComponent } from "react";
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
-import { FilterByDateValues } from "../../../state/SessionState";
+import { FilterByDateValues } from "../../../store/sessionStore";
 import { MenuContainer } from "../../atoms";
 import { MenuCheckBox } from "../../molecules";
 import { CheckBoxStatus } from "../../molecules/LabeledCheckBox";

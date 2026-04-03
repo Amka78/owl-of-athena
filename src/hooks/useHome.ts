@@ -2,9 +2,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
-import { useDispatch } from "react-redux";
 
-import { cacheProfiles, cacheSettings, setWakeLock } from "../actions";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
@@ -13,6 +11,9 @@ import { AuroraProfile } from "../sdk/AuroraTypes";
 import { Settings } from "../sdk/models";
 import { WakeLockService } from "../services";
 import { createOfficialProfile } from "../services/ProfileService";
+import { useAppStore } from "../store/appStore";
+import { useAuroraStore } from "../store/auroraStore";
+import { useProfileStore } from "../store/profileStore";
 import { GuestUser } from "../types";
 import {
     useCheckLogging,
@@ -33,7 +34,8 @@ export const useHome = (): {
 } => {
     useCheckLogging();
     const { navigate } = useNavigation<any>();
-    const dispatch = useDispatch();
+    const { cacheProfiles } = useProfileStore();
+    const { cacheSettings } = useAuroraStore();
 
     const settings = useSettingsSelector();
     const user = useUserSelector();
@@ -45,10 +47,10 @@ export const useHome = (): {
         Platform.OS === "web"
             ? onSleeping(
                   () => {
-                      dispatch(setWakeLock(true));
+                      useAppStore.getState().setWakeLock(true);
                   },
                   () => {
-                      dispatch(setWakeLock(false));
+                      useAppStore.getState().setWakeLock(false);
                       WakeLockService.release();
                   },
                   () => {
@@ -59,13 +61,13 @@ export const useHome = (): {
     );
 
     const wakeEvent = useRef(() => {
-        dispatch(setWakeLock(false));
+        useAppStore.getState().setWakeLock(false);
         WakeLockService.release();
         navigate("Awake");
     });
 
     const wakingEvent = useRef(() => {
-        dispatch(setWakeLock(false));
+        useAppStore.getState().setWakeLock(false);
         WakeLockService.release();
         navigate("Waking");
     });
@@ -114,7 +116,7 @@ export const useHome = (): {
                     try {
                         auroraProfiles = await AuroraRestClientInstance.getAuroraProfiles();
                         console.log("Current remote profile:", auroraProfiles);
-                        dispatch(cacheProfiles(auroraProfiles));
+                        cacheProfiles(auroraProfiles);
                     } catch (e) {
                         navigate("Logout");
                     }
@@ -128,7 +130,7 @@ export const useHome = (): {
                     const profile = await createOfficialProfile();
 
                     auroraProfiles.push(profile);
-                    dispatch(cacheProfiles(auroraProfiles));
+                    cacheProfiles(auroraProfiles);
                 }
 
                 if (auroraProfiles.length > 0) {
@@ -165,7 +167,7 @@ export const useHome = (): {
                         }
                     }
                     settings.userId = user.id;
-                    dispatch(cacheSettings(settings));
+                    cacheSettings(settings);
                 }
             }
         };
@@ -176,7 +178,8 @@ export const useHome = (): {
         };
         return cleanup();
     }, [
-        dispatch,
+        cacheProfiles,
+        cacheSettings,
         navigate,
         profiles,
         settings,

@@ -1,11 +1,5 @@
-import { useSelector } from "react-redux";
-
-import { RootState } from "../state";
+import { useAuroraStore } from "../store/auroraStore";
 import { Settings } from "../sdk/models";
 
-const clientSelector = (state: RootState): Settings =>
-    state.aurora.userSettings;
-
-export const useSettingsSelector = (): Settings => {
-    return useSelector(clientSelector);
-};
+export const useSettingsSelector = (): Settings =>
+    useAuroraStore((state) => state.userSettings);

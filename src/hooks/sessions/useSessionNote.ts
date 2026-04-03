@@ -1,9 +1,8 @@
 //#region Import Modules
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 
 import { useCheckLogging, useUserSelector } from "..";
-import { updateSession } from "../../actions/SessionsActions";
+import { useSessionStore } from "../../store/sessionStore";
 import { SessionRestClientInstance } from "../../clients";
 import { GuestUser } from "../../types";
 import { useSelectedSessionSelector } from "./useSelectedSessionSelector";
@@ -17,7 +16,7 @@ export const useSessionNote = (): {
 } => {
     useCheckLogging();
 
-    const dispatch = useDispatch();
+    const { updateSession } = useSessionStore();
     const userInfo = useUserSelector();
     const selectedSession = useSelectedSessionSelector();
     const [notes, setNotes] = useState(selectedSession!.notes);
@@ -30,9 +29,9 @@ export const useSessionNote = (): {
                 });
             }
             selectedSession!.notes = notes;
-            dispatch(updateSession(selectedSession!));
+            updateSession(selectedSession!);
         }
-    }, [dispatch, notes, selectedSession, userInfo?.id]);
+    }, [notes, selectedSession, updateSession, userInfo?.id]);
 
     const onChangeText = useCallback((value: string): void => {
         setNotes(value);

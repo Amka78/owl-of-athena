@@ -1,15 +1,14 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "redux";
+import { useAuthStore } from "../store/authStore";
 
-import { login as loginAction } from "../actions";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { GuestUser, Login } from "../types";
 import { Auth } from "../types/Auth";
+import { User } from "../types";
 import { useTextBox, useTextBoxReturn } from "./useTextBox";
 //#endregion
 
@@ -26,25 +25,25 @@ export const useLogin = (): {
     const email = useTextBox("");
     const password = useTextBox("");
     const { navigate } = useNavigation<any>();
-    const dispatch = useDispatch();
+    const { login } = useAuthStore();
     const [generalError, setGeneralError] = useState("");
     const onLoginPress = useCallback(async () => {
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.login_loading_message),
         });
         try {
-            const login: Login = {
+            const loginData: Login = {
                 email: email.value,
                 password: password.value,
             };
-            console.debug("useLogin start", login);
-            const result = await AuroraRestClientInstance.login(login);
+            console.debug("useLogin start", loginData);
+            const result = await AuroraRestClientInstance.login(loginData);
             console.debug("loggedin user", result);
 
             if (result.user.providers?.email.activation_expires_at) {
                 throw new Error(Message.get(MessageKeys.account_not_activated));
             }
-            postLoginAction(dispatch, navigate, result);
+            postLoginAction(login, navigate, result);
         } catch (e) {
             const err = e as Error;
             console.debug(e);
@@ -59,7 +58,7 @@ export const useLogin = (): {
                 isCancelable: true,
                 onConfirm: () => {
                     const currentDate = Date.now().toLocaleString();
-                    postLoginAction(dispatch, navigate, {
+                    postLoginAction(login, navigate, {
                         user: {
                             id: GuestUser,
                             birthday: currentDate,
@@ -82,7 +81,7 @@ export const useLogin = (): {
         } finally {
             LoadingDialog.close();
         }
-    }, [dispatch, email.value, navigate, password.value]);
+    }, [email.value, login, navigate, password.value]);
 
     const onCancelPress = useCallback(() => {
         navigate("Welcome");
@@ -108,8 +107,8 @@ export const useLogin = (): {
 //#endregion
 
 //#region Function
-function postLoginAction(dispatch: Dispatch<any>, navigate: any, result: Auth) {
-    dispatch(loginAction(result.user, result.token));
+function postLoginAction(login: (user: User, token: string) => void, navigate: any, result: Auth) {
+    login(result.user, result.token);
     navigate("Main");
 }
 //#endregion

@@ -1,13 +1,11 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useAuthStore } from "../store/authStore";
 
-import { login as loginAction } from "../actions";
 import { LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { createGuestUser } from "../services/WelcomeService";
-import { Auth } from "../types/Auth";
 import { useAutoLogin } from "./useAutoLogin";
 //#endregion
 
@@ -20,7 +18,7 @@ export const useWelcome = (): {
 } => {
     useAutoLogin();
     const { navigate } = useNavigation<any>();
-    const dispatch = useDispatch();
+    const { login } = useAuthStore();
 
     const onStandalonePress = useCallback(() => {
         LoadingDialog.show({
@@ -28,15 +26,15 @@ export const useWelcome = (): {
         });
 
         try {
-            const guestLogin: Auth = createGuestUser(Date.now());
-            dispatch(loginAction(guestLogin.user, guestLogin.token));
+            const guestLogin = createGuestUser(Date.now());
+            login(guestLogin.user, guestLogin.token);
             navigate("Main");
         } catch (e) {
             console.error(e);
         } finally {
             LoadingDialog.close();
         }
-    }, [dispatch, navigate]);
+    }, [login, navigate]);
 
     const onLoginPress = useCallback(() => {
         navigate("Login");

@@ -6,15 +6,11 @@ import * as Font from "expo-font";
 import * as Localization from "expo-localization";
 import React from "react";
 import { Platform, StatusBar } from "react-native";
-import { Provider as ReduxProvider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-
 import { Container } from "./src/components";
 import { UpdateSnackBar } from "./src/components/atoms";
 import { Message } from "./src/constants";
 import { AuroraManagerInstance, SoundManagerInstance } from "./src/managers";
 import { InitialNavigator } from "./src/navigation";
-import reduxStore from "./src/store";
 //#endregion
 
 SplashScreen.preventAutoHideAsync();
@@ -45,25 +41,17 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     public render(): React.ReactNode {
-        const persistedRedux = reduxStore();
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return <></>;
         }
         return (
-            <ReduxProvider store={persistedRedux.store}>
-                <PersistGate
-                    loading={undefined}
-                    persistor={persistedRedux.persistor}
-                >
-                    <Container>
-                        {Platform.OS === "ios" && (
-                            <StatusBar barStyle="default" />
-                        )}
-                        <InitialNavigator></InitialNavigator>
-                        <UpdateSnackBar></UpdateSnackBar>
-                    </Container>
-                </PersistGate>
-            </ReduxProvider>
+            <Container>
+                {Platform.OS === "ios" && (
+                    <StatusBar barStyle="default" />
+                )}
+                <InitialNavigator></InitialNavigator>
+                <UpdateSnackBar></UpdateSnackBar>
+            </Container>
         );
     }
     //#endregion

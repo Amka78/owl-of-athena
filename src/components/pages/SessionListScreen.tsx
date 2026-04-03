@@ -4,7 +4,7 @@ import { StackHeaderLeftProps } from "@react-navigation/stack";
 import React, { FunctionComponent, useLayoutEffect } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
-import { FilterByDateValues } from "../../state/SessionState";
+import { FilterByDateValues } from "../../store/sessionStore";
 import { FilterIcon, RefreshIcon } from "../atoms";
 import { SessionListScreenTemplate } from "./../templates/SessionListScreenTemplate";
 //#endregion

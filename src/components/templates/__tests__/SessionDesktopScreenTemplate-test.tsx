@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../../constants';
 import { SessionDesktopScreenTemplate } from '../SessionDesktopScreenTemplate';
-import { FilterByDateValues } from '../../../state/SessionState';
+import { FilterByDateValues } from '../../../store/sessionStore';
 
 jest.mock('../../../navigation/SessionTabNavigator', () => {
     const React = require('react');

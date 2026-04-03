@@ -22,7 +22,7 @@ type Duration = {
 //#region Hooks
 export const useSession = (): {
     selectedSession: AuroraSession;
-    selectedSessionDetail: AuroraSessionDetail;
+    selectedSessionDetail: AuroraSessionDetail | undefined;
     asleepAt?: Moment;
     awakeAt?: Moment;
     sleepDuration?: Duration;

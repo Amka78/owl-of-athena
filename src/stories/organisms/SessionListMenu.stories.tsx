@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
 import { SessionListMenu } from '../../components/organisms/sessions/SessionListMenu';
-import { FilterByDateValues } from '../../state/SessionState';
+import { FilterByDateValues } from '../../store/sessionStore';
 
 const meta = {
     title: 'Organisms/SessionListMenu',

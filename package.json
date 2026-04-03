@@ -70,14 +70,11 @@
     "react-native-svg": "15.15.3",
     "react-native-tab-view": "^4.3.0",
     "react-native-web": "~0.21.0",
-    "react-redux": "^9.0.0",
-    "redux": "^4.0.5",
-    "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0",
     "serialport": "^9.0.7",
     "split": "^1.0.1",
     "usb-detection": "^4.10.0",
-    "webpack-bundle-analyzer": "^4.4.1"
+    "webpack-bundle-analyzer": "^4.4.1",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
@@ -107,7 +104,6 @@
     "@types/node-fetch": "^2.5.10",
     "@types/react": "~19.0.0",
     "@types/react-test-renderer": "^19.0.0",
-    "@types/redux-logger": "^3.0.8",
     "@types/serialport": "^8.0.1",
     "@types/split": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.22.0",

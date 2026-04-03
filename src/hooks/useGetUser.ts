@@ -1,11 +1,8 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-
 import { User } from "../types";
 import { AuroraRestClientInstance } from "../clients";
 
 export const useGetUser = (onInitialize: (user: User) => void): void => {
-    const dispatch = useDispatch();
     useEffect(() => {
         let unmounted = false;
         console.debug("useGetUser start");
@@ -22,11 +19,10 @@ export const useGetUser = (onInitialize: (user: User) => void): void => {
         };
         f().then((value?: User) => {
             onInitialize(value!);
-            //dispatch(updateUser(value!));
         });
         const cleanup = (): void => {
             unmounted = true;
         };
         return cleanup;
-    }, [dispatch, onInitialize]);
+    }, [onInitialize]);
 };

@@ -1,33 +1,14 @@
 import { renderHook } from "@testing-library/react-native";
-import { FilterByDateValues } from "../../../state/SessionState";
+import { useSessionStore, FilterByDateValues } from "../../../store/sessionStore";
+import { AuroraSession, AuroraSessionDetail } from "../../../sdk/models";
 
-const mockSession = { id: "s1", starred: true };
-const mockSessionDetail = { sessionId: "s1" };
+const mockSession = { id: "s1", starred: true } as unknown as AuroraSession;
+const mockSessionDetail = { sessionId: "s1" } as unknown as AuroraSessionDetail;
 const mockFilterCondition = {
     byDate: FilterByDateValues.ANY_TIME,
     showNotes: false,
     showStarred: false,
 };
-
-jest.mock("react-redux", () => ({
-    useSelector: jest.fn((selector: any) =>
-        selector({
-            session: {
-                sessionList: [mockSession],
-                filteredSessionList: [mockSession],
-                selectedSession: mockSession,
-                sessionDetailList: [mockSessionDetail],
-                selectedSessionDetail: mockSessionDetail,
-                filterCondition: mockFilterCondition,
-            },
-            auth: {},
-            aurora: {},
-            app: {},
-            profile: {},
-        })
-    ),
-    useDispatch: () => jest.fn(),
-}));
 
 import { useSessionListSelector } from "../useSessionListSelector";
 import { useFilteredSessionListSelector } from "../useFilteredSessionListSelector";
@@ -37,6 +18,28 @@ import { useSelectedSessionDetailSelector } from "../useSelectedSessionDetailSel
 import { useFilterConditionSelector } from "../useFilteredConditionSelector";
 
 describe("Session selector hooks", () => {
+    beforeEach(() => {
+        useSessionStore.setState({
+            sessionList: [mockSession],
+            filteredSessionList: [mockSession],
+            selectedSession: mockSession,
+            sessionDetailList: [mockSessionDetail],
+            selectedSessionDetail: mockSessionDetail,
+            filterCondition: mockFilterCondition,
+        } as any);
+    });
+
+    afterEach(() => {
+        useSessionStore.setState({
+            sessionList: [],
+            filteredSessionList: [],
+            selectedSession: undefined,
+            sessionDetailList: [],
+            selectedSessionDetail: undefined,
+            filterCondition: mockFilterCondition,
+        } as any);
+    });
+
     it("useSessionListSelector returns sessionList", () => {
         const { result } = renderHook(() => useSessionListSelector());
         expect(result.current).toEqual([mockSession]);

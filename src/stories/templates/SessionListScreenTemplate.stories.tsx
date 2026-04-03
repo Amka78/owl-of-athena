@@ -4,7 +4,7 @@ import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
 import { SessionListScreenTemplate } from '../../components/templates/SessionListScreenTemplate';
-import { FilterByDateValues } from '../../state/SessionState';
+import { FilterByDateValues } from '../../store/sessionStore';
 import { AuroraSession } from '../../sdk/models';
 
 const filterMenuProps = {

@@ -1,9 +1,7 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { cacheSessionDetails, cacheSessions } from "../actions";
 import { SessionRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
@@ -15,6 +13,7 @@ import {
     AuroraSessionDetail,
 } from "../sdk/models";
 import { onConnectionChange } from "../services/MainService";
+import { useSessionStore } from "../store/sessionStore";
 import { GuestUser } from "../types";
 import {
     useSessionDetailListSelector,
@@ -35,7 +34,7 @@ export const useMain = (): {
     currentFirmwareVersion: string;
     error: string;
 } => {
-    const dispatch = useDispatch();
+    const { cacheSessions, cacheSessionDetails } = useSessionStore();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
     const userInfo = useUserSelector();
@@ -72,7 +71,7 @@ export const useMain = (): {
                     const remoteSessionList = await SessionRestClientInstance.getAll(
                         userInfo.id
                     );
-                    dispatch(cacheSessions(remoteSessionList));
+                    cacheSessions(remoteSessionList);
                 }
             }
         };
@@ -82,7 +81,7 @@ export const useMain = (): {
             unmounted = true;
         };
         return cleanup();
-    }, [connect, dispatch, sessionList, userInfo]);
+    }, [cacheSessions, connect, sessionList, userInfo]);
 
     const onConnectionStatesPress = useCallback(async (): Promise<string> => {
         console.debug("Start configuring aurora.");
@@ -107,8 +106,8 @@ export const useMain = (): {
                     sessionList.unshift(...session[0]);
                     sessionDetailList.unshift(...session[1]);
 
-                    dispatch(cacheSessions(sessionList));
-                    dispatch(cacheSessionDetails(sessionDetailList));
+                    cacheSessions(sessionList);
+                    cacheSessionDetails(sessionDetailList);
                 },
                 (osInfo: AuroraOSInfo) => {
                     setConnect(ConnectionStates.CONNECTED);
@@ -146,7 +145,7 @@ export const useMain = (): {
         }
 
         return error;
-    }, [connect, dispatch, sessionDetailList, sessionList, userInfo?.id]);
+    }, [cacheSessionDetails, cacheSessions, connect, sessionDetailList, sessionList, userInfo?.id]);
 
     const onHomePress = useCallback(() => {
         navigate("Home");

@@ -1,27 +1,20 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useProfileStore } from "../../store/profileStore";
 
 import { useCheckLogging, useUserSelector, useWindowDimensions } from "..";
-import {
-    cache,
-    deleteById,
-    select,
-    update,
-    updateFilter,
-} from "../../actions/ProfilesActions";
 import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
 import { Message, MessageKeys } from "../../constants";
 import { AuroraProfile } from "../../sdk/AuroraTypes";
-import { FilterCondition } from "../../state/ProfileState";
+import { ProfileFilterCondition } from "../../store/profileStore";
 import { useFilterConditionSelector, useFilteredProfileListSelector } from "./";
 //#endregion
 
 //#region Hooks
 export const useProfileList = (): {
     showFilter: boolean;
-    filterCondition: FilterCondition;
+    filterCondition: ProfileFilterCondition;
     onShowOfficialPress: () => void;
     onShowCommunityPress: () => void;
     onShowPrivatePress: () => void;
@@ -33,7 +26,7 @@ export const useProfileList = (): {
     onRefreshPress: () => void;
     onFilterPress: () => void;
 } => {
-    const dispatch = useDispatch();
+    const { cacheProfiles, deleteProfile, selectProfile, updateProfile, updateFilter } = useProfileStore();
     const filterCondition = useFilterConditionSelector();
     const list = useFilteredProfileListSelector();
     const user = useUserSelector();
@@ -49,37 +42,31 @@ export const useProfileList = (): {
             ]),
         });
         //const sessions = await SessionRestClientInstance.getAll(user!.id);
-        dispatch(cache(new Array<AuroraProfile>()));
+        cacheProfiles(new Array<AuroraProfile>());
         LoadingDialog.close();
-    }, [dispatch]);
+    }, [cacheProfiles]);
 
     const onPressedFilter = useCallback(async () => {
         setShowFilter(!showFilter);
     }, [showFilter]);
 
     const onShowOfficialPress = useCallback((): void => {
-        dispatch(
-            updateFilter({
-                showOfficial: !filterCondition.showOfficial,
-            })
-        );
-    }, [dispatch, filterCondition.showOfficial]);
+        updateFilter({
+            showOfficial: !filterCondition.showOfficial,
+        });
+    }, [filterCondition.showOfficial, updateFilter]);
 
     const onShowCommunityPress = useCallback((): void => {
-        dispatch(
-            updateFilter({
-                showCommunity: !filterCondition.showCommunity,
-            })
-        );
-    }, [dispatch, filterCondition.showCommunity]);
+        updateFilter({
+            showCommunity: !filterCondition.showCommunity,
+        });
+    }, [filterCondition.showCommunity, updateFilter]);
 
     const onShowPrivatePress = useCallback((): void => {
-        dispatch(
-            updateFilter({
-                showPrivate: !filterCondition.showPrivate,
-            })
-        );
-    }, [dispatch, filterCondition.showPrivate]);
+        updateFilter({
+            showPrivate: !filterCondition.showPrivate,
+        });
+    }, [filterCondition.showPrivate, updateFilter]);
 
     const onStarPress = useCallback(
         async (value: AuroraProfile): Promise<void> => {
@@ -95,16 +82,16 @@ export const useProfileList = (): {
             }*/
 
             value.starred = !value.starred;
-            dispatch(update(value));
+            updateProfile(value);
         },
-        [dispatch]
+        [updateProfile]
     );
 
     const onDeleteConfirmPress = useCallback(
         (value: AuroraProfile) => {
-            dispatch(deleteById(value.id));
+            deleteProfile(value.id);
         },
-        [dispatch]
+        [deleteProfile]
     );
 
     const onDeletePress = useCallback(
@@ -127,7 +114,7 @@ export const useProfileList = (): {
 
     const onMenuPress = useCallback(
         (value: AuroraProfile, index: number): void => {
-            dispatch(select(value));
+            selectProfile(value);
 
             if (!(dimens.isHorizontal && dimens.isDesktop)) {
                 navigate("Detail", {
@@ -135,7 +122,7 @@ export const useProfileList = (): {
                 });
             }
         },
-        [dimens.isDesktop, dimens.isHorizontal, dispatch, navigate]
+        [dimens.isDesktop, dimens.isHorizontal, navigate, selectProfile]
     );
 
     const userId = user ? user.id : "";

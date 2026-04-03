@@ -32,7 +32,7 @@ export const SessionScreen: FunctionComponent = () => {
             currentChart={sessionHook.currentChart}
             sessionSleepChart={{
                 scaleXDomain: sessionHook.scaleXDomain,
-                sessionDetail: sessionHook.selectedSessionDetail,
+                sessionDetail: sessionHook.selectedSessionDetail!,
                 totalSleepHour: sessionHook.sleepDuration!.hours,
                 isFilterEnabled: false,
             }}
