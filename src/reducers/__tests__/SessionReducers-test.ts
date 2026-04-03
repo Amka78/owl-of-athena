@@ -1,4 +1,8 @@
 //#region "Import modules"
+jest.mock("expo-av", () => ({
+    Audio: { Sound: { createAsync: jest.fn() }, setAudioModeAsync: jest.fn() },
+    Video: {},
+}));
 import SessionReducers, { initialState } from "../SessionReducers";
 import { CacheAction, DeleteSession } from "../../actions/SessionsActions";
 import { SessionState } from "../../state";

@@ -1,3 +1,7 @@
+jest.mock("expo-av", () => ({
+    Audio: { Sound: { createAsync: jest.fn() }, setAudioModeAsync: jest.fn() },
+    Video: {},
+}));
 import AuroraReducer from "../AuroraReducers";
 import { SettingsActions } from "../../actions/SettingsActions";
 import { AuroraState } from "../../state";
