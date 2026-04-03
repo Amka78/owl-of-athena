@@ -1,24 +1,31 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
 import React from "react";
-
-import {
-    UnsavedProfileMenu,
-    UnsavedProfileMenuProps,
-} from "../../../components/organisms/profiles/UnsavedProfileMenu";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { UnsavedProfileMenu } from "../../../components/organisms/profiles/UnsavedProfileMenu";
 import { getDimensions } from "../../WindowDimensionsForStoryBook";
-//#endregion
 
-//#region Story
-export default {
+const meta = {
     title: "Organisms/UnsavedProfileMenu",
     component: UnsavedProfileMenu,
-} as Meta;
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof UnsavedProfileMenu>;
 
-const Template: Story<UnsavedProfileMenuProps> = (args) => (
-    <UnsavedProfileMenu {...args} dimens={getDimensions()} />
-);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {};
-//#endregion
+export const Primary: Story = {
+    args: {
+        isUserProfile: true,
+        dimens: getDimensions(),
+        onSaveAsNewPress: fn(),
+        onOverwriteSavePress: fn(),
+        onCancelPress: fn(),
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};

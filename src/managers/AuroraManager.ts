@@ -34,6 +34,7 @@ import {
     DirectoryInfo,
     FileInfo,
 } from "../sdk/AuroraTypes";
+import { AuroraEvent as AuroraSDKEvent } from "../sdk/AuroraTypes";
 import {
     AuroraEvent,
     AuroraOSInfo,
@@ -427,7 +428,7 @@ export class AuroraManager extends EventEmitter {
                 groupBy = meanBy;
         }
 
-        eventsInBins.forEach((eventsInBin, binIndex) => {
+        eventsInBins.forEach((eventsInBin: Record<string, { event: AuroraEventJson; eventIndex: number }[]>, binIndex: number) => {
             for (const binOfEvents of Object.values(eventsInBin)) {
                 const sortedEvents = sortBy(
                     binOfEvents,
@@ -592,7 +593,7 @@ export class AuroraManager extends EventEmitter {
         return enableEventList;
     }
 
-    private onEvent(event: AuroraEvent): void {
+    private onEvent(event: AuroraSDKEvent): void {
         console.debug("Aurora Event: %s", event.eventId);
         console.debug("Aurora Event Name:", EventIdsToNames[event.eventId]);
 

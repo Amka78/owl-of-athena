@@ -17,7 +17,7 @@ const AuroraCmdGetProfiles = async function (
     const profilesInList = profileListReadResp.output
         .filter(String)
         .map((prof: string, index: number) => {
-            const profile: AuroraProfile = {};
+            const profile: AuroraProfile = {} as AuroraProfile;
             const profParts = prof.trim().split(":");
 
             if (profParts.length == 3) {
@@ -35,10 +35,11 @@ const AuroraCmdGetProfiles = async function (
             return profile;
         });
 
-    const { response } = await this.queueCmd(
+    const cmdResult = await this.queueCmd(
         "sd-dir-read profiles 1 *.prof",
         connectorType
     );
+    const response = (cmdResult as any).response;
     const profiles = [];
 
     for (const profile of response) {

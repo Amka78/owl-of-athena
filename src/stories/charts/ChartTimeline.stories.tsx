@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
 
@@ -32,7 +32,7 @@ const sampleEvents = [
 
 const meta = {
     title: "Charts/ChartTimeline",
-    component: ChartTimeline,
+    component: ChartTimeline as React.ComponentType<any>,
     tags: ["autodocs"],
     decorators: [
         (Story: any) => (
@@ -64,7 +64,6 @@ export const Primary: Story = {
         axisXEnabled: true,
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

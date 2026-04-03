@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
 
@@ -34,8 +34,7 @@ export const Primary: Story = {
         maxValue: 100,
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -51,8 +50,7 @@ export const Full: Story = {
         maxValue: 100,
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -68,7 +66,6 @@ export const Empty: Story = {
         maxValue: 100,
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

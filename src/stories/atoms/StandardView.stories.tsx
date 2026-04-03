@@ -19,7 +19,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  render: (args): React.ReactElement => (
+  args: { children: undefined as unknown as React.ReactNode },
+  render: (args) => (
     <StandardView {...args}>
       <Text>Content</Text>
     </StandardView>

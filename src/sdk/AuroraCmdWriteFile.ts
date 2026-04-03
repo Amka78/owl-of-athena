@@ -4,13 +4,12 @@ import Stream from "stream";
 import { ConnectorTypes } from "./AuroraConstants";
 import { CommandResult, FileInfo } from "./AuroraTypes";
 
-const checkCrcSupportedOSVersion = 30000;
 const AuroraCmdUploadFile = async function (
     this: any,
     destPath: string,
     dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
     rename = false,
-    osVersion = 3000,
+    _osVersion = 3000,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<CommandResult<FileInfo>> {
     //const destPathSegments = destPath.split("/");

@@ -33,7 +33,6 @@ jest.mock("../../../hooks", () => ({
         fontScale: 1,
         scale: 2,
     }),
-    useConvertibleHeader: jest.fn(),
     useSignup: () => ({
         loading: false,
         emailHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },

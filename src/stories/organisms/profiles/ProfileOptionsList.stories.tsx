@@ -1,38 +1,45 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
 import React from "react";
-
-import {
-    ProfileOptionList,
-    ProfileOptionListProps,
-} from "../../../components/organisms/profiles/ProfileOptionList";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { ProfileOptionList } from "../../../components/organisms/profiles/ProfileOptionList";
 import {
     defaultOptions,
     groupingProfileOptionList,
 } from "../../../services/ProfileService";
-//#endregion
 
-//#region Story
-export default {
+const meta = {
     title: "Organisms/ProfileOptionList",
     component: ProfileOptionList,
-} as Meta;
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof ProfileOptionList>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 const groupedOptionList = groupingProfileOptionList(defaultOptions);
 
-const Template: Story<ProfileOptionListProps> = (args) => (
-    <ProfileOptionList {...args} />
-);
-
-export const EnUSLocale = Template.bind({});
-EnUSLocale.args = {
-    locale: "en-US",
-    groupedOptionList,
+export const EnUSLocale: Story = {
+    args: {
+        locale: "en-US",
+        groupedOptionList,
+        style: {},
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
 };
 
-export const JaJPLocale = Template.bind({});
-JaJPLocale.args = {
-    locale: "ja-JP",
-    groupedOptionList,
+export const JaJPLocale: Story = {
+    args: {
+        locale: "ja-JP",
+        groupedOptionList,
+        style: {},
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
 };
-//#endregion

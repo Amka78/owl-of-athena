@@ -18,7 +18,7 @@ const mobileDimens = {
 };
 
 const defaultProps = {
-    emailAddress: { value: '', onChangeText: jest.fn() },
+    emailAddress: { value: '', onChangeText: jest.fn(), set: jest.fn() },
     errorText: { children: '' },
     forgotPasswordButton: { onPress: jest.fn() },
     cancelButton: { onPress: jest.fn() },

@@ -10,7 +10,7 @@ const AuroraCmdDownloadFile = function(
     destPath: string
 ): Promise<unknown> {
     return promisify(mkdirp)(path.dirname(destPath)).then(() =>
-        this.readFile(srcPath, fs.createWriteStream(destPath))
+        this.readFile(srcPath, fs.createWriteStream(destPath), false)
     );
 };
 

@@ -1,31 +1,38 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
 import React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { ProfileMenu } from "../../../components/organisms/profiles/ProfileMenu";
 
-import {
-    ProfileMenu,
-    ProfileMenuProps,
-} from "../../../components/organisms/profiles/ProfileMenu";
-//#endregion
-
-//#region Story
-export default {
+const meta = {
     title: "Organisms/ProfileMenu",
     component: ProfileMenu,
-} as Meta;
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof ProfileMenu>;
 
-const Template: Story<ProfileMenuProps> = (args) => <ProfileMenu {...args} />;
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-    selectedProfile: {
-        content: "",
-        id: "",
-        key: "",
-        name: "test",
-        title: "test",
-        starred: false,
-        type: "community",
+export const Primary: Story = {
+    args: {
+        selectedProfile: {
+            content: "",
+            id: "",
+            key: "",
+            name: "test",
+            title: "test",
+            starred: false,
+            type: "community",
+            created_at: 0,
+            updated_at: 0,
+            min_firmware_version: 0,
+            options: [],
+        },
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
     },
 };
-//#endregion

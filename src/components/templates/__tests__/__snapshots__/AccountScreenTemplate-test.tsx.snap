@@ -783,7 +783,7 @@ exports[`AccountScreenTemplate renders correctly with en-US locale 1`] = `
                       }
                       testID="text-input-flat"
                       underlineColorAndroid="transparent"
-                      value="04,03,2026"
+                      value="01,01,1990"
                     />
                   </View>
                 </View>
@@ -2098,7 +2098,7 @@ exports[`AccountScreenTemplate renders correctly with ja-JP locale 1`] = `
                       }
                       testID="text-input-flat"
                       underlineColorAndroid="transparent"
-                      value="2026年04月03日  "
+                      value="1990年01月01日  "
                     />
                   </View>
                 </View>

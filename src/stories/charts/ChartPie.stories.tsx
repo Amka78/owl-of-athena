@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
 
@@ -8,7 +8,7 @@ import ChartPie from "../../components/charts/ChartPie";
 
 const meta = {
     title: "Charts/ChartPie",
-    component: ChartPie,
+    component: ChartPie as React.ComponentType<any>,
     tags: ["autodocs"],
     decorators: [
         (Story: any) => (
@@ -32,8 +32,7 @@ export const Primary: Story = {
         legendPosition: "right",
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -47,7 +46,6 @@ export const LegendLeft: Story = {
         legendPosition: "left",
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

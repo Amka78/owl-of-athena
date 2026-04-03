@@ -11,8 +11,8 @@ export type OptionSliderProps = OptionProps & { value?: number };
 //#endregion
 
 //#region Component
-export const OptionSlider: FunctionComponent<OptionProps> = (
-    props: OptionProps
+export const OptionSlider: FunctionComponent<OptionSliderProps> = (
+    props: OptionSliderProps
 ) => {
     return (
         <ListItem

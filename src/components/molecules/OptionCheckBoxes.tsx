@@ -11,8 +11,8 @@ export type OptionCheckBoxesProps = OptionProps & { value?: number };
 //#endregion
 
 //#region Component
-export const OptionCheckBoxes: FunctionComponent<OptionProps> = (
-    props: OptionProps
+export const OptionCheckBoxes: FunctionComponent<OptionCheckBoxesProps> = (
+    props: OptionCheckBoxesProps
 ) => {
     return (
         <ListItem

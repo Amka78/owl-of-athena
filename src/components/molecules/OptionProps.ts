@@ -1,5 +1,5 @@
 //#region Import Modules
-import { SliderField, ToggleField } from "../../sdk/AuroraTypes";
+import { CheckBoxField, SliderField, ToggleField, TimeField, LedEffectField, BuzzSongField } from "../../sdk/AuroraTypes";
 import { ListItemComponentProps } from "../atoms/ListItem";
 //#endregion
 
@@ -8,6 +8,6 @@ export type OptionProps = {
     description?: string;
     left: (props: ListItemComponentProps) => React.ReactNode;
     disabled: boolean;
-    field: ToggleField | SliderField;
+    field: ToggleField | SliderField | CheckBoxField | TimeField | LedEffectField | BuzzSongField;
     onValueChange: () => void;
 };

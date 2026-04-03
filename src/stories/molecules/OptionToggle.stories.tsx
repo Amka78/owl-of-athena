@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 import React from 'react';
 import { View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -36,8 +36,7 @@ export const Enabled: Story = {
         onValueChange: () => {},
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -52,7 +51,6 @@ export const Disabled: Story = {
         onValueChange: () => {},
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

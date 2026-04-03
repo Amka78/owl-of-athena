@@ -28,6 +28,7 @@ const ConnectionStates = {
 };
 
 const mobileDimens = {
+    fontScale: 1, scale: 1, height: 800, width: 400,
     isDesktop: false, isLargeWidth: false, isSmallHeight: false,
     isVertical: true, isHorizontal: false,
 };

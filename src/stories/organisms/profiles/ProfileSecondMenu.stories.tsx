@@ -1,25 +1,31 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
 import React from "react";
-import {
-    ProfileSecondMenu,
-    ProfileSecondMenuProps,
-} from "../../../components/organisms/profiles/ProfileSecondMenu";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { ProfileSecondMenu } from "../../../components/organisms/profiles/ProfileSecondMenu";
 import { getDimensions } from "../../WindowDimensionsForStoryBook";
 
-//#endregion
-
-//#region Story
-export default {
+const meta = {
     title: "Organisms/ProfileSecondMenu",
     component: ProfileSecondMenu,
-} as Meta;
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof ProfileSecondMenu>;
 
-const Template: Story<ProfileSecondMenuProps> = (args) => (
-    <ProfileSecondMenu {...args} dimens={getDimensions()} />
-);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-
-Primary.args = {};
-//#endregion
+export const Primary: Story = {
+    args: {
+        auroraConnected: false,
+        selectedProfileHasUnsavedChanges: false,
+        dimens: getDimensions(),
+        onSaveToAuroraPress: fn(),
+        onShowAdvancedOptionsPress: fn(),
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};

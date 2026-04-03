@@ -20,7 +20,7 @@ const mobileDimens = {
 const defaultProps = {
     firstName: { value: 'Jane', onChangeText: jest.fn() },
     lastName: { value: 'Doe', onChangeText: jest.fn() },
-    birthDay: { value: new Date(1990, 0, 1), onConfirm: jest.fn(), onCancel: jest.fn() },
+    birthDay: { selected: new Date(1990, 0, 1), onChange: jest.fn() },
     gender: { value: 'female', onValueChange: jest.fn() },
     maleRadioButton: { value: 'male' },
     femaleRadioButton: { value: 'female' },

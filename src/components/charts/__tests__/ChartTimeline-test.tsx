@@ -46,6 +46,9 @@ describe("ChartTimeline UnitTest", () => {
                     eventTickSize={20}
                     eventPlacement={0}
                     axisXEnabled={true}
+                    eventLabelStyle={{}}
+                    eventTickStyle={{}}
+                    eventIconStyle={{}}
                 />
             );
             rendered = true;
@@ -75,6 +78,9 @@ describe("ChartTimeline UnitTest", () => {
                     eventTickSize={20}
                     eventPlacement={0}
                     axisXEnabled={true}
+                    eventLabelStyle={{}}
+                    eventTickStyle={{}}
+                    eventIconStyle={{}}
                 />
             );
             rendered = true;

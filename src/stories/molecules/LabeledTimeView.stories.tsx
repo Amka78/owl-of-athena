@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
@@ -25,8 +25,7 @@ export const Primary: Story = {
         mode: 'meridian',
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -38,7 +37,6 @@ export const TimeMode: Story = {
         mode: 'time',
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

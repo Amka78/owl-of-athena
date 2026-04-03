@@ -398,7 +398,7 @@ export class AuroraBluetooth extends EventEmitter {
         if (packet.length > BLE_CMD_MAX_PACKET_LENGTH)
             return Promise.reject("Exceeded max write packet length.");
 
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             //write a packet, the false here means the callback
             //isn't executed until the other side confirms receipt
             char.write(packet, false, (error: string) => {
@@ -478,7 +478,7 @@ export class AuroraBluetooth extends EventEmitter {
         char: noble.Characteristic,
         onNotification: Function
     ): Promise<unknown> {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             char.subscribe((error: string) => {
                 if (error) return reject(error);
 

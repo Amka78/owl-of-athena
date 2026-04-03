@@ -63,7 +63,7 @@ class InlineTimePickerCore extends Component<
 
     private secondsText?: Text;
 
-    private interval?: number;
+    private interval?: ReturnType<typeof setInterval>;
 
     private mode?: TimePickerMode;
     constructor(props: InlineTimePickerProps) {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
@@ -35,8 +35,7 @@ export const Primary: Story = {
         onShowNoteCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -53,7 +52,6 @@ export const PastWeek: Story = {
         onShowNoteCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

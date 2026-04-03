@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../../../constants';
 import { ProfileMenu } from '../ProfileMenu';
@@ -38,7 +38,7 @@ describe('ProfileMenu', () => {
 
     it('calls onEditPress when edit icon pressed', () => {
         const onEditPress = jest.fn();
-        const { getByTestId, UNSAFE_getAllByType } = renderWithProvider(
+        const { UNSAFE_getAllByType: _UNSAFE_getAllByType } = renderWithProvider(
             <ProfileMenu selectedProfile={sampleProfile} onEditPress={onEditPress} />
         );
         // EditIcon renders a pressable - fire press on the menu area

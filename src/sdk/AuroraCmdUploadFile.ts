@@ -11,7 +11,7 @@ const AuroraCmdUploadFile = async function (
 ): Promise<unknown> {
     if (srcPath.match(/https?:\/\//i)) {
         return fetch(srcPath).then((res) => {
-            return this.writeFile(destPath, res.body, rename);
+            return this.writeFile(destPath, res.body as unknown as NodeJS.ReadStream, rename);
         });
     }
 

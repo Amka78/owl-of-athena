@@ -19,7 +19,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  render: (args): React.ReactElement => (
+  args: { children: [] as React.ReactNode[] },
+  render: (args) => (
     <ScrollableList {...args}>
       {[
         <Text key="1">Item 1</Text>,
@@ -33,7 +34,8 @@ export const Primary: Story = {
 };
 
 export const ManyItems: Story = {
-  render: (args): React.ReactElement => (
+  args: { children: [] as React.ReactNode[] },
+  render: (args) => (
     <ScrollableList {...args}>
       {Array.from({ length: 10 }, (_, i) => (
         <Text key={i}>Item {i + 1}</Text>

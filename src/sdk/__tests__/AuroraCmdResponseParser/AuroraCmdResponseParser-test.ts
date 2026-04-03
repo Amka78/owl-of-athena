@@ -30,7 +30,7 @@ describe("AuroraCmdResponseParserTest", () => {
         ];
 
         const testPromises = responseTypes.map(responseType => {
-            return new Promise(resolve => {
+            return new Promise<void>(resolve => {
                 const lineReader = readline.createInterface({
                     input: fs.createReadStream(
                         path.join(__dirname, responseType.inputFile)

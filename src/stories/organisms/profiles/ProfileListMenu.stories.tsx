@@ -1,23 +1,31 @@
-//#region Import Modules
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
 import React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { ProfileListMenu } from "../../../components/organisms/profiles/ProfileListMenu";
 
-import {
-    ProfileListMenu,
-    ProfileListMenuProps,
-} from "../../../components/organisms/profiles/ProfileListMenu";
-//#endregion
-
-//#region Story
-export default {
+const meta = {
     title: "Organisms/ProfileListMenu",
     component: ProfileListMenu,
-} as Meta;
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof ProfileListMenu>;
 
-const Template: Story<ProfileListMenuProps> = (args) => (
-    <ProfileListMenu {...args} />
-);
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export const Primary = Template.bind({});
-Primary.args = {};
-//#endregion
+export const Primary: Story = {
+    args: {
+        showOfficialCheckBoxStatus: "checked",
+        onShowOfficialCheckBoxPress: fn(),
+        showCommunityCheckBoxStatus: "checked",
+        onShowCommunityCheckBoxPress: fn(),
+        showPrivateCheckBoxStatus: "checked",
+        onShowPrivateCheckBoxPress: fn(),
+    },
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};

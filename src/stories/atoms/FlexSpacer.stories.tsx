@@ -1,16 +1,25 @@
-import { Meta, Story } from "@storybook/react/types-6-0";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
 import React from "react";
-
+import { Provider } from "react-native-paper";
+import { Theme } from "../../constants";
 import { FlexSpacer } from "../../components/atoms/FlexSpacer";
 
-export default {
+const meta = {
     title: "Atoms/FlexSpacer",
     component: FlexSpacer,
-    argTypes: {
-        backgroundColor: { control: "color" },
+    decorators: [
+        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+    ],
+} satisfies Meta<typeof FlexSpacer>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {
+    args: {},
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
     },
-} as Meta;
+};
 
-const Template: Story = (args) => <FlexSpacer {...args} />;
-
-export const Primary = Template.bind({});

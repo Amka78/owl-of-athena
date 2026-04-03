@@ -14,7 +14,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  render: (args): React.ReactElement => (
+  args: { children: undefined as unknown as React.ReactNode },
+  render: (args) => (
     <MenuContainer {...args}>
       <Text>Menu Item</Text>
     </MenuContainer>
@@ -25,7 +26,8 @@ export const Primary: Story = {
 };
 
 export const MultipleItems: Story = {
-  render: (args): React.ReactElement => (
+  args: { children: undefined as unknown as React.ReactNode },
+  render: (args) => (
     <MenuContainer {...args}>
       <Text>Menu Item 1</Text>
       <Text>Menu Item 2</Text>

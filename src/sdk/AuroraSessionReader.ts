@@ -65,7 +65,7 @@ export default class AuroraSessionReader {
                     session.streams[i].size = streamFile.size;
                 }
             }
-        } catch (sessionWithError) {
+        } catch (sessionWithError: any) {
             //infer the date from the name of the session if we have to
             if (!sessionWithError.date || typeof sessionWithError != "number") {
                 sessionWithError.date = +moment.utc(

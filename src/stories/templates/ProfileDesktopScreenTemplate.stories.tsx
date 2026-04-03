@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
@@ -69,8 +69,7 @@ export const WithList: Story = {
         locale: 'en-US',
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -89,7 +88,6 @@ export const NoList: Story = {
         locale: 'en-US',
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

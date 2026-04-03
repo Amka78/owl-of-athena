@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../../constants';
 import { ValidatableTextBox } from '../ValidatableTextBox';

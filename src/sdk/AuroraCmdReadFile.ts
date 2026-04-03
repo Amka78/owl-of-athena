@@ -12,7 +12,7 @@ const COMMAND_COMPRESSION_LOOKAHEAD_SIZE = 4;
 const AuroraCmdReadFile = async function (
     this: Aurora,
     srcPath: string,
-    writeStream: boolean,
+    writeStream: NodeJS.WritableStream | boolean,
     compress: boolean,
     connectorType: ConnectorTypes = ConnectorTypes.ANY
 ): Promise<ReadCommandResult> {
@@ -40,7 +40,7 @@ const AuroraCmdReadFile = async function (
             stream = cmd.outputStream;
 
             if (writeStream) {
-                stream = stream!.pipe(writeStream);
+                stream = stream!.pipe(writeStream as NodeJS.WritableStream) as unknown as Stream.Readable;
             }
 
             stream!.on("data", (chunk) => {

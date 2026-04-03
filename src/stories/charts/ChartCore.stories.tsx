@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, within } from "@storybook/test";
+import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
 
@@ -28,8 +28,7 @@ export const Primary: Story = {
         height: 200,
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -40,7 +39,6 @@ export const WithMargin: Story = {
         svgStyle: { marginLeft: 16, marginRight: 16, marginTop: 8, marginBottom: 8 },
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

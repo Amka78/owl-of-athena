@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
@@ -22,7 +22,7 @@ const desktopDimens = {
 };
 
 const defaultArgs = {
-    inlineTimePicker: { hours: 7, minutes: 30, onPress: fn() },
+    inlineTimePicker: { initialTime: { hours: 7, minutes: 30, seconds: 0 }, onChangeTime: fn() },
     smartAlarmAudioMenu: { onPress: fn(), value: 'birds' },
     profileMenu: { onPress: fn(), value: 'default', hasProfiles: false },
     smartAlarmEnabled: { status: 'checked' as const, onPress: fn() },
@@ -48,24 +48,21 @@ type Story = StoryObj<typeof meta>;
 export const EnUSLocale: Story = {
     args: { ...defaultArgs, dimens: mobileDimens, locale: 'en-US' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
 export const JaJPLocale: Story = {
     args: { ...defaultArgs, dimens: mobileDimens, locale: 'ja-JP' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
 export const Desktop: Story = {
     args: { ...defaultArgs, dimens: desktopDimens, locale: 'en-US' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
@@ -77,7 +74,6 @@ export const WithProfiles: Story = {
         locale: 'en-US',
     },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

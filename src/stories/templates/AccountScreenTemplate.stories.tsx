@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
@@ -24,7 +24,7 @@ const desktopDimens = {
 const defaultArgs = {
     firstName: { value: 'Jane', onChangeText: fn() },
     lastName: { value: 'Doe', onChangeText: fn() },
-    birthDay: { value: new Date(1990, 0, 1), onConfirm: fn(), onCancel: fn() },
+    birthDay: { selected: new Date(1990, 0, 1), onChange: fn() },
     gender: { value: 'female', onValueChange: fn() },
     maleRadioButton: { value: 'male' },
     femaleRadioButton: { value: 'female' },
@@ -47,23 +47,20 @@ type Story = StoryObj<typeof meta>;
 export const EnUSLocale: Story = {
     args: { ...defaultArgs, dimens: mobileDimens, locale: 'en-US' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
 export const JaJPLocale: Story = {
     args: { ...defaultArgs, dimens: mobileDimens, locale: 'ja-JP' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
 export const Desktop: Story = {
     args: { ...defaultArgs, dimens: desktopDimens, locale: 'en-US' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

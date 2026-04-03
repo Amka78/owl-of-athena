@@ -13,8 +13,8 @@ describe("FlexSpacer UnitTest", () => {
     });
 
     it("Renders a View with flex:1 style", () => {
-        const { getByTestId, toJSON } = render(
-            <FlexSpacer testID="spacer" />
+        const { toJSON } = render(
+            <FlexSpacer />
         );
         const json = toJSON() as any;
         expect(json.props.style).toMatchObject({ flex: 1 });

@@ -20,16 +20,16 @@ const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
             // @ts-ignore
             newProfiles[i].content,
             true,
-            connectorType
+            connectorType as unknown as number
         );
 
         const profile: AuroraProfile = pick(newProfiles[i], [
             "id",
             "active",
             "content"
-        ]);
+        ]) as AuroraProfile;
 
-        profile.name = profWriteCmd.response.file.slice(9);
+        profile.name = profWriteCmd.response!.file.slice(9);
         profile.key = i + profile.id! + profile.name;
 
         //add leading ':' to mark profile as inactive
@@ -44,7 +44,7 @@ const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
         "profiles/_profiles.list",
         profileList.join("\r\n"),
         false,
-        connectorType
+        connectorType as unknown as number
     );
 
     return profiles;

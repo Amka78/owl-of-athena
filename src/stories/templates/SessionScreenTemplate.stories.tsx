@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn, within } from '@storybook/test';
+import { expect, fn } from '@storybook/test';
 import React from 'react';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../constants';
 import { SessionScreenTemplate } from '../../components/templates/SessionScreenTemplate';
+import { AuroraSession } from '../../sdk/models';
 
 const meta = {
     title: 'Templates/SessionScreenTemplate',
@@ -31,7 +32,7 @@ const defaultArgs = {
         totalSleepHour: 8,
     },
     sessionChartPie: {
-        session: null,
+        session: null as unknown as AuroraSession,
     },
     sleepDurationLabel: { hours: 8, minutes: 30 },
     remDurationLabel: { hours: 1, minutes: 45 },
@@ -41,15 +42,13 @@ const defaultArgs = {
 export const EnUSLocale: Story = {
     args: { ...defaultArgs, locale: 'en-US' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };
 
 export const JaJPLocale: Story = {
     args: { ...defaultArgs, locale: 'ja-JP' },
     play: async ({ canvasElement }) => {
-        const canvas = within(canvasElement);
-        expect(canvas.baseElement).toBeTruthy();
+        expect(canvasElement).toBeTruthy();
     },
 };

@@ -34,7 +34,6 @@ jest.mock("../../../hooks", () => ({
         fontScale: 1,
         scale: 2,
     }),
-    useConvertibleHeader: jest.fn(),
     useSleeping: () => ({
         wakeLockTextKey: "sleeping_wakelock_enabled",
         onRelockPress: jest.fn(),

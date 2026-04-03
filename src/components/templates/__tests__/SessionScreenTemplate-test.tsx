@@ -3,6 +3,7 @@ import { render } from '@testing-library/react-native';
 import { Provider } from 'react-native-paper';
 import { Theme } from '../../../constants';
 import { SessionScreenTemplate } from '../SessionScreenTemplate';
+import { AuroraSession } from '../../../sdk/models';
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
@@ -26,7 +27,7 @@ const defaultProps = {
         totalSleepHour: 8,
     },
     sessionChartPie: {
-        session: null,
+        session: null as unknown as AuroraSession,
     },
     sleepDurationLabel: { hours: 8, minutes: 30 },
     remDurationLabel: { hours: 1, minutes: 45 },

@@ -1,0 +1,245 @@
+src/components/atoms/InlineTimePicker.tsx(370,13): error TS2322: Type 'Timeout' is not assignable to type 'number'.
+src/components/atoms/__tests__/FlexSpacer-test.tsx(16,17): error TS6133: 'getByTestId' is declared but its value is never read.
+src/components/atoms/__tests__/FlexSpacer-test.tsx(17,25): error TS2322: Type '{ testID: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'testID' does not exist on type 'IntrinsicAttributes'.
+src/components/charts/__tests__/ChartTimeline-test.tsx(34,18): error TS2739: Type '{ width: number; height: number; events: { id: number; eventAt: number; flags: number; bins: never[]; time: number; label: string; auroraEventId: number; }[]; scaleXDomain: number[]; eventIconSize: number; ... 8 more ...; axisXEnabled: true; }' is missing the following properties from type 'Readonly<ChartTimeLineProps>': eventLabelStyle, eventTickStyle, eventIconStyle
+src/components/charts/__tests__/ChartTimeline-test.tsx(63,18): error TS2739: Type '{ width: number; height: number; events: never[]; scaleXDomain: number[]; eventIconSize: number; eventIconColor: string; eventLabelColor: string; eventLabelSize: number; eventLabelPosition: number; ... 4 more ...; axisXEnabled: true; }' is missing the following properties from type 'Readonly<ChartTimeLineProps>': eventLabelStyle, eventTickStyle, eventIconStyle
+src/components/molecules/__tests__/OptionCheckBoxes-test.tsx(30,48): error TS2322: Type '{ title: string; description: string; left: (props: any) => Element; disabled: boolean; value: number; field: { type: "checkboxes"; choices: string; labelNone: string; }; onValueChange: Mock<...>; }' is not assignable to type 'OptionProps'.
+  Types of property 'field' are incompatible.
+    Type '{ type: "checkboxes"; choices: string; labelNone: string; }' is not assignable to type 'ToggleField | SliderField'.
+      Type '{ type: "checkboxes"; choices: string; labelNone: string; }' is missing the following properties from type 'SliderField': format, min, max, step
+src/components/molecules/__tests__/OptionCheckBoxes-test.tsx(35,51): error TS2322: Type '{ title: string; description: string; left: (props: any) => Element; disabled: boolean; value: number; field: { type: "checkboxes"; choices: string; labelNone: string; }; onValueChange: Mock<...>; }' is not assignable to type 'OptionProps'.
+  Types of property 'field' are incompatible.
+    Type '{ type: "checkboxes"; choices: string; labelNone: string; }' is not assignable to type 'ToggleField | SliderField'.
+src/components/molecules/__tests__/OptionTime-test.tsx(30,48): error TS2322: Type '{ title: string; description: string; left: (props: any) => Element; disabled: boolean; value: string; field: { type: "time"; clearable: boolean; labelCleared: string; minutesStep: number; defaultTime: number; }; onValueChange: Mock<...>; }' is not assignable to type 'OptionProps'.
+  Types of property 'field' are incompatible.
+    Type '{ type: "time"; clearable: boolean; labelCleared: string; minutesStep: number; defaultTime: number; }' is not assignable to type 'ToggleField | SliderField'.
+      Type '{ type: "time"; clearable: boolean; labelCleared: string; minutesStep: number; defaultTime: number; }' is missing the following properties from type 'SliderField': format, min, max, step
+src/components/molecules/__tests__/OptionTime-test.tsx(35,51): error TS2322: Type '{ title: string; description: string; left: (props: any) => Element; disabled: boolean; value: string; field: { type: "time"; clearable: boolean; labelCleared: string; minutesStep: number; defaultTime: number; }; onValueChange: Mock<...>; }' is not assignable to type 'OptionProps'.
+  Types of property 'field' are incompatible.
+    Type '{ type: "time"; clearable: boolean; labelCleared: string; minutesStep: number; defaultTime: number; }' is not assignable to type 'ToggleField | SliderField'.
+src/components/molecules/__tests__/ValidatableTextBox-test.tsx(2,18): error TS6133: 'fireEvent' is declared but its value is never read.
+src/components/organisms/profiles/__tests__/ProfileMenu-test.tsx(2,18): error TS6133: 'fireEvent' is declared but its value is never read.
+src/components/organisms/profiles/__tests__/ProfileMenu-test.tsx(41,15): error TS6198: All destructured elements are unused.
+src/components/pages/__tests__/SignupScreen-test.tsx(36,5): error TS1117: An object literal cannot have multiple properties with the same name.
+src/components/pages/__tests__/SleepingScreen-test.tsx(37,5): error TS1117: An object literal cannot have multiple properties with the same name.
+src/components/pages/__tests__/WakingScreen-test.tsx(35,5): error TS1117: An object literal cannot have multiple properties with the same name.
+src/components/templates/__tests__/AccountScreenTemplate-test.tsx(34,14): error TS2326: Types of property 'birthDay' are incompatible.
+  Type '{ value: Date; onConfirm: Mock<any, any, any>; onCancel: Mock<any, any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/components/templates/__tests__/AccountScreenTemplate-test.tsx(41,14): error TS2326: Types of property 'birthDay' are incompatible.
+  Type '{ value: Date; onConfirm: Mock<any, any, any>; onCancel: Mock<any, any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/components/templates/__tests__/AccountScreenTemplate-test.tsx(49,14): error TS2326: Types of property 'birthDay' are incompatible.
+  Type '{ value: Date; onConfirm: Mock<any, any, any>; onCancel: Mock<any, any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/components/templates/__tests__/ForgotPasswordScreenTemplate-test.tsx(30,14): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'ForgotPasswordScreenTemplateProps'.
+  Types of property 'emailAddress' are incompatible.
+    Property 'set' is missing in type '{ value: string; onChangeText: jest.Mock<any, any, any>; }' but required in type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/components/templates/__tests__/ForgotPasswordScreenTemplate-test.tsx(37,14): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'ForgotPasswordScreenTemplateProps'.
+  Types of property 'emailAddress' are incompatible.
+    Type '{ value: string; onChangeText: jest.Mock<any, any, any>; }' is not assignable to type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/components/templates/__tests__/ForgotPasswordScreenTemplate-test.tsx(45,14): error TS2322: Type '{ forgotPasswordButton: { onPress: Mock<any, any, any>; }; dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; cancelBu...' is not assignable to type 'ForgotPasswordScreenTemplateProps'.
+  Types of property 'emailAddress' are incompatible.
+    Type '{ value: string; onChangeText: jest.Mock<any, any, any>; }' is not assignable to type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/components/templates/__tests__/MainScreenTemplate-test.tsx(56,51): error TS2739: Type '{ isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }' is missing the following properties from type 'Dimensions': fontScale, scale, height, width
+src/components/templates/__tests__/MainScreenTemplate-test.tsx(73,17): error TS2322: Type '{ isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }' is not assignable to type 'Dimensions'.
+src/components/templates/__tests__/MainScreenTemplate-test.tsx(85,17): error TS2322: Type '{ isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }' is not assignable to type 'Dimensions'.
+src/components/templates/__tests__/SessionScreenTemplate-test.tsx(39,14): error TS2322: Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'SessionScreenTemplateProps'.
+  The types of 'sessionChartPie.session' are incompatible between these types.
+    Type 'null' is not assignable to type 'AuroraSession'.
+src/components/templates/__tests__/SessionScreenTemplate-test.tsx(46,14): error TS2322: Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'SessionScreenTemplateProps'.
+  Types of property 'sessionChartPie' are incompatible.
+    Type '{ session: null; }' is not assignable to type 'Pick<SessionChartPieProps, "session">'.
+src/managers/AuroraManager.ts(430,31): error TS7006: Parameter 'eventsInBin' implicitly has an 'any' type.
+src/managers/AuroraManager.ts(430,44): error TS7006: Parameter 'binIndex' implicitly has an 'any' type.
+src/managers/AuroraManager.ts(433,21): error TS2769: No overload matches this call.
+  Overload 1 of 2, '(collection: List<unknown> | null | undefined, ...iteratees: Many<ListIteratee<unknown>>[]): unknown[]', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'List<unknown> | null | undefined'.
+  Overload 2 of 2, '(collection: object | null | undefined, ...iteratees: Many<ObjectIteratee<object>>[]): never[]', gave the following error.
+    Argument of type 'unknown' is not assignable to parameter of type 'object | null | undefined'.
+src/managers/AuroraManager.ts(434,24): error TS2339: Property 'event' does not exist on type 'unknown'.
+src/managers/AuroraManager.ts(439,28): error TS2571: Object is of type 'unknown'.
+src/managers/AuroraManager.ts(441,48): error TS2345: Argument of type 'unknown[]' is not assignable to parameter of type '{ event: AuroraEventJson; eventIndex: number; }[]'.
+  Type 'unknown' is not assignable to type '{ event: AuroraEventJson; eventIndex: number; }'.
+src/managers/AuroraManager.ts(444,25): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'List<unknown> | null | undefined'.
+src/managers/AuroraManager.ts(445,28): error TS2339: Property 'event' does not exist on type 'unknown'.
+src/managers/AuroraManager.ts(454,25): error TS2571: Object is of type 'unknown'.
+src/managers/AuroraManager.ts(596,49): error TS2339: Property 'eventId' does not exist on type 'AuroraEvent'.
+src/managers/AuroraManager.ts(597,45): error TS7053: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ 0: string; 1: string; 2: string; 3: string; 4: string; 6: string; 5: string; 7: string; 8: string; 9: string; 10: string; 11: string; 12: string; 13: string; 14: string; 15: string; 16: string; 17: string; 18: string; ... 12 more ...; 31: string; }'.
+src/managers/AuroraManager.ts(597,67): error TS2339: Property 'eventId' does not exist on type 'AuroraEvent'.
+src/managers/AuroraManager.ts(599,23): error TS2339: Property 'eventId' does not exist on type 'AuroraEvent'.
+src/sdk/AuroraBluetooth.ts(407,17): error TS2794: Expected 1 arguments, but got 0. Did you forget to include 'void' in your type argument to 'Promise'?
+src/sdk/AuroraBluetooth.ts(487,17): error TS2794: Expected 1 arguments, but got 0. Did you forget to include 'void' in your type argument to 'Promise'?
+src/sdk/AuroraCmdDownloadFile.ts(13,14): error TS2554: Expected 3-4 arguments, but got 2.
+src/sdk/AuroraCmdDownloadStream.ts(38,38): error TS2345: Argument of type 'WriteStream | AuroraTransformBinary' is not assignable to parameter of type 'boolean'.
+  Type 'WriteStream' is not assignable to type 'boolean'.
+src/sdk/AuroraCmdGetProfiles.ts(12,9): error TS2345: Argument of type 'ThroughStream' is not assignable to parameter of type 'boolean'.
+src/sdk/AuroraCmdGetProfiles.ts(20,19): error TS2740: Type '{}' is missing the following properties from type 'AuroraProfile': content, name, id, type, and 5 more.
+src/sdk/AuroraCmdGetProfiles.ts(38,13): error TS2339: Property 'response' does not exist on type 'unknown'.
+src/sdk/AuroraCmdReadFile.ts(43,17): error TS2740: Type 'WritableStream' is missing the following properties from type 'Readable': readableAborted, readable, readableDidRead, readableEncoding, and 37 more.
+src/sdk/AuroraCmdReadFile.ts(43,39): error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'WritableStream'.
+src/sdk/AuroraCmdSetProfiles.ts(23,13): error TS2345: Argument of type 'import("/home/amka78/private/owl-of-athena/src/sdk/AuroraConstants").ConnectorTypes' is not assignable to parameter of type 'number'.
+src/sdk/AuroraCmdSetProfiles.ts(26,15): error TS2740: Type 'Pick<AuroraProfile, "id" | "content" | "active">' is missing the following properties from type 'AuroraProfile': name, type, title, created_at, and 3 more.
+src/sdk/AuroraCmdSetProfiles.ts(32,24): error TS18048: 'profWriteCmd.response' is possibly 'undefined'.
+src/sdk/AuroraCmdSetProfiles.ts(47,9): error TS2345: Argument of type 'import("/home/amka78/private/owl-of-athena/src/sdk/AuroraConstants").ConnectorTypes' is not assignable to parameter of type 'number'.
+src/sdk/AuroraCmdUploadFile.ts(14,45): error TS2345: Argument of type 'ReadableStream' is not assignable to parameter of type 'string | Readable | ReadStream'.
+  Type 'ReadableStream' is missing the following properties from type 'ReadStream': isRaw, setRawMode, isTTY, destroySoon, and 61 more.
+src/sdk/AuroraCmdWriteFile.ts(7,7): error TS6133: 'checkCrcSupportedOSVersion' is declared but its value is never read.
+src/sdk/AuroraCmdWriteFile.ts(13,5): error TS6133: 'osVersion' is declared but its value is never read.
+src/sdk/AuroraSessionReader.android.ts(7,9): error TS6133: 'sessionDirFilesForCheck' is declared but its value is never read.
+src/sdk/AuroraSessionReader.expo.ts(7,9): error TS6133: 'sessionDirFilesForCheck' is declared but its value is never read.
+src/sdk/AuroraSessionReader.ts(70,18): error TS18046: 'sessionWithError' is of type 'unknown'.
+src/sdk/AuroraSessionReader.ts(71,17): error TS18046: 'sessionWithError' is of type 'unknown'.
+src/sdk/AuroraUsb.web.ts(2,1): error TS6133: 'SerialPort' is declared but its value is never read.
+src/sdk/AuroraUsb.web.ts(3,1): error TS6133: 'AuroraEvent' is declared but its value is never read.
+src/sdk/AuroraUsb.web.ts(28,27): error TS6133: 'cmd' is declared but its value is never read.
+src/sdk/AuroraUsb.web.ts(33,32): error TS6133: 'data' is declared but its value is never read.
+src/sdk/__tests__/AuroraCmdResponseParser/AuroraCmdResponseParser-test.ts(55,21): error TS2794: Expected 1 arguments, but got 0. Did you forget to include 'void' in your type argument to 'Promise'?
+src/stories/atoms/FlexSpacer.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/atoms/MenuContainer.stories.tsx(16,14): error TS2322: Type '{ render: (args: { children: ReactNode; style?: ViewStyle | undefined; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; play: ({ canvasElement }: PlayFunctionContext<...>) => Promise<...>; }' is not assignable to type 'StoryAnnotations<ReactRenderer, { children: ReactNode; style?: ViewStyle | undefined; }, { children: ReactNode; style?: ViewStyle | undefined; }>'.
+  Property 'args' is missing in type '{ render: (args: { children: ReactNode; style?: ViewStyle | undefined; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; play: ({ canvasElement }: PlayFunctionContext<...>) => Promise<...>; }' but required in type '{ args: { children: ReactNode; style?: ViewStyle | undefined; }; }'.
+src/stories/atoms/MenuContainer.stories.tsx(27,14): error TS2322: Type '{ render: (args: { children: ReactNode; style?: ViewStyle | undefined; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; }' is not assignable to type 'StoryAnnotations<ReactRenderer, { children: ReactNode; style?: ViewStyle | undefined; }, { children: ReactNode; style?: ViewStyle | undefined; }>'.
+  Property 'args' is missing in type '{ render: (args: { children: ReactNode; style?: ViewStyle | undefined; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; }' but required in type '{ args: { children: ReactNode; style?: ViewStyle | undefined; }; }'.
+src/stories/atoms/ScrollableList.stories.tsx(21,14): error TS2322: Type '{ render: (args: { children: ReactNode[]; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; play: ({ canvasElement }: PlayFunctionContext<ReactRenderer, { ...; }>) => Promise<...>; }' is not assignable to type 'StoryAnnotations<ReactRenderer, { children: ReactNode[]; }, { children: ReactNode[]; }>'.
+  Property 'args' is missing in type '{ render: (args: { children: ReactNode[]; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; play: ({ canvasElement }: PlayFunctionContext<ReactRenderer, { ...; }>) => Promise<...>; }' but required in type '{ args: { children: ReactNode[]; }; }'.
+src/stories/atoms/ScrollableList.stories.tsx(35,14): error TS2322: Type '{ render: (args: { children: ReactNode[]; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; }' is not assignable to type 'StoryAnnotations<ReactRenderer, { children: ReactNode[]; }, { children: ReactNode[]; }>'.
+  Property 'args' is missing in type '{ render: (args: { children: ReactNode[]; }) => ReactElement<unknown, string | JSXElementConstructor<any>>; }' but required in type '{ args: { children: ReactNode[]; }; }'.
+src/stories/atoms/StandardView.stories.tsx(21,14): error TS2322: Type '{ render: (args: { children: ReactNode; rootViewStyle?: any[] | ViewStyle | undefined; standardViewStyle?: any[] | ViewStyle | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; }) => ReactElement<...>; play: ({ canvasElement }: PlayFunctionContext<...>) => Promise<...>; }' is not assignable to type 'StoryAnnotations<ReactRenderer, { children: ReactNode; rootViewStyle?: any[] | ViewStyle | undefined; standardViewStyle?: any[] | ViewStyle | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; }, { ...; }>'.
+  Property 'args' is missing in type '{ render: (args: { children: ReactNode; rootViewStyle?: any[] | ViewStyle | undefined; standardViewStyle?: any[] | ViewStyle | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; }) => ReactElement<...>; play: ({ canvasElement }: PlayFunctionContext<...>) => Promise<...>; }' but required in type '{ args: { children: ReactNode; rootViewStyle?: any[] | ViewStyle | undefined; standardViewStyle?: any[] | ViewStyle | undefined; onLayout?: ((event: LayoutChangeEvent) => void) | undefined; }; }'.
+src/stories/charts/ChartCore.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartLine.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartLine.stories.tsx(20,5): error TS2322: Type 'typeof ChartLine' is not assignable to type 'ComponentType<ChartProps> | undefined'.
+  Type 'typeof ChartLine' is not assignable to type 'ComponentClass<ChartProps, any>'.
+    The types of 'defaultProps.zoomX' are incompatible between these types.
+      Type 'boolean' is not assignable to type 'number'.
+src/stories/charts/ChartMovement.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartPie.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartPie.stories.tsx(11,5): error TS2322: Type 'typeof ChartPie' is not assignable to type 'ComponentType<ChartCoreProps & { categoryColors: string[]; categoryLabels: string[]; categoryLabelSize: number; categoryLabelColor: string; categoryLabelPadding: number; legendPosition: string; ... 5 more ...; percentLabelColorLight: string; }> | undefined'.
+  Type 'typeof ChartPie' is not assignable to type 'ComponentClass<ChartCoreProps & { categoryColors: string[]; categoryLabels: string[]; categoryLabelSize: number; categoryLabelColor: string; categoryLabelPadding: number; legendPosition: string; ... 5 more ...; percentLabelColorLight: string; }, any>'.
+    The types of 'defaultProps.categoryColors' are incompatible between these types.
+      The type 'readonly string[]' is 'readonly' and cannot be assigned to the mutable type 'string[]'.
+src/stories/charts/ChartPie.stories.tsx(26,5): error TS2322: Type '{ width: number; height: number; categoryPercents: number[]; categoryLabels: string[]; categoryColors: string[]; legendPosition: string; }' is not assignable to type 'Partial<{ children?: ReactNode; defs?: ReactNode; svgStyle?: ViewStyle | undefined; width: number; height: number; axisMargin?: Margin | undefined; ... 17 more ...; percentLabelColorLight: string; }> & { ...; }'.
+  Type '{ width: number; height: number; categoryPercents: number[]; categoryLabels: string[]; categoryColors: string[]; legendPosition: string; }' is missing the following properties from type '{ children?: ReactNode; defs?: ReactNode; svgStyle?: ViewStyle | undefined; width: number; height: number; axisMargin?: Margin | undefined; yAxis?: Axis | undefined; ... 16 more ...; percentLabelColorLight: string; }': categoryLabelSize, categoryLabelColor, categoryLabelPadding, percentLabelSize, and 2 more.
+src/stories/charts/ChartPie.stories.tsx(40,5): error TS2322: Type '{ width: number; height: number; categoryPercents: number[]; categoryLabels: string[]; categoryColors: string[]; legendPosition: string; }' is not assignable to type 'Partial<{ children?: ReactNode; defs?: ReactNode; svgStyle?: ViewStyle | undefined; width: number; height: number; axisMargin?: Margin | undefined; ... 17 more ...; percentLabelColorLight: string; }> & { ...; }'.
+  Type '{ width: number; height: number; categoryPercents: number[]; categoryLabels: string[]; categoryColors: string[]; legendPosition: string; }' is missing the following properties from type '{ children?: ReactNode; defs?: ReactNode; svgStyle?: ViewStyle | undefined; width: number; height: number; axisMargin?: Margin | undefined; yAxis?: Axis | undefined; ... 16 more ...; percentLabelColorLight: string; }': categoryLabelSize, categoryLabelColor, categoryLabelPadding, percentLabelSize, and 2 more.
+src/stories/charts/ChartRadialProgress.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartSleep.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartTimeline.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/charts/ChartTimeline.stories.tsx(35,5): error TS2322: Type 'typeof ChartTimeline' is not assignable to type 'ComponentType<ChartProps & { eventIconSize: number; eventIconColor: string; eventLabelColor: string; eventLabelSize: number; eventLabelStyle: ValueMap<any, any>; eventLabelPosition: number; ... 5 more ...; eventIconStyle: ValueMap<...>; }> | undefined'.
+  Type 'typeof ChartTimeline' is not assignable to type 'ComponentClass<ChartProps & { eventIconSize: number; eventIconColor: string; eventLabelColor: string; eventLabelSize: number; eventLabelStyle: ValueMap<any, any>; eventLabelPosition: number; ... 5 more ...; eventIconStyle: ValueMap<...>; }, any>'.
+    The types of 'defaultProps.zoomX' are incompatible between these types.
+      Type 'boolean' is not assignable to type 'number'.
+src/stories/molecules/AudioDialog.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ConfirmDialog.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ConvertibleContentTitle.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ConvertibleListForm.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/DatePicker.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/InternalView.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/LabeledCheckBox.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/LabeledRadioButton.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/LabeledSelectorMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/LabeledTimeView.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/LoadingDialog.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/MenuCheckBox.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/OptionCheckBoxes.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/OptionCheckBoxes.stories.tsx(35,18): error TS2322: Type '"checkboxes"' is not assignable to type '"toggle" | "slider"'.
+src/stories/molecules/OptionLedEffect.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/OptionSlider.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/OptionSlider.stories.tsx(34,9): error TS2353: Object literal may only specify known properties, and 'value' does not exist in type 'Partial<{ title: string; description?: string | undefined; left: (props: ListItemComponentProps) => ReactNode; disabled: boolean; field: ToggleField | SliderField; onValueChange: () => void; }> & { ...; }'.
+src/stories/molecules/OptionTime.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/OptionTime.stories.tsx(35,18): error TS2322: Type '"time"' is not assignable to type '"toggle" | "slider"'.
+src/stories/molecules/OptionToggle.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ProfilesDialog.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ProfilesDialog.stories.tsx(4,20): error TS6133: 'RadioButton' is declared but its value is never read.
+src/stories/molecules/RightSideButton.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/SessionTimeView.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/molecules/ValidatableTextBox.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/ProfileListMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/ProfileMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/ProfileOption.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/ProfileOptionList.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/ProfileSecondMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/SessionListMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/UnsavedProfileMenu.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/organisms/profiles/ProfileListMenu.stories.tsx(20,5): error TS2322: Type '{ showOfficialCheckBoxStatus: "checked"; onShowOfficialCheckBoxPress: Mock<[], void>; showCommunityCheckBoxStatus: "checked"; onShowCommunityCheckBoxPress: Mock<[], void>; }' is not assignable to type 'Partial<{ containerStyle?: ViewStyle | undefined; showOfficialCheckBoxStatus: CheckBoxStatus; onShowOfficialCheckBoxPress: () => void; showCommunityCheckBoxStatus: CheckBoxStatus; onShowCommunityCheckBoxPress: () => void; showPrivateCheckBoxStatus: CheckBoxStatus; onShowPrivateCheckBoxPress: () => void; }> & { ...; }'.
+  Property 'showPrivateCheckBoxStatus' is missing in type '{ showOfficialCheckBoxStatus: "checked"; onShowOfficialCheckBoxPress: Mock<[], void>; showCommunityCheckBoxStatus: "checked"; onShowCommunityCheckBoxPress: Mock<[], void>; }' but required in type '{ containerStyle?: ViewStyle | undefined; showOfficialCheckBoxStatus: CheckBoxStatus; showCommunityCheckBoxStatus: CheckBoxStatus; showPrivateCheckBoxStatus: CheckBoxStatus; onShowOfficialCheckBoxPress?: (() => void) | undefined; onShowCommunityCheckBoxPress?: (() => void) | undefined; onShowPrivateCheckBoxPress?: (...'.
+src/stories/organisms/profiles/ProfileMenu.stories.tsx(21,9): error TS2739: Type '{ content: string; id: string; key: string; name: string; title: string; starred: false; type: "community"; }' is missing the following properties from type 'AuroraProfile': created_at, updated_at, min_firmware_version, options
+src/stories/pages/AccountScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/AwakeScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/ForgotPasswordScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/HomeScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/LoginScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/MainScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/ProfileDesktopScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/ProfileListScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/ProfilePreviewScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/ProfileScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SessionDesktopScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SessionListScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SessionNoteScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SessionScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SettingsScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SignupScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/SleepingScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/WakingScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/pages/WelcomeScreen.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/AccountScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/AccountScreenTemplate.stories.tsx(48,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 7 more ...; logoutButton: { ...; }; }' is not assignable to type 'Partial<{ firstName: TemplateTextBoxProps; lastName: TemplateTextBoxProps; birthDay: DatePickerProps; gender: { value: string; onValueChange: (value: string) => void; }; ... 5 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'birthDay' are incompatible.
+    Type '{ value: Date; onConfirm: Mock<any, any>; onCancel: Mock<any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/stories/templates/AccountScreenTemplate.stories.tsx(55,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 7 more ...; logoutButton: { ...; }; }' is not assignable to type 'Partial<{ firstName: TemplateTextBoxProps; lastName: TemplateTextBoxProps; birthDay: DatePickerProps; gender: { value: string; onValueChange: (value: string) => void; }; ... 5 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'birthDay' are incompatible.
+    Type '{ value: Date; onConfirm: Mock<any, any>; onCancel: Mock<any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/stories/templates/AccountScreenTemplate.stories.tsx(62,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 7 more ...; logoutButton: { ...; }; }' is not assignable to type 'Partial<{ firstName: TemplateTextBoxProps; lastName: TemplateTextBoxProps; birthDay: DatePickerProps; gender: { value: string; onValueChange: (value: string) => void; }; ... 5 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'birthDay' are incompatible.
+    Type '{ value: Date; onConfirm: Mock<any, any>; onCancel: Mock<any, any>; }' has no properties in common with type 'DatePickerProps'.
+src/stories/templates/AwakeScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ForgotPasswordScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ForgotPasswordScreenTemplate.stories.tsx(44,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }> & { ...; }'.
+  Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }>'.
+    Types of property 'emailAddress' are incompatible.
+      Property 'set' is missing in type '{ value: string; onChangeText: Mock<any, any>; }' but required in type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/stories/templates/ForgotPasswordScreenTemplate.stories.tsx(51,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }> & { ...; }'.
+  Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }>'.
+    Types of property 'emailAddress' are incompatible.
+      Type '{ value: string; onChangeText: Mock<any, any>; }' is not assignable to type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/stories/templates/ForgotPasswordScreenTemplate.stories.tsx(58,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }> & { ...; }'.
+  Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; emailAddress: { ...; }; errorText: { ...; }; forgotPasswordButton: { ...; }; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ emailAddress: { onChangeText: (e: string) => void; value: string; set: any; }; errorText: ErrorTextProps; forgotPasswordButton: TemplateButtonProps; cancelButton: TemplateButtonProps; dimens: Dimensions; locale?: string | undefined; }>'.
+    Types of property 'emailAddress' are incompatible.
+      Type '{ value: string; onChangeText: Mock<any, any>; }' is not assignable to type '{ onChangeText: (e: string) => void; value: string; set: any; }'.
+src/stories/templates/HomeScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/LoginScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/MainScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ProfileDesktopScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ProfileListScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ProfileListScreenTemplate.stories.tsx(7,1): error TS6133: 'FilterByDateValues' is declared but its value is never read.
+src/stories/templates/ProfilePreviewScreenTemplate.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/ProfileScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionBlankScreenTemplate.stories.tsx(2,18): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionDesktopScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionListScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionNoteScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SessionScreenTemplate.stories.tsx(42,5): error TS2322: Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'Partial<{ asleepAtTimeLabel: TemplateTimeViewProps; chartRadialProgress: Pick<ChartRadialProgressProps, "value" | "valueLabel">; ... 9 more ...; locale?: string | undefined; }> & { ...; }'.
+  Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'Partial<{ asleepAtTimeLabel: TemplateTimeViewProps; chartRadialProgress: Pick<ChartRadialProgressProps, "value" | "valueLabel">; ... 9 more ...; locale?: string | undefined; }>'.
+    The types of 'sessionChartPie.session' are incompatible between these types.
+      Type 'null' is not assignable to type 'AuroraSession'.
+src/stories/templates/SessionScreenTemplate.stories.tsx(49,5): error TS2322: Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'Partial<{ asleepAtTimeLabel: TemplateTimeViewProps; chartRadialProgress: Pick<ChartRadialProgressProps, "value" | "valueLabel">; ... 9 more ...; locale?: string | undefined; }> & { ...; }'.
+  Type '{ locale: string; asleepAtTimeLabel: { hours: number; minutes: number; }; chartRadialProgress: { value: number; valueLabel: string; }; awakeTimeLabel: { hours: number; minutes: number; }; leftSelectButton: { ...; }; ... 6 more ...; deepDurationLabel: { ...; }; }' is not assignable to type 'Partial<{ asleepAtTimeLabel: TemplateTimeViewProps; chartRadialProgress: Pick<ChartRadialProgressProps, "value" | "valueLabel">; ... 9 more ...; locale?: string | undefined; }>'.
+    Types of property 'sessionChartPie' are incompatible.
+      Type '{ session: null; }' is not assignable to type 'Pick<SessionChartPieProps, "session">'.
+src/stories/templates/SettingsScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SettingsScreenTemplate.stories.tsx(49,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 8 more ...; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ inlineTimePicker: InlineTimePickerProps; smartAlarmAudioMenu: TemplateSelectorMenuProps; profileMenu: TemplateSelectorMenuProps & { ...; }; ... 7 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'inlineTimePicker' are incompatible.
+    Type '{ hours: number; minutes: number; onPress: Mock<any, any>; }' has no properties in common with type 'InlineTimePickerProps'.
+src/stories/templates/SettingsScreenTemplate.stories.tsx(56,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 8 more ...; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ inlineTimePicker: InlineTimePickerProps; smartAlarmAudioMenu: TemplateSelectorMenuProps; profileMenu: TemplateSelectorMenuProps & { ...; }; ... 7 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'inlineTimePicker' are incompatible.
+    Type '{ hours: number; minutes: number; onPress: Mock<any, any>; }' has no properties in common with type 'InlineTimePickerProps'.
+src/stories/templates/SettingsScreenTemplate.stories.tsx(63,5): error TS2322: Type '{ dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; locale: string; ... 8 more ...; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ inlineTimePicker: InlineTimePickerProps; smartAlarmAudioMenu: TemplateSelectorMenuProps; profileMenu: TemplateSelectorMenuProps & { ...; }; ... 7 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'inlineTimePicker' are incompatible.
+    Type '{ hours: number; minutes: number; onPress: Mock<any, any>; }' has no properties in common with type 'InlineTimePickerProps'.
+src/stories/templates/SettingsScreenTemplate.stories.tsx(70,5): error TS2322: Type '{ profileMenu: { onPress: Mock<[], void>; value: string; hasProfiles: true; }; dimens: { fontScale: number; scale: number; height: number; width: number; isDesktop: boolean; isLargeWidth: boolean; isSmallHeight: boolean; isVertical: boolean; isHorizontal: boolean; }; ... 8 more ...; cancelButton: { ...; }; }' is not assignable to type 'Partial<{ inlineTimePicker: InlineTimePickerProps; smartAlarmAudioMenu: TemplateSelectorMenuProps; profileMenu: TemplateSelectorMenuProps & { ...; }; ... 7 more ...; locale?: string | undefined; }> & { ...; }'.
+  Types of property 'inlineTimePicker' are incompatible.
+    Type '{ hours: number; minutes: number; onPress: Mock<any, any>; }' has no properties in common with type 'InlineTimePickerProps'.
+src/stories/templates/SignupScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/SleepingScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/WakingScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.
+src/stories/templates/WelcomeScreenTemplate.stories.tsx(2,22): error TS6133: 'within' is declared but its value is never read.

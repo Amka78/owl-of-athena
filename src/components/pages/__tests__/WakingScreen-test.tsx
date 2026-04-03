@@ -32,7 +32,6 @@ jest.mock("../../../hooks", () => ({
         fontScale: 1,
         scale: 2,
     }),
-    useConvertibleHeader: jest.fn(),
     useWaking: () => ({
         wakeupButtonPress: jest.fn(),
         settings: {

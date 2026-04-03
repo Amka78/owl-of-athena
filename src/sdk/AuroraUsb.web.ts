@@ -1,6 +1,4 @@
 import EventEmitter from "events";
-import SerialPort from "serialport";
-import { AuroraEvent } from "./AuroraTypes";
 
 export class AuroraUsb extends EventEmitter {
     private static NOT_SUPPORTED_ERROR =
@@ -25,12 +23,12 @@ export class AuroraUsb extends EventEmitter {
         throw Error(AuroraUsb.NOT_SUPPORTED_ERROR);
     }
 
-    public async writeCmd(cmd: string): Promise<void | never> {
+    public async writeCmd(_cmd: string): Promise<void | never> {
         throw Error(AuroraUsb.NOT_SUPPORTED_ERROR);
         Promise.reject(AuroraUsb.NOT_SUPPORTED_ERROR);
     }
 
-    public async writeCmdInput(data: string): Promise<string | never> {
+    public async writeCmdInput(_data: string): Promise<string | never> {
         throw Error(AuroraUsb.NOT_SUPPORTED_ERROR);
         return "mock";
     }
