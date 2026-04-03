@@ -99,6 +99,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .merge(eventTicks as any)
             .attr("stroke", (d) => d.tickColor || eventTickColor)
             .attr("stroke-width", (d) => d.tickWidth || eventTickWidth)
+            // @ts-ignore - d3-selection-multi type augmentation
             .styles(this.props.eventTickStyle)
             .attrs(this.getEventTickPositionProps);
 
@@ -111,8 +112,9 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .merge(eventLabels as any)
             .attr("fill", (d) => d.labelColor || eventLabelColor)
             .attr("font-size", (d) => d.labelSize || eventLabelSize)
+            // @ts-ignore - d3-selection-multi type augmentation
             .styles(this.props.eventLabelStyle)
-            .text((d) => {
+            .text((d: any) => {
                 return d.label
                     .replace(
                         "${time}",
@@ -133,6 +135,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .attr("height", (d) => d.iconSize || eventIconSize)
             .attr("fill", (d) => d.iconColor || eventIconColor)
             .attr("href", (d) => `#${d.icon}`)
+            // @ts-ignore - d3-selection-multi type augmentation
             .styles(this.props.eventIconStyle)
             .attrs(this.getEventIconPositionProps);
 

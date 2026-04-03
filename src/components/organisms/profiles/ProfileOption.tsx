@@ -14,8 +14,8 @@ import {
 export type ProfileOptionProps = {
     profileOption: AuroraProfileOption;
     failed: boolean;
-    onHelpIconPress: () => void;
-    onValueChange: () => void;
+    onHelpIconPress?: () => void;
+    onValueChange?: () => void;
 };
 //#endregion
 

@@ -100,9 +100,9 @@ export class AudioDialog extends React.Component<
         });
     }
 
-    public render(): JSX.Element | null {
+    public render(): React.ReactNode {
         let width = this.props.dialogContainer?.width;
-        if (width && width > Dimens.inner_screen_max_width) {
+        if (width && typeof width === "number" && width > Dimens.inner_screen_max_width) {
             width = Dimens.inner_screen_max_width;
         } else if (width && typeof width === "number") {
             width = width - Dimens.content_margin_horizontal * 2;

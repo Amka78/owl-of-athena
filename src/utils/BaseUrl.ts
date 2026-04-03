@@ -8,8 +8,13 @@ import Constants from "expo-constants";
  */
 export default class BaseUrl {
     public static get(relCh?: string): string {
-        if (!relCh && Constants.manifest.releaseChannel) {
-            relCh = Constants.manifest.releaseChannel;
+        if (!relCh) {
+            const channel = Constants.expoConfig?.extra?.channel
+                ?? (Constants.expoConfig as any)?.releaseChannel
+                ?? (Constants.manifest2?.metadata as Record<string, string>)?.['branchName'];
+            if (channel) {
+                relCh = channel as string;
+            }
         }
 
         if (relCh !== undefined) {

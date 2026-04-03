@@ -26,7 +26,7 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (
             mode={"text"}
             labelStyle={[
                 labelStyle,
-                { color: theme?.colors.text },
+                { color: theme?.colors.onSurface },
                 props.labelStyle,
             ]}
             contentStyle={[contentStyle, props.contentStyle]}

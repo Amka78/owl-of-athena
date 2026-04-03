@@ -1,6 +1,6 @@
 //#region Import Modules
-import { SliderField, ToggleField } from "../../../../sdk/AuroraTypes";
-import { ListItemComponentProps } from "../../../atoms/ListItem";
+import { SliderField, ToggleField } from "../../sdk/AuroraTypes";
+import { ListItemComponentProps } from "../atoms/ListItem";
 //#endregion
 
 export type OptionProps = {

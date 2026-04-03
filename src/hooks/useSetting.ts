@@ -58,7 +58,7 @@ export const useSetting = (): {
 } => {
     useCheckLogging();
 
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const settings = useSettingsSelector();
     const profiles = useProfileListSelector();
 

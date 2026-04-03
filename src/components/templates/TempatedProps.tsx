@@ -1,5 +1,5 @@
 //#region Import Modules
-import { PickerItemProps } from "react-native";
+import { PickerItemProps } from "@react-native-picker/picker";
 import { ButtonProps } from "../atoms/Button";
 import { TextBoxProps } from "../atoms/TextBox";
 import { FlatButtonProps } from "../atoms/FlatButton";

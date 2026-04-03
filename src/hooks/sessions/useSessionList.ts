@@ -50,7 +50,7 @@ export const useSessinList = (): {
     const sessionList = useFilteredSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
     const selectedSession = useSelectedSessionSelector();
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const dimens = useWindowDimensions();
     useCheckLogging();

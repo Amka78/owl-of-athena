@@ -119,7 +119,7 @@ export default class RestClient {
     private createSimulateDelay(): Promise<[]> {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve();
+                resolve([]);
             }, this.simulatedDelay);
         });
     }

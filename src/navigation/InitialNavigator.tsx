@@ -8,9 +8,9 @@ import { UnauthenticatedNavigator } from "./UnauthenticatedNavigator";
 
 //#region Component
 const Stack = createStackNavigator();
-const InitialNavigator = (): JSX.Element => {
+const InitialNavigator = (): React.ReactNode => {
     return (
-        <Stack.Navigator initialRouteName="Unauthenticated" headerMode={"none"}>
+        <Stack.Navigator initialRouteName="Unauthenticated" screenOptions={{ headerShown: false }}>
             <Stack.Screen name={"Main"} component={MainScreen}></Stack.Screen>
             <Stack.Screen
                 name={"Unauthenticated"}

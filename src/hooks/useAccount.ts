@@ -93,7 +93,7 @@ export const useAcount = (): {
                 await AuroraRestClientInstance.updateUser(userInfo as User);
             }
         } catch (e) {
-            if (e.message) {
+            if (e instanceof Error) {
                 setGeneralError(e.message);
             }
         } finally {

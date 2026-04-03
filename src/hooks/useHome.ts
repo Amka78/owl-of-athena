@@ -32,7 +32,7 @@ export const useHome = (): {
     errorText: string;
 } => {
     useCheckLogging();
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const dispatch = useDispatch();
 
     const settings = useSettingsSelector();
@@ -77,11 +77,11 @@ export const useHome = (): {
         if (Platform.OS === "web") {
             AuroraManagerInstance.off(
                 AuroraManagerEventList.onSleeping,
-                onSleepingEvent.current
+                onSleepingEvent.current!
             );
             AuroraManagerInstance.on(
                 AuroraManagerEventList.onSleeping,
-                onSleepingEvent.current
+                onSleepingEvent.current!
             );
             AuroraManagerInstance.off(
                 AuroraManagerEventList.onAwake,
@@ -153,7 +153,7 @@ export const useHome = (): {
                             settings.savedAt != undefined &&
                             auroraProfiles[0].id !==
                                 selectedProfile.current.id &&
-                            auroraProfiles[0].updatedAt! < settings.savedAt
+                            auroraProfiles[0].updated_at! < settings.savedAt.getTime()
                         ) {
                             //use the most recently saved profile instead
                             //of the last one used in the app
@@ -240,7 +240,7 @@ function onSleeping(
             );
             postSleepingCallback();
         } catch (err) {
-            console.error(`${err.name}, ${err.message}`);
+            console.error(`${(err as Error).name}, ${(err as Error).message}`);
         }
     };
 }

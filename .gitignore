@@ -75,9 +75,9 @@ buck-out/
 # Expo
 .expo/*
 web-build/
+dist/
 
-# Yarn
+# Bun
 .yarnrc
-.yarn/releases
 
 # @end expo-cli

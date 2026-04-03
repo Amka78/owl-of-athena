@@ -28,7 +28,7 @@ export const TimeView: FunctionComponent<TimeViewProps> = (
             <Text
                 style={[
                     style.alarmTime,
-                    { color: theme.colors?.accent },
+                    { color: theme.colors?.secondary },
                     props.timeStyle,
                 ]}
             >
@@ -38,7 +38,7 @@ export const TimeView: FunctionComponent<TimeViewProps> = (
                 <Text
                     style={[
                         style.alarmMeridian,
-                        { color: theme.colors?.accent },
+                        { color: theme.colors?.secondary },
                         props.timeMeridianStyle,
                     ]}
                 >

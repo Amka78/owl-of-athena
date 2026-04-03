@@ -25,7 +25,7 @@ export const useLogin = (): {
 } => {
     const email = useTextBox("");
     const password = useTextBox("");
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const dispatch = useDispatch();
     const [generalError, setGeneralError] = useState("");
     const onLoginPress = useCallback(async () => {
@@ -46,6 +46,7 @@ export const useLogin = (): {
             }
             postLoginAction(dispatch, navigate, result);
         } catch (e) {
+            const err = e as Error;
             console.debug(e);
 
             LoadingDialog.close();
@@ -69,8 +70,8 @@ export const useLogin = (): {
                     });
                 },
                 onDissmiss: () => {
-                    if (e.message) {
-                        setGeneralError(e.message);
+                    if (err.message) {
+                        setGeneralError(err.message);
                     } else {
                         setGeneralError(
                             Message.get(MessageKeys.login_general_error_message)

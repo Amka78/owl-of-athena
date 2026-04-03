@@ -20,8 +20,8 @@ import { headerStyle } from "./HeaderStyles";
 //#region Component
 const Stack = createStackNavigator();
 
-const HomeNavigator = (): JSX.Element => {
-    const voidLeftHeader = (): JSX.Element => <View></View>;
+const HomeNavigator = (): React.ReactNode => {
+    const voidLeftHeader = (): React.ReactNode => <View />;
     const dimens = useWindowDimensions();
 
     return (

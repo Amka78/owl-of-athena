@@ -37,7 +37,7 @@ export const useProfileList = (): {
     const filterCondition = useFilterConditionSelector();
     const list = useFilteredProfileListSelector();
     const user = useUserSelector();
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const dimens = useWindowDimensions();
     useCheckLogging();

@@ -45,7 +45,7 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
             onPress={props.onLabelPress}
             style={[
                 styles.text,
-                { color: theme.colors?.accent },
+                { color: theme.colors?.secondary },
                 props.labelStyle,
             ]}
         >
@@ -57,7 +57,7 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
         <Text
             style={[
                 styles.text,
-                { color: theme.colors?.accent },
+                { color: theme.colors?.secondary },
                 props.descriptionStyle,
             ]}
         >
@@ -81,12 +81,12 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
                     color={
                         props.checkBoxColor
                             ? props.checkBoxColor
-                            : theme.colors?.text
+                            : theme.colors?.onSurface
                     }
                     uncheckedColor={
                         props.checkBoxUncheckedColor
                             ? props.checkBoxUncheckedColor
-                            : theme.colors?.text
+                            : theme.colors?.onSurface
                     }
                     onPress={props.onPress}
                 ></Checkbox>

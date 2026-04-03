@@ -1,9 +1,10 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import { StackHeaderLeftProps } from "@react-navigation/stack";
 import React, { FunctionComponent, useLayoutEffect } from "react";
 
 import { useProfileList } from "../../hooks/profiles/useProfileList";
+import { useWindowDimensions } from "../../hooks";
 import { FilterIcon, RefreshIcon } from "../atoms";
 import { ProfileListScreenTemplate } from "../templates/ProfileListScreenTemplate";
 //#endregion
@@ -11,7 +12,8 @@ import { ProfileListScreenTemplate } from "../templates/ProfileListScreenTemplat
 //#region Component
 export const ProfileListScreen: FunctionComponent = () => {
     const profileListHook = useProfileList();
-    const { setOptions } = useNavigation();
+    const dimens = useWindowDimensions();
+    const { setOptions } = useNavigation<any>();
 
     useLayoutEffect(() => {
         setOptions({
@@ -22,7 +24,7 @@ export const ProfileListScreen: FunctionComponent = () => {
                     ></RefreshIcon>
                 );
             },
-            headerRight: (props: StackHeaderLeftButtonProps) => {
+            headerRight: (props: StackHeaderLeftProps) => {
                 return (
                     <FilterIcon
                         {...props}
@@ -61,6 +63,7 @@ export const ProfileListScreen: FunctionComponent = () => {
             }}
             list={profileListHook.list}
             userId={profileListHook.userId}
+            dimens={dimens}
             onStarPress={profileListHook.onStarPress}
             onDeletePress={profileListHook.onDeletePress}
             onMenuPress={profileListHook.onMenuPress}

@@ -78,7 +78,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         this.updateChart();
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const style = Object.assign(
             {},
             {
@@ -393,25 +393,27 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         ];
     }
 
-    onZoom(): void {
+    onZoom(event: d3.D3ZoomEvent<SVGElement, unknown>): void {
         if (this.props.zoomX) {
             this.axisGroupX!.call(
-                this.axisX!.scale(d3.event.transform.rescaleX(this.scaleX))
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (this.axisX! as any).scale(event.transform.rescaleX(this.scaleX as any))
             );
         }
 
         if (this.props.zoomY) {
             this.axisGroupY!.call(
-                this.axisY!.scale(d3.event.transform.rescaleY(this.scaleY))
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (this.axisY! as any).scale(event.transform.rescaleY(this.scaleY as any))
             );
         }
     }
 
-    onBrushEnd(): void {
-        if (!d3.event.sourceEvent) return; // Only transition after input.
-        if (!d3.event.selection) return; // Ignore empty selections.
+    onBrushEnd(event: d3.D3BrushEvent<unknown>): void {
+        if (!event.sourceEvent) return; // Only transition after input.
+        if (!event.selection) return; // Ignore empty selections.
 
-        const domain = d3.event.selection.map(this.scaleX!.invert);
+        const domain = (event.selection as [number, number]).map(this.scaleX!.invert);
         const ticks = this.scaleX!.ticks(32);
 
         let leftTickIndex = d3.bisectLeft(ticks, domain[0]);

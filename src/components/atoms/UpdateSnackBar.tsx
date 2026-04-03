@@ -22,7 +22,7 @@ export const UpdateSnackBarCore: FunctionComponent<UpdateSnackBarProps> = (
         //@ts-ignore
         <Snackbar
             visible={props.showReload}
-            onDismiss={props.reloadPageCallback}
+            onDismiss={props.reloadPageCallback ?? (() => undefined)}
             action={{
                 label: Message.get(MessageKeys.update_snack_bar_action_label),
                 onPress: props.reloadPageCallback,

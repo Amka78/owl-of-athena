@@ -9,6 +9,7 @@ import { ContentTitle } from "./ContentTitle";
 import { DeleteIcon } from "./DeleteIcon";
 import { ErrorText } from "./ErrorText";
 import { FilterIcon } from "./FilterIcon";
+import { FieldLedEffect } from "./FieldLedEffect";
 import { FieldStreamCheckBoxes } from "./FieldStreamCheckboxes";
 import { FieldSlider } from "./FieldSlider";
 import { FieldTime } from "./FieldTime";
@@ -51,6 +52,7 @@ export {
     ContentText,
     ContentTitle,
     ErrorText,
+    FieldLedEffect,
     FieldStreamCheckBoxes,
     FieldSlider,
     FieldTime,

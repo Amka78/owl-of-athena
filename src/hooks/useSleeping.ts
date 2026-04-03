@@ -1,5 +1,5 @@
 //#region Import Modules
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 
 import { setWakeLock } from "../actions";
@@ -7,12 +7,10 @@ import { MessageKeys } from "../constants";
 import { useCheckLogging } from "../hooks";
 import { useWakeLockSelector } from "../hooks/useWakeLockSelector";
 import { WakeLockService } from "../services";
-import { WakeLockSentinel } from "../types";
 import { useSettingsSelector } from "./useSettingsSelector";
 import { Settings } from "../sdk/models";
 import { AuroraManagerInstance } from "../managers";
 import { SleepStates } from "../sdk";
-import { dispatch } from "react-redux";
 //#endregion
 
 //#region Hooks

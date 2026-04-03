@@ -16,7 +16,7 @@ describe("BaseUtil Test", () => {
         "Able to obtain the Rest-API server corresponding to the release channel",
         // @ts-ignore
         async (testManifestReleaseChannel: string, testRestApiURL: string) => {
-            Constants.manifest.releaseChannel = testManifestReleaseChannel;
+            (Constants.expoConfig as any).extra = { channel: testManifestReleaseChannel };
 
             expect(BaseUrl.get()).toBe(testRestApiURL);
         }
@@ -33,7 +33,7 @@ describe("BaseUtil Test", () => {
         "if the release channel is set dev, connect to the local server.",
         // @ts-ignore
         async (getArgs: string, testRestApiURL: string) => {
-            Constants.manifest.releaseChannel = "dev";
+            (Constants.expoConfig as any).extra = { channel: "dev" };
             expect(BaseUrl.get(getArgs)).toBe(testRestApiURL);
         }
     );

@@ -12,7 +12,7 @@ import { StackCommonScreenOptions } from "./StackSettings";
 //#region Component
 const Stack = createStackNavigator();
 
-const ProfileNavigator = (): JSX.Element => {
+const ProfileNavigator = (): React.ReactNode => {
     const dimens = useWindowDimensions();
 
     return (

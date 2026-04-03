@@ -30,7 +30,7 @@ export const useSignup = (
     passwordConfirmError?: string;
 } => {
     const [loading, setLoading] = useState(loadingInitialValue);
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const [emailError, setEmailError] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
     const [passwordConfirmError, setPasswordConfirmError] = useState<string>(
@@ -76,8 +76,9 @@ export const useSignup = (
                 navigate("Login");
             }
         } catch (e) {
-            if (e.message) {
-                setGeneralError(e.message);
+            const err = e as Error;
+            if (err.message) {
+                setGeneralError(err.message);
             } else {
                 setGeneralError(
                     Message.get(MessageKeys.email_already_registered)

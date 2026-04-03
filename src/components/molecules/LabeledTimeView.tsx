@@ -27,7 +27,7 @@ export const LabeledTimeView: FunctionComponent<LabeledTimeViewProps> = (
             <Text
                 style={[
                     style.label,
-                    { color: theme.colors?.accent },
+                    { color: theme.colors?.secondary },
                     props.labelStyle,
                 ]}
             >

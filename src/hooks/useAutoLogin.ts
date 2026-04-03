@@ -15,7 +15,7 @@ import { GuestUser } from "../types";
 
 //#region Hooks
 export const useAutoLogin = (): void => {
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
 
     const dispatch = useDispatch();
     const user = useUserSelector();

@@ -3,8 +3,8 @@ import React, { FunctionComponent, useState } from "react";
 import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
-import { useLocale, useWindowDimensions } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import { useLocale } from "../../hooks";
+import { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
 import {

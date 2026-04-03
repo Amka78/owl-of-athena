@@ -12,7 +12,7 @@ import { GuestUser } from "../types";
 
 //#region Hooks
 export const useLogout = (): { onPress: () => Promise<void> } => {
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const user = useUserSelector();
     const dispatch = useDispatch();
     const onPress = useCallback(async () => {

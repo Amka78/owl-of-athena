@@ -9,7 +9,7 @@ import { createMock, toJson } from "../../../utils/TestHelper";
 import { ContentTitle, ContentTitleProps } from "../ContentTitle";
 import { useTheme } from "react-native-paper";
 import { Colors } from "../../../constants";
-import { Theme } from "react-native-paper/lib/typescript/types";
+import { MD3Theme as Theme } from "react-native-paper";
 //#endregion
 
 //#region Test

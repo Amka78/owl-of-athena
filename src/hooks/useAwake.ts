@@ -23,7 +23,7 @@ export const useAwake = (): {
 } => {
     useCheckLogging();
     const dispatch = useDispatch();
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const userInfo = useUserSelector();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();

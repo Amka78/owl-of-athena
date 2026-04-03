@@ -82,7 +82,7 @@ export const useSession = (): {
         radialProgress,
         chartSelectButtonPress,
         currentChart,
-        scaleXDomain,
+        scaleXDomain: scaleXDomain ?? [],
     };
 };
 //#endregion

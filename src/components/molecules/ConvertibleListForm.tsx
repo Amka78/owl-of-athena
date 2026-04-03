@@ -7,7 +7,7 @@ import { Colors } from "../../constants";
 
 //#region Types
 export type ConvertibleListFormProps = {
-    listMenu?: React.ReactNodeArray;
+    listMenu?: React.ReactNode[];
     listScreen?: React.ReactNode;
     itemScreen?: React.ReactNode;
 };

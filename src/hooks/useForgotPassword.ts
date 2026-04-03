@@ -17,7 +17,7 @@ export const useForgotPassword = (
     generalError: string;
 } => {
     const emailAddress = useTextBox("");
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const [loading, setLoading] = useState(loadingInitialValue);
     // const { auroraClient } = useClientSelector();
     const [generalError, setGeneralError] = useState("");

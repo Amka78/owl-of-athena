@@ -22,7 +22,7 @@ export const OptionLedEffect: FunctionComponent<OptionLedEffectProps> = (
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldLedEffect
-                        {...props}
+                        {...(props as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldLedEffect>
                 );

@@ -11,7 +11,7 @@ import { Dimens } from "../../constants";
 export const ForgotPasswordScreen: FunctionComponent = () => {
     const forgotPassword = useForgotPassword(false);
     const dimens = useWindowDimensions();
-    const { setOptions } = useNavigation();
+    const { setOptions } = useNavigation<any>();
     useLayoutEffect(() => {
         setOptions({
             headerTitleStyle: {

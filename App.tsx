@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
-import AppLoading from "expo-app-loading";
+import * as SplashScreen from "expo-splash-screen";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
 import * as Localization from "expo-localization";
@@ -16,6 +16,8 @@ import { AuroraManagerInstance, SoundManagerInstance } from "./src/managers";
 import { InitialNavigator } from "./src/navigation";
 import reduxStore from "./src/store";
 //#endregion
+
+SplashScreen.preventAutoHideAsync();
 
 //#region Types
 type AppProps = {
@@ -38,70 +40,58 @@ export default class App extends React.Component<AppProps, AppState> {
     }
 
     public componentDidMount(): void {
-        Message.setLocale(Localization.locale);
+        Message.setLocale(Localization.getLocales()[0].languageTag);
+        this.loadResourcesAsync();
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const persistedRedux = reduxStore();
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-            return (
-                <AppLoading
-                    startAsync={this.loadResourcesAsync}
-                    onError={this.handleLoadingError}
-                    onFinish={this.handleFinishLoading}
-                />
-            );
-        } else {
-            return (
-                <ReduxProvider store={persistedRedux.store}>
-                    <PersistGate
-                        loading={undefined}
-                        persistor={persistedRedux.persistor}
-                    >
-                        <Container>
-                            {Platform.OS === "ios" && (
-                                <StatusBar barStyle="default" />
-                            )}
-                            <InitialNavigator></InitialNavigator>
-                            <UpdateSnackBar></UpdateSnackBar>
-                        </Container>
-                    </PersistGate>
-                </ReduxProvider>
-            );
+            return <></>;
         }
+        return (
+            <ReduxProvider store={persistedRedux.store}>
+                <PersistGate
+                    loading={undefined}
+                    persistor={persistedRedux.persistor}
+                >
+                    <Container>
+                        {Platform.OS === "ios" && (
+                            <StatusBar barStyle="default" />
+                        )}
+                        <InitialNavigator></InitialNavigator>
+                        <UpdateSnackBar></UpdateSnackBar>
+                    </Container>
+                </PersistGate>
+            </ReduxProvider>
+        );
     }
     //#endregion
 
     //#region Function
     public loadResourcesAsync = async (): Promise<void> => {
-        Promise.all([
-            Font.loadAsync({
-                calibre_app_regular: require("./assets/fonts/calibre_app_regular.ttf"),
-                calibre_app_semibold: require("./assets/fonts/calibre_app_semibold.ttf"),
-            }),
-            Asset.loadAsync([
-                require("./assets/profiles/default_profile_content.ttf"),
-            ]),
-            SoundManagerInstance.loadResource(),
-        ]);
-        return;
-    };
-
-    public handleLoadingError = (error: Error): void => {
-        // In this case, you might want to report the error to your error
-        // reporting service, for example Sentry
-        // tslint:disable-next-line:no-console
-        console.warn(error);
-    };
-
-    public handleFinishLoading = (): void => {
-        if (Platform.OS === "web") {
-            AuroraManagerInstance.setAuroraSound(
-                SoundManagerInstance.getData()
-            );
+        try {
+            await Promise.all([
+                Font.loadAsync({
+                    calibre_app_regular: require("./assets/fonts/calibre_app_regular.ttf"),
+                    calibre_app_semibold: require("./assets/fonts/calibre_app_semibold.ttf"),
+                }),
+                Asset.loadAsync([
+                    require("./assets/profiles/default_profile_content.ttf"),
+                ]),
+                SoundManagerInstance.loadResource(),
+            ]);
+        } catch (error) {
+            console.warn(error);
+        } finally {
+            if (Platform.OS === "web") {
+                AuroraManagerInstance.setAuroraSound(
+                    SoundManagerInstance.getData()
+                );
+            }
+            this.setState({ isLoadingComplete: true });
+            await SplashScreen.hideAsync();
         }
-
-        this.setState({ isLoadingComplete: true });
     };
     //#endregion
 }

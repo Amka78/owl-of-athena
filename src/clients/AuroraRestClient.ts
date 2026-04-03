@@ -115,4 +115,4 @@ export class AuroraRestClient extends RestClient {
         throw await response.json();
     }
 }
-export default new AuroraRestClient(BaseUrl.get(), Localization.locale);
+export default new AuroraRestClient(BaseUrl.get(), Localization.getLocales()[0].languageTag);

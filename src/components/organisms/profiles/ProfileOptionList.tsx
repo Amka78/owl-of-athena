@@ -13,8 +13,8 @@ import { ProfileOption } from "./ProfileOption";
 //#region Types
 export type ProfileOptionListProps = {
     groupedOptionList: GroupedProfileOptionList;
-    onHelpIconPress: () => void;
-    onValueChange: () => void;
+    onHelpIconPress?: () => void;
+    onValueChange?: () => void;
     style: StyleProp<ViewStyle>;
     locale?: string;
 };

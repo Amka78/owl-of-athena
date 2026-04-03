@@ -24,7 +24,7 @@ import { useTextBox } from "./useTextBox";
 import { useTokenSelector } from "./useTokenSelector";
 import { useUserSelector } from "./useUserSelector";
 import { useWakeLockSelector } from "./useWakeLockSelector";
-import { useWindowDimensions } from "./useWindowDimensions";
+import { useWindowDimensions, Dimensions } from "./useWindowDimensions";
 //#endregion
 
 //#region Exports
@@ -55,5 +55,6 @@ export {
     useUserSelector,
     useWakeLockSelector,
     useWindowDimensions,
+    Dimensions,
 };
 //#endregion

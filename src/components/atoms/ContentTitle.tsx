@@ -19,7 +19,7 @@ export const ContentTitle: FunctionComponent<ContentTitleProps> = (
     const theme = useTheme();
     return (
         <Text
-            style={[textStyle, { color: theme?.colors?.accent }, props.style]}
+            style={[textStyle, { color: theme?.colors?.secondary }, props.style]}
         >
             {props.children}
         </Text>

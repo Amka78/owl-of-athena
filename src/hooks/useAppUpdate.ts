@@ -36,7 +36,7 @@ export const useAppUpdate = (): {
     const reloadPageCallback = useCallback((): void => {
         waitingWorker?.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
-        window.location.reload(true);
+        window.location.reload();
     }, [waitingWorker]);
     return { reloadPageCallback, showReload };
 };

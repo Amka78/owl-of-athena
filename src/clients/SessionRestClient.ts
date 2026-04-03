@@ -273,4 +273,4 @@ export class SessionRestClient extends RestClient {
         return `users/me/aurora-sessions/${sessionId}`;
     }
 }
-export default new SessionRestClient(BaseUrl.get(), Localization.locale);
+export default new SessionRestClient(BaseUrl.get(), Localization.getLocales()[0].languageTag);

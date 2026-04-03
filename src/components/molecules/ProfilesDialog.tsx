@@ -59,7 +59,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
         this.setState({ dialogSettings: undefined });
     }
 
-    public render(): JSX.Element | null {
+    public render(): React.ReactNode {
         return this.state.dialogSettings ? (
             <Dialog
                 visible={true}
@@ -83,7 +83,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
                                         <LabeledRadioButton
                                             key={index}
                                             value={value.title!}
-                                            label={{ key: value.title! }}
+                                            label={value.title!}
                                         ></LabeledRadioButton>
                                     );
                                 }
@@ -96,13 +96,13 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
                         labelStyle={style.dialogButton}
                         onPress={this.onCancelButtonPressed()}
                     >
-                        {{ key: MessageKeys.cancel }}
+                        {Message.get(MessageKeys.cancel)}
                     </FlatButton>
                     <FlatButton
                         labelStyle={style.dialogButton}
                         onPress={this.onCofirmButtonPressed()}
                     >
-                        {{ key: MessageKeys.save }}
+                        {Message.get(MessageKeys.save)}
                     </FlatButton>
                 </Dialog.Actions>
             </Dialog>

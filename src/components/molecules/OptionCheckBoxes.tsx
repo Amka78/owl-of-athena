@@ -20,7 +20,7 @@ export const OptionCheckBoxes: FunctionComponent<OptionProps> = (
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldStreamCheckBoxes
-                        {...props}
+                        {...(props as any)}
                         style={[rightProps.style]}
                     ></FieldStreamCheckBoxes>
                 );

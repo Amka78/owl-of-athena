@@ -22,7 +22,7 @@ export const OptionToggle: FunctionComponent<OptionToggleProps> = (
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldToggle
-                        {...props}
+                        {...(props as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldToggle>
                 );

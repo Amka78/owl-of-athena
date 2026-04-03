@@ -41,7 +41,7 @@ export const FieldLedEffect: FunctionComponent<FieldLedEffectProps> = (
                     selectedValue={props.value}
                     style={pickerStyle}
                     itemStyle={pickerItemStyle}
-                    onValueChange={(itemValue: React.ReactText) => {
+                    onValueChange={(itemValue: string | number) => {
                         props.onValueChange(itemValue as LedEffect);
                     }}
                 >

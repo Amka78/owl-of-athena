@@ -22,7 +22,7 @@ export const OptionTime: FunctionComponent<OptionTimeProps> = (
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldTime
-                        {...props}
+                        {...(props as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldTime>
                 );

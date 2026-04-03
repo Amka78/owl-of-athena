@@ -45,25 +45,25 @@ export type MainDrawerNavigatorProps = {
 //#region Compnent
 const Drawer = createDrawerNavigator();
 
-const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
+const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode => {
     const mainDrawerHook = useMainDrawerNavigator();
     return (
         <Drawer.Navigator
             initialRouteName={"Sleep Process"}
-            openByDefault={
+            defaultStatus={
                 mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal
+                    ? "open"
+                    : "closed"
             }
-            drawerType={mainDrawerHook.drawerType}
-            drawerStyle={{
-                backgroundColor: Colors.blue,
-                width: mainDrawerHook.isDesktop ? undefined : 60,
-            }}
-            drawerContentOptions={{
-                activeBackgroundColor: Colors.navy_darker,
-                activeTintColor: Colors.cyan,
-                inactiveTintColor: Colors.white,
-            }}
             screenOptions={{
+                drawerType: mainDrawerHook.drawerType,
+                drawerStyle: {
+                    backgroundColor: Colors.blue,
+                    width: mainDrawerHook.isDesktop ? undefined : 60,
+                },
+                drawerActiveBackgroundColor: Colors.navy_darker,
+                drawerActiveTintColor: Colors.cyan,
+                drawerInactiveTintColor: Colors.white,
                 headerLeft: () => {
                     return (
                         <MenuIcon
@@ -187,3 +187,4 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): JSX.Element => {
 //#region Export
 export default MainDrawerNavigator;
 //#endregion
+

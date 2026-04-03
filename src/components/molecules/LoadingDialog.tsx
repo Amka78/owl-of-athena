@@ -44,7 +44,7 @@ export class LoadingDialog extends React.Component<
         LoadingDialog.Instance = this;
     }
 
-    public render(): JSX.Element | null {
+    public render(): React.ReactNode {
         return this.state.settings ? (
             <Dialog visible={true} style={styles.dialogContainer}>
                 <Dialog.Title style={styles.dialogTitle}>

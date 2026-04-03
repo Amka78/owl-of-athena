@@ -12,7 +12,7 @@ import { FlexSpacer } from "../FlexSpacer";
 let component: ShallowWrapper<unknown, unknown, unknown>;
 describe("FlexSpacer UnitTest", () => {
     it("Renders correctly", () => {
-        component = createMock(<FlexSpacer>{"test"}</FlexSpacer>);
+        component = createMock(<FlexSpacer />);
 
         expect(toJson(component)).toMatchSnapshot();
     });

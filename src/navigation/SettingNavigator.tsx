@@ -5,7 +5,6 @@ import { View } from "react-native";
 
 import { AccountScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
-import { useWindowDimensions } from "../hooks";
 import { headerStyle } from "./HeaderStyles";
 
 //#endregion
@@ -13,9 +12,8 @@ import { headerStyle } from "./HeaderStyles";
 //#region Component
 const Stack = createStackNavigator();
 
-const SettingNavigator = (): JSX.Element => {
-    const voidLeftHeader = (): JSX.Element => <View></View>;
-    const dimens = useWindowDimensions();
+const SettingNavigator = (): React.ReactNode => {
+    const voidLeftHeader = (): React.ReactNode => <View />;
     return (
         <View style={{ flex: 1 }}>
             <Stack.Navigator

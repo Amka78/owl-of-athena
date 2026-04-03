@@ -1,6 +1,6 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftButtonProps } from "@react-navigation/stack";
+import { StackHeaderLeftProps } from "@react-navigation/stack";
 import React, { FunctionComponent, useLayoutEffect } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
@@ -12,7 +12,7 @@ import { SessionListScreenTemplate } from "./../templates/SessionListScreenTempl
 //#region Component
 export const SessionListScreen: FunctionComponent = () => {
     const sessionListHook = useSessinList();
-    const { setOptions } = useNavigation();
+    const { setOptions } = useNavigation<any>();
 
     useLayoutEffect(() => {
         setOptions({
@@ -23,7 +23,7 @@ export const SessionListScreen: FunctionComponent = () => {
                     ></RefreshIcon>
                 );
             },
-            headerRight: (props: StackHeaderLeftButtonProps) => {
+            headerRight: (props: StackHeaderLeftProps) => {
                 return (
                     <FilterIcon
                         {...props}
@@ -55,7 +55,7 @@ export const SessionListScreen: FunctionComponent = () => {
                     ? "checked"
                     : "unchecked",
                 selectedPickerValue: sessionListHook.filterCondition.byDate,
-                onPickerValueChange: sessionListHook.onPickerValueChange,
+                onPickerValueChange: sessionListHook.onPickerValueChange as (itemValue: string | number) => void,
                 onShowNoteCheckBoxPress: sessionListHook.onShowNotesPress,
             }}
             sessionList={sessionListHook.sessionList}

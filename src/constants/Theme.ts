@@ -1,4 +1,4 @@
-import { DefaultTheme } from "react-native-paper";
+import { DefaultTheme, MD3Theme } from "react-native-paper";
 import { Colors } from "../constants";
 
 export const Theme = {
@@ -14,4 +14,4 @@ export const Theme = {
         placeholder: Colors.white,
     },
 };
-export type ThemeType = Partial<ReactNativePaper.Theme>;
+export type ThemeType = Partial<MD3Theme>;

@@ -20,7 +20,7 @@ export type FieldStreamCheckBoxesProps = {
 
 //#region Component
 export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps> = (
-    props: FieldStreamCheckBoxesProps
+    _props: FieldStreamCheckBoxesProps
 ) => {
     return (
         <View

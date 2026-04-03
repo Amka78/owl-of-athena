@@ -28,16 +28,16 @@ export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
                 color={
                     props.radioButtonColor
                         ? props.radioButtonColor
-                        : theme.colors.accent
+                        : theme.colors.secondary
                 }
                 uncheckedColor={
                     props.radioButtonUncheckedColor
                         ? props.radioButtonUncheckedColor
-                        : theme.colors.accent
+                        : theme.colors.secondary
                 }
             />
             <Text
-                style={[{ color: theme.colors.text }, props.textStyle]}
+                style={[{ color: theme.colors.onSurface }, props.textStyle]}
                 onPress={props.onLabelPress}
             >
                 {props.label}

@@ -10,9 +10,9 @@ import { MaterialTabbarCommonOptions } from "./MaterialTabbarSettings";
 //#region Component
 const MaterialTab = createMaterialTopTabNavigator();
 
-const ProfileTabNavigator = (): JSX.Element => {
+const ProfileTabNavigator = (): React.ReactNode => {
     return (
-        <MaterialTab.Navigator tabBarOptions={MaterialTabbarCommonOptions}>
+        <MaterialTab.Navigator screenOptions={MaterialTabbarCommonOptions}>
             <MaterialTab.Screen
                 name={"Edit"}
                 component={ProfileScreen}

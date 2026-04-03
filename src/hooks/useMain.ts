@@ -45,7 +45,7 @@ export const useMain = (): {
     const [batteryLevel, setBatteryLevel] = useState<number>(0);
     const [error, setError] = useState<string>("");
     const firmwareVersion = useRef<string>("");
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const onConnectionChangeEventHandler = useRef(
         (connectionState: ConnectionStates): void => {
             console.debug("Called onConnectionChangeHandler");
@@ -137,8 +137,9 @@ export const useMain = (): {
                 }
             );
         } catch (e) {
-            setError(e);
-            error = e;
+            const err = e as Error;
+            setError(err.message);
+            error = err.message;
             console.error(e);
         } finally {
             LoadingDialog.close();

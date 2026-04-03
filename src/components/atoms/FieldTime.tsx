@@ -19,7 +19,7 @@ export type FieldTimeProps = {
 
 //#region Component
 export const FieldTime: FunctionComponent<FieldTimeProps> = (
-    props: FieldTimeProps
+    _props: FieldTimeProps
 ) => {
     return (
         <InlineTimePicker

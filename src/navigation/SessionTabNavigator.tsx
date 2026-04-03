@@ -10,9 +10,9 @@ import { MaterialTabbarCommonOptions } from "./MaterialTabbarSettings";
 //#region Component
 const MaterialTab = createMaterialTopTabNavigator();
 
-const SessionTabNavigator = (): JSX.Element => {
+const SessionTabNavigator = (): React.ReactNode => {
     return (
-        <MaterialTab.Navigator tabBarOptions={MaterialTabbarCommonOptions}>
+        <MaterialTab.Navigator screenOptions={MaterialTabbarCommonOptions}>
             <MaterialTab.Screen
                 name={"SleepTracking"}
                 component={SessionScreen}

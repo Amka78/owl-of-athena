@@ -1,7 +1,7 @@
 //#region Import Modules
 import React, { FunctionComponent } from "react";
 import { View } from "react-native";
-import { Dimensions, useWindowDimensions } from "../hooks/useWindowDimensions";
+import { Dimensions } from "../hooks/useWindowDimensions";
 //#endregion
 
 export type ContainerProps = { dimens: Dimensions; children: React.ReactNode };

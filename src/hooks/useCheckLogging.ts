@@ -12,7 +12,7 @@ import { GuestUser } from "../types";
 
 //#region Hooks
 export const useCheckLogging = (): void => {
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
 
     const token = useTokenSelector();
     const user = useUserSelector();

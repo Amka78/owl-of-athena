@@ -14,7 +14,7 @@ import { StackCommonScreenOptions } from "./StackSettings";
 //#region Component
 const Stack = createStackNavigator();
 
-const SessionNavigator = (): JSX.Element => {
+const SessionNavigator = (): React.ReactNode => {
     const sessionSelector = useSelectedSessionSelector();
     const dimens = useWindowDimensions();
     const title = sessionSelector

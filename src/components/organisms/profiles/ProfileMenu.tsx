@@ -11,7 +11,8 @@ import { EditIcon } from "../../atoms";
 export type ProfileMenuProps = {
     style?: ViewStyle;
     selectedProfile: AuroraProfile;
-    onEditPress: () => void;
+    onEditPress?: () => void;
+    onInfoPress?: () => void;
 };
 //#endregion
 

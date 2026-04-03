@@ -63,7 +63,7 @@ export const Container: FunctionComponent<ContainerProps> = (
         },
     };
 
-    const linking: LinkingOptions = {
+    const linking: LinkingOptions<object> = {
         prefixes: ["https://owl-of-athena", "owl-of-athena://"],
         config,
     };

@@ -49,7 +49,7 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
             marginBottom: 32,
         },
     };
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const {
             categoryColors,
             categoryLabelColor,

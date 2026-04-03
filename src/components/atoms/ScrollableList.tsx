@@ -6,7 +6,7 @@ import { List } from "react-native-paper";
 
 //#region Types
 export type ScrollableListProps = {
-    children: React.ReactNodeArray;
+    children: React.ReactNode[];
 };
 //#endregion
 

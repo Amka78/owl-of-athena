@@ -13,7 +13,7 @@ import { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
 //#region Types
 export type SessionListMenuProps = {
     containerStyle?: ViewStyle;
-    onPickerValueChange: (itemValue: React.ReactText) => void;
+    onPickerValueChange: (itemValue: string | number) => void;
     selectedPickerValue: FilterByDateValues;
     anyTimePickerValue: FilterByDateValues;
     pastWeekPickerValue: FilterByDateValues;

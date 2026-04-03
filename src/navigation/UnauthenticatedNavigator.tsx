@@ -13,7 +13,7 @@ import { StackCommonScreenOptions } from "./StackSettings";
 //#region Component
 export const Stack = createStackNavigator();
 
-export const UnauthenticatedNavigator = (): JSX.Element => {
+export const UnauthenticatedNavigator = (): React.ReactNode => {
     const dimens = useWindowDimensions();
     return (
         <View style={{ flex: 1 }}>

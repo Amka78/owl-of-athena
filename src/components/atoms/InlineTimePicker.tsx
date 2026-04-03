@@ -45,7 +45,7 @@ type TimePickerMode = "full" | "minute";
 //#endregion
 
 //#region Component
-export const InlineTimePicker = (props: InlineTimePickerProps): JSX.Element => {
+export const InlineTimePicker = (props: InlineTimePickerProps): React.ReactNode => {
     const theme = useTheme();
     return (
         <InlineTimePickerCore {...props} theme={theme}></InlineTimePickerCore>
@@ -136,7 +136,7 @@ class InlineTimePickerCore extends Component<
         if (this.state !== prevState) this.invokeOnChangeTime();
     }
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         return (
             <View style={[containerStyle, this.props.containerStyle]}>
                 <View style={timeContainerStyle}>
@@ -161,7 +161,7 @@ class InlineTimePickerCore extends Component<
                                         textStyle,
                                         {
                                             color: this.props.theme?.colors
-                                                ?.text,
+                                                ?.onSurface,
                                         },
                                         this.getTextStyle(),
                                     ]}
@@ -231,7 +231,7 @@ class InlineTimePickerCore extends Component<
                             onPressOut={(): void => this.longIncrement()}
                         >
                             <Ionicons
-                                name={"md-add"}
+                                name={"add"}
                                 size={this.style.iconSize}
                                 color={this.style.textColor}
                             />
@@ -247,7 +247,7 @@ class InlineTimePickerCore extends Component<
                             onPressOut={(): void => this.longIncrement()}
                         >
                             <Ionicons
-                                name={"md-remove"}
+                                name={"remove"}
                                 size={this.style.iconSize}
                                 color={this.style.textColor}
                             />
@@ -263,8 +263,8 @@ class InlineTimePickerCore extends Component<
             this.style = {};
         }
         if (!this.style.activeColor) {
-            this.style.activeColor = theme?.colors?.accent
-                ? theme.colors?.accent
+            this.style.activeColor = theme?.colors?.secondary
+                ? theme.colors?.secondary
                 : TimePickerDefaultStyle.activeColor;
         }
         if (!this.style.backgroundColor) {
@@ -273,8 +273,8 @@ class InlineTimePickerCore extends Component<
                 : TimePickerDefaultStyle.backgroundColor;
         }
         if (!this.style.borderColor) {
-            this.style.borderColor = theme?.colors?.text
-                ? theme?.colors?.text
+            this.style.borderColor = theme?.colors?.onSurface
+                ? theme?.colors?.onSurface
                 : TimePickerDefaultStyle.borderColor;
         }
         if (!this.style.borderRadius) {
@@ -287,8 +287,8 @@ class InlineTimePickerCore extends Component<
             this.style.iconSize = TimePickerDefaultStyle.iconSize;
         }
         if (!this.style.textColor) {
-            this.style.textColor = theme?.colors?.accent
-                ? theme?.colors?.text
+            this.style.textColor = theme?.colors?.secondary
+                ? theme?.colors?.onSurface
                 : TimePickerDefaultStyle.textColor;
         }
     }
@@ -483,15 +483,5 @@ const incrementStyle: ViewStyle = {
 const colonStyle: TextStyle = {
     fontSize: 35,
     marginHorizontal: 3,
-};
-
-const meridianStyle: TextStyle = {
-    position: "absolute",
-    top: 0,
-    left: 5,
-};
-
-const meridianTextStyle: TextStyle = {
-    fontSize: 16,
 };
 //#endregion

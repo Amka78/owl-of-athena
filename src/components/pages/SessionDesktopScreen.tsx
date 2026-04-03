@@ -30,7 +30,7 @@ export const SessionDesktopScreen: FunctionComponent = () => {
                     ? "checked"
                     : "unchecked",
                 selectedPickerValue: sessionListHook.filterCondition.byDate,
-                onPickerValueChange: sessionListHook.onPickerValueChange,
+                onPickerValueChange: sessionListHook.onPickerValueChange as (itemValue: string | number) => void,
                 onShowNoteCheckBoxPress: sessionListHook.onShowNotesPress,
             }}
             sessionList={sessionListHook.sessionList}

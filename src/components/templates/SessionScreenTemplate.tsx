@@ -115,7 +115,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     {...props.leftSelectButton}
                     icon={"chevron-left"}
                     size={40}
-                    color={Colors.white}
+                    iconColor={Colors.white}
                     style={{ marginLeft: Dimens.session_margin_left }}
                 ></IconButton>
                 <FlexSpacer></FlexSpacer>
@@ -123,7 +123,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     {...props.rightSelectButton}
                     icon={"chevron-right"}
                     size={40}
-                    color={Colors.white}
+                    iconColor={Colors.white}
                     style={{ marginRight: Dimens.session_margin_right }}
                 ></IconButton>
             </View>

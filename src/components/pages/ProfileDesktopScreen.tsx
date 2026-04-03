@@ -36,6 +36,7 @@ export const ProfileDesktopScreen: FunctionComponent = () => {
                 onShowPrivateCheckBoxPress: profileListHook.onShowPrivatePress,
             }}
             list={profileListHook.list}
+            userId={profileListHook.userId}
             dimens={dimens}
             onStarPress={profileListHook.onStarPress}
             onDeletePress={profileListHook.onDeletePress}

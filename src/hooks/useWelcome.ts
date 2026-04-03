@@ -19,7 +19,7 @@ export const useWelcome = (): {
     onSignupPress: () => void;
 } => {
     useAutoLogin();
-    const { navigate } = useNavigation();
+    const { navigate } = useNavigation<any>();
     const dispatch = useDispatch();
 
     const onStandalonePress = useCallback(() => {

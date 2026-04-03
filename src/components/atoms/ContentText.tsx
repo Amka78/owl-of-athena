@@ -22,7 +22,7 @@ export const ContentText: FunctionComponent<ContentTextProps> = (
 
     return (
         <Text
-            style={[textStyle, { color: theme?.colors?.accent }, props.style]}
+            style={[textStyle, { color: theme?.colors?.secondary }, props.style]}
             onPress={props.onPress}
         >
             {props.children}

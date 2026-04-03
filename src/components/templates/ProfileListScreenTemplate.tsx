@@ -86,7 +86,7 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
                                 <View {...rightProps} style={iconContainer}>
                                     <StarIcon
                                         disabled={!isUserProfile}
-                                        starred={value.starred}
+                                        starred={value.starred ?? false}
                                         onPress={async () => {
                                             await props.onStarPress(value);
                                         }}

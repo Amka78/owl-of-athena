@@ -20,7 +20,7 @@ export const OptionSlider: FunctionComponent<OptionProps> = (
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldSlider
-                        {...props}
+                        {...(props as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldSlider>
                 );
