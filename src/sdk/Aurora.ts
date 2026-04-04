@@ -1,6 +1,4 @@
-//import DriveList from "drivelist";
 //#region Import Modules
-import ejectMedia from "eject-media";
 import { EventEmitter } from "events";
 import _ from "lodash";
 import Stream from "stream";
@@ -28,18 +26,11 @@ import {
     CommandResult,
     EventResponse,
 } from "./AuroraTypes";
-import { AuroraUsb } from "./AuroraUsb";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { AuroraEventList } from "./AuroraEventList";
 import { Event } from "./models/Event";
-import { isDesktop } from "./Platform";
-import { promisify, sleep, stringToVersion, versionToString } from "./util";
+import { stringToVersion, versionToString } from "./util";
 //#endregion
-
-//import usbDetect from "usb-detection";
-const MSD_DISCONNECT_RETRY_DELAY_MS = 2000;
-const MSD_SCAN_RETRY_DELAY_MS = 2000;
-const MSD_CONNECT_DELAY_SEC = 30;
 
 type PlayLedEffect = typeof AuroraCmdPlayLedEffect;
 type GetSessions = typeof AuroraCmdGetSessions;
@@ -56,46 +47,22 @@ type UploadFile = typeof AuroraCmdUploadFile;
 type ReadFileInfo = typeof AuroraCmdFileInfo;
 type GetUnsyncedSessions = typeof AuroraCmdGetUnSyncedSessions;
 
+/**
+ * Shared Aurora SDK class used on all platforms (web, Android, iOS).
+ * Uses Bluetooth-only connectivity.
+ */
 class Aurora extends EventEmitter {
-    private auroraUsb: AuroraUsb;
     private bluetooth: AuroraBluetooth;
     private cmdQueue: Command[];
     private cmdCurrent?: Command;
-    private msdDrive: boolean;
     private isFlashing: boolean;
     private info?: AuroraOSInfo;
-    private isAutoConnectUsb: boolean;
     private isAutoConnectBluetooth: boolean;
-    private msdAttaching: boolean;
     private enabledEventList: Array<AuroraConstants.EventIds>;
+
     constructor() {
         super();
 
-        this.msdAttaching = false;
-
-        this.auroraUsb = new AuroraUsb();
-        this.auroraUsb.on(
-            AuroraConstants.DeviceEventList.connectionStateChange,
-            this.onUsbConnectionStateChange
-        );
-        this.auroraUsb.on("usbError", this.onAuroraError);
-        this.auroraUsb.on("log", this.onAuroraLog);
-        this.auroraUsb.on(
-            AuroraConstants.DeviceEventList.streamData,
-            this.onAuroraStreamData
-        );
-        this.auroraUsb.on(
-            AuroraConstants.DeviceEventList.auroraEvent,
-            this.onAuroraEvent
-        );
-        this.auroraUsb.on(
-            AuroraConstants.DeviceEventList.cmdInputRequested,
-            this.onCmdInputRequested
-        );
-        this.auroraUsb.on(
-            AuroraConstants.DeviceEventList.cmdOutputReady,
-            this.onCmdOutputReady
-        );
         this.bluetooth = new AuroraBluetooth();
         this.bluetooth.on(
             AuroraConstants.DeviceEventList.connectionStateChange,
@@ -124,25 +91,18 @@ class Aurora extends EventEmitter {
 
         this.cmdQueue = new Array<Command>();
 
-        this.isAutoConnectUsb = false;
         this.isAutoConnectBluetooth = false;
-        this.msdDrive = false;
         this.isFlashing = false;
         this.info = undefined;
         this.enabledEventList = new Array<AuroraConstants.EventIds>();
-
-        //this scans for MSD disks that could potentially be the Aurora
-        //this.findMsdDrive().then(this.msdSetAttached, true);
-
-        this.watchUsb();
     }
 
     public isConnected(): boolean {
-        return this.isUsbConnected() || this.isBluetoothConnected();
+        return this.isBluetoothConnected();
     }
 
     public isUsbConnected(): boolean {
-        return this.auroraUsb.isConnected();
+        return false;
     }
 
     public isBluetoothConnected(): boolean {
@@ -150,15 +110,7 @@ class Aurora extends EventEmitter {
     }
 
     public isMsdAttached(): boolean {
-        return !!this.msdDrive;
-    }
-
-    public executeUsbAutoConnection(): void {
-        this.isAutoConnectUsb = true;
-
-        if (!this.auroraUsb.isConnected() && !this.auroraUsb.isConnecting()) {
-            this.auroraUsb.connect().catch(undefined);
-        }
+        return false;
     }
 
     public async executeBluetoothAutoConnection(): Promise<void | never> {
@@ -169,53 +121,11 @@ class Aurora extends EventEmitter {
         }
     }
 
-    public async connectUsb(
-        port = "detect",
-        retryCount = 3
-    ): Promise<never | unknown> {
-        if (this.auroraUsb.isConnected()) {
-            return Promise.reject("Already connected over usb.");
-        } else if (this.auroraUsb.isConnecting()) {
-            return Promise.reject("Already connecting over usb.");
-        }
-
-        return new Promise((resolve, reject) => {
-            this.once("usbConnectionChange", (fwInfo) => {
-                if (!fwInfo) return reject();
-
-                resolve(fwInfo);
-            });
-
-            this.detachMsd()
-                .then(() => this.auroraUsb.connect(port, retryCount))
-                .catch(reject);
-        });
-    }
-
-    public async disconnectUsb(): Promise<unknown | never> {
-        this.isAutoConnectUsb = false;
-
-        if (!this.auroraUsb.isConnected() && !this.auroraUsb.isConnecting()) {
-            return;
-        }
-
-        return this.auroraUsb.disconnect();
-    }
-
     public async connectBluetooth(
         timeoutMs = 20000
     ): Promise<AuroraOSInfo | never> {
         if (this.bluetooth.isConnected()) {
             return Promise.reject("Already connected over bluetooth.");
-        }
-
-        //is USB is already connected, lets signal to
-        //the Aurora to start advertising aggressively
-        if (this.isUsbConnected()) {
-            await this.queueCmd(
-                "ble-reset",
-                AuroraConstants.ConnectorTypes.USB
-            );
         }
 
         if (this.bluetooth.isConnecting()) {
@@ -244,92 +154,6 @@ class Aurora extends EventEmitter {
         return this.bluetooth.disconnect();
     }
 
-    public async attachMsd(): Promise<unknown | never> {
-        if (!this.isConnected()) {
-            return Promise.reject("Must have a connection first.");
-        }
-
-        if (this.isMsdAttached()) {
-            return Promise.reject("MSD mode already attached.");
-        } else if (this.msdAttaching) {
-            return Promise.reject("Already attaching MSD.");
-        }
-
-        this.msdAttaching = true;
-
-        try {
-            await this.queueCmd("usb-mode 2");
-        } catch (error) {
-            this.msdAttaching = false;
-
-            return Promise.reject("Failed enabling MSD mode: " + error);
-        }
-
-        //sleep one second at a time, checking
-        //for a connection
-        for (let i = 0; i < MSD_CONNECT_DELAY_SEC; i++) {
-            await sleep(1000);
-
-            //if we are connected we can return!!
-            if (this.msdDrive) return this.msdDrive;
-        }
-
-        this.msdAttaching = false;
-
-        return Promise.reject("Timeout waiting for Aurora MSD drive to mount.");
-    }
-
-    public async detachMsd(retryCount = 5): Promise<unknown> {
-        if (!this.msdDrive) {
-            return;
-        }
-
-        //we do this just in case things are moving too fast...
-        await sleep(1500);
-
-        if (!this.msdDrive) {
-            return;
-        }
-
-        return promisify(
-            ejectMedia.eject,
-            ejectMedia
-        )(this.msdDrive)
-            .then(() => {
-                //we go ahead and mark the drive as removed in case
-                //the event hasn't fired yet.
-                this.msdSetDetached();
-            })
-            .catch(async () => {
-                if (retryCount) {
-                    await sleep(MSD_DISCONNECT_RETRY_DELAY_MS);
-
-                    if (!this.msdDrive) {
-                        this.msdSetDetached();
-
-                        return Promise.resolve();
-                    }
-
-                    return this.detachMsd(retryCount - 1);
-                }
-
-                //check if drive is not actually present
-                //in case we missed the disconnect event somehow
-                return this.findMsdDrive().then(
-                    (msdDrive: unknown): Promise<void> => {
-                        if (msdDrive)
-                            return Promise.reject(
-                                "Failed disconnecting from MSD"
-                            );
-
-                        this.msdSetDetached();
-
-                        return Promise.resolve();
-                    }
-                );
-            });
-    }
-
     public async flash(
         fwFile: string,
         fwVersion: number | false = false,
@@ -340,16 +164,8 @@ class Aurora extends EventEmitter {
         if (!this.isConnected())
             return Promise.reject("Must be connected to perform flash.");
 
-        //remember whether auto connect was on before flash
-        //since we are going to secretly turn auto connect on now
-        const wasUsbAutoConnectOff = !this.isAutoConnectUsb;
         const wasBluetoothAutoConnectOff = !this.isAutoConnectBluetooth;
-        const wasUsbConnected = this.isUsbConnected();
         const wasBluetoothConnected = this.isBluetoothConnected();
-
-        if (this.isUsbConnected()) {
-            this.isAutoConnectUsb = true;
-        }
 
         if (this.isBluetoothConnected()) {
             this.isAutoConnectBluetooth = true;
@@ -382,10 +198,6 @@ class Aurora extends EventEmitter {
                 let flashTimeout: NodeJS.Timeout | undefined;
 
                 const finish = (): void => {
-                    if (wasUsbAutoConnectOff && this.isAutoConnectUsb) {
-                        this.isAutoConnectUsb = false;
-                    }
-
                     if (
                         wasBluetoothAutoConnectOff &&
                         this.isAutoConnectBluetooth
@@ -401,10 +213,6 @@ class Aurora extends EventEmitter {
                         AuroraEventList.flashConnectionChange,
                         onFlashConnectionChange
                     );
-
-                    if (wasUsbConnected && !this.isUsbConnected()) {
-                        this.emit(AuroraEventList.usbConnectionChange, false);
-                    }
 
                     if (wasBluetoothConnected && !this.isBluetoothConnected()) {
                         setTimeout(() => {
@@ -460,11 +268,9 @@ class Aurora extends EventEmitter {
         onCmdBegin?: (cmd: T) => void,
         onCmdEnd?: () => void
     ): Promise<T> {
-        if (!this.getConnector(connectorType).isConnected()) {
+        if (!this.bluetooth.isConnected()) {
             return Promise.reject(
-                `Not connected to Aurora over ${
-                    connectorType == "any" ? "usb or bluetooth" : connectorType
-                }.`
+                `Not connected to Aurora over bluetooth.`
             );
         }
 
@@ -565,15 +371,12 @@ class Aurora extends EventEmitter {
     public get playBuzzSong(): PlayBuzzSong {
         return AuroraCmdPlayBuzzSong;
     }
-    //this command is really only useful to reconcile differences between
-    //the old version of os-info and new ones
-    //TODO: remove once all in-field units are upgraded to firmware >= 2.1.0
+
     private async getOsInfo(
         connectorType: AuroraConstants.ConnectorTypes
     ): Promise<unknown> {
         return await this.queueCmd("os-info 1", connectorType)
             .catch((cmdWithResponse) => {
-                //if the "too many arguments" error, then we'll reissue the command without params
                 if (cmdWithResponse.response.error === 3) {
                     return this.queueCmd("os-info", connectorType);
                 }
@@ -607,17 +410,12 @@ class Aurora extends EventEmitter {
             return;
         }
 
-        this.cmdCurrent.connector = this.getConnector(
-            this.cmdCurrent.connectorType!
-        );
+        // On mobile, always use bluetooth
+        this.cmdCurrent.connector = this.bluetooth;
 
         if (!this.cmdCurrent.connector.isConnected()) {
             this.cmdCurrent.reject!(
-                `No longer connected to Aurora over ${
-                    this.cmdCurrent.connectorType == "any"
-                        ? "usb or bluetooth"
-                        : this.cmdCurrent.connectorType
-                }.`
+                `No longer connected to Aurora over bluetooth.`
             );
             return;
         }
@@ -664,11 +462,7 @@ class Aurora extends EventEmitter {
             )
             .catch(
                 (error: string): CommandResult<unknown> => {
-                    cmd.origin =
-                        this.cmdCurrent!.connectorType ==
-                        AuroraConstants.ConnectorTypes.ANY
-                            ? "unknown"
-                            : this.cmdCurrent!.connectorType;
+                    cmd.origin = "bluetooth";
                     cmd.error = true;
                     cmd.response = {
                         error: -99,
@@ -698,8 +492,6 @@ class Aurora extends EventEmitter {
 
                     this.emit(AuroraEventList.cmdEnd, cmd);
 
-                    //todo this shouldn't be necessary!!
-                    //figure out WTF is going on
                     setTimeout(() => {
                         this.cmdCurrent = undefined;
                         this.processCmdQueue();
@@ -707,170 +499,6 @@ class Aurora extends EventEmitter {
                 }
             );
     }
-
-    private getConnector(
-        connectorType: AuroraConstants.ConnectorTypes
-    ): AuroraBluetooth | AuroraUsb {
-        switch (connectorType) {
-            case AuroraConstants.ConnectorTypes.USB:
-                return this.auroraUsb;
-
-            case AuroraConstants.ConnectorTypes.BLUETOOTH:
-                return this.bluetooth;
-
-            case AuroraConstants.ConnectorTypes.ANY:
-            default:
-                return this.auroraUsb.isConnected()
-                    ? this.auroraUsb
-                    : this.bluetooth;
-        }
-    }
-
-    public async findMsdDrive(
-        retryCount = 0,
-        successOnFound = true
-    ): Promise<any> {
-        // @ts-ignore
-        return promisify(DriveList.list, DriveList)().then(
-            async (drives: any): Promise<unknown> => {
-                const drive = drives.find(
-                    (drive: { description: string }) =>
-                        drive.description == AuroraConstants.MSD_DRIVE_NAME
-                );
-
-                if (
-                    !drive ||
-                    !drive.mountpoints.length ||
-                    !drive.mountpoints[0].path
-                ) {
-                    if (!retryCount || !successOnFound) {
-                        return false;
-                    }
-                } else if (successOnFound) {
-                    return drive.mountpoints[0].path;
-                }
-
-                await sleep(MSD_SCAN_RETRY_DELAY_MS);
-
-                return this.findMsdDrive(retryCount - 1, successOnFound);
-            }
-        );
-    }
-
-    private watchUsb = (): void => {
-        if (isDesktop) {
-            this.unwatchUsb();
-
-            // @ts-ignore
-            usbDetect.on(
-                `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this.onAuroraUsbAttached
-            );
-
-            // @ts-ignore
-            usbDetect.on(
-                `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this.onAuroraUsbDetached
-            );
-        }
-    };
-
-    private unwatchUsb = (): void => {
-        if (isDesktop) {
-            // @ts-ignore
-            usbDetect.removeListener(
-                `add:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this.onAuroraUsbAttached
-            );
-            // @ts-ignore
-            usbDetect.removeListener(
-                `remove:${parseInt(AuroraConstants.AURORA_USB_VID)}`,
-                this.onAuroraUsbDetached
-            );
-        }
-    };
-
-    // @ts-ignore
-    private onAuroraUsbAttached = async (device: {
-        productId: number;
-    }): Promise<void> => {
-        if (isDesktop) {
-            /*if (
-                device.productId ===
-                parseInt(AuroraConstants.AURORA_USB_MSD_PID)
-            ) {
-                // @ts-ignore
-                this.findMsdDrive(5).then(this.msdSetAttached, true);
-            } else if (
-                device.productId ===
-                    parseInt(AuroraConstants.AURORA_USB_SERIAL_PID) &&
-                this.isAutoConnectUsb
-            ) {
-                this.executeUsbAutoConnection();
-            }*/
-        }
-    };
-
-    private onAuroraUsbDetached = (device: { productId: number }): void => {
-        if (device.productId === parseInt(AuroraConstants.AURORA_USB_MSD_PID)) {
-            // @ts-ignore
-            this.findMsdDrive(5).then(this.msdSetDetached, false);
-        }
-    };
-
-    // @ts-ignore
-    private msdSetAttached = (msdDrive: boolean): void => {
-        if (!this.msdDrive && msdDrive) {
-            this.msdAttaching = false;
-            this.msdDrive = msdDrive;
-
-            this.emit(AuroraEventList.msdAttachmentChange, msdDrive);
-        }
-    };
-
-    private msdSetDetached = (msdDrive?: unknown): void => {
-        if (this.msdDrive && !msdDrive) {
-            this.msdDrive = false;
-
-            this.emit(AuroraEventList.msdAttachmentChange, false);
-        }
-    };
-
-    private onUsbConnectionStateChange = (
-        connectionState: AuroraConstants.ConnectionStates,
-        previousConnectionState: AuroraConstants.ConnectionStates
-    ): void => {
-        if (
-            connectionState === AuroraConstants.ConnectionStates.IDLE &&
-            previousConnectionState ===
-                AuroraConstants.ConnectionStates.CONNECTING
-        ) {
-            this.getOsInfo(AuroraConstants.ConnectorTypes.USB)
-                .then((cmd: any): void => {
-                    this.emit(
-                        this.isFlashing
-                            ? AuroraEventList.flashConnectionChange
-                            : AuroraEventList.usbConnectionChange,
-                        cmd.response
-                    );
-                })
-                .catch((error: string): void => {
-                    console.debug("Usb Connection Error:", error);
-                    this.disconnectUsb();
-                });
-        } else if (
-            connectionState === AuroraConstants.ConnectionStates.DISCONNECTED &&
-            previousConnectionState !==
-                AuroraConstants.ConnectionStates.CONNECTING
-        ) {
-            this.emit(
-                this.isFlashing
-                    ? AuroraEventList.flashConnectionChange
-                    : AuroraEventList.usbConnectionChange,
-                false
-            );
-        }
-    };
 
     private onBluetoothConnectionStateChange = async (
         connectionState: AuroraConstants.ConnectionStates,
@@ -935,10 +563,6 @@ class Aurora extends EventEmitter {
         if (!this.cmdCurrent) return;
 
         this.cmdCurrent.outputStream!.push(output);
-    };
-
-    private onAuroraLog = (log: unknown): void => {
-        this.emit(AuroraEventList.log, log);
     };
 
     private onAuroraStreamData = (streamData: unknown): void => {

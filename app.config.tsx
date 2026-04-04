@@ -21,9 +21,22 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ios: {
         supportsTablet: true,
         bundleIdentifier: "com.amikaboshi.owlofathena",
+        infoPlist: {
+            NSBluetoothAlwaysUsageDescription:
+                "Bluetooth is required to connect to the Aurora sleep headband.",
+            NSBluetoothPeripheralUsageDescription:
+                "Bluetooth is required to connect to the Aurora sleep headband.",
+        },
     },
     android: {
         package: "com.amikaboshi.owlofathena",
+        permissions: [
+            "android.permission.BLUETOOTH",
+            "android.permission.BLUETOOTH_ADMIN",
+            "android.permission.BLUETOOTH_SCAN",
+            "android.permission.BLUETOOTH_CONNECT",
+            "android.permission.ACCESS_FINE_LOCATION",
+        ],
     },
     description: "Aurora Client for community user.",
     backgroundColor: Colors.navy_darker,
@@ -34,6 +47,15 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     plugins: [
         "expo-dev-client",
+        [
+            "react-native-ble-plx",
+            {
+                isBackgroundEnabled: false,
+                modes: ["peripheral", "central"],
+                bluetoothAlwaysPermission:
+                    "Bluetooth is required to connect to the Aurora sleep headband.",
+            },
+        ],
         [
             "expo-splash-screen",
             {
