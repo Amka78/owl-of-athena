@@ -1,17 +1,17 @@
+import fs from "fs";
 import mkdirp from "mkdirp";
 import path from "path";
-import fs from "fs";
-import { promisify } from "./util";
+import type { Aurora } from "./Aurora";
+import { ConnectorTypes, type DataTypes } from "./AuroraConstants";
 import AuroraTransformBinary from "./AuroraTransformBinary";
-import { DataTypes, ConnectorTypes } from "./AuroraConstants";
-import { Aurora } from "./Aurora";
+import { promisify } from "./util";
 
 const AuroraCmdDownloadStream = async function (
     this: Aurora,
     srcPath: string,
     destDir: string,
     type: DataTypes,
-    connector: ConnectorTypes = ConnectorTypes.ANY
+    connector: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<unknown> {
     try {
         await promisify(mkdirp)(destDir);
@@ -24,10 +24,8 @@ const AuroraCmdDownloadStream = async function (
             transform = new AuroraTransformBinary(type);
         }
 
-        let writeStream:
-            | fs.WriteStream
-            | AuroraTransformBinary = fs.createWriteStream(
-            path.join(destDir, file)
+        let writeStream: fs.WriteStream | AuroraTransformBinary = fs.createWriteStream(
+            path.join(destDir, file),
         );
 
         if (transform) {

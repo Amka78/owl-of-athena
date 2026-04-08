@@ -1,8 +1,8 @@
 import Flat from "flat";
 import moment from "moment";
-import { parseValueString, camelCaseObjectKeys } from "./util";
 import AuroraSessionParser from "./AuroraSessionParser";
 import type { DirectoryInfo } from "./AuroraTypes";
+import { camelCaseObjectKeys, parseValueString } from "./util";
 
 function transformSessionText(raw: string): any {
     const transformedObject: Record<string, any> = {};
@@ -30,7 +30,7 @@ export default class AuroraSessionReader {
     public static async read(
         sessionDirName: string,
         sessionRaw: string,
-        sessionDirFilesForCheck?: Array<DirectoryInfo>
+        sessionDirFilesForCheck?: Array<DirectoryInfo>,
     ): Promise<any> {
         const session: any = {
             name: sessionDirName.split("/").pop(),
@@ -42,24 +42,17 @@ export default class AuroraSessionReader {
         try {
             const sessionTxtObject = transformSessionText(sessionRaw);
 
-            const parsedSession =
-                await AuroraSessionParser.parseSessionTxtObject(
-                    sessionTxtObject
-                );
+            const parsedSession = await AuroraSessionParser.parseSessionTxtObject(sessionTxtObject);
 
             Object.assign(session, parsedSession);
 
             if (sessionDirFilesForCheck) {
                 for (let i = 0; i < session.streams.length; i++) {
                     const streamFile = sessionDirFilesForCheck.find(
-                        (file) => file.name == session.streams[i].file
+                        (file) => file.name == session.streams[i].file,
                     );
 
-                    if (
-                        !streamFile ||
-                        !streamFile.size ||
-                        streamFile.size > 100 * 1024 * 1024
-                    ) {
+                    if (!streamFile || !streamFile.size || streamFile.size > 100 * 1024 * 1024) {
                         delete session.streams[i];
                         continue;
                     }
@@ -68,14 +61,8 @@ export default class AuroraSessionReader {
                 }
             }
         } catch (sessionWithError: any) {
-            if (
-                !sessionWithError.date ||
-                typeof sessionWithError != "number"
-            ) {
-                sessionWithError.date = +moment.utc(
-                    session.name,
-                    "YYYY-MM-DD@HHmm"
-                );
+            if (!sessionWithError.date || typeof sessionWithError != "number") {
+                sessionWithError.date = +moment.utc(session.name, "YYYY-MM-DD@HHmm");
             }
             Object.assign(session, sessionWithError);
         }

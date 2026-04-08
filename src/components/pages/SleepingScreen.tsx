@@ -1,9 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-
+import React, { type FunctionComponent } from "react";
+import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useWindowDimensions } from "../../hooks";
 import { useSleeping } from "../../hooks/useSleeping";
-import { Message, MessageKeys } from "../../constants";
 import { SleepingScreenTemplate } from "./../templates/SleepingScreenTemplate";
 //#endregion
 
@@ -11,11 +10,7 @@ import { SleepingScreenTemplate } from "./../templates/SleepingScreenTemplate";
 export const SleepingScreen: FunctionComponent = () => {
     const sleepingHook = useSleeping();
     const dimens = useWindowDimensions();
-    useConvertibleHeader(
-        MessageKeys.sleeping_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
+    useConvertibleHeader(MessageKeys.sleeping_title, dimens.isDesktop, dimens.isSmallHeight);
     return (
         <SleepingScreenTemplate
             dimens={dimens}
@@ -26,6 +21,8 @@ export const SleepingScreen: FunctionComponent = () => {
                 minutes: sleepingHook.settings.alarmMinute,
             }}
             onWakeupPress={sleepingHook.onWakeupPress}
+            onSnoozePress={sleepingHook.onSnoozePress}
+            isSnoozing={sleepingHook.isSnoozing}
         ></SleepingScreenTemplate>
     );
 };

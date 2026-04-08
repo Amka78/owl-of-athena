@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -49,7 +49,7 @@ describe("ChartTimeline UnitTest", () => {
                     eventLabelStyle={{}}
                     eventTickStyle={{}}
                     eventIconStyle={{}}
-                />
+                />,
             );
             rendered = true;
         } catch (e) {
@@ -81,7 +81,7 @@ describe("ChartTimeline UnitTest", () => {
                     eventLabelStyle={{}}
                     eventTickStyle={{}}
                     eventIconStyle={{}}
-                />
+                />,
             );
             rendered = true;
         } catch (e) {

@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme, MessageKeys } from '../../constants';
-import { ProfileOption } from '../../components/organisms/profiles/ProfileOption';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ProfileOption } from "../../components/organisms/profiles/ProfileOption";
+import { MessageKeys, Theme } from "../../constants";
 
 const toggleOption = {
-    name: 'stim-enabled' as const,
-    title: 'REM Stimulation',
-    description: 'Enables REM stimulation when detected.',
-    group: 'REM Stim Options' as const,
+    name: "stim-enabled" as const,
+    title: "REM Stimulation",
+    description: "Enables REM stimulation when detected.",
+    group: "REM Stim Options" as const,
     groupName: MessageKeys.profile_rem_stim_options,
     value: false,
-    field: { type: 'toggle' as const },
+    field: { type: "toggle" as const },
 };
 
 const meta = {
-    title: 'Organisms/ProfileOption',
+    title: "Organisms/ProfileOption",
     component: ProfileOption,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
         (Story: any) => (
             <Provider theme={Theme}>
@@ -47,7 +47,7 @@ export const Failed: Story = {
     args: {
         profileOption: {
             ...toggleOption,
-            failedConditionMessage: 'Requires firmware >= 2.0',
+            failedConditionMessage: "Requires firmware >= 2.0",
         },
         failed: true,
         onHelpIconPress: fn(),

@@ -1,8 +1,8 @@
 //#region Import Moduels
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import {
     AwakeScreenTemplate,
-    AwakeScreenTemplateProps,
+    type AwakeScreenTemplateProps,
 } from "../../../components/templates/AwakeScreenTemplate";
 import { useWindowDimensions } from "../../../hooks";
 import { Container } from "../../Container";
@@ -13,16 +13,11 @@ export type AwakeScreenProps = Omit<AwakeScreenTemplateProps, "dimens">;
 //#endregion
 
 //#region Component
-export const AwakeScreen: FunctionComponent<AwakeScreenProps> = (
-    props: AwakeScreenProps
-) => {
+export const AwakeScreen: FunctionComponent<AwakeScreenProps> = (props: AwakeScreenProps) => {
     const dimens = useWindowDimensions();
     return (
         <Container dimens={dimens}>
-            <AwakeScreenTemplate
-                {...props}
-                dimens={dimens}
-            ></AwakeScreenTemplate>
+            <AwakeScreenTemplate {...props} dimens={dimens}></AwakeScreenTemplate>
         </Container>
     );
 };

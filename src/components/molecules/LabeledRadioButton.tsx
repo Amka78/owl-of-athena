@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { StyleSheet, Text, type TextStyle, View, type ViewStyle } from "react-native";
 import { RadioButton, useTheme } from "react-native-paper";
 //#endregion
 
@@ -18,18 +19,14 @@ export type LabeledRadioButtonProps = {
 
 //#region Component
 export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
-    props: LabeledRadioButtonProps
+    props: LabeledRadioButtonProps,
 ) => {
     const theme = useTheme();
     return (
         <View style={[styles.radioButtonContainer, props.containerStyle]}>
             <RadioButton
                 value={props.value}
-                color={
-                    props.radioButtonColor
-                        ? props.radioButtonColor
-                        : theme.colors.secondary
-                }
+                color={props.radioButtonColor ? props.radioButtonColor : theme.colors.secondary}
                 uncheckedColor={
                     props.radioButtonUncheckedColor
                         ? props.radioButtonUncheckedColor

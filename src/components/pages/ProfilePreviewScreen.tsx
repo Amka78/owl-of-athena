@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { useProfilePreview } from "../../hooks/profiles/useProfilePreview";
 import { ProfilePreviewScreenTemplate } from "../templates/ProfilePreviewScreenTemplate";
@@ -8,10 +8,6 @@ import { ProfilePreviewScreenTemplate } from "../templates/ProfilePreviewScreenT
 //#region Component
 export const ProfilePreviewScreen: FunctionComponent = () => {
     const { content } = useProfilePreview();
-    return (
-        <ProfilePreviewScreenTemplate
-            content={content}
-        ></ProfilePreviewScreenTemplate>
-    );
+    return <ProfilePreviewScreenTemplate content={content}></ProfilePreviewScreenTemplate>;
 };
 //#endregion

@@ -1,8 +1,7 @@
 import EventEmitter from "events";
 
 export class AuroraUsb extends EventEmitter {
-    private static NOT_SUPPORTED_ERROR =
-        "USB connections are not supported on this platform.";
+    private static NOT_SUPPORTED_ERROR = "USB connections are not supported on this platform.";
     constructor() {
         super();
     }

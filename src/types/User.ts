@@ -1,4 +1,5 @@
 import type { ProviderCollection } from "./ProviderCollection";
+import type { Role } from "./Role";
 
 export type User = {
     id: string;
@@ -16,4 +17,8 @@ export type User = {
     updatedAt: string;
 
     providers?: ProviderCollection;
+
+    emailConfirmed?: boolean;
+
+    roles?: Role[];
 };

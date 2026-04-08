@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { LabeledSelectorMenu } from '../../components/molecules/LabeledSelectorMenu';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { LabeledSelectorMenu } from "../../components/molecules/LabeledSelectorMenu";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/LabeledSelectorMenu',
+    title: "Molecules/LabeledSelectorMenu",
     component: LabeledSelectorMenu,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof LabeledSelectorMenu>;
 
@@ -19,8 +23,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        label: 'Language',
-        value: 'English',
+        label: "Language",
+        value: "English",
         onPress: fn(),
     },
     play: async ({ canvasElement }) => {

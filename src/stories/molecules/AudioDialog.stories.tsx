@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { AudioDialog } from '../../components/molecules/AudioDialog';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { AudioDialog } from "../../components/molecules/AudioDialog";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/AudioDialog',
+    title: "Molecules/AudioDialog",
     component: AudioDialog,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof AudioDialog>;
 

@@ -10,7 +10,7 @@ const AuroraCmdUploadFile = async function (
     dataOrReadStream: string | Stream.Readable | NodeJS.ReadStream,
     rename = false,
     _osVersion = 3000,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<CommandResult<FileInfo>> {
     //const destPathSegments = destPath.split("/");
 
@@ -25,10 +25,7 @@ const AuroraCmdUploadFile = async function (
     let stream: Stream.Readable;
 
     //convert to stream in case of string or buffer
-    if (
-        typeof dataOrReadStream == "string" ||
-        Buffer.isBuffer(dataOrReadStream)
-    ) {
+    if (typeof dataOrReadStream == "string" || Buffer.isBuffer(dataOrReadStream)) {
         stream = new Stream.Readable();
         stream._read = (): void => {
             return;
@@ -42,14 +39,12 @@ const AuroraCmdUploadFile = async function (
     stream.pause();
     stream.on("data", (chunk) => {
         //crc = crc32.unsigned(chunk);
-        // @ts-ignore
+        // @ts-expect-error
         crc = crc32.unsigned(chunk);
     });
 
     return await this.queueCmd(
-        `sd-file-write ${destFileName} ${destFileDir} ${
-            rename ? 1 : 0
-        } 1 500 0 }`,
+        `sd-file-write ${destFileName} ${destFileDir} ${rename ? 1 : 0} 1 500 0 }`,
         connectorType,
         (_cmd: unknown): void => {
             console.debug(_cmd);
@@ -57,7 +52,7 @@ const AuroraCmdUploadFile = async function (
                 stream.pipe(inputStream);
                 stream.resume();
             });
-        }
+        },
     ).then((cmdWithResponse: { response: { crc: string } }) => {
         if (cmdWithResponse.response.crc) {
             const deviceCrc = parseInt(cmdWithResponse.response.crc);

@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { View, type ViewStyle } from "react-native";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
@@ -15,11 +16,8 @@ import {
     StandardView,
     StarIcon,
 } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
-import {
-    ProfileListMenu,
-    ProfileListMenuProps,
-} from "../organisms/profiles/ProfileListMenu";
+import type { ListItemComponentProps } from "../atoms/ListItem";
+import { ProfileListMenu, type ProfileListMenuProps } from "../organisms/profiles/ProfileListMenu";
 //#endregion
 
 //#region Types
@@ -39,12 +37,12 @@ export type ProfileListScreenTemplateProps = {
 
 //#region Component
 export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTemplateProps> = (
-    props: ProfileListScreenTemplateProps
+    props: ProfileListScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     const screenDimens = useScreenDimensions();
-    let menu = undefined;
+    let menu;
     if (props.showFilter) {
         menu = (
             <ProfileListMenu
@@ -54,14 +52,11 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
         );
     }
     return props.list ? (
-        <StandardView
-            standardViewStyle={standardView}
-            onLayout={screenDimens.onLayout}
-        >
+        <StandardView standardViewStyle={standardView} onLayout={screenDimens.onLayout}>
             {menu}
             <ScrollableList>
                 {props.list.map((value: AuroraProfile, index: number) => {
-                    let leftAvatar: React.ReactNode = undefined;
+                    let leftAvatar: React.ReactNode;
                     switch (value.type) {
                         case "community":
                             leftAvatar = <CommunityIcon></CommunityIcon>;
@@ -80,9 +75,7 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
                         <ListItem
                             key={value.id}
                             left={(): React.ReactNode => leftAvatar}
-                            right={(
-                                rightProps: ListItemComponentProps
-                            ): React.ReactNode => (
+                            right={(rightProps: ListItemComponentProps): React.ReactNode => (
                                 <View {...rightProps} style={iconContainer}>
                                     <StarIcon
                                         disabled={!isUserProfile}

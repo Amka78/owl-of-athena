@@ -2,16 +2,20 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
-
-import { Theme } from "../../constants";
 import { SignupScreen } from "../../components/pages/SignupScreen";
+import { Theme } from "../../constants";
 
 jest.mock("../../hooks/useSignup", () => ({
     useSignup: () => ({
         loading: false,
         emailHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
         passwordHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        passwordConfirmHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
+        passwordConfirmHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
         checkBoxHooks: { checked: false, onPress: jest.fn() },
         onSignupPress: jest.fn(),
         onCancelPress: jest.fn(),
@@ -37,7 +41,12 @@ jest.mock("../../hooks", () => ({
         loading: false,
         emailHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
         passwordHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        passwordConfirmHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
+        passwordConfirmHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
         checkBoxHooks: { checked: false, onPress: jest.fn() },
         onSignupPress: jest.fn(),
         onCancelPress: jest.fn(),
@@ -51,7 +60,6 @@ jest.mock("@react-navigation/native", () => ({
     useRoute: () => ({ params: {} }),
     useFocusEffect: jest.fn(),
 }));
-
 
 const meta = {
     title: "Pages/SignupScreen",

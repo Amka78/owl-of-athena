@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { OptionToggle } from '../../components/molecules/OptionToggle';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { View } from "react-native";
+import { Provider } from "react-native-paper";
+import { OptionToggle } from "../../components/molecules/OptionToggle";
+import { Theme } from "../../constants";
 
 const leftIcon = (props: any) => (
     <View style={props.style}>
@@ -14,11 +14,15 @@ const leftIcon = (props: any) => (
 );
 
 const meta = {
-    title: 'Molecules/OptionToggle',
+    title: "Molecules/OptionToggle",
     component: OptionToggle,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof OptionToggle>;
 
@@ -27,12 +31,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Enabled: Story = {
     args: {
-        title: 'Enable Notifications',
-        description: 'Receive alerts on your device',
+        title: "Enable Notifications",
+        description: "Receive alerts on your device",
         left: leftIcon,
         disabled: false,
-        value: 'enabled',
-        field: { type: 'toggle', valueEnabled: 'enabled', valueDisabled: 'disabled' },
+        value: "enabled",
+        field: { type: "toggle", valueEnabled: "enabled", valueDisabled: "disabled" },
         onValueChange: () => {},
     },
     play: async ({ canvasElement }) => {
@@ -42,12 +46,12 @@ export const Enabled: Story = {
 
 export const Disabled: Story = {
     args: {
-        title: 'Enable Notifications',
-        description: 'Receive alerts on your device',
+        title: "Enable Notifications",
+        description: "Receive alerts on your device",
         left: leftIcon,
         disabled: true,
-        value: 'disabled',
-        field: { type: 'toggle', valueEnabled: 'enabled', valueDisabled: 'disabled' },
+        value: "disabled",
+        field: { type: "toggle", valueEnabled: "enabled", valueDisabled: "disabled" },
         onValueChange: () => {},
     },
     play: async ({ canvasElement }) => {

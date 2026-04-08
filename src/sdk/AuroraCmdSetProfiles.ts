@@ -1,12 +1,12 @@
 import pick from "lodash/pick";
+import type { Aurora } from "./Aurora";
 import { ConnectorTypes } from "./AuroraConstants";
 import type { AuroraProfile } from "./AuroraTypes";
-import { Aurora } from "./Aurora";
 
 const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
     this: Aurora,
     newProfiles: Array<AuroraProfile>,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<Array<AuroraProfile>> {
     await this.queueCmd("sd-dir-del profiles");
     await this.queueCmd("sd-dir-create profiles");
@@ -17,25 +17,23 @@ const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
     for (let i = 0; i < newProfiles.length; i++) {
         const profWriteCmd = await this.writeFile(
             `profiles/${newProfiles[i].name}`,
-            // @ts-ignore
+            // @ts-expect-error
             newProfiles[i].content,
             true,
-            connectorType as unknown as number
+            connectorType as unknown as number,
         );
 
         const profile: AuroraProfile = pick(newProfiles[i], [
             "id",
             "active",
-            "content"
+            "content",
         ]) as AuroraProfile;
 
         profile.name = profWriteCmd.response!.file.slice(9);
         profile.key = i + profile.id! + profile.name;
 
         //add leading ':' to mark profile as inactive
-        profileList.push(
-            `${profile.active ? "" : ":"}${profile.name}:${profile.id}`
-        );
+        profileList.push(`${profile.active ? "" : ":"}${profile.name}:${profile.id}`);
 
         profiles.push(profile);
     }
@@ -44,7 +42,7 @@ const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
         "profiles/_profiles.list",
         profileList.join("\r\n"),
         false,
-        connectorType as unknown as number
+        connectorType as unknown as number,
     );
 
     return profiles;

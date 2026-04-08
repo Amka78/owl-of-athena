@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { FieldTime, ListItem } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
@@ -13,9 +13,7 @@ export type OptionTimeProps = OptionProps & {
 //#endregion
 
 //#region Component
-export const OptionTime: FunctionComponent<OptionTimeProps> = (
-    props: OptionTimeProps
-) => {
+export const OptionTime: FunctionComponent<OptionTimeProps> = (props: OptionTimeProps) => {
     return (
         <ListItem
             {...props}

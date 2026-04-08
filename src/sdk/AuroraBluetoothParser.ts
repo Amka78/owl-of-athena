@@ -1,15 +1,15 @@
 import { EventEmitter } from "events";
+import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import {
     BleCmdStates,
     DataTypes,
     EVENT_ID_MAX,
+    type EventIds,
     EventIdsToNames,
     STREAM_ID_MAX,
     StreamIdsToNames,
-    EventIds,
 } from "./AuroraConstants";
 import type { BluetoothStream, CommandResult } from "./AuroraTypes";
-import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import { sleep } from "./util";
 
 export enum EventList {
@@ -48,8 +48,7 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public setCmd(cmd: string): void {
-        if (this.cmdState != BleCmdStates.IDLE)
-            throw new Error("Parser command state not idle.");
+        if (this.cmdState != BleCmdStates.IDLE) throw new Error("Parser command state not idle.");
 
         this.reset();
 
@@ -62,7 +61,7 @@ export class AuroraBluetoothParser extends EventEmitter {
     }
 
     public onStreamDataCharNotification(dataBuffer: Buffer): void {
-        let stream: BluetoothStream | undefined = undefined;
+        let stream: BluetoothStream | undefined;
         let streamDataType = DataTypes.UNKNOWN;
         let streamDataLength = 0;
 
@@ -71,10 +70,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                 const streamId = dataBuffer[i];
 
                 if (streamId > STREAM_ID_MAX) {
-                    this.emit(
-                        EventList.parseError,
-                        "Invalid stream id: " + streamId
-                    );
+                    this.emit(EventList.parseError, "Invalid stream id: " + streamId);
                     continue;
                 }
 
@@ -88,7 +84,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                         stream = {
                             streamId,
                             stream: StreamIdsToNames[streamId],
-                            data: new Array<number>(),
+                            data: [] as number[],
                             time: Date.now(),
                         };
 
@@ -140,8 +136,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                     default:
                         this.emit(
                             EventList.parseError,
-                            "Invalid or unsupported stream data type: " +
-                                streamDataType
+                            "Invalid or unsupported stream data type: " + streamDataType,
                         );
                 }
 
@@ -176,9 +171,7 @@ export class AuroraBluetoothParser extends EventEmitter {
         });
     }
 
-    public async onCmdStatusCharNotification(
-        statusBuffer: Buffer
-    ): Promise<void> {
+    public async onCmdStatusCharNotification(statusBuffer: Buffer): Promise<void> {
         if (this.parsing) {
             await sleep(100);
         }
@@ -189,10 +182,7 @@ export class AuroraBluetoothParser extends EventEmitter {
         this.cmdWatchdogTimer = setTimeout(this.onCmdTimeout, 10000);
 
         if (this.cmdState != BleCmdStates.IDLE && !this.cmd) {
-            this.emit(
-                EventList.parseError,
-                "Invalid status change. No command set."
-            );
+            this.emit(EventList.parseError, "Invalid status change. No command set.");
             return;
         }
 
@@ -214,22 +204,14 @@ export class AuroraBluetoothParser extends EventEmitter {
             case BleCmdStates.CMD_RESP_OBJECT_READY:
                 this.parsing = true;
                 //second statusBuffer byte is number of bytes available to read
-                this.emit(
-                    "cmdResponseRead",
-                    statusBuffer[1],
-                    this.cmdDataReceiveResponseObject
-                );
+                this.emit("cmdResponseRead", statusBuffer[1], this.cmdDataReceiveResponseObject);
 
                 break;
 
             case BleCmdStates.CMD_RESP_TABLE_READY:
                 this.parsing = true;
                 //second statusBuffer byte is number of bytes available to read
-                this.emit(
-                    "cmdResponseRead",
-                    statusBuffer[1],
-                    this.cmdDataReceiveResponseTable
-                );
+                this.emit("cmdResponseRead", statusBuffer[1], this.cmdDataReceiveResponseTable);
 
                 break;
 
@@ -241,10 +223,7 @@ export class AuroraBluetoothParser extends EventEmitter {
                 break;
 
             default:
-                this.emit(
-                    "parseError",
-                    "Unknown command state: " + statusBuffer[0]
-                );
+                this.emit("parseError", "Unknown command state: " + statusBuffer[0]);
                 break;
         }
     }

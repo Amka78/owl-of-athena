@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { TextStyle, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import type { TextStyle, ViewStyle } from "react-native";
 import { Button as PaperButton, useTheme } from "react-native-paper";
 
 import { Dimens, Fonts } from "../../constants";
@@ -16,19 +17,13 @@ export type FlatButtonProps = {
 //#endregion
 
 //#region Component
-export const FlatButton: FunctionComponent<FlatButtonProps> = (
-    props: FlatButtonProps
-) => {
+export const FlatButton: FunctionComponent<FlatButtonProps> = (props: FlatButtonProps) => {
     const theme = useTheme();
     return (
         <PaperButton
             onPress={props.onPress}
             mode={"text"}
-            labelStyle={[
-                labelStyle,
-                { color: theme?.colors.onSurface },
-                props.labelStyle,
-            ]}
+            labelStyle={[labelStyle, { color: theme?.colors.onSurface }, props.labelStyle]}
             contentStyle={[contentStyle, props.contentStyle]}
         >
             {props.children}

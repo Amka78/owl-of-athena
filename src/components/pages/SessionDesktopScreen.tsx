@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
 import { FilterByDateValues } from "../../store/sessionStore";
@@ -19,18 +19,18 @@ export const SessionDesktopScreen: FunctionComponent = () => {
                 anyTimePickerValue: FilterByDateValues.ANY_TIME,
                 pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
                 pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-                showStarredCheckBoxStatus: sessionListHook.filterCondition
-                    .showStarred
+                showStarredCheckBoxStatus: sessionListHook.filterCondition.showStarred
                     ? "checked"
                     : "unchecked",
 
                 onShowStarredCheckBoxPress: sessionListHook.onShowStarredPress,
-                showNoteCheckBoxStatus: sessionListHook.filterCondition
-                    .showNotes
+                showNoteCheckBoxStatus: sessionListHook.filterCondition.showNotes
                     ? "checked"
                     : "unchecked",
                 selectedPickerValue: sessionListHook.filterCondition.byDate,
-                onPickerValueChange: sessionListHook.onPickerValueChange as (itemValue: string | number) => void,
+                onPickerValueChange: sessionListHook.onPickerValueChange as (
+                    itemValue: string | number,
+                ) => void,
                 onShowNoteCheckBoxPress: sessionListHook.onShowNotesPress,
             }}
             sessionList={sessionListHook.sessionList}

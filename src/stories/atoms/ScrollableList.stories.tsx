@@ -1,45 +1,46 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Text } from 'react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ScrollableList } from '../../components/atoms/ScrollableList';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import type React from "react";
+import { Text } from "react-native";
+import { Provider } from "react-native-paper";
+import { ScrollableList } from "../../components/atoms/ScrollableList";
+import { Theme } from "../../constants";
 
 const meta = {
-  title: 'Atoms/ScrollableList',
-  component: ScrollableList,
-  tags: ['autodocs'],
-  decorators: [
-    (Story: any) => <Provider theme={Theme}><Story /></Provider>,
-  ],
+    title: "Atoms/ScrollableList",
+    component: ScrollableList,
+    tags: ["autodocs"],
+    decorators: [
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
+    ],
 } satisfies Meta<typeof ScrollableList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { children: [] as React.ReactNode[] },
-  render: (args) => (
-    <ScrollableList {...args}>
-      {[
-        <Text key="1">Item 1</Text>,
-        <Text key="2">Item 2</Text>,
-      ]}
-    </ScrollableList>
-  ),
-  play: async ({ canvasElement }) => {
-    expect(canvasElement).toBeTruthy();
-  },
+    args: { children: [] as React.ReactNode[] },
+    render: (args) => (
+        <ScrollableList {...args}>
+            {[<Text key="1">Item 1</Text>, <Text key="2">Item 2</Text>]}
+        </ScrollableList>
+    ),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
 };
 
 export const ManyItems: Story = {
-  args: { children: [] as React.ReactNode[] },
-  render: (args) => (
-    <ScrollableList {...args}>
-      {Array.from({ length: 10 }, (_, i) => (
-        <Text key={i}>Item {i + 1}</Text>
-      ))}
-    </ScrollableList>
-  ),
+    args: { children: [] as React.ReactNode[] },
+    render: (args) => (
+        <ScrollableList {...args}>
+            {Array.from({ length: 10 }, (_, i) => (
+                <Text key={i}>Item {i + 1}</Text>
+            ))}
+        </ScrollableList>
+    ),
 };

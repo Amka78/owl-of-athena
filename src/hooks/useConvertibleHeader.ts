@@ -10,10 +10,11 @@ import { Message } from "../constants";
 export const useConvertibleHeader = (
     headerTitleKey: string,
     isDesktop: boolean,
-    isSmallHeight: boolean
+    isSmallHeight: boolean,
 ): void => {
-    let navigation: any = undefined;
+    let navigation: any;
     try {
+        // biome-ignore lint/correctness/useHookAtTopLevel: intentionally used in try-catch for optional navigation context
         navigation = useNavigation();
     } catch (ex) {
         console.debug(ex);

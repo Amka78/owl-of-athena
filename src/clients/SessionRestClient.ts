@@ -1,36 +1,23 @@
-import RestClient from "./RestClient";
-
-import { BaseUrl } from "../utils";
-import * as Localization from "expo-localization";
-import {
-    AuroraSession,
-    AuroraSessionDetail,
-    AuroraStream,
-    AuroraEvent,
-} from "../sdk/models";
+import { EventIds } from "../sdk/AuroraConstants";
 import type {
-    AuroraSessionJson,
-    AuroraStreamJson,
     AuroraEventJson,
     AuroraSessionCSV,
+    AuroraSessionJson,
+    AuroraStreamJson,
 } from "../sdk/AuroraTypes";
-import { EventIds } from "../sdk/AuroraConstants";
+import { AuroraEvent, AuroraSession, AuroraSessionDetail, AuroraStream } from "../sdk/models";
+import { supabase } from "./supabase";
 
 /**
- * Managing session-related RestAPI communication
+ * Managing session-related Supabase communication
  *
  * @export
  * @class SessionRestClient
- * @extends {RestClient}
  */
-export class SessionRestClient extends RestClient {
-    constructor(baseUrl: string, locale: string) {
-        super(baseUrl, {
-            headers: {
-                "Accept-Language": locale,
-            },
-        });
-    }
+export class SessionRestClient {
+    /** @deprecated Supabase manages auth internally; this is kept for API compatibility. */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public set getTokenCallback(_callback: () => string) {}
 
     /**
      * Register a session.
@@ -40,40 +27,34 @@ export class SessionRestClient extends RestClient {
      * @memberof SessionRestClient
      */
     public async create(sessionJson: AuroraSessionCSV): Promise<AuroraSession> {
-        const response = await this.post(
-            "users/me/aurora-sessions",
-            sessionJson
-        );
+        const { data, error } = await supabase
+            .from("aurora_sessions")
+            .insert(sessionJson)
+            .select()
+            .single();
 
-        if (response.ok) {
-            return new AuroraSession(await response.json());
-        }
-        throw await response.json();
+        if (error) throw error;
+
+        return new AuroraSession(data as AuroraSessionJson);
     }
 
     /**
-     * Get your own session.
+     * Get your own sessions.
      *
      * @param {string} userId
      * @returns {Promise<Array<AuroraSession>>}
      * @memberof SessionRestClient
      */
     public async getAll(userId: string): Promise<Array<AuroraSession>> {
-        const response = await this.get(
-            `users/${userId}/aurora-sessions?\$sort[session_at]=1`,
-            {}
-        );
+        const { data, error } = await supabase
+            .from("aurora_sessions")
+            .select("*")
+            .eq("user_id", userId)
+            .order("session_at", { ascending: true });
 
-        if (response.ok) {
-            const result: Array<AuroraSessionJson> = await response.json();
+        if (error) throw error;
 
-            const auroraSessions = new Array<AuroraSession>();
-            result.forEach((value: AuroraSessionJson) => {
-                auroraSessions.push(new AuroraSession(value));
-            });
-            return auroraSessions.reverse();
-        }
-        throw await response.json();
+        return (data as AuroraSessionJson[]).map((value) => new AuroraSession(value)).reverse();
     }
 
     /**
@@ -84,39 +65,38 @@ export class SessionRestClient extends RestClient {
      * @memberof SessionRestClient
      */
     public async getById(sessionId: string): Promise<AuroraSession> {
-        const response = await this._getById(sessionId);
+        const { data, error } = await supabase
+            .from("aurora_sessions")
+            .select("*")
+            .eq("id", sessionId)
+            .single();
 
-        if (response.ok) {
-            return new AuroraSession(await response.json());
-        }
-        throw await response.json();
+        if (error) throw error;
+
+        return new AuroraSession(data as AuroraSessionJson);
     }
 
     /**
-     * Get the stream of the specified session.
+     * Get the streams of the specified session.
      *
-     * @param sessionId
+     * @param {string} sessionId
+     * @returns {Promise<Array<AuroraStream>>}
+     * @memberof SessionRestClient
      */
     public async getStreams(sessionId: string): Promise<Array<AuroraStream>> {
-        const response = await this.get(
-            `aurora-sessions/${sessionId}/streams`,
-            {}
-        );
+        const { data, error } = await supabase
+            .from("aurora_streams")
+            .select("*")
+            .eq("aurora_session_id", sessionId);
 
-        if (response.ok) {
-            const result = await response.json();
+        if (error) throw error;
 
-            const auroraStreams = new Array<AuroraStream>();
-            result.forEach((value: AuroraStreamJson) => {
-                auroraStreams.push(new AuroraStream(value));
-            });
-            return auroraStreams;
-        }
-        throw await response.json();
+        return (data as AuroraStreamJson[]).map((value) => new AuroraStream(value));
     }
 
     /**
      * Get the events of the specified session.
+     * Calls the Supabase RPC function `get_session_events` for each event type.
      *
      * @param {string} sessionId
      * @returns {Promise<any>}
@@ -154,20 +134,22 @@ export class SessionRestClient extends RestClient {
 
         return Promise.all(
             Object.entries(queries).map(async ([eventIndex, eventQuery]) => {
-                return this.get(
-                    `aurora-sessions/${sessionId}/events`,
-                    eventQuery
-                ).then(async (response: Response) => {
-                    const result = await response.json();
-
-                    const auroraEvents = Array<AuroraEvent>();
-                    result.forEach((value: AuroraEventJson) => {
-                        auroraEvents.push(new AuroraEvent(value));
-                    });
-
-                    queries[eventIndex] = auroraEvents;
+                const { data, error } = await supabase.rpc("get_session_events", {
+                    p_session_id: sessionId,
+                    p_aurora_event_id: eventQuery.aurora_event_id,
+                    p_bins: eventQuery.bins,
+                    p_group_by: eventQuery.group_by,
+                    p_flags: eventQuery.flags ?? null,
                 });
-            })
+
+                if (error) throw error;
+
+                const auroraEvents = (data as AuroraEventJson[]).map(
+                    (value) => new AuroraEvent(value),
+                );
+
+                queries[eventIndex] = auroraEvents;
+            }),
         ).then(() => queries);
     }
 
@@ -178,9 +160,7 @@ export class SessionRestClient extends RestClient {
      * @returns {Promise<AuroraSessionDetail>}
      * @memberof SessionRestClient
      */
-    public async getDetailsById(
-        sessionId: string
-    ): Promise<AuroraSessionDetail> {
+    public async getDetailsById(sessionId: string): Promise<AuroraSessionDetail> {
         const streams = await this.getStreams(sessionId);
         const events = await this.getEvents(sessionId);
 
@@ -191,7 +171,7 @@ export class SessionRestClient extends RestClient {
             events.buttonEvents,
             events.movementEvents,
             events.sleepEvents,
-            events.stimEvents
+            events.stimEvents,
         );
 
         console.debug("sessionDetail:", sessionDetail);
@@ -199,78 +179,36 @@ export class SessionRestClient extends RestClient {
     }
 
     /**
-     * Get the session of the specified ID.
+     * Delete the session of the specified ID.
      *
      * @param {string} sessionId
-     * @returns {Promise<AuroraSession>}
+     * @returns {Promise<void>}
      * @memberof SessionRestClient
      */
     public async deleteById(sessionId: string): Promise<void> {
-        const response = await this.delete(
-            `users/me/aurora-sessions/${sessionId}`,
-            {}
-        );
+        const { error } = await supabase.from("aurora_sessions").delete().eq("id", sessionId);
 
-        if (response.ok) {
-            return;
-        }
-        throw await response.json();
+        if (error) throw error;
     }
 
     /**
-     * Sessoin update process
+     * Session update process
      *
      * @param {string} sessionId
-     * @param {AuroraSessionJson} updateInfo
+     * @param {Partial<AuroraSessionJson>} updateInfo
      * @returns {Promise<void>}
      * @memberof SessionRestClient
      */
     public async updateById(
         sessionId: string,
-        updateInfo: Partial<AuroraSessionJson>
+        updateInfo: Partial<AuroraSessionJson>,
     ): Promise<void> {
-        const getResponse = await this._getById(sessionId);
+        const { error } = await supabase
+            .from("aurora_sessions")
+            .update(updateInfo)
+            .eq("id", sessionId);
 
-        if (!getResponse.ok) {
-            throw getResponse.json;
-        }
-
-        const updatedJson = Object.assign(getResponse.json(), updateInfo);
-
-        const patchResponse = await this.patch(
-            this.getRoute(sessionId),
-            updatedJson
-        );
-
-        if (patchResponse.ok) {
-            return patchResponse.json();
-        }
-
-        throw patchResponse.json();
-    }
-
-    /**
-     * Internal session retrieval process
-     *
-     * @private
-     * @param {string} sessionId
-     * @returns {Promise<Response>}
-     * @memberof SessionRestClient
-     */
-    private async _getById(sessionId: string): Promise<Response> {
-        return await this.get(this.getRoute(sessionId), {});
-    }
-
-    /**
-     * Get the RouteURL of the session.
-     *
-     * @private
-     * @param {string} sessionId
-     * @returns {string}
-     * @memberof SessionRestClient
-     */
-    private getRoute(sessionId: string): string {
-        return `users/me/aurora-sessions/${sessionId}`;
+        if (error) throw error;
     }
 }
-export default new SessionRestClient(BaseUrl.get(), Localization.getLocales()[0].languageTag);
+export default new SessionRestClient();

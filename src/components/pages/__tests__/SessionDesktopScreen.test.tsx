@@ -1,14 +1,12 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
 import { SessionDesktopScreen } from "../SessionDesktopScreen";
 
 jest.mock("../../../navigation/SessionTabNavigator", () => () => null);
-jest.mock("react-native-reanimated", () =>
-    require("react-native-reanimated/mock")
-);
+jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
 jest.mock("../../../hooks/sessions/useSessionList", () => ({
     useSessinList: () => ({
         showFilter: false,
@@ -27,7 +25,6 @@ jest.mock("../../../hooks/sessions/useSessionList", () => ({
         userId: "guest",
     }),
 }));
-
 
 
 const renderWithProvider = (ui: React.ReactElement) =>

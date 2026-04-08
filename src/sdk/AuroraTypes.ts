@@ -1,8 +1,9 @@
 //#region Import Modules
-import { AuroraBluetooth } from "./AuroraBluetooth";
-import { AuroraUsb } from "./AuroraUsb";
-import { ConnectorTypes, EventIds } from "./AuroraConstants";
-import Stream from "stream";
+
+import type Stream from "stream";
+import type { AuroraBluetooth } from "./AuroraBluetooth";
+import type { ConnectorTypes, EventIds } from "./AuroraConstants";
+import type { AuroraUsb } from "./AuroraUsb";
 //#endregion
 
 //#region Types
@@ -77,13 +78,7 @@ export type AuroraProfileOption = {
     advanced?: boolean;
     developer?: boolean;
     roles?: any;
-    field:
-        | CheckBoxField
-        | ToggleField
-        | TimeField
-        | LedEffectField
-        | BuzzSongField
-        | SliderField;
+    field: CheckBoxField | ToggleField | TimeField | LedEffectField | BuzzSongField | SliderField;
 };
 
 export type ToggleField = {
@@ -145,7 +140,7 @@ export type BluetoothStream = {
 };
 
 export type CommandResolverType = (
-    value?: void | PromiseLike<void> | undefined | CommandResult<any>
+    value?: void | PromiseLike<void> | undefined | CommandResult<any>,
 ) => void;
 export type CommandRejectType = (rejected?: any) => void;
 export type Command = {

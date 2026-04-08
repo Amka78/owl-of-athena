@@ -9,10 +9,7 @@ export default class RestClient {
 
     private _getTokenCallback?: () => string;
 
-    constructor(
-        baseUrl = "",
-        { headers = {}, devMode = false, simulatedDelay = 0 } = {}
-    ) {
+    constructor(baseUrl = "", { headers = {}, devMode = false, simulatedDelay = 0 } = {}) {
         if (!baseUrl) {
             throw new Error("missing baseUrl");
         }
@@ -140,7 +137,7 @@ export default class RestClient {
         route: string,
         methodName: string,
         sendData: T,
-        isQuery = false
+        isQuery = false,
     ): Promise<Response> {
         if (!route) {
             throw new Error("Route is undefined");

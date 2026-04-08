@@ -1,9 +1,9 @@
-import { MessageKeys } from "./Message";
+import type { MessageLocalizationParam } from "./Message";
 
-export default class LocaleMessageParameter {
+export default class LocaleMessageParameter implements Partial<MessageLocalizationParam> {
     constructor() {
         this.key = "";
     }
-    public key: MessageKeys;
-    public restParam?: MessageKeys[];
+    public key: string;
+    public restParam?: string[];
 }

@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Text, View, StyleSheet, TextStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { StyleSheet, Text, type TextStyle, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { TimeView, TimeViewMode } from "../atoms/TimeView";
+import { TimeView, type TimeViewMode } from "../atoms/TimeView";
 //#endregion
 
 //#region Types
@@ -19,18 +19,12 @@ export type LabeledTimeViewProps = {
 
 //#region Component
 export const LabeledTimeView: FunctionComponent<LabeledTimeViewProps> = (
-    props: LabeledTimeViewProps
+    props: LabeledTimeViewProps,
 ) => {
     const theme = useTheme();
     return (
         <View style={{ alignItems: "center" }}>
-            <Text
-                style={[
-                    style.label,
-                    { color: theme.colors?.secondary },
-                    props.labelStyle,
-                ]}
-            >
+            <Text style={[style.label, { color: theme.colors?.secondary }, props.labelStyle]}>
                 {props.label}
             </Text>
             <TimeView

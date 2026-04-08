@@ -1,15 +1,15 @@
 //#region Import Modules
 import * as d3 from "d3";
 import moment from "moment";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { Defs, G, LinearGradient, Path, Stop, Text } from "react-native-svg";
 
 import { Colors } from "../../constants";
-import { AuroraEvent } from "../../sdk/models";
+import type { AuroraEvent } from "../../sdk/models";
 import {
-    Axis,
+    type Axis,
     ChartCore,
-    ChartCoreProps,
+    type ChartCoreProps,
     getChartHeight,
     getChartWidth,
     getData,
@@ -19,9 +19,9 @@ import {
     getYChartRange,
     getYScale,
 } from "./ChartCore";
+import { ClippedG } from "./ClippedG";
 import { XAxisBottomLine } from "./XAxisBottomLine";
 import { XAxisTopLine } from "./XAxisTopLine";
-import { ClippedG } from "./ClippedG";
 //#endregion
 
 //#region Export Types
@@ -58,12 +58,7 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
     const axisMargin = { top: 32, right: 32, bottom: 48, left: 100 };
 
     const xScaleDomain = props.xScaleDomain as number[];
-    const sleep = getData(
-        props.sleep,
-        props.dataBins!,
-        props.dataBinThreshold!,
-        xScaleDomain
-    );
+    const sleep = getData(props.sleep, props.dataBins!, props.dataBinThreshold!, xScaleDomain);
 
     //if we have an odd number of events
     //let's create an additional one at the end
@@ -72,31 +67,24 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
             Object.assign({}, sleep[0], {
                 time: 0,
                 eventAt: xScaleDomain![0],
-            })
+            }),
         );
         sleep.push(
             Object.assign({}, sleep[sleep.length - 1], {
                 eventAt: props.xScaleDomain![1],
                 time: xScaleDomain![1] - xScaleDomain![0],
-            })
+            }),
         );
     }
 
     const yChartRange = getYChartRange(chartHeight, axisMargin);
     const yScale = getYScale(yChartRange, [0, sleepStageLabels.length - 1]);
     const xChartRange = getXChartRange(chartWidth, axisMargin);
-    const xScale = getXScale(xChartRange, [
-        sleep[0].eventAt,
-        sleep[sleep.length - 1].eventAt,
-    ]);
+    const xScale = getXScale(xChartRange, [sleep[0].eventAt, sleep[sleep.length - 1].eventAt]);
 
-    const xAxisLabels = buildXAxisLabels(
-        xScale,
-        props.tickInterval,
-        props.totalSleepHour
-    );
+    const xAxisLabels = buildXAxisLabels(xScale, props.tickInterval, props.totalSleepHour);
     const yAxisLabels = buildYAxisLabels(yScale);
-    // @ts-ignore
+    // @ts-expect-error
     const line = d3
         .line<AuroraEvent>()
         .curve(d3.curveStepAfter)
@@ -120,26 +108,10 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
                         y2={"100%"}
                         gradientUnits={"userSpaceOnUse"}
                     >
-                        <Stop
-                            offset={"0%"}
-                            stopColor={sleepStageColors[4]}
-                            stopOpacity={1}
-                        ></Stop>
-                        <Stop
-                            offset={"25%"}
-                            stopColor={sleepStageColors[3]}
-                            stopOpacity={1}
-                        ></Stop>
-                        <Stop
-                            offset={"50%"}
-                            stopColor={sleepStageColors[2]}
-                            stopOpacity={1}
-                        ></Stop>
-                        <Stop
-                            offset={"75%"}
-                            stopColor={sleepStageColors[1]}
-                            stopOpacity={1}
-                        ></Stop>
+                        <Stop offset={"0%"} stopColor={sleepStageColors[4]} stopOpacity={1}></Stop>
+                        <Stop offset={"25%"} stopColor={sleepStageColors[3]} stopOpacity={1}></Stop>
+                        <Stop offset={"50%"} stopColor={sleepStageColors[2]} stopOpacity={1}></Stop>
+                        <Stop offset={"75%"} stopColor={sleepStageColors[1]} stopOpacity={1}></Stop>
                         <Stop
                             offset={"100%"}
                             stopColor={sleepStageColors[0]}
@@ -199,10 +171,10 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
 const buildXAxisLabels = (
     scaleX: d3.ScaleTime<number, number>,
     tickInterval: "default" | "hour",
-    totalSleepHour: number
+    totalSleepHour: number,
 ): Array<Axis> => {
-    const xAxisLabels = new Array<Axis>();
-    let xAxisTicks: Date[] | undefined = undefined;
+    const xAxisLabels: Axis[] = [];
+    let xAxisTicks: Date[] | undefined;
 
     if (tickInterval === "default") {
         xAxisTicks = scaleX.ticks();
@@ -210,16 +182,12 @@ const buildXAxisLabels = (
         xAxisTicks = scaleX.ticks(totalSleepHour);
     }
 
-    xAxisTicks.map((value: Date) => {
+    xAxisTicks.forEach((value: Date) => {
         xAxisLabels.push({
             color: Colors.white,
             label:
                 tickInterval === "default"
-                    ? moment(value)
-                          .utc()
-                          .format("h:mm a")
-                          .replace(":00", "")
-                          .slice(0, -1)
+                    ? moment(value).utc().format("h:mm a").replace(":00", "").slice(0, -1)
                     : moment(value).utc().format("h"),
             scale: value,
         });
@@ -227,13 +195,11 @@ const buildXAxisLabels = (
     return xAxisLabels;
 };
 
-const buildYAxisLabels = (
-    scaleY: d3.ScaleLinear<number, number>
-): Array<Axis> => {
-    const yAxisLabels = new Array<Axis>();
+const buildYAxisLabels = (scaleY: d3.ScaleLinear<number, number>): Array<Axis> => {
+    const yAxisLabels: Axis[] = [];
     const yAxisTicks = scaleY.ticks(sleepStageLabels.length - 1);
 
-    yAxisTicks.map((value: number, index: number) => {
+    yAxisTicks.forEach((value: number, index: number) => {
         yAxisLabels.push({
             color: sleepStageColors[index],
             label: sleepStageLabels[index],

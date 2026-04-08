@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
@@ -13,10 +13,7 @@ import {
     RightSideButton,
     ValidatableTextBox,
 } from "../molecules";
-import {
-    TemplateLabeledCheckBoxProps,
-    TemplateValidateTextBoxProps,
-} from "./TempatedProps";
+import type { TemplateLabeledCheckBoxProps, TemplateValidateTextBoxProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -35,7 +32,7 @@ export type SignupScreenTemplateProps = {
 
 //#region Component
 export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> = (
-    props: SignupScreenTemplateProps
+    props: SignupScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
@@ -70,9 +67,7 @@ export const SignupScreenTemplate: FunctionComponent<SignupScreenTemplateProps> 
         bottomButtons = signupButton;
     }
 
-    const textBoxMarginBottom = props.dimens.isSmallHeight
-        ? 0
-        : Dimens.button_margin;
+    const textBoxMarginBottom = props.dimens.isSmallHeight ? 0 : Dimens.button_margin;
     const textBoxHeight = props.dimens.isSmallHeight ? 45 : undefined;
     return (
         <InternalView>

@@ -1,12 +1,14 @@
 //#region Import Modules
+
+import type { Aurora } from "../sdk";
 import { ConnectorTypes } from "./AuroraConstants";
-import { Aurora } from "../sdk";
+
 //#endregion
 
 //#region Function
 const AuroraCmdSyncTime = async function (
     this: Aurora,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<number> {
     const date = new Date();
     const msAfterMidnight =
@@ -19,7 +21,7 @@ const AuroraCmdSyncTime = async function (
         `clock-set ${date.getFullYear()} ${
             date.getMonth() + 1
         } ${date.getDate()} ${msAfterMidnight}`,
-        connectorType
+        connectorType,
     );
 };
 //#endregion

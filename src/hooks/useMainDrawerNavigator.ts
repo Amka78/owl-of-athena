@@ -1,9 +1,10 @@
 //#region Import Modules
-import { useLayoutEffect } from "react";
+
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useCallback, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 
 import { useCheckLogging, useLogout, useWindowDimensions } from "./";
+
 //#endregion
 
 //#region Type
@@ -24,7 +25,7 @@ export const useMainDrawerNavigator = (): {
     const logout = useLogout();
     const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(dimens.isDesktop);
     const [drawerType, setDrawerType] = useState<DrawerType>(
-        dimens.isDesktop ? "permanent" : "slide"
+        dimens.isDesktop ? "permanent" : "slide",
     );
     const { dispatch } = useNavigation();
 

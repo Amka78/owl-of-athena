@@ -1,6 +1,6 @@
 //#region Import Modules
 import { EventEmitter } from "events";
-import { Audio } from "expo-av";
+import type { Audio } from "expo-av";
 import {
     cloneDeep,
     isEmpty,
@@ -17,7 +17,7 @@ import { SessionRestClientInstance } from "../clients";
 import { AuroraInstance, SleepStates } from "../sdk";
 import {
     CommandNames,
-    ConnectionStates,
+    type ConnectionStates,
     EventIds,
     EventIdsToNames,
     SleepStatesToNames,
@@ -27,19 +27,19 @@ import AuroraSessionReader from "../sdk/AuroraSessionReader";
 import type {
     AuroraEventJson,
     AuroraProfile,
+    AuroraEvent as AuroraSDKEvent,
     AuroraSessionCSV,
     CommandResult,
     DirectoryInfo,
     FileInfo,
 } from "../sdk/AuroraTypes";
-import type { AuroraEvent as AuroraSDKEvent } from "../sdk/AuroraTypes";
 import {
     AuroraEvent,
-    AuroraOSInfo,
+    type AuroraOSInfo,
     AuroraSession,
     AuroraSessionDetail,
     Profile,
-    Settings,
+    type Settings,
 } from "../sdk/models";
 import type { AuroraSound } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
@@ -55,6 +55,7 @@ export class AuroraManager extends EventEmitter {
     private currentProfile?: string;
 
     private soundList?: Array<AuroraSound>;
+    private currentSettings?: Settings;
     constructor() {
         super();
         this.connected = false;
@@ -64,7 +65,7 @@ export class AuroraManager extends EventEmitter {
         AuroraInstance.on(AuroraEventList.auroraEvent, this.onEvent);
         AuroraInstance.on(
             AuroraEventList.bluetoothConnectionChange,
-            this.onBluetoothConnectionChange
+            this.onBluetoothConnectionChange,
         );
     }
 
@@ -109,16 +110,14 @@ export class AuroraManager extends EventEmitter {
         return await AuroraInstance.queueCmd(command);
     }
 
-    public async goToSleep(
-        profile: AuroraProfile,
-        settings: Settings
-    ): Promise<void> {
+    public async goToSleep(profile: AuroraProfile, settings: Settings): Promise<void> {
         try {
+            this.currentSettings = settings;
             const writingProfile = new Profile(profile.content);
 
             writingProfile.wakeupTime = this.getMsAfterMidnight(
                 settings.alarmHour,
-                settings.alarmMinute
+                settings.alarmMinute,
             );
             writingProfile.saEnabled = settings.smartAlarmEnabled;
             writingProfile.stimEnabled = settings.remStimEnabled;
@@ -126,23 +125,15 @@ export class AuroraManager extends EventEmitter {
 
             if (this.soundList) {
                 if (settings.alarmAudioPath) {
-                    this.alarmSound = this.soundList.find(
-                        (value: AuroraSound) => {
-                            return (
-                                value.fileName === settings.alarmAudioPath
-                            );
-                        }
-                    )?.sound;
+                    this.alarmSound = this.soundList.find((value: AuroraSound) => {
+                        return value.fileName === settings.alarmAudioPath;
+                    })?.sound;
                 }
 
                 if (settings.remStimAudioPath) {
-                    this.remStimSound = this.soundList.find(
-                        (value: AuroraSound) => {
-                            return (
-                                value.fileName === settings.remStimAudioPath
-                            );
-                        }
-                    )?.sound;
+                    this.remStimSound = this.soundList.find((value: AuroraSound) => {
+                        return value.fileName === settings.remStimAudioPath;
+                    })?.sound;
                 }
             }
 
@@ -151,11 +142,11 @@ export class AuroraManager extends EventEmitter {
                 const readProfileResult = await AuroraInstance.readFile(
                     "profiles/default.prof",
                     false,
-                    false
+                    false,
                 );
                 if (!readProfileResult.error) {
                     await AuroraInstance.queueCmd(
-                        `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`
+                        `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`,
                     );
                 }
             } catch (e) {
@@ -165,7 +156,7 @@ export class AuroraManager extends EventEmitter {
                     "profiles/default.prof",
                     writingProfile.raw,
                     false,
-                    this.osInfo!.version
+                    this.osInfo!.version,
                 );
             }
 
@@ -177,9 +168,7 @@ export class AuroraManager extends EventEmitter {
                 ""
             );*/
             this.currentProfile = "default.prof";
-            await AuroraInstance.queueCmd(
-                `prof-load ${this.currentProfile}`
-            );
+            await AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`);
 
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
@@ -194,8 +183,8 @@ export class AuroraManager extends EventEmitter {
             `SleepState Change ${
                 SleepStatesToNames[this.currentSleepState]
             } to ${SleepStatesToNames[followingSleepState]} when ${new Date(
-                Date.now()
-            ).toLocaleString()}`
+                Date.now(),
+            ).toLocaleString()}`,
         );
         if (followingSleepState !== this.currentSleepState) {
             this.currentSleepState = followingSleepState;
@@ -219,7 +208,11 @@ export class AuroraManager extends EventEmitter {
                     console.debug("start onWaking.");
                     if (this.alarmSound !== undefined) {
                         this.alarmSound.setIsLoopingAsync(true).then(() => {
-                            this.alarmSound!.playAsync();
+                            this.alarmSound!.setVolumeAsync(
+                                this.currentSettings?.alarmVolume ?? 0.8,
+                            ).then(() => {
+                                this.alarmSound!.playAsync();
+                            });
                         });
                     }
                     this.emit(AuroraManagerEventList.onWaking);
@@ -253,17 +246,11 @@ export class AuroraManager extends EventEmitter {
         return await AuroraInstance.getUnsyncedSessions("*@*");
     }
 
-    public async readSessionContent(
-        sessions: Array<FileInfo>
-    ): Promise<Map<string, any>> {
+    public async readSessionContent(sessions: Array<FileInfo>): Promise<Map<string, any>> {
         const readSessionContent = new Map<string, any>();
 
         for (const sessionFileInfo of sessions) {
-            const result = await AuroraInstance.readFile(
-                sessionFileInfo.file,
-                false,
-                true
-            );
+            const result = await AuroraInstance.readFile(sessionFileInfo.file, false, true);
 
             const dirName = sessionFileInfo.file.replace("/session.txt", "");
             console.debug("Start reading session.");
@@ -273,7 +260,7 @@ export class AuroraManager extends EventEmitter {
             const session = await AuroraSessionReader.read(
                 dirName,
                 result.output,
-                sessionDirReadCmd.response
+                sessionDirReadCmd.response,
             );
             readSessionContent.set(sessionFileInfo.file, session);
         }
@@ -283,12 +270,12 @@ export class AuroraManager extends EventEmitter {
 
     public async pushSessions(
         sessions: Array<FileInfo>,
-        guestLogin: boolean
+        guestLogin: boolean,
     ): Promise<[Array<AuroraSession>, Array<AuroraSessionDetail>]> {
         const sessionList = await this.readSessionContent(sessions);
 
-        const pushedSessionList = new Array<AuroraSession>();
-        const pushedSessionDetailList = new Array<AuroraSessionDetail>();
+        const pushedSessionList: AuroraSession[] = [];
+        const pushedSessionDetailList: AuroraSessionDetail[] = [];
         for (const value of sessionList) {
             const sessionInfo = value[1];
             const uploadSession: AuroraSessionCSV = {
@@ -304,17 +291,13 @@ export class AuroraManager extends EventEmitter {
                 if (!guestLogin) {
                     console.debug("guest process called.");
                     if (sessionInfo.name.indexOf("@") == -1) {
-                        await SessionRestClientInstance.getById(
-                            sessionInfo.name
-                        ).catch(async () => {
-                            newSession = await SessionRestClientInstance.create(
-                                uploadSession
-                            );
-                        });
-                    } else {
-                        newSession = await SessionRestClientInstance.create(
-                            uploadSession
+                        await SessionRestClientInstance.getById(sessionInfo.name).catch(
+                            async () => {
+                                newSession = await SessionRestClientInstance.create(uploadSession);
+                            },
                         );
+                    } else {
+                        newSession = await SessionRestClientInstance.create(uploadSession);
                     }
                 } else {
                     newSession = new AuroraSession(uploadSession);
@@ -324,9 +307,7 @@ export class AuroraManager extends EventEmitter {
                 console.debug(`uploadSession:${uploadSession}`);
                 if (newSession!.id != sessionInfo.name) {
                     await AuroraInstance.queueCmd(
-                        `sd-rename sessions/${sessionInfo.name} sessions/${
-                            newSession!.id
-                        }`
+                        `sd-rename sessions/${sessionInfo.name} sessions/${newSession!.id}`,
                     );
                 }
                 pushedSessionList.push(newSession!);
@@ -338,29 +319,29 @@ export class AuroraManager extends EventEmitter {
                         this.aggregateSessionDetail(
                             cloneDeep(uploadSession.events),
                             [0, 15, 30, 45, 60],
-                            "sum"
+                            "sum",
                         ),
                         this.aggregateSessionDetail(
                             cloneDeep(uploadSession.events),
                             [0, 15, 30, 45, 60],
-                            "sum"
+                            "sum",
                         ),
                         this.aggregateSessionDetail(
                             cloneDeep(uploadSession.events),
                             [0, 5, 10, 15, 20],
-                            "average"
+                            "average",
                         ),
                         this.aggregateSessionDetail(
                             cloneDeep(uploadSession.events),
                             [0, 5, 10, 15, 20, 25],
-                            "duration"
+                            "duration",
                         ),
                         this.aggregateSessionDetail(
                             cloneDeep(uploadSession.events),
                             [0, 15, 30, 45, 60],
-                            "count"
-                        )
-                    )
+                            "count",
+                        ),
+                    ),
                 );
             } catch (e) {
                 console.debug(`session parse error:${e}`);
@@ -373,7 +354,7 @@ export class AuroraManager extends EventEmitter {
     private aggregateSessionDetail(
         events: Array<AuroraEventJson>,
         bins: Array<number>,
-        groupByType: string
+        groupByType: string,
     ): Array<AuroraEvent> {
         /*const eventsInBins: Array<{
             event: AuroraEventJson;
@@ -404,7 +385,7 @@ export class AuroraManager extends EventEmitter {
             }
         });
 
-        let groupBy: any = undefined;
+        let groupBy: any;
         switch (groupByType) {
             case "mode":
                 groupBy = this.modeBy;
@@ -425,38 +406,35 @@ export class AuroraManager extends EventEmitter {
                 groupBy = meanBy;
         }
 
-        eventsInBins.forEach((eventsInBin: Record<string, { event: AuroraEventJson; eventIndex: number }[]>, binIndex: number) => {
-            for (const binOfEvents of Object.values(eventsInBin)) {
-                const sortedEvents = sortBy(
-                    binOfEvents,
-                    ({ event }) => event.time
-                );
+        eventsInBins.forEach(
+            (
+                eventsInBin: Record<string, { event: AuroraEventJson; eventIndex: number }[]>,
+                binIndex: number,
+            ) => {
+                for (const binOfEvents of Object.values(eventsInBin)) {
+                    const sortedEvents = sortBy(binOfEvents, ({ event }) => event.time);
 
-                //special case
-                if (groupByType == "duration") {
-                    events[sortedEvents[0].eventIndex].bins[
-                        bins[binIndex]
-                    ] = this.calculateDuration(sortedEvents, bins[binIndex]);
-                } else {
-                    const meanTime = meanBy(
-                        binOfEvents,
-                        ({ event }) => event.time
-                    );
-                    const sortedEventIndex = sortedIndexBy(
-                        sortedEvents,
-                        // @ts-ignore
-                        { event: { time: meanTime } },
-                        ({ event }) => event.time
-                    );
-                    const eventIndex =
-                        sortedEvents[sortedEventIndex].eventIndex;
-                    events[eventIndex].bins[bins[binIndex]] = groupBy(
-                        sortedEvents,
-                        ({ event }: { event: any }) => event.flags
-                    );
+                    //special case
+                    if (groupByType == "duration") {
+                        events[sortedEvents[0].eventIndex].bins[bins[binIndex]] =
+                            this.calculateDuration(sortedEvents, bins[binIndex]);
+                    } else {
+                        const meanTime = meanBy(binOfEvents, ({ event }) => event.time);
+                        const sortedEventIndex = sortedIndexBy(
+                            sortedEvents,
+                            // @ts-expect-error
+                            { event: { time: meanTime } },
+                            ({ event }) => event.time,
+                        );
+                        const eventIndex = sortedEvents[sortedEventIndex].eventIndex;
+                        events[eventIndex].bins[bins[binIndex]] = groupBy(
+                            sortedEvents,
+                            ({ event }: { event: any }) => event.flags,
+                        );
+                    }
                 }
-            }
-        });
+            },
+        );
 
         //if we don't need the whole result
         if (!bins.includes(0)) {
@@ -464,7 +442,7 @@ export class AuroraManager extends EventEmitter {
             remove(events, (event) => isEmpty(event.bins));
         }
 
-        const auroraEvent = new Array<AuroraEvent>();
+        const auroraEvent: AuroraEvent[] = [];
 
         events.forEach((value: AuroraEventJson) => {
             auroraEvent.push(new AuroraEvent(value));
@@ -491,12 +469,12 @@ export class AuroraManager extends EventEmitter {
 
     private calculateDuration(
         events: Array<{ event: AuroraEventJson; eventIndex: number }>,
-        binDuration: number
+        binDuration: number,
     ) {
         let totalDuration = 0;
         let maxDuration = 0;
         let maxFlags = events[0].event.flags;
-        const totalDurations = new Array<number>();
+        const totalDurations: number[] = [];
 
         if (events.length == 1) {
             return maxFlags;
@@ -507,8 +485,7 @@ export class AuroraManager extends EventEmitter {
         }
 
         for (let i = 1; i < events.length; i++) {
-            const lastEventDuration =
-                events[i].event.time - events[i - 1].event.time;
+            const lastEventDuration = events[i].event.time - events[i - 1].event.time;
             const lastEventFlags = events[i - 1].event.flags;
 
             totalDurations[lastEventFlags] =
@@ -531,14 +508,11 @@ export class AuroraManager extends EventEmitter {
             binDuration * 60 * 1000 -
             totalDuration;
 
-        return totalDurations[lastEventFlags] > maxDuration
-            ? lastEventFlags
-            : maxFlags;
+        return totalDurations[lastEventFlags] > maxDuration ? lastEventFlags : maxFlags;
     }
 
     private getMsAfterMidnight(alarmHour: number, alarmMinute: number): number {
-        const msAfterMidNight =
-            alarmHour * 60 * 60 * 1000 + alarmMinute * 60 * 1000;
+        const msAfterMidNight = alarmHour * 60 * 60 * 1000 + alarmMinute * 60 * 1000;
         console.debug(msAfterMidNight);
         return msAfterMidNight;
     }
@@ -555,9 +529,7 @@ export class AuroraManager extends EventEmitter {
                 //all we really need to is restart profile
                 //since the events will get resubscribed to below
                 //and backup alarm should still be running
-                await AuroraInstance.queueCmd(
-                    `prof-load ${this.currentProfile!}`
-                );
+                await AuroraInstance.queueCmd(`prof-load ${this.currentProfile!}`);
             } else {
                 //TODO: make sure backup alarm is still running?
                 //aurora
@@ -581,7 +553,7 @@ export class AuroraManager extends EventEmitter {
     }
 
     private createEventList(): Array<EventIds> {
-        const enableEventList = new Array<EventIds>();
+        const enableEventList: EventIds[] = [];
         enableEventList.push(EventIds.BUTTON_MONITOR);
         enableEventList.push(EventIds.BATTERY_MONITOR);
         enableEventList.push(EventIds.SMART_ALARM);
@@ -597,42 +569,26 @@ export class AuroraManager extends EventEmitter {
         switch (event.eventId) {
             case EventIds.BATTERY_MONITOR: {
                 this.batteryLevel = event.flags;
-                this.emit(
-                    AuroraManagerEventList.onBatteryChange,
-                    this.batteryLevel
-                );
+                this.emit(AuroraManagerEventList.onBatteryChange, this.batteryLevel);
                 break;
             }
             case EventIds.BUTTON_MONITOR: {
-                if (
-                    event.flags == 1 &&
-                    this.currentSleepState ===
-                        SleepStates.WAKING
-                ) {
+                if (event.flags == 1 && this.currentSleepState === SleepStates.WAKING) {
                     this.setSleepState(SleepStates.AWAKE);
                 }
                 break;
             }
             case EventIds.CLOCK_ALARM_FIRE:
             case EventIds.SMART_ALARM: {
-                console.debug(
-                    "Current SleepState:",
-                    this.currentSleepState
-                );
-                if (
-                    this.currentSleepState ===
-                    SleepStates.SLEEPING
-                ) {
+                console.debug("Current SleepState:", this.currentSleepState);
+                if (this.currentSleepState === SleepStates.SLEEPING) {
                     console.debug("Execute Smart Alarm Event.");
                     this.setSleepState(SleepStates.WAKING);
                 }
                 break;
             }
             case EventIds.STIM_PRESENTED: {
-                if (
-                    this.currentSleepState ===
-                    SleepStates.SLEEPING
-                ) {
+                if (this.currentSleepState === SleepStates.SLEEPING) {
                     if (this.remStimSound !== undefined) {
                         this.remStimSound.playAsync();
                     }
@@ -641,13 +597,8 @@ export class AuroraManager extends EventEmitter {
         }
     };
 
-    private onBluetoothConnectionChange = (
-        connectionState: ConnectionStates
-    ): void => {
-        this.emit(
-            AuroraManagerEventList.onConnectionChange,
-            connectionState
-        );
+    private onBluetoothConnectionChange = (connectionState: ConnectionStates): void => {
+        this.emit(AuroraManagerEventList.onConnectionChange, connectionState);
     };
 }
 

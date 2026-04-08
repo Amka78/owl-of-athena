@@ -13,22 +13,15 @@ interface BluetoothRemoteGATTCharacteristic extends EventTarget {
     writeValueWithoutResponse(value: BufferSource): Promise<void>;
     startNotifications(): Promise<BluetoothRemoteGATTCharacteristic>;
     stopNotifications(): Promise<BluetoothRemoteGATTCharacteristic>;
-    addEventListener(
-        type: "characteristicvaluechanged",
-        listener: (event: Event) => void
-    ): void;
+    addEventListener(type: "characteristicvaluechanged", listener: (event: Event) => void): void;
 }
 
 interface BluetoothRemoteGATTService extends EventTarget {
     readonly device: BluetoothDevice;
     readonly uuid: string;
     readonly isPrimary: boolean;
-    getCharacteristic(
-        uuid: string
-    ): Promise<BluetoothRemoteGATTCharacteristic>;
-    getCharacteristics(
-        uuid?: string
-    ): Promise<BluetoothRemoteGATTCharacteristic[]>;
+    getCharacteristic(uuid: string): Promise<BluetoothRemoteGATTCharacteristic>;
+    getCharacteristics(uuid?: string): Promise<BluetoothRemoteGATTCharacteristic[]>;
 }
 
 interface BluetoothRemoteGATTServer {
@@ -37,23 +30,15 @@ interface BluetoothRemoteGATTServer {
     connect(): Promise<BluetoothRemoteGATTServer>;
     disconnect(): void;
     getPrimaryService(uuid: string): Promise<BluetoothRemoteGATTService>;
-    getPrimaryServices(
-        uuid?: string
-    ): Promise<BluetoothRemoteGATTService[]>;
+    getPrimaryServices(uuid?: string): Promise<BluetoothRemoteGATTService[]>;
 }
 
 interface BluetoothDevice extends EventTarget {
     readonly id: string;
     readonly name?: string;
     readonly gatt?: BluetoothRemoteGATTServer;
-    addEventListener(
-        type: "gattserverdisconnected",
-        listener: (event: Event) => void
-    ): void;
-    removeEventListener(
-        type: "gattserverdisconnected",
-        listener: (event: Event) => void
-    ): void;
+    addEventListener(type: "gattserverdisconnected", listener: (event: Event) => void): void;
+    removeEventListener(type: "gattserverdisconnected", listener: (event: Event) => void): void;
 }
 
 interface BluetoothRequestDeviceFilter {

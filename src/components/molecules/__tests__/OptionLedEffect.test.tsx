@@ -1,10 +1,10 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { OptionLedEffect } from '../OptionLedEffect';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { render } from "@testing-library/react-native";
+import type React from "react";
+import { View } from "react-native";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { OptionLedEffect } from "../OptionLedEffect";
 
 const leftIcon = (props: any) => (
     <View style={props.style}>
@@ -13,26 +13,26 @@ const leftIcon = (props: any) => (
 );
 
 const defaultProps = {
-    title: 'LED Effect',
-    description: 'Choose LED effect',
+    title: "LED Effect",
+    description: "Choose LED effect",
     left: leftIcon,
     disabled: false,
-    value: 'blink',
-    field: { type: 'toggle' as const, valueEnabled: 'blink', valueDisabled: '' },
+    value: "blink",
+    field: { type: "toggle" as const, valueEnabled: "blink", valueDisabled: "" },
     onValueChange: jest.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
-describe('OptionLedEffect', () => {
-    it('renders correctly', () => {
+describe("OptionLedEffect", () => {
+    it("renders correctly", () => {
         const { toJSON } = renderWithProvider(<OptionLedEffect {...defaultProps} />);
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders title', () => {
+    it("renders title", () => {
         const { getByText } = renderWithProvider(<OptionLedEffect {...defaultProps} />);
-        expect(getByText('LED Effect')).toBeTruthy();
+        expect(getByText("LED Effect")).toBeTruthy();
     });
 });

@@ -1,4 +1,4 @@
-import { MaterialTopTabNavigationOptions } from "@react-navigation/material-top-tabs";
+import type { MaterialTopTabNavigationOptions } from "@react-navigation/material-top-tabs";
 //#region Import Modules
 import { Colors } from "../constants";
 //#endregion

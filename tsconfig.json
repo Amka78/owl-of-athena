@@ -22,7 +22,9 @@
   },
   "exclude": [
     "node_modules",
-    "coverage"
+    "coverage",
+    "src-electrobun",
+    "electrobun.config.ts"
   ],
   "extends": "expo/tsconfig.base"
 }

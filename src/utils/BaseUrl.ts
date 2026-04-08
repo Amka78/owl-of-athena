@@ -9,9 +9,10 @@ import Constants from "expo-constants";
 export default class BaseUrl {
     public static get(relCh?: string): string {
         if (!relCh) {
-            const channel = Constants.expoConfig?.extra?.channel
-                ?? (Constants.expoConfig as any)?.releaseChannel
-                ?? (Constants.manifest2?.metadata as Record<string, string>)?.['branchName'];
+            const channel =
+                Constants.expoConfig?.extra?.channel ??
+                (Constants.expoConfig as any)?.releaseChannel ??
+                (Constants.manifest2?.metadata as Record<string, string>)?.["branchName"];
             if (channel) {
                 relCh = channel as string;
             }
@@ -20,7 +21,8 @@ export default class BaseUrl {
         if (relCh !== undefined) {
             if (relCh!.includes("staging")) {
                 return IWinksRestAPI.staging.url;
-            } else if (relCh!.includes("prod")) {
+            }
+            if (relCh!.includes("prod")) {
                 return IWinksRestAPI.prod.url;
             }
         }

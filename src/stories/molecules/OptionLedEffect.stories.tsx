@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { OptionLedEffect } from '../../components/molecules/OptionLedEffect';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { View } from "react-native";
+import { Provider } from "react-native-paper";
+import { OptionLedEffect } from "../../components/molecules/OptionLedEffect";
+import { Theme } from "../../constants";
 
 const leftIcon = (props: any) => (
     <View style={props.style}>
@@ -14,11 +14,15 @@ const leftIcon = (props: any) => (
 );
 
 const meta = {
-    title: 'Molecules/OptionLedEffect',
+    title: "Molecules/OptionLedEffect",
     component: OptionLedEffect,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof OptionLedEffect>;
 
@@ -27,12 +31,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        title: 'LED Effect',
-        description: 'Choose the LED lighting effect',
+        title: "LED Effect",
+        description: "Choose the LED lighting effect",
         left: leftIcon,
         disabled: false,
-        value: 'blink',
-        field: { type: 'toggle', valueEnabled: 'blink', valueDisabled: '' },
+        value: "blink",
+        field: { type: "toggle", valueEnabled: "blink", valueDisabled: "" },
         onValueChange: () => {},
     },
     play: async ({ canvasElement }) => {

@@ -1,17 +1,17 @@
 import split from "split";
+import type { Aurora } from "./Aurora";
 import { ConnectorTypes } from "./AuroraConstants";
 import type { AuroraProfile } from "./AuroraTypes";
-import { Aurora } from "./Aurora";
 
 const AuroraCmdGetProfiles = async function (
     this: Aurora,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<unknown> {
     const profileListReadResp: any = await this.readFile(
         "profiles/_profiles.list",
         split(),
         true,
-        connectorType
+        connectorType,
     );
 
     const profilesInList = profileListReadResp.output
@@ -35,10 +35,7 @@ const AuroraCmdGetProfiles = async function (
             return profile;
         });
 
-    const cmdResult = await this.queueCmd(
-        "sd-dir-read profiles 1 *.prof",
-        connectorType
-    );
+    const cmdResult = await this.queueCmd("sd-dir-read profiles 1 *.prof", connectorType);
     const response = (cmdResult as any).response;
     const profiles = [];
 
@@ -48,7 +45,7 @@ const AuroraCmdGetProfiles = async function (
                 `profiles/${profile.name}`,
                 false,
                 false,
-                connectorType
+                connectorType,
             );
 
             const p = {
@@ -60,9 +57,7 @@ const AuroraCmdGetProfiles = async function (
             Object.assign(
                 p,
                 profile,
-                profilesInList.find(
-                    (prof: AuroraProfile) => prof.name == profile.name
-                )
+                profilesInList.find((prof: AuroraProfile) => prof.name == profile.name),
             );
 
             profiles.push(p);
@@ -71,9 +66,7 @@ const AuroraCmdGetProfiles = async function (
         }
     }
 
-    return profiles.sort((a, b) =>
-        a.key > b.key ? 1 : a.key < b.key ? -1 : 0
-    );
+    return profiles.sort((a, b) => (a.key > b.key ? 1 : a.key < b.key ? -1 : 0));
 };
 
 export default AuroraCmdGetProfiles;

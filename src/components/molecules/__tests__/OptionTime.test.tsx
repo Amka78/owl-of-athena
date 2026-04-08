@@ -1,10 +1,10 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { OptionTime } from '../OptionTime';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { render } from "@testing-library/react-native";
+import type React from "react";
+import { View } from "react-native";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { OptionTime } from "../OptionTime";
 
 const leftIcon = (props: any) => (
     <View style={props.style}>
@@ -13,26 +13,32 @@ const leftIcon = (props: any) => (
 );
 
 const defaultProps = {
-    title: 'Wake-up Time',
-    description: 'Set wake time',
+    title: "Wake-up Time",
+    description: "Set wake time",
     left: leftIcon,
     disabled: false,
-    value: '07:30',
-    field: { type: 'time' as const, clearable: true, labelCleared: 'Not set', minutesStep: 5, defaultTime: 0 },
+    value: "07:30",
+    field: {
+        type: "time" as const,
+        clearable: true,
+        labelCleared: "Not set",
+        minutesStep: 5,
+        defaultTime: 0,
+    },
     onValueChange: jest.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
-describe('OptionTime', () => {
-    it('renders without crashing', () => {
+describe("OptionTime", () => {
+    it("renders without crashing", () => {
         const { toJSON } = renderWithProvider(<OptionTime {...defaultProps} />);
         expect(toJSON()).toBeTruthy();
     });
 
-    it('renders title', () => {
+    it("renders title", () => {
         const { getByText } = renderWithProvider(<OptionTime {...defaultProps} />);
-        expect(getByText('Wake-up Time')).toBeTruthy();
+        expect(getByText("Wake-up Time")).toBeTruthy();
     });
 });

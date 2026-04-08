@@ -3,7 +3,7 @@ import { EventEmitter } from "events";
 import _ from "lodash";
 import Stream from "stream";
 
-import { AuroraEvent } from "../model/AuroraEvent";
+import type { AuroraEvent } from "../model/AuroraEvent";
 import { AuroraBluetooth } from "./AuroraBluetooth";
 import AuroraCmdDownloadFile from "./AuroraCmdDownloadFile";
 import AuroraCmdDownloadStream from "./AuroraCmdDownloadStream";
@@ -20,16 +20,12 @@ import AuroraCmdSyncTime from "./AuroraCmdSyncTime";
 import AuroraCmdUploadFile from "./AuroraCmdUploadFile";
 import AuroraCmdWriteFile from "./AuroraCmdWriteFile";
 import * as AuroraConstants from "./AuroraConstants";
-import type {
-    Command,
-    CommandResolverType,
-    CommandResult,
-    EventResponse,
-} from "./AuroraTypes";
-import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { AuroraEventList } from "./AuroraEventList";
+import type { Command, CommandResolverType, CommandResult, EventResponse } from "./AuroraTypes";
+import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { Event } from "./models/Event";
 import { stringToVersion, versionToString } from "./util";
+
 //#endregion
 
 type PlayLedEffect = typeof AuroraCmdPlayLedEffect;
@@ -66,35 +62,23 @@ class Aurora extends EventEmitter {
         this.bluetooth = new AuroraBluetooth();
         this.bluetooth.on(
             AuroraConstants.DeviceEventList.connectionStateChange,
-            this.onBluetoothConnectionStateChange
+            this.onBluetoothConnectionStateChange,
         );
-        this.bluetooth.on(
-            AuroraConstants.DeviceEventList.Error,
-            this.onAuroraError
-        );
-        this.bluetooth.on(
-            AuroraConstants.DeviceEventList.streamData,
-            this.onAuroraStreamData
-        );
-        this.bluetooth.on(
-            AuroraConstants.DeviceEventList.auroraEvent,
-            this.onAuroraEvent
-        );
+        this.bluetooth.on(AuroraConstants.DeviceEventList.Error, this.onAuroraError);
+        this.bluetooth.on(AuroraConstants.DeviceEventList.streamData, this.onAuroraStreamData);
+        this.bluetooth.on(AuroraConstants.DeviceEventList.auroraEvent, this.onAuroraEvent);
         this.bluetooth.on(
             AuroraConstants.DeviceEventList.cmdInputRequested,
-            this.onCmdInputRequested
+            this.onCmdInputRequested,
         );
-        this.bluetooth.on(
-            AuroraConstants.DeviceEventList.cmdOutputReady,
-            this.onCmdOutputReady
-        );
+        this.bluetooth.on(AuroraConstants.DeviceEventList.cmdOutputReady, this.onCmdOutputReady);
 
-        this.cmdQueue = new Array<Command>();
+        this.cmdQueue = [] as Command[];
 
         this.isAutoConnectBluetooth = false;
         this.isFlashing = false;
         this.info = undefined;
-        this.enabledEventList = new Array<AuroraConstants.EventIds>();
+        this.enabledEventList = [] as AuroraConstants.EventIds[];
     }
 
     public isConnected(): boolean {
@@ -121,9 +105,7 @@ class Aurora extends EventEmitter {
         }
     }
 
-    public async connectBluetooth(
-        timeoutMs = 20000
-    ): Promise<AuroraOSInfo | never> {
+    public async connectBluetooth(timeoutMs = 20000): Promise<AuroraOSInfo | never> {
         if (this.bluetooth.isConnected()) {
             return Promise.reject("Already connected over bluetooth.");
         }
@@ -157,12 +139,11 @@ class Aurora extends EventEmitter {
     public async flash(
         fwFile: string,
         fwVersion: number | false = false,
-        fwType = "app"
+        fwType = "app",
     ): Promise<unknown> {
         if (this.isFlashing) return Promise.reject("Already flashing.");
 
-        if (!this.isConnected())
-            return Promise.reject("Must be connected to perform flash.");
+        if (!this.isConnected()) return Promise.reject("Must be connected to perform flash.");
 
         const wasBluetoothAutoConnectOff = !this.isAutoConnectBluetooth;
         const wasBluetoothConnected = this.isBluetoothConnected();
@@ -175,8 +156,8 @@ class Aurora extends EventEmitter {
             fwType == "bootloader" || fwType == "bootloader-and-bootstrap"
                 ? "os-flash-bootloader"
                 : fwType == "ble"
-                ? "ble-flash"
-                : "os-flash";
+                  ? "ble-flash"
+                  : "os-flash";
 
         if (this.info!.version! >= 20100) {
             flashCmd += ` ${fwFile} /`;
@@ -191,17 +172,12 @@ class Aurora extends EventEmitter {
 
             return new Promise((resolve, reject) => {
                 // eslint-disable-next-line prefer-const
-                let onFlashConnectionChange: (
-                    fwInfo: AuroraOSInfo
-                ) => void | undefined;
+                let onFlashConnectionChange: (fwInfo: AuroraOSInfo) => void | undefined;
                 // eslint-disable-next-line prefer-const
                 let flashTimeout: NodeJS.Timeout | undefined;
 
                 const finish = (): void => {
-                    if (
-                        wasBluetoothAutoConnectOff &&
-                        this.isAutoConnectBluetooth
-                    ) {
+                    if (wasBluetoothAutoConnectOff && this.isAutoConnectBluetooth) {
                         this.isAutoConnectBluetooth = false;
                     }
 
@@ -211,16 +187,13 @@ class Aurora extends EventEmitter {
 
                     this.removeListener(
                         AuroraEventList.flashConnectionChange,
-                        onFlashConnectionChange
+                        onFlashConnectionChange,
                     );
 
                     if (wasBluetoothConnected && !this.isBluetoothConnected()) {
                         setTimeout(() => {
                             if (!this.isBluetoothConnected()) {
-                                this.emit(
-                                    AuroraEventList.bluetoothConnectionChange,
-                                    false
-                                );
+                                this.emit(AuroraEventList.bluetoothConnectionChange, false);
                             }
                         }, 3000);
                     }
@@ -231,20 +204,19 @@ class Aurora extends EventEmitter {
                         finish();
 
                         const version =
-                            fwType == "bootloader" ||
-                            fwType == "bootloader-and-bootstrap"
+                            fwType == "bootloader" || fwType == "bootloader-and-bootstrap"
                                 ? fwInfo.bootloaderVersion
                                 : fwType == "ble"
-                                ? fwInfo.bleVersion
-                                : fwInfo.version;
+                                  ? fwInfo.bleVersion
+                                  : fwInfo.version;
 
                         if (!fwVersion || version === fwVersion) {
                             resolve(fwInfo);
                         } else {
                             reject(
                                 `Flash failed. Expected ${fwType} version ${versionToString(
-                                    fwVersion
-                                )} but have ${versionToString(version!)}.`
+                                    fwVersion,
+                                )} but have ${versionToString(version!)}.`,
                             );
                         }
                     }
@@ -254,9 +226,7 @@ class Aurora extends EventEmitter {
 
                 flashTimeout = setTimeout(() => {
                     finish();
-                    reject(
-                        "Unable to verify flash. Timeout waiting for reconnection."
-                    );
+                    reject("Unable to verify flash. Timeout waiting for reconnection.");
                 }, 50000);
             });
         });
@@ -266,12 +236,10 @@ class Aurora extends EventEmitter {
         commandStr: string,
         connectorType = AuroraConstants.ConnectorTypes.ANY,
         onCmdBegin?: (cmd: T) => void,
-        onCmdEnd?: () => void
+        onCmdEnd?: () => void,
     ): Promise<T> {
         if (!this.bluetooth.isConnected()) {
-            return Promise.reject(
-                `Not connected to Aurora over bluetooth.`
-            );
+            return Promise.reject(`Not connected to Aurora over bluetooth.`);
         }
 
         return new Promise((resolve, reject) => {
@@ -292,7 +260,7 @@ class Aurora extends EventEmitter {
     }
 
     public async enableEvents(
-        enableEvent: AuroraConstants.EventIds[]
+        enableEvent: AuroraConstants.EventIds[],
     ): Promise<CommandResult<EventResponse>> {
         this.enabledEventList.concat(enableEvent);
 
@@ -300,19 +268,17 @@ class Aurora extends EventEmitter {
         const mask = Event.toMask(enableEvent);
 
         return await this.queueCmd(
-            `${AuroraConstants.CommandNames.EVENT_OUTPUT_ENABLE}${mask} ${16}`
+            `${AuroraConstants.CommandNames.EVENT_OUTPUT_ENABLE}${mask} ${16}`,
         );
     }
 
-    public async disableEvents(
-        disableEvent: AuroraConstants.EventIds[]
-    ): Promise<void> {
+    public async disableEvents(disableEvent: AuroraConstants.EventIds[]): Promise<void> {
         this.enabledEventList = _.pullAll(this.enabledEventList, disableEvent);
 
         const mask = Event.toMask(disableEvent);
 
         return await this.queueCmd(
-            `${AuroraConstants.CommandNames.EVENT_OUTPUT_DISABLE}${mask} ${16}`
+            `${AuroraConstants.CommandNames.EVENT_OUTPUT_DISABLE}${mask} ${16}`,
         );
     }
 
@@ -372,9 +338,7 @@ class Aurora extends EventEmitter {
         return AuroraCmdPlayBuzzSong;
     }
 
-    private async getOsInfo(
-        connectorType: AuroraConstants.ConnectorTypes
-    ): Promise<unknown> {
+    private async getOsInfo(connectorType: AuroraConstants.ConnectorTypes): Promise<unknown> {
         return await this.queueCmd("os-info 1", connectorType)
             .catch((cmdWithResponse) => {
                 if (cmdWithResponse.response.error === 3) {
@@ -393,7 +357,7 @@ class Aurora extends EventEmitter {
             .then((cmdWithResponse) => {
                 if (typeof cmdWithResponse.response.version == "string") {
                     cmdWithResponse.response.version = stringToVersion(
-                        cmdWithResponse.response.version
+                        cmdWithResponse.response.version,
                     );
                 }
 
@@ -414,9 +378,7 @@ class Aurora extends EventEmitter {
         this.cmdCurrent.connector = this.bluetooth;
 
         if (!this.cmdCurrent.connector.isConnected()) {
-            this.cmdCurrent.reject!(
-                `No longer connected to Aurora over bluetooth.`
-            );
+            this.cmdCurrent.reject!(`No longer connected to Aurora over bluetooth.`);
             return;
         }
 
@@ -448,73 +410,64 @@ class Aurora extends EventEmitter {
 
         this.cmdCurrent.connector
             .writeCmd(this.cmdCurrent.commandStr!)
-            .then(
-                (
-                    cmdWithResponse: CommandResult<unknown>
-                ): CommandResult<unknown> => {
-                    cmd.endTime = Date.now();
-                    cmd.origin = cmdWithResponse.origin;
-                    cmd.error = cmdWithResponse.error;
-                    cmd.response = cmdWithResponse.response;
+            .then((cmdWithResponse: CommandResult<unknown>): CommandResult<unknown> => {
+                cmd.endTime = Date.now();
+                cmd.origin = cmdWithResponse.origin;
+                cmd.error = cmdWithResponse.error;
+                cmd.response = cmdWithResponse.response;
 
-                    return cmd;
+                return cmd;
+            })
+            .catch((error: string): CommandResult<unknown> => {
+                cmd.origin = "bluetooth";
+                cmd.error = true;
+                cmd.response = {
+                    error: -99,
+                    message: `Fatal error: ${error}`,
+                };
+                this.cmdQueue = [];
+
+                return cmd;
+            })
+            .then(async (cmd: CommandResult<unknown>): Promise<void> => {
+                cmd.outputStream!.push(null);
+
+                if (cmd.error) {
+                    console.error("Rejected command:", cmd);
+                    this.cmdCurrent!.reject!(cmd);
+                } else {
+                    console.debug("Succeed command:", cmd);
+                    this.cmdCurrent!.resolve(cmd);
                 }
-            )
-            .catch(
-                (error: string): CommandResult<unknown> => {
-                    cmd.origin = "bluetooth";
-                    cmd.error = true;
-                    cmd.response = {
-                        error: -99,
-                        message: `Fatal error: ${error}`,
-                    };
-                    this.cmdQueue = [];
 
-                    return cmd;
+                if (this.cmdCurrent!.onCmdEnd) {
+                    console.debug("onCmdEnd has been executed.");
+                    this.cmdCurrent!.onCmdEnd(cmd);
                 }
-            )
-            .then(
-                async (cmd: CommandResult<unknown>): Promise<void> => {
-                    cmd.outputStream!.push(null);
 
-                    if (cmd.error) {
-                        console.error("Rejected command:", cmd);
-                        this.cmdCurrent!.reject!(cmd);
-                    } else {
-                        console.debug("Succeed command:", cmd);
-                        this.cmdCurrent!.resolve(cmd);
-                    }
+                this.emit(AuroraEventList.cmdEnd, cmd);
 
-                    if (this.cmdCurrent!.onCmdEnd) {
-                        console.debug("onCmdEnd has been executed.");
-                        this.cmdCurrent!.onCmdEnd(cmd);
-                    }
-
-                    this.emit(AuroraEventList.cmdEnd, cmd);
-
-                    setTimeout(() => {
-                        this.cmdCurrent = undefined;
-                        this.processCmdQueue();
-                    }, 200);
-                }
-            );
+                setTimeout(() => {
+                    this.cmdCurrent = undefined;
+                    this.processCmdQueue();
+                }, 200);
+            });
     }
 
     private onBluetoothConnectionStateChange = async (
         connectionState: AuroraConstants.ConnectionStates,
-        previousConnectionState: AuroraConstants.ConnectionStates
+        previousConnectionState: AuroraConstants.ConnectionStates,
     ): Promise<void> => {
         console.debug(
             `BluetoothConnectionStateChange ${
                 AuroraConstants.ConnectionStatesToNames[previousConnectionState]
             } to ${
                 AuroraConstants.ConnectionStatesToNames[connectionState]
-            } when ${new Date(Date.now()).toLocaleString()}`
+            } when ${new Date(Date.now()).toLocaleString()}`,
         );
         if (
             connectionState === AuroraConstants.ConnectionStates.IDLE &&
-            previousConnectionState ===
-                AuroraConstants.ConnectionStates.CONNECTING
+            previousConnectionState === AuroraConstants.ConnectionStates.CONNECTING
         ) {
             await this.getOsInfo(AuroraConstants.ConnectorTypes.BLUETOOTH)
                 .then((cmd: any): void => {
@@ -523,7 +476,7 @@ class Aurora extends EventEmitter {
                         this.isFlashing
                             ? AuroraEventList.flashConnectionChange
                             : AuroraEventList.findBluetoothDevice,
-                        cmd.response
+                        cmd.response,
                     );
                 })
                 .catch((error: string): void => {
@@ -532,11 +485,9 @@ class Aurora extends EventEmitter {
                 });
         } else if (
             connectionState === AuroraConstants.ConnectionStates.DISCONNECTED &&
-            previousConnectionState !==
-                AuroraConstants.ConnectionStates.CONNECTING
+            previousConnectionState !== AuroraConstants.ConnectionStates.CONNECTING
         ) {
-            if (this.isFlashing)
-                this.emit(AuroraEventList.flashConnectionChange, false);
+            if (this.isFlashing) this.emit(AuroraEventList.flashConnectionChange, false);
 
             if (this.isAutoConnectBluetooth) {
                 this.bluetooth.connect(0).catch(() => {
@@ -550,16 +501,10 @@ class Aurora extends EventEmitter {
     private onCmdInputRequested = (): void => {
         if (!this.cmdCurrent) return;
 
-        this.emit(
-            AuroraEventList.cmdInputRequested,
-            this.cmdCurrent.inputStream
-        );
+        this.emit(AuroraEventList.cmdInputRequested, this.cmdCurrent.inputStream);
     };
 
-    private onCmdOutputReady = (output: {
-        chunk: unknown;
-        encoding?: string;
-    }): void => {
+    private onCmdOutputReady = (output: { chunk: unknown; encoding?: string }): void => {
         if (!this.cmdCurrent) return;
 
         this.cmdCurrent.outputStream!.push(output);
@@ -588,11 +533,11 @@ export {
     Aurora,
     AuroraConstants,
     AuroraEventIds,
+    AuroraEventList,
     AuroraEventOutputIds,
     AuroraLogTypeIds,
     AuroraStreamIds,
     AuroraStreamOutputIds,
-    AuroraEventList,
 };
 
 export default new Aurora();

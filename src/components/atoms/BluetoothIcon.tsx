@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { Colors, Dimens } from "../../constants";
 import { ConnectionStates } from "../../sdk/AuroraConstants";
-import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
+import { TemplateIcon, type TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types
@@ -15,9 +15,7 @@ export type BluetoothIconProps = Omit<TemplateIconProps, "name" | "color"> & {
 //#endregion
 
 //#region Component
-export const BluetoothIcon: FunctionComponent<BluetoothIconProps> = (
-    props: BluetoothIconProps
-) => {
+export const BluetoothIcon: FunctionComponent<BluetoothIconProps> = (props: BluetoothIconProps) => {
     let stateIcon = "bluetooth-off";
     let stateColor = Colors.white;
     if (props.connectionStates === ConnectionStates.CONNECTED) {

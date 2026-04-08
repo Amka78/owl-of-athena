@@ -1,7 +1,13 @@
 //#region Import modules
 import { EventEmitter } from "events";
-import { BleManager, Device, Characteristic, Subscription, State } from "react-native-ble-plx";
 import { PermissionsAndroid, Platform } from "react-native";
+import {
+    BleManager,
+    type Characteristic,
+    type Device,
+    State,
+    type Subscription,
+} from "react-native-ble-plx";
 
 import { AuroraBluetoothParser } from "./AuroraBluetoothParser";
 import {
@@ -14,6 +20,7 @@ import {
 } from "./AuroraConstants";
 import type { AuroraEvent, BluetoothStream, CommandResult } from "./AuroraTypes";
 import { sleep } from "./util";
+
 //#endregion
 
 const INIT_DELAY_MS = 5000;
@@ -104,9 +111,7 @@ export class AuroraBluetooth extends EventEmitter {
             this.initializing = false;
 
             if (this.connectionState == ConnectionStates.INIT) {
-                return Promise.reject(
-                    "No bluetooth adapter found. Is bluetooth disabled?"
-                );
+                return Promise.reject("No bluetooth adapter found. Is bluetooth disabled?");
             }
 
             return this.connect(timeoutMs);
@@ -133,7 +138,7 @@ export class AuroraBluetooth extends EventEmitter {
 
             this.disconnectSubscription = this.bleManager.onDeviceDisconnected(
                 device.id,
-                this.onPeripheralDisconnect
+                this.onPeripheralDisconnect,
             );
 
             await this.setupConnection(device);
@@ -163,7 +168,7 @@ export class AuroraBluetooth extends EventEmitter {
                 }
             } else {
                 const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                 );
                 if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
                     throw new Error("Location permission not granted.");
@@ -176,7 +181,7 @@ export class AuroraBluetooth extends EventEmitter {
         const discovered = await device.discoverAllServicesAndCharacteristics();
         const services = await discovered.services();
         const auroraService = services.find(
-            (s) => s.uuid.toLowerCase() === BLE_SERVICE_UUID.toLowerCase()
+            (s) => s.uuid.toLowerCase() === BLE_SERVICE_UUID.toLowerCase(),
         );
 
         if (!auroraService) {
@@ -195,45 +200,30 @@ export class AuroraBluetooth extends EventEmitter {
         }
 
         // Subscribe to stream data notifications (route through parser)
-        await this.charSubscribe(
-            BleAuroraChars.STREAM_DATA_NOTIFIED,
-            (data: Buffer): void => {
-                this.bluetoothParser.onStreamDataCharNotification(data);
-            }
-        );
+        await this.charSubscribe(BleAuroraChars.STREAM_DATA_NOTIFIED, (data: Buffer): void => {
+            this.bluetoothParser.onStreamDataCharNotification(data);
+        });
 
         // Subscribe to aurora event notifications
-        await this.charSubscribe(
-            BleAuroraChars.AURORA_EVENT_NOTIFIED,
-            (data: Buffer): void => {
-                this.bluetoothParser.onAuroraEventCharNotification(data);
-            }
-        );
+        await this.charSubscribe(BleAuroraChars.AURORA_EVENT_NOTIFIED, (data: Buffer): void => {
+            this.bluetoothParser.onAuroraEventCharNotification(data);
+        });
 
         // Subscribe to command status notifications
-        await this.charSubscribe(
-            BleAuroraChars.CMD_STATUS,
-            (status: Buffer): void => {
-                this.bluetoothParser.onCmdStatusCharNotification(status);
-            }
-        );
+        await this.charSubscribe(BleAuroraChars.CMD_STATUS, (status: Buffer): void => {
+            this.bluetoothParser.onCmdStatusCharNotification(status);
+        });
 
         // Subscribe to command output notifications
-        await this.charSubscribe(
-            BleAuroraChars.CMD_OUTPUT_INDICATED,
-            (output: Buffer): void => {
-                this.bluetoothParser.onCmdOutputCharNotification(output);
-            }
-        );
+        await this.charSubscribe(BleAuroraChars.CMD_OUTPUT_INDICATED, (output: Buffer): void => {
+            this.bluetoothParser.onCmdOutputCharNotification(output);
+        });
 
         this.setConnectionState(ConnectionStates.IDLE);
     }
 
     public async disconnect(): Promise<void> {
-        if (
-            this.connectionState == ConnectionStates.DISCONNECTED ||
-            this.disconnectPending
-        ) {
+        if (this.connectionState == ConnectionStates.DISCONNECTED || this.disconnectPending) {
             return;
         }
 
@@ -243,17 +233,15 @@ export class AuroraBluetooth extends EventEmitter {
             this.bleManager.stopDeviceScan();
             await sleep(20);
 
-            // @ts-ignore
+            // @ts-expect-error
             if (this.connectionState !== ConnectionStates.DISCONNECTED) {
-                return Promise.reject(
-                    "Failed to disconnect. Scanning not stopped."
-                );
+                return Promise.reject("Failed to disconnect. Scanning not stopped.");
             }
         } else if (this.connectionState == ConnectionStates.BUSY) {
             await sleep(DISCONNECT_RETRY_DELAY_MS);
         }
 
-        // @ts-ignore
+        // @ts-expect-error
         if (this.connectionState === ConnectionStates.DISCONNECTED) return;
 
         try {
@@ -272,13 +260,9 @@ export class AuroraBluetooth extends EventEmitter {
                 case ConnectionStates.DISCONNECTED:
                     return Promise.reject("No idle serial connection.");
                 case ConnectionStates.BUSY:
-                    return Promise.reject(
-                        "Another command is already in progress."
-                    );
+                    return Promise.reject("Another command is already in progress.");
                 default:
-                    return Promise.reject(
-                        "Unknown Bluetooth connection state."
-                    );
+                    return Promise.reject("Unknown Bluetooth connection state.");
             }
         }
 
@@ -291,26 +275,17 @@ export class AuroraBluetooth extends EventEmitter {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             try {
-                this.bluetoothParser.once(
-                    "cmdResponse",
-                    (cmdResponse: CommandResult<unknown>) => {
-                        this.setConnectionState(ConnectionStates.IDLE);
-                        cmdResponse.origin = "bluetooth";
-                        resolve(cmdResponse);
-                    }
-                );
+                this.bluetoothParser.once("cmdResponse", (cmdResponse: CommandResult<unknown>) => {
+                    this.setConnectionState(ConnectionStates.IDLE);
+                    cmdResponse.origin = "bluetooth";
+                    resolve(cmdResponse);
+                });
 
-                await this.charWrite(
-                    BleAuroraChars.CMD_STATUS,
-                    Buffer.from([BleCmdStates.IDLE])
-                );
+                await this.charWrite(BleAuroraChars.CMD_STATUS, Buffer.from([BleCmdStates.IDLE]));
 
                 await sleep(10);
 
-                await this.charWrite(
-                    BleAuroraChars.CMD_DATA,
-                    Buffer.from(cmd, "ascii")
-                );
+                await this.charWrite(BleAuroraChars.CMD_DATA, Buffer.from(cmd, "ascii"));
 
                 await sleep(10);
 
@@ -318,7 +293,7 @@ export class AuroraBluetooth extends EventEmitter {
 
                 await this.charWrite(
                     BleAuroraChars.CMD_STATUS,
-                    Buffer.from([BleCmdStates.CMD_EXECUTE])
+                    Buffer.from([BleCmdStates.CMD_EXECUTE]),
                 );
                 await sleep(10);
             } catch (error) {
@@ -336,13 +311,9 @@ export class AuroraBluetooth extends EventEmitter {
                 case ConnectionStates.DISCONNECTED:
                     return Promise.reject("No idle serial connection.");
                 case ConnectionStates.IDLE:
-                    return Promise.reject(
-                        "Command input can only be written during a command."
-                    );
+                    return Promise.reject("Command input can only be written during a command.");
                 default:
-                    return Promise.reject(
-                        "Unknown Bluetooth connection state."
-                    );
+                    return Promise.reject("Unknown Bluetooth connection state.");
             }
         }
 
@@ -361,11 +332,7 @@ export class AuroraBluetooth extends EventEmitter {
             this.disconnectPending = false;
         }
 
-        this.emit(
-            DeviceEventList.connectionStateChange,
-            connectionState,
-            previousConnectionState
-        );
+        this.emit(DeviceEventList.connectionStateChange, connectionState, previousConnectionState);
     }
 
     private async connectDevice(timeoutMs: number): Promise<Device> {
@@ -378,23 +345,19 @@ export class AuroraBluetooth extends EventEmitter {
 
             console.debug("bluetooth scanning start.");
 
-            this.bleManager.startDeviceScan(
-                [BLE_SERVICE_UUID],
-                null,
-                (error, device) => {
-                    if (error) {
-                        console.error("Scan error:", error);
-                        this.connectPromise = undefined;
-                        this.setConnectionState(ConnectionStates.DISCONNECTED);
-                        reject(error.message);
-                        return;
-                    }
-
-                    if (device) {
-                        this.onPeripheralFound(device);
-                    }
+            this.bleManager.startDeviceScan([BLE_SERVICE_UUID], null, (error, device) => {
+                if (error) {
+                    console.error("Scan error:", error);
+                    this.connectPromise = undefined;
+                    this.setConnectionState(ConnectionStates.DISCONNECTED);
+                    reject(error.message);
+                    return;
                 }
-            );
+
+                if (device) {
+                    this.onPeripheralFound(device);
+                }
+            });
 
             clearTimeout(this.connectTimer!);
 
@@ -411,8 +374,7 @@ export class AuroraBluetooth extends EventEmitter {
     }
 
     private async charWrite(charKey: string, buffer: Buffer): Promise<void> {
-        if (!Buffer.isBuffer(buffer))
-            throw "Buffer parameter is not a valid buffer.";
+        if (!Buffer.isBuffer(buffer)) throw "Buffer parameter is not a valid buffer.";
 
         if (!buffer.length) return;
 
@@ -433,7 +395,7 @@ export class AuroraBluetooth extends EventEmitter {
                 this.device.id,
                 BLE_SERVICE_UUID,
                 charUUID,
-                bufferToBase64(packet)
+                bufferToBase64(packet),
             );
         }
     }
@@ -452,7 +414,7 @@ export class AuroraBluetooth extends EventEmitter {
             const result = await this.bleManager.readCharacteristicForDevice(
                 this.device.id,
                 BLE_SERVICE_UUID,
-                charUUID
+                charUUID,
             );
             await sleep(10);
             if (result.value) {
@@ -465,7 +427,7 @@ export class AuroraBluetooth extends EventEmitter {
 
     private async charSubscribe(
         charKey: string,
-        onNotification: (data: Buffer) => void
+        onNotification: (data: Buffer) => void,
     ): Promise<void> {
         if (!this.device) throw "No device connected.";
 
@@ -485,7 +447,7 @@ export class AuroraBluetooth extends EventEmitter {
                     const buffer = base64ToBuffer(characteristic.value);
                     onNotification(buffer);
                 }
-            }
+            },
         );
 
         this.subscriptions.push(subscription);
@@ -516,10 +478,7 @@ export class AuroraBluetooth extends EventEmitter {
         }
     };
 
-    private onPeripheralDisconnect = (
-        error: Error | null,
-        _device: Device | null
-    ): void => {
+    private onPeripheralDisconnect = (error: Error | null, _device: Device | null): void => {
         console.debug("onPeripheralDisconnect called.");
 
         if (error) {
@@ -553,7 +512,7 @@ export class AuroraBluetooth extends EventEmitter {
 
                 this.disconnectSubscription = this.bleManager.onDeviceDisconnected(
                     device.id,
-                    this.onPeripheralDisconnect
+                    this.onPeripheralDisconnect,
                 );
 
                 await this.setupConnection(device);
@@ -564,7 +523,7 @@ export class AuroraBluetooth extends EventEmitter {
             },
             () => {
                 this.time("Failed to reconnect.");
-            }
+            },
         );
 
         return reconnectResult;
@@ -575,7 +534,7 @@ export class AuroraBluetooth extends EventEmitter {
         delay: number,
         toTry: any,
         success: () => void,
-        fail: () => void
+        fail: () => void,
     ): void {
         toTry()
             .then(() => success())
@@ -583,17 +542,9 @@ export class AuroraBluetooth extends EventEmitter {
                 if (max === 0) {
                     return fail();
                 }
-                this.time(
-                    "Retrying in " + delay + "s... (" + max + " tries left)"
-                );
+                this.time("Retrying in " + delay + "s... (" + max + " tries left)");
                 setTimeout(() => {
-                    this.exponentialBackoff(
-                        --max,
-                        delay * 2,
-                        toTry,
-                        success,
-                        fail
-                    );
+                    this.exponentialBackoff(--max, delay * 2, toTry, success, fail);
                 }, delay * 1000);
             });
     }
@@ -608,15 +559,12 @@ export class AuroraBluetooth extends EventEmitter {
         this.bleManager.stopDeviceScan();
 
         try {
-            const connectedDevice = await this.bleManager.connectToDevice(
-                device.id,
-                { requestMTU: 185 }
-            );
+            const connectedDevice = await this.bleManager.connectToDevice(device.id, {
+                requestMTU: 185,
+            });
 
             if (!this.connectPromise) {
-                throw new Error(
-                    "Peripheral found event fired without valid connection promise."
-                );
+                throw new Error("Peripheral found event fired without valid connection promise.");
             }
 
             clearTimeout(this.connectTimer!);
@@ -633,20 +581,19 @@ export class AuroraBluetooth extends EventEmitter {
 
     private onParseCmdResponseRead = (
         bytesToRead: number,
-        cbAfterRead: (value: Buffer) => void
+        cbAfterRead: (value: Buffer) => void,
     ): void => {
         this.charRead(BleAuroraChars.CMD_DATA, bytesToRead).then(cbAfterRead);
     };
 
     private onParseCmdResponseWrite = (
         buffer: Buffer,
-        cbAfterWrite: (value: void) => Buffer
+        cbAfterWrite: (value: void) => Buffer,
     ): void => {
         this.charWrite(BleAuroraChars.CMD_DATA, buffer).then(() => {
-            this.charWrite(
-                BleAuroraChars.CMD_STATUS,
-                Buffer.from([BleCmdStates.IDLE])
-            ).then(cbAfterWrite);
+            this.charWrite(BleAuroraChars.CMD_STATUS, Buffer.from([BleCmdStates.IDLE])).then(
+                cbAfterWrite,
+            );
         });
     };
 

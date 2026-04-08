@@ -1,0 +1,68 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"indentWidth": 4,
+		"lineWidth": 100
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"a11y": {
+				"noSvgWithoutTitle": "off"
+			},
+			"correctness": {
+				"noUnusedImports": "warn",
+				"noUnusedVariables": "warn",
+				"useExhaustiveDependencies": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "off",
+				"noDoubleEquals": "warn",
+				"noImplicitAnyLet": "warn",
+				"noAssignInExpressions": "warn",
+				"noArrayIndexKey": "warn",
+				"noAsyncPromiseExecutor": "warn",
+				"noConfusingVoidType": "off",
+				"noGlobalIsNan": "warn"
+			},
+			"style": {
+				"noNonNullAssertion": "off",
+				"noUselessElse": "warn",
+				"useConst": "warn",
+				"useNodejsImportProtocol": "off"
+			},
+			"complexity": {
+				"noStaticOnlyClass": "off",
+				"noBannedTypes": "warn"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"trailingCommas": "all",
+			"semicolons": "always"
+		},
+		"globals": ["require", "module", "__DEV__"]
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}
+

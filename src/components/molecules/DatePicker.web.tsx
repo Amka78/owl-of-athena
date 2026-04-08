@@ -3,7 +3,7 @@ import "rc-calendar/assets/index.css";
 
 import moment from "moment";
 import Calendar from "rc-calendar";
-import React, { FunctionComponent, useState } from "react";
+import React, { type FunctionComponent, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Menu } from "react-native-paper";
 
@@ -12,9 +12,7 @@ import type { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component
-export const DatePicker: FunctionComponent<DatePickerProps> = (
-    props: DatePickerProps
-) => {
+export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePickerProps) => {
     const selectedDate = moment(props.selected);
     const calendar = (
         <Calendar

@@ -8,7 +8,7 @@ export type useTextBoxReturn = ReturnType<typeof useTextBox>;
 
 //#region Hooks
 export const useTextBox = (
-    initialValue: string
+    initialValue: string,
 ): { onChangeText: (e: string) => void; value: string; set: any } => {
     const [value, set] = useState(initialValue);
 

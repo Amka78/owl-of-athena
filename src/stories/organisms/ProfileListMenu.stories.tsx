@@ -1,14 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ProfileListMenu } from '../../components/organisms/profiles/ProfileListMenu';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ProfileListMenu } from "../../components/organisms/profiles/ProfileListMenu";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Organisms/ProfileListMenu',
+    title: "Organisms/ProfileListMenu",
     component: ProfileListMenu,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
         (Story: any) => (
             <Provider theme={Theme}>
@@ -23,11 +23,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        showOfficialCheckBoxStatus: 'checked',
+        showOfficialCheckBoxStatus: "checked",
         onShowOfficialCheckBoxPress: fn(),
-        showCommunityCheckBoxStatus: 'unchecked',
+        showCommunityCheckBoxStatus: "unchecked",
         onShowCommunityCheckBoxPress: fn(),
-        showPrivateCheckBoxStatus: 'indeterminate',
+        showPrivateCheckBoxStatus: "indeterminate",
         onShowPrivateCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {
@@ -37,11 +37,11 @@ export const Primary: Story = {
 
 export const AllChecked: Story = {
     args: {
-        showOfficialCheckBoxStatus: 'checked',
+        showOfficialCheckBoxStatus: "checked",
         onShowOfficialCheckBoxPress: fn(),
-        showCommunityCheckBoxStatus: 'checked',
+        showCommunityCheckBoxStatus: "checked",
         onShowCommunityCheckBoxPress: fn(),
-        showPrivateCheckBoxStatus: 'checked',
+        showPrivateCheckBoxStatus: "checked",
         onShowPrivateCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {

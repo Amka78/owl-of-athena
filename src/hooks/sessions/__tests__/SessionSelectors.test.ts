@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-native";
-import { useSessionStore, FilterByDateValues } from "../../../store/sessionStore";
-import { AuroraSession, AuroraSessionDetail } from "../../../sdk/models";
+import type { AuroraSession, AuroraSessionDetail } from "../../../sdk/models";
+import { FilterByDateValues, useSessionStore } from "../../../store/sessionStore";
 
 const mockSession = { id: "s1", starred: true } as unknown as AuroraSession;
 const mockSessionDetail = { sessionId: "s1" } as unknown as AuroraSessionDetail;
@@ -10,12 +10,12 @@ const mockFilterCondition = {
     showStarred: false,
 };
 
-import { useSessionListSelector } from "../useSessionListSelector";
+import { useFilterConditionSelector } from "../useFilteredConditionSelector";
 import { useFilteredSessionListSelector } from "../useFilteredSessionListSelector";
+import { useSelectedSessionDetailSelector } from "../useSelectedSessionDetailSelector";
 import { useSelectedSessionSelector } from "../useSelectedSessionSelector";
 import { useSessionDetailListSelector } from "../useSessionDetailListSelector";
-import { useSelectedSessionDetailSelector } from "../useSelectedSessionDetailSelector";
-import { useFilterConditionSelector } from "../useFilteredConditionSelector";
+import { useSessionListSelector } from "../useSessionListSelector";
 
 describe("Session selector hooks", () => {
     beforeEach(() => {

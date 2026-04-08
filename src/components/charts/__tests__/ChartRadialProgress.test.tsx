@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -21,44 +21,34 @@ const defaultProps = {
 
 describe("ChartRadialProgress UnitTest", () => {
     it("renders correctly", () => {
-        const { toJSON } = renderWithProvider(
-            <ChartRadialProgress {...defaultProps} />
-        );
+        const { toJSON } = renderWithProvider(<ChartRadialProgress {...defaultProps} />);
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("renders with value 0 (empty progress)", () => {
         const { toJSON } = renderWithProvider(
-            <ChartRadialProgress {...defaultProps} value={0} valueLabel="0%" />
+            <ChartRadialProgress {...defaultProps} value={0} valueLabel="0%" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("renders with value at maximum", () => {
         const { toJSON } = renderWithProvider(
-            <ChartRadialProgress {...defaultProps} value={100} valueLabel="100%" />
+            <ChartRadialProgress {...defaultProps} value={100} valueLabel="100%" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("renders with custom radii", () => {
         const { toJSON } = renderWithProvider(
-            <ChartRadialProgress
-                {...defaultProps}
-                outerRadius={60}
-                innerRadius={50}
-            />
+            <ChartRadialProgress {...defaultProps} outerRadius={60} innerRadius={50} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("renders with custom label color and size", () => {
         const { toJSON } = renderWithProvider(
-            <ChartRadialProgress
-                {...defaultProps}
-                valueLabelColor="#fff"
-                valueLabelSize={18}
-            />
+            <ChartRadialProgress {...defaultProps} valueLabelColor="#fff" valueLabelSize={18} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });

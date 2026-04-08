@@ -1,11 +1,10 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
-
-import type { CheckBoxField } from "../../sdk/AuroraTypes";
-import { StreamIds } from "../../sdk/AuroraConstants";
-import { LabeledCheckBox } from "../molecules";
+import React, { type FunctionComponent } from "react";
+import { type StyleProp, View, type ViewStyle } from "react-native";
 import { Colors } from "../../constants";
+import { StreamIds } from "../../sdk/AuroraConstants";
+import type { CheckBoxField } from "../../sdk/AuroraTypes";
+import { LabeledCheckBox } from "../molecules/LabeledCheckBox";
 //#endregion
 
 //#region Types
@@ -20,7 +19,7 @@ export type FieldStreamCheckBoxesProps = {
 
 //#region Component
 export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps> = (
-    _props: FieldStreamCheckBoxesProps
+    _props: FieldStreamCheckBoxesProps,
 ) => {
     return (
         <View

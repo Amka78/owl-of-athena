@@ -1,7 +1,7 @@
 //#region Import Modules
 import Slider from "@react-native-community/slider";
-import React, { FunctionComponent } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import type { StyleProp, ViewStyle } from "react-native";
 
 import type { SliderField } from "../../sdk/AuroraTypes";
 //#endregion
@@ -17,9 +17,7 @@ export type FieldSliderProps = {
 //#endregion
 
 //#region Component
-export const FieldSlider: FunctionComponent<FieldSliderProps> = (
-    props: FieldSliderProps
-) => {
+export const FieldSlider: FunctionComponent<FieldSliderProps> = (props: FieldSliderProps) => {
     return (
         <Slider
             {...props}

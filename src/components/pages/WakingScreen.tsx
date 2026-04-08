@@ -1,9 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { useConvertibleHeader, useWindowDimensions } from "../../hooks";
-
-import { useWaking } from "../../hooks/useWaking ";
+import React, { type FunctionComponent } from "react";
 import { MessageKeys } from "../../constants";
+import { useConvertibleHeader, useWindowDimensions } from "../../hooks";
+import { useWaking } from "../../hooks/useWaking ";
 import { WakingScreenTemplate } from "./../templates/WakingScreenTemplate";
 //#endregion
 
@@ -11,11 +10,7 @@ import { WakingScreenTemplate } from "./../templates/WakingScreenTemplate";
 export const WakingScreen: FunctionComponent = () => {
     const wakingHook = useWaking();
     const dimens = useWindowDimensions();
-    useConvertibleHeader(
-        MessageKeys.waking_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
+    useConvertibleHeader(MessageKeys.waking_title, dimens.isDesktop, dimens.isSmallHeight);
     return (
         <WakingScreenTemplate
             dimens={dimens}

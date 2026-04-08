@@ -1,14 +1,13 @@
-import { buzzSongObjToCmd } from "./util";
+import type { Aurora } from "./Aurora";
 import { ConnectorTypes } from "./AuroraConstants";
+import { buzzSongObjToCmd } from "./util";
 
-import { Aurora } from "./Aurora";
-const AuroraCmdPlayBuzzSong = async function(
+const AuroraCmdPlayBuzzSong = async function (
     this: Aurora,
     buzzSong: unknown,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<unknown> {
-    const cmd =
-        typeof buzzSong == "string" ? buzzSong : buzzSongObjToCmd(buzzSong);
+    const cmd = typeof buzzSong == "string" ? buzzSong : buzzSongObjToCmd(buzzSong);
 
     return await this.queueCmd(cmd, connectorType);
 };

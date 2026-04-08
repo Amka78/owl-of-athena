@@ -1,4 +1,4 @@
-import { useSessionStore, SessionFilterCondition } from "../../store/sessionStore";
+import { type SessionFilterCondition, useSessionStore } from "../../store/sessionStore";
 
 export const useFilterConditionSelector = (): SessionFilterCondition =>
     useSessionStore((state) => state.filterCondition);

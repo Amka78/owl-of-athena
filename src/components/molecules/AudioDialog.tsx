@@ -1,7 +1,7 @@
 //#region "Import Modules"
 import { Audio } from "expo-av";
 import React from "react";
-import { Platform, StyleSheet, ViewStyle } from "react-native";
+import { Platform, StyleSheet, type ViewStyle } from "react-native";
 import { Dialog, RadioButton } from "react-native-paper";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
@@ -9,6 +9,7 @@ import { AudioList } from "../../sdk/models/AudioList";
 import type { AuroraSound } from "../../types";
 import { FlatButton } from "../atoms";
 import { LabeledRadioButton } from "../molecules";
+
 //#endregion
 
 export { AudioList };
@@ -34,10 +35,7 @@ type AudioDialogState = {
     selectedFileName: string;
 };
 
-export class AudioDialog extends React.Component<
-    AudioDialogProps,
-    AudioDialogState
-> {
+export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogState> {
     public static Instance?: AudioDialog;
     private soundList: Array<AudioType> = [
         { showName: AudioList.A_NEY_DAY, fileName: "a_new_day.m4a" },
@@ -51,14 +49,9 @@ export class AudioDialog extends React.Component<
 
     private sound = new Audio.Sound();
 
-    public static show(
-        args: AudioDialogSettings,
-        selectedSound: AudioList
-    ): void {
+    public static show(args: AudioDialogSettings, selectedSound: AudioList): void {
         const foundAudio = AudioDialog.Instance!.findAudio(
-            selectedSound === AudioList.NONE
-                ? AudioList.A_NEY_DAY
-                : selectedSound
+            selectedSound === AudioList.NONE ? AudioList.A_NEY_DAY : selectedSound,
         );
 
         AudioDialog.Instance!.setState({
@@ -103,11 +96,7 @@ export class AudioDialog extends React.Component<
             <Dialog
                 visible={true}
                 onDismiss={this.onDialogDismissed()}
-                style={[
-                    styles.dialogContainer,
-                    this.props.dialogContainer,
-                    { width },
-                ]}
+                style={[styles.dialogContainer, this.props.dialogContainer, { width }]}
             >
                 <Dialog.Title style={styles.dialogTitle}>
                     {Message.get(MessageKeys.alarm_sound_dialog_title)}
@@ -117,20 +106,16 @@ export class AudioDialog extends React.Component<
                         onValueChange={this.onRadioButtonSelected()}
                         value={this.getSelectedAudio()}
                     >
-                        {this.soundList.map(
-                            (value: AudioType, index: number) => {
-                                return (
-                                    <LabeledRadioButton
-                                        key={index}
-                                        value={value.showName}
-                                        label={Message.get(value.showName)}
-                                        onLabelPress={this.onLabelPressed(
-                                            value
-                                        )}
-                                    ></LabeledRadioButton>
-                                );
-                            }
-                        )}
+                        {this.soundList.map((value: AudioType, index: number) => {
+                            return (
+                                <LabeledRadioButton
+                                    key={index}
+                                    value={value.showName}
+                                    label={Message.get(value.showName)}
+                                    onLabelPress={this.onLabelPressed(value)}
+                                ></LabeledRadioButton>
+                            );
+                        })}
                     </RadioButton.Group>
                 </Dialog.Content>
                 <Dialog.Actions>
@@ -200,7 +185,7 @@ export class AudioDialog extends React.Component<
             await this.stopSound(this.sound);
             this.state.dialogSettings!.onConfirm(
                 this.state.selectedShowName,
-                this.state.selectedFileName
+                this.state.selectedFileName,
             );
             this.setState({ dialogSettings: undefined });
         };
@@ -209,11 +194,9 @@ export class AudioDialog extends React.Component<
     private onLabelPressed(value: AudioType): () => void {
         return async (): Promise<void> => {
             await this.stopSound(this.sound);
-            this.sound = this.props.auroraSoundList.find(
-                (sound: AuroraSound) => {
-                    return sound.fileName == value.fileName;
-                }
-            )!.sound;
+            this.sound = this.props.auroraSoundList.find((sound: AuroraSound) => {
+                return sound.fileName == value.fileName;
+            })!.sound;
 
             await this.sound.playAsync();
         };

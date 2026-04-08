@@ -1,10 +1,5 @@
 import AuroraManagerInstance, { AuroraManager } from "./AuroraManager";
-import SoundManagerInstance from "./SoundManager";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
+import SoundManagerInstance from "./SoundManager";
 
-export {
-    AuroraManagerInstance,
-    AuroraManager,
-    AuroraManagerEventList,
-    SoundManagerInstance,
-};
+export { AuroraManager, AuroraManagerEventList, AuroraManagerInstance, SoundManagerInstance };

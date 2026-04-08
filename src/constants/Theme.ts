@@ -1,4 +1,4 @@
-import { DefaultTheme, MD3Theme } from "react-native-paper";
+import { DefaultTheme, type MD3Theme } from "react-native-paper";
 import { Colors } from "../constants";
 
 export const Theme = {

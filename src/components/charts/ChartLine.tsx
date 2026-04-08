@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
-import Chart, { ChartProps } from "./Chart";
-import moment from "moment";
 import * as d3 from "d3";
+import moment from "moment";
+import PropTypes from "prop-types";
+import Chart, { type ChartProps } from "./Chart";
 
 export default class ChartLine extends Chart<ChartProps> {
     public shouldComponentUpdate(
@@ -10,7 +10,7 @@ export default class ChartLine extends Chart<ChartProps> {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _nextState: Readonly<{}>,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _nextContext: any
+        _nextContext: any,
     ): boolean {
         return false;
     }
@@ -26,7 +26,7 @@ export default class ChartLine extends Chart<ChartProps> {
         this.axisX!.tickFormat((d) =>
             moment(d as Date)
                 .format("h:ma")
-                .slice(0, -1)
+                .slice(0, -1),
         );
 
         this.axisY!.ticks(16);
@@ -40,10 +40,8 @@ export default class ChartLine extends Chart<ChartProps> {
         for (let i = 0; i < this.props.data.length; i++) {
             this.lines![i] = d3.line();
 
-            // @ts-ignore
-            this.lines[i]
-                .x((_d, i) => this.scaleX!(i * 128))
-                .y((d) => this.scaleY!(d as any));
+            // @ts-expect-error
+            this.lines[i].x((_d, i) => this.scaleX!(i * 128)).y((d) => this.scaleY!(d as any));
 
             this.svg!.append("path")
                 .datum(this.props.data[i])

@@ -6,7 +6,7 @@ import { G, Path, Rect, Text } from "react-native-svg";
 import { Colors } from "../../constants";
 import {
     ChartCore,
-    ChartCoreProps,
+    type ChartCoreProps,
     getChartHeight,
     getChartWidth,
     getMargin,
@@ -66,12 +66,8 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
         const chartWidth = getChartWidth(this.props.width, margin);
         const chartHeight = getChartHeight(this.props.height, margin);
 
-        const outerRadius = this.props.outerRadius
-            ? this.props.outerRadius
-            : chartWidth / 2;
-        const innerRadius = this.props.innerRadius
-            ? this.props.innerRadius
-            : chartWidth / 3;
+        const outerRadius = this.props.outerRadius ? this.props.outerRadius : chartWidth / 2;
+        const innerRadius = this.props.innerRadius ? this.props.innerRadius : chartWidth / 3;
 
         console.debug(`outerRadius:${outerRadius}`);
         console.debug(`innerRadius:${innerRadius}`);
@@ -117,24 +113,22 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
         return (
             <ChartCore {...this.props}>
                 <G transform={`translate(${pieTranslateX}, ${pieTranslateY})`}>
+                    {pie(this.props.categoryPercents).map((value: any, index: number) => {
+                        const currentAngle = arc
+                            .startAngle(value.startAngle)
+                            .endAngle(value.endAngle)
+                            .padAngle(value.padAngle);
+                        return (
+                            <Path
+                                key={index}
+                                //@ts-expect-error
+                                d={currentAngle()}
+                                fill={categoryColors[index]}
+                            ></Path>
+                        );
+                    })}
                     {pie(this.props.categoryPercents).map(
-                        (value: any, index: number) => {
-                            const currentAngle = arc
-                                .startAngle(value.startAngle)
-                                .endAngle(value.endAngle)
-                                .padAngle(value.padAngle);
-                            return (
-                                <Path
-                                    key={index}
-                                    //@ts-ignore
-                                    d={currentAngle()}
-                                    fill={categoryColors[index]}
-                                ></Path>
-                            );
-                        }
-                    )}
-                    {pie(this.props.categoryPercents).map(
-                        // @ts-ignore
+                        // @ts-expect-error
                         (value: any, index: number) => {
                             return (
                                 <Text
@@ -153,48 +147,40 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
                                         .padAngle(value.padAngle)
                                         .centroid(value)})`}
                                 >
-                                    {value.data >= 5
-                                        ? `${Math.round(value.data)}%`
-                                        : ""}
+                                    {value.data >= 5 ? `${Math.round(value.data)}%` : ""}
                                 </Text>
                             );
-                        }
+                        },
                     )}
                 </G>
-                <G
-                    transform={`translate(${legendTranslateX}, ${legendTranslateY})`}
-                >
-                    {this.props.categoryLabels.map(
-                        (value: string, index: number) => {
-                            return (
-                                <G
+                <G transform={`translate(${legendTranslateX}, ${legendTranslateY})`}>
+                    {this.props.categoryLabels.map((value: string, index: number) => {
+                        return (
+                            <G
+                                key={index}
+                                transform={`translate(0, ${index * (categoryLabelPadding + 12)})`}
+                            >
+                                <Rect
                                     key={index}
-                                    transform={`translate(0, ${
-                                        index * (categoryLabelPadding + 12)
-                                    })`}
+                                    width={categoryLabelPadding}
+                                    height={categoryLabelPadding}
+                                    rx={categoryLabelPadding}
+                                    ry={categoryLabelPadding}
+                                    fill={"transparent"}
+                                    strokeWidth={2}
+                                    stroke={categoryColors[index]}
+                                ></Rect>
+                                <Text
+                                    x={categoryLabelPadding + 12}
+                                    y={categoryLabelPadding / 2 + 6}
+                                    fill={categoryLabelColor}
+                                    fontSize={this.props.categoryLabelSize}
                                 >
-                                    <Rect
-                                        key={index}
-                                        width={categoryLabelPadding}
-                                        height={categoryLabelPadding}
-                                        rx={categoryLabelPadding}
-                                        ry={categoryLabelPadding}
-                                        fill={"transparent"}
-                                        strokeWidth={2}
-                                        stroke={categoryColors[index]}
-                                    ></Rect>
-                                    <Text
-                                        x={categoryLabelPadding + 12}
-                                        y={categoryLabelPadding / 2 + 6}
-                                        fill={categoryLabelColor}
-                                        fontSize={this.props.categoryLabelSize}
-                                    >
-                                        {value}
-                                    </Text>
-                                </G>
-                            );
-                        }
-                    )}
+                                    {value}
+                                </Text>
+                            </G>
+                        );
+                    })}
                 </G>
             </ChartCore>
         );

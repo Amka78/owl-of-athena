@@ -1,10 +1,9 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftProps } from "@react-navigation/stack";
-import React, { FunctionComponent, useLayoutEffect } from "react";
-
-import { useProfileList } from "../../hooks/profiles/useProfileList";
+import type { NativeStackHeaderItemProps } from "@react-navigation/native-stack";
+import React, { type FunctionComponent, useLayoutEffect } from "react";
 import { useWindowDimensions } from "../../hooks";
+import { useProfileList } from "../../hooks/profiles/useProfileList";
 import { FilterIcon, RefreshIcon } from "../atoms";
 import { ProfileListScreenTemplate } from "../templates/ProfileListScreenTemplate";
 //#endregion
@@ -18,45 +17,27 @@ export const ProfileListScreen: FunctionComponent = () => {
     useLayoutEffect(() => {
         setOptions({
             headerLeft: () => {
-                return (
-                    <RefreshIcon
-                        onPress={profileListHook.onRefreshPress}
-                    ></RefreshIcon>
-                );
+                return <RefreshIcon onPress={profileListHook.onRefreshPress}></RefreshIcon>;
             },
-            headerRight: (props: StackHeaderLeftProps) => {
-                return (
-                    <FilterIcon
-                        {...props}
-                        onPress={profileListHook.onFilterPress}
-                    ></FilterIcon>
-                );
+            headerRight: (props: NativeStackHeaderItemProps) => {
+                return <FilterIcon {...props} onPress={profileListHook.onFilterPress}></FilterIcon>;
             },
         });
-    }, [
-        profileListHook.onFilterPress,
-        profileListHook.onRefreshPress,
-        setOptions,
-    ]);
+    }, [profileListHook.onFilterPress, profileListHook.onRefreshPress, setOptions]);
     return (
         <ProfileListScreenTemplate
             showFilter={profileListHook.showFilter}
             filterMenuProps={{
-                showOfficialCheckBoxStatus: profileListHook.filterCondition
-                    .showOfficial
+                showOfficialCheckBoxStatus: profileListHook.filterCondition.showOfficial
                     ? "checked"
                     : "unchecked",
 
-                onShowOfficialCheckBoxPress:
-                    profileListHook.onShowOfficialPress,
-                showCommunityCheckBoxStatus: profileListHook.filterCondition
-                    .showCommunity
+                onShowOfficialCheckBoxPress: profileListHook.onShowOfficialPress,
+                showCommunityCheckBoxStatus: profileListHook.filterCondition.showCommunity
                     ? "checked"
                     : "unchecked",
-                onShowCommunityCheckBoxPress:
-                    profileListHook.onShowCommunityPress,
-                showPrivateCheckBoxStatus: profileListHook.filterCondition
-                    .showPrivate
+                onShowCommunityCheckBoxPress: profileListHook.onShowCommunityPress,
+                showPrivateCheckBoxStatus: profileListHook.filterCondition.showPrivate
                     ? "checked"
                     : "unchecked",
                 onShowPrivateCheckBoxPress: profileListHook.onShowPrivatePress,

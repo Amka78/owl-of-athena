@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionListScreenTemplate } from '../../components/templates/SessionListScreenTemplate';
-import { FilterByDateValues } from '../../store/sessionStore';
-import { AuroraSession } from '../../sdk/models';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionListScreenTemplate } from "../../components/templates/SessionListScreenTemplate";
+import { Theme } from "../../constants";
+import type { AuroraSession } from "../../sdk/models";
+import { FilterByDateValues } from "../../store/sessionStore";
 
 const filterMenuProps = {
     onPickerValueChange: fn(),
@@ -13,20 +13,24 @@ const filterMenuProps = {
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-    showStarredCheckBoxStatus: 'unchecked' as const,
+    showStarredCheckBoxStatus: "unchecked" as const,
     onShowStarredCheckBoxPress: fn(),
-    showNoteCheckBoxStatus: 'unchecked' as const,
+    showNoteCheckBoxStatus: "unchecked" as const,
     onShowNoteCheckBoxPress: fn(),
 };
 
 const sampleSessions: AuroraSession[] = [];
 
 const meta = {
-    title: 'Templates/SessionListScreenTemplate',
+    title: "Templates/SessionListScreenTemplate",
     component: SessionListScreenTemplate,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SessionListScreenTemplate>;
 
@@ -41,7 +45,7 @@ export const EnUSLocale: Story = {
         onStarPress: fn(),
         onDeletePress: fn(),
         onMenuPress: fn(),
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -56,7 +60,7 @@ export const JaJPLocale: Story = {
         onStarPress: fn(),
         onDeletePress: fn(),
         onMenuPress: fn(),
-        locale: 'ja-JP',
+        locale: "ja-JP",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -71,7 +75,7 @@ export const WithFilter: Story = {
         onStarPress: fn(),
         onDeletePress: fn(),
         onMenuPress: fn(),
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

@@ -1,12 +1,8 @@
-import { useEffect } from "react";
-
 import { useNavigation } from "@react-navigation/native";
-import {
-    AuroraRestClientInstance,
-    SessionRestClientInstance,
-} from "../clients";
-import { useAuthStore } from "../store/authStore";
+import { useEffect } from "react";
+import { AuroraRestClientInstance, SessionRestClientInstance } from "../clients";
 import { useTokenSelector, useUserSelector } from "../hooks";
+import { useAuthStore } from "../store/authStore";
 
 import { GuestUser } from "../types";
 
@@ -27,10 +23,8 @@ export const useAutoLogin = (): void => {
                         const currentUser = await AuroraRestClientInstance.getAuthUser();
                         updateUser(currentUser);
                     }
-                    AuroraRestClientInstance.getTokenCallback = (): string =>
-                        token;
-                    SessionRestClientInstance.getTokenCallback = (): string =>
-                        token;
+                    AuroraRestClientInstance.getTokenCallback = (): string => token;
+                    SessionRestClientInstance.getTokenCallback = (): string => token;
                     navigate("Main");
                 } else if (user?.id === GuestUser) {
                     navigate("Main");

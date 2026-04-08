@@ -38,6 +38,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
             "android.permission.ACCESS_FINE_LOCATION",
         ],
     },
+    extra: {
+        supabaseUrl: process.env.SUPABASE_URL ?? "",
+        supabaseAnonKey: process.env.SUPABASE_ANON_KEY ?? "",
+    },
     description: "Aurora Client for community user.",
     backgroundColor: Colors.navy_darker,
     splash: {

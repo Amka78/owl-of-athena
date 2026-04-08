@@ -25,6 +25,8 @@ export class Settings {
 
     public remStimAudioPath?: string;
 
+    public alarmVolume: number;
+
     public savedAt?: Date;
     constructor(settings: Partial<Settings>) {
         this.profileId = settings.profileId;
@@ -33,13 +35,9 @@ export class Settings {
             ? (this.profileTitle = settings.profileTitle)
             : (this.profileTitle = "Default Profile");
 
-        settings.alarmHour
-            ? (this.alarmHour = settings.alarmHour)
-            : (this.alarmHour = 8);
+        settings.alarmHour ? (this.alarmHour = settings.alarmHour) : (this.alarmHour = 8);
 
-        settings.alarmMinute
-            ? (this.alarmMinute = settings.alarmMinute)
-            : (this.alarmMinute = 0);
+        settings.alarmMinute ? (this.alarmMinute = settings.alarmMinute) : (this.alarmMinute = 0);
 
         settings.smartAlarmEnabled
             ? (this.smartAlarmEnabled = settings.smartAlarmEnabled)
@@ -49,9 +47,7 @@ export class Settings {
             ? (this.remStimEnabled = settings.remStimEnabled)
             : (this.remStimEnabled = false);
 
-        settings.dslEnabled
-            ? (this.dslEnabled = settings.dslEnabled)
-            : (this.dslEnabled = false);
+        settings.dslEnabled ? (this.dslEnabled = settings.dslEnabled) : (this.dslEnabled = false);
 
         settings.alarmAudio
             ? (this.alarmAudio = settings.alarmAudio)
@@ -61,6 +57,7 @@ export class Settings {
             ? (this.remStimAudio = settings.remStimAudio)
             : (this.remStimAudio = AudioList.NONE);
         this.remStimAudioPath = settings.remStimAudioPath;
+        this.alarmVolume = settings.alarmVolume ?? 0.8;
         this.savedAt = settings.savedAt;
     }
 }

@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -16,8 +16,8 @@ describe("ClippedG UnitTest", () => {
             renderWithProvider(
                 <ClippedG xChartRange={[0, 300]} yChartRange={[200, 0]}>
                     {null}
-                </ClippedG>
-            )
+                </ClippedG>,
+            ),
         ).not.toThrow();
     });
 
@@ -26,8 +26,8 @@ describe("ClippedG UnitTest", () => {
             renderWithProvider(
                 <ClippedG xChartRange={[50, 350]} yChartRange={[150, 20]}>
                     {null}
-                </ClippedG>
-            )
+                </ClippedG>,
+            ),
         ).not.toThrow();
     });
 
@@ -35,7 +35,7 @@ describe("ClippedG UnitTest", () => {
         const { toJSON } = renderWithProvider(
             <ClippedG xChartRange={[0, 300]} yChartRange={[200, 0]}>
                 {null}
-            </ClippedG>
+            </ClippedG>,
         );
         expect(toJSON()).not.toBeNull();
     });

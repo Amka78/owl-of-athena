@@ -1,31 +1,47 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SignupScreenTemplate } from '../../components/templates/SignupScreenTemplate';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SignupScreenTemplate } from "../../components/templates/SignupScreenTemplate";
+import { Theme } from "../../constants";
 
 const mobileDimens = {
-    fontScale: 1, scale: 1, height: 800, width: 400,
-    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
-    isVertical: true, isHorizontal: false,
+    fontScale: 1,
+    scale: 1,
+    height: 800,
+    width: 400,
+    isDesktop: false,
+    isLargeWidth: false,
+    isSmallHeight: false,
+    isVertical: true,
+    isHorizontal: false,
 };
 
 const desktopDimens = {
-    fontScale: 1, scale: 1, height: 1200, width: 1400,
-    isDesktop: true, isLargeWidth: true, isSmallHeight: false,
-    isVertical: false, isHorizontal: true,
+    fontScale: 1,
+    scale: 1,
+    height: 1200,
+    width: 1400,
+    isDesktop: true,
+    isLargeWidth: true,
+    isSmallHeight: false,
+    isVertical: false,
+    isHorizontal: true,
 };
 
-const textBoxProps = { value: '', onChangeText: fn() };
-const checkBoxProps = { status: 'unchecked' as const, onPress: fn(), onLabelPress: fn() };
+const textBoxProps = { value: "", onChangeText: fn() };
+const checkBoxProps = { status: "unchecked" as const, onPress: fn(), onLabelPress: fn() };
 
 const meta = {
-    title: 'Templates/SignupScreenTemplate',
+    title: "Templates/SignupScreenTemplate",
     component: SignupScreenTemplate,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SignupScreenTemplate>;
 
@@ -41,7 +57,7 @@ export const EnUSLocale: Story = {
         onSignupPress: fn(),
         onCancelPress: fn(),
         dimens: mobileDimens,
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -57,7 +73,7 @@ export const JaJPLocale: Story = {
         onSignupPress: fn(),
         onCancelPress: fn(),
         dimens: mobileDimens,
-        locale: 'ja-JP',
+        locale: "ja-JP",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -73,7 +89,7 @@ export const Desktop: Story = {
         onSignupPress: fn(),
         onCancelPress: fn(),
         dimens: desktopDimens,
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

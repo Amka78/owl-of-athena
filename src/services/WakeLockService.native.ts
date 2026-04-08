@@ -6,7 +6,7 @@ let isActive = false;
 
 export const request = async (
     succeedWakeLockCallback: () => void,
-    releaseWakeLockCallback: () => void
+    releaseWakeLockCallback: () => void,
 ): Promise<void> => {
     try {
         await activateKeepAwakeAsync(WAKELOCK_TAG);

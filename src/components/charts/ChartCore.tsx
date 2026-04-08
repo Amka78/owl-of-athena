@@ -1,12 +1,13 @@
 //#region Import Modules
 import * as d3 from "d3";
 import sortBy from "lodash/sortBy";
-import React, { FC } from "react";
-import { ViewStyle } from "react-native";
+import type React from "react";
+import type { FC } from "react";
+import type { ViewStyle } from "react-native";
 import { Svg } from "react-native-svg";
 
-import { AuroraEvent } from "../../sdk/models";
-import { Margin } from "./Chart";
+import type { AuroraEvent } from "../../sdk/models";
+import type { Margin } from "./Chart";
 //#endregion
 
 //#region Export Types
@@ -69,7 +70,7 @@ export const getMargin = (svgStyle?: ViewStyle): Margin => {
 
 export const getXScale = (
     range: number[],
-    domain: (number | Date | { valueOf(): number })[]
+    domain: (number | Date | { valueOf(): number })[],
 ): d3.ScaleTime<number, number> => {
     const scaleX = d3.scaleTime().range(range);
     scaleX.nice();
@@ -81,7 +82,7 @@ export const getXScale = (
 
 export const getYScale = (
     range: number[],
-    domain: (number | Date | { valueOf(): number })[]
+    domain: (number | Date | { valueOf(): number })[],
 ): d3.ScaleLinear<number, number> => {
     const scaleY = d3.scaleLinear().range(range);
     scaleY.nice();
@@ -92,33 +93,25 @@ export const getYScale = (
     return scaleY;
 };
 
-export const getXChartRange = (
-    chartWidth: number,
-    axisMargin?: Margin
-): number[] => {
+export const getXChartRange = (chartWidth: number, axisMargin?: Margin): number[] => {
     if (axisMargin) {
         return [axisMargin.left, chartWidth - axisMargin.right];
-    } else {
-        return [0, chartWidth];
     }
+    return [0, chartWidth];
 };
 
-export const getYChartRange = (
-    chartHeight: number,
-    axisMargin?: Margin
-): number[] => {
+export const getYChartRange = (chartHeight: number, axisMargin?: Margin): number[] => {
     if (axisMargin) {
         return [chartHeight - axisMargin.bottom, axisMargin!.top];
-    } else {
-        return [chartHeight, 0];
     }
+    return [chartHeight, 0];
 };
 
 export const getData = (
     source: AuroraEvent[],
     dataBins: number[],
     dataBinThreshold: number,
-    scaleXDomain: number[]
+    scaleXDomain: number[],
 ): AuroraEvent[] => {
     const bin = getCurrentBin(dataBins, dataBinThreshold, scaleXDomain);
 
@@ -133,10 +126,7 @@ export const getData = (
         }
 
         if (typeof datum.bins[bin] != "undefined") {
-            filteredData.push(
-                Object.assign({}, datum, { flags: datum.bins[bin] })
-            );
-            continue;
+            filteredData.push(Object.assign({}, datum, { flags: datum.bins[bin] }));
         }
     }
 
@@ -146,7 +136,7 @@ export const getData = (
 export const getCurrentBin = (
     dataBins: number[],
     dataBinThreshold: number,
-    scaleXDomain: number[]
+    scaleXDomain: number[],
 ): number => {
     if (!dataBins.length) return 0;
 

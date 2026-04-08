@@ -1,23 +1,16 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { View } from "react-native";
 
+import Slider from "@react-native-community/slider";
+import React, { type FunctionComponent } from "react";
+import { Text, View } from "react-native";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { InlineTimePicker, LeftSideButton } from "../atoms";
-import { InlineTimePickerProps } from "../atoms/InlineTimePicker";
-import {
-    InternalView,
-    LabeledCheckBox,
-    LabeledSelectorMenu,
-    RightSideButton,
-} from "../molecules";
-import { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
-import {
-    TemplateButtonProps,
-    TemplateSelectorMenuProps,
-} from "./TempatedProps";
+import type { InlineTimePickerProps } from "../atoms/InlineTimePicker";
+import { InternalView, LabeledCheckBox, LabeledSelectorMenu, RightSideButton } from "../molecules";
+import type { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
+import type { TemplateButtonProps, TemplateSelectorMenuProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -29,6 +22,8 @@ export type SettingsScreenTemplateProps = {
     dslEnabled: LabeledCheckBoxProps;
     remStimEnabled: LabeledCheckBoxProps;
     remStimAudioMenu: TemplateSelectorMenuProps;
+    alarmVolume: number;
+    onAlarmVolumeChange: (value: number) => void;
     saveButton: TemplateButtonProps;
     cancelButton: TemplateButtonProps;
     dimens: Dimensions;
@@ -38,13 +33,13 @@ export type SettingsScreenTemplateProps = {
 
 //#region Component
 export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplateProps> = (
-    props: SettingsScreenTemplateProps
+    props: SettingsScreenTemplateProps,
 ) => {
     useLocale(props.locale);
     useConvertibleHeader(
         MessageKeys.settings_title,
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
 
     const saveButton = (
@@ -80,10 +75,7 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
     }
     return (
         <InternalView>
-            <InlineTimePicker
-                {...props.inlineTimePicker}
-                mode="minute"
-            ></InlineTimePicker>
+            <InlineTimePicker {...props.inlineTimePicker} mode="minute"></InlineTimePicker>
             <View
                 style={{
                     marginLeft: Dimens.content_margin_horizontal,
@@ -117,10 +109,26 @@ export const SettingsScreenTemplate: FunctionComponent<SettingsScreenTemplatePro
                 ></LabeledCheckBox>
                 <LabeledSelectorMenu
                     {...props.remStimAudioMenu}
-                    label={Message.get(
-                        MessageKeys.settings_option_rem_stim_audio
-                    )}
+                    label={Message.get(MessageKeys.settings_option_rem_stim_audio)}
                 ></LabeledSelectorMenu>
+                <Text
+                    style={{
+                        marginTop: Dimens.content_title_margin_top,
+                        color: "white",
+                    }}
+                >
+                    {Message.get(MessageKeys.settings_option_volume)}
+                </Text>
+                <Slider
+                    minimumValue={0}
+                    maximumValue={1}
+                    step={0.05}
+                    value={props.alarmVolume}
+                    onValueChange={props.onAlarmVolumeChange}
+                    minimumTrackTintColor="#00FFFF"
+                    maximumTrackTintColor="#888888"
+                    thumbTintColor="#00FFFF"
+                />
             </View>
             {bottomButtons}
         </InternalView>

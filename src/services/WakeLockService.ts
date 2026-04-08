@@ -1,17 +1,15 @@
 import { Platform } from "react-native";
 import type { ExperimentalNavigator, WakeLockSentinel } from "../types";
 
-let wakeLockSentinel: WakeLockSentinel | undefined = undefined;
+let wakeLockSentinel: WakeLockSentinel | undefined;
 export const request = async (
     succeedWakeLockCallback: () => void,
-    releaseWakeLockCallback: () => void
+    releaseWakeLockCallback: () => void,
 ): Promise<void> => {
     const exNavigator = navigator as ExperimentalNavigator;
 
     if (exNavigator.wakeLock && Platform.OS === "web") {
-        wakeLockSentinel = await (navigator as ExperimentalNavigator).wakeLock.request(
-            "screen"
-        );
+        wakeLockSentinel = await (navigator as ExperimentalNavigator).wakeLock.request("screen");
 
         wakeLockSentinel.addEventListener("release", () => {
             releaseWakeLockCallback();

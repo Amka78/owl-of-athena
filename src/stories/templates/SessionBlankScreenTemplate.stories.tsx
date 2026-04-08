@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionBlankScreenTemplate } from '../../components/templates/SessionBlankScreenTemplate';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionBlankScreenTemplate } from "../../components/templates/SessionBlankScreenTemplate";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Templates/SessionBlankScreenTemplate',
+    title: "Templates/SessionBlankScreenTemplate",
     component: SessionBlankScreenTemplate,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SessionBlankScreenTemplate>;
 

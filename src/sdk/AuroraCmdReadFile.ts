@@ -1,10 +1,10 @@
-import { promisifyStream } from "./util";
 import crc32 from "buffer-crc32";
+import { HeatshrinkDecoder } from "heatshrink-ts";
+import type Stream from "stream";
+import type { Aurora } from "./Aurora";
 import { ConnectorTypes } from "./AuroraConstants";
 import type { CommandResult, FileInfo } from "./AuroraTypes";
-import Stream from "stream";
-import { Aurora } from "./Aurora";
-import { HeatshrinkDecoder } from "heatshrink-ts";
+import { promisifyStream } from "./util";
 
 export type ReadCommandResult = CommandResult<FileInfo> & { output: string };
 const COMMAND_COMPRESSION_WINDOW_SIZE = 8;
@@ -14,7 +14,7 @@ const AuroraCmdReadFile = async function (
     srcPath: string,
     writeStream: NodeJS.WritableStream | boolean,
     compress: boolean,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<ReadCommandResult> {
     console.debug("start AuroraCmdReadFile.");
     console.debug("srcPath:", srcPath);
@@ -40,13 +40,15 @@ const AuroraCmdReadFile = async function (
             stream = cmd.outputStream;
 
             if (writeStream) {
-                stream = stream!.pipe(writeStream as NodeJS.WritableStream) as unknown as Stream.Readable;
+                stream = stream!.pipe(
+                    writeStream as NodeJS.WritableStream,
+                ) as unknown as Stream.Readable;
             }
 
             stream!.on("data", (chunk) => {
                 outputChunks.push(chunk);
             });
-        }
+        },
     ).then((cmdWithResponse: ReadCommandResult) => {
         return promisifyStream(stream!).then(() => {
             console.debug("Calculated Crc:", crc);
@@ -63,15 +65,13 @@ const AuroraCmdReadFile = async function (
                 const decoder = new HeatshrinkDecoder(
                     COMMAND_COMPRESSION_WINDOW_SIZE,
                     COMMAND_COMPRESSION_LOOKAHEAD_SIZE,
-                    compressedArray.length
+                    compressedArray.length,
                 );
 
                 decoder.process(new Uint8Array(compressedArray));
 
                 const textDecoder = new TextDecoder();
-                cmdWithResponse.output = textDecoder.decode(
-                    decoder.getOutput()
-                );
+                cmdWithResponse.output = textDecoder.decode(decoder.getOutput());
             } else {
                 cmdWithResponse.output = writeStream
                     ? outputChunks

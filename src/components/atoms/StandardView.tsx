@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { LayoutChangeEvent, View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { type LayoutChangeEvent, View, type ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { Dimens } from "../../constants";
@@ -16,9 +17,7 @@ export type StandardViewProps = {
 //#endregion
 
 //#region Component
-export const StandardView: FunctionComponent<StandardViewProps> = (
-    props: StandardViewProps
-) => {
+export const StandardView: FunctionComponent<StandardViewProps> = (props: StandardViewProps) => {
     const theme = useTheme();
     return (
         <View

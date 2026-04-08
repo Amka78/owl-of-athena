@@ -4,7 +4,7 @@ import moment from "moment";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import type { AuroraSession, AuroraSessionDetail } from "../sdk/models";
 
 export enum FilterByDateValues {
     ANY_TIME = "any_time",
@@ -43,10 +43,10 @@ const initialFilterCondition: SessionFilterCondition = {
 
 function createFilteredSessionList(
     sessionList: AuroraSession[],
-    filterCondition: Partial<SessionFilterCondition>
+    filterCondition: Partial<SessionFilterCondition>,
 ): AuroraSession[] {
     const filtered: AuroraSession[] = [];
-    let dateFrom: moment.Moment | undefined = undefined;
+    let dateFrom: moment.Moment | undefined;
     const dateTo = moment().utc();
 
     if (filterCondition.byDate !== FilterByDateValues.ANY_TIME) {
@@ -92,21 +92,18 @@ export const useSessionStore = create<SessionStore>()(
                     sessionList,
                     filteredSessionList: createFilteredSessionList(
                         sessionList,
-                        state.filterCondition
+                        state.filterCondition,
                     ),
                 })),
 
-            cacheSessionDetails: (sessionDetailList) =>
-                set({ sessionDetailList }),
+            cacheSessionDetails: (sessionDetailList) => set({ sessionDetailList }),
 
             selectSession: (session) => set({ selectedSession: session }),
 
             selectSessionDetail: (sessionDetail) =>
                 set((state) => {
                     const detailList = [...state.sessionDetailList];
-                    const exists = detailList.find(
-                        (d) => d.sessionId === sessionDetail.sessionId
-                    );
+                    const exists = detailList.find((d) => d.sessionId === sessionDetail.sessionId);
                     if (!exists) detailList.push(sessionDetail);
                     return {
                         selectedSessionDetail: sessionDetail,
@@ -117,30 +114,25 @@ export const useSessionStore = create<SessionStore>()(
             updateSession: (session) =>
                 set((state) => {
                     const sessionList = [...state.sessionList];
-                    const idx = sessionList.findIndex(
-                        (s) => s.id === session.id
-                    );
+                    const idx = sessionList.findIndex((s) => s.id === session.id);
                     if (idx >= 0) sessionList[idx] = session;
                     return {
                         sessionList,
                         filteredSessionList: createFilteredSessionList(
                             sessionList,
-                            state.filterCondition
+                            state.filterCondition,
                         ),
                     };
                 }),
 
             deleteSession: (sessionId) =>
                 set((state) => {
-                    const sessionList = _.remove(
-                        [...state.sessionList],
-                        (s) => s.id !== sessionId
-                    );
+                    const sessionList = _.remove([...state.sessionList], (s) => s.id !== sessionId);
                     return {
                         sessionList,
                         filteredSessionList: createFilteredSessionList(
                             sessionList,
-                            state.filterCondition
+                            state.filterCondition,
                         ),
                     };
                 }),
@@ -155,7 +147,7 @@ export const useSessionStore = create<SessionStore>()(
                         filterCondition,
                         filteredSessionList: createFilteredSessionList(
                             state.sessionList,
-                            filterCondition
+                            filterCondition,
                         ),
                     };
                 }),
@@ -173,6 +165,6 @@ export const useSessionStore = create<SessionStore>()(
         {
             name: "session-storage",
             storage: createJSONStorage(() => AsyncStorage),
-        }
-    )
+        },
+    ),
 );

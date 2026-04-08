@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { TextInputProps } from "react-native";
+import React, { type FunctionComponent } from "react";
+import type { TextInputProps } from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
 
 import { Colors, Dimens, Fonts } from "../../constants";
@@ -18,9 +18,7 @@ export type TextBoxProps = Omit<TextInputProps, "selectionColor"> & {
 //#endregion
 
 //#region Component
-export const TextBox: FunctionComponent<TextBoxProps> = (
-    props: TextBoxProps
-) => {
+export const TextBox: FunctionComponent<TextBoxProps> = (props: TextBoxProps) => {
     const theme = useTheme();
     const dimens = useWindowDimensions();
 
@@ -35,17 +33,13 @@ export const TextBox: FunctionComponent<TextBoxProps> = (
     }
     return (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        //@ts-expect-error
         <TextInput
             {...props}
             mode={"flat"}
-            selectionColor={
-                props.selectionColor ? props.selectionColor : Colors.white
-            }
+            selectionColor={props.selectionColor ? props.selectionColor : Colors.white}
             style={[textInputStyle, { width }, props.style]}
-            underlineColor={
-                props.underlineColor ? props.underlineColor : Colors.white
-            }
+            underlineColor={props.underlineColor ? props.underlineColor : Colors.white}
             theme={theme}
         ></TextInput>
     );

@@ -1,15 +1,14 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { TouchableWithoutFeedback, View } from "react-native";
-
-import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
-import { InternalView } from "../molecules";
-import { ErrorTextProps } from "../atoms/ErrorText";
-import { TimeViewProps } from "../atoms/TimeView";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
-import { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
+import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
+import type { ErrorTextProps } from "../atoms/ErrorText";
+import type { TimeViewProps } from "../atoms/TimeView";
+import { InternalView } from "../molecules";
+import type { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -26,14 +25,14 @@ export type HomeScreenTemplateProps = {
 
 //#region Component
 export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
-    props: HomeScreenTemplateProps
+    props: HomeScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     useConvertibleHeader(
         MessageKeys.home_title,
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
     return (
         <InternalView>
@@ -49,9 +48,7 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
                             fontSize: Dimens.home_alarm_meridian_text_size,
                         }}
                     ></TimeView>
-                    <FlatButton>
-                        {Message.get(MessageKeys.home_edit_alarm_button)}
-                    </FlatButton>
+                    <FlatButton>{Message.get(MessageKeys.home_edit_alarm_button)}</FlatButton>
                 </View>
             </TouchableWithoutFeedback>
             <FlatButton {...props.profileButton}>
@@ -59,10 +56,7 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
             </FlatButton>
             <View style={{ alignItems: "center" }}>
                 <ErrorText {...props.errorText}></ErrorText>
-                <Button
-                    {...props.goToSleepButton}
-                    screenWidth={props.dimens.width}
-                >
+                <Button {...props.goToSleepButton} screenWidth={props.dimens.width}>
                     {Message.get(MessageKeys.home_go_to_sleep_button)}
                 </Button>
             </View>

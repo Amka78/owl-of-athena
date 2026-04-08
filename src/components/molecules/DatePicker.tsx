@@ -1,7 +1,7 @@
 //#region Import Modules
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import React, { FunctionComponent, useCallback, useState } from "react";
+import React, { type FunctionComponent, useCallback, useState } from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -10,9 +10,7 @@ import type { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component
-export const DatePicker: FunctionComponent<DatePickerProps> = (
-    props: DatePickerProps
-) => {
+export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePickerProps) => {
     const [date, setDate] = useState(moment(props.selected));
     const [showDateTimePicker, setShowDateTimePicker] = useState(false);
 

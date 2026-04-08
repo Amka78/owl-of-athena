@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -18,18 +18,14 @@ describe("ChartLine UnitTest", () => {
     it("renders without crashing with one data channel", () => {
         const data = [generateChannel(128)];
         expect(() =>
-            renderWithProvider(
-                <ChartLine width={600} height={200} data={data} />
-            )
+            renderWithProvider(<ChartLine width={600} height={200} data={data} />),
         ).not.toThrow();
     });
 
     it("renders without crashing with multiple data channels", () => {
         const data = [generateChannel(256), generateChannel(256)];
         expect(() =>
-            renderWithProvider(
-                <ChartLine width={600} height={200} data={data} />
-            )
+            renderWithProvider(<ChartLine width={600} height={200} data={data} />),
         ).not.toThrow();
     });
 });

@@ -21,740 +21,40 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                       "children": [
                         {
                           "$$typeof": Symbol(react.test.json),
-                          "children": null,
-                          "props": {
-                            "style": [
-                              {
-                                "bottom": 0,
-                                "height": 2,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "zIndex": 1,
-                              },
-                              {
-                                "height": 1,
-                              },
-                              {
-                                "backgroundColor": "#ffffff",
-                                "transform": [
-                                  {
-                                    "scaleY": 0.5,
-                                  },
-                                ],
-                              },
-                              undefined,
-                            ],
-                            "testID": "text-input-underline",
-                          },
-                          "type": "Animated.View",
-                        },
-                        {
-                          "$$typeof": Symbol(react.test.json),
                           "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    {
-                                      "$$typeof": Symbol(react.test.json),
-                                      "children": [
-                                        {
-                                          "$$typeof": Symbol(react.test.json),
-                                          "children": [
-                                            "FIRST NAME",
-                                          ],
-                                          "props": {
-                                            "maxFontSizeMultiplier": 1.5,
-                                            "numberOfLines": 1,
-                                            "onLayout": [Function],
-                                            "onTextLayout": [Function],
-                                            "ref": null,
-                                            "style": [
-                                              {
-                                                "fontFamily": "System",
-                                                "fontSize": 12,
-                                                "fontWeight": "400",
-                                                "letterSpacing": 0.4,
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "textAlign": "left",
-                                              },
-                                              {
-                                                "color": "rgba(28, 27, 31, 1)",
-                                                "writingDirection": "ltr",
-                                              },
-                                              [
-                                                [
-                                                  {
-                                                    "left": 0,
-                                                    "position": "absolute",
-                                                  },
-                                                  {
-                                                    "top": 30,
-                                                  },
-                                                  {
-                                                    "maxWidth": 73,
-                                                  },
-                                                  {
-                                                    "fontFamily": "System",
-                                                    "fontSize": 12,
-                                                    "fontWeight": undefined,
-                                                    "letterSpacing": 0.15,
-                                                    "lineHeight": undefined,
-                                                    "opacity": AnimatedValue {
-                                                      "_v": 0,
-                                                    },
-                                                    "transform": [
-                                                      {
-                                                        "translateX": 0,
-                                                      },
-                                                      {
-                                                        "translateY": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                      {
-                                                        "scale": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                    ],
-                                                  },
-                                                  {
-                                                    "paddingLeft": 16,
-                                                    "paddingRight": 16,
-                                                  },
-                                                ],
-                                                {
-                                                  "color": "#00ffe6",
-                                                },
-                                              ],
-                                            ],
-                                            "testID": "text-input-flat-label-active",
-                                          },
-                                          "type": "Text",
-                                        },
-                                        {
-                                          "$$typeof": Symbol(react.test.json),
-                                          "children": [
-                                            "FIRST NAME",
-                                          ],
-                                          "props": {
-                                            "maxFontSizeMultiplier": 1.5,
-                                            "numberOfLines": 1,
-                                            "ref": null,
-                                            "style": [
-                                              {
-                                                "fontFamily": "System",
-                                                "fontSize": 12,
-                                                "fontWeight": "400",
-                                                "letterSpacing": 0.4,
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "textAlign": "left",
-                                              },
-                                              {
-                                                "color": "rgba(28, 27, 31, 1)",
-                                                "writingDirection": "ltr",
-                                              },
-                                              [
-                                                [
-                                                  {
-                                                    "left": 0,
-                                                    "position": "absolute",
-                                                  },
-                                                  {
-                                                    "top": 30,
-                                                  },
-                                                  {
-                                                    "maxWidth": 73,
-                                                  },
-                                                  {
-                                                    "fontFamily": "System",
-                                                    "fontSize": 12,
-                                                    "fontWeight": undefined,
-                                                    "letterSpacing": 0.15,
-                                                    "lineHeight": undefined,
-                                                    "opacity": AnimatedValue {
-                                                      "_v": 0,
-                                                    },
-                                                    "transform": [
-                                                      {
-                                                        "translateX": 0,
-                                                      },
-                                                      {
-                                                        "translateY": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                      {
-                                                        "scale": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                    ],
-                                                  },
-                                                  {
-                                                    "paddingLeft": 16,
-                                                    "paddingRight": 16,
-                                                  },
-                                                ],
-                                                {
-                                                  "color": "rgba(73, 69, 79, 1)",
-                                                  "opacity": AnimatedValue {
-                                                    "_v": 0,
-                                                  },
-                                                },
-                                              ],
-                                            ],
-                                            "testID": "text-input-flat-label-inactive",
-                                          },
-                                          "type": "Text",
-                                        },
-                                      ],
-                                      "props": {
-                                        "style": {
-                                          "width": 73,
-                                        },
-                                      },
-                                      "type": "View",
-                                    },
-                                  ],
-                                  "props": {
-                                    "pointerEvents": "none",
-                                    "style": [
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      },
-                                      {
-                                        "width": 375,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "translateX": AnimatedValue {
-                                              "_v": 0,
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                  "type": "Animated.View",
-                                },
-                              ],
-                              "props": {
-                                "pointerEvents": "none",
-                                "style": [
-                                  {
-                                    "bottom": 0,
-                                    "left": 0,
-                                    "position": "absolute",
-                                    "right": 0,
-                                    "top": 0,
-                                  },
-                                  {
-                                    "overflow": "hidden",
-                                  },
-                                  {
-                                    "zIndex": 3,
-                                  },
-                                ],
-                              },
-                              "type": "View",
-                            },
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": null,
                               "props": {
-                                "cursorColor": "#00ffe6",
-                                "editable": true,
-                                "maxFontSizeMultiplier": 1.5,
-                                "maxWidth": undefined,
-                                "multiline": false,
-                                "onBlur": [Function],
-                                "onChangeText": [Function],
-                                "onFocus": [Function],
-                                "placeholder": undefined,
-                                "placeholderTextColor": "transparent",
-                                "ref": [Function],
-                                "selectionColor": "#ffffff",
-                                "style": [
-                                  {
-                                    "flexGrow": 1,
-                                    "margin": 0,
-                                  },
-                                  {},
-                                  {
-                                    "paddingBottom": 4,
-                                    "paddingTop": 24,
-                                  },
-                                  {
-                                    "color": "rgba(28, 27, 31, 1)",
-                                    "fontFamily": "System",
-                                    "fontSize": 12,
-                                    "fontWeight": undefined,
-                                    "letterSpacing": 0.15,
-                                    "lineHeight": undefined,
-                                    "minWidth": 65,
-                                    "paddingLeft": 16,
-                                    "paddingRight": 16,
-                                    "textAlign": "left",
-                                    "textAlignVertical": "center",
-                                  },
-                                  undefined,
-                                  [
-                                    {},
-                                  ],
-                                  undefined,
-                                ],
-                                "testID": "text-input-flat",
-                                "underlineColorAndroid": "transparent",
-                                "value": "Jane",
-                              },
-                              "type": "TextInput",
-                            },
-                          ],
-                          "props": {
-                            "onLayout": [Function],
-                            "style": [
-                              {
-                                "flexGrow": 1,
-                                "paddingBottom": 0,
-                                "paddingTop": 0,
-                              },
-                              {
-                                "minHeight": 56,
-                              },
-                            ],
-                          },
-                          "type": "View",
-                        },
-                      ],
-                      "props": {
-                        "style": [
-                          {
-                            "backgroundColor": "rgba(231, 224, 236, 1)",
-                            "borderTopLeftRadius": 2,
-                            "borderTopRightRadius": 2,
-                          },
-                          {
-                            "fontFamily": "calibre_app_regular",
-                            "marginBottom": 16,
-                            "marginRight": undefined,
-                            "width": 279,
-                          },
-                        ],
-                      },
-                      "type": "View",
-                    },
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": null,
-                          "props": {
-                            "style": [
-                              {
-                                "bottom": 0,
-                                "height": 2,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "zIndex": 1,
-                              },
-                              {
-                                "height": 1,
-                              },
-                              {
-                                "backgroundColor": "#ffffff",
-                                "transform": [
-                                  {
-                                    "scaleY": 0.5,
-                                  },
-                                ],
-                              },
-                              undefined,
-                            ],
-                            "testID": "text-input-underline",
-                          },
-                          "type": "Animated.View",
-                        },
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    {
-                                      "$$typeof": Symbol(react.test.json),
-                                      "children": [
-                                        {
-                                          "$$typeof": Symbol(react.test.json),
-                                          "children": [
-                                            "LAST NAME",
-                                          ],
-                                          "props": {
-                                            "maxFontSizeMultiplier": 1.5,
-                                            "numberOfLines": 1,
-                                            "onLayout": [Function],
-                                            "onTextLayout": [Function],
-                                            "ref": null,
-                                            "style": [
-                                              {
-                                                "fontFamily": "System",
-                                                "fontSize": 12,
-                                                "fontWeight": "400",
-                                                "letterSpacing": 0.4,
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "textAlign": "left",
-                                              },
-                                              {
-                                                "color": "rgba(28, 27, 31, 1)",
-                                                "writingDirection": "ltr",
-                                              },
-                                              [
-                                                [
-                                                  {
-                                                    "left": 0,
-                                                    "position": "absolute",
-                                                  },
-                                                  {
-                                                    "top": 30,
-                                                  },
-                                                  {
-                                                    "maxWidth": 73,
-                                                  },
-                                                  {
-                                                    "fontFamily": "System",
-                                                    "fontSize": 12,
-                                                    "fontWeight": undefined,
-                                                    "letterSpacing": 0.15,
-                                                    "lineHeight": undefined,
-                                                    "opacity": AnimatedValue {
-                                                      "_v": 0,
-                                                    },
-                                                    "transform": [
-                                                      {
-                                                        "translateX": 0,
-                                                      },
-                                                      {
-                                                        "translateY": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                      {
-                                                        "scale": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                    ],
-                                                  },
-                                                  {
-                                                    "paddingLeft": 16,
-                                                    "paddingRight": 16,
-                                                  },
-                                                ],
-                                                {
-                                                  "color": "#00ffe6",
-                                                },
-                                              ],
-                                            ],
-                                            "testID": "text-input-flat-label-active",
-                                          },
-                                          "type": "Text",
-                                        },
-                                        {
-                                          "$$typeof": Symbol(react.test.json),
-                                          "children": [
-                                            "LAST NAME",
-                                          ],
-                                          "props": {
-                                            "maxFontSizeMultiplier": 1.5,
-                                            "numberOfLines": 1,
-                                            "ref": null,
-                                            "style": [
-                                              {
-                                                "fontFamily": "System",
-                                                "fontSize": 12,
-                                                "fontWeight": "400",
-                                                "letterSpacing": 0.4,
-                                                "lineHeight": 16,
-                                              },
-                                              {
-                                                "textAlign": "left",
-                                              },
-                                              {
-                                                "color": "rgba(28, 27, 31, 1)",
-                                                "writingDirection": "ltr",
-                                              },
-                                              [
-                                                [
-                                                  {
-                                                    "left": 0,
-                                                    "position": "absolute",
-                                                  },
-                                                  {
-                                                    "top": 30,
-                                                  },
-                                                  {
-                                                    "maxWidth": 73,
-                                                  },
-                                                  {
-                                                    "fontFamily": "System",
-                                                    "fontSize": 12,
-                                                    "fontWeight": undefined,
-                                                    "letterSpacing": 0.15,
-                                                    "lineHeight": undefined,
-                                                    "opacity": AnimatedValue {
-                                                      "_v": 0,
-                                                    },
-                                                    "transform": [
-                                                      {
-                                                        "translateX": 0,
-                                                      },
-                                                      {
-                                                        "translateY": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                      {
-                                                        "scale": AnimatedValue {
-                                                          "_v": 0,
-                                                        },
-                                                      },
-                                                    ],
-                                                  },
-                                                  {
-                                                    "paddingLeft": 16,
-                                                    "paddingRight": 16,
-                                                  },
-                                                ],
-                                                {
-                                                  "color": "rgba(73, 69, 79, 1)",
-                                                  "opacity": AnimatedValue {
-                                                    "_v": 0,
-                                                  },
-                                                },
-                                              ],
-                                            ],
-                                            "testID": "text-input-flat-label-inactive",
-                                          },
-                                          "type": "Text",
-                                        },
-                                      ],
-                                      "props": {
-                                        "style": {
-                                          "width": 73,
-                                        },
-                                      },
-                                      "type": "View",
-                                    },
-                                  ],
-                                  "props": {
-                                    "pointerEvents": "none",
-                                    "style": [
-                                      {
-                                        "bottom": 0,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "top": 0,
-                                      },
-                                      {
-                                        "width": 375,
-                                      },
-                                      {
-                                        "opacity": 0,
-                                      },
-                                      {
-                                        "transform": [
-                                          {
-                                            "translateX": AnimatedValue {
-                                              "_v": 0,
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    ],
-                                  },
-                                  "type": "Animated.View",
-                                },
-                              ],
-                              "props": {
-                                "pointerEvents": "none",
                                 "style": [
                                   {
                                     "bottom": 0,
+                                    "height": 2,
                                     "left": 0,
                                     "position": "absolute",
                                     "right": 0,
-                                    "top": 0,
+                                    "zIndex": 1,
                                   },
                                   {
-                                    "overflow": "hidden",
+                                    "height": 1,
                                   },
                                   {
-                                    "zIndex": 3,
-                                  },
-                                ],
-                              },
-                              "type": "View",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "cursorColor": "#00ffe6",
-                                "editable": true,
-                                "maxFontSizeMultiplier": 1.5,
-                                "maxWidth": undefined,
-                                "multiline": false,
-                                "onBlur": [Function],
-                                "onChangeText": [Function],
-                                "onFocus": [Function],
-                                "placeholder": undefined,
-                                "placeholderTextColor": "transparent",
-                                "ref": [Function],
-                                "selectionColor": "#ffffff",
-                                "style": [
-                                  {
-                                    "flexGrow": 1,
-                                    "margin": 0,
-                                  },
-                                  {},
-                                  {
-                                    "paddingBottom": 4,
-                                    "paddingTop": 24,
-                                  },
-                                  {
-                                    "color": "rgba(28, 27, 31, 1)",
-                                    "fontFamily": "System",
-                                    "fontSize": 12,
-                                    "fontWeight": undefined,
-                                    "letterSpacing": 0.15,
-                                    "lineHeight": undefined,
-                                    "minWidth": 65,
-                                    "paddingLeft": 16,
-                                    "paddingRight": 16,
-                                    "textAlign": "left",
-                                    "textAlignVertical": "center",
+                                    "backgroundColor": "#ffffff",
+                                    "transform": [
+                                      {
+                                        "scaleY": 0.5,
+                                      },
+                                    ],
                                   },
                                   undefined,
-                                  [
-                                    {},
-                                  ],
-                                  undefined,
                                 ],
-                                "testID": "text-input-flat",
-                                "underlineColorAndroid": "transparent",
-                                "value": "Doe",
+                                "testID": "text-input-underline",
                               },
-                              "type": "TextInput",
+                              "type": "Animated.View",
                             },
-                          ],
-                          "props": {
-                            "onLayout": [Function],
-                            "style": [
-                              {
-                                "flexGrow": 1,
-                                "paddingBottom": 0,
-                                "paddingTop": 0,
-                              },
-                              {
-                                "minHeight": 56,
-                              },
-                            ],
-                          },
-                          "type": "View",
-                        },
-                      ],
-                      "props": {
-                        "style": [
-                          {
-                            "backgroundColor": "rgba(231, 224, 236, 1)",
-                            "borderTopLeftRadius": 2,
-                            "borderTopRightRadius": 2,
-                          },
-                          {
-                            "fontFamily": "calibre_app_regular",
-                            "marginBottom": 16,
-                            "marginLeft": undefined,
-                            "width": 279,
-                          },
-                        ],
-                      },
-                      "type": "View",
-                    },
-                  ],
-                  "props": {
-                    "style": {
-                      "flexDirection": "column",
-                      "maxWidth": 650,
-                    },
-                  },
-                  "type": "View",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": [
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": null,
-                                  "props": {
-                                    "style": [
-                                      {
-                                        "bottom": 0,
-                                        "height": 2,
-                                        "left": 0,
-                                        "position": "absolute",
-                                        "right": 0,
-                                        "zIndex": 1,
-                                      },
-                                      {
-                                        "height": 1,
-                                      },
-                                      {
-                                        "backgroundColor": "#ffffff",
-                                        "transform": [
-                                          {
-                                            "scaleY": 0.5,
-                                          },
-                                        ],
-                                      },
-                                      undefined,
-                                    ],
-                                    "testID": "text-input-underline",
-                                  },
-                                  "type": "Animated.View",
-                                },
                                 {
                                   "$$typeof": Symbol(react.test.json),
                                   "children": [
@@ -767,198 +67,165 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                                             {
                                               "$$typeof": Symbol(react.test.json),
                                               "children": [
-                                                {
-                                                  "$$typeof": Symbol(react.test.json),
-                                                  "children": [
-                                                    "BIRTHDAY",
-                                                  ],
-                                                  "props": {
-                                                    "maxFontSizeMultiplier": 1.5,
-                                                    "numberOfLines": 1,
-                                                    "onLayout": [Function],
-                                                    "onTextLayout": [Function],
-                                                    "ref": null,
-                                                    "style": [
-                                                      {
-                                                        "fontFamily": "System",
-                                                        "fontSize": 12,
-                                                        "fontWeight": "400",
-                                                        "letterSpacing": 0.4,
-                                                        "lineHeight": 16,
-                                                      },
-                                                      {
-                                                        "textAlign": "left",
-                                                      },
-                                                      {
-                                                        "color": "rgba(28, 27, 31, 1)",
-                                                        "writingDirection": "ltr",
-                                                      },
-                                                      [
-                                                        [
-                                                          {
-                                                            "left": 0,
-                                                            "position": "absolute",
-                                                          },
-                                                          {
-                                                            "top": 30,
-                                                          },
-                                                          {
-                                                            "maxWidth": 73,
-                                                          },
-                                                          {
-                                                            "fontFamily": "System",
-                                                            "fontSize": 12,
-                                                            "fontWeight": undefined,
-                                                            "letterSpacing": 0.15,
-                                                            "lineHeight": undefined,
-                                                            "opacity": AnimatedValue {
-                                                              "_v": 0,
-                                                            },
-                                                            "transform": [
-                                                              {
-                                                                "translateX": 0,
-                                                              },
-                                                              {
-                                                                "translateY": AnimatedValue {
-                                                                "_v": 0,
-                                                                },
-                                                              },
-                                                              {
-                                                                "scale": AnimatedValue {
-                                                                "_v": 0,
-                                                                },
-                                                              },
-                                                            ],
-                                                          },
-                                                          {
-                                                            "paddingLeft": 16,
-                                                            "paddingRight": 16,
-                                                          },
-                                                        ],
-                                                        {
-                                                          "color": "#00ffe6",
-                                                        },
-                                                      ],
-                                                    ],
-                                                    "testID": "text-input-flat-label-active",
-                                                  },
-                                                  "type": "Text",
-                                                },
-                                                {
-                                                  "$$typeof": Symbol(react.test.json),
-                                                  "children": [
-                                                    "BIRTHDAY",
-                                                  ],
-                                                  "props": {
-                                                    "maxFontSizeMultiplier": 1.5,
-                                                    "numberOfLines": 1,
-                                                    "ref": null,
-                                                    "style": [
-                                                      {
-                                                        "fontFamily": "System",
-                                                        "fontSize": 12,
-                                                        "fontWeight": "400",
-                                                        "letterSpacing": 0.4,
-                                                        "lineHeight": 16,
-                                                      },
-                                                      {
-                                                        "textAlign": "left",
-                                                      },
-                                                      {
-                                                        "color": "rgba(28, 27, 31, 1)",
-                                                        "writingDirection": "ltr",
-                                                      },
-                                                      [
-                                                        [
-                                                          {
-                                                            "left": 0,
-                                                            "position": "absolute",
-                                                          },
-                                                          {
-                                                            "top": 30,
-                                                          },
-                                                          {
-                                                            "maxWidth": 73,
-                                                          },
-                                                          {
-                                                            "fontFamily": "System",
-                                                            "fontSize": 12,
-                                                            "fontWeight": undefined,
-                                                            "letterSpacing": 0.15,
-                                                            "lineHeight": undefined,
-                                                            "opacity": AnimatedValue {
-                                                              "_v": 0,
-                                                            },
-                                                            "transform": [
-                                                              {
-                                                                "translateX": 0,
-                                                              },
-                                                              {
-                                                                "translateY": AnimatedValue {
-                                                                "_v": 0,
-                                                                },
-                                                              },
-                                                              {
-                                                                "scale": AnimatedValue {
-                                                                "_v": 0,
-                                                                },
-                                                              },
-                                                            ],
-                                                          },
-                                                          {
-                                                            "paddingLeft": 16,
-                                                            "paddingRight": 16,
-                                                          },
-                                                        ],
-                                                        {
-                                                          "color": "rgba(73, 69, 79, 1)",
-                                                          "opacity": AnimatedValue {
-                                                            "_v": 0,
-                                                          },
-                                                        },
-                                                      ],
-                                                    ],
-                                                    "testID": "text-input-flat-label-inactive",
-                                                  },
-                                                  "type": "Text",
-                                                },
+                                                "FIRST NAME",
                                               ],
                                               "props": {
-                                                "style": {
-                                                  "width": 73,
-                                                },
+                                                "maxFontSizeMultiplier": 1.5,
+                                                "numberOfLines": 1,
+                                                "onLayout": [Function],
+                                                "onTextLayout": [Function],
+                                                "ref": null,
+                                                "style": [
+                                                  {
+                                                    "fontFamily": "System",
+                                                    "fontSize": 12,
+                                                    "fontWeight": "400",
+                                                    "letterSpacing": 0.4,
+                                                    "lineHeight": 16,
+                                                  },
+                                                  {
+                                                    "textAlign": "left",
+                                                  },
+                                                  {
+                                                    "color": "rgba(28, 27, 31, 1)",
+                                                    "writingDirection": "ltr",
+                                                  },
+                                                  [
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                      },
+                                                      {
+                                                        "top": 30,
+                                                      },
+                                                      {
+                                                        "maxWidth": 73,
+                                                      },
+                                                      {
+                                                        "fontFamily": "System",
+                                                        "fontSize": 12,
+                                                        "fontWeight": undefined,
+                                                        "letterSpacing": 0.15,
+                                                        "lineHeight": undefined,
+                                                        "opacity": AnimatedValue {
+                                                          "_v": 0,
+                                                        },
+                                                        "transform": [
+                                                          {
+                                                            "translateX": 0,
+                                                          },
+                                                          {
+                                                            "translateY": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                          {
+                                                            "scale": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                      {
+                                                        "paddingLeft": 16,
+                                                        "paddingRight": 16,
+                                                      },
+                                                    ],
+                                                    {
+                                                      "color": "#00ffe6",
+                                                    },
+                                                  ],
+                                                ],
+                                                "testID": "text-input-flat-label-active",
                                               },
-                                              "type": "View",
+                                              "type": "Text",
+                                            },
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                "FIRST NAME",
+                                              ],
+                                              "props": {
+                                                "maxFontSizeMultiplier": 1.5,
+                                                "numberOfLines": 1,
+                                                "ref": null,
+                                                "style": [
+                                                  {
+                                                    "fontFamily": "System",
+                                                    "fontSize": 12,
+                                                    "fontWeight": "400",
+                                                    "letterSpacing": 0.4,
+                                                    "lineHeight": 16,
+                                                  },
+                                                  {
+                                                    "textAlign": "left",
+                                                  },
+                                                  {
+                                                    "color": "rgba(28, 27, 31, 1)",
+                                                    "writingDirection": "ltr",
+                                                  },
+                                                  [
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                      },
+                                                      {
+                                                        "top": 30,
+                                                      },
+                                                      {
+                                                        "maxWidth": 73,
+                                                      },
+                                                      {
+                                                        "fontFamily": "System",
+                                                        "fontSize": 12,
+                                                        "fontWeight": undefined,
+                                                        "letterSpacing": 0.15,
+                                                        "lineHeight": undefined,
+                                                        "opacity": AnimatedValue {
+                                                          "_v": 0,
+                                                        },
+                                                        "transform": [
+                                                          {
+                                                            "translateX": 0,
+                                                          },
+                                                          {
+                                                            "translateY": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                          {
+                                                            "scale": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                      {
+                                                        "paddingLeft": 16,
+                                                        "paddingRight": 16,
+                                                      },
+                                                    ],
+                                                    {
+                                                      "color": "rgba(73, 69, 79, 1)",
+                                                      "opacity": AnimatedValue {
+                                                        "_v": 0,
+                                                      },
+                                                    },
+                                                  ],
+                                                ],
+                                                "testID": "text-input-flat-label-inactive",
+                                              },
+                                              "type": "Text",
                                             },
                                           ],
                                           "props": {
-                                            "pointerEvents": "none",
-                                            "style": [
-                                              {
-                                                "bottom": 0,
-                                                "left": 0,
-                                                "position": "absolute",
-                                                "right": 0,
-                                                "top": 0,
-                                              },
-                                              {
-                                                "width": 375,
-                                              },
-                                              {
-                                                "opacity": 0,
-                                              },
-                                              {
-                                                "transform": [
-                                                  {
-                                                    "translateX": AnimatedValue {
-                                                      "_v": 0,
-                                                    },
-                                                  },
-                                                ],
-                                              },
-                                            ],
+                                            "style": {
+                                              "width": 73,
+                                            },
                                           },
-                                          "type": "Animated.View",
+                                          "type": "View",
                                         },
                                       ],
                                       "props": {
@@ -972,112 +239,845 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                                             "top": 0,
                                           },
                                           {
-                                            "overflow": "hidden",
+                                            "width": 375,
                                           },
                                           {
-                                            "zIndex": 3,
+                                            "opacity": 0,
+                                          },
+                                          {
+                                            "transform": [
+                                              {
+                                                "translateX": AnimatedValue {
+                                                  "_v": 0,
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        ],
+                                      },
+                                      "type": "Animated.View",
+                                    },
+                                  ],
+                                  "props": {
+                                    "pointerEvents": "none",
+                                    "style": [
+                                      {
+                                        "bottom": 0,
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "right": 0,
+                                        "top": 0,
+                                      },
+                                      {
+                                        "overflow": "hidden",
+                                      },
+                                      {
+                                        "zIndex": 3,
+                                      },
+                                    ],
+                                  },
+                                  "type": "View",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "cursorColor": "#00ffe6",
+                                    "editable": true,
+                                    "maxFontSizeMultiplier": 1.5,
+                                    "maxWidth": undefined,
+                                    "multiline": false,
+                                    "onBlur": [Function],
+                                    "onChangeText": [Function],
+                                    "onFocus": [Function],
+                                    "placeholder": undefined,
+                                    "placeholderTextColor": "transparent",
+                                    "ref": [Function],
+                                    "selectionColor": "#ffffff",
+                                    "style": [
+                                      {
+                                        "flexGrow": 1,
+                                        "margin": 0,
+                                      },
+                                      {},
+                                      {
+                                        "paddingBottom": 4,
+                                        "paddingTop": 24,
+                                      },
+                                      {
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "fontFamily": "System",
+                                        "fontSize": 12,
+                                        "fontWeight": undefined,
+                                        "letterSpacing": 0.15,
+                                        "lineHeight": undefined,
+                                        "minWidth": 65,
+                                        "paddingLeft": 16,
+                                        "paddingRight": 16,
+                                        "textAlign": "left",
+                                        "textAlignVertical": "center",
+                                      },
+                                      undefined,
+                                      [
+                                        {},
+                                      ],
+                                      undefined,
+                                    ],
+                                    "testID": "text-input-flat",
+                                    "underlineColorAndroid": "transparent",
+                                    "value": "Jane",
+                                  },
+                                  "type": "TextInput",
+                                },
+                              ],
+                              "props": {
+                                "onLayout": [Function],
+                                "style": [
+                                  {
+                                    "flexGrow": 1,
+                                    "paddingBottom": 0,
+                                    "paddingTop": 0,
+                                  },
+                                  {
+                                    "minHeight": 56,
+                                  },
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "backgroundColor": "rgba(231, 224, 236, 1)",
+                                "borderTopLeftRadius": 2,
+                                "borderTopRightRadius": 2,
+                              },
+                              {
+                                "fontFamily": "calibre_app_regular",
+                                "marginBottom": 16,
+                                "marginRight": undefined,
+                                "width": 279,
+                              },
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "style": [
+                                  {
+                                    "bottom": 0,
+                                    "height": 2,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "zIndex": 1,
+                                  },
+                                  {
+                                    "height": 1,
+                                  },
+                                  {
+                                    "backgroundColor": "#ffffff",
+                                    "transform": [
+                                      {
+                                        "scaleY": 0.5,
+                                      },
+                                    ],
+                                  },
+                                  undefined,
+                                ],
+                                "testID": "text-input-underline",
+                              },
+                              "type": "Animated.View",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        {
+                                          "$$typeof": Symbol(react.test.json),
+                                          "children": [
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                "LAST NAME",
+                                              ],
+                                              "props": {
+                                                "maxFontSizeMultiplier": 1.5,
+                                                "numberOfLines": 1,
+                                                "onLayout": [Function],
+                                                "onTextLayout": [Function],
+                                                "ref": null,
+                                                "style": [
+                                                  {
+                                                    "fontFamily": "System",
+                                                    "fontSize": 12,
+                                                    "fontWeight": "400",
+                                                    "letterSpacing": 0.4,
+                                                    "lineHeight": 16,
+                                                  },
+                                                  {
+                                                    "textAlign": "left",
+                                                  },
+                                                  {
+                                                    "color": "rgba(28, 27, 31, 1)",
+                                                    "writingDirection": "ltr",
+                                                  },
+                                                  [
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                      },
+                                                      {
+                                                        "top": 30,
+                                                      },
+                                                      {
+                                                        "maxWidth": 73,
+                                                      },
+                                                      {
+                                                        "fontFamily": "System",
+                                                        "fontSize": 12,
+                                                        "fontWeight": undefined,
+                                                        "letterSpacing": 0.15,
+                                                        "lineHeight": undefined,
+                                                        "opacity": AnimatedValue {
+                                                          "_v": 0,
+                                                        },
+                                                        "transform": [
+                                                          {
+                                                            "translateX": 0,
+                                                          },
+                                                          {
+                                                            "translateY": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                          {
+                                                            "scale": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                      {
+                                                        "paddingLeft": 16,
+                                                        "paddingRight": 16,
+                                                      },
+                                                    ],
+                                                    {
+                                                      "color": "#00ffe6",
+                                                    },
+                                                  ],
+                                                ],
+                                                "testID": "text-input-flat-label-active",
+                                              },
+                                              "type": "Text",
+                                            },
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                "LAST NAME",
+                                              ],
+                                              "props": {
+                                                "maxFontSizeMultiplier": 1.5,
+                                                "numberOfLines": 1,
+                                                "ref": null,
+                                                "style": [
+                                                  {
+                                                    "fontFamily": "System",
+                                                    "fontSize": 12,
+                                                    "fontWeight": "400",
+                                                    "letterSpacing": 0.4,
+                                                    "lineHeight": 16,
+                                                  },
+                                                  {
+                                                    "textAlign": "left",
+                                                  },
+                                                  {
+                                                    "color": "rgba(28, 27, 31, 1)",
+                                                    "writingDirection": "ltr",
+                                                  },
+                                                  [
+                                                    [
+                                                      {
+                                                        "left": 0,
+                                                        "position": "absolute",
+                                                      },
+                                                      {
+                                                        "top": 30,
+                                                      },
+                                                      {
+                                                        "maxWidth": 73,
+                                                      },
+                                                      {
+                                                        "fontFamily": "System",
+                                                        "fontSize": 12,
+                                                        "fontWeight": undefined,
+                                                        "letterSpacing": 0.15,
+                                                        "lineHeight": undefined,
+                                                        "opacity": AnimatedValue {
+                                                          "_v": 0,
+                                                        },
+                                                        "transform": [
+                                                          {
+                                                            "translateX": 0,
+                                                          },
+                                                          {
+                                                            "translateY": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                          {
+                                                            "scale": AnimatedValue {
+                                                              "_v": 0,
+                                                            },
+                                                          },
+                                                        ],
+                                                      },
+                                                      {
+                                                        "paddingLeft": 16,
+                                                        "paddingRight": 16,
+                                                      },
+                                                    ],
+                                                    {
+                                                      "color": "rgba(73, 69, 79, 1)",
+                                                      "opacity": AnimatedValue {
+                                                        "_v": 0,
+                                                      },
+                                                    },
+                                                  ],
+                                                ],
+                                                "testID": "text-input-flat-label-inactive",
+                                              },
+                                              "type": "Text",
+                                            },
+                                          ],
+                                          "props": {
+                                            "style": {
+                                              "width": 73,
+                                            },
+                                          },
+                                          "type": "View",
+                                        },
+                                      ],
+                                      "props": {
+                                        "pointerEvents": "none",
+                                        "style": [
+                                          {
+                                            "bottom": 0,
+                                            "left": 0,
+                                            "position": "absolute",
+                                            "right": 0,
+                                            "top": 0,
+                                          },
+                                          {
+                                            "width": 375,
+                                          },
+                                          {
+                                            "opacity": 0,
+                                          },
+                                          {
+                                            "transform": [
+                                              {
+                                                "translateX": AnimatedValue {
+                                                  "_v": 0,
+                                                },
+                                              },
+                                            ],
+                                          },
+                                        ],
+                                      },
+                                      "type": "Animated.View",
+                                    },
+                                  ],
+                                  "props": {
+                                    "pointerEvents": "none",
+                                    "style": [
+                                      {
+                                        "bottom": 0,
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "right": 0,
+                                        "top": 0,
+                                      },
+                                      {
+                                        "overflow": "hidden",
+                                      },
+                                      {
+                                        "zIndex": 3,
+                                      },
+                                    ],
+                                  },
+                                  "type": "View",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "cursorColor": "#00ffe6",
+                                    "editable": true,
+                                    "maxFontSizeMultiplier": 1.5,
+                                    "maxWidth": undefined,
+                                    "multiline": false,
+                                    "onBlur": [Function],
+                                    "onChangeText": [Function],
+                                    "onFocus": [Function],
+                                    "placeholder": undefined,
+                                    "placeholderTextColor": "transparent",
+                                    "ref": [Function],
+                                    "selectionColor": "#ffffff",
+                                    "style": [
+                                      {
+                                        "flexGrow": 1,
+                                        "margin": 0,
+                                      },
+                                      {},
+                                      {
+                                        "paddingBottom": 4,
+                                        "paddingTop": 24,
+                                      },
+                                      {
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "fontFamily": "System",
+                                        "fontSize": 12,
+                                        "fontWeight": undefined,
+                                        "letterSpacing": 0.15,
+                                        "lineHeight": undefined,
+                                        "minWidth": 65,
+                                        "paddingLeft": 16,
+                                        "paddingRight": 16,
+                                        "textAlign": "left",
+                                        "textAlignVertical": "center",
+                                      },
+                                      undefined,
+                                      [
+                                        {},
+                                      ],
+                                      undefined,
+                                    ],
+                                    "testID": "text-input-flat",
+                                    "underlineColorAndroid": "transparent",
+                                    "value": "Doe",
+                                  },
+                                  "type": "TextInput",
+                                },
+                              ],
+                              "props": {
+                                "onLayout": [Function],
+                                "style": [
+                                  {
+                                    "flexGrow": 1,
+                                    "paddingBottom": 0,
+                                    "paddingTop": 0,
+                                  },
+                                  {
+                                    "minHeight": 56,
+                                  },
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "backgroundColor": "rgba(231, 224, 236, 1)",
+                                "borderTopLeftRadius": 2,
+                                "borderTopRightRadius": 2,
+                              },
+                              {
+                                "fontFamily": "calibre_app_regular",
+                                "marginBottom": 16,
+                                "marginLeft": undefined,
+                                "width": 279,
+                              },
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "flexDirection": "column",
+                          "maxWidth": 650,
+                        },
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "style": [
+                                          {
+                                            "bottom": 0,
+                                            "height": 2,
+                                            "left": 0,
+                                            "position": "absolute",
+                                            "right": 0,
+                                            "zIndex": 1,
+                                          },
+                                          {
+                                            "height": 1,
+                                          },
+                                          {
+                                            "backgroundColor": "#ffffff",
+                                            "transform": [
+                                              {
+                                                "scaleY": 0.5,
+                                              },
+                                            ],
+                                          },
+                                          undefined,
+                                        ],
+                                        "testID": "text-input-underline",
+                                      },
+                                      "type": "Animated.View",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        {
+                                          "$$typeof": Symbol(react.test.json),
+                                          "children": [
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                {
+                                                  "$$typeof": Symbol(react.test.json),
+                                                  "children": [
+                                                    {
+                                                      "$$typeof": Symbol(react.test.json),
+                                                      "children": [
+                                                        "BIRTHDAY",
+                                                      ],
+                                                      "props": {
+                                                        "maxFontSizeMultiplier": 1.5,
+                                                        "numberOfLines": 1,
+                                                        "onLayout": [Function],
+                                                        "onTextLayout": [Function],
+                                                        "ref": null,
+                                                        "style": [
+                                                          {
+                                                            "fontFamily": "System",
+                                                            "fontSize": 12,
+                                                            "fontWeight": "400",
+                                                            "letterSpacing": 0.4,
+                                                            "lineHeight": 16,
+                                                          },
+                                                          {
+                                                            "textAlign": "left",
+                                                          },
+                                                          {
+                                                            "color": "rgba(28, 27, 31, 1)",
+                                                            "writingDirection": "ltr",
+                                                          },
+                                                          [
+                                                            [
+                                                              {
+                                                                "left": 0,
+                                                                "position": "absolute",
+                                                              },
+                                                              {
+                                                                "top": 30,
+                                                              },
+                                                              {
+                                                                "maxWidth": 73,
+                                                              },
+                                                              {
+                                                                "fontFamily": "System",
+                                                                "fontSize": 12,
+                                                                "fontWeight": undefined,
+                                                                "letterSpacing": 0.15,
+                                                                "lineHeight": undefined,
+                                                                "opacity": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                "transform": [
+                                                                {
+                                                                "translateX": 0,
+                                                                },
+                                                                {
+                                                                "translateY": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                },
+                                                                {
+                                                                "scale": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                },
+                                                                ],
+                                                              },
+                                                              {
+                                                                "paddingLeft": 16,
+                                                                "paddingRight": 16,
+                                                              },
+                                                            ],
+                                                            {
+                                                              "color": "#00ffe6",
+                                                            },
+                                                          ],
+                                                        ],
+                                                        "testID": "text-input-flat-label-active",
+                                                      },
+                                                      "type": "Text",
+                                                    },
+                                                    {
+                                                      "$$typeof": Symbol(react.test.json),
+                                                      "children": [
+                                                        "BIRTHDAY",
+                                                      ],
+                                                      "props": {
+                                                        "maxFontSizeMultiplier": 1.5,
+                                                        "numberOfLines": 1,
+                                                        "ref": null,
+                                                        "style": [
+                                                          {
+                                                            "fontFamily": "System",
+                                                            "fontSize": 12,
+                                                            "fontWeight": "400",
+                                                            "letterSpacing": 0.4,
+                                                            "lineHeight": 16,
+                                                          },
+                                                          {
+                                                            "textAlign": "left",
+                                                          },
+                                                          {
+                                                            "color": "rgba(28, 27, 31, 1)",
+                                                            "writingDirection": "ltr",
+                                                          },
+                                                          [
+                                                            [
+                                                              {
+                                                                "left": 0,
+                                                                "position": "absolute",
+                                                              },
+                                                              {
+                                                                "top": 30,
+                                                              },
+                                                              {
+                                                                "maxWidth": 73,
+                                                              },
+                                                              {
+                                                                "fontFamily": "System",
+                                                                "fontSize": 12,
+                                                                "fontWeight": undefined,
+                                                                "letterSpacing": 0.15,
+                                                                "lineHeight": undefined,
+                                                                "opacity": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                "transform": [
+                                                                {
+                                                                "translateX": 0,
+                                                                },
+                                                                {
+                                                                "translateY": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                },
+                                                                {
+                                                                "scale": AnimatedValue {
+                                                                "_v": 0,
+                                                                },
+                                                                },
+                                                                ],
+                                                              },
+                                                              {
+                                                                "paddingLeft": 16,
+                                                                "paddingRight": 16,
+                                                              },
+                                                            ],
+                                                            {
+                                                              "color": "rgba(73, 69, 79, 1)",
+                                                              "opacity": AnimatedValue {
+                                                                "_v": 0,
+                                                              },
+                                                            },
+                                                          ],
+                                                        ],
+                                                        "testID": "text-input-flat-label-inactive",
+                                                      },
+                                                      "type": "Text",
+                                                    },
+                                                  ],
+                                                  "props": {
+                                                    "style": {
+                                                      "width": 73,
+                                                    },
+                                                  },
+                                                  "type": "View",
+                                                },
+                                              ],
+                                              "props": {
+                                                "pointerEvents": "none",
+                                                "style": [
+                                                  {
+                                                    "bottom": 0,
+                                                    "left": 0,
+                                                    "position": "absolute",
+                                                    "right": 0,
+                                                    "top": 0,
+                                                  },
+                                                  {
+                                                    "width": 375,
+                                                  },
+                                                  {
+                                                    "opacity": 0,
+                                                  },
+                                                  {
+                                                    "transform": [
+                                                      {
+                                                        "translateX": AnimatedValue {
+                                                          "_v": 0,
+                                                        },
+                                                      },
+                                                    ],
+                                                  },
+                                                ],
+                                              },
+                                              "type": "Animated.View",
+                                            },
+                                          ],
+                                          "props": {
+                                            "pointerEvents": "none",
+                                            "style": [
+                                              {
+                                                "bottom": 0,
+                                                "left": 0,
+                                                "position": "absolute",
+                                                "right": 0,
+                                                "top": 0,
+                                              },
+                                              {
+                                                "overflow": "hidden",
+                                              },
+                                              {
+                                                "zIndex": 3,
+                                              },
+                                            ],
+                                          },
+                                          "type": "View",
+                                        },
+                                        {
+                                          "$$typeof": Symbol(react.test.json),
+                                          "children": null,
+                                          "props": {
+                                            "cursorColor": "#00ffe6",
+                                            "editable": false,
+                                            "maxFontSizeMultiplier": 1.5,
+                                            "multiline": false,
+                                            "onBlur": [Function],
+                                            "onChangeText": [Function],
+                                            "onFocus": [Function],
+                                            "placeholder": undefined,
+                                            "placeholderTextColor": "transparent",
+                                            "ref": [Function],
+                                            "selectionColor": "#ffffff",
+                                            "style": [
+                                              {
+                                                "flexGrow": 1,
+                                                "margin": 0,
+                                              },
+                                              {},
+                                              {
+                                                "paddingBottom": 4,
+                                                "paddingTop": 24,
+                                              },
+                                              {
+                                                "color": "rgba(28, 27, 31, 1)",
+                                                "fontFamily": "System",
+                                                "fontSize": 12,
+                                                "fontWeight": undefined,
+                                                "letterSpacing": 0.15,
+                                                "lineHeight": undefined,
+                                                "minWidth": 65,
+                                                "paddingLeft": 16,
+                                                "paddingRight": 16,
+                                                "textAlign": "left",
+                                                "textAlignVertical": "center",
+                                              },
+                                              undefined,
+                                              [
+                                                {},
+                                              ],
+                                              undefined,
+                                            ],
+                                            "testID": "text-input-flat",
+                                            "underlineColorAndroid": "transparent",
+                                            "value": "01,15,1990",
+                                          },
+                                          "type": "TextInput",
+                                        },
+                                      ],
+                                      "props": {
+                                        "onLayout": [Function],
+                                        "style": [
+                                          {
+                                            "flexGrow": 1,
+                                            "paddingBottom": 0,
+                                            "paddingTop": 0,
+                                          },
+                                          {
+                                            "minHeight": 56,
                                           },
                                         ],
                                       },
                                       "type": "View",
                                     },
-                                    {
-                                      "$$typeof": Symbol(react.test.json),
-                                      "children": null,
-                                      "props": {
-                                        "cursorColor": "#00ffe6",
-                                        "editable": false,
-                                        "maxFontSizeMultiplier": 1.5,
-                                        "multiline": false,
-                                        "onBlur": [Function],
-                                        "onChangeText": [Function],
-                                        "onFocus": [Function],
-                                        "placeholder": undefined,
-                                        "placeholderTextColor": "transparent",
-                                        "ref": [Function],
-                                        "selectionColor": "#ffffff",
-                                        "style": [
-                                          {
-                                            "flexGrow": 1,
-                                            "margin": 0,
-                                          },
-                                          {},
-                                          {
-                                            "paddingBottom": 4,
-                                            "paddingTop": 24,
-                                          },
-                                          {
-                                            "color": "rgba(28, 27, 31, 1)",
-                                            "fontFamily": "System",
-                                            "fontSize": 12,
-                                            "fontWeight": undefined,
-                                            "letterSpacing": 0.15,
-                                            "lineHeight": undefined,
-                                            "minWidth": 65,
-                                            "paddingLeft": 16,
-                                            "paddingRight": 16,
-                                            "textAlign": "left",
-                                            "textAlignVertical": "center",
-                                          },
-                                          undefined,
-                                          [
-                                            {},
-                                          ],
-                                          undefined,
-                                        ],
-                                        "testID": "text-input-flat",
-                                        "underlineColorAndroid": "transparent",
-                                        "value": "01,15,1990",
-                                      },
-                                      "type": "TextInput",
-                                    },
                                   ],
                                   "props": {
-                                    "onLayout": [Function],
                                     "style": [
                                       {
-                                        "flexGrow": 1,
-                                        "paddingBottom": 0,
-                                        "paddingTop": 0,
+                                        "backgroundColor": "rgba(231, 224, 236, 1)",
+                                        "borderTopLeftRadius": 2,
+                                        "borderTopRightRadius": 2,
                                       },
                                       {
-                                        "minHeight": 56,
+                                        "fontFamily": "calibre_app_regular",
+                                        "marginBottom": 16,
+                                        "width": 279,
                                       },
                                     ],
                                   },
                                   "type": "View",
                                 },
                               ],
-                              "props": {
-                                "style": [
-                                  {
-                                    "backgroundColor": "rgba(231, 224, 236, 1)",
-                                    "borderTopLeftRadius": 2,
-                                    "borderTopRightRadius": 2,
-                                  },
-                                  {
-                                    "fontFamily": "calibre_app_regular",
-                                    "marginBottom": 16,
-                                    "width": 279,
-                                  },
-                                ],
-                              },
+                              "props": {},
                               "type": "View",
                             },
                           ],
-                          "props": {},
-                          "type": "View",
+                          "props": {
+                            "accessible": true,
+                            "onPressIn": [Function],
+                          },
+                          "type": "TouchableOpacity",
                         },
-                      ],
-                      "props": {
-                        "accessible": true,
-                        "onPressIn": [Function],
-                      },
-                      "type": "TouchableOpacity",
-                    },
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
                         {
                           "$$typeof": Symbol(react.test.json),
                           "children": [
@@ -1093,90 +1093,90 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                                         {
                                           "$$typeof": Symbol(react.test.json),
                                           "children": [
-                                            "□",
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                "□",
+                                              ],
+                                              "props": {
+                                                "accessibilityElementsHidden": true,
+                                                "allowFontScaling": false,
+                                                "importantForAccessibility": "no-hide-descendants",
+                                                "pointerEvents": "none",
+                                                "selectable": false,
+                                                "style": [
+                                                  {
+                                                    "backgroundColor": "transparent",
+                                                  },
+                                                  {
+                                                    "color": "rgba(98, 91, 113, 1)",
+                                                    "fontSize": 24,
+                                                  },
+                                                ],
+                                                "testID": undefined,
+                                              },
+                                              "type": "Text",
+                                            },
                                           ],
                                           "props": {
-                                            "accessibilityElementsHidden": true,
-                                            "allowFontScaling": false,
-                                            "importantForAccessibility": "no-hide-descendants",
-                                            "pointerEvents": "none",
-                                            "selectable": false,
-                                            "style": [
-                                              {
-                                                "backgroundColor": "transparent",
-                                              },
-                                              {
-                                                "color": "rgba(98, 91, 113, 1)",
-                                                "fontSize": 24,
-                                              },
-                                            ],
-                                            "testID": undefined,
+                                            "style": {
+                                              "opacity": 0,
+                                            },
                                           },
-                                          "type": "Text",
+                                          "type": "View",
                                         },
                                       ],
                                       "props": {
-                                        "style": {
-                                          "opacity": 0,
+                                        "accessibilityLiveRegion": "polite",
+                                        "accessibilityRole": "radio",
+                                        "accessibilityState": {
+                                          "checked": false,
+                                          "disabled": undefined,
                                         },
+                                        "accessible": true,
+                                        "color": "rgba(98, 91, 113, 1)",
+                                        "disabled": false,
+                                        "onPress": [Function],
+                                        "onPressIn": [Function],
+                                        "onPressOut": [Function],
+                                        "ref": null,
+                                        "style": [Function],
+                                        "testID": undefined,
+                                        "uncheckedColor": "rgba(98, 91, 113, 1)",
                                       },
-                                      "type": "View",
+                                      "type": "Pressable",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Male",
+                                      ],
+                                      "props": {
+                                        "onPress": undefined,
+                                        "style": [
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                          },
+                                          undefined,
+                                        ],
+                                      },
+                                      "type": "Text",
                                     },
                                   ],
                                   "props": {
-                                    "accessibilityLiveRegion": "polite",
-                                    "accessibilityRole": "radio",
-                                    "accessibilityState": {
-                                      "checked": false,
-                                      "disabled": undefined,
-                                    },
-                                    "accessible": true,
-                                    "color": "rgba(98, 91, 113, 1)",
-                                    "disabled": false,
-                                    "onPress": [Function],
-                                    "onPressIn": [Function],
-                                    "onPressOut": [Function],
-                                    "ref": null,
-                                    "style": [Function],
-                                    "testID": undefined,
-                                    "uncheckedColor": "rgba(98, 91, 113, 1)",
-                                  },
-                                  "type": "Pressable",
-                                },
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    "Male",
-                                  ],
-                                  "props": {
-                                    "onPress": undefined,
                                     "style": [
                                       {
-                                        "color": "rgba(28, 27, 31, 1)",
+                                        "alignItems": "center",
+                                        "flex": 1,
+                                        "flexDirection": "row",
+                                        "height": 40,
+                                        "justifyContent": "flex-start",
                                       },
                                       undefined,
                                     ],
                                   },
-                                  "type": "Text",
+                                  "type": "View",
                                 },
-                              ],
-                              "props": {
-                                "style": [
-                                  {
-                                    "alignItems": "center",
-                                    "flex": 1,
-                                    "flexDirection": "row",
-                                    "height": 40,
-                                    "justifyContent": "flex-start",
-                                  },
-                                  undefined,
-                                ],
-                              },
-                              "type": "View",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
                                 {
                                   "$$typeof": Symbol(react.test.json),
                                   "children": [
@@ -1186,513 +1186,661 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                                         {
                                           "$$typeof": Symbol(react.test.json),
                                           "children": [
-                                            "□",
+                                            {
+                                              "$$typeof": Symbol(react.test.json),
+                                              "children": [
+                                                "□",
+                                              ],
+                                              "props": {
+                                                "accessibilityElementsHidden": true,
+                                                "allowFontScaling": false,
+                                                "importantForAccessibility": "no-hide-descendants",
+                                                "pointerEvents": "none",
+                                                "selectable": false,
+                                                "style": [
+                                                  {
+                                                    "backgroundColor": "transparent",
+                                                  },
+                                                  {
+                                                    "color": "rgba(98, 91, 113, 1)",
+                                                    "fontSize": 24,
+                                                  },
+                                                ],
+                                                "testID": undefined,
+                                              },
+                                              "type": "Text",
+                                            },
                                           ],
                                           "props": {
-                                            "accessibilityElementsHidden": true,
-                                            "allowFontScaling": false,
-                                            "importantForAccessibility": "no-hide-descendants",
-                                            "pointerEvents": "none",
-                                            "selectable": false,
-                                            "style": [
-                                              {
-                                                "backgroundColor": "transparent",
-                                              },
-                                              {
-                                                "color": "rgba(98, 91, 113, 1)",
-                                                "fontSize": 24,
-                                              },
-                                            ],
-                                            "testID": undefined,
+                                            "style": {
+                                              "opacity": 1,
+                                            },
                                           },
-                                          "type": "Text",
+                                          "type": "View",
                                         },
                                       ],
                                       "props": {
-                                        "style": {
-                                          "opacity": 1,
+                                        "accessibilityLiveRegion": "polite",
+                                        "accessibilityRole": "radio",
+                                        "accessibilityState": {
+                                          "checked": true,
+                                          "disabled": undefined,
                                         },
+                                        "accessible": true,
+                                        "color": "rgba(98, 91, 113, 1)",
+                                        "disabled": false,
+                                        "onPress": [Function],
+                                        "onPressIn": [Function],
+                                        "onPressOut": [Function],
+                                        "ref": null,
+                                        "style": [Function],
+                                        "testID": undefined,
+                                        "uncheckedColor": "rgba(98, 91, 113, 1)",
                                       },
-                                      "type": "View",
+                                      "type": "Pressable",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Female",
+                                      ],
+                                      "props": {
+                                        "onPress": undefined,
+                                        "style": [
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                          },
+                                          undefined,
+                                        ],
+                                      },
+                                      "type": "Text",
                                     },
                                   ],
                                   "props": {
-                                    "accessibilityLiveRegion": "polite",
-                                    "accessibilityRole": "radio",
-                                    "accessibilityState": {
-                                      "checked": true,
-                                      "disabled": undefined,
-                                    },
-                                    "accessible": true,
-                                    "color": "rgba(98, 91, 113, 1)",
-                                    "disabled": false,
-                                    "onPress": [Function],
-                                    "onPressIn": [Function],
-                                    "onPressOut": [Function],
-                                    "ref": null,
-                                    "style": [Function],
-                                    "testID": undefined,
-                                    "uncheckedColor": "rgba(98, 91, 113, 1)",
-                                  },
-                                  "type": "Pressable",
-                                },
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    "Female",
-                                  ],
-                                  "props": {
-                                    "onPress": undefined,
                                     "style": [
                                       {
-                                        "color": "rgba(28, 27, 31, 1)",
+                                        "alignItems": "center",
+                                        "flex": 1,
+                                        "flexDirection": "row",
+                                        "height": 40,
+                                        "justifyContent": "flex-start",
                                       },
                                       undefined,
                                     ],
                                   },
-                                  "type": "Text",
+                                  "type": "View",
                                 },
                               ],
                               "props": {
-                                "style": [
-                                  {
-                                    "alignItems": "center",
-                                    "flex": 1,
-                                    "flexDirection": "row",
-                                    "height": 40,
-                                    "justifyContent": "flex-start",
-                                  },
-                                  undefined,
-                                ],
+                                "accessibilityRole": "radiogroup",
                               },
                               "type": "View",
                             },
                           ],
                           "props": {
-                            "accessibilityRole": "radiogroup",
+                            "style": {
+                              "alignItems": "center",
+                              "marginLeft": undefined,
+                              "maxWidth": undefined,
+                              "width": undefined,
+                            },
                           },
                           "type": "View",
                         },
                       ],
                       "props": {
                         "style": {
-                          "alignItems": "center",
-                          "marginLeft": undefined,
-                          "maxWidth": undefined,
-                          "width": undefined,
+                          "flexDirection": "column",
+                          "maxWidth": 650,
                         },
                       },
                       "type": "View",
                     },
-                  ],
-                  "props": {
-                    "style": {
-                      "flexDirection": "column",
-                      "maxWidth": 650,
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "style": [
+                          {
+                            "fontFamily": "calibre_app_regular",
+                            "fontSize": 13,
+                            "marginBottom": 18,
+                          },
+                          {
+                            "color": "#ff4310",
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "Text",
                     },
-                  },
-                  "type": "View",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": null,
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Update",
+                                      ],
+                                      "props": {
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "System",
+                                              "fontSize": 14,
+                                              "fontWeight": "500",
+                                              "letterSpacing": 0.1,
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "marginHorizontal": 16,
+                                                "marginVertical": 9,
+                                                "textAlign": "center",
+                                              },
+                                              false,
+                                              {
+                                                "marginHorizontal": 24,
+                                                "marginVertical": 10,
+                                              },
+                                              undefined,
+                                              false,
+                                              {
+                                                "color": "rgba(255, 255, 255, 1)",
+                                                "fontFamily": "System",
+                                                "fontSize": 14,
+                                                "fontWeight": "500",
+                                                "letterSpacing": 0.1,
+                                                "lineHeight": 20,
+                                              },
+                                              [
+                                                {
+                                                  "fontFamily": "calibre_app_semibold",
+                                                  "fontSize": 24,
+                                                },
+                                                undefined,
+                                              ],
+                                            ],
+                                          ],
+                                        ],
+                                        "testID": "button-text",
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      undefined,
+                                    ],
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityHint": undefined,
+                                "accessibilityLabel": undefined,
+                                "accessibilityRole": "button",
+                                "accessibilityState": {
+                                  "disabled": false,
+                                },
+                                "accessible": undefined,
+                                "delayLongPress": undefined,
+                                "disabled": false,
+                                "hitSlop": undefined,
+                                "onLongPress": undefined,
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": "button",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "screenWidth": 375,
+                            "style": {
+                              "0": {
+                                "borderRadius": 16,
+                                "height": 50,
+                                "marginBottom": 16,
+                                "marginTop": 16,
+                              },
+                              "1": {
+                                "width": 270,
+                              },
+                              "2": undefined,
+                              "backgroundColor": "#00ffe6",
+                              "borderColor": "transparent",
+                              "borderRadius": 16,
+                              "borderStyle": "solid",
+                              "borderWidth": 0,
+                              "flex": undefined,
+                              "minWidth": 64,
+                              "shadowColor": "#000",
+                              "shadowOffset": {
+                                "height": AnimatedValue {
+                                  "_v": 0,
+                                },
+                                "width": 0,
+                              },
+                              "shadowOpacity": AnimatedValue {
+                                "_v": 0,
+                              },
+                              "shadowRadius": AnimatedValue {
+                                "_v": 0,
+                              },
+                            },
+                            "testID": "button-container",
+                          },
+                          "type": "Animated.View",
+                        },
+                      ],
+                      "props": {
+                        "ref": null,
+                        "style": {
+                          "backgroundColor": "#00ffe6",
+                          "borderRadius": 16,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
+                        },
+                        "testID": "button-container-outer-layer",
+                      },
+                      "type": "Animated.View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Sign Out",
+                                      ],
+                                      "props": {
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "System",
+                                              "fontSize": 14,
+                                              "fontWeight": "500",
+                                              "letterSpacing": 0.1,
+                                              "lineHeight": 20,
+                                            },
+                                            [
+                                              {
+                                                "marginHorizontal": 16,
+                                                "marginVertical": 9,
+                                                "textAlign": "center",
+                                              },
+                                              false,
+                                              {
+                                                "marginHorizontal": 12,
+                                              },
+                                              undefined,
+                                              false,
+                                              {
+                                                "color": "#00ffe6",
+                                                "fontFamily": "System",
+                                                "fontSize": 14,
+                                                "fontWeight": "500",
+                                                "letterSpacing": 0.1,
+                                                "lineHeight": 20,
+                                              },
+                                              [
+                                                {
+                                                  "fontFamily": "calibre_app_semibold",
+                                                  "fontSize": 14,
+                                                },
+                                                {
+                                                  "color": "rgba(28, 27, 31, 1)",
+                                                },
+                                                undefined,
+                                              ],
+                                            ],
+                                          ],
+                                        ],
+                                        "testID": "button-text",
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      [
+                                        {
+                                          "height": 28,
+                                          "marginBottom": 12,
+                                          "marginTop": 16,
+                                        },
+                                        undefined,
+                                      ],
+                                    ],
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityHint": undefined,
+                                "accessibilityLabel": undefined,
+                                "accessibilityRole": "button",
+                                "accessibilityState": {
+                                  "disabled": undefined,
+                                },
+                                "accessible": undefined,
+                                "delayLongPress": undefined,
+                                "disabled": false,
+                                "hitSlop": undefined,
+                                "onLongPress": undefined,
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": "button",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "backgroundColor": "transparent",
+                              "borderColor": "transparent",
+                              "borderRadius": 10,
+                              "borderStyle": "solid",
+                              "borderWidth": 0,
+                              "flex": undefined,
+                              "minWidth": 64,
+                              "shadowColor": "#000",
+                              "shadowOffset": {
+                                "height": AnimatedValue {
+                                  "_v": 0,
+                                },
+                                "width": 0,
+                              },
+                              "shadowOpacity": AnimatedValue {
+                                "_v": 0,
+                              },
+                              "shadowRadius": AnimatedValue {
+                                "_v": 0,
+                              },
+                            },
+                            "testID": "button-container",
+                          },
+                          "type": "Animated.View",
+                        },
+                      ],
+                      "props": {
+                        "ref": null,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderRadius": 10,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
+                        },
+                        "testID": "button-container-outer-layer",
+                      },
+                      "type": "Animated.View",
+                    },
+                  ],
                   "props": {
                     "style": [
                       {
-                        "fontFamily": "calibre_app_regular",
-                        "fontSize": 13,
-                        "marginBottom": 18,
+                        "alignItems": "center",
+                        "flex": 1,
+                        "justifyContent": "space-between",
+                        "marginLeft": 48,
+                        "marginRight": 48,
                       },
                       {
-                        "color": "#ff4310",
+                        "backgroundColor": "#070724",
                       },
-                      undefined,
+                      [
+                        {
+                          "maxHeight": 650,
+                          "maxWidth": 650,
+                        },
+                        undefined,
+                      ],
                     ],
                   },
-                  "type": "Text",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": [
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    "Update",
-                                  ],
-                                  "props": {
-                                    "maxFontSizeMultiplier": undefined,
-                                    "numberOfLines": 1,
-                                    "ref": {
-                                      "current": null,
-                                    },
-                                    "selectable": false,
-                                    "style": [
-                                      {
-                                        "textAlign": "left",
-                                      },
-                                      {
-                                        "color": "rgba(28, 27, 31, 1)",
-                                        "writingDirection": "ltr",
-                                      },
-                                      [
-                                        {
-                                          "fontFamily": "System",
-                                          "fontSize": 14,
-                                          "fontWeight": "500",
-                                          "letterSpacing": 0.1,
-                                          "lineHeight": 20,
-                                        },
-                                        [
-                                          {
-                                            "marginHorizontal": 16,
-                                            "marginVertical": 9,
-                                            "textAlign": "center",
-                                          },
-                                          false,
-                                          {
-                                            "marginHorizontal": 24,
-                                            "marginVertical": 10,
-                                          },
-                                          undefined,
-                                          false,
-                                          {
-                                            "color": "rgba(255, 255, 255, 1)",
-                                            "fontFamily": "System",
-                                            "fontSize": 14,
-                                            "fontWeight": "500",
-                                            "letterSpacing": 0.1,
-                                            "lineHeight": 20,
-                                          },
-                                          [
-                                            {
-                                              "fontFamily": "calibre_app_semibold",
-                                              "fontSize": 24,
-                                            },
-                                            undefined,
-                                          ],
-                                        ],
-                                      ],
-                                    ],
-                                    "testID": "button-text",
-                                  },
-                                  "type": "Text",
-                                },
-                              ],
-                              "props": {
-                                "style": [
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                  },
-                                  undefined,
-                                ],
-                              },
-                              "type": "View",
-                            },
-                          ],
-                          "props": {
-                            "accessibilityHint": undefined,
-                            "accessibilityLabel": undefined,
-                            "accessibilityRole": "button",
-                            "accessibilityState": {
-                              "disabled": false,
-                            },
-                            "accessible": undefined,
-                            "delayLongPress": undefined,
-                            "disabled": false,
-                            "hitSlop": undefined,
-                            "onLongPress": undefined,
-                            "onPress": [class Function],
-                            "onPressIn": [Function],
-                            "onPressOut": [Function],
-                            "ref": null,
-                            "style": [Function],
-                            "testID": "button",
-                          },
-                          "type": "Pressable",
-                        },
-                      ],
-                      "props": {
-                        "screenWidth": 375,
-                        "style": {
-                          "0": {
-                            "borderRadius": 16,
-                            "height": 50,
-                            "marginBottom": 16,
-                            "marginTop": 16,
-                          },
-                          "1": {
-                            "width": 270,
-                          },
-                          "2": undefined,
-                          "backgroundColor": "#00ffe6",
-                          "borderColor": "transparent",
-                          "borderRadius": 16,
-                          "borderStyle": "solid",
-                          "borderWidth": 0,
-                          "flex": undefined,
-                          "minWidth": 64,
-                          "shadowColor": "#000",
-                          "shadowOffset": {
-                            "height": AnimatedValue {
-                              "_v": 0,
-                            },
-                            "width": 0,
-                          },
-                          "shadowOpacity": AnimatedValue {
-                            "_v": 0,
-                          },
-                          "shadowRadius": AnimatedValue {
-                            "_v": 0,
-                          },
-                        },
-                        "testID": "button-container",
-                      },
-                      "type": "Animated.View",
-                    },
-                  ],
-                  "props": {
-                    "ref": null,
-                    "style": {
-                      "backgroundColor": "#00ffe6",
-                      "borderRadius": 16,
-                      "shadowColor": "#000",
-                      "shadowOffset": {
-                        "height": AnimatedValue {
-                          "_v": 0,
-                        },
-                        "width": 0,
-                      },
-                      "shadowOpacity": AnimatedValue {
-                        "_v": 0,
-                      },
-                      "shadowRadius": AnimatedValue {
-                        "_v": 0,
-                      },
-                    },
-                    "testID": "button-container-outer-layer",
-                  },
-                  "type": "Animated.View",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": [
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                {
-                                  "$$typeof": Symbol(react.test.json),
-                                  "children": [
-                                    "Sign Out",
-                                  ],
-                                  "props": {
-                                    "maxFontSizeMultiplier": undefined,
-                                    "numberOfLines": 1,
-                                    "ref": {
-                                      "current": null,
-                                    },
-                                    "selectable": false,
-                                    "style": [
-                                      {
-                                        "textAlign": "left",
-                                      },
-                                      {
-                                        "color": "rgba(28, 27, 31, 1)",
-                                        "writingDirection": "ltr",
-                                      },
-                                      [
-                                        {
-                                          "fontFamily": "System",
-                                          "fontSize": 14,
-                                          "fontWeight": "500",
-                                          "letterSpacing": 0.1,
-                                          "lineHeight": 20,
-                                        },
-                                        [
-                                          {
-                                            "marginHorizontal": 16,
-                                            "marginVertical": 9,
-                                            "textAlign": "center",
-                                          },
-                                          false,
-                                          {
-                                            "marginHorizontal": 12,
-                                          },
-                                          undefined,
-                                          false,
-                                          {
-                                            "color": "#00ffe6",
-                                            "fontFamily": "System",
-                                            "fontSize": 14,
-                                            "fontWeight": "500",
-                                            "letterSpacing": 0.1,
-                                            "lineHeight": 20,
-                                          },
-                                          [
-                                            {
-                                              "fontFamily": "calibre_app_semibold",
-                                              "fontSize": 14,
-                                            },
-                                            {
-                                              "color": "rgba(28, 27, 31, 1)",
-                                            },
-                                            undefined,
-                                          ],
-                                        ],
-                                      ],
-                                    ],
-                                    "testID": "button-text",
-                                  },
-                                  "type": "Text",
-                                },
-                              ],
-                              "props": {
-                                "style": [
-                                  {
-                                    "alignItems": "center",
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                  },
-                                  [
-                                    {
-                                      "height": 28,
-                                      "marginBottom": 12,
-                                      "marginTop": 16,
-                                    },
-                                    undefined,
-                                  ],
-                                ],
-                              },
-                              "type": "View",
-                            },
-                          ],
-                          "props": {
-                            "accessibilityHint": undefined,
-                            "accessibilityLabel": undefined,
-                            "accessibilityRole": "button",
-                            "accessibilityState": {
-                              "disabled": undefined,
-                            },
-                            "accessible": undefined,
-                            "delayLongPress": undefined,
-                            "disabled": false,
-                            "hitSlop": undefined,
-                            "onLongPress": undefined,
-                            "onPress": [class Function],
-                            "onPressIn": [Function],
-                            "onPressOut": [Function],
-                            "ref": null,
-                            "style": [Function],
-                            "testID": "button",
-                          },
-                          "type": "Pressable",
-                        },
-                      ],
-                      "props": {
-                        "style": {
-                          "backgroundColor": "transparent",
-                          "borderColor": "transparent",
-                          "borderRadius": 10,
-                          "borderStyle": "solid",
-                          "borderWidth": 0,
-                          "flex": undefined,
-                          "minWidth": 64,
-                          "shadowColor": "#000",
-                          "shadowOffset": {
-                            "height": AnimatedValue {
-                              "_v": 0,
-                            },
-                            "width": 0,
-                          },
-                          "shadowOpacity": AnimatedValue {
-                            "_v": 0,
-                          },
-                          "shadowRadius": AnimatedValue {
-                            "_v": 0,
-                          },
-                        },
-                        "testID": "button-container",
-                      },
-                      "type": "Animated.View",
-                    },
-                  ],
-                  "props": {
-                    "ref": null,
-                    "style": {
-                      "backgroundColor": "transparent",
-                      "borderRadius": 10,
-                      "shadowColor": "#000",
-                      "shadowOffset": {
-                        "height": AnimatedValue {
-                          "_v": 0,
-                        },
-                        "width": 0,
-                      },
-                      "shadowOpacity": AnimatedValue {
-                        "_v": 0,
-                      },
-                      "shadowRadius": AnimatedValue {
-                        "_v": 0,
-                      },
-                    },
-                    "testID": "button-container-outer-layer",
-                  },
-                  "type": "Animated.View",
+                  "type": "View",
                 },
               ],
               "props": {
+                "onLayout": undefined,
                 "style": [
                   {
                     "alignItems": "center",
                     "flex": 1,
-                    "justifyContent": "space-between",
-                    "marginLeft": 48,
-                    "marginRight": 48,
+                    "justifyContent": "center",
                   },
                   {
                     "backgroundColor": "#070724",
                   },
-                  [
-                    {
-                      "maxHeight": 650,
-                      "maxWidth": 650,
-                    },
-                    undefined,
-                  ],
+                  undefined,
                 ],
+              },
+              "type": "View",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Messages",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#00ffe6",
+                          "fontSize": 14,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "accessible": true,
+                    "onPress": [Function],
+                    "style": {
+                      "borderColor": "#00ffe6",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 8,
+                    },
+                  },
+                  "type": "TouchableOpacity",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Change Password",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#00ffe6",
+                          "fontSize": 14,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "accessible": true,
+                    "onPress": [Function],
+                    "style": {
+                      "borderColor": "#00ffe6",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 8,
+                    },
+                  },
+                  "type": "TouchableOpacity",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Change Email",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#00ffe6",
+                          "fontSize": 14,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "accessible": true,
+                    "onPress": [Function],
+                    "style": {
+                      "borderColor": "#00ffe6",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 8,
+                    },
+                  },
+                  "type": "TouchableOpacity",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Report an Issue",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#00ffe6",
+                          "fontSize": 14,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "accessible": true,
+                    "onPress": [Function],
+                    "style": {
+                      "borderColor": "#00ffe6",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 8,
+                    },
+                  },
+                  "type": "TouchableOpacity",
+                },
+              ],
+              "props": {
+                "style": {
+                  "borderTopColor": "#001438",
+                  "borderTopWidth": 1,
+                  "flexDirection": "row",
+                  "flexWrap": "wrap",
+                  "gap": 8,
+                  "padding": 12,
+                },
               },
               "type": "View",
             },
           ],
           "props": {
-            "onLayout": undefined,
-            "style": [
-              {
-                "alignItems": "center",
-                "flex": 1,
-                "justifyContent": "center",
-              },
-              {
-                "backgroundColor": "#070724",
-              },
-              undefined,
-            ],
+            "style": {
+              "backgroundColor": "#070724",
+              "flex": 1,
+            },
           },
           "type": "View",
         },

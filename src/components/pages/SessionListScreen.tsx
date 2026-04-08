@@ -1,7 +1,7 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import { StackHeaderLeftProps } from "@react-navigation/stack";
-import React, { FunctionComponent, useLayoutEffect } from "react";
+import type { NativeStackHeaderItemProps } from "@react-navigation/native-stack";
+import React, { type FunctionComponent, useLayoutEffect } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
 import { FilterByDateValues } from "../../store/sessionStore";
@@ -17,26 +17,13 @@ export const SessionListScreen: FunctionComponent = () => {
     useLayoutEffect(() => {
         setOptions({
             headerLeft: () => {
-                return (
-                    <RefreshIcon
-                        onPress={sessionListHook.onRefreshPress}
-                    ></RefreshIcon>
-                );
+                return <RefreshIcon onPress={sessionListHook.onRefreshPress}></RefreshIcon>;
             },
-            headerRight: (props: StackHeaderLeftProps) => {
-                return (
-                    <FilterIcon
-                        {...props}
-                        onPress={sessionListHook.onFilterPress}
-                    ></FilterIcon>
-                );
+            headerRight: (props: NativeStackHeaderItemProps) => {
+                return <FilterIcon {...props} onPress={sessionListHook.onFilterPress}></FilterIcon>;
             },
         });
-    }, [
-        sessionListHook.onFilterPress,
-        sessionListHook.onRefreshPress,
-        setOptions,
-    ]);
+    }, [sessionListHook.onFilterPress, sessionListHook.onRefreshPress, setOptions]);
     return (
         <SessionListScreenTemplate
             showFilter={sessionListHook.showFilter}
@@ -44,18 +31,18 @@ export const SessionListScreen: FunctionComponent = () => {
                 anyTimePickerValue: FilterByDateValues.ANY_TIME,
                 pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
                 pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-                showStarredCheckBoxStatus: sessionListHook.filterCondition
-                    .showStarred
+                showStarredCheckBoxStatus: sessionListHook.filterCondition.showStarred
                     ? "checked"
                     : "unchecked",
 
                 onShowStarredCheckBoxPress: sessionListHook.onShowStarredPress,
-                showNoteCheckBoxStatus: sessionListHook.filterCondition
-                    .showNotes
+                showNoteCheckBoxStatus: sessionListHook.filterCondition.showNotes
                     ? "checked"
                     : "unchecked",
                 selectedPickerValue: sessionListHook.filterCondition.byDate,
-                onPickerValueChange: sessionListHook.onPickerValueChange as (itemValue: string | number) => void,
+                onPickerValueChange: sessionListHook.onPickerValueChange as (
+                    itemValue: string | number,
+                ) => void,
                 onShowNoteCheckBoxPress: sessionListHook.onShowNotesPress,
             }}
             sessionList={sessionListHook.sessionList}

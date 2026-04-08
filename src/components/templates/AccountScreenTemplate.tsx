@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
@@ -7,13 +7,8 @@ import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ErrorText, FlatButton, TextBox } from "../atoms";
-import {
-    DatePicker,
-    DatePickerProps,
-    InternalView,
-    LabeledRadioButton,
-} from "../molecules";
-import {
+import { DatePicker, type DatePickerProps, InternalView, LabeledRadioButton } from "../molecules";
+import type {
     TemplateButtonProps,
     TemplateRadioButtonProps,
     TemplateTextBoxProps,
@@ -40,14 +35,14 @@ export type AccountScreenTemplateProps = {
 
 //#region Component
 export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps> = (
-    props: AccountScreenTemplateProps
+    props: AccountScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     useConvertibleHeader(
         Message.get(MessageKeys.account_title),
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
 
     const saveButton = (
@@ -56,18 +51,12 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
         </Button>
     );
     const logoutButton = props.dimens.isDesktop ? undefined : (
-        <FlatButton {...props.logoutButton}>
-            {Message.get(MessageKeys.account_signout)}
-        </FlatButton>
+        <FlatButton {...props.logoutButton}>{Message.get(MessageKeys.account_signout)}</FlatButton>
     );
 
-    const splitWidth = props.dimens.isHorizontal
-        ? Dimens.input_text_max_width / 2
-        : undefined;
+    const splitWidth = props.dimens.isHorizontal ? Dimens.input_text_max_width / 2 : undefined;
 
-    const itemMargin = props.dimens.isHorizontal
-        ? Dimens.items_margin
-        : undefined;
+    const itemMargin = props.dimens.isHorizontal ? Dimens.items_margin : undefined;
 
     return (
         <InternalView>

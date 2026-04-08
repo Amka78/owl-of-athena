@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 import { HelperText } from "react-native-paper";
 
-import { TextBox, TextBoxProps } from "../atoms/TextBox";
+import { TextBox, type TextBoxProps } from "../atoms/TextBox";
 //#endregion
 
 //#region Types
@@ -12,7 +12,7 @@ export type ValidatableTextBoxProps = TextBoxProps & { helperText?: string };
 
 //#region Component
 export const ValidatableTextBox: FunctionComponent<ValidatableTextBoxProps> = (
-    props: ValidatableTextBoxProps
+    props: ValidatableTextBoxProps,
 ) => {
     return (
         <View style={{ flex: 1 }}>

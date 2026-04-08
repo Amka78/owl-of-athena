@@ -1,4 +1,4 @@
-import { AuroraEvent, AuroraStream } from "../models";
+import type { AuroraEvent, AuroraStream } from "../models";
 
 export class AuroraSessionDetail {
     public sessionId: string;
@@ -16,7 +16,7 @@ export class AuroraSessionDetail {
         buttonEvents: Array<AuroraEvent>,
         movementEvents: Array<AuroraEvent>,
         sleepEvents: Array<AuroraEvent>,
-        stimeEvents: Array<AuroraEvent>
+        stimeEvents: Array<AuroraEvent>,
     ) {
         this.sessionId = sessionId;
         this.streams = streams;

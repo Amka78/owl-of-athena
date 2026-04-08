@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ConfirmDialog } from '../../components/molecules/ConfirmDialog';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ConfirmDialog } from "../../components/molecules/ConfirmDialog";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/ConfirmDialog',
+    title: "Molecules/ConfirmDialog",
     component: ConfirmDialog,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof ConfirmDialog>;
 

@@ -1,8 +1,8 @@
 //#region Import Moduels
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import {
     SessionScreenTemplate,
-    SessionScreenTemplateProps,
+    type SessionScreenTemplateProps,
 } from "../../../components/templates/SessionScreenTemplate";
 import { useWindowDimensions } from "../../../hooks";
 import { Container } from "../../Container";
@@ -13,9 +13,7 @@ export type SessionScreenProps = Omit<SessionScreenTemplateProps, "dimens">;
 //#endregion
 
 //#region Component
-export const SessionScreen: FunctionComponent<SessionScreenProps> = (
-    props: SessionScreenProps
-) => {
+export const SessionScreen: FunctionComponent<SessionScreenProps> = (props: SessionScreenProps) => {
     const dimens = useWindowDimensions();
     return (
         <Container dimens={dimens}>

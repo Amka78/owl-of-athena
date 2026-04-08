@@ -1,20 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { LabeledCheckBox } from '../../components/molecules/LabeledCheckBox';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { LabeledCheckBox } from "../../components/molecules/LabeledCheckBox";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/LabeledCheckBox',
+    title: "Molecules/LabeledCheckBox",
     component: LabeledCheckBox,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
     argTypes: {
-        checkBoxColor: { control: 'color' },
-        checkBoxUncheckedColor: { control: 'color' },
+        checkBoxColor: { control: "color" },
+        checkBoxUncheckedColor: { control: "color" },
     },
 } satisfies Meta<typeof LabeledCheckBox>;
 
@@ -23,9 +27,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        label: 'Accept terms',
-        labelPlace: 'right',
-        status: 'checked',
+        label: "Accept terms",
+        labelPlace: "right",
+        status: "checked",
         onPress: fn(),
     },
     play: async ({ canvasElement }) => {
@@ -35,9 +39,9 @@ export const Primary: Story = {
 
 export const Unchecked: Story = {
     args: {
-        label: 'Unchecked item',
-        labelPlace: 'left',
-        status: 'unchecked',
+        label: "Unchecked item",
+        labelPlace: "left",
+        status: "unchecked",
         onPress: fn(),
     },
     play: async ({ canvasElement }) => {
@@ -47,10 +51,10 @@ export const Unchecked: Story = {
 
 export const WithDescription: Story = {
     args: {
-        label: 'Option',
-        description: 'This is a description',
-        labelPlace: 'right',
-        status: 'unchecked',
+        label: "Option",
+        description: "This is a description",
+        labelPlace: "right",
+        status: "unchecked",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

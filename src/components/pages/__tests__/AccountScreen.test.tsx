@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -51,7 +51,6 @@ jest.mock("../../../hooks", () => ({
         generalError: "",
     }),
 }));
-
 
 
 const renderWithProvider = (ui: React.ReactElement) =>

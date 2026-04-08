@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import type { User } from "../types";
 import { AuroraRestClientInstance } from "../clients";
+import type { User } from "../types";
 
 export const useGetUser = (onInitialize: (user: User) => void): void => {
     useEffect(() => {

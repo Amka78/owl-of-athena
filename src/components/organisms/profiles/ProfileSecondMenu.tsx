@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { View, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { View, type ViewStyle } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../../constants";
 import type { Dimensions } from "../../../hooks/useWindowDimensions";
@@ -20,15 +20,12 @@ export type ProfileSecondMenuProps = {
 
 //#region Component
 export const ProfileSecondMenu: FunctionComponent<ProfileSecondMenuProps> = (
-    props: ProfileSecondMenuProps
+    props: ProfileSecondMenuProps,
 ) => {
     return (
         <View style={[menuStyle, props.style]}>
             <Button
-                disabled={
-                    !props.auroraConnected ||
-                    props.selectedProfileHasUnsavedChanges
-                }
+                disabled={!props.auroraConnected || props.selectedProfileHasUnsavedChanges}
                 onPress={props.onSaveToAuroraPress}
                 screenWidth={props.dimens.width}
                 style={{ marginLeft: Dimens.button_margin }}

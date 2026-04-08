@@ -40,16 +40,12 @@ export const MessageKeys = {
     //#region Aurora strings
     aurora_connected: "aurora_connected",
     aurora_disconnected: "aurora_disconnected",
-    aurora_unsynced_sessions_dialog_title:
-        "aurora_unsynced_sessions_dialog_title",
-    aurora_unsynced_sessions_dialog_message:
-        "aurora_unsynced_sessions_dialog_message",
+    aurora_unsynced_sessions_dialog_title: "aurora_unsynced_sessions_dialog_title",
+    aurora_unsynced_sessions_dialog_message: "aurora_unsynced_sessions_dialog_message",
     aurora_low_battery_dialog_title: "aurora_low_battery_dialog_title",
     aurora_low_battery_dialog_message: "aurora_low_battery_dialog_message",
-    aurora_sync_successful_snackbar_message:
-        "aurora_sync_successful_snackbar_message",
-    aurora_sync_successful_snackbar_action:
-        "aurora_sync_successful_snackbar_action",
+    aurora_sync_successful_snackbar_message: "aurora_sync_successful_snackbar_message",
+    aurora_sync_successful_snackbar_action: "aurora_sync_successful_snackbar_action",
     //#endregion
 
     //#region WelcomeScreen
@@ -93,10 +89,8 @@ export const MessageKeys = {
     home_title: "home_title",
     home_edit_alarm_button: "home_edit_alarm_button",
     home_go_to_sleep_button: "home_go_to_sleep_button",
-    home_aurora_disconnected_dialog_title:
-        "home_aurora_disconnected_dialog_title",
-    home_aurora_disconnected_dialog_message:
-        "home_aurora_disconnected_dialog_message",
+    home_aurora_disconnected_dialog_title: "home_aurora_disconnected_dialog_title",
+    home_aurora_disconnected_dialog_message: "home_aurora_disconnected_dialog_message",
     home_go_to_sleep_loading_message: "home_go_to_sleep_loading_message",
     home_go_to_sleep_error_message: "home_go_to_sleep_error_message",
     //#endregion
@@ -121,11 +115,9 @@ export const MessageKeys = {
     sessions_picker_values_past_week: "sessions_picker_value_past_week",
     sessions_picker_values_past_month: "sessions_picker_value_past_month",
     sessions_check_show_starred_label: "sessions_check_show_starred_label",
-    sessions_check_show_starred_description:
-        "sessions_check_show_starred_description",
+    sessions_check_show_starred_description: "sessions_check_show_starred_description",
     sessions_check_show_notes_label: "sessions_check_show_notes_label",
-    sessions_check_show_notes_description:
-        "sessions_check_show_notes_description",
+    sessions_check_show_notes_description: "sessions_check_show_notes_description",
     //#endregion
 
     //#region Session picker fragment
@@ -186,6 +178,7 @@ export const MessageKeys = {
     //#region error required
     required: "required",
     passwords_must_match: "passwords_must_match",
+    emails_must_match: "emails_must_match",
     must_agree_to_term_of_use: "must_agree_to_term_of_use",
     email_already_registered: "email_already_registered",
     //#endregion
@@ -230,16 +223,13 @@ export const MessageKeys = {
 
     //#region Profile filter menu
     profile_filter_menu_header_label: "profile_filter_menu_header_label",
-    profile_filter_menu_official_check_box_label:
-        "profile_filter_menu_official_check_box_label",
+    profile_filter_menu_official_check_box_label: "profile_filter_menu_official_check_box_label",
     profile_filter_menu_official_check_box_description:
         "profile_filter_menu_official_check_box_description",
-    profile_filter_menu_private_check_box_label:
-        "profile_filter_menu_private_check_box_label",
+    profile_filter_menu_private_check_box_label: "profile_filter_menu_private_check_box_label",
     profile_filter_menu_private_check_box_description:
         "profile_filter_menu_private_check_box_description",
-    profile_filter_menu_community_check_box_label:
-        "profile_filter_menu_community_check_box_label",
+    profile_filter_menu_community_check_box_label: "profile_filter_menu_community_check_box_label",
     profile_filter_menu_community_check_box_description:
         "profile_filter_menu_community_check_box_description",
     //#endregion
@@ -250,6 +240,29 @@ export const MessageKeys = {
     profile_misc_options: "profile_misc_options",
     profile_save_to_aurora: "save_to_aurora",
     profile_show_advanced_options: "show_advanced_options",
+    //#endregion
+
+    //#region ConfirmEmailScreen
+    confirm_email_title: "confirm_email_title",
+    confirm_email_text: "confirm_email_text",
+    confirm_email_check_button: "confirm_email_check_button",
+    confirm_email_resend_button: "confirm_email_resend_button",
+    confirm_email_change_email_button: "confirm_email_change_email_button",
+    confirm_email_not_verified: "confirm_email_not_verified",
+    confirm_email_resent: "confirm_email_resent",
+    //#endregion
+
+    //#region ForgotPassword success
+    forgot_password_success: "forgot_password_success",
+    //#endregion
+
+    //#region SleepingScreen snooze
+    sleeping_snooze_button: "sleeping_snooze_button",
+    sleeping_snoozing_message: "sleeping_snoozing_message",
+    //#endregion
+
+    //#region SettingsScreen volume
+    settings_option_volume: "settings_option_volume",
     //#endregion
 
     connection_error: "connection_error",
@@ -263,4 +276,115 @@ export const MessageKeys = {
     blink: "blink",
     alternate: "alternate",
     transition: "transition",
+
+    //#region Admin screens
+    admin_title: "admin_title",
+    admin_users_title: "admin_users_title",
+    admin_orders_title: "admin_orders_title",
+    admin_sessions_title: "admin_sessions_title",
+    admin_issues_title: "admin_issues_title",
+    admin_messages_title: "admin_messages_title",
+    admin_app_settings_title: "admin_app_settings_title",
+    drawer_items_admin: "drawer_items_admin",
+    //#endregion
+
+    //#region Account Messages
+    account_messages_title: "account_messages_title",
+    //#endregion
+
+    //#region Account Roles
+    account_roles_title: "account_roles_title",
+    //#endregion
+
+    //#region Console screen
+    console_title: "console_title",
+    console_input_placeholder: "console_input_placeholder",
+    console_send_button: "console_send_button",
+    console_clear_button: "console_clear_button",
+    console_not_connected: "console_not_connected",
+    //#endregion
+
+    //#region Messages screen
+    messages_mark_as_read: "messages_mark_as_read",
+    messages_read_label: "messages_read_label",
+    messages_unread_label: "messages_unread_label",
+    messages_begin_questionnaire: "messages_begin_questionnaire",
+    messages_continue_questionnaire: "messages_continue_questionnaire",
+    messages_save_for_later: "messages_save_for_later",
+    messages_already_completed: "messages_already_completed",
+    messages_no_messages: "messages_no_messages",
+    //#endregion
+
+    //#region Issue report dialog
+    issue_report_title: "issue_report_title",
+    issue_report_input_title: "issue_report_input_title",
+    issue_report_input_description: "issue_report_input_description",
+    issue_report_input_reproduce_steps: "issue_report_input_reproduce_steps",
+    issue_report_check_critical: "issue_report_check_critical",
+    issue_report_check_anonymous: "issue_report_check_anonymous",
+    issue_report_send_button: "issue_report_send_button",
+    issue_report_success: "issue_report_success",
+    issue_report_error: "issue_report_error",
+    issue_report_button: "issue_report_button",
+    //#endregion
+
+    //#region Session transfer dialog
+    session_transfer_title: "session_transfer_title",
+    session_transfer_scanning: "session_transfer_scanning",
+    session_transfer_not_connected: "session_transfer_not_connected",
+    session_transfer_no_sessions: "session_transfer_no_sessions",
+    session_transfer_transferring: "session_transfer_transferring",
+    session_transfer_complete: "session_transfer_complete",
+    session_transfer_button: "session_transfer_button",
+    session_transfer_cancel: "session_transfer_cancel",
+    session_transfer_continue: "session_transfer_continue",
+    session_transfer_delete_confirm_title: "session_transfer_delete_confirm_title",
+    session_transfer_delete_confirm_message: "session_transfer_delete_confirm_message",
+    //#endregion
+
+    //#region Questionnaire dialog
+    questionnaire_begin_button: "questionnaire_begin_button",
+    questionnaire_next_button: "questionnaire_next_button",
+    questionnaire_previous_button: "questionnaire_previous_button",
+    questionnaire_complete_title: "questionnaire_complete_title",
+    questionnaire_close_button: "questionnaire_close_button",
+    questionnaire_loading: "questionnaire_loading",
+    questionnaire_error: "questionnaire_error",
+    //#endregion
+
+    //#region Change password screen
+    change_password_title: "change_password_title",
+    change_password_input_new_password: "change_password_input_new_password",
+    change_password_input_confirm_password: "change_password_input_confirm_password",
+    change_password_button: "change_password_button",
+    change_password_success: "change_password_success",
+    change_password_nav_button: "change_password_nav_button",
+    change_password_warning: "change_password_warning",
+    //#endregion
+
+    //#region Change email screen
+    change_email_title: "change_email_title",
+    change_email_input_new_email: "change_email_input_new_email",
+    change_email_input_confirm_email: "change_email_input_confirm_email",
+    change_email_button: "change_email_button",
+    change_email_success: "change_email_success",
+    change_email_nav_button: "change_email_nav_button",
+    change_email_warning: "change_email_warning",
+    //#endregion
+
+    //#region Profile edit dialog
+    profile_edit_title: "profile_edit_title",
+    profile_edit_input_title: "profile_edit_input_title",
+    profile_edit_input_description: "profile_edit_input_description",
+    profile_edit_button: "profile_edit_button",
+    //#endregion
+
+    //#region Aurora info dialog
+    aurora_info_title: "aurora_info_title",
+    aurora_info_firmware: "aurora_info_firmware",
+    aurora_info_bootloader: "aurora_info_bootloader",
+    aurora_info_ble: "aurora_info_ble",
+    aurora_info_bootstrap: "aurora_info_bootstrap",
+    aurora_info_battery: "aurora_info_battery",
+    //#endregion
 };

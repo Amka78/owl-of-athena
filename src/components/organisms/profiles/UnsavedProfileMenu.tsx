@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
 import type { Dimensions } from "../../../hooks/useWindowDimensions";
@@ -20,7 +21,7 @@ export type UnsavedProfileMenuProps = {
 
 //#region Component
 export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
-    props: UnsavedProfileMenuProps
+    props: UnsavedProfileMenuProps,
 ) => {
     const saveButton: React.ReactNode = (
         <LeftSideButton
@@ -32,9 +33,7 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
         </LeftSideButton>
     );
 
-    const overwriteSaveButton:
-        | React.ReactNode
-        | undefined = props.isUserProfile ? (
+    const overwriteSaveButton: React.ReactNode | undefined = props.isUserProfile ? (
         <LeftSideButton
             onPress={props.onOverwriteSavePress}
             needMargin={props.dimens.isLargeWidth}
@@ -45,9 +44,7 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
     ) : undefined;
 
     const cancelButton: React.ReactNode = (
-        <FlatButton onPress={props.onCancelPress}>
-            {Message.get(MessageKeys.cancel)}
-        </FlatButton>
+        <FlatButton onPress={props.onCancelPress}>{Message.get(MessageKeys.cancel)}</FlatButton>
     );
 
     return (

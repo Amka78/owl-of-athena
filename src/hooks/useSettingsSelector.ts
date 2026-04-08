@@ -1,5 +1,4 @@
+import type { Settings } from "../sdk/models";
 import { useAuroraStore } from "../store/auroraStore";
-import { Settings } from "../sdk/models";
 
-export const useSettingsSelector = (): Settings =>
-    useAuroraStore((state) => state.userSettings);
+export const useSettingsSelector = (): Settings => useAuroraStore((state) => state.userSettings);

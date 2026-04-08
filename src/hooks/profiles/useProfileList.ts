@@ -1,13 +1,11 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useProfileStore } from "../../store/profileStore";
-
-import { useCheckLogging, useUserSelector, useWindowDimensions } from "..";
 import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
 import { Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
-import { ProfileFilterCondition } from "../../store/profileStore";
+import { type ProfileFilterCondition, useProfileStore } from "../../store/profileStore";
+import { useCheckLogging, useUserSelector, useWindowDimensions } from "..";
 import { useFilterConditionSelector, useFilteredProfileListSelector } from "./";
 //#endregion
 
@@ -26,7 +24,8 @@ export const useProfileList = (): {
     onRefreshPress: () => void;
     onFilterPress: () => void;
 } => {
-    const { cacheProfiles, deleteProfile, selectProfile, updateProfile, updateFilter } = useProfileStore();
+    const { cacheProfiles, deleteProfile, selectProfile, updateProfile, updateFilter } =
+        useProfileStore();
     const filterCondition = useFilterConditionSelector();
     const list = useFilteredProfileListSelector();
     const user = useUserSelector();
@@ -37,12 +36,10 @@ export const useProfileList = (): {
 
     const onPressedRefresh = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.reloading, [
-                MessageKeys.profiles,
-            ]),
+            dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.profiles]),
         });
         //const sessions = await SessionRestClientInstance.getAll(user!.id);
-        cacheProfiles(new Array<AuroraProfile>());
+        cacheProfiles([] as AuroraProfile[]);
         LoadingDialog.close();
     }, [cacheProfiles]);
 
@@ -84,22 +81,20 @@ export const useProfileList = (): {
             value.starred = !value.starred;
             updateProfile(value);
         },
-        [updateProfile]
+        [updateProfile],
     );
 
     const onDeleteConfirmPress = useCallback(
         (value: AuroraProfile) => {
             deleteProfile(value.id);
         },
-        [deleteProfile]
+        [deleteProfile],
     );
 
     const onDeletePress = useCallback(
         (value: AuroraProfile): void => {
             ConfirmDialog.show({
-                title: Message.get(MessageKeys.delete_dialog_title, [
-                    MessageKeys.profile,
-                ]),
+                title: Message.get(MessageKeys.delete_dialog_title, [MessageKeys.profile]),
 
                 message: Message.get(MessageKeys.delete_dialog_message),
 
@@ -109,7 +104,7 @@ export const useProfileList = (): {
                 },
             });
         },
-        [onDeleteConfirmPress]
+        [onDeleteConfirmPress],
     );
 
     const onMenuPress = useCallback(
@@ -122,7 +117,7 @@ export const useProfileList = (): {
                 });
             }
         },
-        [dimens.isDesktop, dimens.isHorizontal, navigate, selectProfile]
+        [dimens.isDesktop, dimens.isHorizontal, navigate, selectProfile],
     );
 
     const userId = user ? user.id : "";

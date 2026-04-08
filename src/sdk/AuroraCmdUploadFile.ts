@@ -1,13 +1,13 @@
 import fs from "fs";
 import fetch from "node-fetch";
-import { Aurora } from "./Aurora";
+import type { Aurora } from "./Aurora";
 
 const AuroraCmdUploadFile = async function (
     this: Aurora,
     srcPath: string,
     destPath: string,
-    // @ts-ignore
-    rename = false
+    // @ts-expect-error
+    rename = false,
 ): Promise<unknown> {
     if (srcPath.match(/https?:\/\//i)) {
         return fetch(srcPath).then((res) => {

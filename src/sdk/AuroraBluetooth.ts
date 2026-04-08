@@ -1,7 +1,7 @@
 //#region Import modules
 import { EventEmitter } from "events";
-import { Dictionary, keyBy } from "lodash";
-import noble, { Characteristic, Peripheral } from "noble";
+import { type Dictionary, keyBy } from "lodash";
+import noble, { type Characteristic, type Peripheral } from "noble";
 
 import { AuroraBluetoothParser } from "./AuroraBluetoothParser";
 import {
@@ -14,6 +14,7 @@ import {
 } from "./AuroraConstants";
 import type { AuroraEvent, BluetoothStream, CommandResult } from "./AuroraTypes";
 import { promisify, sleep } from "./util";
+
 //#endregion
 
 const INIT_DELAY_MS = 5000;
@@ -54,14 +55,8 @@ export class AuroraBluetooth extends EventEmitter {
         this.bluetoothParser = new AuroraBluetoothParser();
         this.bluetoothParser.on("parseError", this.onParseError);
         this.bluetoothParser.on("cmdResponseRead", this.onParseCmdResponseRead);
-        this.bluetoothParser.on(
-            "cmdResponseWrite",
-            this.onParseCmdResponseWrite
-        );
-        this.bluetoothParser.on(
-            "cmdInputRequested",
-            this.onParseCmdInputRequested
-        );
+        this.bluetoothParser.on("cmdResponseWrite", this.onParseCmdResponseWrite);
+        this.bluetoothParser.on("cmdInputRequested", this.onParseCmdInputRequested);
         this.bluetoothParser.on("cmdOutputReady", this.onParseCmdOutputReady);
         this.bluetoothParser.on("auroraEvent", this.onParseAuroraEvent);
         this.bluetoothParser.on("streamData", this.onParseStreamData);
@@ -99,9 +94,7 @@ export class AuroraBluetooth extends EventEmitter {
             //if the state hasn't changed since we waited for
             //initialization to complete, something is wrong
             if (this.connectionState == ConnectionStates.INIT) {
-                return Promise.reject(
-                    "No bluetooth adapter found. Is bluetooth disabled?"
-                );
+                return Promise.reject("No bluetooth adapter found. Is bluetooth disabled?");
             }
 
             //try connecting now that the system is initialized
@@ -118,9 +111,7 @@ export class AuroraBluetooth extends EventEmitter {
                     return Promise.reject("Already connected.");
 
                 default:
-                    return Promise.reject(
-                        "Unknown Bluetooth connection state."
-                    );
+                    return Promise.reject("Unknown Bluetooth connection state.");
             }
         }
 
@@ -145,46 +136,34 @@ export class AuroraBluetooth extends EventEmitter {
         }
     }
 
-    private async setupConnection(
-        characteristics: Characteristic[]
-    ): Promise<void> {
+    private async setupConnection(characteristics: Characteristic[]): Promise<void> {
         this.characteristicsByUUID = keyBy(characteristics, "uuid");
         //these get used a lot, so let's store references
-        this.cmdStatusChar = this.characteristicsByUUID[
-            BleAuroraChars.CMD_STATUS
-        ];
+        this.cmdStatusChar = this.characteristicsByUUID[BleAuroraChars.CMD_STATUS];
         this.cmdDataChar = this.characteristicsByUUID[BleAuroraChars.CMD_DATA];
-        this.cmdOutputChar = this.characteristicsByUUID[
-            BleAuroraChars.CMD_OUTPUT_INDICATED
-        ];
+        this.cmdOutputChar = this.characteristicsByUUID[BleAuroraChars.CMD_OUTPUT_INDICATED];
         await this.charSubscribe(
             this.characteristicsByUUID[BleAuroraChars.STREAM_DATA_NOTIFIED],
-            this.onParseStreamData
+            this.onParseStreamData,
         );
         await this.charSubscribe(
             this.characteristicsByUUID[BleAuroraChars.AURORA_EVENT_NOTIFIED],
             (event: Buffer): void => {
                 this.bluetoothParser.onAuroraEventCharNotification(event);
-            }
+            },
         );
         await this.charSubscribe(this.cmdStatusChar, (status: Buffer): void => {
             this.bluetoothParser.onCmdStatusCharNotification(status);
         });
-        await this.charSubscribe(
-            this.cmdOutputChar,
-            (output: unknown): void => {
-                this.bluetoothParser.onCmdOutputCharNotification(output);
-            }
-        );
+        await this.charSubscribe(this.cmdOutputChar, (output: unknown): void => {
+            this.bluetoothParser.onCmdOutputCharNotification(output);
+        });
 
         this.setConnectionState(ConnectionStates.IDLE);
     }
 
     public async disconnect(): Promise<void> {
-        if (
-            this.connectionState == ConnectionStates.DISCONNECTED ||
-            this.disconnectPending
-        ) {
+        if (this.connectionState == ConnectionStates.DISCONNECTED || this.disconnectPending) {
             return;
         }
 
@@ -197,11 +176,9 @@ export class AuroraBluetooth extends EventEmitter {
             //give scanning a little time to stop
             await sleep(20);
 
-            // @ts-ignore
+            // @ts-expect-error
             if (this.connectionState !== ConnectionStates.DISCONNECTED) {
-                return Promise.reject(
-                    "Failed to disconnect. Scanning not stopped."
-                );
+                return Promise.reject("Failed to disconnect. Scanning not stopped.");
             }
         } else if (this.connectionState == ConnectionStates.BUSY) {
             //let's give the system a little time before we pull the plug
@@ -209,17 +186,15 @@ export class AuroraBluetooth extends EventEmitter {
         }
 
         //have we disconnected yet?
-        // @ts-ignore
+        // @ts-expect-error
         if (this.connectionState === ConnectionStates.DISCONNECTED) return;
 
         //nope but we can't wait any longer
-        return promisify(this.peripheral!.disconnect, this.peripheral!)().then(
-            () => {
-                //in case disconnected event hasn't fired yet, we fire it here
-                console.debug("failed connection.");
-                this.setConnectionState(ConnectionStates.DISCONNECTED);
-            }
-        );
+        return promisify(this.peripheral!.disconnect, this.peripheral!)().then(() => {
+            //in case disconnected event hasn't fired yet, we fire it here
+            console.debug("failed connection.");
+            this.setConnectionState(ConnectionStates.DISCONNECTED);
+        });
     }
 
     public async writeCmd(cmd: string): Promise<any> {
@@ -232,14 +207,10 @@ export class AuroraBluetooth extends EventEmitter {
                     return Promise.reject("No idle serial connection.");
 
                 case ConnectionStates.BUSY:
-                    return Promise.reject(
-                        "Another command is already in progress."
-                    );
+                    return Promise.reject("Another command is already in progress.");
 
                 default:
-                    return Promise.reject(
-                        "Unknown Bluetooth connection state."
-                    );
+                    return Promise.reject("Unknown Bluetooth connection state.");
             }
         }
 
@@ -252,30 +223,21 @@ export class AuroraBluetooth extends EventEmitter {
         // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
             try {
-                this.bluetoothParser.once(
-                    "cmdResponse",
-                    (cmdResponse: CommandResult<unknown>) => {
-                        this.setConnectionState(ConnectionStates.IDLE);
+                this.bluetoothParser.once("cmdResponse", (cmdResponse: CommandResult<unknown>) => {
+                    this.setConnectionState(ConnectionStates.IDLE);
 
-                        cmdResponse.origin = "bluetooth";
+                    cmdResponse.origin = "bluetooth";
 
-                        resolve(cmdResponse);
-                    }
-                );
+                    resolve(cmdResponse);
+                });
 
                 //write the status byte, indicating start of command
-                await this.charWrite(
-                    this.cmdStatusChar!,
-                    Buffer.from([BleCmdStates.IDLE])
-                );
+                await this.charWrite(this.cmdStatusChar!, Buffer.from([BleCmdStates.IDLE]));
 
                 await sleep(10);
 
                 //write the actual command string as ascii (max 128bytes)
-                await this.charWrite(
-                    this.cmdDataChar!,
-                    Buffer.from(cmd, "ascii")
-                );
+                await this.charWrite(this.cmdDataChar!, Buffer.from(cmd, "ascii"));
 
                 await sleep(10);
 
@@ -283,10 +245,7 @@ export class AuroraBluetooth extends EventEmitter {
                 this.bluetoothParser.setCmd(cmd);
 
                 //write the status byte, indicating end of command
-                await this.charWrite(
-                    this.cmdStatusChar!,
-                    Buffer.from([BleCmdStates.CMD_EXECUTE])
-                );
+                await this.charWrite(this.cmdStatusChar!, Buffer.from([BleCmdStates.CMD_EXECUTE]));
                 await sleep(10);
             } catch (error) {
                 this.bluetoothParser.reset();
@@ -309,14 +268,10 @@ export class AuroraBluetooth extends EventEmitter {
                     return Promise.reject("No idle serial connection.");
 
                 case ConnectionStates.IDLE:
-                    return Promise.reject(
-                        "Command input can only be written during a command."
-                    );
+                    return Promise.reject("Command input can only be written during a command.");
 
                 default:
-                    return Promise.reject(
-                        "Unknown Bluetooth connection state."
-                    );
+                    return Promise.reject("Unknown Bluetooth connection state.");
             }
         }
 
@@ -336,15 +291,11 @@ export class AuroraBluetooth extends EventEmitter {
             this.disconnectPending = false;
         }
 
-        this.emit(
-            DeviceEventList.connectionStateChange,
-            connectionState,
-            previousConnectionState
-        );
+        this.emit(DeviceEventList.connectionStateChange, connectionState, previousConnectionState);
     }
 
     private async connectDevice(
-        timeoutMs: number
+        timeoutMs: number,
     ): Promise<{ peripheral: Peripheral; characteristics: Characteristic[] }> {
         if (this.connectPromise) {
             throw new Error("Already have a pending connection.");
@@ -386,10 +337,7 @@ export class AuroraBluetooth extends EventEmitter {
         });
     }
 
-    private async charWritePacket(
-        char: noble.Characteristic,
-        packet: Buffer
-    ): Promise<unknown> {
+    private async charWritePacket(char: noble.Characteristic, packet: Buffer): Promise<unknown> {
         if (!Buffer.isBuffer(packet))
             return Promise.reject("Packet parameter is not a valid buffer.");
 
@@ -409,9 +357,7 @@ export class AuroraBluetooth extends EventEmitter {
         });
     }
 
-    private async charReadPacket(
-        char: noble.Characteristic
-    ): Promise<Uint8Array> {
+    private async charReadPacket(char: noble.Characteristic): Promise<Uint8Array> {
         return new Promise((resolve, reject) => {
             //write a packet, the false here means the callback
             //isn't executed until the other side confirms receipt
@@ -423,12 +369,8 @@ export class AuroraBluetooth extends EventEmitter {
         });
     }
 
-    private async charWrite(
-        char: noble.Characteristic,
-        buffer: Buffer
-    ): Promise<void> {
-        if (!Buffer.isBuffer(buffer))
-            throw "Buffer parameter is not a valid buffer.";
+    private async charWrite(char: noble.Characteristic, buffer: Buffer): Promise<void> {
+        if (!Buffer.isBuffer(buffer)) throw "Buffer parameter is not a valid buffer.";
 
         if (!buffer.length) return;
 
@@ -450,10 +392,7 @@ export class AuroraBluetooth extends EventEmitter {
         }
     }
 
-    public async charRead(
-        char: noble.Characteristic,
-        numBytes: number
-    ): Promise<Buffer> {
+    public async charRead(char: noble.Characteristic, numBytes: number): Promise<Buffer> {
         if (numBytes <= 0) throw "Trying to read less than 1 byte.";
 
         const packets: Uint8Array[] = [];
@@ -476,7 +415,7 @@ export class AuroraBluetooth extends EventEmitter {
 
     private async charSubscribe(
         char: noble.Characteristic,
-        onNotification: Function
+        onNotification: Function,
     ): Promise<unknown> {
         return new Promise<void>((resolve, reject) => {
             char.subscribe((error: string) => {
@@ -545,7 +484,7 @@ export class AuroraBluetooth extends EventEmitter {
 
                             console.debug("Start connection setup.");
                             this.setupConnection(characteristics);
-                        }
+                        },
                     );
                     reconnectResult = true;
                     return true;
@@ -556,7 +495,7 @@ export class AuroraBluetooth extends EventEmitter {
             },
             () => {
                 this.time("Failed to reconnect.");
-            }
+            },
         );
 
         return reconnectResult;
@@ -569,7 +508,7 @@ export class AuroraBluetooth extends EventEmitter {
         delay: number,
         toTry: any,
         success: () => void,
-        fail: () => void
+        fail: () => void,
     ): void {
         toTry()
             .then(() => success())
@@ -577,17 +516,9 @@ export class AuroraBluetooth extends EventEmitter {
                 if (max === 0) {
                     return fail();
                 }
-                this.time(
-                    "Retrying in " + delay + "s... (" + max + " tries left)"
-                );
+                this.time("Retrying in " + delay + "s... (" + max + " tries left)");
                 setTimeout(() => {
-                    this.exponentialBackoff(
-                        --max,
-                        delay * 2,
-                        toTry,
-                        success,
-                        fail
-                    );
+                    this.exponentialBackoff(--max, delay * 2, toTry, success, fail);
                 }, delay * 1000);
             });
     }
@@ -613,7 +544,7 @@ export class AuroraBluetooth extends EventEmitter {
 
                     if (!this.connectPromise) {
                         throw new Error(
-                            "Peripheral found event fired without valid connection promise."
+                            "Peripheral found event fired without valid connection promise.",
                         );
                     }
 
@@ -624,7 +555,7 @@ export class AuroraBluetooth extends EventEmitter {
                     this.connectPromise = undefined;
 
                     noble.stopScanning();
-                }
+                },
             );
         });
     };
@@ -643,20 +574,19 @@ export class AuroraBluetooth extends EventEmitter {
 
     private onParseCmdResponseRead = (
         bytesToRead: number,
-        cbAfterRead: (value: Buffer) => void
+        cbAfterRead: (value: Buffer) => void,
     ): void => {
         this.charRead(this.cmdDataChar!, bytesToRead).then(cbAfterRead);
     };
 
     private onParseCmdResponseWrite = (
         buffer: Buffer,
-        cbAfterWrite: (value: void) => Buffer
+        cbAfterWrite: (value: void) => Buffer,
     ): void => {
         this.charWrite(this.cmdDataChar!, buffer).then(() => {
-            this.charWrite(
-                this.cmdStatusChar!,
-                Buffer.from([BleCmdStates.IDLE])
-            ).then(cbAfterWrite);
+            this.charWrite(this.cmdStatusChar!, Buffer.from([BleCmdStates.IDLE])).then(
+                cbAfterWrite,
+            );
         });
     };
 

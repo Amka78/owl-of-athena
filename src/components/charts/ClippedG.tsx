@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FC } from "react";
-import { G, ClipPath, Rect } from "react-native-svg";
+import type React from "react";
+import type { FC } from "react";
+import { ClipPath, G, Rect } from "react-native-svg";
 
 export type ClippedGProps = {
     children: React.ReactNode;

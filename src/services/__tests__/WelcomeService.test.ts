@@ -1,5 +1,5 @@
-import { createGuestUser } from "../WelcomeService";
 import { GuestUser } from "../../types/Auth";
+import { createGuestUser } from "../WelcomeService";
 
 describe("WelcomeService - createGuestUser", () => {
     it("returns an Auth object with GuestUser id", () => {

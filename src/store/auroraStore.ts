@@ -20,6 +20,6 @@ export const useAuroraStore = create<AuroraStore>()(
         {
             name: "aurora-storage",
             storage: createJSONStorage(() => AsyncStorage),
-        }
-    )
+        },
+    ),
 );

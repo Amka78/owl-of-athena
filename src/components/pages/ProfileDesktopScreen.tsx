@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { ProfileDesktopScreenTemplate } from "../../components/templates/ProfileDesktopScreenTemplate";
 import { useWindowDimensions } from "../../hooks";
@@ -17,20 +17,15 @@ export const ProfileDesktopScreen: FunctionComponent = () => {
             onRefreshPress={profileListHook.onRefreshPress}
             showFilter={profileListHook.showFilter}
             filterMenuProps={{
-                showOfficialCheckBoxStatus: profileListHook.filterCondition
-                    .showOfficial
+                showOfficialCheckBoxStatus: profileListHook.filterCondition.showOfficial
                     ? "checked"
                     : "unchecked",
-                onShowOfficialCheckBoxPress:
-                    profileListHook.onShowOfficialPress,
-                showCommunityCheckBoxStatus: profileListHook.filterCondition
-                    .showCommunity
+                onShowOfficialCheckBoxPress: profileListHook.onShowOfficialPress,
+                showCommunityCheckBoxStatus: profileListHook.filterCondition.showCommunity
                     ? "checked"
                     : "unchecked",
-                onShowCommunityCheckBoxPress:
-                    profileListHook.onShowCommunityPress,
-                showPrivateCheckBoxStatus: profileListHook.filterCondition
-                    .showPrivate
+                onShowCommunityCheckBoxPress: profileListHook.onShowCommunityPress,
+                showPrivateCheckBoxStatus: profileListHook.filterCondition.showPrivate
                     ? "checked"
                     : "unchecked",
                 onShowPrivateCheckBoxPress: profileListHook.onShowPrivatePress,

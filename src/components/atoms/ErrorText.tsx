@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Text, TextStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { Text, type TextStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { Dimens, Fonts } from "../../constants";
@@ -14,9 +14,7 @@ export type ErrorTextProps = {
 //#endregion
 
 //#region Component
-export const ErrorText: FunctionComponent<ErrorTextProps> = (
-    props: ErrorTextProps
-) => {
+export const ErrorText: FunctionComponent<ErrorTextProps> = (props: ErrorTextProps) => {
     const theme = useTheme();
     return (
         <Text style={[textStyle, { color: theme?.colors?.error }, props.style]}>

@@ -1,12 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { MessageKeys } from "../../constants";
-import {
-    useConvertibleHeader,
-    useSignup,
-    useWindowDimensions,
-} from "../../hooks";
+import { useConvertibleHeader, useSignup, useWindowDimensions } from "../../hooks";
 import { SignupScreenTemplate } from "./../templates/SignupScreenTemplate";
 //#endregion
 
@@ -14,11 +10,7 @@ import { SignupScreenTemplate } from "./../templates/SignupScreenTemplate";
 export const SignupScreen: FunctionComponent = () => {
     const signupHooks = useSignup(false);
     const dimens = useWindowDimensions();
-    useConvertibleHeader(
-        MessageKeys.signup_title,
-        dimens.isDesktop,
-        dimens.isSmallHeight
-    );
+    useConvertibleHeader(MessageKeys.signup_title, dimens.isDesktop, dimens.isSmallHeight);
     return (
         <SignupScreenTemplate
             dimens={dimens}

@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
@@ -21,17 +21,14 @@ export type WelcomeScreenTemplateProps = {
 
 //#region Component
 export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps> = (
-    props: WelcomeScreenTemplateProps
+    props: WelcomeScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
-    const isTwoColumnsBottoms =
-        props.dimens.isHorizontal || props.dimens.isLargeWidth;
+    const isTwoColumnsBottoms = props.dimens.isHorizontal || props.dimens.isLargeWidth;
     return (
         <InternalView>
-            <ContentTitle>
-                {Message.get(MessageKeys.welcome_title)}
-            </ContentTitle>
+            <ContentTitle>{Message.get(MessageKeys.welcome_title)}</ContentTitle>
             <ContentText>{Message.get(MessageKeys.welcome_text)}</ContentText>
             <View style={{ alignItems: "center" }}>
                 <View
@@ -54,10 +51,7 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
                         {Message.get(MessageKeys.welcome_signup_button)}
                     </RightSideButton>
                 </View>
-                <Button
-                    onPress={props.onStandalonePress}
-                    screenWidth={props.dimens.width}
-                >
+                <Button onPress={props.onStandalonePress} screenWidth={props.dimens.width}>
                     {Message.get(MessageKeys.welcome_standalone_button)}
                 </Button>
             </View>

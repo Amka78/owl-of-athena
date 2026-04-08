@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import {
     SleepingScreenTemplate,
-    SleepingScreenTemplateProps,
+    type SleepingScreenTemplateProps,
 } from "../../../components/templates/SleepingScreenTemplate";
 import { useWindowDimensions } from "../../../hooks";
 import { Container } from "../../Container";
@@ -15,15 +15,12 @@ export type SleepingScreenProps = Omit<SleepingScreenTemplateProps, "dimens">;
 
 //#region Component
 export const SleepingScreen: FunctionComponent<SleepingScreenProps> = (
-    props: SleepingScreenProps
+    props: SleepingScreenProps,
 ) => {
     const dimens = useWindowDimensions();
     return (
         <Container dimens={dimens}>
-            <SleepingScreenTemplate
-                {...props}
-                dimens={dimens}
-            ></SleepingScreenTemplate>
+            <SleepingScreenTemplate {...props} dimens={dimens}></SleepingScreenTemplate>
         </Container>
     );
 };

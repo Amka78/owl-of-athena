@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { FieldSlider, ListItem } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
@@ -11,9 +11,7 @@ export type OptionSliderProps = OptionProps & { value?: number };
 //#endregion
 
 //#region Component
-export const OptionSlider: FunctionComponent<OptionSliderProps> = (
-    props: OptionSliderProps
-) => {
+export const OptionSlider: FunctionComponent<OptionSliderProps> = (props: OptionSliderProps) => {
     return (
         <ListItem
             {...props}

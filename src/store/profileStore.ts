@@ -32,7 +32,7 @@ const initialFilterCondition: ProfileFilterCondition = {
 
 function createFilteredProfileList(
     list: AuroraProfile[],
-    filterCondition: Partial<ProfileFilterCondition>
+    filterCondition: Partial<ProfileFilterCondition>,
 ): AuroraProfile[] {
     const filtered: AuroraProfile[] = [];
     for (const profile of list) {
@@ -46,7 +46,6 @@ function createFilteredProfileList(
         }
         if (filterCondition.showPrivate && profile.type === "private") {
             filtered.push(profile);
-            continue;
         }
     }
     return filtered;
@@ -63,10 +62,7 @@ export const useProfileStore = create<ProfileStore>()(
             cacheProfiles: (list) =>
                 set((state) => ({
                     list,
-                    filteredList: createFilteredProfileList(
-                        list,
-                        state.filterCondition
-                    ),
+                    filteredList: createFilteredProfileList(list, state.filterCondition),
                 })),
 
             selectProfile: (profile) => set({ selected: profile }),
@@ -78,25 +74,16 @@ export const useProfileStore = create<ProfileStore>()(
                     if (idx >= 0) list[idx] = profile;
                     return {
                         list,
-                        filteredList: createFilteredProfileList(
-                            list,
-                            state.filterCondition
-                        ),
+                        filteredList: createFilteredProfileList(list, state.filterCondition),
                     };
                 }),
 
             deleteProfile: (profileId) =>
                 set((state) => {
-                    const list = _.remove(
-                        [...state.list],
-                        (p) => p.id !== profileId
-                    );
+                    const list = _.remove([...state.list], (p) => p.id !== profileId);
                     return {
                         list,
-                        filteredList: createFilteredProfileList(
-                            list,
-                            state.filterCondition
-                        ),
+                        filteredList: createFilteredProfileList(list, state.filterCondition),
                     };
                 }),
 
@@ -108,10 +95,7 @@ export const useProfileStore = create<ProfileStore>()(
                     };
                     return {
                         filterCondition,
-                        filteredList: createFilteredProfileList(
-                            state.list,
-                            filterCondition
-                        ),
+                        filteredList: createFilteredProfileList(state.list, filterCondition),
                     };
                 }),
 
@@ -126,6 +110,6 @@ export const useProfileStore = create<ProfileStore>()(
         {
             name: "profile-storage",
             storage: createJSONStorage(() => AsyncStorage),
-        }
-    )
+        },
+    ),
 );

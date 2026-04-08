@@ -1,5 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import type React from "react";
+import type { FunctionComponent } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { List } from "react-native-paper";
 //#endregion
@@ -12,7 +13,7 @@ export type ScrollableListProps = {
 
 //#region Component
 export const ScrollableList: FunctionComponent<ScrollableListProps> = (
-    props: ScrollableListProps
+    props: ScrollableListProps,
 ) => {
     return (
         <ScrollView style={{ flex: 1 }}>

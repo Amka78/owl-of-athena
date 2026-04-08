@@ -1,10 +1,11 @@
 //#region Import modules
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import * as React from "react";
+import type * as React from "react";
 
 import { SessionNoteScreen, SessionScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
 import { MaterialTabbarCommonOptions } from "./MaterialTabbarSettings";
+
 //#endregion
 
 //#region Component
@@ -17,18 +18,14 @@ const SessionTabNavigator = (): React.ReactNode => {
                 name={"SleepTracking"}
                 component={SessionScreen}
                 options={{
-                    title: Message.get(
-                        MessageKeys.top_tab_sleep_tracking_title
-                    ),
+                    title: Message.get(MessageKeys.top_tab_sleep_tracking_title),
                 }}
             ></MaterialTab.Screen>
             <MaterialTab.Screen
                 name={"Journal"}
                 component={SessionNoteScreen}
                 options={{
-                    title: Message.get(
-                        Message.get(MessageKeys.top_tab_journal_title)
-                    ),
+                    title: Message.get(Message.get(MessageKeys.top_tab_journal_title)),
                 }}
             ></MaterialTab.Screen>
         </MaterialTab.Navigator>

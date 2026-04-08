@@ -1,21 +1,13 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-
-import { useAuroraStore } from "../store/auroraStore";
-import {
-    AudioDialog,
-    ProfilesDialog,
-    SoundList,
-} from "../components/molecules";
-import { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
-import {
-    useCheckLogging,
-    useProfileListSelector,
-    useSettingsSelector,
-} from "../hooks";
+import { AudioDialog, ProfilesDialog, type SoundList } from "../components/molecules";
+import type { CheckBoxStatus } from "../components/molecules/LabeledCheckBox";
+import { useCheckLogging, useProfileListSelector, useSettingsSelector } from "../hooks";
 import type { AuroraProfile } from "../sdk/AuroraTypes";
 import { Settings } from "../sdk/models";
+import { useAuroraStore } from "../store/auroraStore";
+
 //#endregion
 
 //#region Types
@@ -51,6 +43,8 @@ export const useSetting = (): {
     remStimEnabledOnPress: () => void;
     remStimAudio: AudioState;
     remStimAudioMenuOnPress: () => void;
+    alarmVolume: number;
+    onAlarmVolumeChange: (value: number) => void;
     saveButtonPress: () => void;
     cancelButtonPress: () => void;
     profiles?: AuroraProfile[];
@@ -75,24 +69,18 @@ export const useSetting = (): {
         name: settings.alarmAudio,
         path: settings.alarmAudioPath,
     });
-    const [smartAlarmEnabled, setSmartAlarmEnabled] = useState<boolean>(
-        settings.smartAlarmEnabled
-    );
+    const [smartAlarmEnabled, setSmartAlarmEnabled] = useState<boolean>(settings.smartAlarmEnabled);
     const [dslEnabled, setDslEnabled] = useState<boolean>(settings.dslEnabled);
-    const [remStimEnabled, setRemStimEnabled] = useState<boolean>(
-        settings.remStimEnabled
-    );
+    const [remStimEnabled, setRemStimEnabled] = useState<boolean>(settings.remStimEnabled);
     const [remStimAudio, setRemStimAudio] = useState<AudioState>({
         name: settings.remStimAudio,
         path: settings.remStimAudioPath,
     });
+    const [alarmVolume, setAlarmVolume] = useState<number>(settings.alarmVolume);
 
-    const inlineTimePickerOnChangeTime = useCallback(
-        (hours?: number, minutes?: number): void => {
-            setDatePickerState({ hours: hours!, minutes: minutes! });
-        },
-        []
-    );
+    const inlineTimePickerOnChangeTime = useCallback((hours?: number, minutes?: number): void => {
+        setDatePickerState({ hours: hours!, minutes: minutes! });
+    }, []);
 
     const smartAlarmAudioMenuOnPress = useCallback((): void => {
         AudioDialog.show(
@@ -104,7 +92,7 @@ export const useSetting = (): {
                     });
                 },
             },
-            smartAlarmAudio.name
+            smartAlarmAudio.name,
         );
     }, [smartAlarmAudio]);
 
@@ -118,24 +106,18 @@ export const useSetting = (): {
         });
     }, [profileState.profileId, profiles]);
 
-    const smartAlarmEnabledStatus: CheckBoxStatus = smartAlarmEnabled
-        ? "checked"
-        : "unchecked";
+    const smartAlarmEnabledStatus: CheckBoxStatus = smartAlarmEnabled ? "checked" : "unchecked";
 
     const smartAlarmEnabledOnPress = useCallback((): void => {
         setSmartAlarmEnabled(!smartAlarmEnabled);
     }, [smartAlarmEnabled]);
 
-    const dslEnabledStatus: CheckBoxStatus = dslEnabled
-        ? "checked"
-        : "unchecked";
+    const dslEnabledStatus: CheckBoxStatus = dslEnabled ? "checked" : "unchecked";
     const dslEnabledOnPress = useCallback((): void => {
         setDslEnabled(!dslEnabled);
     }, [dslEnabled]);
 
-    const remStimEnabledStatus: CheckBoxStatus = remStimEnabled
-        ? "checked"
-        : "unchecked";
+    const remStimEnabledStatus: CheckBoxStatus = remStimEnabled ? "checked" : "unchecked";
 
     const remStimEnabledOnPress = useCallback((): void => {
         setRemStimEnabled(!remStimEnabled);
@@ -151,7 +133,7 @@ export const useSetting = (): {
                     });
                 },
             },
-            remStimAudio.name
+            remStimAudio.name,
         );
     }, [remStimAudio.name]);
 
@@ -170,6 +152,7 @@ export const useSetting = (): {
         settings.remStimEnabled = remStimEnabled;
         settings.remStimAudio = remStimAudio.name;
         settings.remStimAudioPath = remStimAudio.path;
+        settings.alarmVolume = alarmVolume;
         settings.savedAt = new Date();
 
         console.log("updated Settings:", settings);
@@ -190,6 +173,7 @@ export const useSetting = (): {
         smartAlarmAudio.name,
         smartAlarmAudio.path,
         smartAlarmEnabled,
+        alarmVolume,
     ]);
 
     const cancelButtonPress = useCallback(() => {
@@ -211,6 +195,8 @@ export const useSetting = (): {
         remStimEnabledOnPress,
         remStimAudio,
         remStimAudioMenuOnPress,
+        alarmVolume,
+        onAlarmVolumeChange: setAlarmVolume,
         saveButtonPress,
         cancelButtonPress,
     };

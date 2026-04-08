@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, TextStyle, View } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { StyleSheet, Text, type TextStyle, View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 import { Fonts } from "../../constants";
@@ -19,19 +19,11 @@ export type TimeViewProps = {
 //#endregion
 
 //#region Component
-export const TimeView: FunctionComponent<TimeViewProps> = (
-    props: TimeViewProps
-) => {
+export const TimeView: FunctionComponent<TimeViewProps> = (props: TimeViewProps) => {
     const theme = useTheme();
     return (
         <View style={[style.alarmView, props.timeViewStyle]}>
-            <Text
-                style={[
-                    style.alarmTime,
-                    { color: theme.colors?.secondary },
-                    props.timeStyle,
-                ]}
-            >
+            <Text style={[style.alarmTime, { color: theme.colors?.secondary }, props.timeStyle]}>
                 {getTimeText(props)}
             </Text>
             {props.mode === "meridian" ? (

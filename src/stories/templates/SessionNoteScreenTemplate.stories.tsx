@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionNoteScreenTemplate } from '../../components/templates/SessionNoteScreenTemplate';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionNoteScreenTemplate } from "../../components/templates/SessionNoteScreenTemplate";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Templates/SessionNoteScreenTemplate',
+    title: "Templates/SessionNoteScreenTemplate",
     component: SessionNoteScreenTemplate,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SessionNoteScreenTemplate>;
 
@@ -19,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
     args: {
-        value: '',
+        value: "",
         onChangeText: fn(),
         onBlur: fn(),
     },
@@ -30,7 +34,7 @@ export const Empty: Story = {
 
 export const WithNote: Story = {
     args: {
-        value: 'Had a vivid dream about flying over mountains.',
+        value: "Had a vivid dream about flying over mountains.",
         onChangeText: fn(),
         onBlur: fn(),
     },

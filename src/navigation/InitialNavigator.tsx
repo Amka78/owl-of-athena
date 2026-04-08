@@ -1,13 +1,14 @@
 //#region Import Modules
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type * as React from "react";
 
 import { MainScreen } from "../components/pages";
 import { UnauthenticatedNavigator } from "./UnauthenticatedNavigator";
+
 //#endregion
 
 //#region Component
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const InitialNavigator = (): React.ReactNode => {
     return (
         <Stack.Navigator initialRouteName="Unauthenticated" screenOptions={{ headerShown: false }}>

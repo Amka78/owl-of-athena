@@ -1,10 +1,10 @@
 //#region Import Modules
 import * as d3 from "d3";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { Path, Text } from "react-native-svg";
 
 import { Colors } from "../../constants";
-import { ChartCore, ChartCoreProps } from "./ChartCore";
+import { ChartCore, type ChartCoreProps } from "./ChartCore";
 //#endregion
 
 //#region Types
@@ -25,11 +25,9 @@ export type ChartRadialProgressProps = ChartCoreProps & {
 
 //#region Component
 export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
-    props: ChartRadialProgressProps
+    props: ChartRadialProgressProps,
 ) => {
-    const valueLabelColor = props.valueLabelColor
-        ? props.valueLabelColor
-        : Colors.white;
+    const valueLabelColor = props.valueLabelColor ? props.valueLabelColor : Colors.white;
 
     const valueLabelSize = props.valueLabelSize ? props.valueLabelSize : 12;
 
@@ -51,7 +49,7 @@ export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
     return (
         <ChartCore {...props}>
             <Path
-                // @ts-ignore
+                // @ts-expect-error
                 d={arc.endAngle(2 * Math.PI)()}
                 transform={`translate(${outerRadius}, ${outerRadius})`}
                 stroke={props.bgColor}
@@ -67,14 +65,9 @@ export const ChartRadialProgress: FC<ChartRadialProgressProps> = (
                 {props.valueLabel}
             </Text>
             <Path
-                //@ts-ignore
+                //@ts-expect-error
                 d={arc.endAngle(
-                    getRadiansFromProgress(
-                        startAngle,
-                        props.value,
-                        minValue,
-                        maxValue
-                    )
+                    getRadiansFromProgress(startAngle, props.value, minValue, maxValue),
                 )()}
                 transform={`translate(${outerRadius}, ${outerRadius})`}
                 fill={props.fgColor}
@@ -93,16 +86,11 @@ const getRadiansFromProgress = (
     startAngle: number,
     value: number,
     minValue: number,
-    maxValue: number
+    maxValue: number,
 ): number => {
     return (
         getRadiansFromDegrees(startAngle) +
-        2 *
-            Math.PI *
-            Math.min(
-                maxValue,
-                Math.max(minValue, value / (maxValue - minValue))
-            )
+        2 * Math.PI * Math.min(maxValue, Math.max(minValue, value / (maxValue - minValue)))
     );
 };
 //#endregion

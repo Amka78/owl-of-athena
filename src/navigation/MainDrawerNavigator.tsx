@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 //#region Import Modules
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React from "react";
+import type React from "react";
 import { View } from "react-native";
 
 import {
+    AdminIcon,
     BatteryIcon,
     BluetoothIcon,
     HomeIcon,
@@ -15,17 +16,17 @@ import {
     SettingsIcon,
 } from "../components/atoms";
 import { ConfirmDialog } from "../components/molecules";
-import {
-    ProfileDesktopScreen,
-    SessionDesktopScreen,
-} from "../components/pages";
+import { ProfileDesktopScreen, SessionDesktopScreen } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
 import { ConnectionStates } from "../sdk";
+import { useAuthStore } from "../store/authStore";
+import AdminNavigator from "./AdminNavigator";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import SessionNavigator from "./SessionNavigator";
 import SettingNavigator from "./SettingNavigator";
+
 //#endregion
 
 //#region Type
@@ -37,6 +38,7 @@ type DrawerIconProps = {
 
 export type MainDrawerNavigatorProps = {
     onBluetoothConnectPress: () => Promise<string>;
+    onDeviceInfoPress: () => void;
     batteryLevel: number;
     bluetoothConnect: ConnectionStates;
 };
@@ -47,13 +49,13 @@ const Drawer = createDrawerNavigator();
 
 const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode => {
     const mainDrawerHook = useMainDrawerNavigator();
+    const { user } = useAuthStore();
+    const isAdmin = user?.roles?.some((r) => r.slug === "admin") ?? false;
     return (
         <Drawer.Navigator
             initialRouteName={"Sleep Process"}
             defaultStatus={
-                mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal
-                    ? "open"
-                    : "closed"
+                mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal ? "open" : "closed"
             }
             screenOptions={{
                 drawerType: mainDrawerHook.drawerType,
@@ -67,23 +69,20 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
                 headerLeft: () => {
                     return (
                         <MenuIcon
-                            color={
-                                mainDrawerHook.isDrawerOpen
-                                    ? Colors.cyan
-                                    : Colors.white
-                            }
+                            color={mainDrawerHook.isDrawerOpen ? Colors.cyan : Colors.white}
                             onPress={mainDrawerHook.onDrawerMenuPress}
                         ></MenuIcon>
                     );
                 },
                 headerRight: () => {
-                    let batteryIcon = undefined;
+                    let batteryIcon;
                     if (props.bluetoothConnect === ConnectionStates.CONNECTED) {
                         batteryIcon = (
                             <BatteryIcon
                                 isUSBConnected={false}
                                 batteryLevel={props.batteryLevel}
                                 style={{ marginRight: 10 }}
+                                onPress={props.onDeviceInfoPress}
                             ></BatteryIcon>
                         );
                     }
@@ -102,9 +101,7 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
 
                                     if (result !== "") {
                                         ConfirmDialog.show({
-                                            title: Message.get(
-                                                MessageKeys.connection_error
-                                            ),
+                                            title: Message.get(MessageKeys.connection_error),
                                             message: result,
                                         });
                                     }
@@ -179,6 +176,20 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
                         : "",
                 }}
             ></Drawer.Screen>
+            {isAdmin && (
+                <Drawer.Screen
+                    name="Admin"
+                    component={AdminNavigator}
+                    options={{
+                        drawerIcon: (props: DrawerIconProps) => {
+                            return <AdminIcon {...props}></AdminIcon>;
+                        },
+                        drawerLabel: mainDrawerHook.isDesktop
+                            ? Message.get(MessageKeys.drawer_items_admin)
+                            : "",
+                    }}
+                />
+            )}
         </Drawer.Navigator>
     );
 };
@@ -187,4 +198,3 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
 //#region Export
 export default MainDrawerNavigator;
 //#endregion
-

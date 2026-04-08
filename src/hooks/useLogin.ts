@@ -1,16 +1,13 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { useAuthStore } from "../store/authStore";
-
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
-import { GuestUser } from "../types";
-import type { Login } from "../types";
+import { useAuthStore } from "../store/authStore";
+import { GuestUser, type Login, type User } from "../types";
 import type { Auth } from "../types/Auth";
-import type { User } from "../types";
-import { useTextBox, useTextBoxReturn } from "./useTextBox";
+import { useTextBox, type useTextBoxReturn } from "./useTextBox";
 //#endregion
 
 //#region Hooks
@@ -41,8 +38,10 @@ export const useLogin = (): {
             const result = await AuroraRestClientInstance.login(loginData);
             console.debug("loggedin user", result);
 
-            if (result.user.providers?.email.activation_expires_at) {
-                throw new Error(Message.get(MessageKeys.account_not_activated));
+            if (!result.user.emailConfirmed) {
+                LoadingDialog.close();
+                navigate("ConfirmEmail", { email: loginData.email });
+                return;
             }
             postLoginAction(login, navigate, result);
         } catch (e) {
@@ -53,9 +52,7 @@ export const useLogin = (): {
 
             ConfirmDialog.show({
                 title: Message.get(MessageKeys.standalone_mode_confirm_title),
-                message: Message.get(
-                    MessageKeys.standalone_mode_confirm_message
-                ),
+                message: Message.get(MessageKeys.standalone_mode_confirm_message),
                 isCancelable: true,
                 onConfirm: () => {
                     const currentDate = Date.now().toLocaleString();
@@ -73,9 +70,7 @@ export const useLogin = (): {
                     if (err.message) {
                         setGeneralError(err.message);
                     } else {
-                        setGeneralError(
-                            Message.get(MessageKeys.login_general_error_message)
-                        );
+                        setGeneralError(Message.get(MessageKeys.login_general_error_message));
                     }
                 },
             });

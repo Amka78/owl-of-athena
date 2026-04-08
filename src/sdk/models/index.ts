@@ -1,18 +1,19 @@
-import { AuroraOSInfo } from "./AuroraOSInfo";
-import { Event } from "./Event";
-import { AuroraSession } from "./AuroraSession";
-import { Settings } from "./Settings";
-import { Profile } from "./Profile";
 import { AuroraEvent } from "./AuroraEvent";
-import { AuroraStream } from "./AuroraStream";
+import { AuroraOSInfo } from "./AuroraOSInfo";
+import { AuroraSession } from "./AuroraSession";
 import { AuroraSessionDetail } from "./AuroraSessionDetail";
+import { AuroraStream } from "./AuroraStream";
+import { Event } from "./Event";
+import { Profile } from "./Profile";
+import { Settings } from "./Settings";
+
 export {
+    AuroraEvent,
     AuroraOSInfo,
     AuroraSession,
     AuroraSessionDetail,
+    AuroraStream,
     Event,
-    Settings,
     Profile,
-    AuroraEvent,
-    AuroraStream
+    Settings,
 };

@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionListMenu } from '../../components/organisms/sessions/SessionListMenu';
-import { FilterByDateValues } from '../../store/sessionStore';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionListMenu } from "../../components/organisms/sessions/SessionListMenu";
+import { Theme } from "../../constants";
+import { FilterByDateValues } from "../../store/sessionStore";
 
 const meta = {
-    title: 'Organisms/SessionListMenu',
+    title: "Organisms/SessionListMenu",
     component: SessionListMenu,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
         (Story: any) => (
             <Provider theme={Theme}>
@@ -29,9 +29,9 @@ export const Primary: Story = {
         anyTimePickerValue: FilterByDateValues.ANY_TIME,
         pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
         pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-        showStarredCheckBoxStatus: 'unchecked',
+        showStarredCheckBoxStatus: "unchecked",
         onShowStarredCheckBoxPress: fn(),
-        showNoteCheckBoxStatus: 'checked',
+        showNoteCheckBoxStatus: "checked",
         onShowNoteCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {
@@ -46,9 +46,9 @@ export const PastWeek: Story = {
         anyTimePickerValue: FilterByDateValues.ANY_TIME,
         pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
         pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-        showStarredCheckBoxStatus: 'checked',
+        showStarredCheckBoxStatus: "checked",
         onShowStarredCheckBoxPress: fn(),
-        showNoteCheckBoxStatus: 'checked',
+        showNoteCheckBoxStatus: "checked",
         onShowNoteCheckBoxPress: fn(),
     },
     play: async ({ canvasElement }) => {

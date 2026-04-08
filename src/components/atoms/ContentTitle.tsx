@@ -1,7 +1,8 @@
 //#region Import Modules
+
+import React, { type FunctionComponent } from "react";
+import { type StyleProp, Text, type TextStyle } from "react-native";
 import { useTheme } from "react-native-paper";
-import React, { FunctionComponent } from "react";
-import { Text, StyleProp, TextStyle } from "react-native";
 import { Dimens, Fonts } from "../../constants";
 //#endregion
 
@@ -13,14 +14,10 @@ export type ContentTitleProps = {
 //#endregion
 
 //#region Conponent
-export const ContentTitle: FunctionComponent<ContentTitleProps> = (
-    props: ContentTitleProps
-) => {
+export const ContentTitle: FunctionComponent<ContentTitleProps> = (props: ContentTitleProps) => {
     const theme = useTheme();
     return (
-        <Text
-            style={[textStyle, { color: theme?.colors?.secondary }, props.style]}
-        >
+        <Text style={[textStyle, { color: theme?.colors?.secondary }, props.style]}>
             {props.children}
         </Text>
     );

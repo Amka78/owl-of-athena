@@ -1,19 +1,15 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { ContentText, LeftSideButton } from "../atoms";
-import { ContentTextProps } from "../atoms/ContentText";
-import { ContentTitleProps } from "../atoms/ContentTitle";
-import {
-    ConvertibleContentTitle,
-    InternalView,
-    RightSideButton,
-} from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
+import type { ContentTextProps } from "../atoms/ContentText";
+import type { ContentTitleProps } from "../atoms/ContentTitle";
+import { ConvertibleContentTitle, InternalView, QuestionnaireDialog, RightSideButton } from "../molecules";
+import type { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -29,13 +25,13 @@ export type AwakeScreenTemplateProps = {
 
 //#region Component
 export const AwakeScreenTemplate: FunctionComponent<AwakeScreenTemplateProps> = (
-    props: AwakeScreenTemplateProps
+    props: AwakeScreenTemplateProps,
 ) => {
     useLocale(props.locale);
     useConvertibleHeader(
         MessageKeys.awake_title,
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
     const questionButton = (
         <LeftSideButton
@@ -59,9 +55,7 @@ export const AwakeScreenTemplate: FunctionComponent<AwakeScreenTemplateProps> = 
         <View
             style={{
                 flexDirection:
-                    props.dimens.isDesktop || props.dimens.isSmallHeight
-                        ? "row"
-                        : "column",
+                    props.dimens.isDesktop || props.dimens.isSmallHeight ? "row" : "column",
             }}
         >
             {questionButton}
@@ -70,15 +64,11 @@ export const AwakeScreenTemplate: FunctionComponent<AwakeScreenTemplateProps> = 
     );
     return (
         <InternalView>
-            <ConvertibleContentTitle
-                {...props.contentTitle}
-                isDesktop={props.dimens.isDesktop}
-            >
+            <QuestionnaireDialog />
+            <ConvertibleContentTitle {...props.contentTitle} isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.awake_title)}
             </ConvertibleContentTitle>
-            <ContentText {...props.contentText}>
-                {Message.get(MessageKeys.awake_text)}
-            </ContentText>
+            <ContentText {...props.contentText}>{Message.get(MessageKeys.awake_text)}</ContentText>
             {bottomButtons}
         </InternalView>
     );

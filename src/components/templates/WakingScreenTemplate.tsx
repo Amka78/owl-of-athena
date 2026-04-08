@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
@@ -7,7 +7,7 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
-import { TemplateTimeViewProps } from "./TempatedProps";
+import type { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -21,7 +21,7 @@ export type WakingScreenTemplateProps = {
 
 //#region Component
 export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> = (
-    props: WakingScreenTemplateProps
+    props: WakingScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
@@ -43,15 +43,10 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
                 ></TimeView>
             </View>
             <View style={{ alignItems: "center" }}>
-                <Button
-                    onPress={props.onWakeupPress}
-                    screenWidth={props.dimens.width}
-                >
+                <Button onPress={props.onWakeupPress} screenWidth={props.dimens.width}>
                     {Message.get(MessageKeys.waking_wakeup_button)}
                 </Button>
-                <ContentText>
-                    {Message.get(MessageKeys.waking_tip_text)}
-                </ContentText>
+                <ContentText>{Message.get(MessageKeys.waking_tip_text)}</ContentText>
             </View>
         </InternalView>
     );

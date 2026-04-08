@@ -1,14 +1,10 @@
 //#region Import Modules
-import moment, { Moment } from "moment";
+import moment, { type Moment } from "moment";
 import { useCallback, useState } from "react";
-
-import { useCheckLogging } from "..";
-import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
+import type { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
 import type { CurrentChart } from "../../types/CurrentChart";
-import {
-    useSelectedSessionDetailSelector,
-    useSelectedSessionSelector,
-} from "./";
+import { useCheckLogging } from "..";
+import { useSelectedSessionDetailSelector, useSelectedSessionSelector } from "./";
 
 //#endregion
 
@@ -55,20 +51,15 @@ export const useSession = (): {
         sleepDuration = getDuration(selectedSession.sleepDuration);
         remDuration = getDuration(selectedSession.remDuration);
         deepDuration = getDuration(selectedSession.deepDuration);
-        radialProgress =
-            selectedSession.sleepScore == 117 ? 72 : selectedSession.sleepScore;
+        radialProgress = selectedSession.sleepScore == 117 ? 72 : selectedSession.sleepScore;
         scaleXDomain = [
             selectedSession.sessionAt! - 300000,
-            selectedSession.sessionAt! +
-                selectedSession.sessionDuration! +
-                300000,
+            selectedSession.sessionAt! + selectedSession.sessionDuration! + 300000,
         ];
     }
 
     const chartSelectButtonPress = useCallback((): void => {
-        currentChart === "SleepChart"
-            ? setCurrentChart("PieChart")
-            : setCurrentChart("SleepChart");
+        currentChart === "SleepChart" ? setCurrentChart("PieChart") : setCurrentChart("SleepChart");
     }, [currentChart]);
 
     return {

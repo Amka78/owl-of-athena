@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 export const useRadioGroup = (
-    initialState: string
+    initialState: string,
 ): {
     onValueChange: (value: string) => void;
     value: string;
@@ -14,6 +14,6 @@ export const useRadioGroup = (
 
     return {
         onValueChange,
-        value
+        value,
     };
 };

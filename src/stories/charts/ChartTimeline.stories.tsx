@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
-import React from "react";
+import type React from "react";
 import { Provider } from "react-native-paper";
-
-import { Theme } from "../../constants";
 import ChartTimeline from "../../components/charts/ChartTimeline";
+import { Theme } from "../../constants";
 
 const sessionStart = Date.now() - 8 * 3600000;
 const sessionEnd = Date.now();

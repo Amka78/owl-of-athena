@@ -1,5 +1,5 @@
 import type { Mock } from "bun:test";
-import {
+import type {
     GestureResponderEvent,
     NativeSyntheticEvent,
     TextInputEndEditingEventData,
@@ -7,10 +7,11 @@ import {
 
 import type { Dimensions } from "../hooks/useWindowDimensions";
 
-// @ts-ignore
+// @ts-expect-error
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
-// @ts-ignore
-export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEventData> = {};
+// @ts-expect-error
+export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEventData> =
+    {};
 
 export const DesktopDimension: Dimensions = {
     fontScale: 1,

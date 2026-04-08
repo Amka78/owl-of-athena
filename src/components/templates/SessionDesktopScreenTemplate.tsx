@@ -1,14 +1,14 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import SessionTabNavigator from "../../navigation/SessionTabNavigator";
-import { AuroraSession } from "../../sdk/models";
+import type { AuroraSession } from "../../sdk/models";
 import { FilterIcon, FlexSpacer, RefreshIcon } from "../atoms";
 import { ConvertibleListForm } from "../molecules";
 import { SessionBlankScreenTemplate } from "./SessionBlankScreenTemplate";
 import {
     SessionListScreenTemplate,
-    SessionListScreenTemplateProps,
+    type SessionListScreenTemplateProps,
 } from "./SessionListScreenTemplate";
 //#endregion
 
@@ -22,23 +22,18 @@ export type SessionDesktopScreenTemplateProps = SessionListScreenTemplateProps &
 
 //#region Component
 export const SessionDesktopScreenTemplate: FunctionComponent<SessionDesktopScreenTemplateProps> = (
-    props: SessionDesktopScreenTemplateProps
+    props: SessionDesktopScreenTemplateProps,
 ) => {
     return (
         <ConvertibleListForm
             listMenu={[
-                <RefreshIcon
-                    key={0}
-                    onPress={props.onRefreshPress}
-                ></RefreshIcon>,
+                <RefreshIcon key={0} onPress={props.onRefreshPress}></RefreshIcon>,
                 <FlexSpacer key={1}></FlexSpacer>,
                 <FilterIcon key={2} onPress={props.onFilterPress}></FilterIcon>,
             ]}
             listScreen={
                 props.sessionList ? (
-                    <SessionListScreenTemplate
-                        {...props}
-                    ></SessionListScreenTemplate>
+                    <SessionListScreenTemplate {...props}></SessionListScreenTemplate>
                 ) : undefined
             }
             itemScreen={

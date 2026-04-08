@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Text, TextStyle } from "react-native";
-import { Dimens, Fonts } from "../../constants";
-import { ThemeType } from "../../constants/Theme";
+import React, { type FunctionComponent } from "react";
+import { Text, type TextStyle } from "react-native";
 import { useTheme } from "react-native-paper";
+import { Dimens, Fonts } from "../../constants";
+import type { ThemeType } from "../../constants/Theme";
 //#endregion
 
 //#region Types
@@ -15,9 +15,7 @@ export type ContentTextProps = {
 //#endregion
 
 //#region Component
-export const ContentText: FunctionComponent<ContentTextProps> = (
-    props: ContentTextProps
-) => {
+export const ContentText: FunctionComponent<ContentTextProps> = (props: ContentTextProps) => {
     const theme: ThemeType | undefined = useTheme();
 
     return (

@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
-
-import { Theme } from "../../constants";
 import { SessionNoteScreen } from "../../components/pages/SessionNoteScreen";
+import { Theme } from "../../constants";
 
 jest.mock("../../hooks/sessions/useSessionNote", () => ({
     useSessionNote: () => ({
@@ -19,7 +18,6 @@ jest.mock("@react-navigation/native", () => ({
     useRoute: () => ({ params: {} }),
     useFocusEffect: jest.fn(),
 }));
-
 
 const meta = {
     title: "Pages/SessionNoteScreen",

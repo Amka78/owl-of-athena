@@ -1,11 +1,10 @@
 //#region Import Modules
 import { useCallback, useEffect, useState } from "react";
-import { GuestUser } from "../types";
-import type { User } from "../types";
 import { AuroraRestClientInstance } from "../clients";
 import { useAuthStore } from "../store/authStore";
+import { GuestUser, type User } from "../types";
 
-import { useCheckLogging, useUserSelector, useLogout } from "./";
+import { useCheckLogging, useLogout, useUserSelector } from "./";
 //#endregion
 
 //#region Hooks
@@ -86,10 +85,7 @@ export const useAcount = (): {
     const onSavePress = useCallback(async () => {
         setLoading(true);
         try {
-            if (
-                userInfo!.id !== GuestUser &&
-                validate(userInfo!, setGeneralError)
-            ) {
+            if (userInfo!.id !== GuestUser && validate(userInfo!, setGeneralError)) {
                 await AuroraRestClientInstance.updateUser(userInfo as User);
             }
         } catch (e) {
@@ -122,7 +118,7 @@ export const useAcount = (): {
 //#region Function
 function validate(
     user: Partial<User>,
-    setGeneralError: React.Dispatch<React.SetStateAction<string>>
+    setGeneralError: React.Dispatch<React.SetStateAction<string>>,
 ): boolean {
     console.debug(user);
     console.debug(setGeneralError);

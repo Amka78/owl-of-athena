@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
+import { Colors, Message, MessageKeys } from "../constants";
+import type { AuroraSession } from "../sdk/models";
 //import { NewChartPie as ChartPie } from "./charts";
 import { ChartPie } from "./charts";
-import { Colors, Message, MessageKeys } from "../constants";
-import { AuroraSession } from "../sdk/models";
 //#endregion
 
 //#region Types
@@ -56,14 +56,14 @@ const stages = [
 
 //#region Component
 export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
-    props: SessionChartPieProps
+    props: SessionChartPieProps,
 ) => {
     const totalSleepTime = stages.reduce(
         (totalDuration, stage) => totalDuration + props.session[stage.key],
-        0
+        0,
     );
     return (
-        // @ts-ignore
+        // @ts-expect-error
         <ChartPie
             width={props.width}
             height={props.height}
@@ -75,14 +75,12 @@ export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
             categoryLabels={stages.map((stage) => {
                 const duration = getDuration(props.session[stage.key]);
                 return Message.get(stage.label, [
-                    `${duration.hours > 0 ? duration.hours + "h" : ""} ${
-                        duration.minutes
-                    }m`,
+                    `${duration.hours > 0 ? duration.hours + "h" : ""} ${duration.minutes}m`,
                 ]);
             })}
             categoryColors={stages.map((stage) => stage.color)}
             categoryPercents={stages.map(
-                (stage) => (props.session[stage.key] / totalSleepTime) * 100
+                (stage) => (props.session[stage.key] / totalSleepTime) * 100,
             )}
         />
     );

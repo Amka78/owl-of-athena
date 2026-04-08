@@ -4,10 +4,13 @@ import { useFilterConditionSelector } from "./sessions/useFilteredConditionSelec
 import { useSessionDetailListSelector } from "./sessions/useSessionDetailListSelector";
 import { useSessionListSelector } from "./sessions/useSessionListSelector";
 import { useAcount } from "./useAccount";
+import { useChangeEmail } from "./useChangeEmail";
+import { useChangePassword } from "./useChangePassword";
 import { useAppUpdate } from "./useAppUpdate";
 import { useAutoLogin } from "./useAutoLogin";
 import { useCheckBox } from "./useCheckBox";
 import { useCheckLogging } from "./useCheckLogging";
+import { useConfirmEmail } from "./useConfirmEmail";
 import { useConvertibleHeader } from "./useConvertibleHeader";
 import { useDatePicker } from "./useDatePicker";
 import { useForgotPassword } from "./useForgotPassword";
@@ -24,38 +27,42 @@ import { useTextBox } from "./useTextBox";
 import { useTokenSelector } from "./useTokenSelector";
 import { useUserSelector } from "./useUserSelector";
 import { useWakeLockSelector } from "./useWakeLockSelector";
-import { useWindowDimensions } from "./useWindowDimensions";
 import type { Dimensions } from "./useWindowDimensions";
+import { useWindowDimensions } from "./useWindowDimensions";
+
 //#endregion
 
 //#region Exports
+export type { Dimensions };
 export {
-    useAutoLogin,
+    useAcount,
+    useChangeEmail,
+    useChangePassword,
     useAppUpdate,
+    useAutoLogin,
     useCheckBox,
     useCheckLogging,
+    useConfirmEmail,
     useConvertibleHeader,
     useDatePicker,
+    useFilterConditionSelector,
     useForgotPassword,
     useGetUser,
     useLocale,
     useLogin,
     useLogout,
-    useSignup,
-    useFilterConditionSelector,
-    useScreenDimensions,
-    useSessionListSelector,
-    useSessionDetailListSelector,
-    useSettingsSelector,
     useMainDrawerNavigator,
-    useTokenSelector,
     useProfileListSelector,
-    useTextBox,
-    useAcount,
     useRadioGroup,
+    useScreenDimensions,
+    useSessionDetailListSelector,
+    useSessionListSelector,
+    useSettingsSelector,
+    useSignup,
+    useTextBox,
+    useTokenSelector,
     useUserSelector,
     useWakeLockSelector,
     useWindowDimensions,
 };
-export type { Dimensions };
 //#endregion

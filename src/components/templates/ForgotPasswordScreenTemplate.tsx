@@ -1,31 +1,22 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
-import { Message, MessageKeys } from "../../constants";
+import { Colors, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
-import { useTextBoxReturn } from "../../hooks/useTextBox";
+import type { useTextBoxReturn } from "../../hooks/useTextBox";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import {
-    ContentText,
-    ErrorText,
-    FlexSpacer,
-    LeftSideButton,
-    TextBox,
-} from "../atoms";
-import { ErrorTextProps } from "../atoms/ErrorText";
-import {
-    ConvertibleContentTitle,
-    InternalView,
-    RightSideButton,
-} from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
+import { ContentText, ErrorText, FlexSpacer, LeftSideButton, TextBox } from "../atoms";
+import type { ErrorTextProps } from "../atoms/ErrorText";
+import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
+import type { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Type
 export type ForgotPasswordScreenTemplateProps = {
     emailAddress: useTextBoxReturn;
     errorText: ErrorTextProps;
+    successMessage?: string;
     forgotPasswordButton: TemplateButtonProps;
     cancelButton: TemplateButtonProps;
     dimens: Dimensions;
@@ -35,14 +26,14 @@ export type ForgotPasswordScreenTemplateProps = {
 
 //#region Component
 export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScreenTemplateProps> = (
-    props: ForgotPasswordScreenTemplateProps
+    props: ForgotPasswordScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     useConvertibleHeader(
         MessageKeys.forgot_password_title,
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
 
     const forgotPasswordButton = (
@@ -83,15 +74,13 @@ export const ForgotPasswordScreenTemplate: FunctionComponent<ForgotPasswordScree
                 {Message.get(MessageKeys.forgot_password_title)}
             </ConvertibleContentTitle>
             <FlexSpacer></FlexSpacer>
-            <ContentText>
-                {Message.get(MessageKeys.forgot_password_text)}
-            </ContentText>
+            <ContentText>{Message.get(MessageKeys.forgot_password_text)}</ContentText>
             <FlexSpacer></FlexSpacer>
-            <TextBox
-                {...props.emailAddress}
-                keyboardType={"email-address"}
-            ></TextBox>
+            <TextBox {...props.emailAddress} keyboardType={"email-address"}></TextBox>
             <ErrorText {...props.errorText}></ErrorText>
+            {props.successMessage ? (
+                <ContentText style={{ color: Colors.cyan }}>{props.successMessage}</ContentText>
+            ) : null}
             {bottomButtons}
         </InternalView>
     );

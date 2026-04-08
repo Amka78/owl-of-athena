@@ -1,17 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ProfileMenu } from '../../components/organisms/profiles/ProfileMenu';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ProfileMenu } from "../../components/organisms/profiles/ProfileMenu";
+import { Theme } from "../../constants";
 
 const sampleProfile = {
-    id: 'profile-001',
-    content: '',
-    name: 'default.prof',
-    title: 'Default Profile',
-    type: 'official' as const,
-    description: 'A sample profile for testing.',
+    id: "profile-001",
+    content: "",
+    name: "default.prof",
+    title: "Default Profile",
+    type: "official" as const,
+    description: "A sample profile for testing.",
     min_firmware_version: 20206,
     created_at: 1504827468,
     updated_at: 1504827468,
@@ -20,9 +20,9 @@ const sampleProfile = {
 };
 
 const meta = {
-    title: 'Organisms/ProfileMenu',
+    title: "Organisms/ProfileMenu",
     component: ProfileMenu,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
         (Story: any) => (
             <Provider theme={Theme}>
@@ -48,7 +48,7 @@ export const Primary: Story = {
 
 export const CommunityProfile: Story = {
     args: {
-        selectedProfile: { ...sampleProfile, type: 'community', title: 'Community Profile' },
+        selectedProfile: { ...sampleProfile, type: "community", title: "Community Profile" },
         onEditPress: fn(),
     },
     play: async ({ canvasElement }) => {

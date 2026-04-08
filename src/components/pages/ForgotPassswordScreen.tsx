@@ -1,10 +1,10 @@
 //#region Import Modules
-import React, { FunctionComponent, useLayoutEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 
+import { useNavigation } from "@react-navigation/native";
+import React, { type FunctionComponent, useLayoutEffect } from "react";
+import { Dimens } from "../../constants";
 import { useForgotPassword, useWindowDimensions } from "../../hooks";
 import { ForgotPasswordScreenTemplate } from "../templates/ForgotPasswordScreenTemplate";
-import { Dimens } from "../../constants";
 //#endregion
 
 //#region Component
@@ -27,6 +27,7 @@ export const ForgotPasswordScreen: FunctionComponent = () => {
             errorText={{
                 children: forgotPassword.generalError,
             }}
+            successMessage={forgotPassword.successMessage}
             forgotPasswordButton={{
                 onPress: forgotPassword.onForgotPasswordPress,
             }}

@@ -1,6 +1,6 @@
 //#region Import Modules
-import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type React from "react";
 import { View } from "react-native";
 
 import { AudioDialog, ProfilesDialog } from "../components/molecules";
@@ -15,10 +15,11 @@ import { Colors } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { SoundManagerInstance } from "../managers";
 import { headerStyle } from "./HeaderStyles";
+
 //#endregion
 
 //#region Component
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const HomeNavigator = (): React.ReactNode => {
     const voidLeftHeader = (): React.ReactNode => <View />;
@@ -48,10 +49,7 @@ const HomeNavigator = (): React.ReactNode => {
                         headerLeft: voidLeftHeader,
                     }}
                 ></Stack.Screen>
-                <Stack.Screen
-                    name={"Settings"}
-                    component={SettingsScreen}
-                ></Stack.Screen>
+                <Stack.Screen name={"Settings"} component={SettingsScreen}></Stack.Screen>
                 <Stack.Screen
                     name={"Sleeping"}
                     component={SleepingScreen}

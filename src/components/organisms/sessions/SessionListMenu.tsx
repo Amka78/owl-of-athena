@@ -1,13 +1,13 @@
 //#region Import Modules
 import { Picker } from "@react-native-community/picker";
-import React, { FunctionComponent } from "react";
-import { Text, TextStyle, View, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
-import { FilterByDateValues } from "../../../store/sessionStore";
+import type { FilterByDateValues } from "../../../store/sessionStore";
 import { MenuContainer } from "../../atoms";
 import { MenuCheckBox } from "../../molecules";
-import { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
+import type { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
 //#endregion
 
 //#region Types
@@ -27,7 +27,7 @@ export type SessionListMenuProps = {
 
 //#region Component
 export const SessionListMenu: FunctionComponent<SessionListMenuProps> = (
-    props: SessionListMenuProps
+    props: SessionListMenuProps,
 ) => {
     return (
         <MenuContainer style={props.containerStyle}>
@@ -43,21 +43,15 @@ export const SessionListMenu: FunctionComponent<SessionListMenuProps> = (
                 >
                     <Picker.Item
                         value={props.anyTimePickerValue}
-                        label={Message.get(
-                            MessageKeys.sessions_picker_values_any_time
-                        )}
+                        label={Message.get(MessageKeys.sessions_picker_values_any_time)}
                     ></Picker.Item>
                     <Picker.Item
                         value={props.pastWeekPickerValue}
-                        label={Message.get(
-                            MessageKeys.sessions_picker_values_past_week
-                        )}
+                        label={Message.get(MessageKeys.sessions_picker_values_past_week)}
                     ></Picker.Item>
                     <Picker.Item
                         value={props.pastMonthPickerValue}
-                        label={Message.get(
-                            MessageKeys.sessions_picker_values_past_month
-                        )}
+                        label={Message.get(MessageKeys.sessions_picker_values_past_month)}
                     ></Picker.Item>
                 </Picker>
             </View>
@@ -65,21 +59,15 @@ export const SessionListMenu: FunctionComponent<SessionListMenuProps> = (
                 container={props.containerStyle}
                 status={props.showStarredCheckBoxStatus}
                 onPress={props.onShowStarredCheckBoxPress}
-                label={Message.get(
-                    MessageKeys.sessions_check_show_starred_label
-                )}
-                description={Message.get(
-                    MessageKeys.sessions_check_show_starred_description
-                )}
+                label={Message.get(MessageKeys.sessions_check_show_starred_label)}
+                description={Message.get(MessageKeys.sessions_check_show_starred_description)}
             ></MenuCheckBox>
             <MenuCheckBox
                 container={props.containerStyle}
                 status={props.showNoteCheckBoxStatus}
                 onPress={props.onShowNoteCheckBoxPress}
                 label={Message.get(MessageKeys.sessions_check_show_notes_label)}
-                description={Message.get(
-                    MessageKeys.sessions_check_show_notes_description
-                )}
+                description={Message.get(MessageKeys.sessions_check_show_notes_description)}
             ></MenuCheckBox>
         </MenuContainer>
     );

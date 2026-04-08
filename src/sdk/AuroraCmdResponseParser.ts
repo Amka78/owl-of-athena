@@ -6,7 +6,7 @@ enum ResponseStates {
     INIT = 0,
     OBJECT = 1,
     TABLE = 2,
-    OUTPUT = 3
+    OUTPUT = 3,
 }
 
 export default class AuroraCmdResponseParser {
@@ -27,8 +27,7 @@ export default class AuroraCmdResponseParser {
     }
 
     public parseObject(line: string): void {
-        if (line.length > 120)
-            throw new Error("Line exceeded max length of 120 bytes.");
+        if (line.length > 120) throw new Error("Line exceeded max length of 120 bytes.");
 
         line = line.trim();
 
@@ -49,8 +48,7 @@ export default class AuroraCmdResponseParser {
     }
 
     public parseTable(line: string): void {
-        if (line.length > 120)
-            throw new Error("Line exceeded max length of 120 bytes.");
+        if (line.length > 120) throw new Error("Line exceeded max length of 120 bytes.");
 
         line = line.trim();
 
@@ -65,9 +63,7 @@ export default class AuroraCmdResponseParser {
         //this must be the columns
         if (this.responseState == ResponseStates.INIT) {
             this.response = [];
-            this.responseTableCols = line
-                .split("|")
-                .map(col => camelCase(col.trim()));
+            this.responseTableCols = line.split("|").map((col) => camelCase(col.trim()));
             this.responseState = ResponseStates.TABLE;
 
             return;
@@ -77,16 +73,12 @@ export default class AuroraCmdResponseParser {
             throw new Error("Invalid response state to parse a table.");
 
         this.response.push(
-            zipObject(
-                this.responseTableCols,
-                line.split("|").map(parseValueString)
-            )
+            zipObject(this.responseTableCols, line.split("|").map(parseValueString)),
         );
     }
 
     public parseDetect(line: string): void {
-        if (line.length > 120)
-            throw new Error("Line exceeded max length of 120 bytes.");
+        if (line.length > 120) throw new Error("Line exceeded max length of 120 bytes.");
 
         line = line.trim();
 
@@ -124,7 +116,8 @@ export default class AuroraCmdResponseParser {
         if (line.length > 2) {
             if (line[0] == "|" && line[line.length - 1] == "|") {
                 return ResponseStates.TABLE;
-            } else if (line.indexOf(":") > 0) {
+            }
+            if (line.indexOf(":") > 0) {
                 return ResponseStates.OBJECT;
             }
         }

@@ -1,24 +1,24 @@
 //#region Import Modules
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { G, Line, Text } from "react-native-svg";
 
 import { Colors } from "../../constants";
-import { AuroraEvent } from "../../sdk/models";
+import type { AuroraEvent } from "../../sdk/models";
 import {
     ChartCore,
-    ChartCoreProps,
+    type ChartCoreProps,
     getChartHeight,
-    getXChartRange,
-    getYChartRange,
     getChartWidth,
     getData,
     getMargin,
+    getXChartRange,
     getXScale,
+    getYChartRange,
     getYScale,
 } from "./ChartCore";
+import { ClippedG } from "./ClippedG";
 import { XAxisBottomLine } from "./XAxisBottomLine";
 import { XAxisTopLine } from "./XAxisTopLine";
-import { ClippedG } from "./ClippedG";
 //#endregion
 
 //#region Export Types
@@ -29,9 +29,7 @@ export type ChartMovementProps = ChartCoreProps & {
 };
 //#endregion
 
-export const ChartMovement: FC<ChartMovementProps> = (
-    props: ChartMovementProps
-) => {
+export const ChartMovement: FC<ChartMovementProps> = (props: ChartMovementProps) => {
     const margin = getMargin(props.svgStyle);
     const chatWidth = getChartWidth(props.width, margin);
     const chartHeight = getChartHeight(props.height, margin);
@@ -54,12 +52,10 @@ export const ChartMovement: FC<ChartMovementProps> = (
         props.movement,
         props.dataBins!,
         props.dataBinThreshold!,
-        props.xScaleDomain! as number[]
+        props.xScaleDomain! as number[],
     );
 
-    const movementLabelColor = props.movementLabelColor
-        ? props.movementLabelColor
-        : Colors.white;
+    const movementLabelColor = props.movementLabelColor ? props.movementLabelColor : Colors.white;
 
     const lineProps = {
         color: Colors.third_accent_color,
@@ -87,15 +83,9 @@ export const ChartMovement: FC<ChartMovementProps> = (
                             key={index}
                             stroke={movementTickColor}
                             x1={xScale(value.eventAt)}
-                            y1={yScale(
-                                -Math.floor(value.flags + 0.25) *
-                                    movementTickSize
-                            )}
+                            y1={yScale(-Math.floor(value.flags + 0.25) * movementTickSize)}
                             x2={xScale(value.eventAt)}
-                            y2={yScale(
-                                Math.floor(value.flags + 0.25) *
-                                    movementTickSize
-                            )}
+                            y2={yScale(Math.floor(value.flags + 0.25) * movementTickSize)}
                         ></Line>
                     );
                 })}

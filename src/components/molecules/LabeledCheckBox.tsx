@@ -1,10 +1,10 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { StyleSheet, Text, type TextStyle, View, type ViewStyle } from "react-native";
 import { Checkbox, useTheme } from "react-native-paper";
 
 import { Dimens, Fonts } from "../../constants";
-import { useWindowDimensions } from "../../hooks";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types
@@ -30,7 +30,7 @@ export type LabeledCheckBoxProps = {
 
 //#region Component
 export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
-    props: LabeledCheckBoxProps
+    props: LabeledCheckBoxProps,
 ) => {
     const theme = useTheme();
     const dimens = useWindowDimensions();
@@ -43,24 +43,14 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
     const labelComponent = (
         <Text
             onPress={props.onLabelPress}
-            style={[
-                styles.text,
-                { color: theme.colors?.secondary },
-                props.labelStyle,
-            ]}
+            style={[styles.text, { color: theme.colors?.secondary }, props.labelStyle]}
         >
             {props.label}
         </Text>
     );
 
     const descriptionComponent = props.description ? (
-        <Text
-            style={[
-                styles.text,
-                { color: theme.colors?.secondary },
-                props.descriptionStyle,
-            ]}
-        >
+        <Text style={[styles.text, { color: theme.colors?.secondary }, props.descriptionStyle]}>
             {props.description}
         </Text>
     ) : undefined;
@@ -78,11 +68,7 @@ export const LabeledCheckBox: FunctionComponent<LabeledCheckBoxProps> = (
             <View style={[styles.checkBoxStyle, props.checkBoxStyle]}>
                 <Checkbox
                     {...props}
-                    color={
-                        props.checkBoxColor
-                            ? props.checkBoxColor
-                            : theme.colors?.onSurface
-                    }
+                    color={props.checkBoxColor ? props.checkBoxColor : theme.colors?.onSurface}
                     uncheckedColor={
                         props.checkBoxUncheckedColor
                             ? props.checkBoxUncheckedColor

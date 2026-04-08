@@ -4,6 +4,7 @@ import {
     defaultOptions,
     groupingProfileOptionList,
 } from "../ProfileService";
+
 describe("ProfileService-test", () => {
     it("Successful creation of an official profile.", async () => {
         const fetchMock = fetch as unknown as Mock<any>;

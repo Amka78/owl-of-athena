@@ -27,7 +27,6 @@ import java.util.* */
 )*/
 //@JsonClass(generateAdapter = true)
 export class AuroraEvent {
-
     constructor() {
         this.id = 0;
         this.sessionId = "";

@@ -1,7 +1,7 @@
 //#region Import Modules
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import moment from "moment";
-import * as React from "react";
+import type * as React from "react";
 
 import { SessionListScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
@@ -9,18 +9,17 @@ import { useWindowDimensions } from "../hooks";
 import { useSelectedSessionSelector } from "../hooks/sessions";
 import SessionTabNavigator from "./SessionTabNavigator";
 import { StackCommonScreenOptions } from "./StackSettings";
+
 //#endregion
 
 //#region Component
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const SessionNavigator = (): React.ReactNode => {
     const sessionSelector = useSelectedSessionSelector();
     const dimens = useWindowDimensions();
     const title = sessionSelector
-        ? moment(sessionSelector?.sessionAt).format(
-              Message.get(MessageKeys.date_format)
-          )
+        ? moment(sessionSelector?.sessionAt).format(Message.get(MessageKeys.date_format))
         : "";
 
     return (

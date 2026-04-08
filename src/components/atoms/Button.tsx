@@ -1,10 +1,10 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { TextStyle, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import type { TextStyle, ViewStyle } from "react-native";
 import { Button as PaperButton, useTheme } from "react-native-paper";
 
 import { Dimens, Fonts } from "../../constants";
-import { ThemeType } from "../../constants/Theme";
+import type { ThemeType } from "../../constants/Theme";
 //#endregion
 
 //#region Types

@@ -1,57 +1,60 @@
-import type { Login, CreateUser, User } from "../types";
-import type { Auth } from "../types/Auth";
-import RestClient from "./RestClient";
-
-import { BaseUrl } from "../utils";
-import * as Localization from "expo-localization";
 import type { AuroraProfile } from "../sdk/AuroraTypes";
+import type { CreateUser, Login, User } from "../types";
+import type { Auth } from "../types/Auth";
+import { supabase } from "./supabase";
 
 /**
- * Managing aurora related RestAPI communication.
+ * Managing aurora related Supabase communication.
  *
  * @export
  * @class AuroraRestClient
- * @extends {RestClient}
  */
-export class AuroraRestClient extends RestClient {
-    constructor(baseUrl: string, locale: string) {
-        super(baseUrl, {
-            headers: {
-                "Accept-Language": locale,
-            },
-        });
-    }
+export class AuroraRestClient {
+    /** @deprecated Supabase manages auth internally; this is kept for API compatibility. */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public set getTokenCallback(_callback: () => string) {}
 
     /**
      * Request a signup.
      *
-     * @param {AuthDto} createUser
-     * @returns {(Promise<TokenDto>)}
-     * @memberof AuthClient
+     * @param {CreateUser} createUser
+     * @returns {Promise<User>}
+     * @memberof AuroraRestClient
      */
     public async signup(createUser: CreateUser): Promise<User> {
-        const response = await this.post<CreateUser>("users", createUser);
+        const { data, error } = await supabase.auth.signUp({
+            email: createUser.email,
+            password: createUser.password,
+        });
 
-        if (response.ok) {
-            return await response.json();
-        }
-        throw await response.json();
+        if (error) throw error;
+
+        const authUser = data.user!;
+        return await this._getUserProfile(authUser.id);
     }
 
     /**
      * Request a login.
      *
      * @param {Login} login
-     * @returns {(Promise<Auth>)}
-     * @memberof AuroraClient
+     * @returns {Promise<Auth>}
+     * @memberof AuroraRestClient
      */
     public async login(login: Login): Promise<Auth> {
-        const response = await this.post<Login>("auth/email", login);
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: login.email,
+            password: login.password,
+        });
 
-        if (response.ok) {
-            return await response.json();
-        }
-        throw await response.json();
+        if (error) throw error;
+
+        const user = await this._getUserProfile(data.user.id);
+        user.emailConfirmed = !!data.user.email_confirmed_at;
+
+        return {
+            user,
+            token: data.session.access_token,
+        };
     }
 
     /**
@@ -61,14 +64,11 @@ export class AuroraRestClient extends RestClient {
      * @memberof AuroraRestClient
      */
     public async getAuthUser(): Promise<User> {
-        const response = await this.get("users/me", {});
+        const { data, error } = await supabase.auth.getUser();
 
-        if (response.ok) {
-            const result: User = await response.json();
+        if (error) throw error;
 
-            return result;
-        }
-        throw await response.json();
+        return await this._getUserProfile(data.user.id);
     }
 
     /**
@@ -80,39 +80,53 @@ export class AuroraRestClient extends RestClient {
      */
     public async updateUser(user: User): Promise<User> {
         console.debug("updateUser called:", user);
-        const response = await this.put<Partial<User>>("users/me", {
-            first_name: user.first_name,
-            last_name: user.last_name,
-            gender: user.gender,
-            birthday: user.birthday,
-        });
-        console.debug("update result:", response);
-        if (response.ok) {
-            console.debug("update succeed.");
-            return await response.json();
+
+        const { data, error } = await supabase
+            .from("users")
+            .update({
+                first_name: user.first_name,
+                last_name: user.last_name,
+                gender: user.gender,
+                birthday: user.birthday,
+            })
+            .eq("id", user.id)
+            .select()
+            .single();
+
+        console.debug("update result:", data);
+
+        if (error) {
+            console.debug("update failed");
+            throw error;
         }
-        console.debug("update failed");
-        throw await response.json();
+
+        console.debug("update succeed.");
+        return data as User;
     }
 
     /**
-     * Get aurora profile.
+     * Get aurora profiles.
      *
      * @returns {Promise<Array<AuroraProfile>>}
      * @memberof AuroraRestClient
      */
     public async getAuroraProfiles(): Promise<Array<AuroraProfile>> {
-        const response = await this.get(
-            "aurora-profiles?$sort[updated_at]=-1",
-            {}
-        );
+        const { data, error } = await supabase
+            .from("aurora_profiles")
+            .select("*")
+            .order("updated_at", { ascending: false });
 
-        if (response.ok) {
-            const result: Array<AuroraProfile> = await response.json();
+        if (error) throw error;
 
-            return result;
-        }
-        throw await response.json();
+        return data as Array<AuroraProfile>;
+    }
+
+    private async _getUserProfile(userId: string): Promise<User> {
+        const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
+
+        if (error) throw error;
+
+        return data as User;
     }
 }
-export default new AuroraRestClient(BaseUrl.get(), Localization.getLocales()[0].languageTag);
+export default new AuroraRestClient();

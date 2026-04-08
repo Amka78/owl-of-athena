@@ -9,12 +9,8 @@ export class AuroraOSInfo {
     constructor(osInfo: Partial<AuroraOSInfo>) {
         console.debug(osInfo);
         this.version = osInfo.version ? osInfo.version : 0;
-        this.bootstrapVersion = osInfo.bootstrapVersion
-            ? osInfo.bootstrapVersion
-            : 0;
-        this.bootloaderVersion = osInfo.bootloaderVersion
-            ? osInfo.bootloaderVersion
-            : 0;
+        this.bootstrapVersion = osInfo.bootstrapVersion ? osInfo.bootstrapVersion : 0;
+        this.bootloaderVersion = osInfo.bootloaderVersion ? osInfo.bootloaderVersion : 0;
         this.bleVersion = osInfo.bleVersion ? osInfo.bleVersion : 0;
         this.batteryLevel = osInfo.batteryLevel
             ? Number(osInfo.batteryLevel.toString().replace("%", ""))

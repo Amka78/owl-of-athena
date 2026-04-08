@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../../constants';
-import { UnsavedProfileMenu } from '../UnsavedProfileMenu';
+import { fireEvent, render } from "@testing-library/react-native";
+import type React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../../constants";
+import { UnsavedProfileMenu } from "../UnsavedProfileMenu";
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
@@ -19,8 +19,8 @@ const mobileDimens = {
     isHorizontal: false,
 };
 
-describe('UnsavedProfileMenu', () => {
-    it('renders correctly for user profile', () => {
+describe("UnsavedProfileMenu", () => {
+    it("renders correctly for user profile", () => {
         const { toJSON } = renderWithProvider(
             <UnsavedProfileMenu
                 isUserProfile={true}
@@ -28,12 +28,12 @@ describe('UnsavedProfileMenu', () => {
                 onSaveAsNewPress={jest.fn()}
                 onOverwriteSavePress={jest.fn()}
                 onCancelPress={jest.fn()}
-            />
+            />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders correctly for non-user profile (no overwrite button)', () => {
+    it("renders correctly for non-user profile (no overwrite button)", () => {
         const { toJSON } = renderWithProvider(
             <UnsavedProfileMenu
                 isUserProfile={false}
@@ -41,12 +41,12 @@ describe('UnsavedProfileMenu', () => {
                 onSaveAsNewPress={jest.fn()}
                 onOverwriteSavePress={jest.fn()}
                 onCancelPress={jest.fn()}
-            />
+            />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('calls onCancelPress when cancel is pressed', () => {
+    it("calls onCancelPress when cancel is pressed", () => {
         const onCancelPress = jest.fn();
         const { getByText } = renderWithProvider(
             <UnsavedProfileMenu
@@ -55,7 +55,7 @@ describe('UnsavedProfileMenu', () => {
                 onSaveAsNewPress={jest.fn()}
                 onOverwriteSavePress={jest.fn()}
                 onCancelPress={onCancelPress}
-            />
+            />,
         );
         const cancelBtn = getByText(/cancel/i);
         fireEvent.press(cancelBtn);

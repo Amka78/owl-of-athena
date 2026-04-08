@@ -1,8 +1,9 @@
 //#region Import Modules
 import React from "react";
-import { Colors, Fonts } from "../../constants";
-import { Dialog, ActivityIndicator } from "react-native-paper";
 import { StyleSheet } from "react-native";
+import { ActivityIndicator, Dialog } from "react-native-paper";
+import { Colors, Fonts } from "../../constants";
+
 //#endregion
 
 //#region Types
@@ -19,10 +20,7 @@ type LoadingDialogProps = {};
 //#endregion
 
 //#region Component
-export class LoadingDialog extends React.Component<
-    LoadingDialogProps,
-    LoadingDialogState
-> {
+export class LoadingDialog extends React.Component<LoadingDialogProps, LoadingDialogState> {
     public static Instance?: LoadingDialog;
 
     public static show(args: LoadingDialogSettings): void {

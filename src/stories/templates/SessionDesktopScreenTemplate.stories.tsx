@@ -1,15 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionDesktopScreenTemplate } from '../../components/templates/SessionDesktopScreenTemplate';
-import { FilterByDateValues } from '../../store/sessionStore';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionDesktopScreenTemplate } from "../../components/templates/SessionDesktopScreenTemplate";
+import { Theme } from "../../constants";
+import { FilterByDateValues } from "../../store/sessionStore";
 
-jest.mock('../../navigation/SessionTabNavigator', () => {
-    const React = require('react');
-    const { View, Text } = require('react-native');
-    return () => <View><Text>SessionTabNavigator</Text></View>;
+jest.mock("../../navigation/SessionTabNavigator", () => {
+    const React = require("react");
+    const { View, Text } = require("react-native");
+    return () => (
+        <View>
+            <Text>SessionTabNavigator</Text>
+        </View>
+    );
 });
 
 const filterMenuProps = {
@@ -18,18 +22,22 @@ const filterMenuProps = {
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-    showStarredCheckBoxStatus: 'unchecked' as const,
+    showStarredCheckBoxStatus: "unchecked" as const,
     onShowStarredCheckBoxPress: fn(),
-    showNoteCheckBoxStatus: 'unchecked' as const,
+    showNoteCheckBoxStatus: "unchecked" as const,
     onShowNoteCheckBoxPress: fn(),
 };
 
 const meta = {
-    title: 'Templates/SessionDesktopScreenTemplate',
+    title: "Templates/SessionDesktopScreenTemplate",
     component: SessionDesktopScreenTemplate,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SessionDesktopScreenTemplate>;
 
@@ -47,7 +55,7 @@ export const WithList: Story = {
         onRefreshPress: fn(),
         onFilterPress: fn(),
         selected: undefined,
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -65,7 +73,7 @@ export const NoList: Story = {
         onRefreshPress: fn(),
         onFilterPress: fn(),
         selected: undefined,
-        locale: 'en-US',
+        locale: "en-US",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

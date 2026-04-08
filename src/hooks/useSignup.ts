@@ -5,16 +5,16 @@ import { Linking } from "react-native";
 
 import { AuroraRestClientInstance } from "../clients/";
 import { Message, MessageKeys } from "../constants";
-import { checkBoxCoreFunctions } from "../hooks/useCheckBox";
+import type { checkBoxCoreFunctions } from "../hooks/useCheckBox";
 import { validate } from "../services/SignupService";
 import type { Signup } from "../types";
 import { useCheckBox, useTextBox } from "./";
-import { useTextBoxReturn } from "./useTextBox";
+import type { useTextBoxReturn } from "./useTextBox";
 //#endregion
 
 //#region Hooks
 export const useSignup = (
-    loadingInitialValue: boolean
+    loadingInitialValue: boolean,
 ): {
     loading: boolean;
     emailHooks: useTextBoxReturn;
@@ -33,9 +33,7 @@ export const useSignup = (
     const { navigate } = useNavigation<any>();
     const [emailError, setEmailError] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
-    const [passwordConfirmError, setPasswordConfirmError] = useState<string>(
-        ""
-    );
+    const [passwordConfirmError, setPasswordConfirmError] = useState<string>("");
     const [generalError, setGeneralError] = useState<string>("");
     const emailHooks = useTextBox("");
     const passwordHooks = useTextBox("");
@@ -66,23 +64,21 @@ export const useSignup = (
                     },
                     (err: string) => {
                         setGeneralError(err);
-                    }
+                    },
                 )
             ) {
                 await AuroraRestClientInstance.signup({
                     email: signup.email,
                     password: signup.password,
                 });
-                navigate("Login");
+                navigate("ConfirmEmail", { email: signup.email });
             }
         } catch (e) {
             const err = e as Error;
             if (err.message) {
                 setGeneralError(err.message);
             } else {
-                setGeneralError(
-                    Message.get(MessageKeys.email_already_registered)
-                );
+                setGeneralError(Message.get(MessageKeys.email_already_registered));
             }
             setLoading(false);
         }

@@ -2,7 +2,7 @@ export type WakeLockSentinel = {
     addEventListener(
         event: string,
         listener: (...args: any[]) => void,
-        opts?: { once: boolean }
+        opts?: { once: boolean },
     ): any;
     release(): void;
     released: boolean;

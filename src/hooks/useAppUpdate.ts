@@ -9,9 +9,7 @@ export const useAppUpdate = (): {
 } => {
     //#region useState
     const [showReload, setShowReload] = React.useState(false);
-    const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(
-        null
-    );
+    const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
     //#endregion
 
     //#region useEffect

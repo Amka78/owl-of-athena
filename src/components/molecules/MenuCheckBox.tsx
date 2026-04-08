@@ -1,18 +1,15 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { TextStyle, ViewStyle } from "react-native";
-
-import { LabeledCheckBox } from ".";
+import React, { type FunctionComponent } from "react";
+import type { TextStyle, ViewStyle } from "react-native";
 import { Colors } from "../../constants";
-import { LabeledCheckBoxProps } from "./LabeledCheckBox";
+import { LabeledCheckBox } from ".";
+import type { LabeledCheckBoxProps } from "./LabeledCheckBox";
 //#endregion
 
 //#region Types
 export type MenuCheckBoxProps = Omit<LabeledCheckBoxProps, "labelPlace">;
 //#endregion
-export const MenuCheckBox: FunctionComponent<MenuCheckBoxProps> = (
-    props: MenuCheckBoxProps
-) => {
+export const MenuCheckBox: FunctionComponent<MenuCheckBoxProps> = (props: MenuCheckBoxProps) => {
     return (
         <LabeledCheckBox
             {...props}

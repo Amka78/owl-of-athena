@@ -1,10 +1,10 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { OptionSlider } from '../OptionSlider';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { render } from "@testing-library/react-native";
+import type React from "react";
+import { View } from "react-native";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { OptionSlider } from "../OptionSlider";
 
 const leftIcon = (props: any) => (
     <View style={props.style}>
@@ -13,26 +13,26 @@ const leftIcon = (props: any) => (
 );
 
 const defaultProps = {
-    title: 'Delay (minutes)',
-    description: 'Set stimulation delay',
+    title: "Delay (minutes)",
+    description: "Set stimulation delay",
     left: leftIcon,
     disabled: false,
     value: 30,
-    field: { type: 'slider' as const, format: 'minutes' as const, min: 0, max: 120, step: 5 },
+    field: { type: "slider" as const, format: "minutes" as const, min: 0, max: 120, step: 5 },
     onValueChange: jest.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
-describe('OptionSlider', () => {
-    it('renders correctly', () => {
+describe("OptionSlider", () => {
+    it("renders correctly", () => {
         const { toJSON } = renderWithProvider(<OptionSlider {...defaultProps} />);
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders title', () => {
+    it("renders title", () => {
         const { getByText } = renderWithProvider(<OptionSlider {...defaultProps} />);
-        expect(getByText('Delay (minutes)')).toBeTruthy();
+        expect(getByText("Delay (minutes)")).toBeTruthy();
     });
 });

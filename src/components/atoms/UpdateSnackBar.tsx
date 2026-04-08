@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { Snackbar } from "react-native-paper";
 
 import { Message, MessageKeys } from "../../constants";
@@ -15,11 +15,11 @@ export type UpdateSnackBarProps = {
 
 //#region Components
 export const UpdateSnackBarCore: FunctionComponent<UpdateSnackBarProps> = (
-    props: UpdateSnackBarProps
+    props: UpdateSnackBarProps,
 ) => {
     return (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        //@ts-expect-error
         <Snackbar
             visible={props.showReload}
             onDismiss={props.reloadPageCallback ?? (() => undefined)}

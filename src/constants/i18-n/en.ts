@@ -1,5 +1,6 @@
 //#region Import Moduels
 import { MessageKeys } from "../MessageKeys";
+
 //#endregion
 
 //#region Constant
@@ -53,18 +54,15 @@ export default {
     [MessageKeys.input_password_confirm]: input_password_confirm,
     [MessageKeys.input_birthday]: input_birthday,
     // aurora strings
-    [MessageKeys.aurora_connected]:
-        "AuroraStatus:Connected Version:{0} Battery:{1}%",
+    [MessageKeys.aurora_connected]: "AuroraStatus:Connected Version:{0} Battery:{1}%",
     [MessageKeys.aurora_disconnected]: "Aurora disconnected.",
-    [MessageKeys.aurora_unsynced_sessions_dialog_title]:
-        "Unsynced Sessions Found",
+    [MessageKeys.aurora_unsynced_sessions_dialog_title]: "Unsynced Sessions Found",
     [MessageKeys.aurora_unsynced_sessions_dialog_message]:
         "Aurora has {0} unsynced session(s). Would you like to sync now?",
     [MessageKeys.aurora_low_battery_dialog_title]: "Aurora Battery is Low",
     [MessageKeys.aurora_low_battery_dialog_message]:
         "Aurora's battery is at {0}%. To ensure the Aurora remains connected through the night, consider charging the battery before continuing.",
-    [MessageKeys.aurora_sync_successful_snackbar_message]:
-        "Successfully synced {0} session(s).",
+    [MessageKeys.aurora_sync_successful_snackbar_message]: "Successfully synced {0} session(s).",
     [MessageKeys.aurora_sync_successful_snackbar_action]: "View Now",
     // welcome fragment
     [MessageKeys.welcome_title]: "Welcome to Aurora!",
@@ -81,8 +79,7 @@ export default {
     [MessageKeys.login_no_account_button]: "No account yet?",
     [MessageKeys.login_button]: login,
     [MessageKeys.login_loading_message]: "Logging in...",
-    [MessageKeys.login_general_error_message]:
-        "Login failed. Invalid email or password.",
+    [MessageKeys.login_general_error_message]: "Login failed. Invalid email or password.",
 
     // forgot-password fragment
     [MessageKeys.forgot_password_title]: "Forgot Password?",
@@ -90,15 +87,13 @@ export default {
         "Having trouble remembering your password? Input your email address below and we’ll send you instructions to reset it.",
     [MessageKeys.forgot_password_input_email]: input_email,
     [MessageKeys.forgot_password_button]: "Request Reset",
-
-    // signup fragment
+    [MessageKeys.forgot_password_success]: "Password reset email sent. Please check your inbox.",
     [MessageKeys.signup_title]: signup,
     [MessageKeys.signup_input_email]: input_email,
     [MessageKeys.signup_input_password]: input_password,
     [MessageKeys.signup_input_password_confirm]: input_password_confirm,
     [MessageKeys.signup_terms]: "I agree to the terms of use",
-    [MessageKeys.signup_newsletter]:
-        "Keep me updated with Aurora news and developments",
+    [MessageKeys.signup_newsletter]: "Keep me updated with Aurora news and developments",
     [MessageKeys.signup_button]: signup,
 
     // home fragment
@@ -122,6 +117,7 @@ export default {
     [MessageKeys.settings_option_alarm_audio]: "Alarm Sound",
     [MessageKeys.settings_option_rem_stim_audio]: "REM Stim Sound",
     [MessageKeys.settings_option_no_audio_selected]: "None",
+    [MessageKeys.settings_option_volume]: "Alarm Volume",
     // sessions fragment
     [MessageKeys.sessions_title]: sessions,
     [MessageKeys.sessions_toolbar_button_left]: "Prev",
@@ -131,11 +127,9 @@ export default {
     [MessageKeys.sessions_picker_values_past_week]: "Past Week",
     [MessageKeys.sessions_picker_values_past_month]: "Past Month",
     [MessageKeys.sessions_check_show_starred_label]: "Show Starred",
-    [MessageKeys.sessions_check_show_starred_description]:
-        "Only starred sessions",
+    [MessageKeys.sessions_check_show_starred_description]: "Only starred sessions",
     [MessageKeys.sessions_check_show_notes_label]: "Show Notes",
-    [MessageKeys.sessions_check_show_notes_description]:
-        "Only sessions with notes",
+    [MessageKeys.sessions_check_show_notes_description]: "Only sessions with notes",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "asleep at",
     [MessageKeys.session_awake_time_label]: "awake at",
@@ -167,29 +161,27 @@ export default {
     [MessageKeys.sleeping_wakeunlock]:
         "The screen has been unlocked, OOA function may not be working properly. Please click on this message to re-lock your screen.",
     [MessageKeys.sleeping_wakeup_button]: "Wake Up",
+    [MessageKeys.sleeping_snooze_button]: "Snooze",
+    [MessageKeys.sleeping_snoozing_message]: "Snoozing for 9 minutes...",
     // waking fragment
     [MessageKeys.waking_title]: "Time to wake up!",
     [MessageKeys.waking_wakeup_button]: "Wake Up",
-    [MessageKeys.waking_tip_text]:
-        "Tip: You can use the Aurora’s button to stop the alarm.",
+    [MessageKeys.waking_tip_text]: "Tip: You can use the Aurora’s button to stop the alarm.",
     // awake fragment
     [MessageKeys.awake_title]: "Good Morning!",
-    [MessageKeys.awake_text]:
-        "Please answer a few questions about last night’s sleep.",
+    [MessageKeys.awake_text]: "Please answer a few questions about last night’s sleep.",
     [MessageKeys.awake_questionnaire_continue_button]: "Continue",
     [MessageKeys.awake_questionnaire_skip_button]: "Skip",
     [MessageKeys.wip_dialog_title]: "Work in Progress",
-    [MessageKeys.wip_dialog_message]:
-        "Oops, this feature isn't quite ready for prime time.",
+    [MessageKeys.wip_dialog_message]: "Oops, this feature isn't quite ready for prime time.",
     [MessageKeys.account_not_activated]: "Account not activated.",
 
     // error required
     [MessageKeys.required]: "{0} field is required.",
     [MessageKeys.passwords_must_match]: "Passwords must match.",
-    [MessageKeys.must_agree_to_term_of_use]:
-        "You must agree to the terms of use to continue.",
-    [MessageKeys.email_already_registered]:
-        "This email has already been registered.",
+    [MessageKeys.emails_must_match]: "Email addresses must match.",
+    [MessageKeys.must_agree_to_term_of_use]: "You must agree to the terms of use to continue.",
+    [MessageKeys.email_already_registered]: "This email has already been registered.",
 
     // alarm sound menu
     [MessageKeys.alarm_sound_dialog_title]: "Choose a sound",
@@ -197,8 +189,7 @@ export default {
     // profile menu
     [MessageKeys.profile_dialog_title]: "Choose a profile",
 
-    [MessageKeys.update_snack_bar_title]:
-        "There is a new version. Please update.",
+    [MessageKeys.update_snack_bar_title]: "There is a new version. Please update.",
 
     [MessageKeys.update_snack_bar_action_label]: "Update",
 
@@ -214,8 +205,7 @@ export default {
 
     [MessageKeys.date_format]: "MM,DD,YYYY",
 
-    [MessageKeys.standalone_mode_confirm_title]:
-        "Aurora API Connection failed.",
+    [MessageKeys.standalone_mode_confirm_title]: "Aurora API Connection failed.",
 
     [MessageKeys.standalone_mode_confirm_message]:
         "Could not connect to the Aurora API. So Do you want to run Aurora in standalone mode?",
@@ -229,15 +219,12 @@ export default {
     [MessageKeys.profile_misc_options]: "Misc Options",
     [MessageKeys.profile_filter_menu_header_label]: "Filter by Profile Type",
     [MessageKeys.profile_filter_menu_official_check_box_label]: "Show Official",
-    [MessageKeys.profile_filter_menu_official_check_box_description]:
-        "Official iWinks' profiles.",
-    [MessageKeys.profile_filter_menu_community_check_box_label]:
-        "Show Community",
+    [MessageKeys.profile_filter_menu_official_check_box_description]: "Official iWinks' profiles.",
+    [MessageKeys.profile_filter_menu_community_check_box_label]: "Show Community",
     [MessageKeys.profile_filter_menu_community_check_box_description]:
         "Community submitted profiles.",
     [MessageKeys.profile_filter_menu_private_check_box_label]: "Show Private",
-    [MessageKeys.profile_filter_menu_private_check_box_description]:
-        "Your private profiles.",
+    [MessageKeys.profile_filter_menu_private_check_box_description]: "Your private profiles.",
 
     [MessageKeys.profile_save_to_aurora]: "Save to Aurora",
     [MessageKeys.profile_show_advanced_options]: "Show Advanced Options",
@@ -253,5 +240,115 @@ export default {
     [MessageKeys.blink]: "Blink",
     [MessageKeys.alternate]: "Alternate",
     [MessageKeys.transition]: "Transition",
+
+    // confirm email screen
+    [MessageKeys.confirm_email_title]: "Confirm Your Email",
+    [MessageKeys.confirm_email_text]:
+        "We've sent a confirmation email to your address. Please check your inbox and tap the link, then press the button below.",
+    [MessageKeys.confirm_email_check_button]: "I've Confirmed My Email",
+    [MessageKeys.confirm_email_resend_button]: "Resend Email",
+    [MessageKeys.confirm_email_change_email_button]: "Change Email Address",
+    [MessageKeys.confirm_email_not_verified]:
+        "Your email has not been confirmed yet. Please check your inbox.",
+    [MessageKeys.confirm_email_resent]: "Confirmation email resent. Please check your inbox.",
+
+    // admin screens
+    [MessageKeys.admin_title]: "Admin",
+    [MessageKeys.admin_users_title]: "Users",
+    [MessageKeys.admin_orders_title]: "Orders",
+    [MessageKeys.admin_sessions_title]: "Sessions",
+    [MessageKeys.admin_issues_title]: "Issues",
+    [MessageKeys.admin_messages_title]: "Messages",
+    [MessageKeys.admin_app_settings_title]: "App Settings",
+    [MessageKeys.drawer_items_admin]: "Admin",
+
+    // account messages
+    [MessageKeys.account_messages_title]: "Messages",
+
+    // account roles
+    [MessageKeys.account_roles_title]: "Roles",
+
+    // console screen
+    [MessageKeys.console_title]: "Console",
+    [MessageKeys.console_input_placeholder]: "Enter command...",
+    [MessageKeys.console_send_button]: "Send",
+    [MessageKeys.console_clear_button]: "Clear",
+    [MessageKeys.console_not_connected]: "Aurora is not connected. Connect Aurora to use the console.",
+
+    // messages screen
+    [MessageKeys.messages_mark_as_read]: "Mark as Read",
+    [MessageKeys.messages_read_label]: "Read",
+    [MessageKeys.messages_unread_label]: "Unread",
+    [MessageKeys.messages_begin_questionnaire]: "Begin Questionnaire",
+    [MessageKeys.messages_continue_questionnaire]: "Continue Questionnaire",
+    [MessageKeys.messages_save_for_later]: "Save for Later",
+    [MessageKeys.messages_already_completed]: "You have already completed this questionnaire.",
+    [MessageKeys.messages_no_messages]: "No messages.",
+
+    // issue report dialog
+    [MessageKeys.issue_report_title]: "Report an Issue",
+    [MessageKeys.issue_report_input_title]: "TITLE",
+    [MessageKeys.issue_report_input_description]: "DESCRIPTION",
+    [MessageKeys.issue_report_input_reproduce_steps]: "STEPS TO REPRODUCE",
+    [MessageKeys.issue_report_check_critical]: "Critical issue",
+    [MessageKeys.issue_report_check_anonymous]: "Submit anonymously",
+    [MessageKeys.issue_report_send_button]: "Send Report",
+    [MessageKeys.issue_report_success]: "Issue reported. Thank you for your feedback!",
+    [MessageKeys.issue_report_error]: "Failed to send issue report.",
+    [MessageKeys.issue_report_button]: "Report an Issue",
+
+    // session transfer dialog
+    [MessageKeys.session_transfer_title]: "Session Transfer",
+    [MessageKeys.session_transfer_scanning]: "Scanning Aurora for sessions...",
+    [MessageKeys.session_transfer_not_connected]: "You must be connected to Aurora to transfer sessions.",
+    [MessageKeys.session_transfer_no_sessions]: "No sessions found on Aurora.",
+    [MessageKeys.session_transfer_transferring]: "Transferring {0} session(s)...",
+    [MessageKeys.session_transfer_complete]: "{0} session(s) transferred successfully.",
+    [MessageKeys.session_transfer_button]: "Transfer {0} Session(s)",
+    [MessageKeys.session_transfer_cancel]: "Cancel",
+    [MessageKeys.session_transfer_continue]: "Continue",
+    [MessageKeys.session_transfer_delete_confirm_title]: "Delete Session?",
+    [MessageKeys.session_transfer_delete_confirm_message]: "This session has not been transferred. Are you sure you want to delete it?",
+
+    // questionnaire dialog
+    [MessageKeys.questionnaire_begin_button]: "Begin Questionnaire",
+    [MessageKeys.questionnaire_next_button]: "Next",
+    [MessageKeys.questionnaire_previous_button]: "Previous",
+    [MessageKeys.questionnaire_complete_title]: "Questionnaire Complete",
+    [MessageKeys.questionnaire_close_button]: "Close",
+    [MessageKeys.questionnaire_loading]: "Loading questionnaire...",
+    [MessageKeys.questionnaire_error]: "Failed to load questionnaire.",
+
+    // change password screen
+    [MessageKeys.change_password_title]: "Change Password",
+    [MessageKeys.change_password_input_new_password]: "NEW PASSWORD",
+    [MessageKeys.change_password_input_confirm_password]: "CONFIRM NEW PASSWORD",
+    [MessageKeys.change_password_button]: "Save New Password",
+    [MessageKeys.change_password_success]: "Password changed successfully.",
+    [MessageKeys.change_password_nav_button]: "Change Password",
+    [MessageKeys.change_password_warning]: "Changing your password will immediately log you out.",
+
+    // change email screen
+    [MessageKeys.change_email_title]: "Change Email",
+    [MessageKeys.change_email_input_new_email]: "NEW EMAIL ADDRESS",
+    [MessageKeys.change_email_input_confirm_email]: "CONFIRM NEW EMAIL",
+    [MessageKeys.change_email_button]: "Save New Email",
+    [MessageKeys.change_email_success]: "Confirmation email sent. Please check your inbox to verify your new address.",
+    [MessageKeys.change_email_nav_button]: "Change Email",
+    [MessageKeys.change_email_warning]: "Changing your email address will require re-activation. Do not log out until you have confirmed your new address.",
+
+    // profile edit dialog
+    [MessageKeys.profile_edit_title]: "Edit Profile",
+    [MessageKeys.profile_edit_input_title]: "TITLE",
+    [MessageKeys.profile_edit_input_description]: "DESCRIPTION",
+    [MessageKeys.profile_edit_button]: "Save Profile",
+
+    // aurora info dialog
+    [MessageKeys.aurora_info_title]: "Aurora Device Info",
+    [MessageKeys.aurora_info_firmware]: "Firmware Version",
+    [MessageKeys.aurora_info_bootloader]: "Bootloader Version",
+    [MessageKeys.aurora_info_ble]: "BLE Version",
+    [MessageKeys.aurora_info_bootstrap]: "Bootstrap Version",
+    [MessageKeys.aurora_info_battery]: "Battery Level",
 };
 //#endregion

@@ -1,24 +1,16 @@
 //#region Import Modules
 import moment from "moment";
-import React, { FunctionComponent } from "react";
-import { View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions } from "../../hooks";
-import { AuroraSession } from "../../sdk/models";
-import {
-    DeleteIcon,
-    ListItem,
-    ScrollableList,
-    StandardView,
-    StarIcon,
-} from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { AuroraSession } from "../../sdk/models";
+import { DeleteIcon, ListItem, ScrollableList, StandardView, StarIcon } from "../atoms";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import { ChartRadialProgress } from "../charts";
-import {
-    SessionListMenu,
-    SessionListMenuProps,
-} from "../organisms/sessions/SessionListMenu";
+import { SessionListMenu, type SessionListMenuProps } from "../organisms/sessions/SessionListMenu";
 //#endregion
 
 //#region Types
@@ -36,12 +28,12 @@ export type SessionListScreenTemplateProps = {
 
 //#region Component
 export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTemplateProps> = (
-    props: SessionListScreenTemplateProps
+    props: SessionListScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     const screenDimens = useScreenDimensions();
-    let menu = undefined;
+    let menu;
     if (props.showFilter) {
         menu = (
             <SessionListMenu
@@ -51,73 +43,51 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
         );
     }
     return props.sessionList ? (
-        <StandardView
-            standardViewStyle={standardView}
-            onLayout={screenDimens.onLayout}
-        >
+        <StandardView standardViewStyle={standardView} onLayout={screenDimens.onLayout}>
             {props.showFilter ? menu : undefined}
             <ScrollableList>
-                {props.sessionList.map(
-                    (value: AuroraSession, index: number) => {
-                        const sessionAt = moment(value.sessionAt);
-                        return (
-                            <ListItem
-                                key={value.id}
-                                left={(
-                                    props: ListItemComponentProps
-                                ): React.ReactNode => (
-                                    <ChartRadialProgress
-                                        width={38}
-                                        height={38}
-                                        value={
-                                            value.sleepScore == 117
-                                                ? 72
-                                                : value.sleepScore
-                                        }
-                                        fgColor={Colors.teal}
-                                        bgColor={props.color}
-                                        valueLabel={String(
-                                            value.sleepScore == 117
-                                                ? 72
-                                                : value.sleepScore
-                                        )}
-                                    />
-                                )}
-                                right={(
-                                    rightProps: ListItemComponentProps
-                                ): React.ReactNode => (
-                                    <View
-                                        {...rightProps}
-                                        style={starIconContainer}
-                                    >
-                                        <StarIcon
-                                            starred={value.starred}
-                                            onPress={async () => {
-                                                await props.onStarPress(value);
-                                            }}
-                                        ></StarIcon>
+                {props.sessionList.map((value: AuroraSession, index: number) => {
+                    const sessionAt = moment(value.sessionAt);
+                    return (
+                        <ListItem
+                            key={value.id}
+                            left={(props: ListItemComponentProps): React.ReactNode => (
+                                <ChartRadialProgress
+                                    width={38}
+                                    height={38}
+                                    value={value.sleepScore == 117 ? 72 : value.sleepScore}
+                                    fgColor={Colors.teal}
+                                    bgColor={props.color}
+                                    valueLabel={String(
+                                        value.sleepScore == 117 ? 72 : value.sleepScore,
+                                    )}
+                                />
+                            )}
+                            right={(rightProps: ListItemComponentProps): React.ReactNode => (
+                                <View {...rightProps} style={starIconContainer}>
+                                    <StarIcon
+                                        starred={value.starred}
+                                        onPress={async () => {
+                                            await props.onStarPress(value);
+                                        }}
+                                    ></StarIcon>
 
-                                        <DeleteIcon
-                                            onPress={async () => {
-                                                await props.onDeletePress(
-                                                    value
-                                                );
-                                            }}
-                                        ></DeleteIcon>
-                                    </View>
-                                )}
-                                title={sessionAt.format("dddd")}
-                                description={sessionAt.format(
-                                    Message.get(MessageKeys.date_format)
-                                )}
-                                style={{ width: screenDimens.width }}
-                                onPress={async () => {
-                                    props.onMenuPress(value, index);
-                                }}
-                            ></ListItem>
-                        );
-                    }
-                )}
+                                    <DeleteIcon
+                                        onPress={async () => {
+                                            await props.onDeletePress(value);
+                                        }}
+                                    ></DeleteIcon>
+                                </View>
+                            )}
+                            title={sessionAt.format("dddd")}
+                            description={sessionAt.format(Message.get(MessageKeys.date_format))}
+                            style={{ width: screenDimens.width }}
+                            onPress={async () => {
+                                props.onMenuPress(value, index);
+                            }}
+                        ></ListItem>
+                    );
+                })}
             </ScrollableList>
         </StandardView>
     ) : null;

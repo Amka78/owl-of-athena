@@ -1,11 +1,11 @@
+import type { Aurora } from "./Aurora";
 import { ConnectorTypes } from "./AuroraConstants";
-import { Aurora } from "./Aurora";
-import type { FileInfo, CommandResult } from "./AuroraTypes";
+import type { CommandResult, FileInfo } from "./AuroraTypes";
 
 const AuroraCmdFileInfo = async function (
     this: Aurora,
     srcPath: string,
-    connectorType: ConnectorTypes = ConnectorTypes.ANY
+    connectorType: ConnectorTypes = ConnectorTypes.ANY,
 ): Promise<FileInfo> {
     const srcPathSegments = srcPath.split("/");
 
@@ -15,7 +15,7 @@ const AuroraCmdFileInfo = async function (
     return (
         await this.queueCmd<CommandResult<FileInfo>>(
             `sd-file-info ${srcFileName} ${srcFileDir}`,
-            connectorType
+            connectorType,
         )
     ).response!;
 };

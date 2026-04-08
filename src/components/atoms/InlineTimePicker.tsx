@@ -1,16 +1,12 @@
 //#region Import Modules
 import { Ionicons } from "@expo/vector-icons";
-import React, { Component } from "react";
-import {
-    Text,
-    TextStyle,
-    TouchableOpacity,
-    View,
-    ViewStyle,
-} from "react-native";
+import type React from "react";
+import { Component } from "react";
+import { Text, type TextStyle, TouchableOpacity, View, type ViewStyle } from "react-native";
 import { useTheme } from "react-native-paper";
 
-import { ThemeType } from "../../constants/Theme";
+import type { ThemeType } from "../../constants/Theme";
+
 //#endregion
 
 //#region Types
@@ -47,14 +43,9 @@ type TimePickerMode = "full" | "minute";
 //#region Component
 export const InlineTimePicker = (props: InlineTimePickerProps): React.ReactNode => {
     const theme = useTheme();
-    return (
-        <InlineTimePickerCore {...props} theme={theme}></InlineTimePickerCore>
-    );
+    return <InlineTimePickerCore {...props} theme={theme}></InlineTimePickerCore>;
 };
-class InlineTimePickerCore extends Component<
-    InlineTimePickerProps,
-    InlineTimePickerState
-> {
+class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePickerState> {
     private style: TimePickerStyle;
 
     private hoursText?: Text;
@@ -107,7 +98,7 @@ class InlineTimePickerCore extends Component<
                     initialDate.getDate(),
                     this.props.initialTime.hours,
                     this.props.initialTime.minutes,
-                    this.props.initialTime.seconds
+                    this.props.initialTime.seconds,
                 );
             } else {
                 initialDate = this.props.initialTime;
@@ -119,8 +110,8 @@ class InlineTimePickerCore extends Component<
             this.props.mode24hours === true
                 ? currentHours
                 : currentHours >= 12
-                ? currentHours - 12
-                : currentHours;
+                  ? currentHours - 12
+                  : currentHours;
         this.setState({
             hours: calculatedHours,
             minutes: initialDate.getMinutes(),
@@ -131,7 +122,7 @@ class InlineTimePickerCore extends Component<
 
     public async componentDidUpdate(
         _prevProps: InlineTimePickerProps,
-        prevState: InlineTimePickerState
+        prevState: InlineTimePickerState,
     ): Promise<void> {
         if (this.state !== prevState) this.invokeOnChangeTime();
     }
@@ -140,39 +131,32 @@ class InlineTimePickerCore extends Component<
         return (
             <View style={[containerStyle, this.props.containerStyle]}>
                 <View style={timeContainerStyle}>
-                    {this.state.updating === undefined &&
-                        !this.props.mode24hours && (
-                            <TouchableOpacity
-                                style={{
-                                    justifyContent: "center",
-                                    marginRight: 10,
-                                }}
-                                onPress={(): void => {
-                                    this.setState({
-                                        meridian:
-                                            this.state.meridian === "AM"
-                                                ? "PM"
-                                                : "AM",
-                                    });
-                                }}
+                    {this.state.updating === undefined && !this.props.mode24hours && (
+                        <TouchableOpacity
+                            style={{
+                                justifyContent: "center",
+                                marginRight: 10,
+                            }}
+                            onPress={(): void => {
+                                this.setState({
+                                    meridian: this.state.meridian === "AM" ? "PM" : "AM",
+                                });
+                            }}
+                        >
+                            <Text
+                                style={[
+                                    textStyle,
+                                    {
+                                        color: this.props.theme?.colors?.onSurface,
+                                    },
+                                    this.getTextStyle(),
+                                ]}
                             >
-                                <Text
-                                    style={[
-                                        textStyle,
-                                        {
-                                            color: this.props.theme?.colors
-                                                ?.onSurface,
-                                        },
-                                        this.getTextStyle(),
-                                    ]}
-                                >
-                                    {this.state.meridian}
-                                </Text>
-                            </TouchableOpacity>
-                        )}
-                    <TouchableOpacity
-                        onPress={(): void => this.update(this.hoursText!)}
-                    >
+                                {this.state.meridian}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    <TouchableOpacity onPress={(): void => this.update(this.hoursText!)}>
                         <Text
                             style={[textStyle, this.getTextStyle()]}
                             ref={(c): void => {
@@ -184,9 +168,7 @@ class InlineTimePickerCore extends Component<
                         </Text>
                     </TouchableOpacity>
                     <Text style={[colonStyle, this.getTextColor()]}>{":"}</Text>
-                    <TouchableOpacity
-                        onPress={(): void => this.update(this.minutesText!)}
-                    >
+                    <TouchableOpacity onPress={(): void => this.update(this.minutesText!)}>
                         <Text
                             style={[textStyle, this.getTextStyle()]}
                             ref={(c): void => {
@@ -198,14 +180,10 @@ class InlineTimePickerCore extends Component<
                         </Text>
                     </TouchableOpacity>
                     {this.mode === "full" && (
-                        <Text style={[colonStyle, this.getTextColor()]}>
-                            {":"}
-                        </Text>
+                        <Text style={[colonStyle, this.getTextColor()]}>{":"}</Text>
                     )}
                     {this.mode === "full" && (
-                        <TouchableOpacity
-                            onPress={(): void => this.update(this.secondsText!)}
-                        >
+                        <TouchableOpacity onPress={(): void => this.update(this.secondsText!)}>
                             <Text
                                 style={[textStyle, this.getTextStyle()]}
                                 ref={(c): void => {
@@ -221,11 +199,7 @@ class InlineTimePickerCore extends Component<
                 {this.state.updating !== undefined && (
                     <View style={centerStyle}>
                         <TouchableOpacity
-                            style={[
-                                textStyle,
-                                this.getTextStyle(),
-                                incrementStyle,
-                            ]}
+                            style={[textStyle, this.getTextStyle(), incrementStyle]}
                             onPress={(): void => this.increment(1)}
                             onLongPress={(): void => this.longIncrement(10)}
                             onPressOut={(): void => this.longIncrement()}
@@ -237,11 +211,7 @@ class InlineTimePickerCore extends Component<
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={[
-                                textStyle,
-                                this.getTextStyle(),
-                                incrementStyle,
-                            ]}
+                            style={[textStyle, this.getTextStyle(), incrementStyle]}
                             onPress={(): void => this.increment(-1)}
                             onLongPress={(): void => this.longIncrement(-10)}
                             onPressOut={(): void => this.longIncrement()}
@@ -407,9 +377,7 @@ class InlineTimePickerCore extends Component<
     private updateStyle(target: Text, isActive: boolean): void {
         target.setNativeProps({
             style: {
-                backgroundColor: isActive
-                    ? this.style.activeColor
-                    : this.style.backgroundColor,
+                backgroundColor: isActive ? this.style.activeColor : this.style.backgroundColor,
                 borderWidth: isActive ? 2 : 1,
             },
         });

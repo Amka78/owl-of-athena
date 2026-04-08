@@ -815,6 +815,34 @@ exports[`SettingsScreen UnitTest renders correctly 1`] = `
                       },
                       "type": "View",
                     },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Alarm Volume",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "white",
+                          "marginTop": 32,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "maximumTrackTintColor": "#888888",
+                        "maximumValue": 1,
+                        "minimumTrackTintColor": "#00FFFF",
+                        "minimumValue": 0,
+                        "onValueChange": undefined,
+                        "step": 0.05,
+                        "thumbTintColor": "#00FFFF",
+                        "value": undefined,
+                      },
+                      "type": "Slider",
+                    },
                   ],
                   "props": {
                     "style": {

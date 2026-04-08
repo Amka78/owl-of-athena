@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { FunctionComponent, useState } from "react";
+import React, { type FunctionComponent, useState } from "react";
 import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
@@ -7,19 +7,14 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
-import {
-    FlatButton,
-    HomeIcon,
-    ProfilesIcon,
-    SessionsIcon,
-    SettingsIcon,
-} from "../atoms";
-import { ConfirmDialog, LoadingDialog } from "../molecules";
+import { FlatButton, HomeIcon, ProfilesIcon, SessionsIcon, SettingsIcon } from "../atoms";
+import { ConfirmDialog, AuroraInfoDialog, IssueReportDialog, LoadingDialog, SessionTransferDialog } from "../molecules";
 //#endregion
 
 //#region Types
 export type MainScreenTemplateProps = {
     onBluetoothConnectPress: () => Promise<string>;
+    onDeviceInfoPress: () => void;
     bluetoothConnect: ConnectionStates;
     currentFirmwareVersion: string;
     error: string;
@@ -37,7 +32,7 @@ type BottomMenus = "home" | "profiles" | "sessions" | "settings";
 
 //#region Component
 export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
-    props: MainScreenTemplateProps
+    props: MainScreenTemplateProps,
 ) => {
     useLocale(props.locale);
     const [selectedMenu, setSelectedMenu] = useState<BottomMenus>("home");
@@ -62,11 +57,11 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
             {props.error !== ""
                 ? props.error
                 : props.bluetoothConnect === ConnectionStates.CONNECTED
-                ? Message.get(MessageKeys.aurora_connected, [
-                      props.currentFirmwareVersion,
-                      props.batteryLevel.toString(),
-                  ])
-                : Message.get(MessageKeys.aurora_disconnected)}
+                  ? Message.get(MessageKeys.aurora_connected, [
+                        props.currentFirmwareVersion,
+                        props.batteryLevel.toString(),
+                    ])
+                  : Message.get(MessageKeys.aurora_disconnected)}
         </FlatButton>
     ) : undefined;
 
@@ -120,11 +115,15 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
             <MainDrawerNavigator
                 batteryLevel={props.batteryLevel}
                 onBluetoothConnectPress={props.onBluetoothConnectPress}
+                onDeviceInfoPress={props.onDeviceInfoPress}
                 bluetoothConnect={props.bluetoothConnect}
             ></MainDrawerNavigator>
             {bottomTabBar}
             <ConfirmDialog></ConfirmDialog>
             <LoadingDialog></LoadingDialog>
+            <IssueReportDialog></IssueReportDialog>
+            <SessionTransferDialog></SessionTransferDialog>
+            <AuroraInfoDialog></AuroraInfoDialog>
             {statusBar}
         </View>
     );

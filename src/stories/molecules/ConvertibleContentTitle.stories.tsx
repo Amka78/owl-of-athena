@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ConvertibleContentTitle } from '../../components/molecules/ConvertibleContentTitle';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ConvertibleContentTitle } from "../../components/molecules/ConvertibleContentTitle";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/ConvertibleContentTitle',
+    title: "Molecules/ConvertibleContentTitle",
     component: ConvertibleContentTitle,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof ConvertibleContentTitle>;
 
@@ -19,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
     args: {
-        children: 'Settings',
+        children: "Settings",
         isDesktop: true,
     },
     play: async ({ canvasElement }) => {
@@ -29,7 +33,7 @@ export const Desktop: Story = {
 
 export const Mobile: Story = {
     args: {
-        children: 'Settings',
+        children: "Settings",
         isDesktop: false,
     },
     play: async ({ canvasElement }) => {

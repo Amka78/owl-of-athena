@@ -1,11 +1,11 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { Message, MessageKeys, Colors, Fonts } from "../../constants";
-
+import { StyleSheet, View } from "react-native";
 import { Dialog, RadioButton } from "react-native-paper";
-import { LabeledRadioButton } from "./LabeledRadioButton";
-import { FlatButton } from "../atoms";
+import { Colors, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
+import { FlatButton } from "../atoms";
+import { LabeledRadioButton } from "./LabeledRadioButton";
+
 type ProfilesDialogSettings = {
     profileList: Array<AuroraProfile>;
     selectedProfileId: string;
@@ -31,7 +31,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
             selectedProfile = args.profileList[0];
         }
 
-        this.Instance!.setState({
+        ProfilesDialog.Instance!.setState({
             dialogSettings: args,
             selectedProfileId: selectedProfile.id!,
             selectedProfileTitle: selectedProfile.title!,
@@ -86,7 +86,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
                                             label={value.title!}
                                         ></LabeledRadioButton>
                                     );
-                                }
+                                },
                             )}
                         </View>
                     </RadioButton.Group>
@@ -114,7 +114,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
             const selectedProfile = this.state.dialogSettings!.profileList.find(
                 (profile: AuroraProfile) => {
                     return profile.title! == value;
-                }
+                },
             );
             this.setState({
                 selectedProfileId: selectedProfile!.id!,
@@ -139,7 +139,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
         return async (): Promise<void> => {
             this.state.dialogSettings!.onConfirm(
                 this.state.selectedProfileId,
-                this.state.selectedProfileTitle
+                this.state.selectedProfileTitle,
             );
             this.setState({ dialogSettings: undefined });
         };

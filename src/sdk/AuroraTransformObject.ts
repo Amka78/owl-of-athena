@@ -1,6 +1,6 @@
-import Stream from "stream";
 import Flat from "flat";
-import { parseValueString, camelCaseObjectKeys } from "./util";
+import Stream from "stream";
+import { camelCaseObjectKeys, parseValueString } from "./util";
 
 export default class AuroraTransformObject extends Stream.Transform {
     private leftoverData: string;
@@ -13,11 +13,7 @@ export default class AuroraTransformObject extends Stream.Transform {
         this.transformedObject = {};
     }
 
-    _transform(
-        chunk: string,
-        _encoding: string,
-        done: Stream.TransformCallback
-    ): void {
+    _transform(chunk: string, _encoding: string, done: Stream.TransformCallback): void {
         chunk = chunk.toString();
 
         if (this.leftoverData) {
@@ -29,7 +25,7 @@ export default class AuroraTransformObject extends Stream.Transform {
 
         this.leftoverData = lines.pop()!;
 
-        lines = lines.map(line => line.trim()).filter(String);
+        lines = lines.map((line) => line.trim()).filter(String);
 
         for (const line of lines) {
             this.processLine(line);

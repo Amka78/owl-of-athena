@@ -1,8 +1,8 @@
 //#region Import Moduels
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import {
     HomeScreenTemplate,
-    HomeScreenTemplateProps,
+    type HomeScreenTemplateProps,
 } from "../../../components/templates/HomeScreenTemplate";
 import { useWindowDimensions } from "../../../hooks";
 import { Container } from "../../Container";
@@ -13,9 +13,7 @@ export type HomeScreenProps = Omit<HomeScreenTemplateProps, "dimens">;
 //#endregion
 
 //#region Component
-export const HomeScreen: FunctionComponent<HomeScreenProps> = (
-    props: HomeScreenProps
-) => {
+export const HomeScreen: FunctionComponent<HomeScreenProps> = (props: HomeScreenProps) => {
     const dimens = useWindowDimensions();
     return (
         <Container dimens={dimens}>

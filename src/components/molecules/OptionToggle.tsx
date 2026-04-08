@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { FieldToggle, ListItem } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
@@ -13,9 +13,7 @@ export type OptionToggleProps = OptionProps & {
 //#endregion
 
 //#region Component
-export const OptionToggle: FunctionComponent<OptionToggleProps> = (
-    props: OptionToggleProps
-) => {
+export const OptionToggle: FunctionComponent<OptionToggleProps> = (props: OptionToggleProps) => {
     return (
         <ListItem
             {...props}

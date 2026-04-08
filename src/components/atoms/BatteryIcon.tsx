@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { Colors, Dimens } from "../../constants";
-import { TemplateIcon, TemplateIconProps } from "./TemplateIcon";
+import { TemplateIcon, type TemplateIconProps } from "./TemplateIcon";
 //#endregion
 
 //#region Types
@@ -15,9 +15,7 @@ export type BatteryIconProps = Omit<TemplateIconProps, "name" | "color"> & {
 //#endregion
 
 //#region Component
-export const BatteryIcon: FunctionComponent<BatteryIconProps> = (
-    props: BatteryIconProps
-) => {
+export const BatteryIcon: FunctionComponent<BatteryIconProps> = (props: BatteryIconProps) => {
     let batteryLevel = props.batteryLevel;
     if (props.batteryLevel === undefined || props.batteryLevel === null) {
         batteryLevel = 0;
@@ -35,9 +33,7 @@ export const BatteryIcon: FunctionComponent<BatteryIconProps> = (
             color = Colors.red;
             batterIcon = "battery-alert";
         } else {
-            batterIcon = `battery${batteyIconSuffix}-${batteryLevel
-                .toString()
-                .substring(0, 1)}0`;
+            batterIcon = `battery${batteyIconSuffix}-${batteryLevel.toString().substring(0, 1)}0`;
         }
     }
     return (

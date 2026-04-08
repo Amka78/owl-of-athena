@@ -16,7 +16,7 @@ exports[`ProfileMenu renders correctly 1`] = `
               "props": {
                 "color": "#ffffff",
                 "name": "pencil",
-                "onPress": [class Function],
+                "onPress": undefined,
                 "size": 40,
               },
               "type": "Icon",

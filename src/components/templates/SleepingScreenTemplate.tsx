@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
@@ -7,7 +7,7 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
-import { TemplateTimeViewProps } from "./TempatedProps";
+import type { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -16,6 +16,8 @@ export type SleepingScreenTemplateProps = {
     onRelockPress: () => void;
     timeView: TemplateTimeViewProps;
     onWakeupPress: () => void;
+    onSnoozePress: () => void;
+    isSnoozing: boolean;
     dimens: Dimensions;
     locale?: string;
 };
@@ -23,7 +25,7 @@ export type SleepingScreenTemplateProps = {
 
 //#region Component
 export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplateProps> = (
-    props: SleepingScreenTemplateProps
+    props: SleepingScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
@@ -32,9 +34,7 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
             <ConvertibleContentTitle isDesktop={props.dimens.isDesktop}>
                 {Message.get(MessageKeys.sleeping_title)}
             </ConvertibleContentTitle>
-            <ContentText onPress={props.onRelockPress}>
-                {props.wakeLockMessage}
-            </ContentText>
+            <ContentText onPress={props.onRelockPress}>{props.wakeLockMessage}</ContentText>
             <View style={{ flex: 1 }}>
                 <TimeView
                     {...props.timeView}
@@ -47,12 +47,16 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
                     }}
                 ></TimeView>
             </View>
-            <Button
-                onPress={props.onWakeupPress}
-                screenWidth={props.dimens.width}
-            >
+            <Button onPress={props.onWakeupPress} screenWidth={props.dimens.width}>
                 {Message.get(MessageKeys.sleeping_wakeup_button)}
             </Button>
+            {props.isSnoozing ? (
+                <ContentText>{Message.get(MessageKeys.sleeping_snoozing_message)}</ContentText>
+            ) : (
+                <Button onPress={props.onSnoozePress} screenWidth={props.dimens.width}>
+                    {Message.get(MessageKeys.sleeping_snooze_button)}
+                </Button>
+            )}
         </InternalView>
     );
 };

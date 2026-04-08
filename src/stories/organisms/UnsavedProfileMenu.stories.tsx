@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { UnsavedProfileMenu } from '../../components/organisms/profiles/UnsavedProfileMenu';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { UnsavedProfileMenu } from "../../components/organisms/profiles/UnsavedProfileMenu";
+import { Theme } from "../../constants";
 
 const mobileDimens = {
     fontScale: 1,
@@ -18,9 +18,9 @@ const mobileDimens = {
 };
 
 const meta = {
-    title: 'Organisms/UnsavedProfileMenu',
+    title: "Organisms/UnsavedProfileMenu",
     component: UnsavedProfileMenu,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
         (Story: any) => (
             <Provider theme={Theme}>

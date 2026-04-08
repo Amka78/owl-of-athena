@@ -14,7 +14,7 @@ import { ConnectionStates } from "../sdk/AuroraConstants";
 export const onConnectionChange = (
     followingConnectionState: ConnectionStates,
     currentConnectionState: ConnectionStates,
-    connnectionChangeCallback: (state: ConnectionStates) => void
+    connnectionChangeCallback: (state: ConnectionStates) => void,
 ): void => {
     if (
         currentConnectionState === ConnectionStates.DISCONNECTED &&

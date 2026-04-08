@@ -1,25 +1,17 @@
 //#region "Import modules"
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { IconButton } from "react-native-paper";
-
-import { SessionChartPie, SessionSleepChart } from "..";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
-import {
-    useLocale,
-    useScreenDimensions,
-    useWindowDimensions,
-} from "../../hooks";
+import { useLocale, useScreenDimensions, useWindowDimensions } from "../../hooks";
 import type { CurrentChart } from "../../types/CurrentChart";
+import { SessionChartPie, SessionSleepChart } from "..";
 import { FlexSpacer, StandardView } from "../atoms";
-import {
-    ChartRadialProgress,
-    ChartRadialProgressProps,
-} from "../charts/ChartRadialProgress";
+import { ChartRadialProgress, type ChartRadialProgressProps } from "../charts/ChartRadialProgress";
 import { SessionTimeView } from "../molecules";
-import { SessionChartPieProps } from "../SessionChartPie";
-import { SessionSleepChartProps } from "../SessionSleepChart";
-import { TemplateTimeViewProps } from "./TempatedProps";
+import type { SessionChartPieProps } from "../SessionChartPie";
+import type { SessionSleepChartProps } from "../SessionSleepChart";
+import type { TemplateTimeViewProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -42,7 +34,7 @@ export type SessionScreenTemplateProps = {
 
 //#region Component
 export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps> = (
-    props: SessionScreenTemplateProps
+    props: SessionScreenTemplateProps,
 ) => {
     useLocale(props.locale);
     const dimens = useWindowDimensions();
@@ -78,12 +70,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
             }}
             onLayout={screenDimens.onLayout}
         >
-            <View
-                style={[
-                    styles.sessionInfoHeader,
-                    { width: screenDimens.width },
-                ]}
-            >
+            <View style={[styles.sessionInfoHeader, { width: screenDimens.width }]}>
                 <SessionTimeView
                     {...props.asleepAtTimeLabel}
                     mode={"meridian"}
@@ -134,8 +121,7 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                         height={screenDimens.height / 2}
                         width={
                             screenDimens.width -
-                            (Dimens.session_margin_left +
-                                Dimens.session_margin_right)
+                            (Dimens.session_margin_left + Dimens.session_margin_right)
                         }
                     ></SessionSleepChart>
                 ) : (
@@ -147,25 +133,17 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                         height={screenDimens.height / 2}
                         width={
                             screenDimens.width -
-                            (Dimens.session_margin_left +
-                                Dimens.session_margin_right)
+                            (Dimens.session_margin_left + Dimens.session_margin_right)
                         }
                         outerRadius={chartPieOuterRadius}
                         innerRadius={chartPieInnerRadius}
                     ></SessionChartPie>
                 )}
             </View>
-            <View
-                style={[
-                    styles.sessionInfoFooter,
-                    { width: screenDimens.width },
-                ]}
-            >
+            <View style={[styles.sessionInfoFooter, { width: screenDimens.width }]}>
                 <SessionTimeView
                     {...props.sleepDurationLabel}
-                    label={Message.get(
-                        MessageKeys.session_sleep_duration_label
-                    )}
+                    label={Message.get(MessageKeys.session_sleep_duration_label)}
                     mode={"time"}
                     isDesktop={dimens.isDesktop}
                 ></SessionTimeView>

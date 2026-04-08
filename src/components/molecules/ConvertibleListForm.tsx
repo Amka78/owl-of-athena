@@ -1,5 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import type React from "react";
+import type { FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Colors } from "../../constants";
@@ -15,7 +16,7 @@ export type ConvertibleListFormProps = {
 
 //#region Component
 export const ConvertibleListForm: FunctionComponent<ConvertibleListFormProps> = (
-    props: ConvertibleListFormProps
+    props: ConvertibleListFormProps,
 ) => {
     const list = (
         <View style={{ flex: 1 }}>

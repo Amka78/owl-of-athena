@@ -1,6 +1,6 @@
 //#region Inport modules
-import React, { FunctionComponent } from "react";
-import { TextInput, TextStyle, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { TextInput, type TextStyle, type ViewStyle } from "react-native";
 
 import { Colors } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
@@ -15,14 +15,11 @@ export type ProfilePreviewTemplateProps = {
 
 //#region Component
 export const ProfilePreviewScreenTemplate: FunctionComponent<ProfilePreviewTemplateProps> = (
-    props: ProfilePreviewTemplateProps
+    props: ProfilePreviewTemplateProps,
 ) => {
     const screenDimens = useScreenDimensions();
     return (
-        <StandardView
-            standardViewStyle={profilePreviewView}
-            onLayout={screenDimens.onLayout}
-        >
+        <StandardView standardViewStyle={profilePreviewView} onLayout={screenDimens.onLayout}>
             <TextInput
                 value={props.content}
                 style={[defaultTextareaStyle, { width: screenDimens.width }]}

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
-import type { AuroraProfile, AuroraProfileOption } from "../sdk/AuroraTypes";
+
 import groupBy from "lodash/groupBy";
 import { MessageKeys } from "../constants";
+import type { AuroraProfile, AuroraProfileOption } from "../sdk/AuroraTypes";
 //#endregion
 
 //#region Types
@@ -31,7 +32,7 @@ export const createOfficialProfile = async (): Promise<AuroraProfile> => {
 };
 
 export const groupingProfileOptionList = (
-    optionsList: AuroraProfileOption[]
+    optionsList: AuroraProfileOption[],
 ): GroupedProfileOptionList => {
     return Object.entries(groupBy(optionsList, "group"));
 };
@@ -163,8 +164,7 @@ export const stimBuzz: AuroraProfileOption = {
 export const stimDelay: AuroraProfileOption = {
     name: "stim-delay",
     title: "REM Stimulation Delay",
-    description:
-        "The initial amount of time to wait before presenting REM stimulations.",
+    description: "The initial amount of time to wait before presenting REM stimulations.",
     group: "REM Stim Options",
     groupName: MessageKeys.profile_rem_stim_options,
     value: 4,

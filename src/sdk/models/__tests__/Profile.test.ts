@@ -1,6 +1,7 @@
-import { Profile } from "../Profile";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import { Profile } from "../Profile";
+
 let content: string;
 
 let profile: Profile;

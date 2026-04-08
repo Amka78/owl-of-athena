@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import { Line } from "react-native-svg";
 //#endregion
 
@@ -9,9 +9,7 @@ export type XAxisBottomLineProps = {
     color: string;
 };
 
-export const XAxisBottomLine: FC<XAxisBottomLineProps> = (
-    props: XAxisBottomLineProps
-) => {
+export const XAxisBottomLine: FC<XAxisBottomLineProps> = (props: XAxisBottomLineProps) => {
     return (
         <Line
             stroke={props.color}

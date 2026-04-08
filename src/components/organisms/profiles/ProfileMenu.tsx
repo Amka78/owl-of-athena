@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Text, TextStyle, View, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 
 import { Colors } from "../../../constants";
 import type { AuroraProfile } from "../../../sdk/AuroraTypes";
@@ -17,12 +17,10 @@ export type ProfileMenuProps = {
 //#endregion
 
 //#region Component
-export const ProfileMenu: FunctionComponent<ProfileMenuProps> = (
-    props: ProfileMenuProps
-) => {
+export const ProfileMenu: FunctionComponent<ProfileMenuProps> = (props: ProfileMenuProps) => {
     return (
         <View style={[menuStyle, props.style]}>
-            <EditIcon onPress={props.onEditPress}></EditIcon>
+            <EditIcon onPress={props.onInfoPress}></EditIcon>
             <Text style={menuTitleStyle}>{props.selectedProfile.title}</Text>
         </View>
     );

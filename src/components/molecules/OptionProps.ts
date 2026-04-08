@@ -1,6 +1,13 @@
 //#region Import Modules
-import type { CheckBoxField, SliderField, ToggleField, TimeField, LedEffectField, BuzzSongField } from "../../sdk/AuroraTypes";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type {
+    BuzzSongField,
+    CheckBoxField,
+    LedEffectField,
+    SliderField,
+    TimeField,
+    ToggleField,
+} from "../../sdk/AuroraTypes";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 //#endregion
 
 export type OptionProps = {

@@ -1,6 +1,7 @@
-import Stream from "stream";
 import { Parser } from "binary-parser";
+import Stream from "stream";
 import { DataTypes } from "./AuroraConstants";
+
 type DataTypesString =
     | "int8"
     | "uint16le"
@@ -29,19 +30,15 @@ export default class AuroraTransformBinary extends Stream.Transform {
         this.hasData = false;
 
         this.parser.array("values", {
-            // @ts-ignore
+            // @ts-expect-error
             type: this.parseType,
             readUntil: "eof",
 
-            formatter: (values: any) => values.join(",")
+            formatter: (values: any) => values.join(","),
         });
     }
 
-    _transform(
-        respChunk: any,
-        _encoding: string,
-        done: Stream.TransformCallback
-    ): void {
+    _transform(respChunk: any, _encoding: string, done: Stream.TransformCallback): void {
         if (!respChunk.length) {
             done();
             return;
@@ -50,7 +47,7 @@ export default class AuroraTransformBinary extends Stream.Transform {
         if (Buffer.isBuffer(this.leftoverBuffer)) {
             respChunk = Buffer.concat(
                 [this.leftoverBuffer, respChunk],
-                this.leftoverBuffer.length + respChunk.length
+                this.leftoverBuffer.length + respChunk.length,
             );
             this.leftoverBuffer = null;
         }
@@ -66,16 +63,14 @@ export default class AuroraTransformBinary extends Stream.Transform {
         let parsedChunk;
 
         if (numBytesLeftover) {
-            parsedChunk = this.parser.parse(
-                respChunk.slice(0, -numBytesLeftover)
-            );
+            parsedChunk = this.parser.parse(respChunk.slice(0, -numBytesLeftover));
 
             this.leftoverBuffer = respChunk.slice(-numBytesLeftover);
         } else {
             parsedChunk = this.parser.parse(respChunk);
         }
 
-        // @ts-ignore
+        // @ts-expect-error
         this.push((this.hasData ? "," : "") + parsedChunk.values);
 
         this.hasData = true;
@@ -122,9 +117,7 @@ export default class AuroraTransformBinary extends Stream.Transform {
         }
     }
 
-    private getParseTypeLengthFromDataType(
-        dataType: DataTypes
-    ): ParseTypeLength {
+    private getParseTypeLengthFromDataType(dataType: DataTypes): ParseTypeLength {
         switch (dataType) {
             case DataTypes.UINT16:
             case DataTypes.INT16:

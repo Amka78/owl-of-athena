@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { useWindowDimensions } from "../../hooks";
 
 import { useMain } from "../../hooks/useMain";
@@ -17,6 +17,7 @@ export const MainScreen: FunctionComponent = () => {
             currentFirmwareVersion={mainHook.currentFirmwareVersion}
             error={mainHook.error}
             onBluetoothConnectPress={mainHook.onConnectionStatesPress}
+            onDeviceInfoPress={mainHook.onDeviceInfoPress}
             onHomePress={mainHook.onHomePress}
             onProfilesPress={mainHook.onProfilesPress}
             onSessionsPress={mainHook.onSessionsPress}

@@ -1,7 +1,9 @@
 //#region Import Modules
-import React from "react";
+
 import { render } from "@testing-library/react-native";
+import React from "react";
 import { XAxisBottomLine } from "../XAxisBottomLine";
+
 //#endregion
 
 //#region Tests
@@ -19,7 +21,7 @@ describe("XAxisBottomLine UnitTest", () => {
 
     it("renders a Line with correct coordinates", () => {
         const { UNSAFE_getByType } = render(
-            <XAxisBottomLine width={400} height={100} color="#ff0000" />
+            <XAxisBottomLine width={400} height={100} color="#ff0000" />,
         );
         const line = UNSAFE_getByType(require("react-native-svg").Line);
         expect(line.props.x1).toBe(0);

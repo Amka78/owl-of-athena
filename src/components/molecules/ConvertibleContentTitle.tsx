@@ -1,7 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
-import { ContentTitle, ContentTitleProps } from "../atoms/ContentTitle";
+import { ContentTitle, type ContentTitleProps } from "../atoms/ContentTitle";
 //#endregion
 
 //#region Types
@@ -12,11 +12,9 @@ export type ConvertibleContentTitleProps = ContentTitleProps & {
 
 //#region Component
 export const ConvertibleContentTitle: FunctionComponent<ConvertibleContentTitleProps> = (
-    props: ConvertibleContentTitleProps
+    props: ConvertibleContentTitleProps,
 ) => {
-    const contentTitle = props.isDesktop ? (
-        <ContentTitle {...props}></ContentTitle>
-    ) : null;
+    const contentTitle = props.isDesktop ? <ContentTitle {...props}></ContentTitle> : null;
     return contentTitle;
 };
 //#endregion

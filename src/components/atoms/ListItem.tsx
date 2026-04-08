@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { TextStyle, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import type { TextStyle, ViewStyle } from "react-native";
 import { List } from "react-native-paper";
 import { Colors } from "../../constants";
 //#endregion
@@ -29,12 +30,10 @@ export type ListItemProps = {
 //#endregion
 
 //#region Component
-export const ListItem: FunctionComponent<ListItemProps> = (
-    props: ListItemProps
-) => {
+export const ListItem: FunctionComponent<ListItemProps> = (props: ListItemProps) => {
     return (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
+        //@ts-expect-error
         <List.Item
             {...props}
             titleStyle={[menuLabel, props.titleStyle]}

@@ -1,6 +1,6 @@
 //#region Inport modules
-import React, { FunctionComponent } from "react";
-import { StyleSheet, TextInput, TextInputProps } from "react-native";
+import React, { type FunctionComponent } from "react";
+import { StyleSheet, TextInput, type TextInputProps } from "react-native";
 
 import { Colors } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
@@ -16,20 +16,14 @@ export type SessionNoteTemplateProps = Pick<
 
 //#region Component
 export const SessionNoteScreenTemplate: FunctionComponent<SessionNoteTemplateProps> = (
-    props: SessionNoteTemplateProps
+    props: SessionNoteTemplateProps,
 ) => {
     const screenDimens = useScreenDimensions();
     return (
-        <StandardView
-            standardViewStyle={styles.sessionNoteView}
-            onLayout={screenDimens.onLayout}
-        >
+        <StandardView standardViewStyle={styles.sessionNoteView} onLayout={screenDimens.onLayout}>
             <TextInput
                 {...props}
-                style={[
-                    styles.defaultTextareaStyle,
-                    { width: screenDimens.width },
-                ]}
+                style={[styles.defaultTextareaStyle, { width: screenDimens.width }]}
                 multiline={true}
             />
         </StandardView>

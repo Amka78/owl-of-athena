@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import {
     SettingsScreenTemplate,
-    SettingsScreenTemplateProps,
+    type SettingsScreenTemplateProps,
 } from "../../../components/templates/SettingsScreenTemplate";
 import { useWindowDimensions } from "../../../hooks";
 import { Container } from "../../Container";
@@ -14,15 +14,12 @@ export type SettingsScreenProps = Omit<SettingsScreenTemplateProps, "dimens">;
 
 //#region Component
 export const SettingsScreen: FunctionComponent<SettingsScreenProps> = (
-    props: SettingsScreenProps
+    props: SettingsScreenProps,
 ) => {
     const dimens = useWindowDimensions();
     return (
         <Container dimens={dimens}>
-            <SettingsScreenTemplate
-                {...props}
-                dimens={dimens}
-            ></SettingsScreenTemplate>
+            <SettingsScreenTemplate {...props} dimens={dimens}></SettingsScreenTemplate>
         </Container>
     );
 };

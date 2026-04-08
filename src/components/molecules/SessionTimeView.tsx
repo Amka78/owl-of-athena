@@ -1,8 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-
-import { LabeledTimeView, LabeledTimeViewProps } from "./LabeledTimeView";
+import React, { type FunctionComponent } from "react";
 import { Dimens } from "../../constants";
+import { LabeledTimeView, type LabeledTimeViewProps } from "./LabeledTimeView";
 //#endregion
 
 //#region Types
@@ -12,7 +11,7 @@ export type SessionTimeViewProps = LabeledTimeViewProps & {
 //#endregion
 
 export const SessionTimeView: FunctionComponent<SessionTimeViewProps> = (
-    props: SessionTimeViewProps
+    props: SessionTimeViewProps,
 ) => {
     const timeTextSize = props.isDesktop
         ? Dimens.session_time_text_size_desktop

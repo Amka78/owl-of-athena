@@ -1,5 +1,5 @@
-import React from "react";
 import { render } from "@testing-library/react-native";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -24,15 +24,13 @@ describe("ChartPie UnitTest", () => {
     });
 
     it("renders with legend on the left", () => {
-        const { toJSON } = renderWithProvider(
-            <ChartPie {...defaultProps} legendPosition="left" />
-        );
+        const { toJSON } = renderWithProvider(<ChartPie {...defaultProps} legendPosition="left" />);
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("renders with custom inner and outer radius", () => {
         const { toJSON } = renderWithProvider(
-            <ChartPie {...defaultProps} outerRadius={80} innerRadius={50} />
+            <ChartPie {...defaultProps} outerRadius={80} innerRadius={50} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
@@ -44,7 +42,7 @@ describe("ChartPie UnitTest", () => {
                 categoryPercents={[100]}
                 categoryLabels={["Deep"]}
                 categoryColors={["#3b4cca"]}
-            />
+            />,
         );
         expect(toJSON()).toMatchSnapshot();
     });

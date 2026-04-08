@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { useWindowDimensions } from "../../hooks";
 
 import { useSetting } from "../../hooks/useSetting";
@@ -41,6 +41,8 @@ export const SettingsScreen: FunctionComponent = () => {
                 value: settingsHook.remStimAudio.name,
                 onPress: settingsHook.remStimAudioMenuOnPress,
             }}
+            alarmVolume={settingsHook.alarmVolume}
+            onAlarmVolumeChange={settingsHook.onAlarmVolumeChange}
             saveButton={{
                 onPress: settingsHook.saveButtonPress,
             }}

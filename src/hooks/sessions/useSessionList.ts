@@ -1,7 +1,18 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-
+import { SessionRestClientInstance } from "../../clients";
+import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
+import { Message, MessageKeys } from "../../constants";
+import { AuroraManagerInstance } from "../../managers";
+import type { AuroraSessionJson } from "../../sdk/AuroraTypes";
+import type { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
+import {
+    type FilterByDateValues,
+    type SessionFilterCondition,
+    useSessionStore,
+} from "../../store/sessionStore";
+import { GuestUser } from "../../types";
 import {
     useCheckLogging,
     useFilterConditionSelector,
@@ -9,14 +20,6 @@ import {
     useUserSelector,
     useWindowDimensions,
 } from "..";
-import { SessionRestClientInstance } from "../../clients";
-import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
-import { Message, MessageKeys } from "../../constants";
-import { AuroraManagerInstance } from "../../managers";
-import type { AuroraSessionJson } from "../../sdk/AuroraTypes";
-import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
-import { useSessionStore, SessionFilterCondition, FilterByDateValues } from "../../store/sessionStore";
-import { GuestUser } from "../../types";
 import { useFilteredSessionListSelector, useSelectedSessionSelector } from "./";
 //#endregion
 
@@ -55,9 +58,7 @@ export const useSessinList = (): {
 
     const onPressedRefresh = useCallback(async () => {
         LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.reloading, [
-                MessageKeys.sessions,
-            ]),
+            dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.sessions]),
         });
         const sessions = await SessionRestClientInstance.getAll(user!.id);
         cacheSessions(sessions);
@@ -72,7 +73,7 @@ export const useSessinList = (): {
         (itemValue: FilterByDateValues): void => {
             updateFilter({ byDate: itemValue });
         },
-        [updateFilter]
+        [updateFilter],
     );
 
     const onShowStarredPress = useCallback((): void => {
@@ -94,16 +95,13 @@ export const useSessinList = (): {
             };
 
             if (user?.id !== GuestUser) {
-                await SessionRestClientInstance.updateById(
-                    value.id,
-                    updateInfo
-                );
+                await SessionRestClientInstance.updateById(value.id, updateInfo);
             }
 
             value.starred = !value.starred;
             updateSession(value);
         },
-        [updateSession, user?.id]
+        [updateSession, user?.id],
     );
 
     const onDeleteConfirmPress = useCallback(
@@ -114,24 +112,20 @@ export const useSessinList = (): {
 
             if (AuroraManagerInstance.isConnected()) {
                 try {
-                    await AuroraManagerInstance.executeCommand(
-                        `sd-dir-del sessions/${value.id}`
-                    );
+                    await AuroraManagerInstance.executeCommand(`sd-dir-del sessions/${value.id}`);
                 } catch (e) {
                     console.error(e);
                 }
             }
             deleteSession(value.id);
         },
-        [deleteSession, user?.id]
+        [deleteSession, user?.id],
     );
 
     const onDeletePress = useCallback(
         async (value: AuroraSession): Promise<void> => {
             ConfirmDialog.show({
-                title: Message.get(MessageKeys.delete_dialog_title, [
-                    MessageKeys.session,
-                ]),
+                title: Message.get(MessageKeys.delete_dialog_title, [MessageKeys.session]),
 
                 message: Message.get(MessageKeys.delete_dialog_message),
 
@@ -141,7 +135,7 @@ export const useSessinList = (): {
                 },
             });
         },
-        [onDeleteConfirmPress]
+        [onDeleteConfirmPress],
     );
 
     const onMenuPress = useCallback(
@@ -150,17 +144,13 @@ export const useSessinList = (): {
 
             let sessionDetail;
             if (sessionDetailList.length > 0) {
-                sessionDetail = sessionDetailList.find(
-                    (detailValue: AuroraSessionDetail) => {
-                        return detailValue.sessionId === value.id;
-                    }
-                );
+                sessionDetail = sessionDetailList.find((detailValue: AuroraSessionDetail) => {
+                    return detailValue.sessionId === value.id;
+                });
             }
 
             if (!sessionDetail && user?.id !== GuestUser) {
-                sessionDetail = await SessionRestClientInstance.getDetailsById(
-                    value.id
-                );
+                sessionDetail = await SessionRestClientInstance.getDetailsById(value.id);
             }
 
             if (sessionDetail) {
@@ -181,7 +171,7 @@ export const useSessinList = (): {
             selectSessionDetail,
             sessionDetailList,
             user?.id,
-        ]
+        ],
     );
     return {
         showFilter,

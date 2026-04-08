@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 export const useDatePicker = (
-    initialValue: Date
+    initialValue: Date,
 ): { onChange: (e: Date) => void; selected: Date } => {
     const [selected, set] = useState(initialValue);
 
@@ -12,6 +12,6 @@ export const useDatePicker = (
 
     return {
         onChange,
-        selected
+        selected,
     };
 };

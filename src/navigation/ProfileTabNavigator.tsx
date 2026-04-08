@@ -1,10 +1,11 @@
 //#region Import modules
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import * as React from "react";
+import type * as React from "react";
 
 import { ProfilePreviewScreen, ProfileScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
 import { MaterialTabbarCommonOptions } from "./MaterialTabbarSettings";
+
 //#endregion
 
 //#region Component
@@ -24,9 +25,7 @@ const ProfileTabNavigator = (): React.ReactNode => {
                 name={"Preview"}
                 component={ProfilePreviewScreen}
                 options={{
-                    title: Message.get(
-                        Message.get(MessageKeys.top_tab_profile_preview_title)
-                    ),
+                    title: Message.get(Message.get(MessageKeys.top_tab_profile_preview_title)),
                 }}
             ></MaterialTab.Screen>
         </MaterialTab.Navigator>

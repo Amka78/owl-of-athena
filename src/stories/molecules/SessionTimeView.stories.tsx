@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { SessionTimeView } from '../../components/molecules/SessionTimeView';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { SessionTimeView } from "../../components/molecules/SessionTimeView";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/SessionTimeView',
+    title: "Molecules/SessionTimeView",
     component: SessionTimeView,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof SessionTimeView>;
 
@@ -19,10 +23,10 @@ type Story = StoryObj<typeof meta>;
 
 export const Mobile: Story = {
     args: {
-        label: 'Session Time',
+        label: "Session Time",
         hours: 7,
         minutes: 30,
-        mode: 'meridian',
+        mode: "meridian",
         isDesktop: false,
     },
     play: async ({ canvasElement }) => {
@@ -32,10 +36,10 @@ export const Mobile: Story = {
 
 export const Desktop: Story = {
     args: {
-        label: 'Session Time',
+        label: "Session Time",
         hours: 8,
         minutes: 0,
-        mode: 'time',
+        mode: "time",
         isDesktop: true,
     },
     play: async ({ canvasElement }) => {

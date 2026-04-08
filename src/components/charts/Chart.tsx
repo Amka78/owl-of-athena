@@ -1,8 +1,8 @@
-import React, { CSSProperties } from "react";
-import sortBy from "lodash/sortBy";
 import * as d3 from "d3";
+import sortBy from "lodash/sortBy";
 import PropTypes from "prop-types";
-import { ViewStyle } from "react-native";
+import React, { type CSSProperties } from "react";
+import type { ViewStyle } from "react-native";
 
 export type Margin = {
     left: number;
@@ -87,7 +87,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
                 marginTop: this.props.margin?.top,
                 marginBottom: this.props.margin?.bottom,
             },
-            this.props.containerStyle
+            this.props.containerStyle,
         );
 
         return (
@@ -115,11 +115,8 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         this.graphGroup = this.svg!.append("g");
 
         if (clipToRange) {
-            this.clipPathId =
-                "clip-path-" + Math.floor(Math.random() * 1000 + 1);
-            this.clipPath = this.svg!.append("clipPath")
-                .attr("id", this.clipPathId)
-                .append("rect");
+            this.clipPathId = "clip-path-" + Math.floor(Math.random() * 1000 + 1);
+            this.clipPath = this.svg!.append("clipPath").attr("id", this.clipPathId).append("rect");
 
             this.graphGroup.attr("clip-path", `url(#${this.clipPathId})`);
         }
@@ -133,13 +130,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     }
 
     updateChart(): void {
-        const {
-            title,
-            margin,
-            titleSize,
-            titleColor,
-            clipToRange,
-        } = this.props;
+        const { title, margin, titleSize, titleColor, clipToRange } = this.props;
 
         const chartRangeX = this.getChartRangeX();
         const chartRangeY = this.getChartRangeY();
@@ -193,9 +184,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             extentStop[1] = extentY[1];
         }
 
-        this.brush
-            .extent([extentStart, extentStop])
-            .on("end", this.onBrushEnd.bind(this));
+        this.brush.extent([extentStart, extentStop]).on("end", this.onBrushEnd.bind(this));
 
         this.brushGroup = this.svg!.append("g").call(this.brush);
     }
@@ -204,33 +193,27 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
         this.k = 1;
 
         if (this.zoom) {
-            this.svg!.transition()
-                .duration(750)
-                .call(this.zoom.transform, d3.zoomIdentity);
+            this.svg!.transition().duration(750).call(this.zoom.transform, d3.zoomIdentity);
         }
     }
 
     buildScales(
         xScale?: d3.ScaleTime<number, number>,
-        yScale?: d3.ScaleLinear<number, number>
+        yScale?: d3.ScaleLinear<number, number>,
     ): void {
-        this.scaleX = (xScale ? xScale : d3.scaleTime()).range(
-            this.getChartRangeX()
-        );
-        this.scaleY = (yScale ? yScale : d3.scaleLinear()).range(
-            this.getChartRangeY()
-        );
+        this.scaleX = (xScale ? xScale : d3.scaleTime()).range(this.getChartRangeX());
+        this.scaleY = (yScale ? yScale : d3.scaleLinear()).range(this.getChartRangeY());
     }
 
     buildAxes(
         xAxis?: d3.Axis<number | Date | { valueOf(): number }>,
-        yAxis?: d3.Axis<number | Date | { valueOf(): number }>
+        yAxis?: d3.Axis<number | Date | { valueOf(): number }>,
     ): void {
         const { axisXEnabled, axisYEnabled } = this.props;
 
         if (axisXEnabled) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             this.axisX = xAxis ? xAxis : d3.axisBottom(this.scaleX!);
 
             this.axisGroupX = this.svg!.append("g");
@@ -238,7 +221,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         if (axisYEnabled) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error
             this.axisY = yAxis ? yAxis : d3.axisLeft(this.scaleY!);
 
             this.axisGroupY = this.svg!.append("g");
@@ -269,7 +252,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
             this.axisGroupX!.attr(
                 "transform",
-                `translate(0,${this.getChartHeight() - axisMargin!.bottom})`
+                `translate(0,${this.getChartHeight() - axisMargin!.bottom})`,
             )
                 .selectAll("text")
                 .attr("font-size", axisXLabelSize!)
@@ -284,10 +267,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
             this.axisGroupY!.select("path").attr("stroke", axisYColor!);
 
-            this.axisGroupY!.attr(
-                "transform",
-                `translate(${axisMargin!.left}, 0)`
-            )
+            this.axisGroupY!.attr("transform", `translate(${axisMargin!.left}, 0)`)
                 .selectAll("text")
                 .attr("dy", ".3em")
                 .attr("font-size", axisYLabelSize!)
@@ -328,10 +308,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
             }
 
             if (typeof datum.bins[bin] != "undefined") {
-                filteredData.push(
-                    Object.assign({}, datum, { flags: datum.bins[bin] })
-                );
-                continue;
+                filteredData.push(Object.assign({}, datum, { flags: datum.bins[bin] }));
             }
         }
 
@@ -345,8 +322,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         if (!dataBins?.length) return 0;
 
-        const minutesVisible =
-            (scaleXDomain![1] - scaleXDomain![0]) / 1000 / 60;
+        const minutesVisible = (scaleXDomain![1] - scaleXDomain![0]) / 1000 / 60;
 
         if (minutesVisible < dataBinThreshold!) return 0;
 
@@ -364,47 +340,33 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
     }
 
     getChartWidth(): number {
-        return (
-            this.props.width! -
-            this.props.margin!.left -
-            this.props.margin!.right
-        );
+        return this.props.width! - this.props.margin!.left - this.props.margin!.right;
     }
 
     getChartHeight(): number {
-        return (
-            this.props.height! -
-            this.props.margin!.top -
-            this.props.margin!.bottom
-        );
+        return this.props.height! - this.props.margin!.top - this.props.margin!.bottom;
     }
 
     getChartRangeX(): number[] {
-        return [
-            this.props.axisMargin!.left,
-            this.getChartWidth() - this.props.axisMargin!.right,
-        ];
+        return [this.props.axisMargin!.left, this.getChartWidth() - this.props.axisMargin!.right];
     }
 
     getChartRangeY(): number[] {
-        return [
-            this.getChartHeight() - this.props.axisMargin!.bottom,
-            this.props.axisMargin!.top,
-        ];
+        return [this.getChartHeight() - this.props.axisMargin!.bottom, this.props.axisMargin!.top];
     }
 
     onZoom(event: d3.D3ZoomEvent<SVGElement, unknown>): void {
         if (this.props.zoomX) {
             this.axisGroupX!.call(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (this.axisX! as any).scale(event.transform.rescaleX(this.scaleX as any))
+                (this.axisX! as any).scale(event.transform.rescaleX(this.scaleX as any)),
             );
         }
 
         if (this.props.zoomY) {
             this.axisGroupY!.call(
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                (this.axisY! as any).scale(event.transform.rescaleY(this.scaleY as any))
+                (this.axisY! as any).scale(event.transform.rescaleY(this.scaleY as any)),
             );
         }
     }
@@ -427,10 +389,7 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         const newSelection = [ticks[leftTickIndex], ticks[rightTickIndex]];
 
-        this.brushGroup!.transition().call(
-            this.brush!.move,
-            newSelection.map(this.scaleX!)
-        );
+        this.brushGroup!.transition().call(this.brush!.move, newSelection.map(this.scaleX!));
     }
 
     static propTypes = {

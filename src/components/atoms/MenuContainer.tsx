@@ -1,6 +1,7 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Platform, View, ViewStyle } from "react-native";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import { Platform, View, type ViewStyle } from "react-native";
 
 import { Colors } from "../../constants";
 //#endregion
@@ -13,12 +14,8 @@ export type MenuContainerProps = {
 //#endregion
 
 //#region Component
-export const MenuContainer: FunctionComponent<MenuContainerProps> = (
-    props: MenuContainerProps
-) => {
-    return (
-        <View style={[menuContainerStyle, props.style]}>{props.children}</View>
-    );
+export const MenuContainer: FunctionComponent<MenuContainerProps> = (props: MenuContainerProps) => {
+    return <View style={[menuContainerStyle, props.style]}>{props.children}</View>;
 };
 //#endregion
 

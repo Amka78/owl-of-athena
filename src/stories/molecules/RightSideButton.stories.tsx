@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect, fn } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { RightSideButton } from '../../components/molecules/RightSideButton';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect, fn } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { RightSideButton } from "../../components/molecules/RightSideButton";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/RightSideButton',
+    title: "Molecules/RightSideButton",
     component: RightSideButton,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof RightSideButton>;
 
@@ -19,7 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const WithMargin: Story = {
     args: {
-        children: 'Save',
+        children: "Save",
         needMargin: true,
         screenWidth: 375,
         onPress: fn(),
@@ -31,7 +35,7 @@ export const WithMargin: Story = {
 
 export const NoMargin: Story = {
     args: {
-        children: 'Cancel',
+        children: "Cancel",
         needMargin: false,
         screenWidth: 375,
         onPress: fn(),

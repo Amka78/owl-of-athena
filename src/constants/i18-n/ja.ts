@@ -1,4 +1,5 @@
 import { MessageKeys } from "../MessageKeys";
+
 const login = "ログイン";
 const signup = "サインアップ";
 const input_email = "Eメールアドレス";
@@ -45,19 +46,16 @@ export default {
     [MessageKeys.input_birthday]: input_birthday,
     [MessageKeys.choose]: "{0}を選んでください。",
     // aurora strings
-    [MessageKeys.aurora_connected]:
-        "Aurora:接続中 バージョン:{0} バッテリー{1}%",
+    [MessageKeys.aurora_connected]: "Aurora:接続中 バージョン:{0} バッテリー{1}%",
     [MessageKeys.aurora_disconnected]: "Aurora切断済み.",
     [MessageKeys.aurora_unsynced_sessions_dialog_title]:
         "同期されていないセッションを見つけました。",
     [MessageKeys.aurora_unsynced_sessions_dialog_message]:
         "Auroraには{0}の非同期セッションがあります。今から同期しますか?",
-    [MessageKeys.aurora_low_battery_dialog_title]:
-        "Auroraのバッテリーがとても少ないです。",
+    [MessageKeys.aurora_low_battery_dialog_title]: "Auroraのバッテリーがとても少ないです。",
     [MessageKeys.aurora_low_battery_dialog_message]:
         "Auroraのバッテリーが{0}%です。 一晩オーロラを動作させたい場合は充電をしてください。",
-    [MessageKeys.aurora_sync_successful_snackbar_message]:
-        "{0}のセッションの同期に成功しました。",
+    [MessageKeys.aurora_sync_successful_snackbar_message]: "{0}のセッションの同期に成功しました。",
     [MessageKeys.aurora_sync_successful_snackbar_action]: "今見る。",
     // welcome fragment
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
@@ -83,6 +81,8 @@ export default {
         "パスワードを思い出せませんか? \r下記にEメールアドレスを入力すれば、パスワードのリセット方法をお知らせします。",
     [MessageKeys.forgot_password_input_email]: input_email,
     [MessageKeys.forgot_password_button]: "Reset",
+    [MessageKeys.forgot_password_success]:
+        "パスワードリセットのメールを送信しました。受信箱を確認してください。",
 
     // signup fragment
     [MessageKeys.signup_title]: signup,
@@ -90,8 +90,7 @@ export default {
     [MessageKeys.signup_input_password]: input_password,
     [MessageKeys.signup_input_password_confirm]: input_password_confirm,
     [MessageKeys.signup_terms]: "私は利用規約を了承しました。",
-    [MessageKeys.signup_newsletter]:
-        "Auroraのニュースと最新の開発状況を取得する。",
+    [MessageKeys.signup_newsletter]: "Auroraのニュースと最新の開発状況を取得する。",
     [MessageKeys.signup_button]: signup,
 
     // home fragment
@@ -99,8 +98,7 @@ export default {
     [MessageKeys.home_title]: "ホーム",
     [MessageKeys.home_edit_alarm_button]: "アラームを更新",
     [MessageKeys.home_go_to_sleep_button]: "眠る",
-    [MessageKeys.home_aurora_disconnected_dialog_title]:
-        "Auroraが接続されていません。",
+    [MessageKeys.home_aurora_disconnected_dialog_title]: "Auroraが接続されていません。",
     [MessageKeys.home_aurora_disconnected_dialog_message]:
         "接続してください、 もしAuroraの電源がオンの場合一旦オフにし, 起動してください。",
     [MessageKeys.home_go_to_sleep_loading_message]: "Aurora設定中...",
@@ -116,6 +114,7 @@ export default {
     [MessageKeys.settings_option_alarm_audio]: "アラームサウンド",
     [MessageKeys.settings_option_rem_stim_audio]: "REM睡眠通知サウンド",
     [MessageKeys.settings_option_no_audio_selected]: "なし",
+    [MessageKeys.settings_option_volume]: "アラーム音量",
     // sessions fragment
     [MessageKeys.sessions_title]: sessions,
     [MessageKeys.sessions_toolbar_button_left]: "前へ",
@@ -125,8 +124,7 @@ export default {
     [MessageKeys.sessions_picker_values_past_week]: "1週間",
     [MessageKeys.sessions_picker_values_past_month]: "1ヵ月",
     [MessageKeys.sessions_check_show_starred_label]: "星付きを表示",
-    [MessageKeys.sessions_check_show_starred_description]:
-        "星付きのセッションのみ表示します。",
+    [MessageKeys.sessions_check_show_starred_description]: "星付きのセッションのみ表示します。",
     [MessageKeys.sessions_check_show_notes_label]: "ノートを表示",
     [MessageKeys.sessions_check_show_notes_description]:
         "ノートを記述しているセッションのみ表示します。",
@@ -157,11 +155,12 @@ export default {
     [MessageKeys.sleeping_wakeunlock]:
         "画面のロックが解除されました。OOAの機能が正常に動作しない可能性があります。このメッセージをクリックして画面を再ロックしてください。",
     [MessageKeys.sleeping_wakeup_button]: "起きる",
+    [MessageKeys.sleeping_snooze_button]: "スヌーズ",
+    [MessageKeys.sleeping_snoozing_message]: "9分間スヌーズ中...",
     // waking fragment
     [MessageKeys.waking_title]: "起きてください!",
     [MessageKeys.waking_wakeup_button]: "起きる",
-    [MessageKeys.waking_tip_text]:
-        "Tip: アラームを止めるためにAuroraのボタンが使えます。",
+    [MessageKeys.waking_tip_text]: "Tip: アラームを止めるためにAuroraのボタンが使えます。",
     // awake fragment
     [MessageKeys.awake_title]: "おはようございます!",
     [MessageKeys.awake_text]: "昨日の夜に対する幾つかの質問に答えてください。",
@@ -173,12 +172,11 @@ export default {
 
     // error required
     [MessageKeys.required]: "{0}は必須入力です。",
-    [MessageKeys.passwords_must_match]:
-        "パスワードは一致している必要があります。",
+    [MessageKeys.passwords_must_match]: "パスワードは一致している必要があります。",
+    [MessageKeys.emails_must_match]: "メールアドレスは一致している必要があります。",
     [MessageKeys.must_agree_to_term_of_use]:
         "サインアップするには利用規約に同意する必要があります。",
-    [MessageKeys.email_already_registered]:
-        "すでに入力済みのメールアドレスです。",
+    [MessageKeys.email_already_registered]: "すでに入力済みのメールアドレスです。",
 
     // alarm sound menu
     [MessageKeys.alarm_sound_dialog_title]: "目覚まし用の音を選んでください。",
@@ -191,8 +189,7 @@ export default {
 
     [MessageKeys.delete_dialog_title]: "{0}を削除しますか?",
 
-    [MessageKeys.delete_dialog_message]:
-        "本当に削除しても宜しいですか?　この処理は戻せません。",
+    [MessageKeys.delete_dialog_message]: "本当に削除しても宜しいですか?　この処理は戻せません。",
 
     [MessageKeys.top_tab_sleep_tracking_title]: "スリープトラッキング",
     [MessageKeys.top_tab_journal_title]: "ジャーナル",
@@ -201,8 +198,7 @@ export default {
 
     [MessageKeys.date_format]: "YYYY年MM月DD日  ",
 
-    [MessageKeys.standalone_mode_confirm_title]:
-        "Aurora APIへの接続に失敗しました。",
+    [MessageKeys.standalone_mode_confirm_title]: "Aurora APIへの接続に失敗しました。",
 
     [MessageKeys.standalone_mode_confirm_message]:
         "Aurora APIに接続できませんでした。スタンドアローンモードでオーロラを動かしますか?",
@@ -215,18 +211,13 @@ export default {
     [MessageKeys.profile_rem_stim_options]: "レム睡眠誘発設定",
     [MessageKeys.profile_alarm_options]: "アラーム設定",
     [MessageKeys.profile_misc_options]: "その他設定",
-    [MessageKeys.profile_filter_menu_header_label]:
-        "プロファイルタイプで絞り込む。",
-    [MessageKeys.profile_filter_menu_official_check_box_label]:
-        "オフィシャルを見る。",
-    [MessageKeys.profile_filter_menu_official_check_box_description]:
-        "iWinks公式プロファイル",
-    [MessageKeys.profile_filter_menu_community_check_box_label]:
-        "コミュニティを見る。",
+    [MessageKeys.profile_filter_menu_header_label]: "プロファイルタイプで絞り込む。",
+    [MessageKeys.profile_filter_menu_official_check_box_label]: "オフィシャルを見る。",
+    [MessageKeys.profile_filter_menu_official_check_box_description]: "iWinks公式プロファイル",
+    [MessageKeys.profile_filter_menu_community_check_box_label]: "コミュニティを見る。",
     [MessageKeys.profile_filter_menu_community_check_box_description]:
         "コミュニティ認証済みプロファイル",
-    [MessageKeys.profile_filter_menu_private_check_box_label]:
-        "プライベートを見る。",
+    [MessageKeys.profile_filter_menu_private_check_box_label]: "プライベートを見る。",
     [MessageKeys.profile_filter_menu_private_check_box_description]:
         "貴方のプライベートプロファイル",
 
@@ -245,4 +236,114 @@ export default {
     [MessageKeys.blink]: "瞬き",
     [MessageKeys.alternate]: "Alternate",
     [MessageKeys.transition]: "Transition",
+
+    // confirm email screen
+    [MessageKeys.confirm_email_title]: "メールアドレスの確認",
+    [MessageKeys.confirm_email_text]:
+        "確認メールを送信しました。受信箱を確認してリンクをタップした後、下のボタンを押してください。",
+    [MessageKeys.confirm_email_check_button]: "確認しました",
+    [MessageKeys.confirm_email_resend_button]: "メールを再送する",
+    [MessageKeys.confirm_email_change_email_button]: "メールアドレスを変更する",
+    [MessageKeys.confirm_email_not_verified]:
+        "まだメールアドレスが確認されていません。受信箱を確認してください。",
+    [MessageKeys.confirm_email_resent]: "確認メールを再送しました。受信箱を確認してください。",
+
+    // admin screens
+    [MessageKeys.admin_title]: "管理",
+    [MessageKeys.admin_users_title]: "ユーザー",
+    [MessageKeys.admin_orders_title]: "注文",
+    [MessageKeys.admin_sessions_title]: "セッション",
+    [MessageKeys.admin_issues_title]: "問題",
+    [MessageKeys.admin_messages_title]: "メッセージ",
+    [MessageKeys.admin_app_settings_title]: "アプリ設定",
+    [MessageKeys.drawer_items_admin]: "管理",
+
+    // account messages
+    [MessageKeys.account_messages_title]: "メッセージ",
+
+    // account roles
+    [MessageKeys.account_roles_title]: "ロール",
+
+    // console screen
+    [MessageKeys.console_title]: "コンソール",
+    [MessageKeys.console_input_placeholder]: "コマンドを入力...",
+    [MessageKeys.console_send_button]: "送信",
+    [MessageKeys.console_clear_button]: "クリア",
+    [MessageKeys.console_not_connected]: "Auroraが接続されていません。コンソールを使うにはAuroraに接続してください。",
+
+    // messages screen
+    [MessageKeys.messages_mark_as_read]: "既読にする",
+    [MessageKeys.messages_read_label]: "既読",
+    [MessageKeys.messages_unread_label]: "未読",
+    [MessageKeys.messages_begin_questionnaire]: "アンケートを開始する",
+    [MessageKeys.messages_continue_questionnaire]: "アンケートを続ける",
+    [MessageKeys.messages_save_for_later]: "後で確認する",
+    [MessageKeys.messages_already_completed]: "このアンケートはすでに完了しています。",
+    [MessageKeys.messages_no_messages]: "メッセージはありません。",
+
+    // issue report dialog
+    [MessageKeys.issue_report_title]: "問題を報告する",
+    [MessageKeys.issue_report_input_title]: "タイトル",
+    [MessageKeys.issue_report_input_description]: "説明",
+    [MessageKeys.issue_report_input_reproduce_steps]: "再現手順",
+    [MessageKeys.issue_report_check_critical]: "重大な問題",
+    [MessageKeys.issue_report_check_anonymous]: "匿名で送信",
+    [MessageKeys.issue_report_send_button]: "レポートを送信",
+    [MessageKeys.issue_report_success]: "問題を報告しました。フィードバックありがとうございます！",
+    [MessageKeys.issue_report_error]: "問題レポートの送信に失敗しました。",
+    [MessageKeys.issue_report_button]: "問題を報告する",
+
+    // session transfer dialog
+    [MessageKeys.session_transfer_title]: "セッション転送",
+    [MessageKeys.session_transfer_scanning]: "Auroraのセッションをスキャン中...",
+    [MessageKeys.session_transfer_not_connected]: "セッションを転送するにはAuroraに接続する必要があります。",
+    [MessageKeys.session_transfer_no_sessions]: "Auroraにセッションが見つかりませんでした。",
+    [MessageKeys.session_transfer_transferring]: "{0}件のセッションを転送中...",
+    [MessageKeys.session_transfer_complete]: "{0}件のセッションを正常に転送しました。",
+    [MessageKeys.session_transfer_button]: "{0}件のセッションを転送",
+    [MessageKeys.session_transfer_cancel]: "キャンセル",
+    [MessageKeys.session_transfer_continue]: "続ける",
+    [MessageKeys.session_transfer_delete_confirm_title]: "セッションを削除しますか?",
+    [MessageKeys.session_transfer_delete_confirm_message]: "このセッションはまだ転送されていません。本当に削除しますか?",
+
+    // questionnaire dialog
+    [MessageKeys.questionnaire_begin_button]: "アンケートを始める",
+    [MessageKeys.questionnaire_next_button]: "次へ",
+    [MessageKeys.questionnaire_previous_button]: "前へ",
+    [MessageKeys.questionnaire_complete_title]: "アンケート完了",
+    [MessageKeys.questionnaire_close_button]: "閉じる",
+    [MessageKeys.questionnaire_loading]: "アンケートを読み込み中...",
+    [MessageKeys.questionnaire_error]: "アンケートの読み込みに失敗しました。",
+
+    // change password screen
+    [MessageKeys.change_password_title]: "パスワード変更",
+    [MessageKeys.change_password_input_new_password]: "新しいパスワード",
+    [MessageKeys.change_password_input_confirm_password]: "新しいパスワード（確認）",
+    [MessageKeys.change_password_button]: "新しいパスワードを保存",
+    [MessageKeys.change_password_success]: "パスワードを変更しました。",
+    [MessageKeys.change_password_nav_button]: "パスワード変更",
+    [MessageKeys.change_password_warning]: "パスワードを変更すると、すぐにログアウトされます。",
+
+    // change email screen
+    [MessageKeys.change_email_title]: "メールアドレス変更",
+    [MessageKeys.change_email_input_new_email]: "新しいメールアドレス",
+    [MessageKeys.change_email_input_confirm_email]: "新しいメールアドレス（確認）",
+    [MessageKeys.change_email_button]: "新しいメールアドレスを保存",
+    [MessageKeys.change_email_success]: "確認メールを送信しました。新しいアドレスを確認してください。",
+    [MessageKeys.change_email_nav_button]: "メールアドレス変更",
+    [MessageKeys.change_email_warning]: "メールアドレスを変更すると再認証が必要です。新しいアドレスを確認するまでログアウトしないでください。",
+
+    // profile edit dialog
+    [MessageKeys.profile_edit_title]: "プロフィール編集",
+    [MessageKeys.profile_edit_input_title]: "タイトル",
+    [MessageKeys.profile_edit_input_description]: "説明",
+    [MessageKeys.profile_edit_button]: "保存",
+
+    // aurora info dialog
+    [MessageKeys.aurora_info_title]: "Auroraデバイス情報",
+    [MessageKeys.aurora_info_firmware]: "ファームウェアバージョン",
+    [MessageKeys.aurora_info_bootloader]: "ブートローダーバージョン",
+    [MessageKeys.aurora_info_ble]: "BLEバージョン",
+    [MessageKeys.aurora_info_bootstrap]: "ブートストラップバージョン",
+    [MessageKeys.aurora_info_battery]: "バッテリーレベル",
 };

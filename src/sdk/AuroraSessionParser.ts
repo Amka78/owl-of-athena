@@ -1,5 +1,6 @@
 import { EventIds, SleepStages } from "./AuroraConstants";
 import { getEnumlength } from "./util";
+
 type Event = {
     id: unknown;
     date: number;
@@ -39,9 +40,7 @@ type Session = {
     duration?: number;
 };
 export default class AuroraSessionParser {
-    public static parseSessionTxtObject(
-        sessionTxtObject: unknown
-    ): Promise<Session> {
+    public static parseSessionTxtObject(sessionTxtObject: unknown): Promise<Session> {
         const session: Session = AuroraSessionParser.initializeSession();
 
         const throwError = (error: string): Promise<never> => {
@@ -49,28 +48,20 @@ export default class AuroraSessionParser {
             return Promise.reject(session);
         };
 
-        if (typeof sessionTxtObject != "object")
-            return throwError("Session object invalid.");
+        if (typeof sessionTxtObject != "object") return throwError("Session object invalid.");
 
         //TODO: consider using deep assign
         Object.assign(session, sessionTxtObject);
 
-        if (
-            !session.version ||
-            !session.date ||
-            !session.profile ||
-            !session.duration
-        )
+        if (!session.version || !session.date || !session.profile || !session.duration)
             return throwError("Session corrupted.");
 
         if (parseInt(session.version) < 20001)
             return throwError("Aurora firmware version no longer supported.");
 
-        if (!Array.isArray(session.events))
-            return throwError("Session event array corrupted.");
+        if (!Array.isArray(session.events)) return throwError("Session event array corrupted.");
 
-        if (!Array.isArray(session.streams))
-            return throwError("Session stream array corrupted.");
+        if (!Array.isArray(session.streams)) return throwError("Session stream array corrupted.");
 
         //if (session.duration < 1000 * 60 * 30) return throwError('Session is shorter than 30 minutes.');
 
@@ -131,7 +122,7 @@ export default class AuroraSessionParser {
         let currentStageTime = 0;
         let currentStageDate = 0;
 
-        // @ts-ignore
+        // @ts-expect-error
         const stageDurations = new Array(getEnumlength(SleepStages)).fill(0);
 
         for (const event of session.events) {
@@ -143,8 +134,7 @@ export default class AuroraSessionParser {
                     }
 
                     if (currentStageTime) {
-                        stageDurations[currentStage] +=
-                            event.time - currentStageTime;
+                        stageDurations[currentStage] += event.time - currentStageTime;
                     }
 
                     //is this a non-awake stage?
@@ -152,8 +142,7 @@ export default class AuroraSessionParser {
                         //is this the first non-awake sleep stage?
                         if (!session.asleepAt) {
                             session.asleepAt = event.date;
-                            session.sleepOnset =
-                                event.time - firstSignalStageTime;
+                            session.sleepOnset = event.time - firstSignalStageTime;
                         }
                     }
                     //is this an awake stage and have we found the first sleep event?
@@ -193,12 +182,11 @@ export default class AuroraSessionParser {
                     (1 +
                         Math.exp(
                             -3.7 *
-                                ((session.sleepDuration.rem +
-                                    session.sleepDuration.deep) /
+                                ((session.sleepDuration.rem + session.sleepDuration.deep) /
                                     session.sleepDuration.total -
-                                    0.25)
+                                    0.25),
                         ))) *
-                    100
+                    100,
             );
         }
 
@@ -237,10 +225,10 @@ export default class AuroraSessionParser {
                 awake: 0,
                 light: 0,
                 deep: 0,
-                rem: 0
+                rem: 0,
             },
             events: [],
-            streams: []
+            streams: [],
         };
     }
 }

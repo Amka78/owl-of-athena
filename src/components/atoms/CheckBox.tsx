@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { Checkbox as PaperCheckBox, useTheme } from "react-native-paper";
 //#endregion
 
@@ -14,9 +14,7 @@ export type CheckBoxProps = {
 //#endregion
 
 //#region Component
-export const CheckBox: FunctionComponent<CheckBoxProps> = (
-    props: CheckBoxProps
-) => {
+export const CheckBox: FunctionComponent<CheckBoxProps> = (props: CheckBoxProps) => {
     const theme = useTheme();
     return (
         <PaperCheckBox
@@ -25,9 +23,7 @@ export const CheckBox: FunctionComponent<CheckBoxProps> = (
             disabled={props.disabled}
             status={props.status}
             onPress={props.onPress}
-            uncheckedColor={
-                props.uncheckedColor ? props.uncheckedColor : undefined
-            }
+            uncheckedColor={props.uncheckedColor ? props.uncheckedColor : undefined}
             theme={theme}
         ></PaperCheckBox>
     );

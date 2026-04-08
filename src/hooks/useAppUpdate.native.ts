@@ -1,6 +1,7 @@
 //#region Import Modules
-import { useCallback, useEffect, useState } from "react";
+
 import * as Updates from "expo-updates";
+import { useCallback, useEffect, useState } from "react";
 //#endregion
 
 //#region Hooks

@@ -1,14 +1,14 @@
 import { EventEmitter } from "events";
+import moment from "moment";
+import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import {
+    EVENT_ID_MAX,
+    type EventIds,
+    EventIdsToNames,
     LogNamesToTypeIds,
     STREAM_ID_MAX,
-    EVENT_ID_MAX,
     StreamIdsToNames,
-    EventIdsToNames,
-    EventIds,
 } from "./AuroraConstants";
-import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
-import moment from "moment";
 import type { CommandResult } from "./AuroraTypes";
 
 enum CmdStates {
@@ -37,7 +37,7 @@ export default class AuroraSerialParser extends EventEmitter {
         this.regexLog = new RegExp(
             "^\\< (" +
                 Object.keys(LogNamesToTypeIds).join("|") +
-                ") \\| (\\d{2}:\\d{2}:\\d{2}\\.\\d{3}) \\> (.+)$"
+                ") \\| (\\d{2}:\\d{2}:\\d{2}\\.\\d{3}) \\> (.+)$",
         );
     }
 
@@ -81,15 +81,10 @@ export default class AuroraSerialParser extends EventEmitter {
                 }
 
                 //we must have a newline now so grab the line
-                const bufferLine = this.unparsedBuffer
-                    .slice(0, newlineIndex)
-                    .toString()
-                    .trim();
+                const bufferLine = this.unparsedBuffer.slice(0, newlineIndex).toString().trim();
 
                 //and remove it from the unparsed buffer
-                this.unparsedBuffer = this.unparsedBuffer.slice(
-                    newlineIndex + 1
-                );
+                this.unparsedBuffer = this.unparsedBuffer.slice(newlineIndex + 1);
 
                 //after trim, if no data is in line, bail
                 if (!bufferLine.length) {
@@ -101,7 +96,7 @@ export default class AuroraSerialParser extends EventEmitter {
 
                 //if we are now receiving output, we need to exit
                 //this loop
-                // @ts-ignore
+                // @ts-expect-error
                 if (this.cmdState == CmdStates.CMD_OUTPUT) break;
             }
         }
@@ -110,8 +105,7 @@ export default class AuroraSerialParser extends EventEmitter {
         //this is where things get tricky since we need to
         //properly identify whether an output footer exists
 
-        const outputFooter =
-            "\r\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
+        const outputFooter = "\r\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
 
         //while we have enough bytes to potentially identify the footer
         while (this.unparsedBuffer.length >= outputFooter.length) {
@@ -132,60 +126,44 @@ export default class AuroraSerialParser extends EventEmitter {
 
                 //we have a CR, so see if we have enough bytes to guarantee the output footer
                 //hasn't started yet
-                if (
-                    this.unparsedBuffer.length >=
-                    firstCRIndex + outputFooter.length
-                ) {
+                if (this.unparsedBuffer.length >= firstCRIndex + outputFooter.length) {
                     //consume everything up to and including the first CR
-                    this.emit(
-                        "cmdOutputReady",
-                        this.unparsedBuffer.slice(0, firstCRIndex + 1)
-                    );
-                    this.unparsedBuffer = this.unparsedBuffer.slice(
-                        firstCRIndex + 1
-                    );
+                    this.emit("cmdOutputReady", this.unparsedBuffer.slice(0, firstCRIndex + 1));
+                    this.unparsedBuffer = this.unparsedBuffer.slice(firstCRIndex + 1);
                     continue;
                 }
 
                 return;
             }
             //we found the footer!!
-            else {
-                //if the footer doesn't start at the
-                //beginning, we consume everything up to it
-                if (footerStartIndex) {
-                    //consume everything up to the footer
-                    this.emit(
-                        "cmdOutputReady",
-                        this.unparsedBuffer.slice(0, footerStartIndex)
-                    );
-                    this.unparsedBuffer = this.unparsedBuffer.slice(
-                        footerStartIndex
-                    );
-                }
 
-                //at this point we have the footer and it is at the beginning
-                //of the unparsed buffer so now we have to look for the footer
-                //end, which is the second set of \r\n
-                const footerEndIndex = this.unparsedBuffer.indexOf("\r\n", 2);
-
-                if (footerEndIndex == -1) return;
-
-                //we found the entire footer, so consume it all (including trailing new lines) and change the state
-                this.unparsedBuffer = this.unparsedBuffer.slice(
-                    footerEndIndex + 2
-                );
-
-                this.cmdState = CmdStates.CMD_RESPONSE;
-
-                break;
+            //if the footer doesn't start at the
+            //beginning, we consume everything up to it
+            if (footerStartIndex) {
+                //consume everything up to the footer
+                this.emit("cmdOutputReady", this.unparsedBuffer.slice(0, footerStartIndex));
+                this.unparsedBuffer = this.unparsedBuffer.slice(footerStartIndex);
             }
+
+            //at this point we have the footer and it is at the beginning
+            //of the unparsed buffer so now we have to look for the footer
+            //end, which is the second set of \r\n
+            const footerEndIndex = this.unparsedBuffer.indexOf("\r\n", 2);
+
+            if (footerEndIndex == -1) return;
+
+            //we found the entire footer, so consume it all (including trailing new lines) and change the state
+            this.unparsedBuffer = this.unparsedBuffer.slice(footerEndIndex + 2);
+
+            this.cmdState = CmdStates.CMD_RESPONSE;
+
+            break;
         }
     }
 
     public parseLine(line: string): void {
         switch (this.cmdState) {
-            case CmdStates.NO_CMD:
+            case CmdStates.NO_CMD: {
                 //trim off whitespace
                 line = line.trim();
 
@@ -211,6 +189,7 @@ export default class AuroraSerialParser extends EventEmitter {
                 }
 
                 break;
+            }
 
             case CmdStates.CMD_HEADER:
                 //look for response start
@@ -239,9 +218,7 @@ export default class AuroraSerialParser extends EventEmitter {
                     try {
                         this.cmdResponseParser.parseDetect(line);
                     } catch (error) {
-                        this.triggerCmdError(
-                            `Invalid command error response: ${error}`
-                        );
+                        this.triggerCmdError(`Invalid command error response: ${error}`);
                     }
                 }
 
@@ -265,10 +242,7 @@ export default class AuroraSerialParser extends EventEmitter {
                     this.cmdState = CmdStates.CMD_INPUT;
 
                     this.clearCmdWatchDogTimer();
-                    this.cmdWatchdogTimer = setTimeout(
-                        this.onCmdTimeout,
-                        5 * 60 * 1000
-                    );
+                    this.cmdWatchdogTimer = setTimeout(this.onCmdTimeout, 5 * 60 * 1000);
 
                     this.emit("cmdInputRequested");
                 }
@@ -290,9 +264,7 @@ export default class AuroraSerialParser extends EventEmitter {
                     try {
                         this.cmdResponseParser.parseDetect(line);
                     } catch (error) {
-                        this.triggerCmdError(
-                            `Invalid command response: ${error}`
-                        );
+                        this.triggerCmdError(`Invalid command response: ${error}`);
                     }
                 }
 
@@ -322,7 +294,7 @@ export default class AuroraSerialParser extends EventEmitter {
 
             if (logParts && logParts.length == 4) {
                 this.emit("log", {
-                    // @ts-ignore
+                    // @ts-expect-error
                     typeId: LogNamesToTypeIds[logParts[1].toUpperCase()],
                     type: logParts[1].toUpperCase(),
                     time: +moment(logParts[2], "HH:mm:ss.SSS", true),
@@ -332,9 +304,7 @@ export default class AuroraSerialParser extends EventEmitter {
                 return;
             }
         } else if (line.slice(0, 6) == "event-") {
-            const eventParts = line.match(
-                /^event-(\d{1,2}): (\d+) \[(\S*)\]$/i
-            );
+            const eventParts = line.match(/^event-(\d{1,2}): (\d+) \[(\S*)\]$/i);
 
             if (eventParts && eventParts.length == 4) {
                 const eventId = +eventParts[1];

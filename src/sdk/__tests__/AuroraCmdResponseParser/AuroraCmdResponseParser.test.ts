@@ -4,8 +4,9 @@ import readline from "readline";
 import AuroraCmdResponseParser from "../../AuroraCmdResponseParser";
 
 import mockObject from "../../testData/CmdResponseObjectOutput";
-import mockTable from "../../testData/CmdResponseTableOutput";
 import mockTableCondensed from "../../testData/CmdResponseTableCondensedOutput";
+import mockTable from "../../testData/CmdResponseTableOutput";
+
 describe("AuroraCmdResponseParserTest", () => {
     test("Testing response line parsing (success cases)...", () => {
         const responseTypes = [
@@ -13,44 +14,40 @@ describe("AuroraCmdResponseParserTest", () => {
                 inputFile: "CmdResponseObjectInput.mock",
                 outputObject: mockObject,
                 name: "Object",
-                parseAs: "detect"
+                parseAs: "detect",
             },
             {
                 inputFile: "CmdResponseTableInput.mock",
                 outputObject: mockTable,
                 name: "Table",
-                parseAs: "detect"
+                parseAs: "detect",
             },
             {
                 inputFile: "CmdResponseTableCondensedInput.mock",
                 outputObject: mockTableCondensed,
                 name: "Table (condensed)",
-                parseAs: "table"
-            }
+                parseAs: "table",
+            },
         ];
 
-        const testPromises = responseTypes.map(responseType => {
-            return new Promise<void>(resolve => {
+        const testPromises = responseTypes.map((responseType) => {
+            return new Promise<void>((resolve) => {
                 const lineReader = readline.createInterface({
-                    input: fs.createReadStream(
-                        path.join(__dirname, responseType.inputFile)
-                    )
+                    input: fs.createReadStream(path.join(__dirname, responseType.inputFile)),
                 });
 
                 const parser = new AuroraCmdResponseParser();
 
                 if (responseType.parseAs == "object") {
-                    lineReader.on("line", line => parser.parseObject(line));
+                    lineReader.on("line", (line) => parser.parseObject(line));
                 } else if (responseType.parseAs == "table") {
-                    lineReader.on("line", line => parser.parseTable(line));
+                    lineReader.on("line", (line) => parser.parseTable(line));
                 } else {
-                    lineReader.on("line", line => parser.parseDetect(line));
+                    lineReader.on("line", (line) => parser.parseDetect(line));
                 }
 
                 lineReader.on("close", () => {
-                    expect(parser.getResponse()).toEqual(
-                        responseType.outputObject
-                    );
+                    expect(parser.getResponse()).toEqual(responseType.outputObject);
 
                     resolve();
                 });

@@ -1,9 +1,10 @@
 //#region Import Modules
-import { ViewStyle } from "react-native";
 
-import React, { FunctionComponent } from "react";
-import { StandardView } from "../atoms";
+import type React from "react";
+import type { FunctionComponent } from "react";
+import type { ViewStyle } from "react-native";
 import { Dimens } from "../../constants";
+import { StandardView } from "../atoms";
 //#endregion
 
 //#region Type
@@ -14,13 +15,9 @@ export type InternalViewProps = {
 //#endregion
 
 //#region Component
-export const InternalView: FunctionComponent<InternalViewProps> = (
-    props: InternalViewProps
-) => {
+export const InternalView: FunctionComponent<InternalViewProps> = (props: InternalViewProps) => {
     return (
-        <StandardView
-            standardViewStyle={[commonInternalView, props.internalView]}
-        >
+        <StandardView standardViewStyle={[commonInternalView, props.internalView]}>
             {props.children}
         </StandardView>
     );

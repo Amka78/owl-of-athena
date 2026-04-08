@@ -6,7 +6,7 @@ enum ProfileKeys {
     SMART_ALARM_ENABLED = "sa-enabled",
     DAWN_STIMULATING_LIGHT = "dsl-enabled",
     STREAM_DEBUG = "stream-debug",
-    WAKEUP_TIME = "wakeup-time"
+    WAKEUP_TIME = "wakeup-time",
 }
 export class Profile {
     private profileList: Map<ProfileKeys, any>;
@@ -36,7 +36,7 @@ export class Profile {
             const splitted = value.split(":");
             this.profileList.set(
                 splitted[0].replace("{", "") as ProfileKeys,
-                splitted[1].replace("}", "")
+                splitted[1].replace("}", ""),
             );
         });
     }
@@ -120,7 +120,7 @@ export class Profile {
 
         this.content = this.content.replace(
             new RegExp("\\{\\s*" + key + "\\s*:\\s*(.*)\\}"),
-            "{" + key + ":" + setValue + "}"
+            "{" + key + ":" + setValue + "}",
         );
     }
 
@@ -128,9 +128,8 @@ export class Profile {
         const value = this.profileList.get(key);
         if (value) {
             return Number(value);
-        } else {
-            return 0;
         }
+        return 0;
     }
 
     private setNumberValue(key: ProfileKeys, value: number): void {
@@ -138,7 +137,7 @@ export class Profile {
 
         this.content = this.content.replace(
             new RegExp("\\{\\s*" + key + "\\s*:\\s*(.*)\\}"),
-            "{" + key + ":" + value.toString() + "}"
+            "{" + key + ":" + value.toString() + "}",
         );
     }
 }

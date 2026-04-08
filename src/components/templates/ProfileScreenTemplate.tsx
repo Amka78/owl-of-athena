@@ -1,12 +1,14 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import type React from "react";
+import type { FunctionComponent } from "react";
 import { Dimens } from "../../constants";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
-import { GroupedProfileOptionList } from "../../services/ProfileService";
+import type { GroupedProfileOptionList } from "../../services/ProfileService";
 import { StandardView } from "../atoms";
+import { ProfileEditDialog } from "../molecules";
 import { ProfileMenu } from "../organisms/profiles/ProfileMenu";
 import { ProfileOptionList } from "../organisms/profiles/ProfileOptionList";
 import { ProfileSecondMenu } from "../organisms/profiles/ProfileSecondMenu";
@@ -36,11 +38,11 @@ export type ProfileScreenTemplateProps = {
 };
 
 export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps> = (
-    props: ProfileScreenTemplateProps
+    props: ProfileScreenTemplateProps,
 ) => {
     useLocale(props.locale);
     const screenDimens = useScreenDimensions();
-    let profileMenu: React.ReactNode | undefined = undefined;
+    let profileMenu: React.ReactNode | undefined;
     if (props.selectedProfileHasUnSavedChanges) {
         profileMenu = (
             <UnsavedProfileMenu
@@ -65,9 +67,7 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
             <ProfileSecondMenu
                 {...props.profileSecondMenu}
                 auroraConnected={props.auroraConnected}
-                selectedProfileHasUnsavedChanges={
-                    props.selectedProfileHasUnSavedChanges
-                }
+                selectedProfileHasUnsavedChanges={props.selectedProfileHasUnSavedChanges}
                 dimens={props.dimens}
                 style={{
                     width: screenDimens.width,
@@ -78,6 +78,7 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                 groupedOptionList={props.grouedOptionList}
                 style={{ width: screenDimens.width }}
             ></ProfileOptionList>
+            <ProfileEditDialog />
         </StandardView>
     );
 };

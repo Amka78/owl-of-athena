@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { useWindowDimensions } from "../../hooks";
 
 import { useHome } from "../../hooks/useHome";

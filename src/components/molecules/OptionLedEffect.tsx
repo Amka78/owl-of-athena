@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { FieldLedEffect, ListItem } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
@@ -14,7 +14,7 @@ export type OptionLedEffectProps = OptionProps & {
 
 //#region Component
 export const OptionLedEffect: FunctionComponent<OptionLedEffectProps> = (
-    props: OptionLedEffectProps
+    props: OptionLedEffectProps,
 ) => {
     return (
         <ListItem

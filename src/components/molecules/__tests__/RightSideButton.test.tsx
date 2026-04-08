@@ -1,39 +1,39 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { RightSideButton } from '../RightSideButton';
+import { fireEvent, render } from "@testing-library/react-native";
+import type React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { RightSideButton } from "../RightSideButton";
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
-describe('RightSideButton', () => {
-    it('renders correctly with margin', () => {
+describe("RightSideButton", () => {
+    it("renders correctly with margin", () => {
         const { toJSON } = renderWithProvider(
             <RightSideButton needMargin={true} screenWidth={375}>
                 Save
-            </RightSideButton>
+            </RightSideButton>,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders button text', () => {
+    it("renders button text", () => {
         const { getByText } = renderWithProvider(
             <RightSideButton needMargin={false} screenWidth={375}>
                 Cancel
-            </RightSideButton>
+            </RightSideButton>,
         );
-        expect(getByText('Cancel')).toBeTruthy();
+        expect(getByText("Cancel")).toBeTruthy();
     });
 
-    it('calls onPress when pressed', () => {
+    it("calls onPress when pressed", () => {
         const onPress = jest.fn();
         const { getByText } = renderWithProvider(
             <RightSideButton needMargin={true} screenWidth={375} onPress={onPress}>
                 Save
-            </RightSideButton>
+            </RightSideButton>,
         );
-        fireEvent.press(getByText('Save'));
+        fireEvent.press(getByText("Save"));
         expect(onPress).toHaveBeenCalledTimes(1);
     });
 });

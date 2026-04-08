@@ -1,22 +1,20 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { Text, StyleProp, TextStyle, ViewStyle, View } from "react-native";
-import { Button } from "../atoms";
-import { Colors, Message, MessageKeys } from "../../constants";
+
 import { Picker } from "@react-native-community/picker";
+import React, { type FunctionComponent } from "react";
+import { type StyleProp, Text, type TextStyle, View, type ViewStyle } from "react-native";
+import { Colors, Message, MessageKeys } from "../../constants";
+import { Button } from "../atoms";
+
 //#endregion
 
 //#region Types
 const Blink = "blink";
-const Set = "set";
+const SetEffect = "set";
 const Alternate = "alternate";
 const Transition = "transition";
 
-type LedEffect =
-    | typeof Blink
-    | typeof Set
-    | typeof Alternate
-    | typeof Transition;
+type LedEffect = typeof Blink | typeof SetEffect | typeof Alternate | typeof Transition;
 
 export type FieldLedEffectProps = {
     value: LedEffect | string;
@@ -29,14 +27,12 @@ export type FieldLedEffectProps = {
 
 //#region Component
 export const FieldLedEffect: FunctionComponent<FieldLedEffectProps> = (
-    props: FieldLedEffectProps
+    props: FieldLedEffectProps,
 ) => {
     return (
         <View>
             <View style={pickerContainer}>
-                <Text>
-                    {Message.get(MessageKeys.choose, [MessageKeys.lef_effect])}
-                </Text>
+                <Text>{Message.get(MessageKeys.choose, [MessageKeys.lef_effect])}</Text>
                 <Picker
                     selectedValue={props.value}
                     style={pickerStyle}
@@ -50,13 +46,10 @@ export const FieldLedEffect: FunctionComponent<FieldLedEffectProps> = (
                         label={Message.get(MessageKeys.no_effect)}
                     ></Picker.Item>
                     <Picker.Item
-                        value={Set}
+                        value={SetEffect}
                         label={Message.get(MessageKeys.set)}
                     ></Picker.Item>
-                    <Picker.Item
-                        value={Blink}
-                        label={Message.get(MessageKeys.blink)}
-                    ></Picker.Item>
+                    <Picker.Item value={Blink} label={Message.get(MessageKeys.blink)}></Picker.Item>
                     <Picker.Item
                         value={Alternate}
                         label={Message.get(MessageKeys.alternate)}

@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { FieldStreamCheckBoxes, ListItem } from "../atoms";
-import { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
@@ -12,7 +12,7 @@ export type OptionCheckBoxesProps = OptionProps & { value?: number };
 
 //#region Component
 export const OptionCheckBoxes: FunctionComponent<OptionCheckBoxesProps> = (
-    props: OptionCheckBoxesProps
+    props: OptionCheckBoxesProps,
 ) => {
     return (
         <ListItem

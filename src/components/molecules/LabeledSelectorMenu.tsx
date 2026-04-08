@@ -1,6 +1,6 @@
 //#region Import Modules
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -17,14 +17,11 @@ export type LabeledSelectorMenuProps = {
 
 //#region Component
 export const LabeledSelectorMenu: FunctionComponent<LabeledSelectorMenuProps> = (
-    props: LabeledSelectorMenuProps
+    props: LabeledSelectorMenuProps,
 ) => {
     return (
         <View style={style.container}>
-            <TouchableOpacity
-                style={style.tochableOpacity}
-                onPress={props.onPress}
-            >
+            <TouchableOpacity style={style.tochableOpacity} onPress={props.onPress}>
                 <Text style={style.label}>{props.label}</Text>
                 <View style={style.optionContainer}>
                     <Text style={style.option}>{props.value}</Text>

@@ -1,16 +1,16 @@
 //#region Import Modules
-import { AuroraOSInfo } from "./models";
+
 import { EventEmitter } from "events";
+import type { ReadCommandResult } from "./AuroraCmdReadFile";
 import * as AuroraConstants from "./AuroraConstants";
 import { ConnectorTypes } from "./AuroraConstants";
-import type { CommandResult, FileInfo, EventResponse } from "./AuroraTypes";
-import { ReadCommandResult } from "./AuroraCmdReadFile";
+import type { CommandResult, EventResponse, FileInfo } from "./AuroraTypes";
+import { AuroraOSInfo } from "./models";
+
 //#endregion
 
 class Aurora extends EventEmitter {
-    public async connectBluetooth(
-        timeoutMs = 20000
-    ): Promise<AuroraOSInfo | never> {
+    public async connectBluetooth(timeoutMs = 20000): Promise<AuroraOSInfo | never> {
         console.debug(`timeoutMs:${timeoutMs}`);
 
         return new AuroraOSInfo({
@@ -32,7 +32,7 @@ class Aurora extends EventEmitter {
         commandStr: string,
         connectorType = AuroraConstants.ConnectorTypes.ANY,
         onCmdBegin?: (cmd: T) => void,
-        onCmdEnd?: () => void
+        onCmdEnd?: () => void,
     ): Promise<void> {
         console.debug(`commandStr:${commandStr}`);
         console.debug(`connectorType:${connectorType}`);
@@ -46,7 +46,7 @@ class Aurora extends EventEmitter {
         srcPath: string,
         writeStream: boolean,
         compress: boolean,
-        connectorType: ConnectorTypes = ConnectorTypes.ANY
+        connectorType: ConnectorTypes = ConnectorTypes.ANY,
     ): Promise<ReadCommandResult> {
         console.debug(`strPath:${srcPath}`);
         console.debug(`writeStream:${writeStream}`);
@@ -64,7 +64,7 @@ class Aurora extends EventEmitter {
         dataOrReadStream: string,
         rename = false,
         osVersion = 3000,
-        connectorType: ConnectorTypes = ConnectorTypes.ANY
+        connectorType: ConnectorTypes = ConnectorTypes.ANY,
     ): Promise<CommandResult<FileInfo>> {
         console.debug(`destPath:${destPath}`);
         console.debug(`dataOrReadStream:${dataOrReadStream}`);
@@ -77,7 +77,7 @@ class Aurora extends EventEmitter {
 
     public async getUnsyncedSessions(
         filter?: string,
-        connector: ConnectorTypes = ConnectorTypes.ANY
+        connector: ConnectorTypes = ConnectorTypes.ANY,
     ): Promise<Array<FileInfo>> {
         console.debug(`filter:${filter}`);
         console.debug(`connector:${connector}`);
@@ -85,7 +85,7 @@ class Aurora extends EventEmitter {
     }
 
     public async enableEvents(
-        enableEvent: AuroraConstants.EventIds[]
+        enableEvent: AuroraConstants.EventIds[],
     ): Promise<CommandResult<EventResponse>> {
         console.debug(`enableEvent:${enableEvent}`);
         return {};

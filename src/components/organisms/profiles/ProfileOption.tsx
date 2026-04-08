@@ -1,13 +1,8 @@
 //#region "Import Modules"
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import type { AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { InfoIcon } from "../../atoms";
-import {
-    OptionCheckBoxes,
-    OptionSlider,
-    OptionTime,
-    OptionToggle,
-} from "../../molecules";
+import { OptionCheckBoxes, OptionSlider, OptionTime, OptionToggle } from "../../molecules";
 //#endregion
 
 //#region Import Modules
@@ -19,20 +14,14 @@ export type ProfileOptionProps = {
 };
 //#endregion
 
-export const ProfileOption: FunctionComponent<ProfileOptionProps> = (
-    props: ProfileOptionProps
-) => {
+export const ProfileOption: FunctionComponent<ProfileOptionProps> = (props: ProfileOptionProps) => {
     const infoIcon = <InfoIcon onPress={props.onHelpIconPress}></InfoIcon>;
     const OptionComponent = optionComponents[props.profileOption.field.type];
     return (
         <OptionComponent
             disabled={props.failed}
             title={props.profileOption.title}
-            description={
-                props.failed
-                    ? props.profileOption.failedConditionMessage
-                    : undefined
-            }
+            description={props.failed ? props.profileOption.failedConditionMessage : undefined}
             left={() => infoIcon}
             field={props.profileOption.field}
         ></OptionComponent>

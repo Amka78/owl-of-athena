@@ -7,7 +7,7 @@ import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
 import type { AuroraProfile } from "../sdk/AuroraTypes";
-import { Settings } from "../sdk/models";
+import type { Settings } from "../sdk/models";
 import { WakeLockService } from "../services";
 import { createOfficialProfile } from "../services/ProfileService";
 import { useAppStore } from "../store/appStore";
@@ -53,8 +53,8 @@ export const useHome = (): {
             },
             () => {
                 navigate("Sleeping");
-            }
-        )
+            },
+        ),
     );
 
     const wakeEvent = useRef(() => {
@@ -73,30 +73,12 @@ export const useHome = (): {
     useEffect(() => {
         console.log("Called HomeScreen useEffect.");
 
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onSleeping,
-            onSleepingEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onSleeping,
-            onSleepingEvent.current
-        );
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onAwake,
-            wakeEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onAwake,
-            wakeEvent.current
-        );
-        AuroraManagerInstance.off(
-            AuroraManagerEventList.onWaking,
-            wakingEvent.current
-        );
-        AuroraManagerInstance.on(
-            AuroraManagerEventList.onWaking,
-            wakingEvent.current
-        );
+        AuroraManagerInstance.off(AuroraManagerEventList.onSleeping, onSleepingEvent.current);
+        AuroraManagerInstance.on(AuroraManagerEventList.onSleeping, onSleepingEvent.current);
+        AuroraManagerInstance.off(AuroraManagerEventList.onAwake, wakeEvent.current);
+        AuroraManagerInstance.on(AuroraManagerEventList.onAwake, wakeEvent.current);
+        AuroraManagerInstance.off(AuroraManagerEventList.onWaking, wakingEvent.current);
+        AuroraManagerInstance.on(AuroraManagerEventList.onWaking, wakingEvent.current);
         let unmounted = false;
         console.log("Loading profiles start");
         const f = async (): Promise<void> => {
@@ -105,9 +87,7 @@ export const useHome = (): {
 
                 console.log("Current profiles:", auroraProfiles);
                 if (auroraProfiles.length <= 0 && user.id !== GuestUser) {
-                    console.log(
-                        "Cached profile is not exist, so loading remote profile start."
-                    );
+                    console.log("Cached profile is not exist, so loading remote profile start.");
                     try {
                         auroraProfiles = await AuroraRestClientInstance.getAuroraProfiles();
                         console.log("Current remote profile:", auroraProfiles);
@@ -118,9 +98,7 @@ export const useHome = (): {
                 }
 
                 if (auroraProfiles.length <= 0) {
-                    console.log(
-                        "At the first start-up, the initial values are read."
-                    );
+                    console.log("At the first start-up, the initial values are read.");
 
                     const profile = await createOfficialProfile();
 
@@ -132,11 +110,9 @@ export const useHome = (): {
                     console.log("Profile select start");
                     // get last used profile.
                     if (settings.profileId) {
-                        selectedProfile.current = auroraProfiles.find(
-                            (value: AuroraProfile) => {
-                                return value.id === settings.profileId;
-                            }
-                        );
+                        selectedProfile.current = auroraProfiles.find((value: AuroraProfile) => {
+                            return value.id === settings.profileId;
+                        });
                     }
 
                     if (selectedProfile.current === undefined) {
@@ -148,8 +124,7 @@ export const useHome = (): {
                         //than last time settings were saved
                         if (
                             settings.savedAt != undefined &&
-                            auroraProfiles[0].id !==
-                                selectedProfile.current.id &&
+                            auroraProfiles[0].id !== selectedProfile.current.id &&
                             auroraProfiles[0].updated_at! < settings.savedAt.getTime()
                         ) {
                             //use the most recently saved profile instead
@@ -157,8 +132,7 @@ export const useHome = (): {
                             selectedProfile.current = profiles[0];
 
                             settings.profileId = selectedProfile.current.id;
-                            settings.profileTitle =
-                                selectedProfile.current.title;
+                            settings.profileTitle = selectedProfile.current.title;
                         }
                     }
                     settings.userId = user.id;
@@ -192,30 +166,19 @@ export const useHome = (): {
         try {
             if (AuroraManagerInstance.isConnected()) {
                 LoadingDialog.show({
-                    dialogTitle: Message.get(
-                        MessageKeys.home_go_to_sleep_loading_message
-                    ),
+                    dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
                 });
-                await AuroraManagerInstance.goToSleep(
-                    selectedProfile.current!,
-                    settings
-                );
+                await AuroraManagerInstance.goToSleep(selectedProfile.current!, settings);
             } else {
                 ConfirmDialog.show({
-                    title: Message.get(
-                        MessageKeys.home_aurora_disconnected_dialog_title
-                    ),
-                    message: Message.get(
-                        MessageKeys.home_aurora_disconnected_dialog_message
-                    ),
+                    title: Message.get(MessageKeys.home_aurora_disconnected_dialog_title),
+                    message: Message.get(MessageKeys.home_aurora_disconnected_dialog_message),
                     isCancelable: false,
                 });
             }
         } catch (e) {
             console.error(e);
-            setErrorText(
-                Message.get(MessageKeys.home_go_to_sleep_error_message)
-            );
+            setErrorText(Message.get(MessageKeys.home_go_to_sleep_error_message));
         } finally {
             LoadingDialog.close();
         }
@@ -228,14 +191,11 @@ export const useHome = (): {
 function onSleeping(
     succeedWakeLockCallback: () => void,
     releaseWakeLockCallback: () => void,
-    postSleepingCallback: () => void
+    postSleepingCallback: () => void,
 ): (...args: any[]) => void {
     return async (): Promise<void> => {
         try {
-            await WakeLockService.request(
-                succeedWakeLockCallback,
-                releaseWakeLockCallback
-            );
+            await WakeLockService.request(succeedWakeLockCallback, releaseWakeLockCallback);
             postSleepingCallback();
         } catch (err) {
             console.error(`${(err as Error).name}, ${(err as Error).message}`);

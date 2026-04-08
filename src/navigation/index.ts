@@ -1,6 +1,8 @@
 //#region Import Modules
-import { UnauthenticatedNavigator } from "./UnauthenticatedNavigator";
+
 import InitialNavigator from "./InitialNavigator";
+import { UnauthenticatedNavigator } from "./UnauthenticatedNavigator";
+
 //#endregion
 
 //#region Exports

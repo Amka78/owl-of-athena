@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../../constants';
-import { ProfileSecondMenu } from '../ProfileSecondMenu';
+import { fireEvent, render } from "@testing-library/react-native";
+import type React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../../constants";
+import { ProfileSecondMenu } from "../ProfileSecondMenu";
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
@@ -19,8 +19,8 @@ const mobileDimens = {
     isHorizontal: false,
 };
 
-describe('ProfileSecondMenu', () => {
-    it('renders correctly when connected', () => {
+describe("ProfileSecondMenu", () => {
+    it("renders correctly when connected", () => {
         const { toJSON } = renderWithProvider(
             <ProfileSecondMenu
                 auroraConnected={true}
@@ -28,12 +28,12 @@ describe('ProfileSecondMenu', () => {
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={jest.fn()}
-            />
+            />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders correctly when disconnected', () => {
+    it("renders correctly when disconnected", () => {
         const { toJSON } = renderWithProvider(
             <ProfileSecondMenu
                 auroraConnected={false}
@@ -41,12 +41,12 @@ describe('ProfileSecondMenu', () => {
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={jest.fn()}
-            />
+            />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('calls onShowAdvancedOptionsPress when advanced options pressed', () => {
+    it("calls onShowAdvancedOptionsPress when advanced options pressed", () => {
         const onPress = jest.fn();
         const { getByText } = renderWithProvider(
             <ProfileSecondMenu
@@ -55,7 +55,7 @@ describe('ProfileSecondMenu', () => {
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={onPress}
-            />
+            />,
         );
         // Find the advanced options flat button and press it
         const btn = getByText(/advanced/i);

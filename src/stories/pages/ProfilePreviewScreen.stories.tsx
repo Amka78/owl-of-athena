@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
-
-import { Theme } from "../../constants";
 import { ProfilePreviewScreen } from "../../components/pages/ProfilePreviewScreen";
+import { Theme } from "../../constants";
 
 jest.mock("../../hooks/profiles/useProfilePreview", () => ({
     useProfilePreview: () => ({
@@ -17,7 +16,6 @@ jest.mock("@react-navigation/native", () => ({
     useRoute: () => ({ params: {} }),
     useFocusEffect: jest.fn(),
 }));
-
 
 const meta = {
     title: "Pages/ProfilePreviewScreen",

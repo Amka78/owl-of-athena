@@ -1,16 +1,20 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { expect } from '@storybook/test';
-import React from 'react';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../constants';
-import { ValidatableTextBox } from '../../components/molecules/ValidatableTextBox';
+import type { Meta, StoryObj } from "@storybook/react";
+import { expect } from "@storybook/test";
+import React from "react";
+import { Provider } from "react-native-paper";
+import { ValidatableTextBox } from "../../components/molecules/ValidatableTextBox";
+import { Theme } from "../../constants";
 
 const meta = {
-    title: 'Molecules/ValidatableTextBox',
+    title: "Molecules/ValidatableTextBox",
     component: ValidatableTextBox,
-    tags: ['autodocs'],
+    tags: ["autodocs"],
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof ValidatableTextBox>;
 
@@ -19,9 +23,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        label: 'Email',
-        value: 'user@example.com',
-        helperText: '',
+        label: "Email",
+        value: "user@example.com",
+        helperText: "",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -30,9 +34,9 @@ export const Primary: Story = {
 
 export const WithError: Story = {
     args: {
-        label: 'Email',
-        value: 'invalid',
-        helperText: 'Please enter a valid email',
+        label: "Email",
+        value: "invalid",
+        helperText: "Please enter a valid email",
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

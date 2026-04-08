@@ -1,14 +1,18 @@
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { SessionDesktopScreenTemplate } from '../SessionDesktopScreenTemplate';
-import { FilterByDateValues } from '../../../store/sessionStore';
+import { render } from "@testing-library/react-native";
+import type React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { FilterByDateValues } from "../../../store/sessionStore";
+import { SessionDesktopScreenTemplate } from "../SessionDesktopScreenTemplate";
 
-jest.mock('../../../navigation/SessionTabNavigator', () => {
-    const React = require('react');
-    const { View, Text } = require('react-native');
-    return () => <View><Text>SessionTabNavigator</Text></View>;
+jest.mock("../../../navigation/SessionTabNavigator", () => {
+    const React = require("react");
+    const { View, Text } = require("react-native");
+    return () => (
+        <View>
+            <Text>SessionTabNavigator</Text>
+        </View>
+    );
 });
 
 const renderWithProvider = (ui: React.ReactElement) =>
@@ -20,9 +24,9 @@ const filterMenuProps = {
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
-    showStarredCheckBoxStatus: 'unchecked' as const,
+    showStarredCheckBoxStatus: "unchecked" as const,
     onShowStarredCheckBoxPress: jest.fn(),
-    showNoteCheckBoxStatus: 'unchecked' as const,
+    showNoteCheckBoxStatus: "unchecked" as const,
     onShowNoteCheckBoxPress: jest.fn(),
 };
 
@@ -38,17 +42,17 @@ const defaultProps = {
     selected: undefined,
 };
 
-describe('SessionDesktopScreenTemplate', () => {
-    it('renders correctly with empty session list', () => {
+describe("SessionDesktopScreenTemplate", () => {
+    it("renders correctly with empty session list", () => {
         const { toJSON } = renderWithProvider(
-            <SessionDesktopScreenTemplate {...defaultProps} locale="en-US" />
+            <SessionDesktopScreenTemplate {...defaultProps} locale="en-US" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders blank screen when no session selected', () => {
+    it("renders blank screen when no session selected", () => {
         const { toJSON } = renderWithProvider(
-            <SessionDesktopScreenTemplate {...defaultProps} selected={undefined} locale="en-US" />
+            <SessionDesktopScreenTemplate {...defaultProps} selected={undefined} locale="en-US" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });

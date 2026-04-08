@@ -1,6 +1,7 @@
 //#region Import Modules
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
-import React, { FunctionComponent } from "react";
+import { type LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import type React from "react";
+import type { FunctionComponent } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { Provider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -16,9 +17,7 @@ export type ContainerProps = {
 //#endregion
 
 //#region Component
-export const Container: FunctionComponent<ContainerProps> = (
-    props: ContainerProps
-) => {
+export const Container: FunctionComponent<ContainerProps> = (props: ContainerProps) => {
     const dimens = useWindowDimensions();
     const config = {
         screens: {
@@ -46,8 +45,7 @@ export const Container: FunctionComponent<ContainerProps> = (
                             List: "sessions/list",
                             Detail: {
                                 screens: {
-                                    SleepTracking:
-                                        "sessions/detail/sleep-tracking",
+                                    SleepTracking: "sessions/detail/sleep-tracking",
                                     Journal: "sessions/detail/journal",
                                 },
                             },
@@ -74,10 +72,7 @@ export const Container: FunctionComponent<ContainerProps> = (
                 <SafeAreaProvider>
                     <SafeAreaView
                         mode={"margin"}
-                        style={[
-                            styles.container,
-                            { width: dimens.width, height: dimens.height },
-                        ]}
+                        style={[styles.container, { width: dimens.width, height: dimens.height }]}
                     >
                         {props.children}
                     </SafeAreaView>

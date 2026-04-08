@@ -1,11 +1,10 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { useAuthStore } from "../store/authStore";
-
 import { LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { createGuestUser } from "../services/WelcomeService";
+import { useAuthStore } from "../store/authStore";
 import { useAutoLogin } from "./useAutoLogin";
 //#endregion
 

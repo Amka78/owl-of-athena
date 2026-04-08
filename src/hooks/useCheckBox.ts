@@ -8,7 +8,7 @@ export type checkBoxCoreFunctions = ReturnType<typeof useCheckBox>;
 
 //#region Hook
 export const useCheckBox = (
-    initialCheck: boolean
+    initialCheck: boolean,
 ): {
     onPress: () => void;
     status: "checked" | "unchecked" | "indeterminate";

@@ -1,20 +1,16 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
-import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
-import { TextBoxProps } from "../atoms/TextBox";
-import { ContentTitleProps } from "../atoms/ContentTitle";
-import { ErrorTextProps } from "../atoms/ErrorText";
-import {
-    ConvertibleContentTitle,
-    InternalView,
-    RightSideButton,
-} from "../molecules";
-import { TemplateButtonProps } from "./TempatedProps";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
+import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
+import type { ContentTitleProps } from "../atoms/ContentTitle";
+import type { ErrorTextProps } from "../atoms/ErrorText";
+import type { TextBoxProps } from "../atoms/TextBox";
+import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
+import type { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 
 //#region Types
@@ -34,14 +30,14 @@ export type LoginScreenTemplateProps = {
 
 //#region Component
 export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = (
-    props: LoginScreenTemplateProps
+    props: LoginScreenTemplateProps,
 ) => {
     useLocale(props.locale);
 
     useConvertibleHeader(
         MessageKeys.login_title,
         props.dimens.isDesktop,
-        props.dimens.isSmallHeight
+        props.dimens.isSmallHeight,
     );
 
     const loginButton = (
@@ -82,9 +78,7 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
                     {loginButton}
                     {cancelButton}
                 </View>
-                <View
-                    style={{ flexDirection: "row", justifyContent: "flex-end" }}
-                >
+                <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
                     {forgotPasswordFlatButton}
                     {signupFlatButton}
                 </View>

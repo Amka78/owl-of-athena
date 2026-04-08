@@ -1,6 +1,6 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import React, { type FunctionComponent } from "react";
+import type { StyleProp, ViewStyle } from "react-native";
 import { Switch } from "react-native-paper";
 
 import type { ToggleField } from "../../sdk/AuroraTypes";
@@ -17,14 +17,7 @@ export type FieldToggleProps = {
 //#endregion
 
 //#region Component
-export const FieldToggle: FunctionComponent<FieldToggleProps> = (
-    props: FieldToggleProps
-) => {
-    return (
-        <Switch
-            {...props}
-            value={props.value === props.field.valueEnabled}
-        ></Switch>
-    );
+export const FieldToggle: FunctionComponent<FieldToggleProps> = (props: FieldToggleProps) => {
+    return <Switch {...props} value={props.value === props.field.valueEnabled}></Switch>;
 };
 //#endregion

@@ -1,16 +1,17 @@
 //#region Import Modules
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import type * as React from "react";
 
 import { ProfileListScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import ProfileTabNavigator from "./ProfileTabNavigator";
 import { StackCommonScreenOptions } from "./StackSettings";
+
 //#endregion
 
 //#region Component
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const ProfileNavigator = (): React.ReactNode => {
     const dimens = useWindowDimensions();
@@ -26,10 +27,7 @@ const ProfileNavigator = (): React.ReactNode => {
                         : "",
                 }}
             ></Stack.Screen>
-            <Stack.Screen
-                name={"Detail"}
-                component={ProfileTabNavigator}
-            ></Stack.Screen>
+            <Stack.Screen name={"Detail"} component={ProfileTabNavigator}></Stack.Screen>
         </Stack.Navigator>
     );
 };

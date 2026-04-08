@@ -1,18 +1,19 @@
 //#region Import Modules
-import { useCallback } from "react";
-import {
-    useCheckLogging,
-    useUserSelector,
-    useSessionListSelector,
-    useSessionDetailListSelector,
-} from "./";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
-import { SleepStates } from "../sdk";
+
 import { useNavigation } from "@react-navigation/native";
-import { useSessionStore } from "../store/sessionStore";
+import { useCallback } from "react";
+import { LoadingDialog, QuestionnaireDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerInstance } from "../managers";
+import { SleepStates } from "../sdk";
+import { useSessionStore } from "../store/sessionStore";
 import { GuestUser } from "../types";
+import {
+    useCheckLogging,
+    useSessionDetailListSelector,
+    useSessionListSelector,
+    useUserSelector,
+} from "./";
 //#endregion
 
 //#region Hooks
@@ -28,18 +29,15 @@ export const useAwake = (): {
     const sessionDetailList = useSessionDetailListSelector();
 
     const questionnaireButtonPress = useCallback((): void => {
-        ConfirmDialog.show({
-            title: Message.get(MessageKeys.wip_dialog_title),
-            message: Message.get(MessageKeys.wip_dialog_message),
-            isCancelable: false,
+        QuestionnaireDialog.show({
+            onComplete: () => navigate("Home"),
+            onClose: () => navigate("Home"),
         });
-    }, []);
+    }, [navigate]);
 
     const skipButtonPress = useCallback(async (): Promise<void> => {
         LoadingDialog.show({
-            dialogTitle: Message.get(
-                MessageKeys.home_go_to_sleep_loading_message
-            ),
+            dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
         });
         try {
             const unsyncedSession = await AuroraManagerInstance.getUnsyncedSessions();
@@ -47,7 +45,7 @@ export const useAwake = (): {
             if (unsyncedSession.length > 0) {
                 const pushedSession = await AuroraManagerInstance.pushSessions(
                     unsyncedSession,
-                    userInfo?.id === GuestUser
+                    userInfo?.id === GuestUser,
                 );
 
                 sessionList.unshift(...pushedSession[0]);
@@ -61,7 +59,15 @@ export const useAwake = (): {
         } finally {
             LoadingDialog.close();
         }
-    }, [cacheSessions, cacheSessionDetails, navigate, selectSession, sessionDetailList, sessionList, userInfo?.id]);
+    }, [
+        cacheSessions,
+        cacheSessionDetails,
+        navigate,
+        selectSession,
+        sessionDetailList,
+        sessionList,
+        userInfo?.id,
+    ]);
     return { questionnaireButtonPress, skipButtonPress };
 };
 //#endregion

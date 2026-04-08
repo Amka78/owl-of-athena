@@ -1,10 +1,11 @@
 //#region Import Modules
 import React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, type ViewStyle } from "react-native";
 import { Dialog } from "react-native-paper";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { ContentText, FlatButton } from "../atoms";
+
 //#endregion
 
 //#region Types
@@ -25,10 +26,7 @@ type ConfirmDialogState = {
 //#endregion
 
 //#region Component
-export class ConfirmDialog extends React.Component<
-    ConfirmDialogProps,
-    ConfirmDialogState
-> {
+export class ConfirmDialog extends React.Component<ConfirmDialogProps, ConfirmDialogState> {
     public static Instance?: ConfirmDialog;
 
     public static show(args: ConfirmDialogSettings): void {
@@ -66,19 +64,13 @@ export class ConfirmDialog extends React.Component<
                 onDismiss={async (): Promise<void> => {
                     this.closeDialog();
                 }}
-                style={[
-                    style.dialogContainer,
-                    this.props.dialogContainer,
-                    { width },
-                ]}
+                style={[style.dialogContainer, this.props.dialogContainer, { width }]}
             >
                 <Dialog.Title style={style.dialogTitle}>
                     {this.state.dialogSettings.title}
                 </Dialog.Title>
                 <Dialog.Content>
-                    <ContentText>
-                        {this.state.dialogSettings.message}
-                    </ContentText>
+                    <ContentText>{this.state.dialogSettings.message}</ContentText>
                 </Dialog.Content>
                 <Dialog.Actions>
                     {this.state.dialogSettings.isCancelable === true ? (

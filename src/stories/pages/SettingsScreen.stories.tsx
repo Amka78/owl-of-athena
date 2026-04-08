@@ -2,9 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
-
-import { Theme } from "../../constants";
 import { SettingsScreen } from "../../components/pages/SettingsScreen";
+import { Theme } from "../../constants";
 
 jest.mock("../../hooks/useSetting", () => ({
     useSetting: () => ({
@@ -62,7 +61,6 @@ jest.mock("@react-navigation/native", () => ({
     useRoute: () => ({ params: {} }),
     useFocusEffect: jest.fn(),
 }));
-
 
 const meta = {
     title: "Pages/SettingsScreen",

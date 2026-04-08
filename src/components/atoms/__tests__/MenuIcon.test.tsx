@@ -1,12 +1,14 @@
 //#region Import Modules
-import React from 'react';
-import { render } from '@testing-library/react-native';
-import { MenuIcon } from '../MenuIcon';
+
+import { render } from "@testing-library/react-native";
+import React from "react";
+import { MenuIcon } from "../MenuIcon";
+
 //#endregion
 
 //#region Tests
-describe('MenuIcon UnitTest', () => {
-    it('renders correctly', () => {
+describe("MenuIcon UnitTest", () => {
+    it("renders correctly", () => {
         const { toJSON } = render(<MenuIcon />);
         expect(toJSON()).toMatchSnapshot();
     });

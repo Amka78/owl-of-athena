@@ -1,8 +1,8 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 
 import { Dimens } from "../../constants";
-import { Button, ButtonProps } from "../atoms/Button";
+import { Button, type ButtonProps } from "../atoms/Button";
 //#endregion
 
 //#region Types
@@ -11,7 +11,7 @@ export type RightSideButtonProps = ButtonProps & { needMargin: boolean };
 
 //#region Component
 export const RightSideButton: FunctionComponent<RightSideButtonProps> = (
-    props: RightSideButtonProps
+    props: RightSideButtonProps,
 ) => {
     return (
         <Button

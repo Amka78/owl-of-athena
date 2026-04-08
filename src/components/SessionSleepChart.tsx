@@ -1,9 +1,9 @@
 //#region Import Modules
-import React, { FunctionComponent } from "react";
+import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
-import { ChartSleep, ChartMovement } from "../components/charts";
-import { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
+import { ChartMovement, ChartSleep } from "../components/charts";
 import { Layout } from "../constants";
+import type { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
 //#endregion
 
 //#region Types
@@ -19,15 +19,9 @@ export type SessionSleepChartProps = {
 
 //#region Component
 export const SessionSleepChart: FunctionComponent<SessionSleepChartProps> = (
-    props: SessionSleepChartProps
+    props: SessionSleepChartProps,
 ) => {
-    const {
-        width,
-        height,
-        scaleXDomain,
-        isFilterEnabled,
-        sessionDetail,
-    } = props;
+    const { width, height, scaleXDomain, isFilterEnabled, sessionDetail } = props;
     const chartSleepHeight = height - 100;
     const chartMovementHeight = height - chartSleepHeight;
     const { sleepEvents, movementEvents } = sessionDetail;

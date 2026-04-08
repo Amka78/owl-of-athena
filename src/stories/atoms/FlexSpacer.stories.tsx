@@ -2,14 +2,18 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
-import { Theme } from "../../constants";
 import { FlexSpacer } from "../../components/atoms/FlexSpacer";
+import { Theme } from "../../constants";
 
 const meta = {
     title: "Atoms/FlexSpacer",
     component: FlexSpacer,
     decorators: [
-        (Story: any) => <Provider theme={Theme}><Story /></Provider>,
+        (Story: any) => (
+            <Provider theme={Theme}>
+                <Story />
+            </Provider>
+        ),
     ],
 } satisfies Meta<typeof FlexSpacer>;
 
@@ -22,4 +26,3 @@ export const Primary: Story = {
         expect(canvasElement).toBeTruthy();
     },
 };
-
