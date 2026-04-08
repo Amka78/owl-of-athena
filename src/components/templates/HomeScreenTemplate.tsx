@@ -9,7 +9,7 @@ import { TimeViewProps } from "../atoms/TimeView";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types

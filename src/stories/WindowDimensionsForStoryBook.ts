@@ -1,7 +1,7 @@
 import { Dimensions as WindowDimensions } from "react-native";
 
 import { Dimens } from "../constants";
-import { Dimensions } from "../hooks/useWindowDimensions";
+import type { Dimensions } from "../hooks/useWindowDimensions";
 
 export const getDimensions = (): Dimensions => {
     const currentDimens = WindowDimensions.get("window");

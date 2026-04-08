@@ -14,7 +14,7 @@ import {
     useProfileListSelector,
     useSettingsSelector,
 } from "../hooks";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import type { AuroraProfile } from "../sdk/AuroraTypes";
 import { Settings } from "../sdk/models";
 //#endregion
 

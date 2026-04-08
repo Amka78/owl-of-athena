@@ -2,7 +2,7 @@ import crc32 from "buffer-crc32";
 import Stream from "stream";
 
 import { ConnectorTypes } from "./AuroraConstants";
-import { CommandResult, FileInfo } from "./AuroraTypes";
+import type { CommandResult, FileInfo } from "./AuroraTypes";
 
 const AuroraCmdUploadFile = async function (
     this: any,

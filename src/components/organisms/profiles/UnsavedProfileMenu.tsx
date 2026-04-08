@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
-import { Dimensions } from "../../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../../hooks/useWindowDimensions";
 import { FlatButton, LeftSideButton } from "../../atoms";
 //#endregion
 

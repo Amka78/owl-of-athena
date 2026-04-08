@@ -12,7 +12,7 @@ import {
     ConnectionStates,
     DeviceEventList,
 } from "./AuroraConstants";
-import { AuroraEvent, BluetoothStream, CommandResult } from "./AuroraTypes";
+import type { AuroraEvent, BluetoothStream, CommandResult } from "./AuroraTypes";
 import { sleep } from "./util";
 //#endregion
 

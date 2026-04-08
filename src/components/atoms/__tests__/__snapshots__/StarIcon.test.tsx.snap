@@ -1,0 +1,31 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`StarIcon UnitTest renders correctly with starred=true 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#ffffff",
+    "name": "star",
+    "onPress": undefined,
+    "size": 25,
+    "starred": true,
+  },
+  "type": "Icon",
+}
+`;
+
+exports[`StarIcon UnitTest renders correctly with starred=false 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#ffffff",
+    "name": "star-outline",
+    "onPress": undefined,
+    "size": 25,
+    "starred": false,
+  },
+  "type": "Icon",
+}
+`;

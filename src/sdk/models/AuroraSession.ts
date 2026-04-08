@@ -1,4 +1,4 @@
-import { AuroraSessionJson, AuroraSessionCSV } from "../AuroraTypes";
+import type { AuroraSessionJson, AuroraSessionCSV } from "../AuroraTypes";
 export class AuroraSession {
     public id: string;
     public userId: string;

@@ -1,0 +1,150 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`TimeView UnitTest renders correctly with mode="meridian" 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                "8:30",
+              ],
+              "props": {
+                "style": [
+                  {
+                    "fontFamily": "calibre_app_semibold",
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "Text",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                "am",
+              ],
+              "props": {
+                "style": [
+                  {
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "Text",
+            },
+          ],
+          "props": {
+            "style": [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`TimeView UnitTest renders correctly with mode="time" 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                "2h 15m",
+              ],
+              "props": {
+                "style": [
+                  {
+                    "fontFamily": "calibre_app_semibold",
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "Text",
+            },
+          ],
+          "props": {
+            "style": [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

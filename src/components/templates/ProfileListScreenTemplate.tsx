@@ -3,8 +3,8 @@ import React, { FunctionComponent } from "react";
 import { View, ViewStyle } from "react-native";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
-import { AuroraProfile } from "../../sdk/AuroraTypes";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
+import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import {
     CommunityIcon,
     DeleteIcon,

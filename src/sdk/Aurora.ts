@@ -20,7 +20,7 @@ import AuroraCmdSyncTime from "./AuroraCmdSyncTime";
 import AuroraCmdUploadFile from "./AuroraCmdUploadFile";
 import AuroraCmdWriteFile from "./AuroraCmdWriteFile";
 import * as AuroraConstants from "./AuroraConstants";
-import {
+import type {
     Command,
     CommandResolverType,
     CommandResult,

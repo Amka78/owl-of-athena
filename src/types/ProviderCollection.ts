@@ -1,4 +1,4 @@
-import { Provider } from "./Provider";
+import type { Provider } from "./Provider";
 
 export type ProviderCollection = {
     email: Provider;

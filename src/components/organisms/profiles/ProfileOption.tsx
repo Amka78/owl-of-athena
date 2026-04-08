@@ -1,6 +1,6 @@
 //#region "Import Modules"
 import React, { FunctionComponent } from "react";
-import { AuroraProfileOption } from "../../../sdk/AuroraTypes";
+import type { AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { InfoIcon } from "../../atoms";
 import {
     OptionCheckBoxes,

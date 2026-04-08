@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 
 import { FieldToggle, ListItem } from "../atoms";
 import { ListItemComponentProps } from "../atoms/ListItem";
-import { OptionProps } from "./OptionProps";
+import type { OptionProps } from "./OptionProps";
 //#endregion
 
 //#region Types

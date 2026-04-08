@@ -2,7 +2,7 @@
 import React, { FunctionComponent } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 
-import { CheckBoxField } from "../../sdk/AuroraTypes";
+import type { CheckBoxField } from "../../sdk/AuroraTypes";
 import { StreamIds } from "../../sdk/AuroraConstants";
 import { LabeledCheckBox } from "../molecules";
 import { Colors } from "../../constants";

@@ -8,7 +8,7 @@ import {
     AuroraStream,
     AuroraEvent,
 } from "../sdk/models";
-import {
+import type {
     AuroraSessionJson,
     AuroraStreamJson,
     AuroraEventJson,

@@ -1,0 +1,110 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`LabeledSelectorMenu renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Language",
+                  ],
+                  "props": {
+                    "style": {
+                      "color": "#bcfeff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 14,
+                      "marginBottom": 12,
+                    },
+                  },
+                  "type": "Text",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "English",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#4a2fba",
+                          "marginLeft": 0,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "#4a2fba",
+                        "name": "chevron-right",
+                        "size": 20,
+                        "style": {
+                          "marginLeft": 0,
+                        },
+                      },
+                      "type": "Icon",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "justifyContent": "flex-end",
+                      "marginBottom": 12,
+                    },
+                  },
+                  "type": "View",
+                },
+              ],
+              "props": {
+                "accessible": true,
+                "onPress": undefined,
+                "style": {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                },
+              },
+              "type": "TouchableOpacity",
+            },
+          ],
+          "props": {
+            "style": {},
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

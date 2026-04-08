@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
-import { AuroraProfile, AuroraProfileOption } from "../sdk/AuroraTypes";
+import type { AuroraProfile, AuroraProfileOption } from "../sdk/AuroraTypes";
 import groupBy from "lodash/groupBy";
 import { MessageKeys } from "../constants";
 //#endregion

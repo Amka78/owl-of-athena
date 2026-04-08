@@ -5,7 +5,7 @@ import { Card, Divider } from "react-native-paper";
 
 import { Colors, Dimens, Message } from "../../../constants";
 import { useLocale } from "../../../hooks";
-import { AuroraProfileOption as AuroraProfileOption } from "../../../sdk/AuroraTypes";
+import type { AuroraProfileOption as AuroraProfileOption } from "../../../sdk/AuroraTypes";
 import { GroupedProfileOptionList } from "../../../services/ProfileService";
 import { ProfileOption } from "./ProfileOption";
 //#endregion

@@ -1,0 +1,407 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Button UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "Test",
+                          ],
+                          "props": {
+                            "maxFontSizeMultiplier": undefined,
+                            "numberOfLines": 1,
+                            "ref": {
+                              "current": null,
+                            },
+                            "selectable": false,
+                            "style": [
+                              {
+                                "textAlign": "left",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "writingDirection": "ltr",
+                              },
+                              [
+                                {
+                                  "fontFamily": "System",
+                                  "fontSize": 14,
+                                  "fontWeight": "500",
+                                  "letterSpacing": 0.1,
+                                  "lineHeight": 20,
+                                },
+                                [
+                                  {
+                                    "marginHorizontal": 16,
+                                    "marginVertical": 9,
+                                    "textAlign": "center",
+                                  },
+                                  false,
+                                  {
+                                    "marginHorizontal": 24,
+                                    "marginVertical": 10,
+                                  },
+                                  undefined,
+                                  false,
+                                  {
+                                    "color": "rgba(255, 255, 255, 1)",
+                                    "fontFamily": "System",
+                                    "fontSize": 14,
+                                    "fontWeight": "500",
+                                    "letterSpacing": 0.1,
+                                    "lineHeight": 20,
+                                  },
+                                  [
+                                    {
+                                      "fontFamily": "calibre_app_semibold",
+                                      "fontSize": 24,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              ],
+                            ],
+                            "testID": "button-text",
+                          },
+                          "type": "Text",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "accessibilityHint": undefined,
+                    "accessibilityLabel": undefined,
+                    "accessibilityRole": "button",
+                    "accessibilityState": {
+                      "disabled": false,
+                    },
+                    "accessible": undefined,
+                    "delayLongPress": undefined,
+                    "disabled": true,
+                    "hitSlop": undefined,
+                    "onLongPress": undefined,
+                    "onPress": undefined,
+                    "onPressIn": [Function],
+                    "onPressOut": [Function],
+                    "ref": null,
+                    "style": [Function],
+                    "testID": "button",
+                  },
+                  "type": "Pressable",
+                },
+              ],
+              "props": {
+                "screenWidth": 375,
+                "style": {
+                  "0": {
+                    "borderRadius": 16,
+                    "height": 50,
+                    "marginBottom": 16,
+                    "marginTop": 16,
+                  },
+                  "1": {
+                    "width": 270,
+                  },
+                  "2": undefined,
+                  "backgroundColor": "#00ffe6",
+                  "borderColor": "transparent",
+                  "borderRadius": 16,
+                  "borderStyle": "solid",
+                  "borderWidth": 0,
+                  "flex": undefined,
+                  "minWidth": 64,
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": AnimatedValue {
+                      "_v": 0,
+                    },
+                    "width": 0,
+                  },
+                  "shadowOpacity": AnimatedValue {
+                    "_v": 0,
+                  },
+                  "shadowRadius": AnimatedValue {
+                    "_v": 0,
+                  },
+                },
+                "testID": "button-container",
+              },
+              "type": "Animated.View",
+            },
+          ],
+          "props": {
+            "ref": null,
+            "style": {
+              "backgroundColor": "#00ffe6",
+              "borderRadius": 16,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": AnimatedValue {
+                  "_v": 0,
+                },
+                "width": 0,
+              },
+              "shadowOpacity": AnimatedValue {
+                "_v": 0,
+              },
+              "shadowRadius": AnimatedValue {
+                "_v": 0,
+              },
+            },
+            "testID": "button-container-outer-layer",
+          },
+          "type": "Animated.View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`Button UnitTest renders in disabled state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "Test",
+                          ],
+                          "props": {
+                            "maxFontSizeMultiplier": undefined,
+                            "numberOfLines": 1,
+                            "ref": {
+                              "current": null,
+                            },
+                            "selectable": false,
+                            "style": [
+                              {
+                                "textAlign": "left",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "writingDirection": "ltr",
+                              },
+                              [
+                                {
+                                  "fontFamily": "System",
+                                  "fontSize": 14,
+                                  "fontWeight": "500",
+                                  "letterSpacing": 0.1,
+                                  "lineHeight": 20,
+                                },
+                                [
+                                  {
+                                    "marginHorizontal": 16,
+                                    "marginVertical": 9,
+                                    "textAlign": "center",
+                                  },
+                                  false,
+                                  {
+                                    "marginHorizontal": 24,
+                                    "marginVertical": 10,
+                                  },
+                                  undefined,
+                                  false,
+                                  {
+                                    "color": "rgba(28, 27, 31, 0.38)",
+                                    "fontFamily": "System",
+                                    "fontSize": 14,
+                                    "fontWeight": "500",
+                                    "letterSpacing": 0.1,
+                                    "lineHeight": 20,
+                                  },
+                                  [
+                                    {
+                                      "fontFamily": "calibre_app_semibold",
+                                      "fontSize": 24,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              ],
+                            ],
+                            "testID": "button-text",
+                          },
+                          "type": "Text",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "justifyContent": "center",
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "accessibilityHint": undefined,
+                    "accessibilityLabel": undefined,
+                    "accessibilityRole": "button",
+                    "accessibilityState": {
+                      "disabled": true,
+                    },
+                    "accessible": undefined,
+                    "delayLongPress": undefined,
+                    "disabled": true,
+                    "hitSlop": undefined,
+                    "onLongPress": undefined,
+                    "onPress": undefined,
+                    "onPressIn": [Function],
+                    "onPressOut": [Function],
+                    "ref": null,
+                    "style": [Function],
+                    "testID": "button",
+                  },
+                  "type": "Pressable",
+                },
+              ],
+              "props": {
+                "screenWidth": 375,
+                "style": {
+                  "0": {
+                    "borderRadius": 16,
+                    "height": 50,
+                    "marginBottom": 16,
+                    "marginTop": 16,
+                  },
+                  "1": {
+                    "width": 270,
+                  },
+                  "2": undefined,
+                  "backgroundColor": "rgba(28, 27, 31, 0.12)",
+                  "borderColor": "transparent",
+                  "borderRadius": 16,
+                  "borderStyle": "solid",
+                  "borderWidth": 0,
+                  "flex": undefined,
+                  "minWidth": 64,
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": AnimatedValue {
+                      "_v": 0,
+                    },
+                    "width": 0,
+                  },
+                  "shadowOpacity": AnimatedValue {
+                    "_v": 0,
+                  },
+                  "shadowRadius": AnimatedValue {
+                    "_v": 0,
+                  },
+                },
+                "testID": "button-container",
+              },
+              "type": "Animated.View",
+            },
+          ],
+          "props": {
+            "ref": null,
+            "style": {
+              "backgroundColor": "rgba(28, 27, 31, 0.12)",
+              "borderRadius": 16,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": AnimatedValue {
+                  "_v": 0,
+                },
+                "width": 0,
+              },
+              "shadowOpacity": AnimatedValue {
+                "_v": 0,
+              },
+              "shadowRadius": AnimatedValue {
+                "_v": 0,
+              },
+            },
+            "testID": "button-container-outer-layer",
+          },
+          "type": "Animated.View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

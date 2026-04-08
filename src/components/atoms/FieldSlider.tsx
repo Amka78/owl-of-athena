@@ -3,7 +3,7 @@ import Slider from "@react-native-community/slider";
 import React, { FunctionComponent } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
-import { SliderField } from "../../sdk/AuroraTypes";
+import type { SliderField } from "../../sdk/AuroraTypes";
 //#endregion
 
 //#region Types

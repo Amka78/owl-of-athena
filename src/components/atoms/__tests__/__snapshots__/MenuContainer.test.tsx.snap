@@ -1,0 +1,27 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`MenuContainer UnitTest renders correctly with children 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        "Menu Item",
+      ],
+      "props": {},
+      "type": "Text",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "backgroundColor": "#4a2fba",
+        "flex": 0.4,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

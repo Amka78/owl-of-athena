@@ -1,3 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`TemplateIcon UnitTest renders correctly with name="home" 1`] = `<Text />`;

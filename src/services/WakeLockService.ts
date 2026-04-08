@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { ExperimentalNavigator, WakeLockSentinel } from "../types";
+import type { ExperimentalNavigator, WakeLockSentinel } from "../types";
 
 let wakeLockSentinel: WakeLockSentinel | undefined = undefined;
 export const request = async (

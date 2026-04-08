@@ -1,0 +1,15 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`EditIcon UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#ffffff",
+    "name": "pencil",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;

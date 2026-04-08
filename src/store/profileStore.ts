@@ -3,7 +3,7 @@ import _ from "lodash";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import type { AuroraProfile } from "../sdk/AuroraTypes";
 
 export type ProfileFilterCondition = {
     showOfficial: boolean;

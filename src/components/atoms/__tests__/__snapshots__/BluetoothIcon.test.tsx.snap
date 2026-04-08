@@ -1,0 +1,31 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`BluetoothIcon UnitTest renders correctly with CONNECTED state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#00ffe6",
+    "connectionStates": 4,
+    "name": "bluetooth-connect",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;
+
+exports[`BluetoothIcon UnitTest renders correctly with DISCONNECTED state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#ffffff",
+    "connectionStates": 7,
+    "name": "bluetooth-off",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;

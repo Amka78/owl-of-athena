@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 
 import { Colors } from "../../../constants";
-import { AuroraProfile } from "../../../sdk/AuroraTypes";
+import type { AuroraProfile } from "../../../sdk/AuroraTypes";
 import { EditIcon } from "../../atoms";
 //#endregion
 

@@ -1,0 +1,80 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`StandardView UnitTest renders correctly with children 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Content",
+                  ],
+                  "props": {},
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "space-between",
+                    "marginLeft": 48,
+                    "marginRight": 48,
+                  },
+                  {
+                    "backgroundColor": "#070724",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "onLayout": undefined,
+            "style": [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

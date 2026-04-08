@@ -5,7 +5,7 @@ import { Message, MessageKeys, Colors, Fonts } from "../../constants";
 import { Dialog, RadioButton } from "react-native-paper";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 import { FlatButton } from "../atoms";
-import { AuroraProfile } from "../../sdk/AuroraTypes";
+import type { AuroraProfile } from "../../sdk/AuroraTypes";
 type ProfilesDialogSettings = {
     profileList: Array<AuroraProfile>;
     selectedProfileId: string;

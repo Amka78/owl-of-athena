@@ -3,7 +3,7 @@ import SerialPort from "serialport";
 import AuroraSerialParser from "./AuroraSerialParser";
 import * as AuroraConstants from "./AuroraConstants";
 import { sleep, promisify } from "./util";
-import { AuroraEvent } from "./AuroraTypes";
+import type { AuroraEvent } from "./AuroraTypes";
 
 const CONNECT_RETRY_DELAY_MS = 1500;
 const DISCONNECT_RETRY_DELAY_MS = 3000;

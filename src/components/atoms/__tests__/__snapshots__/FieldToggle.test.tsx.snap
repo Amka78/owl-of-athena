@@ -1,0 +1,51 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`FieldToggle UnitTest renders correctly with value enabled 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": null,
+          "props": {
+            "disabled": false,
+            "field": {
+              "type": "toggle",
+              "valueDisabled": "disabled",
+              "valueEnabled": "enabled",
+            },
+            "onValueChange": [class Function],
+            "thumbColor": undefined,
+            "trackColor": {
+              "false": "#00ffe6",
+              "true": "#00ffe6",
+            },
+            "value": true,
+          },
+          "type": "Switch",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

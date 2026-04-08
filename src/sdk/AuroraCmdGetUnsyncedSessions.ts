@@ -1,6 +1,6 @@
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
-import { FileInfo, CommandResult, DirectoryInfo } from "./AuroraTypes";
+import type { FileInfo, CommandResult, DirectoryInfo } from "./AuroraTypes";
 
 const AuroraCmdGetUnsyncedSessions = async function (
     this: Aurora,

@@ -6,7 +6,7 @@ import { useProfileStore } from "../../store/profileStore";
 import { useCheckLogging, useUserSelector, useWindowDimensions } from "..";
 import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
 import { Message, MessageKeys } from "../../constants";
-import { AuroraProfile } from "../../sdk/AuroraTypes";
+import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { ProfileFilterCondition } from "../../store/profileStore";
 import { useFilterConditionSelector, useFilteredProfileListSelector } from "./";
 //#endregion

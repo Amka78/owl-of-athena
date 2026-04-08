@@ -1,6 +1,6 @@
 import split from "split";
 import { ConnectorTypes } from "./AuroraConstants";
-import { AuroraProfile } from "./AuroraTypes";
+import type { AuroraProfile } from "./AuroraTypes";
 import { Aurora } from "./Aurora";
 
 const AuroraCmdGetProfiles = async function (

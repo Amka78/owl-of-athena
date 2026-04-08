@@ -1,0 +1,268 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`CheckBox UnitTest renders checked state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "□",
+                  ],
+                  "props": {
+                    "accessibilityElementsHidden": true,
+                    "allowFontScaling": false,
+                    "importantForAccessibility": "no-hide-descendants",
+                    "pointerEvents": "none",
+                    "selectable": false,
+                    "style": [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#00ffe6",
+                        "fontSize": 24,
+                      },
+                    ],
+                    "testID": undefined,
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": {
+                  "opacity": 1,
+                },
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessibilityLiveRegion": "polite",
+            "accessibilityRole": "checkbox",
+            "accessibilityState": {
+              "checked": true,
+              "disabled": undefined,
+            },
+            "accessible": true,
+            "color": undefined,
+            "disabled": true,
+            "onPress": undefined,
+            "onPressIn": [Function],
+            "onPressOut": [Function],
+            "ref": null,
+            "style": [Function],
+            "testID": undefined,
+            "uncheckedColor": undefined,
+          },
+          "type": "Pressable",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`CheckBox UnitTest renders unchecked state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "□",
+                  ],
+                  "props": {
+                    "accessibilityElementsHidden": true,
+                    "allowFontScaling": false,
+                    "importantForAccessibility": "no-hide-descendants",
+                    "pointerEvents": "none",
+                    "selectable": false,
+                    "style": [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#00ffe6",
+                        "fontSize": 24,
+                      },
+                    ],
+                    "testID": undefined,
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": {
+                  "opacity": 0,
+                },
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessibilityLiveRegion": "polite",
+            "accessibilityRole": "checkbox",
+            "accessibilityState": {
+              "checked": false,
+              "disabled": undefined,
+            },
+            "accessible": true,
+            "color": undefined,
+            "disabled": true,
+            "onPress": undefined,
+            "onPressIn": [Function],
+            "onPressOut": [Function],
+            "ref": null,
+            "style": [Function],
+            "testID": undefined,
+            "uncheckedColor": undefined,
+          },
+          "type": "Pressable",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`CheckBox UnitTest renders indeterminate state 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "□",
+                  ],
+                  "props": {
+                    "accessibilityElementsHidden": true,
+                    "allowFontScaling": false,
+                    "importantForAccessibility": "no-hide-descendants",
+                    "pointerEvents": "none",
+                    "selectable": false,
+                    "style": [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#00ffe6",
+                        "fontSize": 24,
+                      },
+                    ],
+                    "testID": undefined,
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": {
+                  "opacity": 1,
+                },
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessibilityLiveRegion": "polite",
+            "accessibilityRole": "checkbox",
+            "accessibilityState": {
+              "checked": false,
+              "disabled": undefined,
+            },
+            "accessible": true,
+            "color": undefined,
+            "disabled": true,
+            "onPress": undefined,
+            "onPressIn": [Function],
+            "onPressOut": [Function],
+            "ref": null,
+            "style": [Function],
+            "testID": undefined,
+            "uncheckedColor": undefined,
+          },
+          "type": "Pressable",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

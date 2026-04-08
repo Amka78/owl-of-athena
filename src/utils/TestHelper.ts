@@ -1,10 +1,11 @@
+import type { Mock } from "bun:test";
 import {
     GestureResponderEvent,
     NativeSyntheticEvent,
     TextInputEndEditingEventData,
 } from "react-native";
 
-import { Dimensions } from "../hooks/useWindowDimensions";
+import type { Dimensions } from "../hooks/useWindowDimensions";
 
 // @ts-ignore
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
@@ -36,6 +37,6 @@ export const MobileDimension: Dimensions = {
 };
 
 /** Create a mock function that tracks calls */
-export function mockFn<T extends (...args: any[]) => any>(): jest.Mock<ReturnType<T>> {
-    return jest.fn();
+export function mockFn<T extends (...args: any[]) => any>(): Mock<ReturnType<T>> {
+    return jest.fn() as unknown as Mock<ReturnType<T>>;
 }

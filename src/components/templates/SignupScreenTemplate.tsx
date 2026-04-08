@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { ErrorText, LeftSideButton } from "../atoms";
 import {
     ConvertibleContentTitle,

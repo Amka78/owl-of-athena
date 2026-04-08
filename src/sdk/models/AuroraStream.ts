@@ -1,4 +1,4 @@
-import { AuroraStreamJson } from "../AuroraTypes";
+import type { AuroraStreamJson } from "../AuroraTypes";
 
 export class AuroraStream {
     public auroraSessionId: string;

@@ -1,6 +1,6 @@
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
-import { FileInfo, CommandResult } from "./AuroraTypes";
+import type { FileInfo, CommandResult } from "./AuroraTypes";
 
 const AuroraCmdFileInfo = async function (
     this: Aurora,

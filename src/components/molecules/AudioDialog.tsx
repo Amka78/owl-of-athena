@@ -6,7 +6,7 @@ import { Dialog, RadioButton } from "react-native-paper";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { AudioList } from "../../sdk/models/AudioList";
-import { AuroraSound } from "../../types";
+import type { AuroraSound } from "../../types";
 import { FlatButton } from "../atoms";
 import { LabeledRadioButton } from "../molecules";
 //#endregion

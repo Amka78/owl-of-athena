@@ -1,0 +1,3480 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`OptionCheckBoxes renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "rgba(73, 69, 79, 1)",
+                        "name": "filter",
+                        "size": 24,
+                      },
+                      "type": "Icon",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "alignSelf": "center",
+                      "marginLeft": 16,
+                      "marginRight": 0,
+                    },
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "File Streams",
+                      ],
+                      "props": {
+                        "ellipsizeMode": undefined,
+                        "maxFontSizeMultiplier": undefined,
+                        "numberOfLines": 1,
+                        "ref": {
+                          "current": null,
+                        },
+                        "selectable": false,
+                        "style": [
+                          {
+                            "textAlign": "left",
+                          },
+                          {
+                            "color": "rgba(28, 27, 31, 1)",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                            "letterSpacing": 0,
+                          },
+                          {
+                            "writingDirection": "ltr",
+                          },
+                          [
+                            {
+                              "fontSize": 16,
+                            },
+                            {
+                              "color": "rgba(28, 27, 31, 1)",
+                            },
+                            [
+                              {
+                                "color": "#ffffff",
+                              },
+                              undefined,
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Select streams",
+                      ],
+                      "props": {
+                        "ellipsizeMode": undefined,
+                        "maxFontSizeMultiplier": undefined,
+                        "numberOfLines": 2,
+                        "onTextLayout": [Function],
+                        "ref": {
+                          "current": null,
+                        },
+                        "selectable": false,
+                        "style": [
+                          {
+                            "textAlign": "left",
+                          },
+                          {
+                            "color": "rgba(28, 27, 31, 1)",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                            "letterSpacing": 0,
+                          },
+                          {
+                            "writingDirection": "ltr",
+                          },
+                          [
+                            {
+                              "fontSize": 14,
+                            },
+                            {
+                              "color": "rgba(73, 69, 79, 1)",
+                            },
+                            [
+                              {
+                                "color": "#9B9B9B",
+                              },
+                              undefined,
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "paddingLeft": 16,
+                      },
+                      {
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ],
+                    "testID": "undefined-content",
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Signal On/Off",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Signal On/Off",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Sleep Stages",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Sleep Stages",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Sleep Tracker",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Sleep Tracker",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Delta",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Delta",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Theta",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Theta",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Alpha",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Alpha",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Beta",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Beta",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Gamma",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Gamma",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "EEG Power Sum",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "EEG Power Sum",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Accelerometer X-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Accelerometer X-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Accelerometer Y-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Accelerometer Y-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Accelerometer Z-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Accelerometer Z-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Accelerometer Magnitude",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Accelerometer Magnitude",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Gyroscope X-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Gyroscope X-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Gyroscope Y-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Gyroscope Y-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Gyroscope Z-axis",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Gyroscope Z-axis",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Gyroscope Magnitude",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Gyroscope Magnitude",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "3D-Rotation Roll",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "3D-Rotation Roll",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "3D-Rotation Pitch",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "3D-Rotation Pitch",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Accelerometer Std. Dev.",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Accelerometer Std. Dev.",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Heart Rate",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Heart Rate",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Temperature",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Temperature",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": true,
+                                "label": "Battery",
+                                "labelPlace": "right",
+                                "labelStyle": {
+                                  "color": "#ffffff",
+                                },
+                                "onPress": undefined,
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Battery",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "flex": 1,
+                      "flexDirection": "row",
+                      "flexWrap": "wrap",
+                      "maxWidth": 500,
+                    },
+                  },
+                  "type": "View",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "flexDirection": "row",
+                    "marginVertical": 6,
+                    "width": "100%",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessible": true,
+            "disabled": true,
+            "field": {
+              "choices": "",
+              "labelNone": "None",
+              "type": "checkboxes",
+            },
+            "onPress": undefined,
+            "onPressIn": [Function],
+            "onPressOut": [Function],
+            "onValueChange": [class Function],
+            "ref": null,
+            "style": [Function],
+            "testID": undefined,
+            "value": 0,
+          },
+          "type": "Pressable",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

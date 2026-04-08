@@ -24,7 +24,7 @@ import {
 } from "../sdk/AuroraConstants";
 import { AuroraEventList } from "../sdk/AuroraEventList";
 import AuroraSessionReader from "../sdk/AuroraSessionReader";
-import {
+import type {
     AuroraEventJson,
     AuroraProfile,
     AuroraSessionCSV,
@@ -32,7 +32,7 @@ import {
     DirectoryInfo,
     FileInfo,
 } from "../sdk/AuroraTypes";
-import { AuroraEvent as AuroraSDKEvent } from "../sdk/AuroraTypes";
+import type { AuroraEvent as AuroraSDKEvent } from "../sdk/AuroraTypes";
 import {
     AuroraEvent,
     AuroraOSInfo,
@@ -41,7 +41,7 @@ import {
     Profile,
     Settings,
 } from "../sdk/models";
-import { AuroraSound } from "../types";
+import type { AuroraSound } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 //#endregion
 

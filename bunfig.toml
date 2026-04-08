@@ -1,0 +1,10 @@
+[test]
+preload = [
+    "./setup/react-native-mock.ts",
+    "./setup-tests.js",
+    "./setup-fetch.js",
+]
+timeout = 30000
+
+[loader]
+".ttf" = "text"

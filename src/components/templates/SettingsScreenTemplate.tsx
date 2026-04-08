@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { InlineTimePicker, LeftSideButton } from "../atoms";
 import { InlineTimePickerProps } from "../atoms/InlineTimePicker";
 import {

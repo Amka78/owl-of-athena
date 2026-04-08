@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
-import { Dimensions } from "../../hooks/";
+import type { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
 import {

@@ -8,7 +8,7 @@ import {
     StreamIdsToNames,
     EventIds,
 } from "./AuroraConstants";
-import { BluetoothStream, CommandResult } from "./AuroraTypes";
+import type { BluetoothStream, CommandResult } from "./AuroraTypes";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import { sleep } from "./util";
 

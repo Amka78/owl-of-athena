@@ -9,7 +9,7 @@ import {
 } from "./AuroraConstants";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import moment from "moment";
-import { CommandResult } from "./AuroraTypes";
+import type { CommandResult } from "./AuroraTypes";
 
 enum CmdStates {
     NO_CMD = 0,

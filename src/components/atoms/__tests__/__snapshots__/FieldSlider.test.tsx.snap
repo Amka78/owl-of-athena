@@ -1,0 +1,24 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`FieldSlider UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "disabled": false,
+    "field": {
+      "format": "minutes",
+      "max": 60,
+      "min": 0,
+      "step": 5,
+      "type": "slider",
+    },
+    "maximumValue": 60,
+    "minimumValue": 0,
+    "onValueChange": [class Function],
+    "step": 5,
+    "value": 30,
+  },
+  "type": "Slider",
+}
+`;

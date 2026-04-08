@@ -1,7 +1,7 @@
 import { ConnectorTypes } from "./AuroraConstants";
 import { Aurora } from "./Aurora";
 import AuroraSessionReader from "./AuroraSessionReader";
-import { CommandResult, DirectoryInfo } from "./AuroraTypes";
+import type { CommandResult, DirectoryInfo } from "./AuroraTypes";
 
 const AuroraCmdGetSessions = async function (
     this: Aurora,

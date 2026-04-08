@@ -1,4 +1,4 @@
-import { ProviderCollection } from "./ProviderCollection";
+import type { ProviderCollection } from "./ProviderCollection";
 
 export type User = {
     id: string;

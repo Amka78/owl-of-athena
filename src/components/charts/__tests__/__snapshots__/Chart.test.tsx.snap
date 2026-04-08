@@ -1,0 +1,20 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Chart UnitTest renders correctly with required props 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "height": 136,
+    "ref": [Function],
+    "style": {
+      "marginBottom": 32,
+      "marginLeft": 32,
+      "marginRight": 32,
+      "marginTop": 32,
+    },
+    "width": 236,
+  },
+  "type": "svg",
+}
+`;

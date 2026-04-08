@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 
 import { useCheckLogging } from "..";
 import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
-import { CurrentChart } from "../../types/CurrentChart";
+import type { CurrentChart } from "../../types/CurrentChart";
 import {
     useSelectedSessionDetailSelector,
     useSelectedSessionSelector,

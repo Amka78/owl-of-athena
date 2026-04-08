@@ -4,7 +4,7 @@ import { StyleProp, ViewStyle } from "react-native";
 import { Colors } from "../../constants";
 import { InlineTimePicker } from ".";
 
-import { TimeField } from "../../sdk/AuroraTypes";
+import type { TimeField } from "../../sdk/AuroraTypes";
 //#endregion
 
 //#region Types

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
 import { Audio } from "expo-av";
-import { AuroraSound } from "../types";
+import type { AuroraSound } from "../types";
 //#endregion
 
 //#region Class

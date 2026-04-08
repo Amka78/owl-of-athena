@@ -1,5 +1,5 @@
 import { useAuthStore } from "../store/authStore";
-import { User } from "../types";
+import type { User } from "../types";
 
 export const useUserSelector = (): User | undefined =>
     useAuthStore((state) => state.user);

@@ -1,0 +1,1024 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ChartPie UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M95.04417546714014,69.93285858429842A118,118,0,0,1,-66.46122450898383,97.50336218185734L-43.719639062836016,65.39906424911436A78.66666666666667,78.66666666666667,0,0,0,62.939877534397134,47.19127313815062Z",
+                    "fill": "#3b4cca",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M2.127195480599238,-117.98082488009362A118,118,0,0,1,97.50336218185734,66.46122450898383L65.39906424911436,43.71963906283603A78.66666666666667,78.66666666666667,0,0,0,2.127195480599235,-78.63790106451064Z",
+                    "fill": "#9c59ff",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-69.9328585842984,95.04417546714014A118,118,0,0,1,-113.06834905314716,-33.757198378948424L-75.5787331436753,-21.824287865622612A78.66666666666667,78.66666666666667,0,0,0,-47.19127313815062,62.939877534397134Z",
+                    "fill": "#00bcd4",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-111.77797046139199,-37.81117982200742A118,118,0,0,1,-2.1271954805991737,-117.98082488009362L-2.1271954805991746,-78.63790106451064A78.66666666666667,78.66666666666667,0,0,0,-74.28835455192012,-25.878269308681656Z",
+                    "fill": "#ffb300",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "25%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(16.547059123670685,96.93110583709542)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "35%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(87.34621168065009,-45.167286275395305)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#d0d0d0",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-93.24329353062386,31.227114115882795)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-58.037282702664825,-79.37958340112027)",
+                  },
+                  "type": "SvgText",
+                },
+              ],
+              "props": {
+                "transform": "translate(0, 56.66666666666667)",
+              },
+              "type": "G",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#3b4cca",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Deep",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 0)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#9c59ff",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Light",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 44)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#00bcd4",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "REM",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 88)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#ffb300",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Awake",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 132)",
+                  },
+                  "type": "G",
+                },
+              ],
+              "props": {
+                "transform": "translate(138, 22.666666666666668)",
+              },
+              "type": "G",
+            },
+          ],
+          "props": {
+            "height": 136,
+            "style": {
+              "marginBottom": 32,
+              "marginLeft": 32,
+              "marginRight": 32,
+              "marginTop": 32,
+            },
+            "width": 236,
+          },
+          "type": "Svg",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ChartPie UnitTest renders with legend on the left 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M95.04417546714014,69.93285858429842A118,118,0,0,1,-66.46122450898383,97.50336218185734L-43.719639062836016,65.39906424911436A78.66666666666667,78.66666666666667,0,0,0,62.939877534397134,47.19127313815062Z",
+                    "fill": "#3b4cca",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M2.127195480599238,-117.98082488009362A118,118,0,0,1,97.50336218185734,66.46122450898383L65.39906424911436,43.71963906283603A78.66666666666667,78.66666666666667,0,0,0,2.127195480599235,-78.63790106451064Z",
+                    "fill": "#9c59ff",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-69.9328585842984,95.04417546714014A118,118,0,0,1,-113.06834905314716,-33.757198378948424L-75.5787331436753,-21.824287865622612A78.66666666666667,78.66666666666667,0,0,0,-47.19127313815062,62.939877534397134Z",
+                    "fill": "#00bcd4",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-111.77797046139199,-37.81117982200742A118,118,0,0,1,-2.1271954805991737,-117.98082488009362L-2.1271954805991746,-78.63790106451064A78.66666666666667,78.66666666666667,0,0,0,-74.28835455192012,-25.878269308681656Z",
+                    "fill": "#ffb300",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "25%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(16.547059123670685,96.93110583709542)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "35%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(87.34621168065009,-45.167286275395305)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#d0d0d0",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-93.24329353062386,31.227114115882795)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-58.037282702664825,-79.37958340112027)",
+                  },
+                  "type": "SvgText",
+                },
+              ],
+              "props": {
+                "transform": "translate(236, 56.66666666666667)",
+              },
+              "type": "G",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#3b4cca",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Deep",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 0)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#9c59ff",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Light",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 44)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#00bcd4",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "REM",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 88)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#ffb300",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Awake",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 132)",
+                  },
+                  "type": "G",
+                },
+              ],
+              "props": {
+                "transform": "translate(0, 22.666666666666668)",
+              },
+              "type": "G",
+            },
+          ],
+          "props": {
+            "height": 136,
+            "style": {
+              "marginBottom": 32,
+              "marginLeft": 32,
+              "marginRight": 32,
+              "marginTop": 32,
+            },
+            "width": 236,
+          },
+          "type": "Svg",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ChartPie UnitTest renders with custom inner and outer radius 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M64.45280207055015,47.39025538287894A80,80,0,0,1,-45.08086944480624,66.08869199870985L-27.73547849671208,41.60220225611165A50,50,0,0,0,39.96631232795196,30.044864434784778Z",
+                    "fill": "#3b4cca",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M1.4150441042616193,-79.98748433463197A80,80,0,0,1,66.08869199870983,45.08086944480625L41.60220225611165,27.735478496712084A50,50,0,0,0,1.4150441042616193,-49.9799724908187Z",
+                    "fill": "#9c59ff",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-47.39025538287894,64.45280207055015A80,80,0,0,1,-76.64874308971406,-22.9122278001728L-48.054780457533994,-13.810795602651172A50,50,0,0,0,-30.044864434784778,39.96631232795196Z",
+                    "fill": "#00bcd4",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M-75.7903628255673,-25.60900042502376A80,80,0,0,1,-1.4150441042615582,-79.98748433463197L-1.4150441042615587,-49.97997249081871A50,50,0,0,0,-47.19640019338723,-16.507568227502137Z",
+                    "fill": "#ffb300",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "25%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(10.937886539375537,64.073103858419)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "35%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(57.73732636517547,-29.8563417752613)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#d0d0d0",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-61.63539741854797,20.641651703719134)",
+                  },
+                  "type": "SvgText",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "20%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(-38.36362754921912,-52.47125004480831)",
+                  },
+                  "type": "SvgText",
+                },
+              ],
+              "props": {
+                "transform": "translate(38, 56.66666666666667)",
+              },
+              "type": "G",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#3b4cca",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Deep",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 0)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#9c59ff",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Light",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 44)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#00bcd4",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "REM",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 88)",
+                  },
+                  "type": "G",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#ffb300",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Awake",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 132)",
+                  },
+                  "type": "G",
+                },
+              ],
+              "props": {
+                "transform": "translate(138, 22.666666666666668)",
+              },
+              "type": "G",
+            },
+          ],
+          "props": {
+            "height": 136,
+            "style": {
+              "marginBottom": 32,
+              "marginLeft": 32,
+              "marginRight": 32,
+              "marginTop": 32,
+            },
+            "width": 236,
+          },
+          "type": "Svg",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ChartPie UnitTest renders with a single category 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": null,
+                  "props": {
+                    "d": "M7.225416114969383e-15,-118A118,118,0,1,1,-7.225416114969383e-15,118A118,118,0,1,1,7.225416114969383e-15,-118M-1.4450832229938766e-14,-78.66666666666667A78.66666666666667,78.66666666666667,0,1,0,1.4450832229938766e-14,78.66666666666667A78.66666666666667,78.66666666666667,0,1,0,-1.4450832229938766e-14,-78.66666666666667Z",
+                    "fill": "#3b4cca",
+                  },
+                  "type": "Path",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "100%",
+                  ],
+                  "props": {
+                    "dy": ".4em",
+                    "fill": "#001438",
+                    "fontSize": "20px",
+                    "textAnchor": "middle",
+                    "transform": "translate(6.02118009580782e-15,98.33333333333334)",
+                  },
+                  "type": "SvgText",
+                },
+              ],
+              "props": {
+                "transform": "translate(0, 56.66666666666667)",
+              },
+              "type": "G",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "fill": "transparent",
+                        "height": 32,
+                        "rx": 32,
+                        "ry": 32,
+                        "stroke": "#3b4cca",
+                        "strokeWidth": 2,
+                        "width": 32,
+                      },
+                      "type": "Rect",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Deep",
+                      ],
+                      "props": {
+                        "fill": "#929DAF",
+                        "fontSize": 15,
+                        "x": 44,
+                        "y": 22,
+                      },
+                      "type": "SvgText",
+                    },
+                  ],
+                  "props": {
+                    "transform": "translate(0, 0)",
+                  },
+                  "type": "G",
+                },
+              ],
+              "props": {
+                "transform": "translate(138, 22.666666666666668)",
+              },
+              "type": "G",
+            },
+          ],
+          "props": {
+            "height": 136,
+            "style": {
+              "marginBottom": 32,
+              "marginLeft": 32,
+              "marginRight": 32,
+              "marginTop": 32,
+            },
+            "width": 236,
+          },
+          "type": "Svg",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

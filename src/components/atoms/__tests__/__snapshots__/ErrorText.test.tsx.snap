@@ -1,0 +1,99 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ErrorText UnitTest renders correctly with children text 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            "Error message",
+          ],
+          "props": {
+            "style": [
+              {
+                "fontFamily": "calibre_app_regular",
+                "fontSize": 13,
+                "marginBottom": 18,
+              },
+              {
+                "color": "#ff4310",
+              },
+              undefined,
+            ],
+          },
+          "type": "Text",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ErrorText UnitTest renders without children 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": null,
+          "props": {
+            "style": [
+              {
+                "fontFamily": "calibre_app_regular",
+                "fontSize": 13,
+                "marginBottom": 18,
+              },
+              {
+                "color": "#ff4310",
+              },
+              undefined,
+            ],
+          },
+          "type": "Text",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

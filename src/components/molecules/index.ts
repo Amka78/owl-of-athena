@@ -4,7 +4,7 @@ import { ConfirmDialog } from "./ConfirmDialog";
 import { ConvertibleContentTitle } from "./ConvertibleContentTitle";
 import { ConvertibleListForm } from "./ConvertibleListForm";
 import { DatePicker } from "./DatePicker";
-import { DatePickerProps } from "./DatePickerProps";
+import type { DatePickerProps } from "./DatePickerProps";
 import { InternalView } from "./InternalView";
 import { LabeledCheckBox } from "./LabeledCheckBox";
 import { LabeledRadioButton } from "./LabeledRadioButton";

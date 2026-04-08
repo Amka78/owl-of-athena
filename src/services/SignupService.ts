@@ -1,5 +1,5 @@
 //#region Import Modules
-import { Signup } from "../types";
+import type { Signup } from "../types";
 import { Message, MessageKeys } from "../constants";
 //#endregion
 

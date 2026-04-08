@@ -3,7 +3,7 @@ import React, { FunctionComponent } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { Switch } from "react-native-paper";
 
-import { ToggleField } from "../../sdk/AuroraTypes";
+import type { ToggleField } from "../../sdk/AuroraTypes";
 //#endregion
 
 //#region Types

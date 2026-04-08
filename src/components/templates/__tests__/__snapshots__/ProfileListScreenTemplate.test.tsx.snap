@@ -1,0 +1,2020 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ProfileListScreenTemplate renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#ffffff",
+                                    "name": "domain",
+                                    "onPress": undefined,
+                                    "size": 40,
+                                  },
+                                  "type": "Icon",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Official Profile",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#ffffff",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "official.prof",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 2,
+                                        "onTextLayout": [Function],
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 14,
+                                            },
+                                            {
+                                              "color": "rgba(73, 69, 79, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#9B9B9B",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": [
+                                      {
+                                        "paddingLeft": 16,
+                                      },
+                                      {
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
+                                        "justifyContent": "center",
+                                      },
+                                      undefined,
+                                    ],
+                                    "testID": "undefined-content",
+                                  },
+                                  "type": "View",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "star-outline",
+                                        "onPress": [Function: AsyncFunction],
+                                        "size": 25,
+                                        "starred": false,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "delete",
+                                        "onPress": [Function],
+                                        "size": 25,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                  ],
+                                  "props": {
+                                    "color": "rgba(73, 69, 79, 1)",
+                                    "style": {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "flexDirection": "row",
+                                    "marginVertical": 6,
+                                    "width": "100%",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "disabled": false,
+                            "onPress": [Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": undefined,
+                          },
+                          "type": "Pressable",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "marginVertical": 8,
+                          },
+                          {
+                            "flex": 1,
+                          },
+                        ],
+                        "theme": {
+                          "animation": {
+                            "scale": 1,
+                          },
+                          "colors": {
+                            "accent": "#bcfeff",
+                            "backdrop": "rgba(50, 47, 55, 0.4)",
+                            "background": "#070724",
+                            "elevation": {
+                              "level0": "transparent",
+                              "level1": "rgb(247, 243, 249)",
+                              "level2": "rgb(243, 237, 246)",
+                              "level3": "rgb(238, 232, 244)",
+                              "level4": "rgb(236, 230, 243)",
+                              "level5": "rgb(233, 227, 241)",
+                            },
+                            "error": "#ff4310",
+                            "errorContainer": "rgba(249, 222, 220, 1)",
+                            "inverseOnSurface": "rgba(244, 239, 244, 1)",
+                            "inversePrimary": "rgba(208, 188, 255, 1)",
+                            "inverseSurface": "rgba(49, 48, 51, 1)",
+                            "onBackground": "rgba(28, 27, 31, 1)",
+                            "onError": "rgba(255, 255, 255, 1)",
+                            "onErrorContainer": "rgba(65, 14, 11, 1)",
+                            "onPrimary": "rgba(255, 255, 255, 1)",
+                            "onPrimaryContainer": "rgba(33, 0, 93, 1)",
+                            "onSecondary": "rgba(255, 255, 255, 1)",
+                            "onSecondaryContainer": "rgba(29, 25, 43, 1)",
+                            "onSurface": "rgba(28, 27, 31, 1)",
+                            "onSurfaceDisabled": "rgba(28, 27, 31, 0.38)",
+                            "onSurfaceVariant": "rgba(73, 69, 79, 1)",
+                            "onTertiary": "rgba(255, 255, 255, 1)",
+                            "onTertiaryContainer": "rgba(49, 17, 29, 1)",
+                            "outline": "rgba(121, 116, 126, 1)",
+                            "outlineVariant": "rgba(202, 196, 208, 1)",
+                            "placeholder": "#ffffff",
+                            "primary": "#00ffe6",
+                            "primaryContainer": "rgba(234, 221, 255, 1)",
+                            "scrim": "rgba(0, 0, 0, 1)",
+                            "secondary": "rgba(98, 91, 113, 1)",
+                            "secondaryContainer": "rgba(232, 222, 248, 1)",
+                            "shadow": "rgba(0, 0, 0, 1)",
+                            "surface": "rgba(255, 251, 254, 1)",
+                            "surfaceDisabled": "rgba(28, 27, 31, 0.12)",
+                            "surfaceVariant": "rgba(231, 224, 236, 1)",
+                            "tertiary": "rgba(125, 82, 96, 1)",
+                            "tertiaryContainer": "rgba(255, 216, 228, 1)",
+                            "text": "#ffffff",
+                          },
+                          "dark": false,
+                          "fonts": {
+                            "bodyLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "bodyMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.25,
+                              "lineHeight": 20,
+                            },
+                            "bodySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.4,
+                              "lineHeight": 16,
+                            },
+                            "default": {
+                              "fontFamily": "System",
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                            },
+                            "displayLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 57,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 64,
+                            },
+                            "displayMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 45,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 52,
+                            },
+                            "displaySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 36,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 44,
+                            },
+                            "headlineLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 32,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 40,
+                            },
+                            "headlineMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 28,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 36,
+                            },
+                            "headlineSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 24,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 32,
+                            },
+                            "labelLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                            "labelMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "labelSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 11,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "titleLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 22,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 28,
+                            },
+                            "titleMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "titleSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                          },
+                          "isV3": true,
+                          "roundness": 2,
+                          "version": 3,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "flex": 1,
+                    },
+                  },
+                  "type": "ScrollView",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "space-between",
+                    "marginLeft": 48,
+                    "marginRight": 48,
+                  },
+                  {
+                    "backgroundColor": "#070724",
+                  },
+                  {
+                    "justifyContent": "flex-start",
+                  },
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "onLayout": [Function],
+            "style": [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ProfileListScreenTemplate renders with ja-JP locale 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#ffffff",
+                                    "name": "domain",
+                                    "onPress": undefined,
+                                    "size": 40,
+                                  },
+                                  "type": "Icon",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Official Profile",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#ffffff",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "official.prof",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 2,
+                                        "onTextLayout": [Function],
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 14,
+                                            },
+                                            {
+                                              "color": "rgba(73, 69, 79, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#9B9B9B",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": [
+                                      {
+                                        "paddingLeft": 16,
+                                      },
+                                      {
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
+                                        "justifyContent": "center",
+                                      },
+                                      undefined,
+                                    ],
+                                    "testID": "undefined-content",
+                                  },
+                                  "type": "View",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "star-outline",
+                                        "onPress": [Function: AsyncFunction],
+                                        "size": 25,
+                                        "starred": false,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "delete",
+                                        "onPress": [Function],
+                                        "size": 25,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                  ],
+                                  "props": {
+                                    "color": "rgba(73, 69, 79, 1)",
+                                    "style": {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "flexDirection": "row",
+                                    "marginVertical": 6,
+                                    "width": "100%",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "disabled": false,
+                            "onPress": [Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": undefined,
+                          },
+                          "type": "Pressable",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "marginVertical": 8,
+                          },
+                          {
+                            "flex": 1,
+                          },
+                        ],
+                        "theme": {
+                          "animation": {
+                            "scale": 1,
+                          },
+                          "colors": {
+                            "accent": "#bcfeff",
+                            "backdrop": "rgba(50, 47, 55, 0.4)",
+                            "background": "#070724",
+                            "elevation": {
+                              "level0": "transparent",
+                              "level1": "rgb(247, 243, 249)",
+                              "level2": "rgb(243, 237, 246)",
+                              "level3": "rgb(238, 232, 244)",
+                              "level4": "rgb(236, 230, 243)",
+                              "level5": "rgb(233, 227, 241)",
+                            },
+                            "error": "#ff4310",
+                            "errorContainer": "rgba(249, 222, 220, 1)",
+                            "inverseOnSurface": "rgba(244, 239, 244, 1)",
+                            "inversePrimary": "rgba(208, 188, 255, 1)",
+                            "inverseSurface": "rgba(49, 48, 51, 1)",
+                            "onBackground": "rgba(28, 27, 31, 1)",
+                            "onError": "rgba(255, 255, 255, 1)",
+                            "onErrorContainer": "rgba(65, 14, 11, 1)",
+                            "onPrimary": "rgba(255, 255, 255, 1)",
+                            "onPrimaryContainer": "rgba(33, 0, 93, 1)",
+                            "onSecondary": "rgba(255, 255, 255, 1)",
+                            "onSecondaryContainer": "rgba(29, 25, 43, 1)",
+                            "onSurface": "rgba(28, 27, 31, 1)",
+                            "onSurfaceDisabled": "rgba(28, 27, 31, 0.38)",
+                            "onSurfaceVariant": "rgba(73, 69, 79, 1)",
+                            "onTertiary": "rgba(255, 255, 255, 1)",
+                            "onTertiaryContainer": "rgba(49, 17, 29, 1)",
+                            "outline": "rgba(121, 116, 126, 1)",
+                            "outlineVariant": "rgba(202, 196, 208, 1)",
+                            "placeholder": "#ffffff",
+                            "primary": "#00ffe6",
+                            "primaryContainer": "rgba(234, 221, 255, 1)",
+                            "scrim": "rgba(0, 0, 0, 1)",
+                            "secondary": "rgba(98, 91, 113, 1)",
+                            "secondaryContainer": "rgba(232, 222, 248, 1)",
+                            "shadow": "rgba(0, 0, 0, 1)",
+                            "surface": "rgba(255, 251, 254, 1)",
+                            "surfaceDisabled": "rgba(28, 27, 31, 0.12)",
+                            "surfaceVariant": "rgba(231, 224, 236, 1)",
+                            "tertiary": "rgba(125, 82, 96, 1)",
+                            "tertiaryContainer": "rgba(255, 216, 228, 1)",
+                            "text": "#ffffff",
+                          },
+                          "dark": false,
+                          "fonts": {
+                            "bodyLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "bodyMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.25,
+                              "lineHeight": 20,
+                            },
+                            "bodySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.4,
+                              "lineHeight": 16,
+                            },
+                            "default": {
+                              "fontFamily": "System",
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                            },
+                            "displayLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 57,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 64,
+                            },
+                            "displayMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 45,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 52,
+                            },
+                            "displaySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 36,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 44,
+                            },
+                            "headlineLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 32,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 40,
+                            },
+                            "headlineMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 28,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 36,
+                            },
+                            "headlineSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 24,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 32,
+                            },
+                            "labelLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                            "labelMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "labelSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 11,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "titleLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 22,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 28,
+                            },
+                            "titleMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "titleSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                          },
+                          "isV3": true,
+                          "roundness": 2,
+                          "version": 3,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "flex": 1,
+                    },
+                  },
+                  "type": "ScrollView",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "space-between",
+                    "marginLeft": 48,
+                    "marginRight": 48,
+                  },
+                  {
+                    "backgroundColor": "#070724",
+                  },
+                  {
+                    "justifyContent": "flex-start",
+                  },
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "onLayout": [Function],
+            "style": [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`ProfileListScreenTemplate shows filter menu when showFilter is true 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Filter by Profile Type",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#bcfeff",
+                          "fontSize": 13,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "container": [
+                                  {
+                                    "marginLeft": 20,
+                                    "marginRight": 20,
+                                    "marginTop": 4,
+                                  },
+                                  [
+                                    {
+                                      "width": 0,
+                                    },
+                                    {
+                                      "marginLeft": 0,
+                                    },
+                                  ],
+                                ],
+                                "description": "Official iWinks' profiles.",
+                                "descriptionStyle": [
+                                  {
+                                    "color": "#9B9B9B",
+                                    "fontSize": 10,
+                                  },
+                                  undefined,
+                                ],
+                                "disabled": false,
+                                "label": "Show Official",
+                                "labelPlace": "right",
+                                "labelStyle": [
+                                  {
+                                    "color": "#ffffff",
+                                    "marginBottom": 0,
+                                  },
+                                  undefined,
+                                ],
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Show Official",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#ffffff",
+                                      "marginBottom": 0,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Official iWinks' profiles.",
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#9B9B9B",
+                                      "fontSize": 10,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          [
+                            {
+                              "marginLeft": 20,
+                              "marginRight": 20,
+                              "marginTop": 4,
+                            },
+                            [
+                              {
+                                "width": 0,
+                              },
+                              {
+                                "marginLeft": 0,
+                              },
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 0,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": false,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "container": [
+                                  {
+                                    "marginLeft": 20,
+                                    "marginRight": 20,
+                                    "marginTop": 4,
+                                  },
+                                  [
+                                    {
+                                      "width": 0,
+                                    },
+                                    {
+                                      "marginLeft": 0,
+                                    },
+                                  ],
+                                ],
+                                "description": "Community submitted profiles.",
+                                "descriptionStyle": [
+                                  {
+                                    "color": "#9B9B9B",
+                                    "fontSize": 10,
+                                  },
+                                  undefined,
+                                ],
+                                "disabled": false,
+                                "label": "Show Community",
+                                "labelPlace": "right",
+                                "labelStyle": [
+                                  {
+                                    "color": "#ffffff",
+                                    "marginBottom": 0,
+                                  },
+                                  undefined,
+                                ],
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Show Community",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#ffffff",
+                                      "marginBottom": 0,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Community submitted profiles.",
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#9B9B9B",
+                                      "fontSize": 10,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          [
+                            {
+                              "marginLeft": 20,
+                              "marginRight": 20,
+                              "marginTop": 4,
+                            },
+                            [
+                              {
+                                "width": 0,
+                              },
+                              {
+                                "marginLeft": 0,
+                              },
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "container": [
+                                  {
+                                    "marginLeft": 20,
+                                    "marginRight": 20,
+                                    "marginTop": 4,
+                                  },
+                                  [
+                                    {
+                                      "width": 0,
+                                    },
+                                    {
+                                      "marginLeft": 0,
+                                    },
+                                  ],
+                                ],
+                                "description": "Your private profiles.",
+                                "descriptionStyle": [
+                                  {
+                                    "color": "#9B9B9B",
+                                    "fontSize": 10,
+                                  },
+                                  undefined,
+                                ],
+                                "disabled": false,
+                                "label": "Show Private",
+                                "labelPlace": "right",
+                                "labelStyle": [
+                                  {
+                                    "color": "#ffffff",
+                                    "marginBottom": 0,
+                                  },
+                                  undefined,
+                                ],
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Show Private",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#ffffff",
+                                      "marginBottom": 0,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Your private profiles.",
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  [
+                                    {
+                                      "color": "#9B9B9B",
+                                      "fontSize": 10,
+                                    },
+                                    undefined,
+                                  ],
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          [
+                            {
+                              "marginLeft": 20,
+                              "marginRight": 20,
+                              "marginTop": 4,
+                            },
+                            [
+                              {
+                                "width": 0,
+                              },
+                              {
+                                "marginLeft": 0,
+                              },
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "backgroundColor": "#4a2fba",
+                        "flex": 0.4,
+                      },
+                      {
+                        "width": 0,
+                      },
+                    ],
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#ffffff",
+                                    "name": "domain",
+                                    "onPress": undefined,
+                                    "size": 40,
+                                  },
+                                  "type": "Icon",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "Official Profile",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 16,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#ffffff",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "official.prof",
+                                      ],
+                                      "props": {
+                                        "ellipsizeMode": undefined,
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 2,
+                                        "onTextLayout": [Function],
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontFamily": "System",
+                                            "fontWeight": "400",
+                                            "letterSpacing": 0,
+                                          },
+                                          {
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontSize": 14,
+                                            },
+                                            {
+                                              "color": "rgba(73, 69, 79, 1)",
+                                            },
+                                            [
+                                              {
+                                                "color": "#9B9B9B",
+                                              },
+                                              undefined,
+                                            ],
+                                          ],
+                                        ],
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": [
+                                      {
+                                        "paddingLeft": 16,
+                                      },
+                                      {
+                                        "flexGrow": 1,
+                                        "flexShrink": 1,
+                                        "justifyContent": "center",
+                                      },
+                                      undefined,
+                                    ],
+                                    "testID": "undefined-content",
+                                  },
+                                  "type": "View",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "star-outline",
+                                        "onPress": [Function: AsyncFunction],
+                                        "size": 25,
+                                        "starred": false,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": null,
+                                      "props": {
+                                        "color": "#ffffff",
+                                        "disabled": false,
+                                        "name": "delete",
+                                        "onPress": [Function],
+                                        "size": 25,
+                                      },
+                                      "type": "Icon",
+                                    },
+                                  ],
+                                  "props": {
+                                    "color": "rgba(73, 69, 79, 1)",
+                                    "style": {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "flexDirection": "row",
+                                    "marginVertical": 6,
+                                    "width": "100%",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "disabled": false,
+                            "onPress": [Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": undefined,
+                          },
+                          "type": "Pressable",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "marginVertical": 8,
+                          },
+                          {
+                            "flex": 1,
+                          },
+                        ],
+                        "theme": {
+                          "animation": {
+                            "scale": 1,
+                          },
+                          "colors": {
+                            "accent": "#bcfeff",
+                            "backdrop": "rgba(50, 47, 55, 0.4)",
+                            "background": "#070724",
+                            "elevation": {
+                              "level0": "transparent",
+                              "level1": "rgb(247, 243, 249)",
+                              "level2": "rgb(243, 237, 246)",
+                              "level3": "rgb(238, 232, 244)",
+                              "level4": "rgb(236, 230, 243)",
+                              "level5": "rgb(233, 227, 241)",
+                            },
+                            "error": "#ff4310",
+                            "errorContainer": "rgba(249, 222, 220, 1)",
+                            "inverseOnSurface": "rgba(244, 239, 244, 1)",
+                            "inversePrimary": "rgba(208, 188, 255, 1)",
+                            "inverseSurface": "rgba(49, 48, 51, 1)",
+                            "onBackground": "rgba(28, 27, 31, 1)",
+                            "onError": "rgba(255, 255, 255, 1)",
+                            "onErrorContainer": "rgba(65, 14, 11, 1)",
+                            "onPrimary": "rgba(255, 255, 255, 1)",
+                            "onPrimaryContainer": "rgba(33, 0, 93, 1)",
+                            "onSecondary": "rgba(255, 255, 255, 1)",
+                            "onSecondaryContainer": "rgba(29, 25, 43, 1)",
+                            "onSurface": "rgba(28, 27, 31, 1)",
+                            "onSurfaceDisabled": "rgba(28, 27, 31, 0.38)",
+                            "onSurfaceVariant": "rgba(73, 69, 79, 1)",
+                            "onTertiary": "rgba(255, 255, 255, 1)",
+                            "onTertiaryContainer": "rgba(49, 17, 29, 1)",
+                            "outline": "rgba(121, 116, 126, 1)",
+                            "outlineVariant": "rgba(202, 196, 208, 1)",
+                            "placeholder": "#ffffff",
+                            "primary": "#00ffe6",
+                            "primaryContainer": "rgba(234, 221, 255, 1)",
+                            "scrim": "rgba(0, 0, 0, 1)",
+                            "secondary": "rgba(98, 91, 113, 1)",
+                            "secondaryContainer": "rgba(232, 222, 248, 1)",
+                            "shadow": "rgba(0, 0, 0, 1)",
+                            "surface": "rgba(255, 251, 254, 1)",
+                            "surfaceDisabled": "rgba(28, 27, 31, 0.12)",
+                            "surfaceVariant": "rgba(231, 224, 236, 1)",
+                            "tertiary": "rgba(125, 82, 96, 1)",
+                            "tertiaryContainer": "rgba(255, 216, 228, 1)",
+                            "text": "#ffffff",
+                          },
+                          "dark": false,
+                          "fonts": {
+                            "bodyLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "bodyMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.25,
+                              "lineHeight": 20,
+                            },
+                            "bodySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "400",
+                              "letterSpacing": 0.4,
+                              "lineHeight": 16,
+                            },
+                            "default": {
+                              "fontFamily": "System",
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                            },
+                            "displayLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 57,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 64,
+                            },
+                            "displayMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 45,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 52,
+                            },
+                            "displaySmall": {
+                              "fontFamily": "System",
+                              "fontSize": 36,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 44,
+                            },
+                            "headlineLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 32,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 40,
+                            },
+                            "headlineMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 28,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 36,
+                            },
+                            "headlineSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 24,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 32,
+                            },
+                            "labelLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                            "labelMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 12,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "labelSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 11,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.5,
+                              "lineHeight": 16,
+                            },
+                            "titleLarge": {
+                              "fontFamily": "System",
+                              "fontSize": 22,
+                              "fontWeight": "400",
+                              "letterSpacing": 0,
+                              "lineHeight": 28,
+                            },
+                            "titleMedium": {
+                              "fontFamily": "System",
+                              "fontSize": 16,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.15,
+                              "lineHeight": 24,
+                            },
+                            "titleSmall": {
+                              "fontFamily": "System",
+                              "fontSize": 14,
+                              "fontWeight": "500",
+                              "letterSpacing": 0.1,
+                              "lineHeight": 20,
+                            },
+                          },
+                          "isV3": true,
+                          "roundness": 2,
+                          "version": 3,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "flex": 1,
+                    },
+                  },
+                  "type": "ScrollView",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "space-between",
+                    "marginLeft": 48,
+                    "marginRight": 48,
+                  },
+                  {
+                    "backgroundColor": "#070724",
+                  },
+                  {
+                    "justifyContent": "flex-start",
+                  },
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "onLayout": [Function],
+            "style": [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

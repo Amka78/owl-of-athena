@@ -1,6 +1,7 @@
 //#region Import Modules
 import { useCallback, useEffect, useState } from "react";
-import { User, GuestUser } from "../types";
+import { GuestUser } from "../types";
+import type { User } from "../types";
 import { AuroraRestClientInstance } from "../clients";
 import { useAuthStore } from "../store/authStore";
 

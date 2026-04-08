@@ -1,0 +1,172 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ListItem UnitTest renders correctly with title and description 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Test Item",
+                      ],
+                      "props": {
+                        "ellipsizeMode": undefined,
+                        "maxFontSizeMultiplier": undefined,
+                        "numberOfLines": 1,
+                        "ref": {
+                          "current": null,
+                        },
+                        "selectable": false,
+                        "style": [
+                          {
+                            "textAlign": "left",
+                          },
+                          {
+                            "color": "rgba(28, 27, 31, 1)",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                            "letterSpacing": 0,
+                          },
+                          {
+                            "writingDirection": "ltr",
+                          },
+                          [
+                            {
+                              "fontSize": 16,
+                            },
+                            {
+                              "color": "rgba(28, 27, 31, 1)",
+                            },
+                            [
+                              {
+                                "color": "#ffffff",
+                              },
+                              undefined,
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Description",
+                      ],
+                      "props": {
+                        "ellipsizeMode": undefined,
+                        "maxFontSizeMultiplier": undefined,
+                        "numberOfLines": 2,
+                        "onTextLayout": [Function],
+                        "ref": {
+                          "current": null,
+                        },
+                        "selectable": false,
+                        "style": [
+                          {
+                            "textAlign": "left",
+                          },
+                          {
+                            "color": "rgba(28, 27, 31, 1)",
+                            "fontFamily": "System",
+                            "fontWeight": "400",
+                            "letterSpacing": 0,
+                          },
+                          {
+                            "writingDirection": "ltr",
+                          },
+                          [
+                            {
+                              "fontSize": 14,
+                            },
+                            {
+                              "color": "rgba(73, 69, 79, 1)",
+                            },
+                            [
+                              {
+                                "color": "#9B9B9B",
+                              },
+                              undefined,
+                            ],
+                          ],
+                        ],
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "paddingLeft": 16,
+                      },
+                      {
+                        "flexGrow": 1,
+                        "flexShrink": 1,
+                        "justifyContent": "center",
+                      },
+                      undefined,
+                    ],
+                    "testID": "undefined-content",
+                  },
+                  "type": "View",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "flexDirection": "row",
+                    "marginVertical": 6,
+                    "width": "100%",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessible": true,
+            "disabled": true,
+            "onPress": undefined,
+            "onPressIn": [Function],
+            "onPressOut": [Function],
+            "ref": null,
+            "style": [Function],
+            "testID": undefined,
+          },
+          "type": "Pressable",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

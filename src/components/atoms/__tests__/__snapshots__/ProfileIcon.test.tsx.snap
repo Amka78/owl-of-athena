@@ -1,0 +1,15 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ProfilesIcon UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "color": "#ffffff",
+    "name": "format-list-checkbox",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;

@@ -1,0 +1,162 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`LabeledCheckBox renders correctly with label on right 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "□",
+                          ],
+                          "props": {
+                            "accessibilityElementsHidden": true,
+                            "allowFontScaling": false,
+                            "importantForAccessibility": "no-hide-descendants",
+                            "pointerEvents": "none",
+                            "selectable": false,
+                            "style": [
+                              {
+                                "backgroundColor": "transparent",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "fontSize": 24,
+                              },
+                            ],
+                            "testID": undefined,
+                          },
+                          "type": "Text",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "opacity": 0,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "accessibilityLiveRegion": "polite",
+                    "accessibilityRole": "checkbox",
+                    "accessibilityState": {
+                      "checked": false,
+                      "disabled": undefined,
+                    },
+                    "accessible": true,
+                    "color": "rgba(28, 27, 31, 1)",
+                    "disabled": true,
+                    "label": "Accept terms",
+                    "labelPlace": "right",
+                    "onPress": undefined,
+                    "onPressIn": [Function],
+                    "onPressOut": [Function],
+                    "ref": null,
+                    "style": [Function],
+                    "testID": undefined,
+                    "uncheckedColor": "rgba(28, 27, 31, 1)",
+                  },
+                  "type": "Pressable",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "flex-end",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Accept terms",
+                  ],
+                  "props": {
+                    "onPress": undefined,
+                    "style": [
+                      {
+                        "fontFamily": "calibre_app_regular",
+                        "fontSize": 14,
+                      },
+                      {
+                        "color": "rgba(98, 91, 113, 1)",
+                      },
+                      undefined,
+                    ],
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "flex-start",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "style": [
+              {
+                "flexDirection": "row",
+                "marginBottom": 12,
+              },
+              {
+                "width": 375,
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

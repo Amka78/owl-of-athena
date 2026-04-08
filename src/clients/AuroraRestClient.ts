@@ -1,10 +1,10 @@
-import { Login, CreateUser, User } from "../types";
-import { Auth } from "../types/Auth";
+import type { Login, CreateUser, User } from "../types";
+import type { Auth } from "../types/Auth";
 import RestClient from "./RestClient";
 
 import { BaseUrl } from "../utils";
 import * as Localization from "expo-localization";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import type { AuroraProfile } from "../sdk/AuroraTypes";
 
 /**
  * Managing aurora related RestAPI communication.

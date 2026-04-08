@@ -3,7 +3,7 @@ import { AuroraOSInfo } from "./models";
 import { EventEmitter } from "events";
 import * as AuroraConstants from "./AuroraConstants";
 import { ConnectorTypes } from "./AuroraConstants";
-import { CommandResult, FileInfo, EventResponse } from "./AuroraTypes";
+import type { CommandResult, FileInfo, EventResponse } from "./AuroraTypes";
 import { ReadCommandResult } from "./AuroraCmdReadFile";
 //#endregion
 

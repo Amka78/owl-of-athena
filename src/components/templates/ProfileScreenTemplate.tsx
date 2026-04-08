@@ -3,8 +3,8 @@ import React, { FunctionComponent } from "react";
 import { Dimens } from "../../constants";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
-import { AuroraProfile } from "../../sdk/AuroraTypes";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
+import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { GroupedProfileOptionList } from "../../services/ProfileService";
 import { StandardView } from "../atoms";
 import { ProfileMenu } from "../organisms/profiles/ProfileMenu";

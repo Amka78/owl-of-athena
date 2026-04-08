@@ -1,0 +1,133 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`LabeledRadioButton renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "□",
+                          ],
+                          "props": {
+                            "accessibilityElementsHidden": true,
+                            "allowFontScaling": false,
+                            "importantForAccessibility": "no-hide-descendants",
+                            "pointerEvents": "none",
+                            "selectable": false,
+                            "style": [
+                              {
+                                "backgroundColor": "transparent",
+                              },
+                              {
+                                "color": "rgba(98, 91, 113, 1)",
+                                "fontSize": 24,
+                              },
+                            ],
+                            "testID": undefined,
+                          },
+                          "type": "Text",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "opacity": 1,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "accessibilityLiveRegion": "polite",
+                    "accessibilityRole": "radio",
+                    "accessibilityState": {
+                      "checked": true,
+                      "disabled": undefined,
+                    },
+                    "accessible": true,
+                    "color": "rgba(98, 91, 113, 1)",
+                    "disabled": false,
+                    "onPress": [Function],
+                    "onPressIn": [Function],
+                    "onPressOut": [Function],
+                    "ref": null,
+                    "style": [Function],
+                    "testID": undefined,
+                    "uncheckedColor": "rgba(98, 91, 113, 1)",
+                  },
+                  "type": "Pressable",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Option 1",
+                  ],
+                  "props": {
+                    "onPress": undefined,
+                    "style": [
+                      {
+                        "color": "rgba(28, 27, 31, 1)",
+                      },
+                      undefined,
+                    ],
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "height": 40,
+                    "justifyContent": "flex-start",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "accessibilityRole": "radiogroup",
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

@@ -13,7 +13,7 @@ import { SessionRestClientInstance } from "../../clients";
 import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
 import { Message, MessageKeys } from "../../constants";
 import { AuroraManagerInstance } from "../../managers";
-import { AuroraSessionJson } from "../../sdk/AuroraTypes";
+import type { AuroraSessionJson } from "../../sdk/AuroraTypes";
 import { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
 import { useSessionStore, SessionFilterCondition, FilterByDateValues } from "../../store/sessionStore";
 import { GuestUser } from "../../types";

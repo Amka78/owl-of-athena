@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import { useTextBoxReturn } from "../../hooks/useTextBox";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 import {
     ContentText,
     ErrorText,

@@ -2,7 +2,7 @@ import Flat from "flat";
 import moment from "moment";
 import { parseValueString, camelCaseObjectKeys } from "./util";
 import AuroraSessionParser from "./AuroraSessionParser";
-import { DirectoryInfo } from "./AuroraTypes";
+import type { DirectoryInfo } from "./AuroraTypes";
 
 function transformSessionText(raw: string): any {
     const transformedObject: Record<string, any> = {};

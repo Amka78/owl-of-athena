@@ -1,0 +1,1065 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`SettingsScreen UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "AM",
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignContent": "center",
+                                    "alignItems": "center",
+                                    "borderWidth": 1,
+                                    "justifyContent": "space-around",
+                                    "paddingHorizontal": 5,
+                                    "textAlign": "center",
+                                  },
+                                  {
+                                    "color": "rgba(28, 27, 31, 1)",
+                                  },
+                                  {
+                                    "backgroundColor": "#070724",
+                                    "borderColor": "rgba(28, 27, 31, 1)",
+                                    "borderRadius": 4,
+                                    "color": "rgba(28, 27, 31, 1)",
+                                    "fontSize": 35,
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [Function],
+                            "style": {
+                              "justifyContent": "center",
+                              "marginRight": 10,
+                            },
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "0",
+                                "7",
+                              ],
+                              "props": {
+                                "ref": [Function],
+                                "style": [
+                                  {
+                                    "alignContent": "center",
+                                    "alignItems": "center",
+                                    "borderWidth": 1,
+                                    "justifyContent": "space-around",
+                                    "paddingHorizontal": 5,
+                                    "textAlign": "center",
+                                  },
+                                  {
+                                    "backgroundColor": "#070724",
+                                    "borderColor": "rgba(28, 27, 31, 1)",
+                                    "borderRadius": 4,
+                                    "color": "rgba(28, 27, 31, 1)",
+                                    "fontSize": 35,
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [Function],
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            ":",
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "fontSize": 35,
+                                "marginHorizontal": 3,
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                              },
+                            ],
+                          },
+                          "type": "Text",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "30",
+                              ],
+                              "props": {
+                                "ref": [Function],
+                                "style": [
+                                  {
+                                    "alignContent": "center",
+                                    "alignItems": "center",
+                                    "borderWidth": 1,
+                                    "justifyContent": "space-around",
+                                    "paddingHorizontal": 5,
+                                    "textAlign": "center",
+                                  },
+                                  {
+                                    "backgroundColor": "#070724",
+                                    "borderColor": "rgba(28, 27, 31, 1)",
+                                    "borderRadius": 4,
+                                    "color": "rgba(28, 27, 31, 1)",
+                                    "fontSize": 35,
+                                  },
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [Function],
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "flexDirection": "row",
+                          "marginRight": 5,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "backgroundColor": "transparent",
+                        "borderRadius": 4,
+                        "flexDirection": "row",
+                        "justifyContent": "space-around",
+                        "margin": 5,
+                        "marginLeft": 7,
+                      },
+                      undefined,
+                    ],
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Alarm Sound",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flex": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "birds",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#4a2fba",
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#4a2fba",
+                                    "name": "chevron-right",
+                                    "size": 20,
+                                    "style": {
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Icon",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "flex": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [class Function],
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                      ],
+                      "props": {
+                        "style": {},
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Profile",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flex": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Default Profile",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#4a2fba",
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#4a2fba",
+                                    "name": "chevron-right",
+                                    "size": 20,
+                                    "style": {
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Icon",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "flex": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [class Function],
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                      ],
+                      "props": {
+                        "style": {},
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Smart Alarm",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 1,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": true,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": false,
+                                "label": "Smart Alarm",
+                                "labelPlace": "left",
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Dawn Simulating Light",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 0,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": false,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": false,
+                                "label": "Dawn Simulating Light",
+                                "labelPlace": "left",
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "REM Stim",
+                              ],
+                              "props": {
+                                "onPress": undefined,
+                                "style": [
+                                  {
+                                    "fontFamily": "calibre_app_regular",
+                                    "fontSize": 14,
+                                  },
+                                  {
+                                    "color": "rgba(98, 91, 113, 1)",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-start",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    {
+                                      "$$typeof": Symbol(react.test.json),
+                                      "children": [
+                                        "□",
+                                      ],
+                                      "props": {
+                                        "accessibilityElementsHidden": true,
+                                        "allowFontScaling": false,
+                                        "importantForAccessibility": "no-hide-descendants",
+                                        "pointerEvents": "none",
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "backgroundColor": "transparent",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "fontSize": 24,
+                                          },
+                                        ],
+                                        "testID": undefined,
+                                      },
+                                      "type": "Text",
+                                    },
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "opacity": 0,
+                                    },
+                                  },
+                                  "type": "View",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityLiveRegion": "polite",
+                                "accessibilityRole": "checkbox",
+                                "accessibilityState": {
+                                  "checked": false,
+                                  "disabled": undefined,
+                                },
+                                "accessible": true,
+                                "color": "rgba(28, 27, 31, 1)",
+                                "disabled": false,
+                                "label": "REM Stim",
+                                "labelPlace": "left",
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": undefined,
+                                "uncheckedColor": "rgba(28, 27, 31, 1)",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": [
+                              {
+                                "alignItems": "flex-end",
+                                "flex": 1,
+                                "justifyContent": "center",
+                              },
+                              undefined,
+                            ],
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "flexDirection": "row",
+                            "marginBottom": 12,
+                          },
+                          {
+                            "width": 375,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "REM Stim Sound",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flex": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "white_noise",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#4a2fba",
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": null,
+                                  "props": {
+                                    "color": "#4a2fba",
+                                    "name": "chevron-right",
+                                    "size": 20,
+                                    "style": {
+                                      "marginLeft": 0,
+                                    },
+                                  },
+                                  "type": "Icon",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "flex": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "flex-end",
+                                  "marginBottom": 12,
+                                },
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "onPress": [class Function],
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                            },
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                      ],
+                      "props": {
+                        "style": {},
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "marginLeft": 48,
+                      "marginRight": 48,
+                    },
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "SAVE",
+                                  ],
+                                  "props": {
+                                    "maxFontSizeMultiplier": undefined,
+                                    "numberOfLines": 1,
+                                    "ref": {
+                                      "current": null,
+                                    },
+                                    "selectable": false,
+                                    "style": [
+                                      {
+                                        "textAlign": "left",
+                                      },
+                                      {
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "writingDirection": "ltr",
+                                      },
+                                      [
+                                        {
+                                          "fontFamily": "System",
+                                          "fontSize": 14,
+                                          "fontWeight": "500",
+                                          "letterSpacing": 0.1,
+                                          "lineHeight": 20,
+                                        },
+                                        [
+                                          {
+                                            "marginHorizontal": 16,
+                                            "marginVertical": 9,
+                                            "textAlign": "center",
+                                          },
+                                          false,
+                                          {
+                                            "marginHorizontal": 24,
+                                            "marginVertical": 10,
+                                          },
+                                          undefined,
+                                          false,
+                                          {
+                                            "color": "rgba(255, 255, 255, 1)",
+                                            "fontFamily": "System",
+                                            "fontSize": 14,
+                                            "fontWeight": "500",
+                                            "letterSpacing": 0.1,
+                                            "lineHeight": 20,
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "calibre_app_semibold",
+                                              "fontSize": 24,
+                                            },
+                                            undefined,
+                                          ],
+                                        ],
+                                      ],
+                                    ],
+                                    "testID": "button-text",
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "accessibilityHint": undefined,
+                            "accessibilityLabel": undefined,
+                            "accessibilityRole": "button",
+                            "accessibilityState": {
+                              "disabled": false,
+                            },
+                            "accessible": undefined,
+                            "delayLongPress": undefined,
+                            "disabled": true,
+                            "hitSlop": undefined,
+                            "onLongPress": undefined,
+                            "onPress": undefined,
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": "button",
+                          },
+                          "type": "Pressable",
+                        },
+                      ],
+                      "props": {
+                        "needMargin": false,
+                        "screenWidth": 375,
+                        "style": {
+                          "0": {
+                            "borderRadius": 16,
+                            "height": 50,
+                            "marginBottom": 16,
+                            "marginTop": 16,
+                          },
+                          "1": {
+                            "width": 270,
+                          },
+                          "2": {
+                            "marginRight": undefined,
+                          },
+                          "backgroundColor": "#00ffe6",
+                          "borderColor": "transparent",
+                          "borderRadius": 16,
+                          "borderStyle": "solid",
+                          "borderWidth": 0,
+                          "flex": undefined,
+                          "minWidth": 64,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
+                        },
+                        "testID": "button-container",
+                      },
+                      "type": "Animated.View",
+                    },
+                  ],
+                  "props": {
+                    "ref": null,
+                    "style": {
+                      "backgroundColor": "#00ffe6",
+                      "borderRadius": 16,
+                      "shadowColor": "#000",
+                      "shadowOffset": {
+                        "height": AnimatedValue {
+                          "_v": 0,
+                        },
+                        "width": 0,
+                      },
+                      "shadowOpacity": AnimatedValue {
+                        "_v": 0,
+                      },
+                      "shadowRadius": AnimatedValue {
+                        "_v": 0,
+                      },
+                    },
+                    "testID": "button-container-outer-layer",
+                  },
+                  "type": "Animated.View",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "space-between",
+                    "marginLeft": 48,
+                    "marginRight": 48,
+                  },
+                  {
+                    "backgroundColor": "#070724",
+                  },
+                  [
+                    {
+                      "maxHeight": 650,
+                      "maxWidth": 650,
+                    },
+                    undefined,
+                  ],
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "onLayout": undefined,
+            "style": [
+              {
+                "alignItems": "center",
+                "flex": 1,
+                "justifyContent": "center",
+              },
+              {
+                "backgroundColor": "#070724",
+              },
+              undefined,
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

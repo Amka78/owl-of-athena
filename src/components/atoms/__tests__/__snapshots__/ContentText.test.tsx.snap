@@ -1,0 +1,52 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`ContentText UnitTest renders correctly with children text 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            "Hello World",
+          ],
+          "props": {
+            "onPress": undefined,
+            "style": [
+              {
+                "flex": 1,
+                "fontFamily": "calibre_app_regular",
+                "fontSize": 16,
+              },
+              {
+                "color": "rgba(98, 91, 113, 1)",
+              },
+              undefined,
+            ],
+          },
+          "type": "Text",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

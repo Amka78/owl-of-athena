@@ -6,7 +6,7 @@ import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
-import { AuroraProfile } from "../sdk/AuroraTypes";
+import type { AuroraProfile } from "../sdk/AuroraTypes";
 import { Settings } from "../sdk/models";
 import { WakeLockService } from "../services";
 import { createOfficialProfile } from "../services/ProfileService";

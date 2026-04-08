@@ -1,5 +1,6 @@
 //#region Import
-import { Auth, GuestUser } from "../types/Auth";
+import { GuestUser } from "../types/Auth";
+import type { Auth } from "../types/Auth";
 
 /**
  * Create guest user information when in stand-alone mode.

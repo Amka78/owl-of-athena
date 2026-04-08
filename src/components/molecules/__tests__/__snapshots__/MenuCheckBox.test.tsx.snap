@@ -1,0 +1,197 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`MenuCheckBox renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "□",
+                          ],
+                          "props": {
+                            "accessibilityElementsHidden": true,
+                            "allowFontScaling": false,
+                            "importantForAccessibility": "no-hide-descendants",
+                            "pointerEvents": "none",
+                            "selectable": false,
+                            "style": [
+                              {
+                                "backgroundColor": "transparent",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "fontSize": 24,
+                              },
+                            ],
+                            "testID": undefined,
+                          },
+                          "type": "Text",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "opacity": 0,
+                        },
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "accessibilityLiveRegion": "polite",
+                    "accessibilityRole": "checkbox",
+                    "accessibilityState": {
+                      "checked": false,
+                      "disabled": undefined,
+                    },
+                    "accessible": true,
+                    "color": "rgba(28, 27, 31, 1)",
+                    "container": [
+                      {
+                        "marginLeft": 20,
+                        "marginRight": 20,
+                        "marginTop": 4,
+                      },
+                      undefined,
+                    ],
+                    "descriptionStyle": [
+                      {
+                        "color": "#9B9B9B",
+                        "fontSize": 10,
+                      },
+                      undefined,
+                    ],
+                    "disabled": true,
+                    "label": "Enable feature",
+                    "labelPlace": "right",
+                    "labelStyle": [
+                      {
+                        "color": "#ffffff",
+                        "marginBottom": 0,
+                      },
+                      undefined,
+                    ],
+                    "onPress": undefined,
+                    "onPressIn": [Function],
+                    "onPressOut": [Function],
+                    "ref": null,
+                    "style": [Function],
+                    "testID": undefined,
+                    "uncheckedColor": "rgba(28, 27, 31, 1)",
+                  },
+                  "type": "Pressable",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "flex-end",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Enable feature",
+                  ],
+                  "props": {
+                    "onPress": undefined,
+                    "style": [
+                      {
+                        "fontFamily": "calibre_app_regular",
+                        "fontSize": 14,
+                      },
+                      {
+                        "color": "rgba(98, 91, 113, 1)",
+                      },
+                      [
+                        {
+                          "color": "#ffffff",
+                          "marginBottom": 0,
+                        },
+                        undefined,
+                      ],
+                    ],
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "flex-start",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "style": [
+              {
+                "flexDirection": "row",
+                "marginBottom": 12,
+              },
+              {
+                "width": 375,
+              },
+              [
+                {
+                  "marginLeft": 20,
+                  "marginRight": 20,
+                  "marginTop": 4,
+                },
+                undefined,
+              ],
+            ],
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

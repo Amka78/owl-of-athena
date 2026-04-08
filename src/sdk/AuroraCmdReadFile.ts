@@ -1,7 +1,7 @@
 import { promisifyStream } from "./util";
 import crc32 from "buffer-crc32";
 import { ConnectorTypes } from "./AuroraConstants";
-import { CommandResult, FileInfo } from "./AuroraTypes";
+import type { CommandResult, FileInfo } from "./AuroraTypes";
 import Stream from "stream";
 import { Aurora } from "./Aurora";
 import { HeatshrinkDecoder } from "heatshrink-ts";

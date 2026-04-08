@@ -1,4 +1,4 @@
-import { AuroraEventJson } from "../AuroraTypes";
+import type { AuroraEventJson } from "../AuroraTypes";
 
 export class AuroraEvent {
     public auroraEventId: number;

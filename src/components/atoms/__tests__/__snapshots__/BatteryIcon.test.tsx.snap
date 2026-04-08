@@ -1,0 +1,49 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`BatteryIcon UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "batteryLevel": 100,
+    "color": "#00ffe6",
+    "isUSBConnected": true,
+    "name": "battery-charging",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;
+
+exports[`BatteryIcon UnitTest renders with USB connected 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "batteryLevel": 80,
+    "color": "#00ffe6",
+    "isUSBConnected": true,
+    "name": "battery-charging-80",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;
+
+exports[`BatteryIcon UnitTest renders without USB connected 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "batteryLevel": 80,
+    "color": "#00ffe6",
+    "isUSBConnected": false,
+    "name": "battery-80",
+    "onPress": undefined,
+    "size": 40,
+  },
+  "type": "Icon",
+}
+`;

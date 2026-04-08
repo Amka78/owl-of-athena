@@ -5,7 +5,7 @@ import { RadioButton } from "react-native-paper";
 
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ErrorText, FlatButton, TextBox } from "../atoms";
 import {
     DatePicker,

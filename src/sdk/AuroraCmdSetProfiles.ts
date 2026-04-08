@@ -1,6 +1,6 @@
 import pick from "lodash/pick";
 import { ConnectorTypes } from "./AuroraConstants";
-import { AuroraProfile } from "./AuroraTypes";
+import type { AuroraProfile } from "./AuroraTypes";
 import { Aurora } from "./Aurora";
 
 const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(

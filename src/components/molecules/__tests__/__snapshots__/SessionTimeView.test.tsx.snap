@@ -1,0 +1,218 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`SessionTimeView renders correctly in mobile mode 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                "Session",
+              ],
+              "props": {
+                "style": [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ],
+              },
+              "type": "Text",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "7:30",
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "fontFamily": "calibre_app_semibold",
+                        "fontSize": 20,
+                      },
+                      {
+                        "color": "rgba(98, 91, 113, 1)",
+                      },
+                      {
+                        "fontSize": 15,
+                      },
+                    ],
+                  },
+                  "type": "Text",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "am",
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "fontFamily": "calibre_app_regular",
+                        "fontSize": 20,
+                      },
+                      {
+                        "color": "rgba(98, 91, 113, 1)",
+                      },
+                      {
+                        "fontSize": 11,
+                      },
+                    ],
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "style": {
+              "alignItems": "center",
+            },
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;
+
+exports[`SessionTimeView renders correctly in desktop mode 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        {
+          "$$typeof": Symbol(react.test.json),
+          "children": [
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                "Session",
+              ],
+              "props": {
+                "style": [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 30,
+                  },
+                ],
+              },
+              "type": "Text",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "8h 0m",
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "fontFamily": "calibre_app_semibold",
+                        "fontSize": 20,
+                      },
+                      {
+                        "color": "rgba(98, 91, 113, 1)",
+                      },
+                      {
+                        "fontSize": 30,
+                      },
+                    ],
+                  },
+                  "type": "Text",
+                },
+              ],
+              "props": {
+                "style": [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ],
+              },
+              "type": "View",
+            },
+          ],
+          "props": {
+            "style": {
+              "alignItems": "center",
+            },
+          },
+          "type": "View",
+        },
+      ],
+      "props": {
+        "collapsable": false,
+        "pointerEvents": "box-none",
+        "style": {
+          "flex": 1,
+        },
+      },
+      "type": "View",
+    },
+  ],
+  "props": {
+    "style": [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ],
+  },
+  "type": "View",
+}
+`;

@@ -6,9 +6,10 @@ import { useAuthStore } from "../store/authStore";
 import { AuroraRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
-import { GuestUser, Login } from "../types";
-import { Auth } from "../types/Auth";
-import { User } from "../types";
+import { GuestUser } from "../types";
+import type { Login } from "../types";
+import type { Auth } from "../types/Auth";
+import type { User } from "../types";
 import { useTextBox, useTextBoxReturn } from "./useTextBox";
 //#endregion
 

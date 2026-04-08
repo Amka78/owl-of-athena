@@ -1,0 +1,16 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`XAxisBottomLine UnitTest renders correctly 1`] = `
+{
+  "$$typeof": Symbol(react.test.json),
+  "children": null,
+  "props": {
+    "stroke": "#ffffff",
+    "x1": 0,
+    "x2": 300,
+    "y1": 200,
+    "y2": 200,
+  },
+  "type": "Line",
+}
+`;

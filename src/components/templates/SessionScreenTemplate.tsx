@@ -10,7 +10,7 @@ import {
     useScreenDimensions,
     useWindowDimensions,
 } from "../../hooks";
-import { CurrentChart } from "../../types/CurrentChart";
+import type { CurrentChart } from "../../types/CurrentChart";
 import { FlexSpacer, StandardView } from "../atoms";
 import {
     ChartRadialProgress,

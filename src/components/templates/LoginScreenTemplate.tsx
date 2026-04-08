@@ -14,7 +14,7 @@ import {
     RightSideButton,
 } from "../molecules";
 import { TemplateButtonProps } from "./TempatedProps";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types

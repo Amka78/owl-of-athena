@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
-import { Dimensions } from "../../hooks/useWindowDimensions";
+import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, ContentTitle, LeftSideButton } from "../atoms";
 import { InternalView, RightSideButton } from "../molecules";
 //#endregion
