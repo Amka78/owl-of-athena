@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "a088b24d-82f1-4459-9936-447d64392502"
+      }
+    },
+    "android": {
+      "package": "com.amka78.owlofminerva"
+    }
+  }
+}
