@@ -481,6 +481,9 @@ class Aurora extends EventEmitter {
                 })
                 .catch((error: string): void => {
                     console.debug("Bluetooth Connection Error", error);
+                    // Emit findBluetoothDevice with falsy value so connectBluetooth
+                    // promise rejects instead of hanging forever.
+                    this.emit(AuroraEventList.findBluetoothDevice, null);
                     this.disconnectBluetooth();
                 });
         } else if (

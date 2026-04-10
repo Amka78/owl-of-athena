@@ -110,7 +110,30 @@ export class AuroraManager extends EventEmitter {
         return await AuroraInstance.queueCmd(command);
     }
 
+    /** Wrap a promise with a timeout so BLE commands cannot hang forever. */
+    private withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+        return new Promise<T>((resolve, reject) => {
+            const timer = setTimeout(
+                () => reject(new Error(`Timeout: ${label} did not complete within ${ms}ms`)),
+                ms,
+            );
+            promise.then(
+                (v) => {
+                    clearTimeout(timer);
+                    resolve(v);
+                },
+                (e) => {
+                    clearTimeout(timer);
+                    reject(e);
+                },
+            );
+        });
+    }
+
+    private static readonly CMD_TIMEOUT_MS = 30_000;
+
     public async goToSleep(profile: AuroraProfile, settings: Settings): Promise<void> {
+        const T = AuroraManager.CMD_TIMEOUT_MS;
         try {
             this.currentSettings = settings;
             const writingProfile = new Profile(profile.content);
@@ -137,26 +160,39 @@ export class AuroraManager extends EventEmitter {
                 }
             }
 
-            await AuroraInstance.queueCmd("prof-unload");
+            console.debug("[goToSleep] prof-unload");
+            await this.withTimeout(AuroraInstance.queueCmd("prof-unload"), T, "prof-unload");
+
             try {
-                const readProfileResult = await AuroraInstance.readFile(
-                    "profiles/default.prof",
-                    false,
-                    false,
+                console.debug("[goToSleep] readFile profiles/default.prof");
+                const readProfileResult = await this.withTimeout(
+                    AuroraInstance.readFile("profiles/default.prof", false, false),
+                    T,
+                    "readFile",
                 );
                 if (!readProfileResult.error) {
-                    await AuroraInstance.queueCmd(
-                        `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`,
+                    console.debug("[goToSleep] sd-rename");
+                    await this.withTimeout(
+                        AuroraInstance.queueCmd(
+                            `sd-rename profiles/default.prof profiles/default-bk-${Date.now()}.prof`,
+                        ),
+                        T,
+                        "sd-rename",
                     );
                 }
             } catch (e) {
-                console.debug(e);
+                console.debug("[goToSleep] readFile/rename error (non-fatal):", e);
             } finally {
-                await AuroraInstance.writeFile(
-                    "profiles/default.prof",
-                    writingProfile.raw,
-                    false,
-                    this.osInfo!.version,
+                console.debug("[goToSleep] writeFile profiles/default.prof");
+                await this.withTimeout(
+                    AuroraInstance.writeFile(
+                        "profiles/default.prof",
+                        writingProfile.raw,
+                        false,
+                        this.osInfo!.version,
+                    ),
+                    T,
+                    "writeFile",
                 );
             }
 
@@ -168,11 +204,16 @@ export class AuroraManager extends EventEmitter {
                 ""
             );*/
             this.currentProfile = "default.prof";
-            await AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`);
+            console.debug("[goToSleep] prof-load");
+            await this.withTimeout(
+                AuroraInstance.queueCmd(`prof-load ${this.currentProfile}`),
+                T,
+                "prof-load",
+            );
 
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
-            console.log(e);
+            console.error("[goToSleep] error:", e);
             this.setSleepState(SleepStates.INIT);
             this.emit("onError", e);
         }
