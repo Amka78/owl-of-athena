@@ -1,58 +1,59 @@
 import Flat from "flat";
-import Stream from "stream";
+import { Transform } from "stream";
+import type { TransformCallback } from "stream";
 import { camelCaseObjectKeys, parseValueString } from "./util";
 
-export default class AuroraTransformObject extends Stream.Transform {
-    private leftoverData: string;
+export default class AuroraTransformObject extends Transform {
+  private leftoverData: string;
 
-    private transformedObject: any;
-    constructor() {
-        super({ objectMode: true, encoding: undefined });
+  private transformedObject: any;
+  constructor() {
+    super({ objectMode: true, encoding: undefined });
 
-        this.leftoverData = "";
-        this.transformedObject = {};
+    this.leftoverData = "";
+    this.transformedObject = {};
+  }
+
+  _transform(chunk: string, _encoding: string, done: TransformCallback): void {
+    chunk = chunk.toString();
+
+    if (this.leftoverData) {
+      chunk = this.leftoverData + chunk;
+      this.leftoverData = "";
     }
 
-    _transform(chunk: string, _encoding: string, done: Stream.TransformCallback): void {
-        chunk = chunk.toString();
+    let lines = chunk.split("\n");
 
-        if (this.leftoverData) {
-            chunk = this.leftoverData + chunk;
-            this.leftoverData = "";
-        }
+    this.leftoverData = lines.pop()!;
 
-        let lines = chunk.split("\n");
+    lines = lines.map((line) => line.trim()).filter(String);
 
-        this.leftoverData = lines.pop()!;
-
-        lines = lines.map((line) => line.trim()).filter(String);
-
-        for (const line of lines) {
-            this.processLine(line);
-        }
-
-        done();
+    for (const line of lines) {
+      this.processLine(line);
     }
 
-    _flush(done: Stream.TransformCallback): void {
-        this.leftoverData = this.leftoverData.trim();
+    done();
+  }
 
-        if (this.leftoverData) {
-            this.processLine(this.leftoverData);
-        }
+  _flush(done: TransformCallback): void {
+    this.leftoverData = this.leftoverData.trim();
 
-        this.push(camelCaseObjectKeys(Flat.unflatten(this.transformedObject)));
-
-        done();
+    if (this.leftoverData) {
+      this.processLine(this.leftoverData);
     }
 
-    private processLine(line: string): void {
-        const key_value = line.split(":");
+    this.push(camelCaseObjectKeys(Flat.unflatten(this.transformedObject)));
 
-        if (key_value.length >= 2) {
-            const key = key_value.shift()!.trim();
+    done();
+  }
 
-            this.transformedObject[key] = parseValueString(key_value.join(":"));
-        }
+  private processLine(line: string): void {
+    const key_value = line.split(":");
+
+    if (key_value.length >= 2) {
+      const key = key_value.shift()!.trim();
+
+      this.transformedObject[key] = parseValueString(key_value.join(":"));
     }
+  }
 }

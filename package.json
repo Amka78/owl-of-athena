@@ -30,7 +30,6 @@
     "check:fix": "biome check --write src/"
   },
   "dependencies": {
-    "electrobun": "^1.17.3-beta.1",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/datetimepicker": "8.6.0",
@@ -45,10 +44,12 @@
     "@react-navigation/stack": "^7.0.0",
     "@supabase/supabase-js": "^2.101.1",
     "binary-parser": "github:iwinks/binary-parser",
+    "buffer-crc32": "^0.2.13",
     "d3": "^6.7.0",
     "d3-selection-multi": "^1.0.1",
     "drivelist": "^12.0.2",
     "eject-media": "0.0.3",
+    "electrobun": "^1.17.3-beta.1",
     "expo": "~55.0.11",
     "expo-asset": "~55.0.12",
     "expo-av": "~16.0.8",
@@ -119,10 +120,14 @@
     "babel-loader": "^8.2.2",
     "babel-preset-expo": "~55.0.0",
     "react-test-renderer": "19.2.0",
-    "typescript": "~5.5.0"
+    "typescript": "~5.5.0",
+    "webpack-dev-server": "^5.2.3"
   },
   "overrides": {
-    "@types/react": "~19.0.0"
+    "@types/react": "~19.0.0",
+    "@expo/webpack-config": {
+      "tapable": "1.1.3"
+    }
   },
   "private": true,
   "name": "owl-of-minerva",
