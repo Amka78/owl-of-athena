@@ -35,6 +35,8 @@ export const useAcount = (): {
     const [loading, setLoading] = useState(false);
     const [generalError, setGeneralError] = useState("");
 
+    const userId = userInfo?.id;
+
     useEffect(() => {
         let unmounted = false;
         console.debug("useGetUser start");
@@ -44,10 +46,13 @@ export const useAcount = (): {
                     console.debug("useGetUser useEffect start");
                     let currentUser;
 
-                    if (userInfo?.id === GuestUser) {
-                        currentUser = userInfo;
-                    } else {
+                    if (userId === GuestUser) {
+                        // Use cached user data for guest
+                        currentUser = { id: GuestUser } as any;
+                    } else if (userId) {
                         currentUser = await AuroraRestClientInstance.getAuthUser();
+                    } else {
+                        return;
                     }
                     console.debug("authenticatedUser", currentUser);
                     updateUser(currentUser);
@@ -64,7 +69,7 @@ export const useAcount = (): {
             unmounted = true;
         };
         return cleanup;
-    }, [updateUser, userInfo]);
+    }, [updateUser, userId]);
 
     const onFirstNameChangeText = useCallback((text: string): void => {
         setFirstName(text);

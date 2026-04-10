@@ -37,6 +37,7 @@ export const useMain = (): {
     const [error, setError] = useState<string>("");
     const firmwareVersion = useRef<string>("");
     const osInfoRef = useRef<AuroraOSInfo | undefined>(undefined);
+    const userId = userInfo?.id;
     const { navigate } = useNavigation<any>();
     const onConnectionChangeEventHandler = useRef((connectionState: ConnectionStates): void => {
         console.debug("Called onConnectionChangeHandler");
@@ -51,9 +52,9 @@ export const useMain = (): {
     useEffect(() => {
         let unmounted = false;
         const f = async (): Promise<void> => {
-            if (!unmounted && userInfo !== undefined) {
-                if (sessionList.length <= 0 && userInfo.id !== GuestUser) {
-                    const remoteSessionList = await SessionRestClientInstance.getAll(userInfo.id);
+            if (!unmounted && userId !== undefined) {
+                if (sessionList.length <= 0 && userId !== GuestUser) {
+                    const remoteSessionList = await SessionRestClientInstance.getAll(userId);
                     cacheSessions(remoteSessionList);
                 }
             }
@@ -63,8 +64,8 @@ export const useMain = (): {
         const cleanup = (): void => {
             unmounted = true;
         };
-        return cleanup();
-    }, [cacheSessions, connect, sessionList, userInfo]);
+        return cleanup;
+    }, [cacheSessions, sessionList.length, userId]);
 
     const onConnectionStatesPress = useCallback(async (): Promise<string> => {
         console.debug("Start configuring aurora.");

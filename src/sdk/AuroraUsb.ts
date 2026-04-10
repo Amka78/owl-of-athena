@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import SerialPort from "serialport";
+import { SerialPort } from "serialport";
 import * as AuroraConstants from "./AuroraConstants";
 import AuroraSerialParser from "./AuroraSerialParser";
 import type { AuroraEvent } from "./AuroraTypes";
@@ -8,29 +8,24 @@ import { promisify, sleep } from "./util";
 const CONNECT_RETRY_DELAY_MS = 1500;
 const DISCONNECT_RETRY_DELAY_MS = 3000;
 export class AuroraUsb extends EventEmitter {
-    // @ts-expect-error
-    static discoverAuroraPorts(): Promise<any[]> {
-        return promisify(SerialPort.list, SerialPort)().then((ports) => {
-            const auroraPorts = [];
+    static async discoverAuroraPorts(): Promise<string[]> {
+        const ports = await SerialPort.list();
+        const auroraPorts: string[] = [];
 
-            // @ts-expect-error
-            for (const port of ports) {
-                //simplify these conditions when old
-                //units are no longer in circulation
-                if (
-                    (port.pnpId && port.pnpId.indexOf("5740") !== -1) ||
-                    (port.pnpId && port.pnpId.indexOf("0483") !== -1) ||
-                    (port.productId && port.productId.indexOf("5740") !== -1) ||
-                    (port.vendorId &&
-                        port.vendorId.indexOf(AuroraConstants.AURORA_USB_VID) !== -1) ||
-                    port.manufacturer == "iWinks"
-                ) {
-                    auroraPorts.push(port.comName.replace("cu.", "tty."));
-                }
+        for (const port of ports) {
+            if (
+                (port.pnpId && port.pnpId.indexOf("5740") !== -1) ||
+                (port.pnpId && port.pnpId.indexOf("0483") !== -1) ||
+                (port.productId && port.productId.indexOf("5740") !== -1) ||
+                (port.vendorId &&
+                    port.vendorId.indexOf(AuroraConstants.AURORA_USB_VID) !== -1) ||
+                port.manufacturer == "iWinks"
+            ) {
+                auroraPorts.push(port.path.replace("cu.", "tty."));
             }
+        }
 
-            return auroraPorts;
-        });
+        return auroraPorts;
     }
 
     private serialParser: AuroraSerialParser;
@@ -107,7 +102,7 @@ export class AuroraUsb extends EventEmitter {
                         try {
                             this.serialPort = (await this.connectSerialPort(
                                 auroraPort,
-                            )) as SerialPort;
+                            ));
 
                             this.setConnectionState(AuroraConstants.ConnectionStates.IDLE);
 
@@ -121,7 +116,7 @@ export class AuroraUsb extends EventEmitter {
                         `Failed connecting to Aurora on port(s): ${auroraPorts.join(",")}`,
                     );
                 }
-                this.serialPort = (await this.connectSerialPort(port)) as SerialPort;
+                this.serialPort = (await this.connectSerialPort(port));
 
                 this.setConnectionState(AuroraConstants.ConnectionStates.IDLE);
 
@@ -297,12 +292,12 @@ export class AuroraUsb extends EventEmitter {
         this.emit("connectionStateChange", connectionState, previousConnectionState);
     }
 
-    private async connectSerialPort(port: string): Promise<SerialPort | string> {
+    private async connectSerialPort(port: string): Promise<SerialPort> {
         return new Promise((resolve, reject) => {
-            const serialPort = new SerialPort(port, (error) => {
+            const serialPort = new SerialPort({ path: port, baudRate: 9600, autoOpen: false });
+            serialPort.open((error) => {
                 if (error) return reject(error);
 
-                //flush any bytes in buffer that haven't been read
                 serialPort.flush((error) => {
                     if (error) return reject(error);
 

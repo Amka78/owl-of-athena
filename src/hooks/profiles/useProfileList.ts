@@ -38,9 +38,12 @@ export const useProfileList = (): {
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.profiles]),
         });
-        //const sessions = await SessionRestClientInstance.getAll(user!.id);
-        cacheProfiles([] as AuroraProfile[]);
-        LoadingDialog.close();
+        try {
+            //const sessions = await SessionRestClientInstance.getAll(user!.id);
+            cacheProfiles([] as AuroraProfile[]);
+        } finally {
+            LoadingDialog.close();
+        }
     }, [cacheProfiles]);
 
     const onPressedFilter = useCallback(async () => {

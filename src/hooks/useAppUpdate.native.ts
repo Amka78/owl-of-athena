@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 //#region Hooks
 export const useAppUpdate = (): {
     reloadPageCallback: () => void;
+    dismissReloadCallback: () => void;
     showReload: boolean;
 } => {
     const [showReload, setShowReload] = useState(false);
@@ -31,6 +32,10 @@ export const useAppUpdate = (): {
         Updates.reloadAsync().catch(console.error);
     }, []);
 
-    return { reloadPageCallback, showReload };
+    const dismissReloadCallback = useCallback((): void => {
+        setShowReload(false);
+    }, []);
+
+    return { reloadPageCallback, dismissReloadCallback, showReload };
 };
 //#endregion

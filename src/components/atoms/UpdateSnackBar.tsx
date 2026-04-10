@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { Snackbar } from "react-native-paper";
 
 import { Message, MessageKeys } from "../../constants";
@@ -10,6 +10,7 @@ import { useAppUpdate } from "../../hooks";
 export type UpdateSnackBarProps = {
     showReload: boolean;
     reloadPageCallback?: () => void;
+    dismissReloadCallback?: () => void;
 };
 //#endregion
 
@@ -22,7 +23,7 @@ export const UpdateSnackBarCore: FunctionComponent<UpdateSnackBarProps> = (
         //@ts-expect-error
         <Snackbar
             visible={props.showReload}
-            onDismiss={props.reloadPageCallback ?? (() => undefined)}
+            onDismiss={props.dismissReloadCallback ?? (() => undefined)}
             action={{
                 label: Message.get(MessageKeys.update_snack_bar_action_label),
                 onPress: props.reloadPageCallback,

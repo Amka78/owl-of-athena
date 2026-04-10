@@ -17,7 +17,7 @@ export const AccountMessagesScreen: FunctionComponent = () => {
 
     useEffect(() => {
         loadMessages();
-    }, [loadMessages]);
+    }, []);
 
     const onMessagePress = (item: UserMessage) => {
         MessageDialog.show({

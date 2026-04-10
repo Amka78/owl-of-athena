@@ -53,7 +53,7 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
     const isAdmin = user?.roles?.some((r) => r.slug === "admin") ?? false;
     return (
         <Drawer.Navigator
-            initialRouteName={"Sleep Process"}
+            initialRouteName={"Home"}
             defaultStatus={
                 mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal ? "open" : "closed"
             }

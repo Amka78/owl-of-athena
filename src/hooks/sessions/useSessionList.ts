@@ -56,18 +56,13 @@ export const useSessinList = (): {
     const dimens = useWindowDimensions();
     useCheckLogging();
 
-    const onPressedRefresh = useCallback(async () => {
-        LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.sessions]),
-        });
-        const sessions = await SessionRestClientInstance.getAll(user!.id);
-        cacheSessions(sessions);
-        LoadingDialog.close();
-    }, [cacheSessions, user]);
+
 
     const onPressedFilter = useCallback(async () => {
         setShowFilter(!showFilter);
     }, [showFilter]);
+
+    const userId = user?.id;
 
     const onPickerValueChange = useCallback(
         (itemValue: FilterByDateValues): void => {
@@ -75,6 +70,19 @@ export const useSessinList = (): {
         },
         [updateFilter],
     );
+
+    const memoizedOnPressedRefresh = useCallback(async () => {
+        if (!userId) return;
+        LoadingDialog.show({
+            dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.sessions]),
+        });
+        try {
+            const sessions = await SessionRestClientInstance.getAll(userId);
+            cacheSessions(sessions);
+        } finally {
+            LoadingDialog.close();
+        }
+    }, [userId, cacheSessions]);
 
     const onShowStarredPress = useCallback((): void => {
         updateFilter({
@@ -184,7 +192,7 @@ export const useSessinList = (): {
         onStarPress,
         onDeletePress,
         onMenuPress,
-        onRefreshPress: onPressedRefresh,
+        onRefreshPress: memoizedOnPressedRefresh,
         onFilterPress: onPressedFilter,
     };
 };
