@@ -1,0 +1,20 @@
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# Private keys and certificates
+*.pem
+*.p12
+*.pfx
+*.key
+*.jks
+*.keystore
+
+# Local config and credentials
+*.mobileprovision
+*.cer
+*.crt
+
+# Build/runtime secret folders
+.azure/

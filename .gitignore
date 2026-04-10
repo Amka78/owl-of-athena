@@ -80,4 +80,9 @@ dist/
 # Bun
 .yarnrc
 
+# Environment variables (never commit real secrets)
+.env
+.env.local
+.env.*.local
+
 # @end expo-cli

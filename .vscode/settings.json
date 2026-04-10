@@ -1,4 +1,11 @@
 {
+    // GitHub Copilot はこのリストのファイルをコンテキストに含めません
+    "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+    "files.exclude": {
+        ".env": true,
+        ".env.local": true,
+        ".env.*.local": true
+    },
     "react-native": {
         "packager": {
             "port": 19001
@@ -9,8 +16,8 @@
     "eslint.validate": [
         "javascript",
         "javascriptreact",
-        {"language": "typescript", "autoFix": true },
-        {"language": "typescriptreact", "autoFix": true }
+        { "language": "typescript", "autoFix": true },
+        { "language": "typescriptreact", "autoFix": true }
     ],
     "typescriptHero.imports.stringQuoteStyle": "\"",
     "editor.codeActionsOnSave": {

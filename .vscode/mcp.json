@@ -1,0 +1,46 @@
+{
+    "inputs": [
+        {
+            "id": "supabase-project-ref",
+            "type": "promptString",
+            "description": "Supabase Project Reference ID (プロジェクトのリファレンスID)"
+        },
+        {
+            "id": "supabase-access-token",
+            "type": "promptString",
+            "description": "Supabase Access Token (Personal Access Token)",
+            "password": true
+        }
+    ],
+    "servers": {
+        "supabase": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@supabase/mcp-server-supabase@latest",
+                "--project-ref",
+                "${input:supabase-project-ref}"
+            ],
+            "env": {
+                "SUPABASE_ACCESS_TOKEN": "${input:supabase-access-token}"
+            }
+        },
+        "context7": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@upstash/context7-mcp@latest"
+            ]
+        },
+        "playwright": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "-y",
+                "@playwright/mcp@latest"
+            ]
+        }
+    }
+}
