@@ -49,6 +49,7 @@ export const EnUSLocale: Story = {
     args: {
         timeView: { hours: 6, minutes: 30 },
         onWakeupPress: fn(),
+        onSnoozePress: fn(),
         dimens: mobileDimens,
         locale: "en-US",
     },
@@ -61,6 +62,7 @@ export const JaJPLocale: Story = {
     args: {
         timeView: { hours: 6, minutes: 30 },
         onWakeupPress: fn(),
+        onSnoozePress: fn(),
         dimens: mobileDimens,
         locale: "ja-JP",
     },
@@ -73,6 +75,7 @@ export const Desktop: Story = {
     args: {
         timeView: { hours: 6, minutes: 30 },
         onWakeupPress: fn(),
+        onSnoozePress: fn(),
         dimens: desktopDimens,
         locale: "en-US",
     },

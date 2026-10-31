@@ -43,6 +43,8 @@ import {
 } from "../sdk/models";
 import type { AuroraSound } from "../types";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
+import AlarmRuntimeInstance, { AlarmRuntimeEventList } from "./alarm/AlarmRuntime";
+import { nextAlarmEpochMs } from "./alarm/AlarmScheduler";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 //#endregion
 
@@ -56,7 +58,6 @@ export class AuroraManager extends EventEmitter {
     private currentProfile?: string;
 
     private soundList?: Array<AuroraSound>;
-    private currentSettings?: Settings;
     constructor() {
         super();
         this.connected = false;
@@ -68,6 +69,12 @@ export class AuroraManager extends EventEmitter {
             AuroraEventList.bluetoothConnectionChange,
             this.onBluetoothConnectionChange,
         );
+
+        AlarmRuntimeInstance.setPlayer({
+            play: (soundFileName, volume) => this.playAlarmSound(soundFileName, volume),
+            stop: () => AlarmAudioInstance.stop(),
+        });
+        AlarmRuntimeInstance.on(AlarmRuntimeEventList.onDismissed, this.onAlarmDismissed);
     }
 
     public setAuroraSound(soundList: Array<AuroraSound>): void {
@@ -136,7 +143,6 @@ export class AuroraManager extends EventEmitter {
     public async goToSleep(profile: AuroraProfile, settings: Settings): Promise<void> {
         const T = AuroraManager.CMD_TIMEOUT_MS;
         try {
-            this.currentSettings = settings;
             const writingProfile = new Profile(profile.content);
 
             writingProfile.wakeupTime = this.getMsAfterMidnight(
@@ -212,6 +218,13 @@ export class AuroraManager extends EventEmitter {
                 "prof-load",
             );
 
+            await AlarmRuntimeInstance.arm(
+                nextAlarmEpochMs(settings.alarmHour, settings.alarmMinute, Date.now()),
+                {
+                    soundFileName: settings.alarmAudioPath,
+                    volume: settings.alarmVolume,
+                },
+            );
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
             console.error("[goToSleep] error:", e);
@@ -246,20 +259,12 @@ export class AuroraManager extends EventEmitter {
                 }
                 case SleepStates.WAKING: {
                     console.debug("start onWaking.");
-                    if (this.alarmSound !== undefined) {
-                        AlarmAudioInstance.playLoop(
-                            this.alarmSound,
-                            this.currentSettings?.alarmVolume,
-                        ).catch((reason: unknown) => {
-                            console.error("[AuroraManager] failed to play alarm sound:", reason);
-                            this.emit("onError", reason);
-                        });
-                    }
+                    void AlarmRuntimeInstance.ring();
                     this.emit(AuroraManagerEventList.onWaking);
                     break;
                 }
                 case SleepStates.AWAKE: {
-                    AlarmAudioInstance.stop();
+                    void AlarmRuntimeInstance.dismiss();
                     this.emit(AuroraManagerEventList.onAwake);
                     this.setSleepState(SleepStates.SYNCING);
                     break;
@@ -554,6 +559,29 @@ export class AuroraManager extends EventEmitter {
         console.debug(msAfterMidNight);
         return msAfterMidNight;
     }
+
+    private async playAlarmSound(soundFileName?: string, volume?: number): Promise<void> {
+        const sound = this.findAlarmSound(soundFileName);
+        if (sound === undefined) {
+            console.warn("[AuroraManager] no alarm sound is available to play.");
+            return;
+        }
+        await AlarmAudioInstance.playLoop(sound, volume);
+    }
+
+    private findAlarmSound(soundFileName?: string): Audio.Sound | undefined {
+        if (soundFileName !== undefined && this.soundList !== undefined) {
+            const matched = this.soundList.find((value) => value.fileName === soundFileName);
+            if (matched !== undefined) {
+                return matched.sound;
+            }
+        }
+        return this.alarmSound;
+    }
+
+    private onAlarmDismissed = (): void => {
+        this.setSleepState(SleepStates.AWAKE);
+    };
 
     private async setupAurora(): Promise<void> {
         this.batteryLevel = this.osInfo!.batteryLevel;

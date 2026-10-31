@@ -9,7 +9,13 @@ import { Platform, StatusBar } from "react-native";
 import { Container } from "./src/components";
 import { UpdateSnackBar } from "./src/components/atoms";
 import { Message } from "./src/constants";
-import { AlarmAudioInstance, AuroraManagerInstance, SoundManagerInstance } from "./src/managers";
+import {
+    AlarmAudioInstance,
+    AlarmRuntimeInstance,
+    AuroraManagerInstance,
+    SoundManagerInstance,
+} from "./src/managers";
+import { alarmStorage } from "./src/managers/alarm/AlarmRuntimeStorage";
 import { InitialNavigator } from "./src/navigation";
 //#endregion
 
@@ -74,6 +80,8 @@ export default class App extends React.Component<AppProps, AppState> {
             console.warn(error);
         } finally {
             AuroraManagerInstance.setAuroraSound(SoundManagerInstance.getData());
+            AlarmRuntimeInstance.setStorage(alarmStorage);
+            await AlarmRuntimeInstance.initialize();
             this.setState({ isLoadingComplete: true });
             await SplashScreen.hideAsync();
         }

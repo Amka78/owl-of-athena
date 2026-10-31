@@ -19,6 +19,7 @@ export const WakingScreen: FunctionComponent = () => {
                 minutes: wakingHook.settings.alarmMinute,
             }}
             onWakeupPress={wakingHook.wakeupButtonPress}
+            onSnoozePress={wakingHook.snoozeButtonPress}
         ></WakingScreenTemplate>
     );
 };

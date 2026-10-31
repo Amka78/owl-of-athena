@@ -37,6 +37,7 @@ describe("WakingScreenTemplate", () => {
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
                 onWakeupPress={jest.fn()}
+                onSnoozePress={jest.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
@@ -49,6 +50,7 @@ describe("WakingScreenTemplate", () => {
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
                 onWakeupPress={jest.fn()}
+                onSnoozePress={jest.fn()}
                 dimens={mobileDimens}
                 locale="ja-JP"
             />,
@@ -61,6 +63,7 @@ describe("WakingScreenTemplate", () => {
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
                 onWakeupPress={jest.fn()}
+                onSnoozePress={jest.fn()}
                 dimens={desktopDimens}
                 locale="en-US"
             />,
@@ -74,11 +77,27 @@ describe("WakingScreenTemplate", () => {
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
                 onWakeupPress={onWakeupPress}
+                onSnoozePress={jest.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
         );
         fireEvent.press(getByText(/wake up/i));
         expect(onWakeupPress).toHaveBeenCalledTimes(1);
+    });
+
+    it("calls onSnoozePress when snooze button pressed", () => {
+        const onSnoozePress = jest.fn();
+        const { getByText } = renderWithProvider(
+            <WakingScreenTemplate
+                timeView={{ hours: 6, minutes: 30 }}
+                onWakeupPress={jest.fn()}
+                onSnoozePress={onSnoozePress}
+                dimens={mobileDimens}
+                locale="en-US"
+            />,
+        );
+        fireEvent.press(getByText(/snooze/i));
+        expect(onSnoozePress).toHaveBeenCalledTimes(1);
     });
 });

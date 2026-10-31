@@ -38,7 +38,6 @@ describe("SleepingScreenTemplate", () => {
                 timeView={{ hours: 23, minutes: 0 }}
                 onRelockPress={jest.fn()}
                 onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
                 dimens={mobileDimens}
@@ -54,7 +53,6 @@ describe("SleepingScreenTemplate", () => {
                 timeView={{ hours: 23, minutes: 0 }}
                 onRelockPress={jest.fn()}
                 onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
                 isSnoozing={false}
                 wakeLockMessage="画面はロックされています"
                 dimens={mobileDimens}
@@ -70,7 +68,6 @@ describe("SleepingScreenTemplate", () => {
                 timeView={{ hours: 23, minutes: 0 }}
                 onRelockPress={jest.fn()}
                 onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
                 dimens={desktopDimens}
@@ -87,7 +84,6 @@ describe("SleepingScreenTemplate", () => {
                 timeView={{ hours: 23, minutes: 0 }}
                 onRelockPress={jest.fn()}
                 onWakeupPress={onWakeupPress}
-                onSnoozePress={jest.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
                 dimens={mobileDimens}
@@ -104,7 +100,6 @@ describe("SleepingScreenTemplate", () => {
                 timeView={{ hours: 23, minutes: 0 }}
                 onRelockPress={jest.fn()}
                 onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Tap to relock screen"
                 dimens={mobileDimens}
@@ -112,5 +107,20 @@ describe("SleepingScreenTemplate", () => {
             />,
         );
         expect(getByText("Tap to relock screen")).toBeTruthy();
+    });
+
+    it("shows the snoozing message while snoozing", () => {
+        const { getByText } = renderWithProvider(
+            <SleepingScreenTemplate
+                timeView={{ hours: 23, minutes: 0 }}
+                onRelockPress={jest.fn()}
+                onWakeupPress={jest.fn()}
+                isSnoozing={true}
+                wakeLockMessage="Screen is locked"
+                dimens={mobileDimens}
+                locale="en-US"
+            />,
+        );
+        expect(getByText(/snoozing/i)).toBeTruthy();
     });
 });

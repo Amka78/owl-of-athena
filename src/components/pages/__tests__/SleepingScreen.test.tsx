@@ -10,6 +10,7 @@ jest.mock("../../../hooks/useSleeping", () => ({
         wakeLockTextKey: "sleeping_wakelock_enabled",
         onRelockPress: jest.fn(),
         onWakeupPress: jest.fn(),
+        isSnoozing: false,
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -38,6 +39,7 @@ jest.mock("../../../hooks", () => ({
         wakeLockTextKey: "sleeping_wakelock_enabled",
         onRelockPress: jest.fn(),
         onWakeupPress: jest.fn(),
+        isSnoozing: false,
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -47,7 +49,6 @@ jest.mock("../../../hooks", () => ({
         },
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

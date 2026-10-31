@@ -15,6 +15,7 @@ import { useAuroraStore } from "../store/auroraStore";
 import { useProfileStore } from "../store/profileStore";
 import { GuestUser } from "../types";
 import {
+    useAlarm,
     useCheckLogging,
     useProfileListSelector,
     useSettingsSelector,
@@ -32,6 +33,7 @@ export const useHome = (): {
     errorText: string;
 } => {
     useCheckLogging();
+    useAlarm();
     const { navigate } = useNavigation<any>();
     const { cacheProfiles } = useProfileStore();
     const { cacheSettings } = useAuroraStore();

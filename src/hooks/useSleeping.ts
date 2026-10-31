@@ -1,10 +1,11 @@
 //#region Import Modules
-import { useCallback, useRef, useState } from "react";
+import { useCallback } from "react";
 import { MessageKeys } from "../constants";
 import { useCheckLogging } from "../hooks";
+import { useAlarmState } from "../hooks/useAlarm";
 import { useWakeLockSelector } from "../hooks/useWakeLockSelector";
-import { AuroraManagerInstance } from "../managers";
-import { SleepStates } from "../sdk";
+import { AlarmRuntimeInstance } from "../managers";
+import { isAlarmSnoozing } from "../managers/alarm/AlarmScheduler";
 import type { Settings } from "../sdk/models";
 import { WakeLockService } from "../services";
 import { useAppStore } from "../store/appStore";
@@ -12,14 +13,11 @@ import { useSettingsSelector } from "./useSettingsSelector";
 
 //#endregion
 
-const SNOOZE_DURATION_MS = __DEV__ ? 9_000 : 9 * 60_000;
-
 //#region Hooks
 export const useSleeping = (): {
     wakeLockTextKey: string;
     onRelockPress: () => void;
     onWakeupPress: () => void;
-    onSnoozePress: () => void;
     isSnoozing: boolean;
     settings: Settings;
 } => {
@@ -28,8 +26,7 @@ export const useSleeping = (): {
     const { setWakeLock } = useAppStore();
     const wakeLock = useWakeLockSelector();
     const settings = useSettingsSelector();
-    const [isSnoozing, setIsSnoozing] = useState(false);
-    const snoozeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const alarmState = useAlarmState();
     console.debug(`current Wakelock:${wakeLock}`);
 
     const wakeLockTextKey = wakeLock
@@ -51,30 +48,14 @@ export const useSleeping = (): {
     }, [setWakeLock, wakeLock]);
 
     const wakeupButtonPress = useCallback((): void => {
-        if (snoozeTimer.current) {
-            clearTimeout(snoozeTimer.current);
-            snoozeTimer.current = null;
-        }
-        setIsSnoozing(false);
-        AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
+        void AlarmRuntimeInstance.dismiss();
     }, []);
-
-    const snoozeButtonPress = useCallback((): void => {
-        if (isSnoozing) return;
-        setIsSnoozing(true);
-        snoozeTimer.current = setTimeout(() => {
-            setIsSnoozing(false);
-            snoozeTimer.current = null;
-            AuroraManagerInstance.setSleepState(SleepStates.AWAKE);
-        }, SNOOZE_DURATION_MS);
-    }, [isSnoozing]);
 
     return {
         wakeLockTextKey,
         onRelockPress: contentTextPress,
         onWakeupPress: wakeupButtonPress,
-        onSnoozePress: snoozeButtonPress,
-        isSnoozing,
+        isSnoozing: isAlarmSnoozing(alarmState),
         settings,
     };
 };

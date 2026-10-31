@@ -16,7 +16,6 @@ export type SleepingScreenTemplateProps = {
     onRelockPress: () => void;
     timeView: TemplateTimeViewProps;
     onWakeupPress: () => void;
-    onSnoozePress: () => void;
     isSnoozing: boolean;
     dimens: Dimensions;
     locale?: string;
@@ -50,12 +49,8 @@ export const SleepingScreenTemplate: FunctionComponent<SleepingScreenTemplatePro
             <Button onPress={props.onWakeupPress} screenWidth={props.dimens.width}>
                 {Message.get(MessageKeys.sleeping_wakeup_button)}
             </Button>
-            {props.isSnoozing ? (
+            {props.isSnoozing && (
                 <ContentText>{Message.get(MessageKeys.sleeping_snoozing_message)}</ContentText>
-            ) : (
-                <Button onPress={props.onSnoozePress} screenWidth={props.dimens.width}>
-                    {Message.get(MessageKeys.sleeping_snooze_button)}
-                </Button>
             )}
         </InternalView>
     );

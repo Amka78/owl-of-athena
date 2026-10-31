@@ -8,6 +8,7 @@ import { WakingScreen } from "../WakingScreen";
 jest.mock("../../../hooks/useWaking ", () => ({
     useWaking: () => ({
         wakeupButtonPress: jest.fn(),
+        snoozeButtonPress: jest.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -34,6 +35,7 @@ jest.mock("../../../hooks", () => ({
     }),
     useWaking: () => ({
         wakeupButtonPress: jest.fn(),
+        snoozeButtonPress: jest.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -43,7 +45,6 @@ jest.mock("../../../hooks", () => ({
         },
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

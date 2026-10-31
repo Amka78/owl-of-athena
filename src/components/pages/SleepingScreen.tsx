@@ -21,7 +21,6 @@ export const SleepingScreen: FunctionComponent = () => {
                 minutes: sleepingHook.settings.alarmMinute,
             }}
             onWakeupPress={sleepingHook.onWakeupPress}
-            onSnoozePress={sleepingHook.onSnoozePress}
             isSnoozing={sleepingHook.isSnoozing}
         ></SleepingScreenTemplate>
     );

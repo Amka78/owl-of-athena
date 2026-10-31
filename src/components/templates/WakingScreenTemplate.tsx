@@ -14,6 +14,7 @@ import type { TemplateTimeViewProps } from "./TempatedProps";
 export type WakingScreenTemplateProps = {
     timeView: TemplateTimeViewProps;
     onWakeupPress: () => void;
+    onSnoozePress: () => void;
     dimens: Dimensions;
     locale?: string;
 };
@@ -43,6 +44,9 @@ export const WakingScreenTemplate: FunctionComponent<WakingScreenTemplateProps> 
                 ></TimeView>
             </View>
             <View style={{ alignItems: "center" }}>
+                <Button onPress={props.onSnoozePress} screenWidth={props.dimens.width}>
+                    {Message.get(MessageKeys.sleeping_snooze_button)}
+                </Button>
                 <Button onPress={props.onWakeupPress} screenWidth={props.dimens.width}>
                     {Message.get(MessageKeys.waking_wakeup_button)}
                 </Button>
