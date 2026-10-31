@@ -17,7 +17,7 @@ import { SessionRestClientInstance } from "../clients";
 import { AuroraInstance, SleepStates } from "../sdk";
 import {
     CommandNames,
-    type ConnectionStates,
+    ConnectionStates,
     EventIds,
     EventIdsToNames,
     SleepStatesToNames,
@@ -43,6 +43,7 @@ import {
 } from "../sdk/models";
 import type { AuroraSound } from "../types";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
+import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
 import AlarmRuntimeInstance, { AlarmRuntimeEventList } from "./alarm/AlarmRuntime";
 import { nextAlarmEpochMs } from "./alarm/AlarmScheduler";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
@@ -225,6 +226,7 @@ export class AuroraManager extends EventEmitter {
                     volume: settings.alarmVolume,
                 },
             );
+            await AlarmKeepAliveInstance.acquire("sleeping");
             this.setSleepState(SleepStates.SLEEPING);
         } catch (e) {
             console.error("[goToSleep] error:", e);
@@ -264,6 +266,7 @@ export class AuroraManager extends EventEmitter {
                     break;
                 }
                 case SleepStates.AWAKE: {
+                    void AlarmKeepAliveInstance.release();
                     void AlarmRuntimeInstance.dismiss();
                     this.emit(AuroraManagerEventList.onAwake);
                     this.setSleepState(SleepStates.SYNCING);
@@ -665,7 +668,42 @@ export class AuroraManager extends EventEmitter {
 
     private onBluetoothConnectionChange = (connectionState: ConnectionStates): void => {
         this.emit(AuroraManagerEventList.onConnectionChange, connectionState);
+        void this.handleAlarmConnectionChange(connectionState);
     };
+
+    /**
+     * 睡眠中に Bluetooth が切れてもアラームは鳴らし続ける必要があるため、
+     * 無音ループでアプリを生かしたままスマホ側の締切に任せる。
+     */
+    private async handleAlarmConnectionChange(
+        connectionState: ConnectionStates,
+    ): Promise<void> {
+        if (AlarmRuntimeInstance.getState().phase === "idle") {
+            await AlarmKeepAliveInstance.release();
+            return;
+        }
+
+        if (connectionState === ConnectionStates.DISCONNECTED) {
+            console.debug(
+                "[AuroraManager] device disconnected while the alarm is armed: the phone alarm takes over.",
+            );
+            await AlarmKeepAliveInstance.acquire("disconnected-fallback");
+            return;
+        }
+
+        await AlarmKeepAliveInstance.acquire("sleeping");
+
+        if (
+            connectionState === ConnectionStates.CONNECTED &&
+            this.currentSleepState === SleepStates.SLEEPING
+        ) {
+            try {
+                await this.setupAurora();
+            } catch (e) {
+                console.error("[AuroraManager] failed to restore the sleeping session:", e);
+            }
+        }
+    }
 }
 
 export default new AuroraManager();
