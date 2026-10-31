@@ -9,7 +9,7 @@ import { Platform, StatusBar } from "react-native";
 import { Container } from "./src/components";
 import { UpdateSnackBar } from "./src/components/atoms";
 import { Message } from "./src/constants";
-import { AuroraManagerInstance, SoundManagerInstance } from "./src/managers";
+import { AlarmAudioInstance, AuroraManagerInstance, SoundManagerInstance } from "./src/managers";
 import { InitialNavigator } from "./src/navigation";
 //#endregion
 
@@ -68,15 +68,12 @@ export default class App extends React.Component<AppProps, AppState> {
                     require("./assets/profiles/default_profile_content.ttf"),
                 ]),
                 SoundManagerInstance.loadResource(),
+                AlarmAudioInstance.configureSession(),
             ]);
         } catch (error) {
             console.warn(error);
         } finally {
-            if (Platform.OS === "web") {
-                AuroraManagerInstance.setAuroraSound(
-                    SoundManagerInstance.getData()
-                );
-            }
+            AuroraManagerInstance.setAuroraSound(SoundManagerInstance.getData());
             this.setState({ isLoadingComplete: true });
             await SplashScreen.hideAsync();
         }

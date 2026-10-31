@@ -42,6 +42,7 @@ import {
     type Settings,
 } from "../sdk/models";
 import type { AuroraSound } from "../types";
+import AlarmAudioInstance from "./alarm/AlarmAudio";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 //#endregion
 
@@ -237,9 +238,7 @@ export class AuroraManager extends EventEmitter {
                     break;
                 }
                 case SleepStates.CONFIGURING: {
-                    if (this.alarmSound !== undefined) {
-                        this.alarmSound.stopAsync();
-                    }
+                    AlarmAudioInstance.stop();
                     if (this.remStimSound !== undefined) {
                         this.remStimSound.stopAsync();
                     }
@@ -248,21 +247,19 @@ export class AuroraManager extends EventEmitter {
                 case SleepStates.WAKING: {
                     console.debug("start onWaking.");
                     if (this.alarmSound !== undefined) {
-                        this.alarmSound.setIsLoopingAsync(true).then(() => {
-                            this.alarmSound!.setVolumeAsync(
-                                this.currentSettings?.alarmVolume ?? 0.8,
-                            ).then(() => {
-                                this.alarmSound!.playAsync();
-                            });
+                        AlarmAudioInstance.playLoop(
+                            this.alarmSound,
+                            this.currentSettings?.alarmVolume,
+                        ).catch((reason: unknown) => {
+                            console.error("[AuroraManager] failed to play alarm sound:", reason);
+                            this.emit("onError", reason);
                         });
                     }
                     this.emit(AuroraManagerEventList.onWaking);
                     break;
                 }
                 case SleepStates.AWAKE: {
-                    if (this.alarmSound !== undefined) {
-                        this.alarmSound.stopAsync();
-                    }
+                    AlarmAudioInstance.stop();
                     this.emit(AuroraManagerEventList.onAwake);
                     this.setSleepState(SleepStates.SYNCING);
                     break;

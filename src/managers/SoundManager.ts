@@ -48,13 +48,15 @@ export class SoundManager {
     }
 
     public async loadResource(): Promise<void> {
-        this.aNewDaySound.loadAsync(require("../../assets/audio/a_new_day.m4a"));
-        this.bungleCallSound.loadAsync(require("../../assets/audio/bugle_call.m4a"));
-        this.classicSound.loadAsync(require("../../assets/audio/classic.m4a"));
-        this.creationSound.loadAsync(require("../../assets/audio/creation.m4a"));
-        this.epicSound.loadAsync(require("../../assets/audio/epic.m4a"));
-        this.greenGardenSound.loadAsync(require("../../assets/audio/green_garden.m4a"));
-        this.singingBirdsSound.loadAsync(require("../../assets/audio/singing_birds.m4a"));
+        await Promise.all([
+            this.aNewDaySound.loadAsync(require("../../assets/audio/a_new_day.m4a")),
+            this.bungleCallSound.loadAsync(require("../../assets/audio/bugle_call.m4a")),
+            this.classicSound.loadAsync(require("../../assets/audio/classic.m4a")),
+            this.creationSound.loadAsync(require("../../assets/audio/creation.m4a")),
+            this.epicSound.loadAsync(require("../../assets/audio/epic.m4a")),
+            this.greenGardenSound.loadAsync(require("../../assets/audio/green_garden.m4a")),
+            this.singingBirdsSound.loadAsync(require("../../assets/audio/singing_birds.m4a")),
+        ]);
     }
 
     public getData(): Array<AuroraSound> {

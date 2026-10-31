@@ -608,6 +608,10 @@ mock.module("expo-av", () => {
         playAsync: () => Promise.resolve(undefined),
         unloadAsync: () => Promise.resolve(undefined),
         loadAsync: () => Promise.resolve(undefined),
+        setIsLoopingAsync: () => Promise.resolve(undefined),
+        setVolumeAsync: () => Promise.resolve(undefined),
+        setIsMutedAsync: () => Promise.resolve(undefined),
+        setPositionAsync: () => Promise.resolve(undefined),
     };
     return {
         Audio: {
@@ -617,6 +621,8 @@ mock.module("expo-av", () => {
             ),
             setAudioModeAsync: () => Promise.resolve(undefined),
         },
+        InterruptionModeIOS: { MixWithOthers: 0, DoNotMix: 1, DuckOthers: 2 },
+        InterruptionModeAndroid: { DoNotMix: 1, DuckOthers: 2 },
         Video: makeHost("Video"),
     };
 });
