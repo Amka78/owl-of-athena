@@ -12,6 +12,7 @@ import {
     sortedIndexBy,
     sumBy,
 } from "lodash";
+import { Platform } from "react-native";
 
 import { SessionRestClientInstance } from "../clients";
 import { AuroraInstance, SleepStates } from "../sdk";
@@ -20,6 +21,7 @@ import {
     ConnectionStates,
     EventIds,
     EventIdsToNames,
+    LOW_BATTERY_THRESHOLD,
     SleepStatesToNames,
 } from "../sdk/AuroraConstants";
 import { AuroraEventList } from "../sdk/AuroraEventList";
@@ -42,12 +44,17 @@ import {
     type Settings,
 } from "../sdk/models";
 import type { AuroraSound } from "../types";
+import { AuroraManagerEventList } from "./AuroraManagerEventList";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
 import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
 import AlarmRuntimeInstance, { AlarmRuntimeEventList } from "./alarm/AlarmRuntime";
 import { nextAlarmEpochMs } from "./alarm/AlarmScheduler";
-import { AuroraManagerEventList } from "./AuroraManagerEventList";
+import type { SessionSyncResult } from "./SessionSyncResult";
+
 //#endregion
+
+/** 中身が空のセッションはサーバへ送らず端末から削除する。 */
+const isSessionContentEmpty = (content?: string): boolean => (content ?? "").trim().length === 0;
 
 export class AuroraManager extends EventEmitter {
     private connected: boolean;
@@ -92,6 +99,16 @@ export class AuroraManager extends EventEmitter {
 
     public getBatteryLevel(): number {
         return this.batteryLevel;
+    }
+
+    /** 電池残量が不明（0）のときは false。 */
+    public isBatteryLow(): boolean {
+        return this.batteryLevel > 0 && this.batteryLevel < LOW_BATTERY_THRESHOLD;
+    }
+
+    /** 端末の電源を落とす。起床時に電池が少ない場合に呼ぶ。 */
+    public async shutdown(): Promise<void> {
+        await AuroraInstance.queueCmd("os-shutdown");
     }
 
     public async connect(): Promise<AuroraOSInfo | void> {
@@ -317,84 +334,116 @@ export class AuroraManager extends EventEmitter {
     public async pushSessions(
         sessions: Array<FileInfo>,
         guestLogin: boolean,
-    ): Promise<[Array<AuroraSession>, Array<AuroraSessionDetail>]> {
+    ): Promise<SessionSyncResult> {
         const sessionList = await this.readSessionContent(sessions);
 
-        const pushedSessionList: AuroraSession[] = [];
-        const pushedSessionDetailList: AuroraSessionDetail[] = [];
+        const result: SessionSyncResult = {
+            sessions: [],
+            sessionDetails: [],
+            syncedCount: 0,
+            failedCount: 0,
+            removedEmptyCount: 0,
+        };
+
         for (const value of sessionList) {
             const sessionInfo = value[1];
-            const uploadSession: AuroraSessionCSV = {
-                ...sessionInfo,
-            };
-            uploadSession.app_version = this.osInfo!.version;
-            uploadSession.app_platform = "win"; //Platform.OS;
-            uploadSession.session_txt = sessionInfo.content;
-
-            let newSession: AuroraSession | undefined;
-
             try {
-                if (!guestLogin) {
-                    console.debug("guest process called.");
-                    if (sessionInfo.name.indexOf("@") == -1) {
-                        await SessionRestClientInstance.getById(sessionInfo.name).catch(
-                            async () => {
-                                newSession = await SessionRestClientInstance.create(uploadSession);
-                            },
-                        );
-                    } else {
-                        newSession = await SessionRestClientInstance.create(uploadSession);
-                    }
-                } else {
-                    newSession = new AuroraSession(uploadSession);
-                    newSession.id = sessionInfo.name.replace("@", "-");
+                if (isSessionContentEmpty(sessionInfo.content)) {
+                    await AuroraInstance.queueCmd(`sd-dir-del sessions/${sessionInfo.name}`);
+                    result.removedEmptyCount += 1;
+                    continue;
                 }
 
-                console.debug(`uploadSession:${uploadSession}`);
-                if (newSession!.id != sessionInfo.name) {
+                const uploadSession: AuroraSessionCSV = {
+                    ...sessionInfo,
+                };
+                uploadSession.app_version = this.osInfo!.version;
+                uploadSession.app_platform = Platform.OS;
+                uploadSession.session_txt = sessionInfo.content;
+
+                const newSession = await this.uploadSession(uploadSession, guestLogin);
+                if (newSession === undefined) {
+                    // サーバに既に存在し、端末側のリネームも不要なセッション
+                    result.syncedCount += 1;
+                    continue;
+                }
+
+                if (newSession.id !== sessionInfo.name) {
                     await AuroraInstance.queueCmd(
-                        `sd-rename sessions/${sessionInfo.name} sessions/${newSession!.id}`,
+                        `sd-rename sessions/${sessionInfo.name} sessions/${newSession.id}`,
                     );
                 }
-                pushedSessionList.push(newSession!);
 
-                pushedSessionDetailList.push(
-                    new AuroraSessionDetail(
-                        newSession!.id,
-                        uploadSession.streams as any,
-                        this.aggregateSessionDetail(
-                            cloneDeep(uploadSession.events),
-                            [0, 15, 30, 45, 60],
-                            "sum",
-                        ),
-                        this.aggregateSessionDetail(
-                            cloneDeep(uploadSession.events),
-                            [0, 15, 30, 45, 60],
-                            "sum",
-                        ),
-                        this.aggregateSessionDetail(
-                            cloneDeep(uploadSession.events),
-                            [0, 5, 10, 15, 20],
-                            "average",
-                        ),
-                        this.aggregateSessionDetail(
-                            cloneDeep(uploadSession.events),
-                            [0, 5, 10, 15, 20, 25],
-                            "duration",
-                        ),
-                        this.aggregateSessionDetail(
-                            cloneDeep(uploadSession.events),
-                            [0, 15, 30, 45, 60],
-                            "count",
-                        ),
-                    ),
-                );
+                result.sessions.push(newSession);
+                result.sessionDetails.push(this.createSessionDetail(newSession, uploadSession));
+                result.syncedCount += 1;
             } catch (e) {
-                console.debug(`session parse error:${e}`);
-                await AuroraInstance.queueCmd(`sd-dir-del ${sessionInfo[0]}`);
+                // 失敗したセッションは端末に残し、次回の同期で再試行する
+                console.error(`[pushSessions] failed to sync ${sessionInfo.name}:`, e);
+                result.failedCount += 1;
             }
         }
-        return [pushedSessionList, pushedSessionDetailList];
+
+        return result;
+    }
+
+    /**
+     * ゲストはローカル生成、通常ユーザーはサーバへ送信する。
+     * 既にサーバへ送信済みのセッションは何もせず undefined を返す。
+     */
+    private async uploadSession(
+        uploadSession: AuroraSessionCSV,
+        guestLogin: boolean,
+    ): Promise<AuroraSession | undefined> {
+        if (guestLogin) {
+            const guestSession = new AuroraSession(uploadSession);
+            guestSession.id = uploadSession.name.replace("@", "-");
+            return guestSession;
+        }
+
+        if (uploadSession.name.indexOf("@") !== -1) {
+            return await SessionRestClientInstance.create(uploadSession);
+        }
+
+        const existingSession = await SessionRestClientInstance.getById(uploadSession.name).catch(
+            () => undefined,
+        );
+        return existingSession ?? (await SessionRestClientInstance.create(uploadSession));
+    }
+
+    private createSessionDetail(
+        session: AuroraSession,
+        uploadSession: AuroraSessionCSV,
+    ): AuroraSessionDetail {
+        return new AuroraSessionDetail(
+            session.id,
+            uploadSession.streams as any,
+            this.aggregateSessionDetail(
+                cloneDeep(uploadSession.events),
+                [0, 15, 30, 45, 60],
+                "sum",
+            ),
+            this.aggregateSessionDetail(
+                cloneDeep(uploadSession.events),
+                [0, 15, 30, 45, 60],
+                "sum",
+            ),
+            this.aggregateSessionDetail(
+                cloneDeep(uploadSession.events),
+                [0, 5, 10, 15, 20],
+                "average",
+            ),
+            this.aggregateSessionDetail(
+                cloneDeep(uploadSession.events),
+                [0, 5, 10, 15, 20, 25],
+                "duration",
+            ),
+            this.aggregateSessionDetail(
+                cloneDeep(uploadSession.events),
+                [0, 15, 30, 45, 60],
+                "count",
+            ),
+        );
     }
 
     private aggregateSessionDetail(
@@ -675,9 +724,7 @@ export class AuroraManager extends EventEmitter {
      * 睡眠中に Bluetooth が切れてもアラームは鳴らし続ける必要があるため、
      * 無音ループでアプリを生かしたままスマホ側の締切に任せる。
      */
-    private async handleAlarmConnectionChange(
-        connectionState: ConnectionStates,
-    ): Promise<void> {
+    private async handleAlarmConnectionChange(connectionState: ConnectionStates): Promise<void> {
         if (AlarmRuntimeInstance.getState().phase === "idle") {
             await AlarmKeepAliveInstance.release();
             return;

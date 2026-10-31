@@ -3,9 +3,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { AuroraRestClientInstance } from "../clients";
-import { ConfirmDialog, LoadingDialog } from "../components/molecules";
+import { LoadingDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
+import { ConnectionStates } from "../sdk";
 import type { AuroraProfile } from "../sdk/AuroraTypes";
 import type { Settings } from "../sdk/models";
 import { WakeLockService } from "../services";
@@ -25,6 +26,9 @@ import {
 
 //#endregion
 
+/** 未接続で GO TO BED を押したとき、接続を待つ最大時間。 */
+const PENDING_GO_TO_SLEEP_TIMEOUT_MS = 10 * 60 * 1000;
+
 //#region Hooks
 export const useHome = (): {
     settings: Settings;
@@ -43,6 +47,15 @@ export const useHome = (): {
     const profiles = useProfileListSelector();
     const wakeLock = useWakeLockSelector();
     const [errorText, setErrorText] = useState<string>("");
+    const pendingGoToSleep = useRef(false);
+    const pendingTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    const clearPendingTimeout = useCallback((): void => {
+        if (pendingTimeout.current !== undefined) {
+            clearTimeout(pendingTimeout.current);
+            pendingTimeout.current = undefined;
+        }
+    }, []);
 
     const onSleepingEvent = useRef(
         onSleeping(
@@ -167,16 +180,22 @@ export const useHome = (): {
     const goToSleepPress = useCallback(async (): Promise<void> => {
         try {
             if (AuroraManagerInstance.isConnected()) {
+                pendingGoToSleep.current = false;
+                clearPendingTimeout();
                 LoadingDialog.show({
                     dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
                 });
                 await AuroraManagerInstance.goToSleep(selectedProfile.current!, settings);
             } else {
-                ConfirmDialog.show({
-                    title: Message.get(MessageKeys.home_aurora_disconnected_dialog_title),
-                    message: Message.get(MessageKeys.home_aurora_disconnected_dialog_message),
-                    isCancelable: false,
-                });
+                // 接続されたら自動で就寝処理を続ける（10分で待機をやめる）
+                pendingGoToSleep.current = true;
+                setErrorText(Message.get(MessageKeys.home_aurora_disconnected_dialog_message));
+                clearPendingTimeout();
+                pendingTimeout.current = setTimeout(() => {
+                    pendingGoToSleep.current = false;
+                    pendingTimeout.current = undefined;
+                    setErrorText("");
+                }, PENDING_GO_TO_SLEEP_TIMEOUT_MS);
             }
         } catch (e) {
             console.error(e);
@@ -185,6 +204,28 @@ export const useHome = (): {
             LoadingDialog.close();
         }
     }, [settings]);
+
+    useEffect(() => {
+        const onConnectionChange = (connectionState: ConnectionStates): void => {
+            if (connectionState !== ConnectionStates.CONNECTED) return;
+            if (!pendingGoToSleep.current) return;
+
+            pendingGoToSleep.current = false;
+            clearPendingTimeout();
+            setErrorText("");
+            void goToSleepPress();
+        };
+
+        AuroraManagerInstance.on(AuroraManagerEventList.onConnectionChange, onConnectionChange);
+        return () => {
+            AuroraManagerInstance.off(
+                AuroraManagerEventList.onConnectionChange,
+                onConnectionChange,
+            );
+            clearPendingTimeout();
+        };
+    }, [clearPendingTimeout, goToSleepPress]);
+
     return { settings, timeViewPress, goToSleepPress, errorText };
 };
 //#endregion

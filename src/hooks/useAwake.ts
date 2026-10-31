@@ -1,10 +1,10 @@
 //#region Import Modules
-
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
-import { LoadingDialog, QuestionnaireDialog } from "../components/molecules";
+
+import { ConfirmDialog, LoadingDialog, QuestionnaireDialog } from "../components/molecules";
 import { Message, MessageKeys } from "../constants";
-import { AuroraManagerInstance } from "../managers";
+import { AuroraManagerInstance, type SessionSyncResult } from "../managers";
 import { SleepStates } from "../sdk";
 import { useSessionStore } from "../store/sessionStore";
 import { GuestUser } from "../types";
@@ -14,6 +14,28 @@ import {
     useSessionListSelector,
     useUserSelector,
 } from "./";
+
+//#endregion
+
+//#region Functions
+/** 同期に失敗したセッションがあるときだけ件数を知らせる。 */
+const showSyncSummary = (result?: SessionSyncResult): void => {
+    if (result === undefined || result.failedCount === 0) return;
+
+    const message =
+        result.syncedCount > 0
+            ? Message.get(MessageKeys.aurora_sync_mixed_message, [
+                  result.syncedCount.toString(),
+                  result.failedCount.toString(),
+              ])
+            : Message.get(MessageKeys.aurora_sync_failed_message, [result.failedCount.toString()]);
+
+    ConfirmDialog.show({
+        title: Message.get(MessageKeys.aurora_sync_dialog_title),
+        message,
+        isCancelable: true,
+    });
+};
 //#endregion
 
 //#region Hooks
@@ -36,28 +58,53 @@ export const useAwake = (): {
     }, [navigate]);
 
     const skipButtonPress = useCallback(async (): Promise<void> => {
+        // 電池切れで同期できない場合は端末を落として、充電後の接続時に同期する
+        if (AuroraManagerInstance.isBatteryLow()) {
+            try {
+                await AuroraManagerInstance.shutdown();
+            } catch (e) {
+                console.error("[useAwake] failed to shut down Aurora:", e);
+            }
+            AuroraManagerInstance.setSleepState(SleepStates.INIT);
+            ConfirmDialog.show({
+                title: Message.get(MessageKeys.aurora_wakeup_battery_low_title),
+                message: Message.get(MessageKeys.aurora_wakeup_battery_low_message),
+                isCancelable: false,
+                onConfirm: () => navigate("Home"),
+            });
+            return;
+        }
+
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
         });
-        try {
-            const unsyncedSession = await AuroraManagerInstance.getUnsyncedSessions();
 
-            if (unsyncedSession.length > 0) {
-                const pushedSession = await AuroraManagerInstance.pushSessions(
-                    unsyncedSession,
+        let syncResult: SessionSyncResult | undefined;
+        try {
+            const unsyncedSessions = await AuroraManagerInstance.getUnsyncedSessions();
+            if (unsyncedSessions.length > 0) {
+                syncResult = await AuroraManagerInstance.pushSessions(
+                    unsyncedSessions,
                     userInfo?.id === GuestUser,
                 );
 
-                sessionList.unshift(...pushedSession[0]);
-                sessionDetailList.unshift(...pushedSession[1]);
-                cacheSessions(sessionList);
-                cacheSessionDetails(sessionDetailList);
-                selectSession(pushedSession[0][0]);
+                if (syncResult.sessions.length > 0) {
+                    sessionList.unshift(...syncResult.sessions);
+                    sessionDetailList.unshift(...syncResult.sessionDetails);
+                    cacheSessions(sessionList);
+                    cacheSessionDetails(sessionDetailList);
+                    selectSession(syncResult.sessions[0]);
+                }
             }
             AuroraManagerInstance.setSleepState(SleepStates.INIT);
-            navigate("Home");
         } finally {
             LoadingDialog.close();
+        }
+
+        showSyncSummary(syncResult);
+        navigate("Home");
+        if (syncResult !== undefined && syncResult.sessions.length > 0) {
+            navigate("Sessions");
         }
     }, [
         cacheSessions,

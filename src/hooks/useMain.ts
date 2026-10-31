@@ -208,7 +208,7 @@ async function executeConfiguring(
                                     unsyncedSessions,
                                     isGuest,
                                 );
-                                pushedSessionCallback(result);
+                                pushedSessionCallback([result.sessions, result.sessionDetails]);
                             } finally {
                                 LoadingDialog.close();
                             }

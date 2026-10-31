@@ -46,6 +46,11 @@ export const MessageKeys = {
     aurora_low_battery_dialog_message: "aurora_low_battery_dialog_message",
     aurora_sync_successful_snackbar_message: "aurora_sync_successful_snackbar_message",
     aurora_sync_successful_snackbar_action: "aurora_sync_successful_snackbar_action",
+    aurora_sync_mixed_message: "aurora_sync_mixed_message",
+    aurora_sync_failed_message: "aurora_sync_failed_message",
+    aurora_sync_dialog_title: "aurora_sync_dialog_title",
+    aurora_wakeup_battery_low_title: "aurora_wakeup_battery_low_title",
+    aurora_wakeup_battery_low_message: "aurora_wakeup_battery_low_message",
     //#endregion
 
     //#region WelcomeScreen

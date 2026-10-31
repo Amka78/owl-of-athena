@@ -34,12 +34,16 @@ export const useSessionTransferStore = create<SessionTransferStore>()((set) => (
     },
 
     transferSessions: async (sessions: FileInfo[], guestLogin = false) => {
-        set({ status: "transferring", transferredCount: 0, statusText: "Transferring sessions..." });
+        set({
+            status: "transferring",
+            transferredCount: 0,
+            statusText: "Transferring sessions...",
+        });
         try {
-            const [transferred] = await AuroraManagerInstance.pushSessions(sessions, guestLogin);
+            const result = await AuroraManagerInstance.pushSessions(sessions, guestLogin);
             set({
                 status: "complete",
-                transferredCount: transferred.length,
+                transferredCount: result.syncedCount,
                 statusText: "",
             });
         } catch (e: any) {
@@ -56,4 +60,3 @@ export const useSessionTransferStore = create<SessionTransferStore>()((set) => (
             error: undefined,
         }),
 }));
-

@@ -57,6 +57,14 @@ export default {
         "Auroraのバッテリーが{0}%です。 一晩オーロラを動作させたい場合は充電をしてください。",
     [MessageKeys.aurora_sync_successful_snackbar_message]: "{0}のセッションの同期に成功しました。",
     [MessageKeys.aurora_sync_successful_snackbar_action]: "今見る。",
+    [MessageKeys.aurora_sync_mixed_message]:
+        "{0}件のセッションを同期しましたが、{1}件は同期できませんでした。",
+    [MessageKeys.aurora_sync_failed_message]:
+        "{0}件のセッションを同期できませんでした。時間をおいて再度お試しください。",
+    [MessageKeys.aurora_sync_dialog_title]: "セッションの同期",
+    [MessageKeys.aurora_wakeup_battery_low_title]: "おはようございます!",
+    [MessageKeys.aurora_wakeup_battery_low_message]:
+        "Auroraのバッテリーが切れたため、今回のセッションは同期できませんでした。充電後にアプリが接続したときに同期されます。",
     // welcome fragment
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
     [MessageKeys.welcome_text]:
@@ -269,7 +277,8 @@ export default {
     [MessageKeys.console_input_placeholder]: "コマンドを入力...",
     [MessageKeys.console_send_button]: "送信",
     [MessageKeys.console_clear_button]: "クリア",
-    [MessageKeys.console_not_connected]: "Auroraが接続されていません。コンソールを使うにはAuroraに接続してください。",
+    [MessageKeys.console_not_connected]:
+        "Auroraが接続されていません。コンソールを使うにはAuroraに接続してください。",
 
     // messages screen
     [MessageKeys.messages_mark_as_read]: "既読にする",
@@ -296,7 +305,8 @@ export default {
     // session transfer dialog
     [MessageKeys.session_transfer_title]: "セッション転送",
     [MessageKeys.session_transfer_scanning]: "Auroraのセッションをスキャン中...",
-    [MessageKeys.session_transfer_not_connected]: "セッションを転送するにはAuroraに接続する必要があります。",
+    [MessageKeys.session_transfer_not_connected]:
+        "セッションを転送するにはAuroraに接続する必要があります。",
     [MessageKeys.session_transfer_no_sessions]: "Auroraにセッションが見つかりませんでした。",
     [MessageKeys.session_transfer_transferring]: "{0}件のセッションを転送中...",
     [MessageKeys.session_transfer_complete]: "{0}件のセッションを正常に転送しました。",
@@ -304,7 +314,8 @@ export default {
     [MessageKeys.session_transfer_cancel]: "キャンセル",
     [MessageKeys.session_transfer_continue]: "続ける",
     [MessageKeys.session_transfer_delete_confirm_title]: "セッションを削除しますか?",
-    [MessageKeys.session_transfer_delete_confirm_message]: "このセッションはまだ転送されていません。本当に削除しますか?",
+    [MessageKeys.session_transfer_delete_confirm_message]:
+        "このセッションはまだ転送されていません。本当に削除しますか?",
 
     // questionnaire dialog
     [MessageKeys.questionnaire_begin_button]: "アンケートを始める",
@@ -329,9 +340,11 @@ export default {
     [MessageKeys.change_email_input_new_email]: "新しいメールアドレス",
     [MessageKeys.change_email_input_confirm_email]: "新しいメールアドレス（確認）",
     [MessageKeys.change_email_button]: "新しいメールアドレスを保存",
-    [MessageKeys.change_email_success]: "確認メールを送信しました。新しいアドレスを確認してください。",
+    [MessageKeys.change_email_success]:
+        "確認メールを送信しました。新しいアドレスを確認してください。",
     [MessageKeys.change_email_nav_button]: "メールアドレス変更",
-    [MessageKeys.change_email_warning]: "メールアドレスを変更すると再認証が必要です。新しいアドレスを確認するまでログアウトしないでください。",
+    [MessageKeys.change_email_warning]:
+        "メールアドレスを変更すると再認証が必要です。新しいアドレスを確認するまでログアウトしないでください。",
 
     // profile edit dialog
     [MessageKeys.profile_edit_title]: "プロフィール編集",

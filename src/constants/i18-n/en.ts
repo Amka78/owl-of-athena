@@ -64,6 +64,14 @@ export default {
         "Aurora's battery is at {0}%. To ensure the Aurora remains connected through the night, consider charging the battery before continuing.",
     [MessageKeys.aurora_sync_successful_snackbar_message]: "Successfully synced {0} session(s).",
     [MessageKeys.aurora_sync_successful_snackbar_action]: "View Now",
+    [MessageKeys.aurora_sync_mixed_message]:
+        "Synced {0} session(s), but {1} session(s) failed to sync.",
+    [MessageKeys.aurora_sync_failed_message]:
+        "{0} session(s) failed to sync. Please try again later.",
+    [MessageKeys.aurora_sync_dialog_title]: "Sync sessions",
+    [MessageKeys.aurora_wakeup_battery_low_title]: "Good morning!",
+    [MessageKeys.aurora_wakeup_battery_low_message]:
+        "Aurora ran out of battery, so this session could not be synced. It will be synced the next time the app connects after charging.",
     // welcome fragment
     [MessageKeys.welcome_title]: "Welcome to Aurora!",
     [MessageKeys.welcome_text]:
@@ -273,7 +281,8 @@ export default {
     [MessageKeys.console_input_placeholder]: "Enter command...",
     [MessageKeys.console_send_button]: "Send",
     [MessageKeys.console_clear_button]: "Clear",
-    [MessageKeys.console_not_connected]: "Aurora is not connected. Connect Aurora to use the console.",
+    [MessageKeys.console_not_connected]:
+        "Aurora is not connected. Connect Aurora to use the console.",
 
     // messages screen
     [MessageKeys.messages_mark_as_read]: "Mark as Read",
@@ -300,7 +309,8 @@ export default {
     // session transfer dialog
     [MessageKeys.session_transfer_title]: "Session Transfer",
     [MessageKeys.session_transfer_scanning]: "Scanning Aurora for sessions...",
-    [MessageKeys.session_transfer_not_connected]: "You must be connected to Aurora to transfer sessions.",
+    [MessageKeys.session_transfer_not_connected]:
+        "You must be connected to Aurora to transfer sessions.",
     [MessageKeys.session_transfer_no_sessions]: "No sessions found on Aurora.",
     [MessageKeys.session_transfer_transferring]: "Transferring {0} session(s)...",
     [MessageKeys.session_transfer_complete]: "{0} session(s) transferred successfully.",
@@ -308,7 +318,8 @@ export default {
     [MessageKeys.session_transfer_cancel]: "Cancel",
     [MessageKeys.session_transfer_continue]: "Continue",
     [MessageKeys.session_transfer_delete_confirm_title]: "Delete Session?",
-    [MessageKeys.session_transfer_delete_confirm_message]: "This session has not been transferred. Are you sure you want to delete it?",
+    [MessageKeys.session_transfer_delete_confirm_message]:
+        "This session has not been transferred. Are you sure you want to delete it?",
 
     // questionnaire dialog
     [MessageKeys.questionnaire_begin_button]: "Begin Questionnaire",
@@ -333,9 +344,11 @@ export default {
     [MessageKeys.change_email_input_new_email]: "NEW EMAIL ADDRESS",
     [MessageKeys.change_email_input_confirm_email]: "CONFIRM NEW EMAIL",
     [MessageKeys.change_email_button]: "Save New Email",
-    [MessageKeys.change_email_success]: "Confirmation email sent. Please check your inbox to verify your new address.",
+    [MessageKeys.change_email_success]:
+        "Confirmation email sent. Please check your inbox to verify your new address.",
     [MessageKeys.change_email_nav_button]: "Change Email",
-    [MessageKeys.change_email_warning]: "Changing your email address will require re-activation. Do not log out until you have confirmed your new address.",
+    [MessageKeys.change_email_warning]:
+        "Changing your email address will require re-activation. Do not log out until you have confirmed your new address.",
 
     // profile edit dialog
     [MessageKeys.profile_edit_title]: "Edit Profile",
