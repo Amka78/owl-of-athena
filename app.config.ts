@@ -41,6 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
             "android.permission.BLUETOOTH_SCAN",
             "android.permission.BLUETOOTH_CONNECT",
             "android.permission.ACCESS_FINE_LOCATION",
+            "android.permission.POST_NOTIFICATIONS",
         ],
     },
     extra: {
@@ -59,6 +60,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     plugins: [
         "expo-dev-client",
+        "expo-notifications",
         [
             "react-native-ble-plx",
             {

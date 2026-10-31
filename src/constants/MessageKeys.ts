@@ -51,6 +51,10 @@ export const MessageKeys = {
     aurora_sync_dialog_title: "aurora_sync_dialog_title",
     aurora_wakeup_battery_low_title: "aurora_wakeup_battery_low_title",
     aurora_wakeup_battery_low_message: "aurora_wakeup_battery_low_message",
+    alarm_notification_title: "alarm_notification_title",
+    alarm_notification_body: "alarm_notification_body",
+    alarm_notification_snooze: "alarm_notification_snooze",
+    alarm_notification_wakeup: "alarm_notification_wakeup",
     //#endregion
 
     //#region WelcomeScreen

@@ -72,6 +72,11 @@ export default {
     [MessageKeys.aurora_wakeup_battery_low_title]: "Good morning!",
     [MessageKeys.aurora_wakeup_battery_low_message]:
         "Aurora ran out of battery, so this session could not be synced. It will be synced the next time the app connects after charging.",
+    [MessageKeys.alarm_notification_title]: "Rise and shine!",
+    [MessageKeys.alarm_notification_body]:
+        "Your Aurora alarm is ringing. Snooze or wake up from this notification.",
+    [MessageKeys.alarm_notification_snooze]: "Snooze",
+    [MessageKeys.alarm_notification_wakeup]: "Wake Up",
     // welcome fragment
     [MessageKeys.welcome_title]: "Welcome to Aurora!",
     [MessageKeys.welcome_text]:

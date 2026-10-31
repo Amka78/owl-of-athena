@@ -66,6 +66,11 @@ export default {
     [MessageKeys.aurora_wakeup_battery_low_message]:
         "Auroraのバッテリーが切れたため、今回のセッションは同期できませんでした。充電後にアプリが接続したときに同期されます。",
     // welcome fragment
+    [MessageKeys.alarm_notification_title]: "起きる時間です!",
+    [MessageKeys.alarm_notification_body]:
+        "Auroraのアラームが鳴っています。この通知からスヌーズか起床を選べます。",
+    [MessageKeys.alarm_notification_snooze]: "スヌーズ",
+    [MessageKeys.alarm_notification_wakeup]: "起きる",
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
     [MessageKeys.welcome_text]:
         "このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!",

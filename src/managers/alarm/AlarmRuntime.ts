@@ -1,7 +1,8 @@
 //#region Import Modules
 import { EventEmitter } from "events";
 import { AppState, Platform } from "react-native";
-
+import AlarmNotifierInstance from "./AlarmNotifier";
+import type { AlarmNotifier } from "./AlarmNotifierTypes";
 import {
     type AlarmState,
     alarmRemainingMs,
@@ -50,6 +51,7 @@ export type AlarmStorage = {
 
 export type AlarmRuntimeOptions = {
     clock?: AlarmRuntimeClock;
+    notifier?: AlarmNotifier;
 };
 
 type AlarmTimerHandle = unknown;
@@ -68,6 +70,7 @@ export enum AlarmRuntimeEventList {
 //#region Class
 export class AlarmRuntime extends EventEmitter {
     private readonly clock: AlarmRuntimeClock;
+    private readonly notifier: AlarmNotifier;
     private state: AlarmState = createInitialAlarmState();
     private soundFileName?: string;
     private volume = DEFAULT_ALARM_VOLUME;
@@ -75,6 +78,7 @@ export class AlarmRuntime extends EventEmitter {
     private storage?: AlarmStorage;
     private player?: AlarmSoundPlayer;
     private lifecycleSubscription?: { remove: () => void };
+    private notifierUnsubscribe?: () => void;
     private initialized = false;
 
     public constructor(options: AlarmRuntimeOptions = {}) {
@@ -84,6 +88,7 @@ export class AlarmRuntime extends EventEmitter {
             setTimer: (handler, delayMs) => setTimeout(handler, delayMs),
             clearTimer: (handle) => clearTimeout(handle as ReturnType<typeof setTimeout>),
         };
+        this.notifier = options.notifier ?? AlarmNotifierInstance;
     }
 
     public setPlayer(player: AlarmSoundPlayer): void {
@@ -112,6 +117,7 @@ export class AlarmRuntime extends EventEmitter {
      */
     public async initialize(): Promise<void> {
         this.subscribeLifecycle();
+        this.subscribeNotifier();
         if (this.initialized) return;
         this.initialized = true;
 
@@ -147,6 +153,7 @@ export class AlarmRuntime extends EventEmitter {
         this.state = armAlarm(this.state, targetEpochMs);
         this.emitStateChange();
         await this.persist();
+        await this.prepareNotifier();
         this.scheduleTimer();
     }
 
@@ -159,6 +166,7 @@ export class AlarmRuntime extends EventEmitter {
         this.emitStateChange();
         await this.persist();
         this.emit(AlarmRuntimeEventList.onRinging, this.state);
+        await this.notify();
 
         try {
             await this.player?.play(this.soundFileName, this.volume);
@@ -172,6 +180,7 @@ export class AlarmRuntime extends EventEmitter {
 
         this.clearTimer();
         await this.stopPlayer();
+        await this.cancelNotification();
         this.state = snoozeAlarm(this.state, this.clock.now(), durationMs);
         this.emitStateChange();
         await this.persist();
@@ -184,6 +193,7 @@ export class AlarmRuntime extends EventEmitter {
 
         this.clearTimer();
         await this.stopPlayer();
+        await this.cancelNotification();
         this.state = dismissAlarm();
         this.emitStateChange();
         await this.clearStorage();
@@ -220,16 +230,55 @@ export class AlarmRuntime extends EventEmitter {
         this.clearTimer();
         this.lifecycleSubscription?.remove();
         this.lifecycleSubscription = undefined;
+        this.notifierUnsubscribe?.();
+        this.notifierUnsubscribe = undefined;
+        void this.cancelNotification();
         this.removeAllListeners();
     }
 
     private async discardStaleAlarm(now: number): Promise<void> {
         this.clearTimer();
         await this.stopPlayer();
+        await this.cancelNotification();
         this.state = dismissAlarm();
         this.emitStateChange();
         await this.clearStorage();
         console.debug(`[AlarmRuntime] alarm discarded ${now}ms after it was due.`);
+    }
+
+    private async prepareNotifier(): Promise<void> {
+        try {
+            await this.notifier.prepare();
+        } catch (e) {
+            this.emitError(e);
+        }
+    }
+
+    private async notify(): Promise<void> {
+        try {
+            await this.notifier.notify();
+        } catch (e) {
+            this.emitError(e);
+        }
+    }
+
+    private async cancelNotification(): Promise<void> {
+        try {
+            await this.notifier.cancel();
+        } catch (e) {
+            this.emitError(e);
+        }
+    }
+
+    private subscribeNotifier(): void {
+        if (this.notifierUnsubscribe !== undefined) return;
+        this.notifierUnsubscribe = this.notifier.subscribe((action) => {
+            if (action === "snooze") {
+                void this.snooze();
+            } else if (action === "wakeup") {
+                void this.dismiss();
+            }
+        });
     }
 
     private async stopPlayer(): Promise<void> {

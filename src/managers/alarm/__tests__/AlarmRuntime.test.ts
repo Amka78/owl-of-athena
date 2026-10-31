@@ -1,4 +1,6 @@
 //#region Import Modules
+
+import type { AlarmNotificationAction, AlarmNotifier } from "../AlarmNotifierTypes";
 import {
     AlarmRuntime,
     AlarmRuntimeEventList,
@@ -61,6 +63,22 @@ const createStorage = (initial: AlarmSnapshot | null = null) => {
         }),
     };
     return { storage, getSaved: () => saved };
+};
+
+const createNotifier = () => {
+    let handler: ((action: AlarmNotificationAction) => void) | undefined;
+    const notifier: AlarmNotifier = {
+        prepare: jest.fn(async () => undefined),
+        notify: jest.fn(async () => undefined),
+        cancel: jest.fn(async () => undefined),
+        subscribe: jest.fn((next: (action: AlarmNotificationAction) => void) => {
+            handler = next;
+            return () => {
+                handler = undefined;
+            };
+        }),
+    };
+    return { notifier, fire: (action: AlarmNotificationAction) => handler?.(action) };
 };
 //#endregion
 
@@ -280,6 +298,83 @@ describe("AlarmRuntime UnitTest", () => {
         expect(runtime.isSnoozing()).toBe(true);
         expect(clock.lastDelay()).toBe(30_000);
         expect(player.play).not.toHaveBeenCalled();
+    });
+
+    it("requests notification permission when armed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 60_000);
+
+        expect(notifier.prepare).toHaveBeenCalledTimes(1);
+    });
+
+    it("shows a notification when it starts ringing", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        await runtime.ring();
+
+        expect(notifier.notify).toHaveBeenCalledTimes(1);
+    });
+
+    it("dismisses the notification when snoozed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        await runtime.ring();
+        await runtime.snooze(60_000);
+
+        expect(notifier.cancel).toHaveBeenCalledTimes(1);
+    });
+
+    it("dismisses the notification when the alarm is dismissed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        await runtime.ring();
+        await runtime.dismiss();
+
+        expect(notifier.cancel).toHaveBeenCalledTimes(1);
+    });
+
+    it("snoozes when the notification snooze action is used", async () => {
+        const clock = createClock();
+        const { notifier, fire } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.initialize();
+        await runtime.arm(1_000_000 + 1000);
+        await runtime.ring();
+        fire("snooze");
+        await flush();
+
+        expect(runtime.isSnoozing()).toBe(true);
+        expect(runtime.getState().phase).toBe("armed");
+    });
+
+    it("dismisses when the notification wake up action is used", async () => {
+        const clock = createClock();
+        const { notifier, fire } = createNotifier();
+        const onDismissed = jest.fn();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+        runtime.on(AlarmRuntimeEventList.onDismissed, onDismissed);
+
+        await runtime.initialize();
+        await runtime.arm(1_000_000 + 1000);
+        await runtime.ring();
+        fire("wakeup");
+        await flush();
+
+        expect(runtime.getState().phase).toBe("idle");
+        expect(onDismissed).toHaveBeenCalledTimes(1);
     });
 });
 //#endregion
