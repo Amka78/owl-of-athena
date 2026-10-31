@@ -9,8 +9,6 @@ import type { ExperimentalNavigator, WakeLockSentinel } from "./WakeLock";
 
 //#endregion
 
-//#region Types
-export { GuestUser };
 export type {
     AuroraSound,
     CreateUser,
@@ -21,15 +19,19 @@ export type {
     User,
     WakeLockSentinel,
 };
+//#region Types
+export { GuestUser };
+
 //#endregion
 
-export type { Issue, CreateIssue } from "./Issue";
+export type { FirmwareRelease, FirmwareUpdate } from "./Firmware";
+export type { CreateIssue, Issue } from "./Issue";
 export type { Message, UserMessage } from "./Message";
 export type { Order } from "./Order";
 export type {
     Question,
     QuestionChoice,
-    QuestionResponse,
     Questionnaire,
     QuestionnaireRespondent,
+    QuestionResponse,
 } from "./Questionnaire";

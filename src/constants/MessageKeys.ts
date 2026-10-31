@@ -55,6 +55,12 @@ export const MessageKeys = {
     alarm_notification_body: "alarm_notification_body",
     alarm_notification_snooze: "alarm_notification_snooze",
     alarm_notification_wakeup: "alarm_notification_wakeup",
+    firmware_update_title: "firmware_update_title",
+    firmware_update_message: "firmware_update_message",
+    firmware_update_flashing: "firmware_update_flashing",
+    firmware_update_success: "firmware_update_success",
+    firmware_update_failed: "firmware_update_failed",
+    firmware_update_battery_low: "firmware_update_battery_low",
     //#endregion
 
     //#region WelcomeScreen

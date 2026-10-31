@@ -4,18 +4,29 @@ import type { Aurora } from "./Aurora";
 //#endregion
 
 //#region Constants
-const UNSUPPORTED_MESSAGE =
-    "uploadFile is not supported on native yet. Firmware update over Bluetooth needs a native file source.";
+const LOCAL_PATH_MESSAGE =
+    "uploadFile from a local path is not supported on native. Pass an https URL instead.";
 //#endregion
 
 //#region Function
-const AuroraCmdUploadFile = function (
+const AuroraCmdUploadFile = async function (
     this: Aurora,
-    _srcPath: string,
-    _destPath: string,
-    _rename: boolean = false,
+    srcPath: string,
+    destPath: string,
+    rename: boolean = false,
 ): Promise<unknown> {
-    return Promise.reject(new Error(UNSUPPORTED_MESSAGE));
+    if (!/^https?:\/\//i.test(srcPath)) {
+        throw new Error(LOCAL_PATH_MESSAGE);
+    }
+
+    const response = await fetch(srcPath);
+    if (!response.ok) {
+        throw new Error(`Failed to download ${srcPath}: ${response.status}`);
+    }
+
+    // ファームウェアの hex はテキストなので、文字列のまま書き込める
+    const content = await response.text();
+    return await this.writeFile(destPath, content, rename);
 };
 //#endregion
 

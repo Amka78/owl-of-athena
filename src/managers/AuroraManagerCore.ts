@@ -14,7 +14,7 @@ import {
 } from "lodash";
 import { Platform } from "react-native";
 
-import { SessionRestClientInstance } from "../clients";
+import { FirmwareRestClientInstance, SessionRestClientInstance } from "../clients";
 import { AuroraInstance, SleepStates } from "../sdk";
 import {
     CommandNames,
@@ -43,7 +43,8 @@ import {
     Profile,
     type Settings,
 } from "../sdk/models";
-import type { AuroraSound } from "../types";
+import { shouldUpdateFirmware } from "../services/FirmwareService";
+import type { AuroraSound, FirmwareUpdate } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
 import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
@@ -109,6 +110,40 @@ export class AuroraManager extends EventEmitter {
     /** 端末の電源を落とす。起床時に電池が少ない場合に呼ぶ。 */
     public async shutdown(): Promise<void> {
         await AuroraInstance.queueCmd("os-shutdown");
+    }
+
+    /** 接続中の端末に適用できる新しいファームウェアがあるか調べる。 */
+    public async getFirmwareUpdate(): Promise<FirmwareUpdate | undefined> {
+        if (this.osInfo === undefined) return undefined;
+
+        const release = await FirmwareRestClientInstance.getLatest();
+        if (release === undefined) return undefined;
+        if (!shouldUpdateFirmware(this.osInfo.version, release.version)) return undefined;
+
+        return {
+            ...release,
+            url: FirmwareRestClientInstance.getHexUrl(release.hexPath),
+        };
+    }
+
+    /**
+     * ファームウェアを書き込む。書き込み中は接続が切れるため、
+     * 睡眠セッション中は実行しない。
+     */
+    public async flashFirmware(update: FirmwareUpdate): Promise<AuroraOSInfo> {
+        if (this.currentSleepState === SleepStates.SLEEPING) {
+            throw new Error("Cannot flash firmware while a sleep session is running.");
+        }
+
+        const flashed = (await AuroraInstance.flashFile(
+            update.url,
+            update.version,
+        )) as AuroraOSInfo;
+        if (flashed !== undefined) {
+            this.osInfo = flashed;
+        }
+        await this.setupAurora();
+        return this.osInfo!;
     }
 
     public async connect(): Promise<AuroraOSInfo | void> {

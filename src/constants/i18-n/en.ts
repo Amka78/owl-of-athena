@@ -77,6 +77,15 @@ export default {
         "Your Aurora alarm is ringing. Snooze or wake up from this notification.",
     [MessageKeys.alarm_notification_snooze]: "Snooze",
     [MessageKeys.alarm_notification_wakeup]: "Wake Up",
+    [MessageKeys.firmware_update_title]: "Firmware update available",
+    [MessageKeys.firmware_update_message]:
+        "Aurora firmware {0} is available. Update now? Do not turn off Aurora or move it away while updating.",
+    [MessageKeys.firmware_update_flashing]:
+        "Updating firmware. Do not turn off Aurora or close the app.",
+    [MessageKeys.firmware_update_success]: "Firmware updated to {0}.",
+    [MessageKeys.firmware_update_failed]: "Firmware update failed: {0}",
+    [MessageKeys.firmware_update_battery_low]:
+        "Charge Aurora before updating the firmware. Updating with a low battery can leave the device unusable.",
     // welcome fragment
     [MessageKeys.welcome_title]: "Welcome to Aurora!",
     [MessageKeys.welcome_text]:

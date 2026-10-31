@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS public.user_messages CASCADE;
 DROP TABLE IF EXISTS public.messages CASCADE;
 DROP TABLE IF EXISTS public.questionnaire_respondents CASCADE;
 DROP TABLE IF EXISTS public.questionnaires CASCADE;
+DROP TABLE IF EXISTS public.firmware_releases CASCADE;
 DROP TABLE IF EXISTS public.aurora_streams CASCADE;
 DROP TABLE IF EXISTS public.aurora_sessions CASCADE;
 DROP TABLE IF EXISTS public.aurora_profiles CASCADE;
@@ -362,7 +363,37 @@ CREATE INDEX idx_orders_user_id ON public.orders(user_id);
 CREATE INDEX idx_orders_created_at ON public.orders(created_at DESC);
 
 -- ====================================
+-- ファームウェア配布 (firmware_releases + Storage)
+-- ====================================
+-- version は端末と同じ major*10000 + minor*100 + build（例: 1.5.0 -> 10500）
+CREATE TABLE public.firmware_releases (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    version INTEGER NOT NULL UNIQUE,
+    hex_path TEXT NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE public.firmware_releases ENABLE ROW LEVEL SECURITY;
+
+-- 配布情報は全員が読める。書き込みはダッシュボード/サービスロールのみ
+CREATE POLICY "Anyone can read firmware releases" ON public.firmware_releases
+    FOR SELECT USING (true);
+
+-- hex 本体は公開バケットに置く（アプリは署名なしで取得する）
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('firmware', 'firmware', true)
+ON CONFLICT (id) DO UPDATE SET public = true;
+
+DROP POLICY IF EXISTS "Public read firmware files" ON storage.objects;
+CREATE POLICY "Public read firmware files" ON storage.objects
+    FOR SELECT USING (bucket_id = 'firmware');
+
+-- ====================================
 -- 実行完了メッセージ
 -- ====================================
 -- このスクリプトをSupabase SQL Editorで実行してください
 -- すべてのテーブルとポリシーが初期化されます
+-- firmware バケットに hex を置いたら firmware_releases に行を追加してください
+--   例: INSERT INTO public.firmware_releases (version, hex_path)
+--       VALUES (10500, 'aurora-10500.hex');

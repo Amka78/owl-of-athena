@@ -9,9 +9,10 @@ import { Message, MessageKeys } from "../constants";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
 import type { AuroraOSInfo, AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import { versionToString } from "../sdk/util";
 import { onConnectionChange } from "../services/MainService";
 import { useSessionStore } from "../store/sessionStore";
-import { GuestUser } from "../types";
+import { type FirmwareUpdate, GuestUser } from "../types";
 import { useSessionDetailListSelector, useSessionListSelector, useUserSelector } from "./";
 //#endregion
 
@@ -66,6 +67,66 @@ export const useMain = (): {
         };
         return cleanup;
     }, [cacheSessions, sessionList.length, userId]);
+
+    const installFirmware = useCallback(async (update: FirmwareUpdate): Promise<void> => {
+        LoadingDialog.show({
+            dialogTitle: Message.get(MessageKeys.firmware_update_flashing),
+        });
+
+        let resultMessage: string;
+        try {
+            const info = await AuroraManagerInstance.flashFirmware(update);
+            firmwareVersion.current = info.version.toString();
+            osInfoRef.current = info;
+            setBatteryLevel(info.batteryLevel);
+            resultMessage = Message.get(MessageKeys.firmware_update_success, [
+                versionToString(info.version),
+            ]);
+        } catch (e) {
+            console.error("[useMain] firmware update failed:", e);
+            resultMessage = Message.get(MessageKeys.firmware_update_failed, [String(e)]);
+        } finally {
+            LoadingDialog.close();
+        }
+
+        ConfirmDialog.show({
+            title: Message.get(MessageKeys.firmware_update_title),
+            message: resultMessage,
+            isCancelable: false,
+        });
+    }, []);
+
+    const promptFirmwareUpdate = useCallback(async (): Promise<void> => {
+        let update: FirmwareUpdate | undefined;
+        try {
+            update = await AuroraManagerInstance.getFirmwareUpdate();
+        } catch (e) {
+            console.error("[useMain] failed to check the firmware version:", e);
+            return;
+        }
+        if (update === undefined) return;
+
+        // 電池が少ない状態で書き込むと端末が復帰できなくなる可能性がある
+        if (AuroraManagerInstance.isBatteryLow()) {
+            ConfirmDialog.show({
+                title: Message.get(MessageKeys.firmware_update_title),
+                message: Message.get(MessageKeys.firmware_update_battery_low),
+                isCancelable: true,
+            });
+            return;
+        }
+
+        ConfirmDialog.show({
+            title: Message.get(MessageKeys.firmware_update_title),
+            message: Message.get(MessageKeys.firmware_update_message, [
+                versionToString(update.version),
+            ]),
+            isCancelable: true,
+            onConfirm: () => {
+                void installFirmware(update);
+            },
+        });
+    }, [installFirmware]);
 
     const onConnectionStatesPress = useCallback(async (): Promise<string> => {
         console.debug("Start configuring aurora.");
@@ -125,8 +186,21 @@ export const useMain = (): {
             LoadingDialog.close();
         }
 
+        // 接続できたときだけファームウェアの更新を確認する
+        if (error === "" && connect !== ConnectionStates.CONNECTED) {
+            void promptFirmwareUpdate();
+        }
+
         return error;
-    }, [cacheSessionDetails, cacheSessions, connect, sessionDetailList, sessionList, userInfo?.id]);
+    }, [
+        cacheSessionDetails,
+        cacheSessions,
+        connect,
+        promptFirmwareUpdate,
+        sessionDetailList,
+        sessionList,
+        userInfo?.id,
+    ]);
 
     const onHomePress = useCallback(() => {
         navigate("Home");

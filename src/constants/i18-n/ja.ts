@@ -71,6 +71,15 @@ export default {
         "Auroraのアラームが鳴っています。この通知からスヌーズか起床を選べます。",
     [MessageKeys.alarm_notification_snooze]: "スヌーズ",
     [MessageKeys.alarm_notification_wakeup]: "起きる",
+    [MessageKeys.firmware_update_title]: "ファームウェアの更新があります",
+    [MessageKeys.firmware_update_message]:
+        "Auroraのファームウェア {0} が公開されています。今すぐ更新しますか? 更新中はAuroraの電源を切ったり、離したりしないでください。",
+    [MessageKeys.firmware_update_flashing]:
+        "ファームウェアを更新しています。Auroraの電源を切ったり、アプリを閉じたりしないでください。",
+    [MessageKeys.firmware_update_success]: "ファームウェアを {0} に更新しました。",
+    [MessageKeys.firmware_update_failed]: "ファームウェアの更新に失敗しました: {0}",
+    [MessageKeys.firmware_update_battery_low]:
+        "更新の前にAuroraを充電してください。電池が少ない状態で更新すると、端末が使えなくなる可能性があります。",
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
     [MessageKeys.welcome_text]:
         "このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!",
