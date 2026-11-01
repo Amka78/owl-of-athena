@@ -37,8 +37,10 @@ bunx expo prebuild          # ios/ android/ を生成（生成物はコミット
 ```bash
 bun run android             # expo run:android（実機 or エミュレータ）
 # または
-eas build --profile development --platform android
+bun run eas:android:preview # ローカルで APK を作り、wsl-avd でエミュレータへ入れられる
 ```
+
+ローカルビルドの詳細・Gradle キャッシュ破損などの切り分けは `EAS_BUILD.md` を参照。
 
 ### iOS（WSL からは EAS 必須）
 
