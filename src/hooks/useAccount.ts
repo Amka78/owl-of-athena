@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AuroraRestClientInstance } from "../clients";
 import { useAuthStore } from "../store/authStore";
 import { GuestUser, type User } from "../types";
+import { buildAccountUpdate, parseBirthday } from "../utils/account";
 
 import { useCheckLogging, useLogout, useUserSelector } from "./";
 //#endregion
@@ -59,7 +60,7 @@ export const useAcount = (): {
                     setFirstName(currentUser.first_name!);
                     setLastName(currentUser.last_name!);
                     setGender(currentUser.gender ? currentUser.gender : "male");
-                    setBirthDay(new Date(currentUser.birthday!));
+                    setBirthDay(parseBirthday(currentUser.birthday));
                 } catch (ex) {
                     console.debug(ex);
                 }
@@ -88,11 +89,24 @@ export const useAcount = (): {
     }, []);
 
     const onSavePress = useCallback(async () => {
+        if (userInfo === undefined) return;
+
         setLoading(true);
+        setGeneralError("");
         try {
-            if (userInfo!.id !== GuestUser && validate(userInfo!, setGeneralError)) {
-                await AuroraRestClientInstance.updateUser(userInfo as User);
-            }
+            if (userInfo.id === GuestUser) return;
+
+            // 画面で編集した値を保存する（userInfo は読み込み時のままで古い）
+            const edited = buildAccountUpdate(userInfo, {
+                firstName,
+                lastName,
+                gender,
+                birthDay,
+            });
+            if (!validate(edited, setGeneralError)) return;
+
+            const saved = await AuroraRestClientInstance.updateUser(edited);
+            updateUser(saved);
         } catch (e) {
             if (e instanceof Error) {
                 setGeneralError(e.message);
@@ -100,7 +114,7 @@ export const useAcount = (): {
         } finally {
             setLoading(false);
         }
-    }, [userInfo]);
+    }, [userInfo, firstName, lastName, gender, birthDay, updateUser]);
 
     const onLogoutPress = useLogoutHook.onPress;
     return {

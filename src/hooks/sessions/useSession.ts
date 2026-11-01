@@ -51,7 +51,7 @@ export const useSession = (): {
         sleepDuration = getDuration(selectedSession.sleepDuration);
         remDuration = getDuration(selectedSession.remDuration);
         deepDuration = getDuration(selectedSession.deepDuration);
-        radialProgress = selectedSession.sleepScore == 117 ? 72 : selectedSession.sleepScore;
+        radialProgress = selectedSession.sleepScore;
         scaleXDomain = [
             selectedSession.sessionAt! - 300000,
             selectedSession.sessionAt! + selectedSession.sessionDuration! + 300000,

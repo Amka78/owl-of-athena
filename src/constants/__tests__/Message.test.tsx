@@ -12,6 +12,13 @@ describe("Message Test", () => {
         expect(Message.get(MessageKeys.login)).toBe("Log In");
     });
 
+    it("In the case of the Brazilian Portuguese locale, acquire Portuguese.", async () => {
+        Message.setLocale("pt-BR");
+        expect(Message.get(MessageKeys.login)).toBe("Entrar");
+        expect(Message.get(MessageKeys.home_go_to_sleep_button)).toBe("Ir Para a Cama");
+        expect(Message.get(MessageKeys.required, ["test"])).toBe("O campo test é obrigatório.");
+    });
+
     it("If translation value is not exit, output args value.", async () => {
         Message.setLocale("ja-JP");
         expect(Message.get("test")).toBe("test");

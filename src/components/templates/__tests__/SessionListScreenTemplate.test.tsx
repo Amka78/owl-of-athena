@@ -2,6 +2,7 @@ import { render } from "@testing-library/react-native";
 import type React from "react";
 import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
+import type { AuroraSession } from "../../../sdk/models";
 import { FilterByDateValues } from "../../../store/sessionStore";
 import { SessionListScreenTemplate } from "../SessionListScreenTemplate";
 
@@ -49,6 +50,31 @@ describe("SessionListScreenTemplate", () => {
             />,
         );
         expect(toJSON()).toMatchSnapshot();
+    });
+
+    it("shows the raw sleep score without rewriting out-of-range values", () => {
+        const session = {
+            id: "session-1",
+            sessionAt: Date.UTC(2026, 0, 1),
+            sleepScore: 117,
+            starred: false,
+        } as unknown as AuroraSession;
+
+        const { toJSON } = renderWithProvider(
+            <SessionListScreenTemplate
+                showFilter={false}
+                filterMenuProps={filterMenuProps}
+                sessionList={[session]}
+                onStarPress={jest.fn()}
+                onDeletePress={jest.fn()}
+                onMenuPress={jest.fn()}
+                locale="en-US"
+            />,
+        );
+
+        const rendered = JSON.stringify(toJSON());
+        // 旧実装の 117 → 72 補正が残っていれば "117" は描画されない
+        expect(rendered).toContain("117");
     });
 
     it("returns null when sessionList is undefined", () => {

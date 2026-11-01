@@ -135,8 +135,4 @@ Android は JS タイマーが Doze で止まるため、締切時刻の通知�
 ## 次の作業
 
 1. 上記 5 項目の実機検証（Doze の項目はネイティブ設定が増えたので要 prebuild）
-2. iOS 版との parity の残り（P2）
-   - `useAccount.onSavePress` が編集値を保存しない
-   - `Settings` コンストラクタで 0 時が 8 時に化ける
-   - pt-BR ロケール
-   - `useSession` の `sleepScore == 117 → 72` のハードコード補正
+2. iOS 版との parity の P2 は解消済み（アカウントの編集値保存・`Settings` の 0 時・`sleepScore` の補正・pt-BR）。残りは実機で見つかった差分のみ

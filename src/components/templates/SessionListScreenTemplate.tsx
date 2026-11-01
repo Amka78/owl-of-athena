@@ -55,12 +55,10 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                                 <ChartRadialProgress
                                     width={38}
                                     height={38}
-                                    value={value.sleepScore == 117 ? 72 : value.sleepScore}
+                                    value={value.sleepScore}
                                     fgColor={Colors.teal}
                                     bgColor={props.color}
-                                    valueLabel={String(
-                                        value.sleepScore == 117 ? 72 : value.sleepScore,
-                                    )}
+                                    valueLabel={String(value.sleepScore)}
                                 />
                             )}
                             right={(rightProps: ListItemComponentProps): React.ReactNode => (

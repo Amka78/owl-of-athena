@@ -35,9 +35,10 @@ export class Settings {
             ? (this.profileTitle = settings.profileTitle)
             : (this.profileTitle = "Default Profile");
 
-        settings.alarmHour ? (this.alarmHour = settings.alarmHour) : (this.alarmHour = 8);
+        // 0 時・0 分は有効な値なので、falsy 判定ではなく undefined 判定で既定値を決める
+        this.alarmHour = settings.alarmHour ?? 8;
 
-        settings.alarmMinute ? (this.alarmMinute = settings.alarmMinute) : (this.alarmMinute = 0);
+        this.alarmMinute = settings.alarmMinute ?? 0;
 
         settings.smartAlarmEnabled
             ? (this.smartAlarmEnabled = settings.smartAlarmEnabled)
