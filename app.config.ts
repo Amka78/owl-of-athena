@@ -57,10 +57,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     extra: {
         ...config.extra,
-        // クライアントに埋め込むのは EXPO_PUBLIC_* を優先する（SUPABASE_* は別用途の値を含むため）
-        supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL ?? "",
-        supabaseAnonKey:
-            process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? process.env.SUPABASE_ANON_KEY ?? "",
+        // クライアントへ埋め込むのは EXPO_PUBLIC_* のみ。
+        // SUPABASE_* は .env に secret キーが入っており、バンドルへ漏れる経路になるため参照しない。
+        supabaseUrl: process.env.EXPO_PUBLIC_SUPABASE_URL ?? "",
+        supabaseAnonKey: process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ?? "",
     },
     description: "Aurora Client for community user.",
     backgroundColor: NAVY_DARKER,

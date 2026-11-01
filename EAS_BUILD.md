@@ -25,6 +25,8 @@ eas build --platform ios --profile preview
 - Android SDK が `ANDROID_HOME` から見えること（現在は `/mnt/c/Android/Sdk`）
 - APK の自動インストールを使う場合は `wsl-avd`（`npm i -g wsl-avd`）
 
+**Supabase の接続情報は `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` で渡す。** ローカルは `.env.local`、EAS のクラウドビルドは EAS の環境変数（`eas env:create`、対象の environment ごと）に登録する。`app.config.ts` は `SUPABASE_*` を参照しないため、これらが無いと `extra` が空のままビルドされ、アプリから接続できない。
+
 `eas.json` のプロファイルは `development` / `preview` / `production` の 3 つ。`preview` は内部配布、`production` は `autoIncrement: true` でバージョンを自動採番する。
 
 ## プロファイルとバリアント
