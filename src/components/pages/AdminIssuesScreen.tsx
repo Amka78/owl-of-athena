@@ -39,7 +39,7 @@ export const AdminIssuesScreen: FunctionComponent = () => {
                     </View>
                 )}
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No issues found.</Text> : null
+                    !loading ? <Text style={styles.empty}>No issues found.</Text> : undefined
                 }
             />
         </View>

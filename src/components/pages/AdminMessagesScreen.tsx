@@ -37,7 +37,7 @@ export const AdminMessagesScreen: FunctionComponent = () => {
                     </View>
                 )}
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No messages found.</Text> : null
+                    !loading ? <Text style={styles.empty}>No messages found.</Text> : undefined
                 }
             />
         </View>

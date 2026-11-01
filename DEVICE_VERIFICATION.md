@@ -2,7 +2,9 @@
 
 P0（一晩装着してアラームで起きる）と P1（通知・起床フロー・ファームウェア更新）は実装済みだが、**実機でしか確認できない項目が残っている**。このガイドはビルドから検証、切り分けまでの手順をまとめたもの。
 
-対象コミット: `fbcea99`（着手前）→ `c83e679`（P1 完了）
+対象コミット: `fbcea99`（着手前）→ `c83e679`（P1 完了）→ `6075632`（P2 完了）
+
+> **SDK 58 へ更新済み（2026-11-01）。** `expo-av` は SDK 56 以降サポート外のため `expo-audio` に移行した。`expo-audio` の config plugin が Android の前景サービス（`AudioControlsService` / `FOREGROUND_SERVICE_MEDIA_PLAYBACK`）と iOS の `UIBackgroundModes: audio` を追加するので、**prebuild とアプリの再インストールが必須**。`bunx expo install --fix` は `.env` の `REACT_NATIVE_PACKAGER_HOSTNAME` を拒否するため、`EXPO_NO_DOTENV=1` を付けて実行する。
 
 ## 事前準備
 

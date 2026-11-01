@@ -77,7 +77,7 @@ export const AccountMessagesScreen: FunctionComponent = () => {
                 ListEmptyComponent={
                     !loading ? (
                         <Text style={styles.empty}>{Message.get(MessageKeys.messages_no_messages)}</Text>
-                    ) : null
+                    ) : undefined
                 }
             />
         </View>

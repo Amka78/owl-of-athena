@@ -1,5 +1,5 @@
 //#region Import Modules
-import { Audio } from "expo-av";
+import { type AudioPlayer, createAudioPlayer } from "expo-audio";
 
 import type { AlarmKeepAlive, AlarmKeepAliveReason } from "./AlarmKeepAliveTypes";
 
@@ -18,28 +18,25 @@ const SILENCE_VOLUME = 0.001;
  * iOS/Android 用。アプリ起動中に無音ループを再生してプロセスを生かし、
  * AlarmRuntime のタイマーがバックグラウンドでも発火できる状態を保つ。
  *
- * アラーム音（AlarmAudio）とは別の Sound インスタンスを使い、
+ * アラーム音（AlarmAudio）とは別の player を使い、
  * 鳴動中の stop で無音ループまで止まらないようにしている。
  */
 class NativeAlarmKeepAlive implements AlarmKeepAlive {
-    private sound?: Audio.Sound;
+    private player?: AudioPlayer;
     private acquired = false;
 
     public async acquire(reason: AlarmKeepAliveReason): Promise<void> {
         if (this.acquired) return;
 
         try {
-            if (this.sound === undefined) {
-                const created = await Audio.Sound.createAsync(
-                    require("../../../assets/audio/silence.wav"),
-                    { isLooping: true, volume: SILENCE_VOLUME, shouldPlay: true },
-                );
-                this.sound = created.sound;
-            } else {
-                await this.sound.setIsLoopingAsync(true);
-                await this.sound.setVolumeAsync(SILENCE_VOLUME);
-                await this.sound.playAsync();
+            if (this.player === undefined) {
+                this.player = createAudioPlayer(require("../../../assets/audio/silence.wav"), {
+                    keepAudioSessionActive: true,
+                });
             }
+            this.player.loop = true;
+            this.player.volume = SILENCE_VOLUME;
+            this.player.play();
             this.acquired = true;
             console.debug(`[AlarmKeepAlive] acquired (${reason}).`);
         } catch (e) {
@@ -48,14 +45,15 @@ class NativeAlarmKeepAlive implements AlarmKeepAlive {
     }
 
     public async release(): Promise<void> {
-        if (!this.acquired || this.sound === undefined) {
+        if (!this.acquired || this.player === undefined) {
             this.acquired = false;
             return;
         }
 
         this.acquired = false;
         try {
-            await this.sound.stopAsync();
+            this.player.pause();
+            await this.player.seekTo(0);
             console.debug("[AlarmKeepAlive] released.");
         } catch (e) {
             console.error("[AlarmKeepAlive] failed to stop the keep-alive sound:", e);

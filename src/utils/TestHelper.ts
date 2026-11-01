@@ -2,7 +2,7 @@ import type { Mock } from "bun:test";
 import type {
     GestureResponderEvent,
     NativeSyntheticEvent,
-    TextInputEndEditingEventData,
+    TextInputEndEditingEvent,
 } from "react-native";
 
 import type { Dimensions } from "../hooks/useWindowDimensions";
@@ -10,7 +10,7 @@ import type { Dimensions } from "../hooks/useWindowDimensions";
 // @ts-expect-error
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
 // @ts-expect-error
-export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEventData> =
+export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEvent> =
     {};
 
 export const DesktopDimension: Dimensions = {

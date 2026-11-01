@@ -73,7 +73,6 @@ export default class App extends React.Component<AppProps, AppState> {
                 Asset.loadAsync([
                     require("./assets/profiles/default_profile_content.ttf"),
                 ]),
-                SoundManagerInstance.loadResource(),
                 AlarmAudioInstance.configureSession(),
             ]);
         } catch (error) {

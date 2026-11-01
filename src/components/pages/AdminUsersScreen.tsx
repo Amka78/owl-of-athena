@@ -35,7 +35,7 @@ export const AdminUsersScreen: FunctionComponent = () => {
                     </View>
                 )}
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No users found.</Text> : null
+                    !loading ? <Text style={styles.empty}>No users found.</Text> : undefined
                 }
             />
         </View>

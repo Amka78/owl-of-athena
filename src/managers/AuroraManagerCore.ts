@@ -1,6 +1,6 @@
 //#region Import Modules
 import { EventEmitter } from "events";
-import type { Audio } from "expo-av";
+import type { AudioPlayer } from "expo-audio";
 import {
     cloneDeep,
     isEmpty,
@@ -62,8 +62,8 @@ export class AuroraManager extends EventEmitter {
     private currentSleepState: SleepStates;
     private osInfo?: AuroraOSInfo;
     private batteryLevel: number;
-    private alarmSound?: Audio.Sound;
-    private remStimSound?: Audio.Sound;
+    private alarmSound?: AudioPlayer;
+    private remStimSound?: AudioPlayer;
     private currentProfile?: string;
 
     private soundList?: Array<AuroraSound>;
@@ -307,7 +307,7 @@ export class AuroraManager extends EventEmitter {
                 case SleepStates.CONFIGURING: {
                     AlarmAudioInstance.stop();
                     if (this.remStimSound !== undefined) {
-                        this.remStimSound.stopAsync();
+                        this.remStimSound.pause();
                     }
                     break;
                 }
@@ -656,7 +656,7 @@ export class AuroraManager extends EventEmitter {
         await AlarmAudioInstance.playLoop(sound, volume);
     }
 
-    private findAlarmSound(soundFileName?: string): Audio.Sound | undefined {
+    private findAlarmSound(soundFileName?: string): AudioPlayer | undefined {
         if (soundFileName !== undefined && this.soundList !== undefined) {
             const matched = this.soundList.find((value) => value.fileName === soundFileName);
             if (matched !== undefined) {
@@ -743,7 +743,9 @@ export class AuroraManager extends EventEmitter {
             case EventIds.STIM_PRESENTED: {
                 if (this.currentSleepState === SleepStates.SLEEPING) {
                     if (this.remStimSound !== undefined) {
-                        this.remStimSound.playAsync();
+                        void this.remStimSound.seekTo(0).then(() => {
+                            this.remStimSound?.play();
+                        });
                     }
                 }
             }

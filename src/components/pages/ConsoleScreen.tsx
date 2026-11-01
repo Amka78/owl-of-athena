@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { type FunctionComponent, useRef, useState } from "react";
+import type { ScrollViewInstance } from "react-native";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useCheckLogging } from "../../hooks";
@@ -22,7 +23,7 @@ export const ConsoleScreen: FunctionComponent = () => {
         { id: 0, text: "Aurora Console Ready", type: "output" },
     ]);
     const [command, setCommand] = useState("");
-    const scrollViewRef = useRef<ScrollView>(null);
+    const scrollViewRef = useRef<ScrollViewInstance>(null);
     const nextId = useRef(1);
 
     const addLine = (text: string, type: ConsoleLine["type"]) => {
@@ -45,9 +46,7 @@ export const ConsoleScreen: FunctionComponent = () => {
 
         try {
             const result = await AuroraManagerInstance.executeCommand(cmd);
-            const output = result != null
-                ? JSON.stringify(result, null, 2)
-                : "OK";
+            const output = result != null ? JSON.stringify(result, null, 2) : "OK";
             addLine(output, "output");
         } catch (e: any) {
             addLine(e?.message ?? "Command failed", "error");

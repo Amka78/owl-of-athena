@@ -599,31 +599,39 @@ mock.module("@react-native-community/datetimepicker", () => ({
 // expo-localization loads without mocking (it is pure JS); no mock needed.
 
 // ---------------------------------------------------------------------------
-// expo-av  (requires native 'ExponentAV' module unavailable in test env)
+// expo-audio  (requires the native audio module unavailable in test env)
 // ---------------------------------------------------------------------------
-mock.module("expo-av", () => {
-    const mockSound = {
-        getStatusAsync: () => Promise.resolve({ isLoaded: false }),
-        stopAsync: () => Promise.resolve(undefined),
-        playAsync: () => Promise.resolve(undefined),
-        unloadAsync: () => Promise.resolve(undefined),
-        loadAsync: () => Promise.resolve(undefined),
-        setIsLoopingAsync: () => Promise.resolve(undefined),
-        setVolumeAsync: () => Promise.resolve(undefined),
-        setIsMutedAsync: () => Promise.resolve(undefined),
-        setPositionAsync: () => Promise.resolve(undefined),
-    };
+mock.module("expo-audio", () => {
+    const createMockPlayer = () => ({
+        id: "mock-player",
+        playing: false,
+        muted: false,
+        loop: false,
+        paused: true,
+        isLoaded: true,
+        isBuffering: false,
+        isAudioSamplingSupported: false,
+        currentTime: 0,
+        duration: 0,
+        volume: 1,
+        play: () => undefined,
+        pause: () => undefined,
+        seekTo: () => Promise.resolve(undefined),
+        replace: () => undefined,
+        remove: () => undefined,
+        setPlaybackRate: () => undefined,
+        addListener: () => ({ remove: () => undefined }),
+    });
     return {
-        Audio: {
-            Sound: Object.assign(
-                function () { return mockSound; },
-                { createAsync: () => Promise.resolve({ sound: mockSound, status: {} }) }
-            ),
-            setAudioModeAsync: () => Promise.resolve(undefined),
+        createAudioPlayer: () => createMockPlayer(),
+        useAudioPlayer: () => createMockPlayer(),
+        setAudioModeAsync: () => Promise.resolve(undefined),
+        setIsAudioActiveAsync: () => Promise.resolve(undefined),
+        preload: () => Promise.resolve(undefined),
+        AudioModule: {},
+        AudioPlayer: function () {
+            return createMockPlayer();
         },
-        InterruptionModeIOS: { MixWithOthers: 0, DoNotMix: 1, DuckOthers: 2 },
-        InterruptionModeAndroid: { DoNotMix: 1, DuckOthers: 2 },
-        Video: makeHost("Video"),
     };
 });
 

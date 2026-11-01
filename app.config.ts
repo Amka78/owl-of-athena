@@ -56,14 +56,19 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     description: "Aurora Client for community user.",
     backgroundColor: NAVY_DARKER,
-    splash: {
-        resizeMode: "cover",
-        backgroundColor: NAVY_DARKER,
-        image: "./assets/images/iwinks-logo-loading.png",
-    },
     plugins: [
         "expo-dev-client",
         "expo-notifications",
+        // バックグラウンド再生用の前景サービスと UIBackgroundModes を有効にする。
+        // 録音は使わないため RECORD_AUDIO は要求しない。
+        [
+            "expo-audio",
+            {
+                recordAudioAndroid: false,
+                microphonePermission:
+                    "Allow $(PRODUCT_NAME) to access your microphone (not used by Aurora).",
+            },
+        ],
         [
             "react-native-ble-plx",
             {

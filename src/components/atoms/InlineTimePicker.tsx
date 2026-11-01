@@ -35,8 +35,9 @@ type InlineTimePickerState = {
     minutes: number;
     seconds: number;
     meridian: "AM" | "PM";
-    updating?: Text;
+    updating?: TimeField;
 };
+type TimeField = "hours" | "minutes" | "seconds";
 type TimePickerMode = "full" | "minute";
 //#endregion
 
@@ -47,12 +48,6 @@ export const InlineTimePicker = (props: InlineTimePickerProps): React.ReactNode 
 };
 class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePickerState> {
     private style: TimePickerStyle;
-
-    private hoursText?: Text;
-
-    private minutesText?: Text;
-
-    private secondsText?: Text;
 
     private interval?: ReturnType<typeof setInterval>;
 
@@ -68,9 +63,6 @@ class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePi
             meridian: "AM",
             updating: undefined,
         };
-        this.hoursText = undefined;
-        this.minutesText = undefined;
-        this.secondsText = undefined;
         this.interval = undefined;
 
         this.mode = "full";
@@ -156,24 +148,16 @@ class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePi
                             </Text>
                         </TouchableOpacity>
                     )}
-                    <TouchableOpacity onPress={(): void => this.update(this.hoursText!)}>
-                        <Text
-                            style={[textStyle, this.getTextStyle()]}
-                            ref={(c): void => {
-                                this.hoursText = c!;
-                            }}
-                        >
+                    <TouchableOpacity onPress={(): void => this.update("hours")}>
+                        <Text style={[textStyle, this.getTextStyle(), this.getFieldStyle("hours")]}>
                             {this.state.hours < 10 ? "0" : ""}
                             {this.state.hours}
                         </Text>
                     </TouchableOpacity>
                     <Text style={[colonStyle, this.getTextColor()]}>{":"}</Text>
-                    <TouchableOpacity onPress={(): void => this.update(this.minutesText!)}>
+                    <TouchableOpacity onPress={(): void => this.update("minutes")}>
                         <Text
-                            style={[textStyle, this.getTextStyle()]}
-                            ref={(c): void => {
-                                this.minutesText = c!;
-                            }}
+                            style={[textStyle, this.getTextStyle(), this.getFieldStyle("minutes")]}
                         >
                             {this.state.minutes < 10 ? "0" : ""}
                             {this.state.minutes}
@@ -183,12 +167,13 @@ class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePi
                         <Text style={[colonStyle, this.getTextColor()]}>{":"}</Text>
                     )}
                     {this.mode === "full" && (
-                        <TouchableOpacity onPress={(): void => this.update(this.secondsText!)}>
+                        <TouchableOpacity onPress={(): void => this.update("seconds")}>
                             <Text
-                                style={[textStyle, this.getTextStyle()]}
-                                ref={(c): void => {
-                                    this.secondsText = c!;
-                                }}
+                                style={[
+                                    textStyle,
+                                    this.getTextStyle(),
+                                    this.getFieldStyle("seconds"),
+                                ]}
                             >
                                 {this.state.seconds < 10 ? "0" : ""}
                                 {this.state.seconds}
@@ -318,17 +303,10 @@ class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePi
         this.setState({ seconds: tempSeconds });
     };
 
-    private update = (item: Text): void => {
-        if (this.state.updating === item) {
-            this.setState({ updating: undefined });
-            this.updateStyle(item, false);
-        } else {
-            if (this.state.updating !== undefined) {
-                this.updateStyle(this.state.updating, false);
-            }
-            this.updateStyle(item, true);
-            this.setState({ updating: item });
-        }
+    private update = (item: TimeField): void => {
+        this.setState({
+            updating: this.state.updating === item ? undefined : item,
+        });
     };
 
     private increment = (inc: number): void => {
@@ -366,22 +344,21 @@ class InlineTimePickerCore extends Component<InlineTimePickerProps, InlineTimePi
     }
 
     private incrementActiveControl(inc: number): void {
-        if (this.state.updating === this.hoursText) {
+        if (this.state.updating === "hours") {
             this.updateHours(this.state.hours + inc);
-        } else if (this.state.updating === this.minutesText) {
+        } else if (this.state.updating === "minutes") {
             this.updateMinutes(this.state.minutes + inc);
-        } else if (this.state.updating === this.secondsText) {
+        } else if (this.state.updating === "seconds") {
             this.updateSeconds(this.state.seconds + inc);
         }
     }
-    private updateStyle(target: Text, isActive: boolean): void {
-        target.setNativeProps({
-            style: {
-                backgroundColor: isActive ? this.style.activeColor : this.style.backgroundColor,
-                borderWidth: isActive ? 2 : 1,
-            },
-        });
-    }
+
+    /** 選択中のフィールドだけ枠と背景を強調する（旧 setNativeProps の置き換え）。 */
+    private getFieldStyle = (field: TimeField): TextStyle => {
+        return this.state.updating === field
+            ? { backgroundColor: this.style.activeColor, borderWidth: 2 }
+            : {};
+    };
 
     private getTextColor = (): TextStyle => {
         return {

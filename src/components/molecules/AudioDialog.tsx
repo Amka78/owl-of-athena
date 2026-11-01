@@ -1,5 +1,5 @@
 //#region "Import Modules"
-import { Audio } from "expo-av";
+import type { AudioPlayer } from "expo-audio";
 import React from "react";
 import { Platform, StyleSheet, type ViewStyle } from "react-native";
 import { Dialog, RadioButton } from "react-native-paper";
@@ -47,7 +47,7 @@ export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogSt
         { showName: AudioList.SINGING_BIRDS, fileName: "singing_birds.m4a" },
     ];
 
-    private sound = new Audio.Sound();
+    private sound?: AudioPlayer;
 
     public static show(args: AudioDialogSettings, selectedSound: AudioList): void {
         const foundAudio = AudioDialog.Instance!.findAudio(
@@ -198,7 +198,8 @@ export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogSt
                 return sound.fileName == value.fileName;
             })!.sound;
 
-            await this.sound.playAsync();
+            await this.sound.seekTo(0);
+            this.sound.play();
         };
     }
 
@@ -209,11 +210,10 @@ export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogSt
         this.setState({ dialogSettings: undefined });
     }
 
-    private async stopSound(sound: Audio.Sound): Promise<void> {
-        const status = await sound.getStatusAsync();
-        if (status.isLoaded) {
-            await sound.stopAsync();
-        }
+    private async stopSound(sound?: AudioPlayer): Promise<void> {
+        if (sound === undefined || !sound.playing) return;
+        sound.pause();
+        await sound.seekTo(0);
     }
 }
 

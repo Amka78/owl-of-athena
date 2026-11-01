@@ -1,78 +1,82 @@
 //#region Import Modules
-import type { Audio } from "expo-av";
+import type { AudioPlayer } from "expo-audio";
 
 import { AlarmAudio } from "../AlarmAudio";
 
 //#endregion
 
 //#region Function
-const createSound = () => ({
-    playAsync: jest.fn(() => Promise.resolve()),
-    stopAsync: jest.fn(() => Promise.resolve()),
-    setIsLoopingAsync: jest.fn(() => Promise.resolve()),
-    setVolumeAsync: jest.fn(() => Promise.resolve()),
+const createPlayer = () => ({
+    loop: false,
+    volume: 1,
+    playing: false,
+    play: jest.fn(),
+    pause: jest.fn(),
+    seekTo: jest.fn(() => Promise.resolve()),
 });
 
-const asSound = (sound: ReturnType<typeof createSound>): Audio.Sound =>
-    sound as unknown as Audio.Sound;
+const asPlayer = (player: ReturnType<typeof createPlayer>): AudioPlayer =>
+    player as unknown as AudioPlayer;
 //#endregion
 
 //#region Tests
 describe("AlarmAudio UnitTest", () => {
     it("plays the sound on loop with the given volume", async () => {
         const audio = new AlarmAudio();
-        const sound = createSound();
+        const player = createPlayer();
 
-        await audio.playLoop(asSound(sound), 0.5);
+        await audio.playLoop(asPlayer(player), 0.5);
 
-        expect(sound.setIsLoopingAsync).toHaveBeenCalledWith(true);
-        expect(sound.setVolumeAsync).toHaveBeenCalledWith(0.5);
-        expect(sound.playAsync).toHaveBeenCalledTimes(1);
+        expect(player.loop).toBe(true);
+        expect(player.volume).toBe(0.5);
+        expect(player.seekTo).toHaveBeenCalledWith(0);
+        expect(player.play).toHaveBeenCalledTimes(1);
         expect(audio.isPlaying()).toBe(true);
     });
 
     it("uses the default volume when no volume is given", async () => {
         const audio = new AlarmAudio();
-        const sound = createSound();
+        const player = createPlayer();
 
-        await audio.playLoop(asSound(sound), undefined);
+        await audio.playLoop(asPlayer(player), undefined);
 
-        expect(sound.setVolumeAsync).toHaveBeenCalledWith(0.8);
+        expect(player.volume).toBe(0.8);
     });
 
     it("clamps the volume into the 0..1 range", async () => {
         const audio = new AlarmAudio();
-        const loud = createSound();
-        const quiet = createSound();
+        const loud = createPlayer();
+        const quiet = createPlayer();
 
-        await audio.playLoop(asSound(loud), 1.5);
-        await audio.playLoop(asSound(quiet), -1);
+        await audio.playLoop(asPlayer(loud), 1.5);
+        await audio.playLoop(asPlayer(quiet), -1);
 
-        expect(loud.setVolumeAsync).toHaveBeenCalledWith(1);
-        expect(quiet.setVolumeAsync).toHaveBeenCalledWith(0);
+        expect(loud.volume).toBe(1);
+        expect(quiet.volume).toBe(0);
     });
 
     it("stops the previous sound when another sound starts", async () => {
         const audio = new AlarmAudio();
-        const first = createSound();
-        const second = createSound();
+        const first = createPlayer();
+        const second = createPlayer();
 
-        await audio.playLoop(asSound(first), 0.5);
-        await audio.playLoop(asSound(second), 0.5);
+        await audio.playLoop(asPlayer(first), 0.5);
+        await audio.playLoop(asPlayer(second), 0.5);
 
-        expect(first.stopAsync).toHaveBeenCalledTimes(1);
-        expect(second.playAsync).toHaveBeenCalledTimes(1);
+        expect(first.pause).toHaveBeenCalledTimes(1);
+        expect(second.play).toHaveBeenCalledTimes(1);
     });
 
     it("stops and clears the active sound", async () => {
         const audio = new AlarmAudio();
-        const sound = createSound();
+        const player = createPlayer();
 
-        await audio.playLoop(asSound(sound), 0.5);
+        await audio.playLoop(asPlayer(player), 0.5);
         await audio.stop();
 
-        expect(sound.stopAsync).toHaveBeenCalledTimes(1);
-        expect(sound.setIsLoopingAsync).toHaveBeenLastCalledWith(false);
+        expect(player.pause).toHaveBeenCalledTimes(1);
+        expect(player.loop).toBe(false);
+        expect(player.seekTo).toHaveBeenLastCalledWith(0);
         expect(audio.isPlaying()).toBe(false);
     });
 
@@ -86,10 +90,10 @@ describe("AlarmAudio UnitTest", () => {
 
     it("clears the active sound when playback fails", async () => {
         const audio = new AlarmAudio();
-        const sound = createSound();
-        sound.playAsync.mockRejectedValueOnce(new Error("playback failed"));
+        const player = createPlayer();
+        player.seekTo.mockRejectedValueOnce(new Error("playback failed"));
 
-        await expect(audio.playLoop(asSound(sound), 0.5)).rejects.toThrow("playback failed");
+        await expect(audio.playLoop(asPlayer(player), 0.5)).rejects.toThrow("playback failed");
 
         expect(audio.isPlaying()).toBe(false);
     });

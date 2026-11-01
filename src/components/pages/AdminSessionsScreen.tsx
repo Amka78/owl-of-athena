@@ -39,7 +39,7 @@ export const AdminSessionsScreen: FunctionComponent = () => {
                     </View>
                 )}
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No sessions found.</Text> : null
+                    !loading ? <Text style={styles.empty}>No sessions found.</Text> : undefined
                 }
             />
         </View>

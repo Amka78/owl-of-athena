@@ -37,7 +37,7 @@ export const AdminOrdersScreen: FunctionComponent = () => {
                     </View>
                 )}
                 ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No orders found.</Text> : null
+                    !loading ? <Text style={styles.empty}>No orders found.</Text> : undefined
                 }
             />
         </View>

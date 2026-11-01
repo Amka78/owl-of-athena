@@ -86,3 +86,5 @@ dist/
 .env.*.local
 
 # @end expo-cli
+# Expo のローカル状態（端末履歴・dev server 設定）
+.expo/
