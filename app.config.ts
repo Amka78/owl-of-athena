@@ -42,6 +42,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
             "android.permission.BLUETOOTH_CONNECT",
             "android.permission.ACCESS_FINE_LOCATION",
             "android.permission.POST_NOTIFICATIONS",
+            // Doze 中でも締切時刻ちょうどに通知を出せるよう、正確なアラームを予約する。
+            // アラームアプリ向けの権限で、インストール時に自動許可される。
+            "android.permission.USE_EXACT_ALARM",
         ],
     },
     extra: {

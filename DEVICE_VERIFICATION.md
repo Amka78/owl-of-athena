@@ -20,7 +20,7 @@ bunx expo config --type introspect    # UIBackgroundModes / Android パーミッ
 
 - `UIBackgroundModes: ["audio","bluetooth-central"]`
 - `NSBluetoothAlwaysUsageDescription`
-- Android: `BLUETOOTH_SCAN` / `BLUETOOTH_CONNECT` / `POST_NOTIFICATIONS` / `ACCESS_FINE_LOCATION`
+- Android: `BLUETOOTH_SCAN` / `BLUETOOTH_CONNECT` / `POST_NOTIFICATIONS` / `ACCESS_FINE_LOCATION` / `USE_EXACT_ALARM`
 
 ## ビルド
 
@@ -99,6 +99,21 @@ adb reverse tcp:8081 tcp:8081 && bunx expo start --host localhost
 
 **注意:** `version` が hex の実バージョンと違うと、書き込み自体は成功しても `flash()` の検証で `Flash failed. Expected ...` になる。
 
+### 5. Android の Doze 中でも時刻に鳴るか
+
+Android は JS タイマーが Doze で止まるため、締切時刻の通知を OS に予約している（`AlarmNotifier.scheduleAt`）。アプリのプロセスが落ちていても、OS が時刻に通知を出す。
+
+1. アラームを 5 分後に設定して GO TO BED
+2. 端末をスリープさせ、`adb shell dumpsys deviceidle force-idle` で Doze に落とす
+   （戻すときは `adb shell dumpsys deviceidle unforce`）
+3. 時刻になったら通知が鳴ること（アプリが前面に無くてもよい）
+4. 通知の **Snooze** を押す → アプリが起動して 9 分後に再鳴動すること
+5. 通知の **Wake Up** を押す → アプリが起動して起床画面へ進むこと（起動時は `consumePendingAction` が操作を拾う）
+
+確認している実装: 締切通知は `identifier: "aurora-alarm-deadline"` の固定 ID で 1 件だけ予約し、arm / snooze / 復帰時に貼り直し、鳴動・起床・破棄で取り消す。`expo-notifications` は `USE_EXACT_ALARM` がある端末で `setExactAndAllowWhileIdle` を使う。端末再起動後の予約復元は `expo-notifications` 側の BOOT_COMPLETED レシーバが行う。
+
+**制約:** アプリが落ちている間は通知音が 1 回だけ鳴る。ループするアラーム音は、通知をタップしてアプリが起動し `reconcile()` が走ってから始まる。
+
 ## 切り分け
 
 | 症状 | 確認すること |
@@ -112,16 +127,15 @@ adb reverse tcp:8081 tcp:8081 && bunx expo start --host localhost
 
 ## 現時点の制約（実装済みだが限界あり）
 
-- **Android の Doze**: JS タイマーが止まると数分遅れることがある。対策（前景サービス / scheduled 通知）は未実装
+- **Android の Doze**: 締切通知は OS に予約するため時刻に出るが、アプリが落ちていると通知音は 1 回だけ（ループ開始にはアプリ起動が要る）。前景サービスによる常駐は未実装
 - **Web**: タブを閉じると鳴らない。ブラウザ通知にアクションが無いため、Snooze / Wake Up は画面から
 - **native の `uploadFile`**: https の URL のみ対応。ローカルパスの hex は未対応
 - iOS の通知音は 1 回だけ（ループするのはアプリ内のアラーム音）
 
 ## 次の作業
 
-1. 上記 4 項目の実機検証
-2. Android の Doze 対策（前景サービス or scheduled 通知）
-3. iOS 版との parity の残り（P2）
+1. 上記 5 項目の実機検証（Doze の項目はネイティブ設定が増えたので要 prebuild）
+2. iOS 版との parity の残り（P2）
    - `useAccount.onSavePress` が編集値を保存しない
    - `Settings` コンストラクタで 0 時が 8 時に化ける
    - pt-BR ロケール

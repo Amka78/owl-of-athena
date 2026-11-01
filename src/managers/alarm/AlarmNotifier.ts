@@ -39,6 +39,19 @@ class WebAlarmNotifier implements AlarmNotifier {
         }
     }
 
+    /** Web には OS 側の予約発報が無いため、タブを開いている間のタイマーのみに頼る。 */
+    public async scheduleAt(): Promise<void> {
+        console.debug("[AlarmNotifier] web cannot schedule a background notification.");
+    }
+
+    public async cancelScheduled(): Promise<void> {
+        return;
+    }
+
+    public async consumePendingAction(): Promise<AlarmNotificationAction | undefined> {
+        return undefined;
+    }
+
     public async notify(): Promise<void> {
         const BrowserNotification = getBrowserNotification();
         if (BrowserNotification === undefined) return;

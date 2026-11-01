@@ -2,7 +2,7 @@
 import { EventEmitter } from "events";
 import { AppState, Platform } from "react-native";
 import AlarmNotifierInstance from "./AlarmNotifier";
-import type { AlarmNotifier } from "./AlarmNotifierTypes";
+import type { AlarmNotificationAction, AlarmNotifier } from "./AlarmNotifierTypes";
 import {
     type AlarmState,
     alarmRemainingMs,
@@ -139,6 +139,8 @@ export class AlarmRuntime extends EventEmitter {
             }
         }
 
+        // 通知の操作で起動した場合は、締切前の発報を取り消さないよう判定してから適用する
+        await this.consumePendingNotificationAction();
         await this.reconcile();
     }
 
@@ -154,6 +156,7 @@ export class AlarmRuntime extends EventEmitter {
         this.emitStateChange();
         await this.persist();
         await this.prepareNotifier();
+        await this.scheduleNotifierAt(this.state.targetEpochMs);
         this.scheduleTimer();
     }
 
@@ -166,6 +169,7 @@ export class AlarmRuntime extends EventEmitter {
         this.emitStateChange();
         await this.persist();
         this.emit(AlarmRuntimeEventList.onRinging, this.state);
+        // 予約済みの通知は notifier 側で取り消される（二重発報の防止）
         await this.notify();
 
         try {
@@ -184,6 +188,7 @@ export class AlarmRuntime extends EventEmitter {
         this.state = snoozeAlarm(this.state, this.clock.now(), durationMs);
         this.emitStateChange();
         await this.persist();
+        await this.scheduleNotifierAt(this.state.targetEpochMs);
         this.scheduleTimer();
         this.emit(AlarmRuntimeEventList.onSnoozed, this.state);
     }
@@ -194,6 +199,7 @@ export class AlarmRuntime extends EventEmitter {
         this.clearTimer();
         await this.stopPlayer();
         await this.cancelNotification();
+        await this.cancelScheduledNotification();
         this.state = dismissAlarm();
         this.emitStateChange();
         await this.clearStorage();
@@ -209,6 +215,9 @@ export class AlarmRuntime extends EventEmitter {
 
         const now = this.clock.now();
         if (!isAlarmDue(this.state, now)) {
+            // アプリが落とされた後でも OS 側の予約で時刻に発報できるよう、毎回復帰時に貼り直す
+            await this.prepareNotifier();
+            await this.scheduleNotifierAt(this.state.targetEpochMs);
             this.scheduleTimer();
             return;
         }
@@ -233,6 +242,7 @@ export class AlarmRuntime extends EventEmitter {
         this.notifierUnsubscribe?.();
         this.notifierUnsubscribe = undefined;
         void this.cancelNotification();
+        void this.cancelScheduledNotification();
         this.removeAllListeners();
     }
 
@@ -240,10 +250,53 @@ export class AlarmRuntime extends EventEmitter {
         this.clearTimer();
         await this.stopPlayer();
         await this.cancelNotification();
+        await this.cancelScheduledNotification();
         this.state = dismissAlarm();
         this.emitStateChange();
         await this.clearStorage();
         console.debug(`[AlarmRuntime] alarm discarded ${now}ms after it was due.`);
+    }
+
+    private async scheduleNotifierAt(targetEpochMs: number | undefined): Promise<void> {
+        if (targetEpochMs === undefined) return;
+        try {
+            await this.notifier.scheduleAt(targetEpochMs);
+        } catch (e) {
+            this.emitError(e);
+        }
+    }
+
+    private async cancelScheduledNotification(): Promise<void> {
+        try {
+            await this.notifier.cancelScheduled();
+        } catch (e) {
+            this.emitError(e);
+        }
+    }
+
+    /**
+     * 通知の Snooze / Wake Up でアプリが起動した場合、その操作を状態に反映する。
+     * まだ締切前のアラームを消してしまわないよう、鳴動中か締切超過のときだけ適用する。
+     */
+    private async consumePendingNotificationAction(): Promise<void> {
+        let action: AlarmNotificationAction | undefined;
+        try {
+            action = await this.notifier.consumePendingAction();
+        } catch (e) {
+            this.emitError(e);
+            return;
+        }
+
+        if (action !== "snooze" && action !== "wakeup") return;
+        const applicable =
+            this.state.phase === "ringing" || isAlarmDue(this.state, this.clock.now());
+        if (!applicable) return;
+
+        if (action === "snooze") {
+            await this.snooze();
+        } else {
+            await this.dismiss();
+        }
     }
 
     private async prepareNotifier(): Promise<void> {

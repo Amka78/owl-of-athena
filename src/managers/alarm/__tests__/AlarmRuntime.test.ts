@@ -65,10 +65,12 @@ const createStorage = (initial: AlarmSnapshot | null = null) => {
     return { storage, getSaved: () => saved };
 };
 
-const createNotifier = () => {
+const createNotifier = (pendingAction?: AlarmNotificationAction) => {
     let handler: ((action: AlarmNotificationAction) => void) | undefined;
     const notifier: AlarmNotifier = {
         prepare: jest.fn(async () => undefined),
+        scheduleAt: jest.fn(async () => undefined),
+        cancelScheduled: jest.fn(async () => undefined),
         notify: jest.fn(async () => undefined),
         cancel: jest.fn(async () => undefined),
         subscribe: jest.fn((next: (action: AlarmNotificationAction) => void) => {
@@ -77,6 +79,7 @@ const createNotifier = () => {
                 handler = undefined;
             };
         }),
+        consumePendingAction: jest.fn(async () => pendingAction),
     };
     return { notifier, fire: (action: AlarmNotificationAction) => handler?.(action) };
 };
@@ -375,6 +378,105 @@ describe("AlarmRuntime UnitTest", () => {
 
         expect(runtime.getState().phase).toBe("idle");
         expect(onDismissed).toHaveBeenCalledTimes(1);
+    });
+
+    it("schedules an OS notification at the deadline when armed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 60_000);
+
+        expect(notifier.scheduleAt).toHaveBeenCalledWith(1_000_000 + 60_000);
+    });
+
+    it("re-schedules the OS notification for the new deadline when snoozed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        clock.advance(1000);
+        await runtime.ring();
+        await runtime.snooze(60_000);
+
+        expect(notifier.scheduleAt).toHaveBeenLastCalledWith(1_001_000 + 60_000);
+    });
+
+    it("re-schedules the OS notification when still armed after a resume", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 60_000);
+        clock.advance(10_000);
+        await runtime.reconcile();
+
+        expect(notifier.scheduleAt).toHaveBeenLastCalledWith(1_000_000 + 60_000);
+    });
+
+    it("cancels the scheduled OS notification when dismissed", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        clock.advance(1000);
+        await runtime.ring();
+        await runtime.dismiss();
+
+        expect(notifier.cancelScheduled).toHaveBeenCalledTimes(1);
+    });
+
+    it("cancels the scheduled OS notification when the alarm is stale", async () => {
+        const clock = createClock();
+        const { notifier } = createNotifier();
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+
+        await runtime.arm(1_000_000 + 1000);
+        clock.advance(1000 + STALE_ALARM_MS + 1);
+        await runtime.reconcile();
+
+        expect(notifier.cancelScheduled).toHaveBeenCalledTimes(1);
+    });
+
+    it("applies a snooze action delivered before the app finished starting", async () => {
+        const clock = createClock();
+        const { storage } = createStorage({
+            phase: "armed",
+            targetEpochMs: 1_000_000 - 1000,
+            snoozeCount: 0,
+            soundFileName: "epic",
+            volume: 0.7,
+        });
+        const { notifier } = createNotifier("snooze");
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+        runtime.setStorage(storage);
+
+        await runtime.initialize();
+
+        expect(runtime.isSnoozing()).toBe(true);
+        expect(runtime.getState().snoozeCount).toBe(1);
+    });
+
+    it("ignores a wake up action for an alarm that is not due yet", async () => {
+        const clock = createClock();
+        const { storage, getSaved } = createStorage({
+            phase: "armed",
+            targetEpochMs: 1_000_000 + 60_000,
+            snoozeCount: 0,
+            soundFileName: "epic",
+            volume: 0.7,
+        });
+        const { notifier } = createNotifier("wakeup");
+        const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
+        runtime.setStorage(storage);
+
+        await runtime.initialize();
+
+        expect(runtime.getState().phase).toBe("armed");
+        expect(runtime.getState().targetEpochMs).toBe(1_000_000 + 60_000);
+        expect(getSaved()).not.toBeNull();
     });
 });
 //#endregion
