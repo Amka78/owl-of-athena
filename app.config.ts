@@ -3,14 +3,22 @@ import type { ConfigContext, ExpoConfig } from "@expo/config";
 // app.config は Node で直接読み込まれるため、src 配下の TS は import できない
 const NAVY_DARKER = "#09092B";
 
+/** eas.json の各プロファイルが APP_VARIANT を設定する。既定は production（接尾辞なし）。 */
+const APP_VARIANT = process.env.APP_VARIANT ?? "production";
+const APP_NAME_SUFFIX =
+    APP_VARIANT === "development" ? " Dev" : APP_VARIANT === "preview" ? " Preview" : "";
+const APP_ID_SUFFIX =
+    APP_VARIANT === "development" ? ".dev" : APP_VARIANT === "preview" ? ".preview" : "";
+
 /**
  * app.json の値を土台に、ネイティブ側の設定（バックグラウンド実行・Bluetooth）を足す。
- * アプリ識別子は既存インストールを壊さないよう app.json の値を引き継ぐ。
+ * アプリ識別子は既存インストールを壊さないよう app.json の値を引き継ぎ、
+ * development / preview だけ接尾辞を付けて production と併存できるようにする。
  */
 export default ({ config }: ConfigContext): ExpoConfig => ({
     ...config,
     // app.json に未設定のため、現在使われている package.json 由来の名前を明示する
-    name: config.name ?? "owl-of-minerva",
+    name: `${config.name ?? "owl-of-minerva"}${APP_NAME_SUFFIX}`,
     slug: config.slug ?? "owl-of-minerva",
     platforms: ["ios", "android", "web"],
     githubUrl: "https://github.com/Amka78/owl-of-athena",
@@ -21,7 +29,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         ...config.ios,
         supportsTablet: true,
         // app.json では未設定のため、Android と同じ識別子を使う
-        bundleIdentifier: config.ios?.bundleIdentifier ?? "com.amka78.owlofminerva",
+        bundleIdentifier: `${config.ios?.bundleIdentifier ?? "com.amka78.owlofminerva"}${APP_ID_SUFFIX}`,
         infoPlist: {
             ...config.ios?.infoPlist,
             NSBluetoothAlwaysUsageDescription:
@@ -34,7 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
     android: {
         ...config.android,
-        package: config.android?.package ?? "com.amka78.owlofminerva",
+        package: `${config.android?.package ?? "com.amka78.owlofminerva"}${APP_ID_SUFFIX}`,
         permissions: [
             "android.permission.BLUETOOTH",
             "android.permission.BLUETOOTH_ADMIN",

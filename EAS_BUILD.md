@@ -27,6 +27,20 @@ eas build --platform ios --profile preview
 
 `eas.json` のプロファイルは `development` / `preview` / `production` の 3 つ。`preview` は内部配布、`production` は `autoIncrement: true` でバージョンを自動採番する。
 
+## プロファイルとバリアント
+
+各プロファイルは `channel` と `env.APP_VARIANT` を持ち、`app.config.ts` がバリアントに応じてアプリ名と識別子を切り替える。
+
+| プロファイル | channel | APP_VARIANT | アプリ名 | Android package / iOS bundleIdentifier |
+| --- | --- | --- | --- | --- |
+| development | development | development | owl-of-minerva Dev | `com.amka78.owlofminerva.dev` |
+| preview | preview | preview | owl-of-minerva Preview | `com.amka78.owlofminerva.preview` |
+| production | production | production | owl-of-minerva | `com.amka78.owlofminerva` |
+
+識別子が別なので **production と dev/preview は同じ端末に併存できる**。ただし EAS の資格情報も識別子ごとに別なので、バリアントを初めてビルドするときに keystore / プロビジョニングプロファイルの生成を求められる。
+
+`channel` は EAS Update の配信先を決める値。OTA を実際に使うには `app.config.ts` に `updates.url`（`https://u.expo.dev/<projectId>`）と `runtimeVersion` の設定が必要で、現状は未設定（ビルドは通るが OTA は配信されない）。
+
 ## ネイティブ設定の変更時
 
 EAS はビルド時に `expo prebuild` を実行するため、`app.config.ts` の変更（BLE の権限、`expo-audio` の前景サービス、`USE_EXACT_ALARM` など）は自動で反映される。ローカルビルドでも同じ。
