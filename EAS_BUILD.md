@@ -41,7 +41,7 @@ eas build --platform ios --profile preview
 
 識別子が別なので **production と dev/preview は同じ端末に併存できる**。ただし EAS の資格情報も識別子ごとに別なので、バリアントを初めてビルドするときに keystore / プロビジョニングプロファイルの生成を求められる。
 
-`channel` は EAS Update の配信先を決める値。OTA を実際に使うには `app.config.ts` に `updates.url`（`https://u.expo.dev/<projectId>`）と `runtimeVersion` の設定が必要で、現状は未設定（ビルドは通るが OTA は配信されない）。
+`channel` は EAS Update の配信先を決める値。`app.config.ts` に `updates.url`（`https://u.expo.dev/<projectId>`）と `runtimeVersion`（`sdkVersion` ポリシー）を設定済みなので、preview / production ビルドは対応するチャンネルの OTA を受け取れる。ただし OTA 対応前の APK は再ビルドが必要。タグ push による配信手順は [RELEASE.md](./RELEASE.md) を参照。
 
 ## ネイティブ設定の変更時
 
