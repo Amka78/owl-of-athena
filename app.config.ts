@@ -3,6 +3,9 @@ import type { ConfigContext, ExpoConfig } from "@expo/config";
 // app.config は Node で直接読み込まれるため、src 配下の TS は import できない
 const NAVY_DARKER = "#09092B";
 
+/** app.json の extra.eas.projectId と同一。updates.url の組み立てに使う。 */
+const EAS_PROJECT_ID = "a088b24d-82f1-4459-9936-447d64392502";
+
 /** eas.json の各プロファイルが APP_VARIANT を設定する。既定は production（接尾辞なし）。 */
 const APP_VARIANT = process.env.APP_VARIANT ?? "production";
 const APP_NAME_SUFFIX =
@@ -22,6 +25,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     slug: config.slug ?? "owl-of-minerva",
     platforms: ["ios", "android", "web"],
     githubUrl: "https://github.com/Amka78/owl-of-athena",
+    // EAS Update の配信先。どのチャンネルへ届くかはビルド時の eas.json の channel が決める。
+    updates: {
+        url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
+        // 取得した更新は次回起動時に適用する（起動を待たせない）
+        fallbackToCacheTimeout: 0,
+    },
+    runtimeVersion: {
+        // SDK を上げるまで、同じネイティブビルドへ OTA を配信できるようにする。
+        // appVersion だと eas.json の appVersionSource: remote とバンドル側の version がずれやすい。
+        policy: "sdkVersion",
+    },
     icon: "./assets/images/icon.png",
     orientation: "default",
     assetBundlePatterns: ["**/*"],

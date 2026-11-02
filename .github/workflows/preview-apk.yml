@@ -1,0 +1,104 @@
+name: Preview APK Build (Manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "リリースバージョン（例: v1.2.3）"
+        required: true
+        type: string
+
+permissions:
+  contents: write # GitHub Release の作成に必要
+
+jobs:
+  # ─────────────────────────────────────────────
+  # Android: EAS ローカルビルド（ubuntu で実行）
+  # v* タグ push は OTA 配信（preview-release.yml）になるため、
+  # APK 再ビルドが必要な場合（ネイティブ変更など）のみ手動で実行する
+  # ─────────────────────────────────────────────
+  android:
+    name: Android Preview Build (Local)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Setup Java (Android ビルドに必要)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Configure Gradle memory (ユーザーホーム設定はプロジェクト設定より優先される)
+        run: |
+          mkdir -p ~/.gradle
+          cat > ~/.gradle/gradle.properties << 'EOF'
+          org.gradle.jvmargs=-Xmx3g -XX:MaxMetaspaceSize=1g -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+          org.gradle.daemon=false
+          EOF
+
+      - name: Set output filename
+        id: set-filename
+        run: echo "filename=owl-of-minerva-${{ inputs.version }}-preview.apk" >> $GITHUB_OUTPUT
+
+      # app.config.ts は extra.supabaseUrl に EXPO_PUBLIC_* を埋め込むため、
+      # ここで渡さないと接続先が空の APK になる
+      - name: Build Android Preview (Local)
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+        run: |
+          eas build \
+            --platform android \
+            --profile preview \
+            --local \
+            --non-interactive \
+            --output "${{ steps.set-filename.outputs.filename }}"
+
+      - name: Upload to workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-preview
+          path: ${{ steps.set-filename.outputs.filename }}
+          retention-days: 7
+
+  # ─────────────────────────────────────────────
+  # GitHub Pre-Release: APK を添付して作成
+  # ─────────────────────────────────────────────
+  create-release:
+    name: Create Preview GitHub Release
+    needs: [android]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: android-preview
+
+      - name: Create GitHub Pre-Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ inputs.version }}" \
+            --title "owl-of-minerva ${{ inputs.version }} Preview" \
+            --generate-notes \
+            --prerelease \
+            "owl-of-minerva-${{ inputs.version }}-preview.apk"
