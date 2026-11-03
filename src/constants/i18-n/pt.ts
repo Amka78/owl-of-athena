@@ -112,6 +112,14 @@ export default {
     [MessageKeys.forgot_password_button]: "Solicitar Redefinição",
     [MessageKeys.forgot_password_success]:
         "E-mail de redefinição enviado. Por favor verifique sua caixa de entrada.",
+    [MessageKeys.reset_password_title]: "Redefinir Senha",
+    [MessageKeys.reset_password_checking]: "Verificando o link de redefinição...",
+    [MessageKeys.reset_password_invalid_link]:
+        "Este link de redefinição é inválido ou expirou.",
+    [MessageKeys.reset_password_request_link]: "Solicitar Novo Link",
+    [MessageKeys.reset_password_success]:
+        "Sua senha foi atualizada. Entre com a nova senha.",
+    [MessageKeys.reset_password_login]: "Ir para o Login",
     [MessageKeys.signup_title]: signup,
     [MessageKeys.signup_input_email]: input_email,
     [MessageKeys.signup_input_password]: input_password,

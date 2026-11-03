@@ -1,13 +1,20 @@
 //#region Import Modules
-import { type LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import {
+    CommonActions,
+    createNavigationContainerRef,
+    type LinkingOptions,
+    NavigationContainer,
+} from "@react-navigation/native";
 import type React from "react";
-import type { FunctionComponent } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { type FunctionComponent, useCallback, useEffect, useRef } from "react";
+import { Linking, Platform, StyleSheet } from "react-native";
 import { Provider } from "react-native-paper";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-import { Theme } from "../constants";
+import { APP_SCHEME, Theme } from "../constants";
 import { useWindowDimensions } from "../hooks";
+import { isPasswordRecoveryUrl } from "../services/AuthLinkService";
+import { useRecoveryLinkStore } from "../store/recoveryLinkStore";
 //#endregion
 
 //#region Types
@@ -19,6 +26,43 @@ export type ContainerProps = {
 //#region Component
 export const Container: FunctionComponent<ContainerProps> = (props: ContainerProps) => {
     const dimens = useWindowDimensions();
+    const setPendingUrl = useRecoveryLinkStore((state) => state.setPendingUrl);
+    const navigationRef = useRef(createNavigationContainerRef()).current;
+
+    const navigateToReset = useCallback(
+        (url: string): void => {
+            if (!navigationRef.isReady()) return;
+
+            navigationRef.dispatch(
+                CommonActions.navigate("Unauthenticated", {
+                    screen: "ResetPassword",
+                    params: { url },
+                }),
+            );
+            useRecoveryLinkStore.getState().consumePendingUrl();
+        },
+        [navigationRef],
+    );
+
+    useEffect(() => {
+        const handleUrl = (url?: string | null): void => {
+            if (!url || !isPasswordRecoveryUrl(url)) return;
+
+            setPendingUrl(url);
+            navigateToReset(url);
+        };
+
+        Linking.getInitialURL().then(handleUrl).catch(() => undefined);
+        const subscription = Linking.addEventListener("url", ({ url }) => handleUrl(url));
+
+        return (): void => subscription.remove();
+    }, [navigateToReset, setPendingUrl]);
+
+    const onNavigationReady = (): void => {
+        const url = useRecoveryLinkStore.getState().pendingUrl;
+        if (url) navigateToReset(url);
+    };
+
     const config = {
         screens: {
             Unauthenticated: {
@@ -62,13 +106,17 @@ export const Container: FunctionComponent<ContainerProps> = (props: ContainerPro
     };
 
     const linking: LinkingOptions<object> = {
-        prefixes: ["https://owl-of-athena", "owl-of-athena://"],
+        prefixes: [`https://${APP_SCHEME}`, `${APP_SCHEME}://`],
         config,
     };
 
     return (
         <Provider theme={Theme}>
-            <NavigationContainer linking={linking}>
+            <NavigationContainer
+                ref={navigationRef}
+                linking={linking}
+                onReady={onNavigationReady}
+            >
                 <SafeAreaProvider>
                     <SafeAreaView
                         mode={"margin"}

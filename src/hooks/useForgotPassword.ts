@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 
 import { supabase } from "../clients/supabase";
-import { Message, MessageKeys } from "../constants";
+import { Message, MessageKeys, PASSWORD_RESET_URL } from "../constants";
 import { useTextBox, type useTextBoxReturn } from "./useTextBox";
 //#endregion
 
@@ -38,7 +38,9 @@ export const useForgotPassword = (
 
         setLoading(true);
         try {
-            const { error } = await supabase.auth.resetPasswordForEmail(email);
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: PASSWORD_RESET_URL,
+            });
             if (error) throw error;
             setSuccessMessage(Message.get(MessageKeys.forgot_password_success));
         } catch (e) {

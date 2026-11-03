@@ -110,6 +110,14 @@ export default {
     [MessageKeys.forgot_password_input_email]: input_email,
     [MessageKeys.forgot_password_button]: "Request Reset",
     [MessageKeys.forgot_password_success]: "Password reset email sent. Please check your inbox.",
+    [MessageKeys.reset_password_title]: "Reset Password",
+    [MessageKeys.reset_password_checking]: "Checking the reset link...",
+    [MessageKeys.reset_password_invalid_link]:
+        "This password reset link is invalid or has expired.",
+    [MessageKeys.reset_password_request_link]: "Request a New Link",
+    [MessageKeys.reset_password_success]:
+        "Your password has been updated. Please log in with your new password.",
+    [MessageKeys.reset_password_login]: "Go to Login",
     [MessageKeys.signup_title]: signup,
     [MessageKeys.signup_input_email]: input_email,
     [MessageKeys.signup_input_password]: input_password,

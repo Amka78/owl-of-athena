@@ -105,6 +105,14 @@ export default {
     [MessageKeys.forgot_password_button]: "Reset",
     [MessageKeys.forgot_password_success]:
         "パスワードリセットのメールを送信しました。受信箱を確認してください。",
+    [MessageKeys.reset_password_title]: "パスワードの再設定",
+    [MessageKeys.reset_password_checking]: "リセットリンクを確認しています...",
+    [MessageKeys.reset_password_invalid_link]:
+        "このパスワード再設定リンクは無効か、有効期限が切れています。",
+    [MessageKeys.reset_password_request_link]: "新しいリンクを請求する",
+    [MessageKeys.reset_password_success]:
+        "パスワードを更新しました。新しいパスワードでログインしてください。",
+    [MessageKeys.reset_password_login]: "ログインへ",
 
     // signup fragment
     [MessageKeys.signup_title]: signup,

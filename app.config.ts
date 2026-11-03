@@ -23,6 +23,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // app.json に未設定のため、現在使われている package.json 由来の名前を明示する
     name: `${config.name ?? "owl-of-minerva"}${APP_NAME_SUFFIX}`,
     slug: config.slug ?? "owl-of-minerva",
+    // パスワード再設定メールの戻り先。ネイティブビルドに埋め込まれるため、変更には再ビルドが必要。
+    scheme: "owl-of-athena",
     platforms: ["ios", "android", "web"],
     githubUrl: "https://github.com/Amka78/owl-of-athena",
     // EAS Update の配信先。どのチャンネルへ届くかはビルド時の eas.json の channel が決める。

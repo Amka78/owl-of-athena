@@ -20,6 +20,7 @@ import { useLocale } from "./useLocale";
 import { useLogin } from "./useLogin";
 import { useLogout } from "./useLogout";
 import { useMainDrawerNavigator } from "./useMainDrawerNavigator";
+import { usePasswordReset } from "./usePasswordReset";
 import { useRadioGroup } from "./useRadioGroup";
 import { useScreenDimensions } from "./useScreenDimensions";
 import { useSettingsSelector } from "./useSettingsSelector";
@@ -55,6 +56,7 @@ export {
     useLogin,
     useLogout,
     useMainDrawerNavigator,
+    usePasswordReset,
     useProfileListSelector,
     useRadioGroup,
     useScreenDimensions,

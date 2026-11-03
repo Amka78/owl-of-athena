@@ -20,6 +20,7 @@ import { ProfileDesktopScreen } from "./ProfileDesktopScreen";
 import { ProfileListScreen } from "./ProfileListScreen";
 import { ProfilePreviewScreen } from "./ProfilePreviewScreen";
 import { ProfileScreen } from "./ProfileScreen";
+import { ResetPasswordScreen } from "./ResetPasswordScreen";
 import { SessionDesktopScreen } from "./SessionDesktopScreen";
 import { SessionListScreen } from "./SessionListScreen";
 import { SessionNoteScreen } from "./SessionNoteScreen";
@@ -55,6 +56,7 @@ export {
     ProfileListScreen,
     ProfilePreviewScreen,
     ProfileScreen,
+    ResetPasswordScreen,
     SessionDesktopScreen,
     SessionListScreen,
     SessionNoteScreen,

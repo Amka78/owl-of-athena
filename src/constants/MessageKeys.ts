@@ -271,6 +271,15 @@ export const MessageKeys = {
     forgot_password_success: "forgot_password_success",
     //#endregion
 
+    //#region ResetPassword
+    reset_password_title: "reset_password_title",
+    reset_password_checking: "reset_password_checking",
+    reset_password_invalid_link: "reset_password_invalid_link",
+    reset_password_request_link: "reset_password_request_link",
+    reset_password_success: "reset_password_success",
+    reset_password_login: "reset_password_login",
+    //#endregion
+
     //#region SleepingScreen snooze
     sleeping_snooze_button: "sleeping_snooze_button",
     sleeping_snoozing_message: "sleeping_snoozing_message",

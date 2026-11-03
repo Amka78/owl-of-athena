@@ -4,7 +4,7 @@ import type { TextInputProps } from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
 
 import { Colors, Dimens, Fonts } from "../../constants";
-import { useWindowDimensions } from "../../hooks";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 //#endregion
 
 //#region Types
