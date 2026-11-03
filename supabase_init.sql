@@ -50,8 +50,16 @@ CREATE POLICY "Users can insert their own profile" ON public.users
 -- ====================================
 CREATE TABLE public.aurora_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES public.users(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
+    title TEXT,
+    description TEXT,
+    content TEXT NOT NULL DEFAULT '',
+    options JSONB NOT NULL DEFAULT '[]'::jsonb,
+    type TEXT NOT NULL DEFAULT 'private' CHECK (type IN ('official', 'community', 'private')),
+    starred BOOLEAN NOT NULL DEFAULT FALSE,
+    parent_profile_id UUID,
+    min_firmware_version INTEGER NOT NULL DEFAULT 0,
     device_color TEXT,
     led_brightness INTEGER DEFAULT 50,
     vibration_strength INTEGER DEFAULT 50,
@@ -64,6 +72,10 @@ ALTER TABLE public.aurora_profiles ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can read their own profiles" ON public.aurora_profiles
     FOR SELECT USING (auth.uid() = user_id);
+
+-- 公式・コミュニティのプロフィールは全認証ユーザーが閲覧できる。
+CREATE POLICY "Authenticated users can read shared profiles" ON public.aurora_profiles
+    FOR SELECT USING (auth.role() = 'authenticated' AND type IN ('official', 'community'));
 
 CREATE POLICY "Users can create their own profiles" ON public.aurora_profiles
     FOR INSERT WITH CHECK (auth.uid() = user_id);
@@ -349,6 +361,9 @@ ON CONFLICT (id) DO NOTHING;
 -- ====================================
 CREATE INDEX idx_users_created_at ON public.users(created_at DESC);
 CREATE INDEX idx_aurora_profiles_user_id ON public.aurora_profiles(user_id);
+CREATE INDEX idx_aurora_profiles_updated_at ON public.aurora_profiles(updated_at DESC);
+CREATE UNIQUE INDEX idx_aurora_profiles_user_name ON public.aurora_profiles(user_id, name)
+    WHERE user_id IS NOT NULL;
 CREATE INDEX idx_aurora_sessions_user_id ON public.aurora_sessions(user_id);
 CREATE INDEX idx_aurora_sessions_session_at ON public.aurora_sessions(session_at DESC);
 CREATE INDEX idx_aurora_streams_session_id ON public.aurora_streams(aurora_session_id);
