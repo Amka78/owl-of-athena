@@ -1,14 +1,16 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
+import { View } from "react-native";
 
-import { FieldLedEffect, ListItem } from "../atoms";
-import type { ListItemComponentProps } from "../atoms/ListItem";
+import type { StimLedValue } from "../../sdk/AuroraTypes";
+import { FieldLedEffect } from "../atoms/FieldLedEffect";
+import { ListItem } from "../atoms/ListItem";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 
 //#region Types
 export type OptionLedEffectProps = OptionProps & {
-    value: string | boolean;
+    value?: StimLedValue | string;
 };
 //#endregion
 
@@ -17,17 +19,20 @@ export const OptionLedEffect: FunctionComponent<OptionLedEffectProps> = (
     props: OptionLedEffectProps,
 ) => {
     return (
-        <ListItem
-            {...props}
-            right={(rightProps: ListItemComponentProps) => {
-                return (
-                    <FieldLedEffect
-                        {...(props as any)}
-                        style={[rightProps.style, { alignSelf: "center" }]}
-                    ></FieldLedEffect>
-                );
-            }}
-        ></ListItem>
+        <View>
+            <ListItem
+                title={props.title}
+                description={props.description}
+                left={props.left}
+                disabled={props.disabled}
+            ></ListItem>
+            <FieldLedEffect
+                value={props.value}
+                disabled={props.disabled}
+                onPreviewEffectPress={(value): void => props.onPreviewEffectPress?.(value)}
+                onValueChange={(value): void => props.onValueChange(value)}
+            ></FieldLedEffect>
+        </View>
     );
 };
 //#endregion

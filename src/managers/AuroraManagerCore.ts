@@ -34,6 +34,8 @@ import type {
     CommandResult,
     DirectoryInfo,
     FileInfo,
+    SongValue,
+    StimLedValue,
 } from "../sdk/AuroraTypes";
 import {
     AuroraEvent,
@@ -169,6 +171,20 @@ export class AuroraManager extends EventEmitter {
 
     public async executeCommand(command: string): Promise<unknown> {
         return await AuroraInstance.queueCmd(command);
+    }
+
+    /** プロフィール編集中のプレビュー用。未接続時は何もしない。 */
+    public async playLedEffect(effect: StimLedValue): Promise<void> {
+        if (!this.isConnected()) return;
+        // プレビューが止まらなくならないよう、停止までの時間を 3 秒に固定する。
+        await AuroraInstance.playLedEffect({ ...effect, shutoffDelay: 3 });
+    }
+
+    /** プロフィール編集中のプレビュー用。未接続時は何もしない。 */
+    public async playBuzzSong(song: SongValue): Promise<void> {
+        if (!this.isConnected()) return;
+        // 試聴なので 1 回だけ再生する。
+        await AuroraInstance.playBuzzSong({ ...song, repeat: 1 });
     }
 
     /** Wrap a promise with a timeout so BLE commands cannot hang forever. */

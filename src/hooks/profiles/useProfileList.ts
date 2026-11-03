@@ -1,12 +1,19 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
 import { useCallback, useState } from "react";
-import { ConfirmDialog, LoadingDialog } from "../../components/molecules";
+
+import { AuroraRestClientInstance } from "../../clients";
+import { ConfirmDialog } from "../../components/molecules/ConfirmDialog";
+import { LoadingDialog } from "../../components/molecules/LoadingDialog";
 import { Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { type ProfileFilterCondition, useProfileStore } from "../../store/profileStore";
-import { useCheckLogging, useUserSelector, useWindowDimensions } from "..";
-import { useFilterConditionSelector, useFilteredProfileListSelector } from "./";
+import { GuestUser } from "../../types/Auth";
+import { useCheckLogging } from "../useCheckLogging";
+import { useUserSelector } from "../useUserSelector";
+import { useWindowDimensions } from "../useWindowDimensions";
+import { useFilterConditionSelector } from "./useFilteredConditionSelector";
+import { useFilteredProfileListSelector } from "./useFilteredProfileListSelector";
 //#endregion
 
 //#region Hooks
@@ -35,16 +42,21 @@ export const useProfileList = (): {
     useCheckLogging();
 
     const onPressedRefresh = useCallback(async () => {
+        if (!user || user.id === GuestUser) return;
+
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.reloading, [MessageKeys.profiles]),
         });
+
         try {
-            //const sessions = await SessionRestClientInstance.getAll(user!.id);
-            cacheProfiles([] as AuroraProfile[]);
+            const remote = await AuroraRestClientInstance.getAuroraProfiles();
+            if (remote.length > 0) cacheProfiles(remote);
+        } catch (error) {
+            console.debug("reload profiles failed:", error);
         } finally {
             LoadingDialog.close();
         }
-    }, [cacheProfiles]);
+    }, [cacheProfiles, user]);
 
     const onPressedFilter = useCallback(async () => {
         setShowFilter(!showFilter);
@@ -70,28 +82,36 @@ export const useProfileList = (): {
 
     const onStarPress = useCallback(
         async (value: AuroraProfile): Promise<void> => {
-            /*const updateInfo: Partial<AuroraProfile> = {
-                starred: !value.starred,
-            };*/
+            const starred = !value.starred;
 
-            /*if (user?.id !== GuestUser) {
-                await SessionRestClientInstance.updateById(
-                    value.id,
-                    updateInfo
-                );
-            }*/
-
-            value.starred = !value.starred;
-            updateProfile(value);
+            try {
+                if (isOwnServerProfile(value, user?.id)) {
+                    await AuroraRestClientInstance.setAuroraProfileStarred(value.id, starred);
+                }
+                updateProfile({ ...value, starred });
+            } catch (error) {
+                console.debug("star profile failed:", error);
+            }
         },
-        [updateProfile],
+        [updateProfile, user],
     );
 
     const onDeleteConfirmPress = useCallback(
-        (value: AuroraProfile) => {
-            deleteProfile(value.id);
+        async (value: AuroraProfile): Promise<void> => {
+            try {
+                if (isOwnServerProfile(value, user?.id)) {
+                    await AuroraRestClientInstance.deleteAuroraProfile(value.id);
+                }
+                deleteProfile(value.id);
+            } catch (error) {
+                console.debug("delete profile failed:", error);
+                ConfirmDialog.show({
+                    title: Message.get(MessageKeys.delete_dialog_title, [MessageKeys.profile]),
+                    message: Message.get(MessageKeys.profile_delete_failed),
+                });
+            }
         },
-        [deleteProfile],
+        [deleteProfile, user],
     );
 
     const onDeletePress = useCallback(
@@ -138,5 +158,21 @@ export const useProfileList = (): {
         onRefreshPress: onPressedRefresh,
         onFilterPress: onPressedFilter,
     };
+};
+
+const isLocalProfile = (profile: AuroraProfile): boolean => profile.id.startsWith("local-");
+
+/** サーバー上の自分のプロフィールだけが更新・削除の対象。 */
+const isOwnServerProfile = (
+    profile: AuroraProfile,
+    userId: string | undefined,
+): boolean => {
+    return (
+        !!userId &&
+        userId !== GuestUser &&
+        profile.type === "private" &&
+        profile.created_by === userId &&
+        !isLocalProfile(profile)
+    );
 };
 //#endregion

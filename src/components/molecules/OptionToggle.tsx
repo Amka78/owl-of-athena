@@ -8,7 +8,7 @@ import type { OptionProps } from "./OptionProps";
 
 //#region Types
 export type OptionToggleProps = OptionProps & {
-    value: string | boolean;
+    value?: string | boolean;
 };
 //#endregion
 

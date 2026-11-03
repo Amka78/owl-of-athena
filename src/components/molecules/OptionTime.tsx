@@ -8,7 +8,7 @@ import type { OptionProps } from "./OptionProps";
 
 //#region Types
 export type OptionTimeProps = OptionProps & {
-    value: string | boolean;
+    value?: string | number | boolean;
 };
 //#endregion
 

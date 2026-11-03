@@ -25,6 +25,7 @@ describe("ProfileSecondMenu", () => {
             <ProfileSecondMenu
                 auroraConnected={true}
                 selectedProfileHasUnsavedChanges={false}
+                showAdvancedOptions={false}
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={jest.fn()}
@@ -38,6 +39,7 @@ describe("ProfileSecondMenu", () => {
             <ProfileSecondMenu
                 auroraConnected={false}
                 selectedProfileHasUnsavedChanges={true}
+                showAdvancedOptions={false}
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={jest.fn()}
@@ -52,6 +54,7 @@ describe("ProfileSecondMenu", () => {
             <ProfileSecondMenu
                 auroraConnected={true}
                 selectedProfileHasUnsavedChanges={false}
+                showAdvancedOptions={false}
                 dimens={mobileDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={onPress}
@@ -60,6 +63,23 @@ describe("ProfileSecondMenu", () => {
         // Find the advanced options flat button and press it
         const btn = getByText(/advanced/i);
         fireEvent.press(btn);
+        expect(onPress).toHaveBeenCalledTimes(1);
+    });
+
+    it("saves the edited values to Aurora even before saving the profile", () => {
+        const onPress = jest.fn();
+        const { getByText } = renderWithProvider(
+            <ProfileSecondMenu
+                auroraConnected={true}
+                selectedProfileHasUnsavedChanges={true}
+                showAdvancedOptions={false}
+                dimens={mobileDimens}
+                onSaveToAuroraPress={onPress}
+                onShowAdvancedOptionsPress={jest.fn()}
+            />,
+        );
+
+        fireEvent.press(getByText("Save to Aurora"));
         expect(onPress).toHaveBeenCalledTimes(1);
     });
 });

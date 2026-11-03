@@ -39,7 +39,7 @@ export const useHome = (): {
     useCheckLogging();
     useAlarm();
     const { navigate } = useNavigation<any>();
-    const { cacheProfiles } = useProfileStore();
+    const { cacheProfiles, selectProfile } = useProfileStore();
     const { cacheSettings } = useAuroraStore();
 
     const settings = useSettingsSelector();
@@ -152,6 +152,10 @@ export const useHome = (): {
                     }
                     settings.userId = user.id;
                     cacheSettings(settings);
+
+                    if (selectedProfile.current) {
+                        selectProfile(selectedProfile.current);
+                    }
                 }
             }
         };
@@ -165,6 +169,7 @@ export const useHome = (): {
         cacheProfiles,
         cacheSettings,
         navigate,
+        selectProfile,
         profiles,
         settings,
         settings.profileId,

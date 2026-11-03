@@ -12,12 +12,8 @@ exports[`FieldToggle UnitTest renders correctly with value enabled 1`] = `
           "children": null,
           "props": {
             "disabled": false,
-            "field": {
-              "type": "toggle",
-              "valueDisabled": "disabled",
-              "valueEnabled": "enabled",
-            },
-            "onValueChange": [class Function],
+            "onValueChange": [Function],
+            "style": undefined,
             "thumbColor": undefined,
             "trackColor": {
               "false": "#00ffe6",

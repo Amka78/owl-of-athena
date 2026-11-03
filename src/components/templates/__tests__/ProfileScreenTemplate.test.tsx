@@ -52,6 +52,11 @@ const defaultProps = {
         onShowAdvancedOptionsPress: jest.fn(),
     },
     grouedOptionList: groupedOptionList,
+    optionValues: {},
+    showAdvancedOptions: false,
+    onOptionValueChange: jest.fn(),
+    onPreviewEffectPress: jest.fn(),
+    onPreviewSongPress: jest.fn(),
     dimens: mobileDimens,
 };
 

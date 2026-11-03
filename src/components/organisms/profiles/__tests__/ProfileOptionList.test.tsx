@@ -15,6 +15,7 @@ describe("ProfileOptionList", () => {
         const { toJSON } = renderWithProvider(
             <ProfileOptionList
                 groupedOptionList={groupedOptionList}
+                optionValues={{}}
                 locale="en-US"
                 style={{ flex: 1 }}
                 onHelpIconPress={jest.fn()}
@@ -28,6 +29,7 @@ describe("ProfileOptionList", () => {
         const { toJSON } = renderWithProvider(
             <ProfileOptionList
                 groupedOptionList={groupedOptionList}
+                optionValues={{}}
                 locale="ja-JP"
                 style={{ flex: 1 }}
                 onHelpIconPress={jest.fn()}
@@ -39,7 +41,12 @@ describe("ProfileOptionList", () => {
 
     it("renders with empty option list", () => {
         const { toJSON } = renderWithProvider(
-            <ProfileOptionList groupedOptionList={[]} style={{ flex: 1 }} />,
+            <ProfileOptionList
+                groupedOptionList={[]}
+                optionValues={{}}
+                onValueChange={jest.fn()}
+                style={{ flex: 1 }}
+            />,
         );
         expect(toJSON()).toBeTruthy();
     });

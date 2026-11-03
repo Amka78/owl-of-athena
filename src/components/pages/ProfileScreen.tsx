@@ -37,6 +37,12 @@ export const ProfileScreen: FunctionComponent = () => {
                 onShowAdvancedOptionsPress: hook.onShowAdvancedOptionsPress,
             }}
             grouedOptionList={hook.groupedOptionList}
+            optionValues={hook.optionValues}
+            optionValuesKey={hook.optionValuesKey}
+            showAdvancedOptions={hook.showAdvancedOptions}
+            onOptionValueChange={hook.onOptionValueChange}
+            onPreviewEffectPress={hook.onPreviewEffectPress}
+            onPreviewSongPress={hook.onPreviewSongPress}
             dimens={hook.dimens}
         />
     );

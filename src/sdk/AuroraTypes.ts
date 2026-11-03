@@ -118,17 +118,35 @@ export type TimeField = {
     defaultTime: number;
 };
 
-type SongValue = {
+export type LedEffectName = "set" | "blink" | "alternate" | "transition";
+
+export type SongValue = {
     song?: string;
+    repeat?: number;
+    volume?: number;
+    tempoAdjust?: number;
+    pitchAdjust?: number;
 };
 
-type StimLedValue = {
-    effect: string;
-    eyes: string;
-    color: string;
-    brightness: number;
-    blinkRate: number;
-    blinkCount: number;
+export type StimLedValue = {
+    effect?: LedEffectName | "";
+    eyes?: string;
+    color?: string;
+    brightness?: number;
+    blinkRate?: number;
+    blinkCount?: number;
+    shutoffDelay?: number;
+    state1Eyes?: string;
+    state1Color?: string;
+    state1Brightness?: number;
+    state1Duration?: number;
+    state2Eyes?: string;
+    state2Color?: string;
+    state2Brightness?: number;
+    state2Duration?: number;
+    alternateCount?: number;
+    transitionDuration?: number;
+    transitionRewind?: boolean;
 };
 
 export type BluetoothStream = {

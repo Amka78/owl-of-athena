@@ -17,8 +17,16 @@ const defaultProps = {
     description: "Choose LED effect",
     left: leftIcon,
     disabled: false,
-    value: "blink",
-    field: { type: "toggle" as const, valueEnabled: "blink", valueDisabled: "" },
+    value: {
+        effect: "blink" as const,
+        eyes: "both",
+        color: "#FF0000",
+        brightness: 100,
+        blinkRate: 0.5,
+        blinkCount: 5,
+        shutoffDelay: 0,
+    },
+    field: { type: "led-effect" as const },
     onValueChange: jest.fn(),
 };
 

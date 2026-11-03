@@ -5,16 +5,23 @@ import { Card, Divider } from "react-native-paper";
 
 import { Colors, Dimens, Message } from "../../../constants";
 import { useLocale } from "../../../hooks";
-import type { AuroraProfileOption } from "../../../sdk/AuroraTypes";
-import type { GroupedProfileOptionList } from "../../../services/ProfileService";
+import type { AuroraProfileOption, SongValue, StimLedValue } from "../../../sdk/AuroraTypes";
+import {
+    checkProfileOptionConditions,
+    type GroupedProfileOptionList,
+    type ProfileOptionValues,
+} from "../../../services/ProfileService";
 import { ProfileOption } from "./ProfileOption";
 //#endregion
 
 //#region Types
 export type ProfileOptionListProps = {
     groupedOptionList: GroupedProfileOptionList;
+    optionValues?: ProfileOptionValues;
     onHelpIconPress?: () => void;
-    onValueChange?: () => void;
+    onValueChange?: (optionName: string, value: unknown) => void;
+    onPreviewEffectPress?: (value: StimLedValue) => void;
+    onPreviewSongPress?: (value: SongValue) => void;
     style: StyleProp<ViewStyle>;
     locale?: string;
 };
@@ -25,11 +32,15 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
     props: ProfileOptionListProps,
 ) => {
     useLocale(props.locale);
+    const optionValues = props.optionValues ?? {};
+
     return (
         <View style={props.style}>
             {props.groupedOptionList.map((value: [string, AuroraProfileOption[]]) => {
                 const title = value[0];
                 const options = value[1];
+                if (options.length === 0) return null;
+
                 return (
                     <Card key={title} style={cardStyle}>
                         <Card.Title
@@ -46,9 +57,14 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
                                     {divider}
                                     <ProfileOption
                                         profileOption={value}
-                                        onValueChange={props.onValueChange}
+                                        value={optionValues[value.name]}
+                                        onValueChange={(nextValue: unknown): void =>
+                                            props.onValueChange?.(value.name, nextValue)
+                                        }
                                         onHelpIconPress={props.onHelpIconPress}
-                                        failed={false}
+                                        onPreviewEffectPress={props.onPreviewEffectPress}
+                                        onPreviewSongPress={props.onPreviewSongPress}
+                                        failed={!checkProfileOptionConditions(value, optionValues)}
                                     ></ProfileOption>
                                 </View>
                             );

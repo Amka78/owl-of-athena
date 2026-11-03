@@ -11,6 +11,7 @@ import { Button, FlatButton } from "../../atoms";
 export type ProfileSecondMenuProps = {
     auroraConnected: boolean;
     selectedProfileHasUnsavedChanges: boolean;
+    showAdvancedOptions?: boolean;
     style?: ViewStyle;
     dimens: Dimensions;
     onSaveToAuroraPress: () => void;
@@ -25,7 +26,7 @@ export const ProfileSecondMenu: FunctionComponent<ProfileSecondMenuProps> = (
     return (
         <View style={[menuStyle, props.style]}>
             <Button
-                disabled={!props.auroraConnected || props.selectedProfileHasUnsavedChanges}
+                disabled={!props.auroraConnected}
                 onPress={props.onSaveToAuroraPress}
                 screenWidth={props.dimens.width}
                 style={{ marginLeft: Dimens.button_margin }}
@@ -36,7 +37,11 @@ export const ProfileSecondMenu: FunctionComponent<ProfileSecondMenuProps> = (
                 onPress={props.onShowAdvancedOptionsPress}
                 contentStyle={{ marginRight: Dimens.button_flat_margin }}
             >
-                {Message.get(MessageKeys.profile_show_advanced_options)}
+                {Message.get(
+                    props.showAdvancedOptions
+                        ? MessageKeys.profile_hide_advanced_options
+                        : MessageKeys.profile_show_advanced_options,
+                )}
             </FlatButton>
         </View>
     );

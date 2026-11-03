@@ -7,7 +7,9 @@ import type { OptionProps } from "./OptionProps";
 //#endregion
 
 //#region Types
-export type OptionCheckBoxesProps = OptionProps & { value?: number };
+export type OptionCheckBoxesProps = OptionProps & {
+    value?: number | number[] | string;
+};
 //#endregion
 
 //#region Component

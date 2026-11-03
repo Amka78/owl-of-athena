@@ -18,213 +18,201 @@ exports[`OptionLedEffect renders correctly 1`] = `
                   "children": [
                     {
                       "$$typeof": Symbol(react.test.json),
-                      "children": null,
-                      "props": {
-                        "color": "rgba(73, 69, 79, 1)",
-                        "name": "led-on",
-                        "size": 24,
-                      },
-                      "type": "Icon",
-                    },
-                  ],
-                  "props": {
-                    "style": {
-                      "alignSelf": "center",
-                      "marginLeft": 16,
-                      "marginRight": 0,
-                    },
-                  },
-                  "type": "View",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": [
-                    {
-                      "$$typeof": Symbol(react.test.json),
                       "children": [
-                        "LED Effect",
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": null,
+                          "props": {
+                            "color": "rgba(73, 69, 79, 1)",
+                            "name": "led-on",
+                            "size": 24,
+                          },
+                          "type": "Icon",
+                        },
                       ],
                       "props": {
-                        "ellipsizeMode": undefined,
-                        "maxFontSizeMultiplier": undefined,
-                        "numberOfLines": 1,
-                        "ref": {
-                          "current": null,
+                        "style": {
+                          "alignSelf": "center",
+                          "marginLeft": 16,
+                          "marginRight": 0,
                         },
-                        "selectable": false,
-                        "style": [
-                          {
-                            "textAlign": "left",
-                          },
-                          {
-                            "color": "rgba(28, 27, 31, 1)",
-                            "fontFamily": "System",
-                            "fontWeight": "400",
-                            "letterSpacing": 0,
-                          },
-                          {
-                            "writingDirection": "ltr",
-                          },
-                          [
-                            {
-                              "fontSize": 16,
-                            },
-                            {
-                              "color": "rgba(28, 27, 31, 1)",
-                            },
-                            [
-                              {
-                                "color": "#ffffff",
-                              },
-                              undefined,
-                            ],
-                          ],
-                        ],
                       },
-                      "type": "Text",
+                      "type": "View",
                     },
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
-                        "Choose LED effect",
-                      ],
-                      "props": {
-                        "ellipsizeMode": undefined,
-                        "maxFontSizeMultiplier": undefined,
-                        "numberOfLines": 2,
-                        "onTextLayout": [Function],
-                        "ref": {
-                          "current": null,
-                        },
-                        "selectable": false,
-                        "style": [
-                          {
-                            "textAlign": "left",
-                          },
-                          {
-                            "color": "rgba(28, 27, 31, 1)",
-                            "fontFamily": "System",
-                            "fontWeight": "400",
-                            "letterSpacing": 0,
-                          },
-                          {
-                            "writingDirection": "ltr",
-                          },
-                          [
-                            {
-                              "fontSize": 14,
-                            },
-                            {
-                              "color": "rgba(73, 69, 79, 1)",
-                            },
-                            [
-                              {
-                                "color": "#9B9B9B",
-                              },
-                              undefined,
-                            ],
-                          ],
-                        ],
-                      },
-                      "type": "Text",
-                    },
-                  ],
-                  "props": {
-                    "style": [
-                      {
-                        "paddingLeft": 16,
-                      },
-                      {
-                        "flexGrow": 1,
-                        "flexShrink": 1,
-                        "justifyContent": "center",
-                      },
-                      undefined,
-                    ],
-                    "testID": "undefined-content",
-                  },
-                  "type": "View",
-                },
-                {
-                  "$$typeof": Symbol(react.test.json),
-                  "children": [
                     {
                       "$$typeof": Symbol(react.test.json),
                       "children": [
                         {
                           "$$typeof": Symbol(react.test.json),
                           "children": [
-                            "Choose a Led Effect",
+                            "LED Effect",
                           ],
-                          "props": {},
+                          "props": {
+                            "ellipsizeMode": undefined,
+                            "maxFontSizeMultiplier": undefined,
+                            "numberOfLines": 1,
+                            "ref": {
+                              "current": null,
+                            },
+                            "selectable": false,
+                            "style": [
+                              {
+                                "textAlign": "left",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "fontFamily": "System",
+                                "fontWeight": "400",
+                                "letterSpacing": 0,
+                              },
+                              {
+                                "writingDirection": "ltr",
+                              },
+                              [
+                                {
+                                  "fontSize": 16,
+                                },
+                                {
+                                  "color": "rgba(28, 27, 31, 1)",
+                                },
+                                [
+                                  {
+                                    "color": "#ffffff",
+                                  },
+                                  undefined,
+                                ],
+                              ],
+                            ],
+                          },
                           "type": "Text",
                         },
                         {
                           "$$typeof": Symbol(react.test.json),
                           "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "No Effect",
-                                "value": "",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Set",
-                                "value": "set",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Blink",
-                                "value": "blink",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Alternate",
-                                "value": "alternate",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Transition",
-                                "value": "transition",
-                              },
-                              "type": "Picker.Item",
-                            },
+                            "Choose LED effect",
                           ],
                           "props": {
-                            "itemStyle": {
-                              "borderColor": "#ffffff",
-                              "textDecorationColor": "#ffffff",
+                            "ellipsizeMode": undefined,
+                            "maxFontSizeMultiplier": undefined,
+                            "numberOfLines": 2,
+                            "onTextLayout": [Function],
+                            "ref": {
+                              "current": null,
                             },
-                            "onValueChange": [Function],
-                            "selectedValue": "blink",
-                            "style": {
-                              "backgroundColor": "#4a2fba",
-                              "borderBottomColor": "#bcfeff",
-                              "borderLeftWidth": 0,
-                              "borderRightWidth": 0,
-                              "borderTopWidth": 0,
-                            },
+                            "selectable": false,
+                            "style": [
+                              {
+                                "textAlign": "left",
+                              },
+                              {
+                                "color": "rgba(28, 27, 31, 1)",
+                                "fontFamily": "System",
+                                "fontWeight": "400",
+                                "letterSpacing": 0,
+                              },
+                              {
+                                "writingDirection": "ltr",
+                              },
+                              [
+                                {
+                                  "fontSize": 14,
+                                },
+                                {
+                                  "color": "rgba(73, 69, 79, 1)",
+                                },
+                                [
+                                  {
+                                    "color": "#9B9B9B",
+                                  },
+                                  undefined,
+                                ],
+                              ],
+                            ],
                           },
-                          "type": "Picker",
+                          "type": "Text",
                         },
+                      ],
+                      "props": {
+                        "style": [
+                          {
+                            "paddingLeft": 16,
+                          },
+                          {
+                            "flexGrow": 1,
+                            "flexShrink": 1,
+                            "justifyContent": "center",
+                          },
+                          undefined,
+                        ],
+                        "testID": "undefined-content",
+                      },
+                      "type": "View",
+                    },
+                  ],
+                  "props": {
+                    "style": [
+                      {
+                        "flexDirection": "row",
+                        "marginVertical": 6,
+                        "width": "100%",
+                      },
+                      undefined,
+                    ],
+                  },
+                  "type": "View",
+                },
+              ],
+              "props": {
+                "accessible": true,
+                "disabled": true,
+                "onPress": undefined,
+                "onPressIn": [Function],
+                "onPressOut": [Function],
+                "ref": null,
+                "style": [Function],
+                "testID": undefined,
+              },
+              "type": "Pressable",
+            },
+            {
+              "$$typeof": Symbol(react.test.json),
+              "children": [
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    "Choose LED Effect",
+                  ],
+                  "props": {
+                    "style": {
+                      "color": "#bcfeff",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 14,
+                      "marginBottom": 4,
+                    },
+                  },
+                  "type": "Text",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "style": [
+                          {
+                            "alignSelf": "flex-start",
+                            "borderColor": "red",
+                            "borderWidth": 1,
+                          },
+                          undefined,
+                        ],
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
                         {
                           "$$typeof": Symbol(react.test.json),
                           "children": [
@@ -237,149 +225,120 @@ exports[`OptionLedEffect renders correctly 1`] = `
                                     {
                                       "$$typeof": Symbol(react.test.json),
                                       "children": [
-                                        {
-                                          "$$typeof": Symbol(react.test.json),
-                                          "children": [
-                                            "Preview Effect",
-                                          ],
-                                          "props": {
-                                            "maxFontSizeMultiplier": undefined,
-                                            "numberOfLines": 1,
-                                            "ref": {
-                                              "current": null,
+                                        "Preview Effect",
+                                      ],
+                                      "props": {
+                                        "maxFontSizeMultiplier": undefined,
+                                        "numberOfLines": 1,
+                                        "ref": {
+                                          "current": null,
+                                        },
+                                        "selectable": false,
+                                        "style": [
+                                          {
+                                            "textAlign": "left",
+                                          },
+                                          {
+                                            "color": "rgba(28, 27, 31, 1)",
+                                            "writingDirection": "ltr",
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "System",
+                                              "fontSize": 14,
+                                              "fontWeight": "500",
+                                              "letterSpacing": 0.1,
+                                              "lineHeight": 20,
                                             },
-                                            "selectable": false,
-                                            "style": [
+                                            [
                                               {
-                                                "textAlign": "left",
+                                                "marginHorizontal": 16,
+                                                "marginVertical": 9,
+                                                "textAlign": "center",
                                               },
+                                              false,
                                               {
-                                                "color": "rgba(28, 27, 31, 1)",
-                                                "writingDirection": "ltr",
+                                                "marginHorizontal": 12,
+                                              },
+                                              undefined,
+                                              false,
+                                              {
+                                                "color": "#00ffe6",
+                                                "fontFamily": "System",
+                                                "fontSize": 14,
+                                                "fontWeight": "500",
+                                                "letterSpacing": 0.1,
+                                                "lineHeight": 20,
                                               },
                                               [
                                                 {
-                                                  "fontFamily": "System",
+                                                  "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 14,
-                                                  "fontWeight": "500",
-                                                  "letterSpacing": 0.1,
-                                                  "lineHeight": 20,
                                                 },
-                                                [
-                                                  {
-                                                    "marginHorizontal": 16,
-                                                    "marginVertical": 9,
-                                                    "textAlign": "center",
-                                                  },
-                                                  false,
-                                                  {
-                                                    "marginHorizontal": 24,
-                                                    "marginVertical": 10,
-                                                  },
-                                                  undefined,
-                                                  false,
-                                                  {
-                                                    "color": "rgba(255, 255, 255, 1)",
-                                                    "fontFamily": "System",
-                                                    "fontSize": 14,
-                                                    "fontWeight": "500",
-                                                    "letterSpacing": 0.1,
-                                                    "lineHeight": 20,
-                                                  },
-                                                  [
-                                                    {
-                                                      "fontFamily": "calibre_app_semibold",
-                                                      "fontSize": 24,
-                                                    },
-                                                    undefined,
-                                                  ],
-                                                ],
+                                                {
+                                                  "color": "rgba(28, 27, 31, 1)",
+                                                },
+                                                undefined,
                                               ],
                                             ],
-                                            "testID": "button-text",
-                                          },
-                                          "type": "Text",
-                                        },
-                                      ],
-                                      "props": {
-                                        "style": [
-                                          {
-                                            "alignItems": "center",
-                                            "flexDirection": "row",
-                                            "justifyContent": "center",
-                                          },
-                                          undefined,
+                                          ],
                                         ],
+                                        "testID": "button-text",
                                       },
-                                      "type": "View",
+                                      "type": "Text",
                                     },
                                   ],
                                   "props": {
-                                    "accessibilityHint": undefined,
-                                    "accessibilityLabel": undefined,
-                                    "accessibilityRole": "button",
-                                    "accessibilityState": {
-                                      "disabled": false,
-                                    },
-                                    "accessible": undefined,
-                                    "delayLongPress": undefined,
-                                    "disabled": true,
-                                    "hitSlop": undefined,
-                                    "onLongPress": undefined,
-                                    "onPress": undefined,
-                                    "onPressIn": [Function],
-                                    "onPressOut": [Function],
-                                    "ref": null,
-                                    "style": [Function],
-                                    "testID": "button",
+                                    "style": [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      [
+                                        {
+                                          "height": 28,
+                                          "marginBottom": 12,
+                                          "marginTop": 16,
+                                        },
+                                        undefined,
+                                      ],
+                                    ],
                                   },
-                                  "type": "Pressable",
+                                  "type": "View",
                                 },
                               ],
                               "props": {
-                                "screenWidth": 50,
-                                "style": {
-                                  "0": {
-                                    "borderRadius": 16,
-                                    "height": 50,
-                                    "marginBottom": 16,
-                                    "marginTop": 16,
-                                  },
-                                  "1": {
-                                    "width": -46,
-                                  },
-                                  "2": undefined,
-                                  "backgroundColor": "#00ffe6",
-                                  "borderColor": "transparent",
-                                  "borderRadius": 16,
-                                  "borderStyle": "solid",
-                                  "borderWidth": 0,
-                                  "flex": undefined,
-                                  "minWidth": 64,
-                                  "shadowColor": "#000",
-                                  "shadowOffset": {
-                                    "height": AnimatedValue {
-                                      "_v": 0,
-                                    },
-                                    "width": 0,
-                                  },
-                                  "shadowOpacity": AnimatedValue {
-                                    "_v": 0,
-                                  },
-                                  "shadowRadius": AnimatedValue {
-                                    "_v": 0,
-                                  },
+                                "accessibilityHint": undefined,
+                                "accessibilityLabel": undefined,
+                                "accessibilityRole": "button",
+                                "accessibilityState": {
+                                  "disabled": undefined,
                                 },
-                                "testID": "button-container",
+                                "accessible": undefined,
+                                "delayLongPress": undefined,
+                                "disabled": false,
+                                "hitSlop": undefined,
+                                "onLongPress": undefined,
+                                "onPress": [Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": "button",
                               },
-                              "type": "Animated.View",
+                              "type": "Pressable",
                             },
                           ],
                           "props": {
-                            "ref": null,
                             "style": {
-                              "backgroundColor": "#00ffe6",
-                              "borderRadius": 16,
+                              "backgroundColor": "transparent",
+                              "borderColor": "transparent",
+                              "borderRadius": 10,
+                              "borderStyle": "solid",
+                              "borderWidth": 0,
+                              "flex": undefined,
+                              "minWidth": 64,
                               "shadowColor": "#000",
                               "shadowOffset": {
                                 "height": AnimatedValue {
@@ -394,14 +353,601 @@ exports[`OptionLedEffect renders correctly 1`] = `
                                 "_v": 0,
                               },
                             },
-                            "testID": "button-container-outer-layer",
+                            "testID": "button-container",
                           },
                           "type": "Animated.View",
                         },
                       ],
                       "props": {
+                        "ref": null,
                         "style": {
-                          "flexDirection": "row",
+                          "backgroundColor": "transparent",
+                          "borderRadius": 10,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
+                        },
+                        "testID": "button-container-outer-layer",
+                      },
+                      "type": "Animated.View",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                  },
+                  "type": "View",
+                },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Eyes",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginBottom": 4,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignSelf": "flex-start",
+                                    "borderColor": "red",
+                                    "borderWidth": 1,
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "marginBottom": 8,
+                            },
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "Color",
+                          ],
+                          "props": {
+                            "style": {
+                              "color": "#bcfeff",
+                              "fontFamily": "calibre_app_regular",
+                              "fontSize": 14,
+                              "marginBottom": 4,
+                            },
+                          },
+                          "type": "Text",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "white",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFFFFF",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "red",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#FF0000",
+                                  },
+                                  {
+                                    "borderColor": "#ffffff",
+                                    "borderWidth": 3,
+                                  },
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "orange",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFFF00",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "pink",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#FF00FF",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "cyan",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#00FFFF",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "green",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#00FF00",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "blue",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#0000FF",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "accessibilityLabel": "yellow",
+                                "accessible": true,
+                                "disabled": false,
+                                "onPress": [Function],
+                                "style": [
+                                  {
+                                    "borderColor": "#9B9B9B",
+                                    "borderRadius": 16,
+                                    "borderWidth": 1,
+                                    "height": 32,
+                                    "marginBottom": 8,
+                                    "marginRight": 8,
+                                    "width": 32,
+                                  },
+                                  {
+                                    "backgroundColor": "#FF7700",
+                                  },
+                                  undefined,
+                                ],
+                              },
+                              "type": "TouchableOpacity",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "flexDirection": "row",
+                              "flexWrap": "wrap",
+                              "marginBottom": 8,
+                            },
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Brightness",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#bcfeff",
+                                      "flexShrink": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 14,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "100%",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 14,
+                                      "marginLeft": 8,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                },
+                              },
+                              "type": "View",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "disabled": false,
+                                "maximumValue": 100,
+                                "minimumValue": 0,
+                                "onValueChange": [Function],
+                                "step": 1,
+                                "value": 100,
+                              },
+                              "type": "Slider",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "marginBottom": 12,
+                            },
+                          },
+                          "type": "View",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "marginBottom": 8,
+                        },
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Times to Blink",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flexShrink": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "5",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#ffffff",
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginLeft": 8,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                            },
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": null,
+                          "props": {
+                            "disabled": false,
+                            "maximumValue": 100,
+                            "minimumValue": 1,
+                            "onValueChange": [Function],
+                            "step": 1,
+                            "value": 5,
+                          },
+                          "type": "Slider",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "marginBottom": 12,
+                        },
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Blink Rate (Hz)",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flexShrink": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "0.5 Hz",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#ffffff",
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginLeft": 8,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                            },
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": null,
+                          "props": {
+                            "disabled": false,
+                            "maximumValue": 5,
+                            "minimumValue": 0.125,
+                            "onValueChange": [Function],
+                            "step": 0.125,
+                            "value": 0.5,
+                          },
+                          "type": "Slider",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "marginBottom": 12,
+                        },
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Shutoff Delay (s)",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#bcfeff",
+                                  "flexShrink": 1,
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "0 s",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#ffffff",
+                                  "fontFamily": "calibre_app_regular",
+                                  "fontSize": 14,
+                                  "marginLeft": 8,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                            },
+                          },
+                          "type": "View",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": null,
+                          "props": {
+                            "disabled": false,
+                            "maximumValue": 120,
+                            "minimumValue": 0,
+                            "onValueChange": [Function],
+                            "step": 5,
+                            "value": 0,
+                          },
+                          "type": "Slider",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "marginBottom": 12,
                         },
                       },
                       "type": "View",
@@ -412,36 +958,17 @@ exports[`OptionLedEffect renders correctly 1`] = `
                 },
               ],
               "props": {
-                "style": [
-                  {
-                    "flexDirection": "row",
-                    "marginVertical": 6,
-                    "width": "100%",
-                  },
-                  undefined,
-                ],
+                "style": {
+                  "paddingBottom": 8,
+                  "paddingHorizontal": 8,
+                  "width": "100%",
+                },
               },
               "type": "View",
             },
           ],
-          "props": {
-            "accessible": true,
-            "disabled": true,
-            "field": {
-              "type": "toggle",
-              "valueDisabled": "",
-              "valueEnabled": "blink",
-            },
-            "onPress": undefined,
-            "onPressIn": [Function],
-            "onPressOut": [Function],
-            "onValueChange": [class Function],
-            "ref": null,
-            "style": [Function],
-            "testID": undefined,
-            "value": "blink",
-          },
-          "type": "Pressable",
+          "props": {},
+          "type": "View",
         },
       ],
       "props": {

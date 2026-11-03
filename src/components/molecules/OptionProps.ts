@@ -4,6 +4,8 @@ import type {
     CheckBoxField,
     LedEffectField,
     SliderField,
+    SongValue,
+    StimLedValue,
     TimeField,
     ToggleField,
 } from "../../sdk/AuroraTypes";
@@ -16,5 +18,8 @@ export type OptionProps = {
     left: (props: ListItemComponentProps) => React.ReactNode;
     disabled: boolean;
     field: ToggleField | SliderField | CheckBoxField | TimeField | LedEffectField | BuzzSongField;
-    onValueChange: () => void;
+    value?: unknown;
+    onValueChange: (value: unknown) => void;
+    onPreviewEffectPress?: (value: StimLedValue) => void;
+    onPreviewSongPress?: (value: SongValue) => void;
 };

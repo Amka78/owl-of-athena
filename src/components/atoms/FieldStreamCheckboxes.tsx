@@ -9,18 +9,20 @@ import { LabeledCheckBox } from "../molecules/LabeledCheckBox";
 
 //#region Types
 export type FieldStreamCheckBoxesProps = {
-    value?: number;
+    value?: number | number[] | string;
     field: CheckBoxField;
     disabled: boolean;
-    onValueChange: () => void;
+    onValueChange: (value: number[]) => void;
     style?: StyleProp<ViewStyle>;
 };
 //#endregion
 
 //#region Component
 export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps> = (
-    _props: FieldStreamCheckBoxesProps,
+    props: FieldStreamCheckBoxesProps,
 ) => {
+    const selected = toStreamIds(props.value);
+
     return (
         <View
             style={{
@@ -31,18 +33,49 @@ export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps
             }}
         >
             {streamOptions.map((value: { label: string; value: number }) => {
+                const checked = selected.includes(value.value);
+
                 return (
                     <LabeledCheckBox
                         key={value.label}
                         label={value.label}
                         labelStyle={{ color: Colors.white }}
                         labelPlace={"right"}
-                        status={"checked"}
+                        status={checked ? "checked" : "unchecked"}
+                        onPress={
+                            props.disabled
+                                ? undefined
+                                : (): void => {
+                                      props.onValueChange(
+                                          checked
+                                              ? selected.filter((id) => id !== value.value)
+                                              : [...selected, value.value],
+                                      );
+                                  }
+                        }
                     ></LabeledCheckBox>
                 );
             })}
         </View>
     );
+};
+
+const toStreamIds = (value: FieldStreamCheckBoxesProps["value"]): number[] => {
+    if (Array.isArray(value)) {
+        return value.map(Number).filter((id) => !Number.isNaN(id));
+    }
+
+    let mask: number | undefined;
+
+    if (typeof value === "number") {
+        mask = value;
+    } else if (typeof value === "string" && value.length > 0) {
+        mask = value.toLowerCase().startsWith("0x") ? parseInt(value, 16) : parseInt(value, 10);
+    }
+
+    if (mask === undefined || Number.isNaN(mask)) return [];
+
+    return streamOptions.map((option) => option.value).filter((id) => (mask! & (1 << id)) !== 0);
 };
 
 const streamOptions: { label: string; value: number }[] = [

@@ -3,22 +3,39 @@
 exports[`FieldSlider UnitTest renders correctly 1`] = `
 {
   "$$typeof": Symbol(react.test.json),
-  "children": null,
-  "props": {
-    "disabled": false,
-    "field": {
-      "format": "minutes",
-      "max": 60,
-      "min": 0,
-      "step": 5,
-      "type": "slider",
+  "children": [
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": null,
+      "props": {
+        "disabled": false,
+        "maximumValue": 60,
+        "minimumValue": 0,
+        "onValueChange": [class Function],
+        "step": 5,
+        "value": 30,
+      },
+      "type": "Slider",
     },
-    "maximumValue": 60,
-    "minimumValue": 0,
-    "onValueChange": [class Function],
-    "step": 5,
-    "value": 30,
+    {
+      "$$typeof": Symbol(react.test.json),
+      "children": [
+        "30 min",
+      ],
+      "props": {
+        "style": {
+          "color": "#ffffff",
+          "fontSize": 12,
+          "marginTop": -4,
+          "textAlign": "center",
+        },
+      },
+      "type": "Text",
+    },
+  ],
+  "props": {
+    "style": undefined,
   },
-  "type": "Slider",
+  "type": "View",
 }
 `;

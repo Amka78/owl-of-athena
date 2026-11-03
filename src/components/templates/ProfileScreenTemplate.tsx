@@ -5,10 +5,10 @@ import { Dimens } from "../../constants";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import type { AuroraProfile } from "../../sdk/AuroraTypes";
-import type { GroupedProfileOptionList } from "../../services/ProfileService";
+import type { AuroraProfile, SongValue, StimLedValue } from "../../sdk/AuroraTypes";
+import type { GroupedProfileOptionList, ProfileOptionValues } from "../../services/ProfileService";
 import { StandardView } from "../atoms";
-import { ProfileEditDialog } from "../molecules";
+import { ProfileEditDialog } from "../molecules/ProfileEditDialog";
 import { ProfileMenu } from "../organisms/profiles/ProfileMenu";
 import { ProfileOptionList } from "../organisms/profiles/ProfileOptionList";
 import { ProfileSecondMenu } from "../organisms/profiles/ProfileSecondMenu";
@@ -33,6 +33,12 @@ export type ProfileScreenTemplateProps = {
         onShowAdvancedOptionsPress: () => void;
     };
     grouedOptionList: GroupedProfileOptionList;
+    optionValues?: ProfileOptionValues;
+    optionValuesKey?: number;
+    showAdvancedOptions?: boolean;
+    onOptionValueChange?: (optionName: string, value: unknown) => void;
+    onPreviewEffectPress?: (value: StimLedValue) => void;
+    onPreviewSongPress?: (value: SongValue) => void;
     dimens: Dimensions;
     locale?: string;
 };
@@ -68,6 +74,7 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                 {...props.profileSecondMenu}
                 auroraConnected={props.auroraConnected}
                 selectedProfileHasUnsavedChanges={props.selectedProfileHasUnSavedChanges}
+                showAdvancedOptions={props.showAdvancedOptions ?? false}
                 dimens={props.dimens}
                 style={{
                     width: screenDimens.width,
@@ -75,7 +82,12 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                 }}
             ></ProfileSecondMenu>
             <ProfileOptionList
+                key={`${props.selectedProfile.id}-${props.optionValuesKey ?? 0}`}
                 groupedOptionList={props.grouedOptionList}
+                optionValues={props.optionValues ?? {}}
+                onValueChange={props.onOptionValueChange}
+                onPreviewEffectPress={props.onPreviewEffectPress}
+                onPreviewSongPress={props.onPreviewSongPress}
                 style={{ width: screenDimens.width }}
             ></ProfileOptionList>
             <ProfileEditDialog />

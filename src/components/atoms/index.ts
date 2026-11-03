@@ -11,6 +11,7 @@ import { ContentTitle } from "./ContentTitle";
 import { DeleteIcon } from "./DeleteIcon";
 import { EditIcon } from "./EditIcon";
 import { ErrorText } from "./ErrorText";
+import { FieldBuzzSong } from "./FieldBuzzSong";
 import { FieldLedEffect } from "./FieldLedEffect";
 import { FieldSlider } from "./FieldSlider";
 import { FieldStreamCheckBoxes } from "./FieldStreamCheckboxes";
@@ -56,6 +57,7 @@ export {
     DeleteIcon,
     EditIcon,
     ErrorText,
+    FieldBuzzSong,
     FieldLedEffect,
     FieldSlider,
     FieldStreamCheckBoxes,

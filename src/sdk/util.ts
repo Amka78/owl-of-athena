@@ -123,7 +123,7 @@ const stringToVersion = (versionString: string): number => {
 
     if (version.length != 3) return 0;
 
-    return parseInt(version[0]) * 10000 + parseInt(version[1]) * 100 + parseInt(version[2]);
+    return parseInt(version[0], 10) * 10000 + parseInt(version[1], 10) * 100 + parseInt(version[2], 10);
 };
 
 const buzzSongObjToCmd = (songObj: any): any => {
@@ -132,19 +132,19 @@ const buzzSongObjToCmd = (songObj: any): any => {
 
     if (!song) throw new Error("Song field is required.");
 
-    repeat = parseInt(repeat);
+    repeat = parseInt(repeat, 10);
 
     if (isNaN(repeat)) {
         repeat = 0;
     }
 
-    volume = parseInt(volume);
+    volume = parseInt(volume, 10);
     volume = isNaN(volume) ? 100 : Math.min(100, Math.max(0, volume));
 
     tempoAdjust = parseFloat(tempoAdjust);
     tempoAdjust = isNaN(tempoAdjust) ? 1 : Math.min(2.5, Math.max(0.25, tempoAdjust));
 
-    pitchAdjust = parseInt(pitchAdjust);
+    pitchAdjust = parseInt(pitchAdjust, 10);
     pitchAdjust = isNaN(pitchAdjust) ? 0 : Math.min(12, Math.max(-12, pitchAdjust));
 
     return `buzz-song ${song} ${repeat} ${volume} ${tempoAdjust} ${pitchAdjust}`;
@@ -157,13 +157,7 @@ const ledEffectObjToCmd = (effectObj: any): any => {
         throw new Error("Invalid effect specified.");
     }
 
-    // @ts-expect-error
-    const [eyes, state1Eyes, state2Eyes] = [
-        "eyes",
-        "state1Eyes",
-        "state2Eyes",
-        // @ts-expect-error
-    ].map((option) => {
+    const [eyes, state1Eyes, state2Eyes] = ["eyes", "state1Eyes", "state2Eyes"].map((option) => {
         const eyesOption = effectObj[option];
 
         if (typeof eyesOption == "string") {
@@ -177,16 +171,13 @@ const ledEffectObjToCmd = (effectObj: any): any => {
                 case "none":
                     return "0x00";
 
-                case "both":
                 default:
                     return "0x03";
             }
         }
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const eye = parseInt(eyesOption);
+        const eye = parseInt(eyesOption, 10);
 
-        return isNaN(eyes) || eyes < 0 || eyes > 3 ? 3 : eyes;
+        return isNaN(eye) || eye < 0 || eye > 3 ? 3 : eye;
     });
 
     const [brightness, state1Brightness, state2Brightness] = [
@@ -195,7 +186,7 @@ const ledEffectObjToCmd = (effectObj: any): any => {
         "state2Brightness",
     ].map((option) => {
         const brightnessOption = effectObj[option];
-        const brightness = parseInt(brightnessOption);
+        const brightness = parseInt(brightnessOption, 10);
 
         if (isNaN(brightness) || brightness > 255 || brightness < 0) {
             return "0xFF";
@@ -215,13 +206,13 @@ const ledEffectObjToCmd = (effectObj: any): any => {
                 return "0x000000";
             }
 
-            let color = LedColors.find((c) => c.name == colorOption);
-            color = !color ? colorOption : color.value;
-            // @ts-expect-error
-            color = color.replace("#", "0x");
+            const matchedColor = LedColors.find((c) => c.name == colorOption);
+            const rawColor = matchedColor ? matchedColor.value : String(colorOption);
+            const hexColor = rawColor.replace("#", "0x");
 
-            // @ts-expect-error
-            return isNaN(parseInt(color)) ? "0x000000" : color.toUpperCase();
+            return isNaN(parseInt(hexColor, 16))
+                ? "0x000000"
+                : `0x${hexColor.replace(/^0X/i, "").toUpperCase()}`;
         },
     );
 
@@ -240,7 +231,7 @@ const ledEffectObjToCmd = (effectObj: any): any => {
         return Math.round(duration * 1000);
     });
 
-    let shutoffDelay = parseInt(effectObj.shutoffDelay);
+    let shutoffDelay = parseInt(effectObj.shutoffDelay, 10);
     shutoffDelay = isNaN(shutoffDelay) ? 0 : Math.round(shutoffDelay * 1000);
 
     switch (effect.name) {
@@ -249,7 +240,7 @@ const ledEffectObjToCmd = (effectObj: any): any => {
 
         case "blink": {
             // eslint-disable-next-line no-case-declarations
-            let blinkCount = parseInt(effectObj.blinkCount);
+            let blinkCount = parseInt(effectObj.blinkCount, 10);
             blinkCount = isNaN(blinkCount) ? 1 : blinkCount;
             // eslint-disable-next-line no-case-declarations
             let blinkRate = parseFloat(effectObj.blinkRate);
@@ -259,7 +250,7 @@ const ledEffectObjToCmd = (effectObj: any): any => {
 
         case "alternate": {
             // eslint-disable-next-line no-case-declarations
-            let alternateCount = parseInt(effectObj.alternateCount);
+            let alternateCount = parseInt(effectObj.alternateCount, 10);
             alternateCount = isNaN(alternateCount) ? 1 : alternateCount;
             return `${effect.cmd} ${state1Eyes} ${state1Color} ${state1Brightness} ${state1Duration} ${state2Eyes} ${state2Color} ${state2Brightness} ${state2Duration} ${alternateCount} ${shutoffDelay}`;
         }
