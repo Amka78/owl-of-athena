@@ -160,6 +160,13 @@ export const MessageKeys = {
     session_detail_show_stim_events: "session_detail_show_stim_events",
     session_detail_show_awakening_events: "session_detail_show_awakening_events",
     session_detail_show_button_events: "session_detail_show_button_events",
+    session_export_button: "session_export_button",
+    session_export_title: "session_export_title",
+    session_export_json: "session_export_json",
+    session_export_csv: "session_export_csv",
+    profile_export_button: "profile_export_button",
+    profile_export_title: "profile_export_title",
+    export_failed: "export_failed",
     //#endregion
 
     //#region AccountScreen

@@ -175,6 +175,13 @@ export default {
     [MessageKeys.session_detail_show_stim_events]: "REM刺激を表示",
     [MessageKeys.session_detail_show_awakening_events]: "覚醒を表示",
     [MessageKeys.session_detail_show_button_events]: "ボタン押下を表示",
+    [MessageKeys.session_export_button]: "セッションをエクスポート",
+    [MessageKeys.session_export_title]: "Aurora セッションデータ",
+    [MessageKeys.session_export_json]: "JSONを共有",
+    [MessageKeys.session_export_csv]: "CSVを共有",
+    [MessageKeys.profile_export_button]: "プロフィールをエクスポート",
+    [MessageKeys.profile_export_title]: "Aurora プロフィール",
+    [MessageKeys.export_failed]: "データのエクスポートに失敗しました。",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
     [MessageKeys.account_input_first_name]: input_first_name,

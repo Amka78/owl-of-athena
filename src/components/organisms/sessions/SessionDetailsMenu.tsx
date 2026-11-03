@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { Switch } from "react-native-paper";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
+import { FlatButton } from "../../atoms/FlatButton";
 import { MenuContainer } from "../../atoms/MenuContainer";
 //#endregion
 
@@ -19,6 +20,8 @@ export type SessionDetailsMenuProps = {
     onStimEventsToggle: () => void;
     onAwakeningEventsToggle: () => void;
     onButtonEventsToggle: () => void;
+    onExportJsonPress: () => void;
+    onExportCsvPress: () => void;
     containerStyle?: ViewStyle;
 };
 //#endregion
@@ -82,6 +85,14 @@ export const SessionDetailsMenu: FunctionComponent<SessionDetailsMenuProps> = (
                     ></Switch>
                 </View>
             ))}
+            <View style={styles.exportRow}>
+                <FlatButton onPress={props.onExportJsonPress}>
+                    {Message.get(MessageKeys.session_export_json)}
+                </FlatButton>
+                <FlatButton onPress={props.onExportCsvPress}>
+                    {Message.get(MessageKeys.session_export_csv)}
+                </FlatButton>
+            </View>
         </MenuContainer>
     );
 };
@@ -109,6 +120,13 @@ const styles = StyleSheet.create({
     },
     disabled: {
         color: Colors.gray,
+    },
+    exportRow: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 6,
     },
 });
 //#endregion

@@ -37,6 +37,7 @@ export type SessionScreenTemplateProps = {
     sessionDetailsMenu: Omit<SessionDetailsMenuProps, "containerStyle">;
     showSettings: boolean;
     onSettingsPress: () => void;
+    onExportPress: () => void;
     sessionChartPie: Pick<SessionChartPieProps, "session">;
     sleepDurationLabel: TemplateTimeViewProps;
     remDurationLabel: TemplateTimeViewProps;
@@ -130,6 +131,13 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     style={{ marginLeft: Dimens.session_margin_left }}
                 ></IconButton>
                 <FlexSpacer></FlexSpacer>
+                <IconButton
+                    icon={"share-variant"}
+                    size={28}
+                    iconColor={Colors.white}
+                    accessibilityLabel={Message.get(MessageKeys.session_export_button)}
+                    onPress={props.onExportPress}
+                ></IconButton>
                 <IconButton
                     icon={"cog"}
                     size={28}

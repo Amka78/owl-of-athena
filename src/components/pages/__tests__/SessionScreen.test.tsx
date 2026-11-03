@@ -26,11 +26,13 @@ jest.mock("../../../hooks/sessions/useSession", () => ({
         showAwakeningEvents: false,
         showButtonEvents: false,
         onSettingsPress: jest.fn(),
+        onExportPress: jest.fn(),
         onFilterToggle: jest.fn(),
         onTimelineToggle: jest.fn(),
         onStimEventsToggle: jest.fn(),
         onAwakeningEventsToggle: jest.fn(),
         onButtonEventsToggle: jest.fn(),
+        onExportCsvPress: jest.fn(),
     }),
 }));
 

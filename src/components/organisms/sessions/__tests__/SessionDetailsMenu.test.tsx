@@ -19,6 +19,8 @@ const defaultProps = {
     onStimEventsToggle: jest.fn(),
     onAwakeningEventsToggle: jest.fn(),
     onButtonEventsToggle: jest.fn(),
+    onExportJsonPress: jest.fn(),
+    onExportCsvPress: jest.fn(),
 };
 
 describe("SessionDetailsMenu", () => {
@@ -59,5 +61,22 @@ describe("SessionDetailsMenu", () => {
 
         fireEvent(getByTestId("session-details-filter-data"), "valueChange", false);
         expect(onFilterToggle).toHaveBeenCalledTimes(1);
+    });
+
+    it("offers JSON and CSV exports", () => {
+        const onExportJsonPress = jest.fn();
+        const onExportCsvPress = jest.fn();
+        const { getByText } = renderWithProvider(
+            <SessionDetailsMenu
+                {...defaultProps}
+                onExportJsonPress={onExportJsonPress}
+                onExportCsvPress={onExportCsvPress}
+            ></SessionDetailsMenu>,
+        );
+
+        fireEvent.press(getByText("Share JSON"));
+        fireEvent.press(getByText("Share CSV"));
+        expect(onExportJsonPress).toHaveBeenCalledTimes(1);
+        expect(onExportCsvPress).toHaveBeenCalledTimes(1);
     });
 });

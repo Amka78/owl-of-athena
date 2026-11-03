@@ -51,6 +51,7 @@ export const SessionScreen: FunctionComponent = () => {
             hasSleepData={sessionHook.hasSleepData}
             showSettings={sessionHook.showSettings}
             onSettingsPress={sessionHook.onSettingsPress}
+            onExportPress={sessionHook.onExportPress}
             sessionDetailsMenu={{
                 isFilterEnabled: sessionHook.isFilterEnabled,
                 showTimeline: sessionHook.showTimeline,
@@ -62,6 +63,8 @@ export const SessionScreen: FunctionComponent = () => {
                 onStimEventsToggle: sessionHook.onStimEventsToggle,
                 onAwakeningEventsToggle: sessionHook.onAwakeningEventsToggle,
                 onButtonEventsToggle: sessionHook.onButtonEventsToggle,
+                onExportJsonPress: sessionHook.onExportPress,
+                onExportCsvPress: sessionHook.onExportCsvPress,
             }}
             sessionChartPie={{
                 session: sessionHook.selectedSession,

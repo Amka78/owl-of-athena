@@ -1,8 +1,9 @@
 //#region Inport modules
 import React, { type FunctionComponent } from "react";
-import { TextInput, type TextStyle, type ViewStyle } from "react-native";
+import { TextInput, type TextStyle, View, type ViewStyle } from "react-native";
+import { IconButton } from "react-native-paper";
 
-import { Colors } from "../../constants";
+import { Colors, Message, MessageKeys } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
 import { StandardView } from "../atoms";
 //#endregion
@@ -10,6 +11,7 @@ import { StandardView } from "../atoms";
 //#region Types
 export type ProfilePreviewTemplateProps = {
     content: string;
+    onExportPress: () => void;
 };
 //#endregion
 
@@ -20,6 +22,15 @@ export const ProfilePreviewScreenTemplate: FunctionComponent<ProfilePreviewTempl
     const screenDimens = useScreenDimensions();
     return (
         <StandardView standardViewStyle={profilePreviewView} onLayout={screenDimens.onLayout}>
+            <View style={[toolbarStyle, { width: screenDimens.width }]}>
+                <IconButton
+                    icon={"share-variant"}
+                    size={24}
+                    iconColor={Colors.white}
+                    accessibilityLabel={Message.get(MessageKeys.profile_export_button)}
+                    onPress={props.onExportPress}
+                ></IconButton>
+            </View>
             <TextInput
                 value={props.content}
                 style={[defaultTextareaStyle, { width: screenDimens.width }]}
@@ -32,6 +43,11 @@ export const ProfilePreviewScreenTemplate: FunctionComponent<ProfilePreviewTempl
 
 //#region Style
 const profilePreviewView: ViewStyle = { marginLeft: 0, marginRight: 0 };
+const toolbarStyle: ViewStyle = {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+};
 const defaultTextareaStyle: TextStyle = {
     color: Colors.white,
     flex: 1,

@@ -7,7 +7,12 @@ import { ProfilePreviewScreenTemplate } from "../templates/ProfilePreviewScreenT
 
 //#region Component
 export const ProfilePreviewScreen: FunctionComponent = () => {
-    const { content } = useProfilePreview();
-    return <ProfilePreviewScreenTemplate content={content}></ProfilePreviewScreenTemplate>;
+    const { content, onExportPress } = useProfilePreview();
+    return (
+        <ProfilePreviewScreenTemplate
+            content={content}
+            onExportPress={onExportPress}
+        ></ProfilePreviewScreenTemplate>
+    );
 };
 //#endregion

@@ -1,9 +1,16 @@
 //#region Import Modules
 import moment, { type Moment } from "moment";
 import { useCallback, useState } from "react";
+import { ConfirmDialog } from "../../components/molecules/ConfirmDialog";
+import { Message, MessageKeys } from "../../constants";
 import type { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
+import {
+    buildSessionEventsCsv,
+    buildSessionExportJson,
+    shareText,
+} from "../../services/ExportService";
 import type { CurrentChart } from "../../types/CurrentChart";
-import { useCheckLogging } from "..";
+import { useCheckLogging } from "../useCheckLogging";
 import { useSelectedSessionDetailSelector, useSelectedSessionSelector } from "./";
 
 //#endregion
@@ -41,6 +48,8 @@ export const useSession = (): {
     onStimEventsToggle: () => void;
     onAwakeningEventsToggle: () => void;
     onButtonEventsToggle: () => void;
+    onExportPress: () => Promise<void>;
+    onExportCsvPress: () => Promise<void>;
 } => {
     useCheckLogging();
     const selectedSession = useSelectedSessionSelector()!;
@@ -100,6 +109,34 @@ export const useSession = (): {
         setShowButtonEvents((value) => !value);
     }, []);
 
+    const exportSession = useCallback(
+        async (format: "json" | "csv"): Promise<void> => {
+            if (!selectedSession) return;
+
+            try {
+                await shareText(
+                    Message.get(MessageKeys.session_export_title),
+                    format === "json"
+                        ? buildSessionExportJson(selectedSession, selectedSessionDetail)
+                        : buildSessionEventsCsv(selectedSession, selectedSessionDetail),
+                );
+            } catch (error) {
+                console.debug("session export failed:", error);
+                ConfirmDialog.show({
+                    title: Message.get(MessageKeys.session_export_title),
+                    message: Message.get(MessageKeys.export_failed),
+                });
+            }
+        },
+        [selectedSession, selectedSessionDetail],
+    );
+
+    const onExportPress = useCallback((): Promise<void> => exportSession("json"), [exportSession]);
+    const onExportCsvPress = useCallback(
+        (): Promise<void> => exportSession("csv"),
+        [exportSession],
+    );
+
     return {
         selectedSession,
         selectedSessionDetail,
@@ -125,6 +162,8 @@ export const useSession = (): {
         onStimEventsToggle,
         onAwakeningEventsToggle,
         onButtonEventsToggle,
+        onExportPress,
+        onExportCsvPress,
     };
 };
 //#endregion

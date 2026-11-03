@@ -41,6 +41,7 @@ const defaultProps = {
     hasSleepData: true,
     showSettings: false,
     onSettingsPress: jest.fn(),
+    onExportPress: jest.fn(),
     sessionDetailsMenu: {
         isFilterEnabled: true,
         showTimeline: true,
@@ -52,6 +53,8 @@ const defaultProps = {
         onStimEventsToggle: jest.fn(),
         onAwakeningEventsToggle: jest.fn(),
         onButtonEventsToggle: jest.fn(),
+        onExportJsonPress: jest.fn(),
+        onExportCsvPress: jest.fn(),
     },
     sessionChartPie: {
         session: null as unknown as AuroraSession,
