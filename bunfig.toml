@@ -8,3 +8,5 @@ timeout = 30000
 
 [loader]
 ".ttf" = "text"
+".m4a" = "file"
+".wav" = "file"

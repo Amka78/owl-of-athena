@@ -445,7 +445,11 @@ mock.module("expo-constants", () => {
         expoConfig: {
             name: "owl-of-athena",
             slug: "owl-of-athena",
-            extra: { channel: undefined as string | undefined },
+            extra: {
+                channel: undefined as string | undefined,
+                supabaseUrl: "https://test.supabase.co",
+                supabaseAnonKey: "test-anon-key",
+            },
         },
         manifest: null,
         manifest2: null,
@@ -847,4 +851,57 @@ mock.module("@react-navigation/native-stack", () => ({
         Group: makeHost("NativeStackGroup"),
     }),
 }));
+
+// ---------------------------------------------------------------------------
+// @react-native-async-storage/async-storage
+// Supabase auth と zustand persist が web 版の window.localStorage を
+// 参照してテスト環境で落ちるため、メモリ実装に差し替える。
+// ---------------------------------------------------------------------------
+mock.module("@react-native-async-storage/async-storage", () => {
+    const storage = new Map<string, string>();
+    const AsyncStorage = {
+        getItem: async (key: string) => storage.get(key) ?? null,
+        setItem: async (key: string, value: string) => {
+            storage.set(key, value);
+        },
+        removeItem: async (key: string) => {
+            storage.delete(key);
+        },
+        mergeItem: async (key: string, value: string) => {
+            storage.set(key, value);
+        },
+        clear: async () => {
+            storage.clear();
+        },
+        getAllKeys: async () => Array.from(storage.keys()),
+        multiGet: async (keys: string[]) => keys.map((key) => [key, storage.get(key) ?? null]),
+        multiSet: async (pairs: [string, string][]) => {
+            for (const [key, value] of pairs) storage.set(key, value);
+        },
+        multiRemove: async (keys: string[]) => {
+            for (const key of keys) storage.delete(key);
+        },
+        multiMerge: async (pairs: [string, string][]) => {
+            for (const [key, value] of pairs) storage.set(key, value);
+        },
+        flushGetRequests: () => {},
+    };
+
+    return {
+        default: AsyncStorage,
+        ...AsyncStorage,
+        useAsyncStorage: (key: string) => ({
+            getItem: async () => storage.get(key) ?? null,
+            setItem: async (value: string) => {
+                storage.set(key, value);
+            },
+            removeItem: async () => {
+                storage.delete(key);
+            },
+            mergeItem: async (value: string) => {
+                storage.set(key, value);
+            },
+        }),
+    };
+});
 
