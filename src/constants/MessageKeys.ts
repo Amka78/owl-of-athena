@@ -154,6 +154,12 @@ export const MessageKeys = {
     session_rem_pie_chart_label: "session_rem_pie_chart_label",
     session_awake_pie_chart_label: "session_awake_pie_chart_label",
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
+    session_no_sleep_data: "session_no_sleep_data",
+    session_detail_filter_data: "session_detail_filter_data",
+    session_detail_show_timeline: "session_detail_show_timeline",
+    session_detail_show_stim_events: "session_detail_show_stim_events",
+    session_detail_show_awakening_events: "session_detail_show_awakening_events",
+    session_detail_show_button_events: "session_detail_show_button_events",
     //#endregion
 
     //#region AccountScreen

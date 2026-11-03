@@ -6,9 +6,17 @@ import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions, useWindowDimensions } from "../../hooks";
 import type { CurrentChart } from "../../types/CurrentChart";
 import { SessionChartPie, SessionSleepChart } from "..";
-import { FlexSpacer, StandardView } from "../atoms";
+import { ContentText, FlexSpacer, StandardView } from "../atoms";
 import { ChartRadialProgress, type ChartRadialProgressProps } from "../charts/ChartRadialProgress";
+import {
+    SessionTimelineChart,
+    type SessionTimelineChartProps,
+} from "../charts/SessionTimelineChart";
 import { SessionTimeView } from "../molecules";
+import {
+    SessionDetailsMenu,
+    type SessionDetailsMenuProps,
+} from "../organisms/sessions/SessionDetailsMenu";
 import type { SessionChartPieProps } from "../SessionChartPie";
 import type { SessionSleepChartProps } from "../SessionSleepChart";
 import type { TemplateTimeViewProps } from "./TempatedProps";
@@ -23,6 +31,12 @@ export type SessionScreenTemplateProps = {
     rightSelectButton: { onPress: () => void };
     currentChart: CurrentChart;
     sessionSleepChart: Omit<SessionSleepChartProps, "width" | "height">;
+    sessionTimeline: Omit<SessionTimelineChartProps, "width" | "height">;
+    showTimeline: boolean;
+    hasSleepData: boolean;
+    sessionDetailsMenu: Omit<SessionDetailsMenuProps, "containerStyle">;
+    showSettings: boolean;
+    onSettingsPress: () => void;
     sessionChartPie: Pick<SessionChartPieProps, "session">;
     sleepDurationLabel: TemplateTimeViewProps;
     remDurationLabel: TemplateTimeViewProps;
@@ -63,6 +77,16 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
     const chartPieCategoryPadding = dimens.isDesktop
         ? Dimens.session_chart_pie_category_label_padding_desktop
         : Dimens.session_chart_pie_category_label_padding_mobile;
+
+    const contentWidth =
+        screenDimens.width - (Dimens.session_margin_left + Dimens.session_margin_right);
+    const contentHeight = screenDimens.height / 2;
+    const timelineHeight = dimens.isDesktop ? 110 : 90;
+    const canShowTimeline = props.showTimeline && props.hasSleepData && contentHeight >= 260;
+    const sleepChartHeight = canShowTimeline
+        ? Math.max(contentHeight - timelineHeight, 160)
+        : contentHeight;
+
     return (
         <StandardView
             standardViewStyle={{
@@ -107,6 +131,12 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                 ></IconButton>
                 <FlexSpacer></FlexSpacer>
                 <IconButton
+                    icon={"cog"}
+                    size={28}
+                    iconColor={Colors.white}
+                    onPress={props.onSettingsPress}
+                ></IconButton>
+                <IconButton
                     {...props.rightSelectButton}
                     icon={"chevron-right"}
                     size={40}
@@ -114,27 +144,40 @@ export const SessionScreenTemplate: FunctionComponent<SessionScreenTemplateProps
                     style={{ marginRight: Dimens.session_margin_right }}
                 ></IconButton>
             </View>
+            {props.showSettings && (
+                <SessionDetailsMenu
+                    {...props.sessionDetailsMenu}
+                    containerStyle={{ width: screenDimens.width }}
+                ></SessionDetailsMenu>
+            )}
             <View style={[styles.sessionContent]}>
-                {props.currentChart === "SleepChart" ? (
-                    <SessionSleepChart
-                        {...props.sessionSleepChart}
-                        height={screenDimens.height / 2}
-                        width={
-                            screenDimens.width -
-                            (Dimens.session_margin_left + Dimens.session_margin_right)
-                        }
-                    ></SessionSleepChart>
+                {!props.hasSleepData ? (
+                    <ContentText>{Message.get(MessageKeys.session_no_sleep_data)}</ContentText>
+                ) : props.currentChart === "SleepChart" ? (
+                    <View>
+                        <View style={{ width: contentWidth, height: sleepChartHeight }}>
+                            <SessionSleepChart
+                                {...props.sessionSleepChart}
+                                height={sleepChartHeight}
+                                width={contentWidth}
+                            ></SessionSleepChart>
+                        </View>
+                        {canShowTimeline && (
+                            <SessionTimelineChart
+                                {...props.sessionTimeline}
+                                height={timelineHeight}
+                                width={contentWidth}
+                            ></SessionTimelineChart>
+                        )}
+                    </View>
                 ) : (
                     <SessionChartPie
                         {...props.sessionChartPie}
                         categoryLabelSize={categoryLabelSize}
                         categoryLabelPadding={chartPieCategoryPadding}
                         percentLabelSize={percentLabelSize}
-                        height={screenDimens.height / 2}
-                        width={
-                            screenDimens.width -
-                            (Dimens.session_margin_left + Dimens.session_margin_right)
-                        }
+                        height={contentHeight}
+                        width={contentWidth}
                         outerRadius={chartPieOuterRadius}
                         innerRadius={chartPieInnerRadius}
                     ></SessionChartPie>

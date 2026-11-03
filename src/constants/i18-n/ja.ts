@@ -169,6 +169,12 @@ export default {
     [MessageKeys.session_movement_label]: "ムーブメント",
     [MessageKeys.session_notes_label]: "ノート",
     [MessageKeys.session_notes_hint_text]: "タップして、ノートを追加します。",
+    [MessageKeys.session_no_sleep_data]: "睡眠データがありません",
+    [MessageKeys.session_detail_filter_data]: "データを間引く",
+    [MessageKeys.session_detail_show_timeline]: "タイムラインを表示",
+    [MessageKeys.session_detail_show_stim_events]: "REM刺激を表示",
+    [MessageKeys.session_detail_show_awakening_events]: "覚醒を表示",
+    [MessageKeys.session_detail_show_button_events]: "ボタン押下を表示",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
     [MessageKeys.account_input_first_name]: input_first_name,

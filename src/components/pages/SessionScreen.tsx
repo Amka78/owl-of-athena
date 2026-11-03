@@ -34,7 +34,34 @@ export const SessionScreen: FunctionComponent = () => {
                 scaleXDomain: sessionHook.scaleXDomain,
                 sessionDetail: sessionHook.selectedSessionDetail!,
                 totalSleepHour: sessionHook.sleepDuration!.hours,
-                isFilterEnabled: false,
+                isFilterEnabled: sessionHook.isFilterEnabled,
+            }}
+            sessionTimeline={{
+                scaleXDomain: sessionHook.scaleXDomain,
+                asleepAt: sessionHook.selectedSession.asleepAt,
+                awakeAt: sessionHook.selectedSession.awakeAt,
+                stimEvents: sessionHook.selectedSessionDetail?.stimEvents ?? [],
+                awakeningEvents: sessionHook.selectedSessionDetail?.awakeningEvents ?? [],
+                buttonEvents: sessionHook.selectedSessionDetail?.buttonEvents ?? [],
+                showStimEvents: sessionHook.showStimEvents,
+                showAwakeningEvents: sessionHook.showAwakeningEvents,
+                showButtonEvents: sessionHook.showButtonEvents,
+            }}
+            showTimeline={sessionHook.showTimeline}
+            hasSleepData={sessionHook.hasSleepData}
+            showSettings={sessionHook.showSettings}
+            onSettingsPress={sessionHook.onSettingsPress}
+            sessionDetailsMenu={{
+                isFilterEnabled: sessionHook.isFilterEnabled,
+                showTimeline: sessionHook.showTimeline,
+                showStimEvents: sessionHook.showStimEvents,
+                showAwakeningEvents: sessionHook.showAwakeningEvents,
+                showButtonEvents: sessionHook.showButtonEvents,
+                onFilterToggle: sessionHook.onFilterToggle,
+                onTimelineToggle: sessionHook.onTimelineToggle,
+                onStimEventsToggle: sessionHook.onStimEventsToggle,
+                onAwakeningEventsToggle: sessionHook.onAwakeningEventsToggle,
+                onButtonEventsToggle: sessionHook.onButtonEventsToggle,
             }}
             sessionChartPie={{
                 session: sessionHook.selectedSession,

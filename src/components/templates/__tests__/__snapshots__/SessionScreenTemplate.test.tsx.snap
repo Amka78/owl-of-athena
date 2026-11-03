@@ -400,6 +400,109 @@ exports[`SessionScreenTemplate renders correctly with en-US locale 1`] = `
                                       },
                                       {
                                         "color": "#ffffff",
+                                        "fontSize": 28,
+                                      },
+                                    ],
+                                    "testID": undefined,
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityComponentType": "button",
+                                "accessibilityLabel": undefined,
+                                "accessibilityRole": "button",
+                                "accessibilityState": {
+                                  "disabled": undefined,
+                                },
+                                "accessibilityTraits": "button",
+                                "accessible": true,
+                                "centered": true,
+                                "disabled": false,
+                                "hitSlop": {
+                                  "bottom": 6,
+                                  "left": 6,
+                                  "right": 6,
+                                  "top": 6,
+                                },
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": "icon-button",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "backgroundColor": "transparent",
+                              "borderColor": "rgba(121, 116, 126, 1)",
+                              "borderRadius": 22,
+                              "borderWidth": 0,
+                              "elevation": 0,
+                              "flex": 1,
+                              "overflow": "hidden",
+                              "shadowColor": "#000",
+                              "shadowOffset": {
+                                "height": 0,
+                                "width": 0,
+                              },
+                              "shadowOpacity": 0,
+                              "shadowRadius": 0,
+                            },
+                            "testID": "icon-button-container",
+                          },
+                          "type": "Animated.View",
+                        },
+                      ],
+                      "props": {
+                        "ref": null,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderRadius": 22,
+                          "height": 44,
+                          "margin": 6,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": 0,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0,
+                          "shadowRadius": 0,
+                          "width": 44,
+                        },
+                        "testID": "icon-button-container-outer-layer",
+                      },
+                      "type": "Animated.View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "□",
+                                  ],
+                                  "props": {
+                                    "accessibilityElementsHidden": true,
+                                    "allowFontScaling": undefined,
+                                    "importantForAccessibility": "no-hide-descendants",
+                                    "pointerEvents": "none",
+                                    "selectable": false,
+                                    "style": [
+                                      {
+                                        "backgroundColor": "transparent",
+                                      },
+                                      {
+                                        "color": "#ffffff",
                                         "fontSize": 40,
                                       },
                                     ],
@@ -497,12 +600,31 @@ exports[`SessionScreenTemplate renders correctly with en-US locale 1`] = `
                   "children": [
                     {
                       "$$typeof": Symbol(react.test.json),
-                      "children": null,
-                      "props": {
-                        "style": {
-                          "position": "absolute",
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "style": {
+                                  "position": "absolute",
+                                },
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "height": 0,
+                              "width": -60,
+                            },
+                          },
+                          "type": "View",
                         },
-                      },
+                      ],
+                      "props": {},
                       "type": "View",
                     },
                   ],
@@ -1201,6 +1323,109 @@ exports[`SessionScreenTemplate renders correctly with ja-JP locale 1`] = `
                                       },
                                       {
                                         "color": "#ffffff",
+                                        "fontSize": 28,
+                                      },
+                                    ],
+                                    "testID": undefined,
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "accessibilityComponentType": "button",
+                                "accessibilityLabel": undefined,
+                                "accessibilityRole": "button",
+                                "accessibilityState": {
+                                  "disabled": undefined,
+                                },
+                                "accessibilityTraits": "button",
+                                "accessible": true,
+                                "centered": true,
+                                "disabled": false,
+                                "hitSlop": {
+                                  "bottom": 6,
+                                  "left": 6,
+                                  "right": 6,
+                                  "top": 6,
+                                },
+                                "onPress": [class Function],
+                                "onPressIn": [Function],
+                                "onPressOut": [Function],
+                                "ref": null,
+                                "style": [Function],
+                                "testID": "icon-button",
+                              },
+                              "type": "Pressable",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "backgroundColor": "transparent",
+                              "borderColor": "rgba(121, 116, 126, 1)",
+                              "borderRadius": 22,
+                              "borderWidth": 0,
+                              "elevation": 0,
+                              "flex": 1,
+                              "overflow": "hidden",
+                              "shadowColor": "#000",
+                              "shadowOffset": {
+                                "height": 0,
+                                "width": 0,
+                              },
+                              "shadowOpacity": 0,
+                              "shadowRadius": 0,
+                            },
+                            "testID": "icon-button-container",
+                          },
+                          "type": "Animated.View",
+                        },
+                      ],
+                      "props": {
+                        "ref": null,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderRadius": 22,
+                          "height": 44,
+                          "margin": 6,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": 0,
+                            "width": 0,
+                          },
+                          "shadowOpacity": 0,
+                          "shadowRadius": 0,
+                          "width": 44,
+                        },
+                        "testID": "icon-button-container-outer-layer",
+                      },
+                      "type": "Animated.View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "□",
+                                  ],
+                                  "props": {
+                                    "accessibilityElementsHidden": true,
+                                    "allowFontScaling": undefined,
+                                    "importantForAccessibility": "no-hide-descendants",
+                                    "pointerEvents": "none",
+                                    "selectable": false,
+                                    "style": [
+                                      {
+                                        "backgroundColor": "transparent",
+                                      },
+                                      {
+                                        "color": "#ffffff",
                                         "fontSize": 40,
                                       },
                                     ],
@@ -1298,12 +1523,31 @@ exports[`SessionScreenTemplate renders correctly with ja-JP locale 1`] = `
                   "children": [
                     {
                       "$$typeof": Symbol(react.test.json),
-                      "children": null,
-                      "props": {
-                        "style": {
-                          "position": "absolute",
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": null,
+                              "props": {
+                                "style": {
+                                  "position": "absolute",
+                                },
+                              },
+                              "type": "View",
+                            },
+                          ],
+                          "props": {
+                            "style": {
+                              "height": 0,
+                              "width": -60,
+                            },
+                          },
+                          "type": "View",
                         },
-                      },
+                      ],
+                      "props": {},
                       "type": "View",
                     },
                   ],

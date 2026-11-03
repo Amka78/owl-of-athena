@@ -28,12 +28,31 @@ export const useSession = (): {
     chartSelectButtonPress: () => void;
     currentChart: CurrentChart;
     scaleXDomain: number[];
+    hasSleepData: boolean;
+    showSettings: boolean;
+    isFilterEnabled: boolean;
+    showTimeline: boolean;
+    showStimEvents: boolean;
+    showAwakeningEvents: boolean;
+    showButtonEvents: boolean;
+    onSettingsPress: () => void;
+    onFilterToggle: () => void;
+    onTimelineToggle: () => void;
+    onStimEventsToggle: () => void;
+    onAwakeningEventsToggle: () => void;
+    onButtonEventsToggle: () => void;
 } => {
     useCheckLogging();
     const selectedSession = useSelectedSessionSelector()!;
     const selectedSessionDetail = useSelectedSessionDetailSelector();
 
     const [currentChart, setCurrentChart] = useState<CurrentChart>("PieChart");
+    const [showSettings, setShowSettings] = useState(false);
+    const [isFilterEnabled, setIsFilterEnabled] = useState(true);
+    const [showTimeline, setShowTimeline] = useState(true);
+    const [showStimEvents, setShowStimEvents] = useState(true);
+    const [showAwakeningEvents, setShowAwakeningEvents] = useState(false);
+    const [showButtonEvents, setShowButtonEvents] = useState(false);
 
     let asleepAt: Moment | undefined;
     let awakeAt: Moment | undefined;
@@ -62,6 +81,25 @@ export const useSession = (): {
         currentChart === "SleepChart" ? setCurrentChart("PieChart") : setCurrentChart("SleepChart");
     }, [currentChart]);
 
+    const onSettingsPress = useCallback((): void => {
+        setShowSettings((value) => !value);
+    }, []);
+    const onFilterToggle = useCallback((): void => {
+        setIsFilterEnabled((value) => !value);
+    }, []);
+    const onTimelineToggle = useCallback((): void => {
+        setShowTimeline((value) => !value);
+    }, []);
+    const onStimEventsToggle = useCallback((): void => {
+        setShowStimEvents((value) => !value);
+    }, []);
+    const onAwakeningEventsToggle = useCallback((): void => {
+        setShowAwakeningEvents((value) => !value);
+    }, []);
+    const onButtonEventsToggle = useCallback((): void => {
+        setShowButtonEvents((value) => !value);
+    }, []);
+
     return {
         selectedSession,
         selectedSessionDetail,
@@ -74,6 +112,19 @@ export const useSession = (): {
         chartSelectButtonPress,
         currentChart,
         scaleXDomain: scaleXDomain ?? [],
+        hasSleepData: !!selectedSessionDetail?.sleepEvents?.length,
+        showSettings,
+        isFilterEnabled,
+        showTimeline,
+        showStimEvents,
+        showAwakeningEvents,
+        showButtonEvents,
+        onSettingsPress,
+        onFilterToggle,
+        onTimelineToggle,
+        onStimEventsToggle,
+        onAwakeningEventsToggle,
+        onButtonEventsToggle,
     };
 };
 //#endregion
