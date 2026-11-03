@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { type FunctionComponent, useState } from "react";
+import React, { type FunctionComponent } from "react";
 import { FlatList, StyleSheet, Switch, Text, View } from "react-native";
 import { Colors } from "../../constants";
 import { useCheckLogging } from "../../hooks";
@@ -10,20 +10,15 @@ import type { Role } from "../../types/Role";
 //#region Component
 export const AccountRolesScreen: FunctionComponent = () => {
     useCheckLogging();
-    const { user } = useAuthStore();
+    const { user, inactiveRoles, setInactiveRoles } = useAuthStore();
     const roles: Role[] = user?.roles ?? [];
-    const [inactiveRoles, setInactiveRoles] = useState<Set<string>>(new Set());
 
-    const toggleRole = (id: string) => {
-        setInactiveRoles((prev) => {
-            const next = new Set(prev);
-            if (next.has(id)) {
-                next.delete(id);
-            } else {
-                next.add(id);
-            }
-            return next;
-        });
+    const toggleRole = (slug: string) => {
+        setInactiveRoles(
+            inactiveRoles.includes(slug)
+                ? inactiveRoles.filter((role) => role !== slug)
+                : [...inactiveRoles, slug],
+        );
     };
 
     return (
@@ -32,7 +27,7 @@ export const AccountRolesScreen: FunctionComponent = () => {
                 data={roles}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => {
-                    const isActive = !inactiveRoles.has(item.id);
+                    const isActive = !inactiveRoles.includes(item.slug);
                     return (
                         <View style={styles.row}>
                             <Text style={styles.title}>{item.title}</Text>
@@ -43,7 +38,7 @@ export const AccountRolesScreen: FunctionComponent = () => {
                             </Text>
                             <Switch
                                 value={isActive}
-                                onValueChange={() => toggleRole(item.id)}
+                                onValueChange={() => toggleRole(item.slug)}
                                 trackColor={{ false: Colors.blue, true: Colors.first_accent_color }}
                                 thumbColor={isActive ? Colors.cyan : Colors.white}
                             />

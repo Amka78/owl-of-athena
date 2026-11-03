@@ -29,15 +29,65 @@ CREATE TABLE public.users (
     last_name TEXT,
     birthday TEXT,
     gender TEXT,
+    -- 例: [{"id":"admin","slug":"admin","title":"Admin"}]
+    roles JSONB NOT NULL DEFAULT '[]'::jsonb,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
 
+-- 管理画面用。SECURITY DEFINER で RLS を迂回して判定する。
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+    SELECT EXISTS (
+        SELECT 1
+        FROM public.users
+        WHERE id = auth.uid()
+          AND roles @> '[{"slug":"admin"}]'::jsonb
+    );
+$$;
+
+-- 一般ユーザーが自分の roles を admin に書き換えられないようにする。
+-- auth.uid() が NULL の service_role からの更新は許可する。
+CREATE OR REPLACE FUNCTION public.prevent_role_self_assignment()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        IF auth.uid() IS NOT NULL AND NOT public.is_admin() THEN
+            NEW.roles := '[]'::jsonb;
+        END IF;
+        RETURN NEW;
+    END IF;
+
+    IF auth.uid() IS NOT NULL
+       AND NEW.roles IS DISTINCT FROM OLD.roles
+       AND NOT public.is_admin() THEN
+        NEW.roles := OLD.roles;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER users_protect_roles
+    BEFORE INSERT OR UPDATE ON public.users
+    FOR EACH ROW EXECUTE FUNCTION public.prevent_role_self_assignment();
+
 -- ユーザープロフィール: 自分のデータのみ読み取り・更新可能
 CREATE POLICY "Users can read their own profile" ON public.users
     FOR SELECT USING (auth.uid() = id);
+
+CREATE POLICY "Admins can read all users" ON public.users
+    FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "Users can update their own profile" ON public.users
     FOR UPDATE USING (auth.uid() = id);
@@ -106,6 +156,9 @@ ALTER TABLE public.aurora_sessions ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can read their own sessions" ON public.aurora_sessions
     FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Admins can read all sessions" ON public.aurora_sessions
+    FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "Users can create their own sessions" ON public.aurora_sessions
     FOR INSERT WITH CHECK (auth.uid() = user_id);
@@ -187,6 +240,9 @@ ALTER TABLE public.questionnaire_respondents ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can read their own responses" ON public.questionnaire_respondents
     FOR SELECT USING (auth.uid() = user_id OR user_id IS NULL);
 
+CREATE POLICY "Admins can read all responses" ON public.questionnaire_respondents
+    FOR SELECT USING (public.is_admin());
+
 CREATE POLICY "Users can create responses" ON public.questionnaire_respondents
     FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
 
@@ -213,6 +269,9 @@ ALTER TABLE public.user_messages ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can read their own messages" ON public.user_messages
     FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Admins can read all user messages" ON public.user_messages
+    FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "System can insert messages for users" ON public.user_messages
     FOR INSERT WITH CHECK (TRUE);
@@ -268,6 +327,9 @@ CREATE POLICY "Authenticated users can create issues" ON public.issues
 CREATE POLICY "Users can read all issues" ON public.issues
     FOR SELECT USING (TRUE);
 
+CREATE POLICY "Admins can update all issues" ON public.issues
+    FOR UPDATE USING (public.is_admin());
+
 CREATE POLICY "Users can update their own issues" ON public.issues
     FOR UPDATE USING (auth.uid() = user_id OR user_id IS NULL);
 
@@ -289,6 +351,9 @@ ALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Users can read their own orders" ON public.orders
     FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Admins can read all orders" ON public.orders
+    FOR SELECT USING (public.is_admin());
 
 CREATE POLICY "Users can create their own orders" ON public.orders
     FOR INSERT WITH CHECK (auth.uid() = user_id);

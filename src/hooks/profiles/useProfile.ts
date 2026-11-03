@@ -41,7 +41,7 @@ export const useProfile = () => {
         syncSelectedProfileOptions,
         toggleAdvancedOptions,
     } = useProfileStore();
-    const { user } = useAuthStore();
+    const { user, inactiveRoles } = useAuthStore();
     const dimens = useWindowDimensions();
     const [auroraConnected, setAuroraConnected] = useState(AuroraManagerInstance.isConnected());
     const [optionValuesKey, setOptionValuesKey] = useState(0);
@@ -65,7 +65,13 @@ export const useProfile = () => {
         }
     }, [selected, optionValuesProfileId, syncSelectedProfileOptions]);
 
-    const roleSlugs = useMemo(() => (user?.roles ?? []).map((role) => role.slug), [user?.roles]);
+    const roleSlugs = useMemo(
+        () =>
+            (user?.roles ?? [])
+                .filter((role) => !inactiveRoles.includes(role.slug))
+                .map((role) => role.slug),
+        [inactiveRoles, user?.roles],
+    );
 
     const groupedOptionList = useMemo(() => {
         if (!selected) return [];
