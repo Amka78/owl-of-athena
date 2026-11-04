@@ -13,6 +13,7 @@ export type FlatButtonProps = {
     labelStyle?: TextStyle;
     contentStyle?: ViewStyle;
     onPress?: () => void;
+    disabled?: boolean;
 };
 //#endregion
 
@@ -22,6 +23,7 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (props: FlatButton
     return (
         <PaperButton
             onPress={props.onPress}
+            disabled={props.disabled}
             mode={"text"}
             labelStyle={[labelStyle, { color: theme?.colors.onSurface }, props.labelStyle]}
             contentStyle={[contentStyle, props.contentStyle]}

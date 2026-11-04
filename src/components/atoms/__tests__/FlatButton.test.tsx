@@ -26,5 +26,16 @@ describe("FlatButton UnitTest", () => {
         fireEvent.press(getByText("Test Button"));
         expect(onPress).toHaveBeenCalledTimes(1);
     });
+
+    it("marks the button as disabled", () => {
+        const onPress = jest.fn();
+        const { UNSAFE_getByProps } = renderWithProvider(
+            <FlatButton onPress={onPress} disabled>
+                Test Button
+            </FlatButton>,
+        );
+
+        expect(UNSAFE_getByProps({ disabled: true })).toBeTruthy();
+    });
 });
 //#endregion
