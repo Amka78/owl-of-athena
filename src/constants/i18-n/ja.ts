@@ -376,6 +376,25 @@ export default {
     [MessageKeys.about_os_label]: "OS",
     [MessageKeys.about_repository_label]: "リポジトリ",
 
+    // device maintenance
+    [MessageKeys.device_section_title]: "Auroraデバイス",
+    [MessageKeys.device_sd_format_button]: "SDカードをフォーマット",
+    [MessageKeys.device_reset_button]: "Auroraをリセット",
+    [MessageKeys.device_sd_format_confirm_title]: "SDカードをフォーマットしますか?",
+    [MessageKeys.device_sd_format_confirm_message]:
+        "Aurora内のセッションはすべて削除されます。未転送のセッションがある場合は先に転送してください。",
+    [MessageKeys.device_reset_confirm_title]: "Auroraをリセットしますか?",
+    [MessageKeys.device_reset_confirm_message]:
+        "Auroraの設定と保存データが初期化され、再起動します。",
+    [MessageKeys.device_sd_format_in_progress]: "SDカードをフォーマット中...",
+    [MessageKeys.device_reset_in_progress]: "Auroraをリセット中...",
+    [MessageKeys.device_operation_complete_title]: "完了",
+    [MessageKeys.device_sd_format_success]: "SDカードをフォーマットしました。",
+    [MessageKeys.device_reset_success]: "Auroraをリセットしました。再起動後に再接続してください。",
+    [MessageKeys.device_operation_failed_title]: "操作に失敗しました",
+    [MessageKeys.device_operation_failed_message]: "操作に失敗しました: {0}",
+    [MessageKeys.device_not_connected]: "Auroraに接続すると使用できます。",
+
     // messages screen
     [MessageKeys.messages_mark_as_read]: "既読にする",
     [MessageKeys.messages_read_label]: "既読",

@@ -1865,6 +1865,135 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                   },
                   "type": "TouchableOpacity",
                 },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Aurora device",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#bcfeff",
+                          "fontSize": 13,
+                          "marginBottom": 6,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Format SD card",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#00ffe6",
+                                  "fontSize": 14,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "disabled": true,
+                            "onPress": [class Function],
+                            "style": [
+                              {
+                                "borderColor": "#00ffe6",
+                                "borderRadius": 4,
+                                "borderWidth": 1,
+                                "paddingHorizontal": 16,
+                                "paddingVertical": 8,
+                              },
+                              {
+                                "opacity": 0.4,
+                              },
+                            ],
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                "Reset Aurora",
+                              ],
+                              "props": {
+                                "style": {
+                                  "color": "#00ffe6",
+                                  "fontSize": 14,
+                                },
+                              },
+                              "type": "Text",
+                            },
+                          ],
+                          "props": {
+                            "accessible": true,
+                            "disabled": true,
+                            "onPress": [class Function],
+                            "style": [
+                              {
+                                "borderColor": "#00ffe6",
+                                "borderRadius": 4,
+                                "borderWidth": 1,
+                                "paddingHorizontal": 16,
+                                "paddingVertical": 8,
+                              },
+                              {
+                                "opacity": 0.4,
+                              },
+                            ],
+                          },
+                          "type": "TouchableOpacity",
+                        },
+                      ],
+                      "props": {
+                        "style": {
+                          "flexDirection": "row",
+                          "flexWrap": "wrap",
+                          "gap": 8,
+                        },
+                      },
+                      "type": "View",
+                    },
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "Connect to Aurora to use this.",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#ffffff",
+                          "fontSize": 11,
+                          "marginTop": 6,
+                          "opacity": 0.6,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "style": {
+                      "borderTopColor": "#001438",
+                      "borderTopWidth": 1,
+                      "marginTop": 8,
+                      "paddingTop": 8,
+                      "width": "100%",
+                    },
+                  },
+                  "type": "View",
+                },
               ],
               "props": {
                 "style": {

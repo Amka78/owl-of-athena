@@ -380,6 +380,25 @@ export default {
     [MessageKeys.about_os_label]: "OS",
     [MessageKeys.about_repository_label]: "Repository",
 
+    // device maintenance
+    [MessageKeys.device_section_title]: "Aurora device",
+    [MessageKeys.device_sd_format_button]: "Format SD card",
+    [MessageKeys.device_reset_button]: "Reset Aurora",
+    [MessageKeys.device_sd_format_confirm_title]: "Format the SD card?",
+    [MessageKeys.device_sd_format_confirm_message]:
+        "All sessions on Aurora will be deleted. Transfer any unsynced sessions first.",
+    [MessageKeys.device_reset_confirm_title]: "Reset Aurora?",
+    [MessageKeys.device_reset_confirm_message]:
+        "Aurora settings and stored data will be reset, and the device will restart.",
+    [MessageKeys.device_sd_format_in_progress]: "Formatting the SD card...",
+    [MessageKeys.device_reset_in_progress]: "Resetting Aurora...",
+    [MessageKeys.device_operation_complete_title]: "Complete",
+    [MessageKeys.device_sd_format_success]: "The SD card was formatted.",
+    [MessageKeys.device_reset_success]: "Aurora was reset. Reconnect after it restarts.",
+    [MessageKeys.device_operation_failed_title]: "Operation failed",
+    [MessageKeys.device_operation_failed_message]: "Operation failed: {0}",
+    [MessageKeys.device_not_connected]: "Connect to Aurora to use this.",
+
     // messages screen
     [MessageKeys.messages_mark_as_read]: "Mark as Read",
     [MessageKeys.messages_read_label]: "Read",

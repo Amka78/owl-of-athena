@@ -1,12 +1,17 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
+import { useDeviceMaintenance } from "../../../hooks/useDeviceMaintenance";
 import { useAuthStore } from "../../../store/authStore";
 import { useMessageStore } from "../../../store/messageStore";
 import type { User, UserMessage } from "../../../types";
 import { AccountScreen } from "../AccountScreen";
+
+jest.mock("../../../hooks/useDeviceMaintenance", () => ({
+    useDeviceMaintenance: jest.fn(),
+}));
 
 jest.mock("../../../hooks/useAccount", () => ({
     useAcount: () => ({
@@ -58,8 +63,17 @@ jest.mock("../../../hooks", () => ({
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
+const mockDeviceMaintenance = useDeviceMaintenance as jest.Mock;
+const disconnectedDevice = {
+    connected: false,
+    busy: false,
+    onFormatSdCardPress: jest.fn(),
+    onResetDevicePress: jest.fn(),
+};
+
 describe("AccountScreen UnitTest", () => {
     beforeEach(() => {
+        mockDeviceMaintenance.mockReturnValue(disconnectedDevice);
         useMessageStore.setState({
             messages: [],
             loaded: true,
@@ -128,5 +142,22 @@ describe("AccountScreen UnitTest", () => {
         const { getByTestId } = renderWithProvider(<AccountScreen />);
 
         expect(getByTestId("unread-message-badge-text").props.children).toBe("2");
+    });
+
+    it("wires the device maintenance buttons when connected", () => {
+        const onFormatSdCardPress = jest.fn();
+        mockDeviceMaintenance.mockReturnValue({
+            connected: true,
+            busy: false,
+            onFormatSdCardPress,
+            onResetDevicePress: jest.fn(),
+        });
+
+        const { getByText, queryByText } = renderWithProvider(<AccountScreen />);
+
+        fireEvent.press(getByText("Format SD card"));
+
+        expect(onFormatSdCardPress).toHaveBeenCalledTimes(1);
+        expect(queryByText("Connect to Aurora to use this.")).toBeNull();
     });
 });

@@ -383,6 +383,25 @@ export default {
     [MessageKeys.about_os_label]: "SO",
     [MessageKeys.about_repository_label]: "Repositório",
 
+    // device maintenance
+    [MessageKeys.device_section_title]: "Dispositivo Aurora",
+    [MessageKeys.device_sd_format_button]: "Formatar cartão SD",
+    [MessageKeys.device_reset_button]: "Redefinir Aurora",
+    [MessageKeys.device_sd_format_confirm_title]: "Formatar o cartão SD?",
+    [MessageKeys.device_sd_format_confirm_message]:
+        "Todas as sessões no Aurora serão excluídas. Transfira as sessões não sincronizadas primeiro.",
+    [MessageKeys.device_reset_confirm_title]: "Redefinir o Aurora?",
+    [MessageKeys.device_reset_confirm_message]:
+        "As configurações e os dados armazenados no Aurora serão redefinidos e o dispositivo reiniciará.",
+    [MessageKeys.device_sd_format_in_progress]: "Formatando o cartão SD...",
+    [MessageKeys.device_reset_in_progress]: "Redefinindo o Aurora...",
+    [MessageKeys.device_operation_complete_title]: "Concluído",
+    [MessageKeys.device_sd_format_success]: "O cartão SD foi formatado.",
+    [MessageKeys.device_reset_success]: "O Aurora foi redefinido. Reconecte após reiniciar.",
+    [MessageKeys.device_operation_failed_title]: "Falha na operação",
+    [MessageKeys.device_operation_failed_message]: "Falha na operação: {0}",
+    [MessageKeys.device_not_connected]: "Conecte-se ao Aurora para usar.",
+
     // messages screen
     [MessageKeys.messages_mark_as_read]: "Marcar como Lida",
     [MessageKeys.messages_read_label]: "Lida",

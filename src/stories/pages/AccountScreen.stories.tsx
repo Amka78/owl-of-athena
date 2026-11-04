@@ -22,6 +22,19 @@ jest.mock("../../hooks/useAccount", () => ({
     }),
 }));
 
+jest.mock("../../hooks/useUnreadMessageCount", () => ({
+    useUnreadMessageCount: () => 2,
+}));
+
+jest.mock("../../hooks/useDeviceMaintenance", () => ({
+    useDeviceMaintenance: () => ({
+        connected: true,
+        busy: false,
+        onFormatSdCardPress: jest.fn(),
+        onResetDevicePress: jest.fn(),
+    }),
+}));
+
 jest.mock("../../hooks", () => ({
     useWindowDimensions: () => ({
         width: 375,

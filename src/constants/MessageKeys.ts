@@ -402,6 +402,24 @@ export const MessageKeys = {
     about_repository_label: "about_repository_label",
     //#endregion
 
+    //#region Device maintenance
+    device_section_title: "device_section_title",
+    device_sd_format_button: "device_sd_format_button",
+    device_reset_button: "device_reset_button",
+    device_sd_format_confirm_title: "device_sd_format_confirm_title",
+    device_sd_format_confirm_message: "device_sd_format_confirm_message",
+    device_reset_confirm_title: "device_reset_confirm_title",
+    device_reset_confirm_message: "device_reset_confirm_message",
+    device_sd_format_in_progress: "device_sd_format_in_progress",
+    device_reset_in_progress: "device_reset_in_progress",
+    device_operation_complete_title: "device_operation_complete_title",
+    device_sd_format_success: "device_sd_format_success",
+    device_reset_success: "device_reset_success",
+    device_operation_failed_title: "device_operation_failed_title",
+    device_operation_failed_message: "device_operation_failed_message",
+    device_not_connected: "device_not_connected",
+    //#endregion
+
     //#region Messages screen
     messages_mark_as_read: "messages_mark_as_read",
     messages_read_label: "messages_read_label",

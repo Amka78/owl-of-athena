@@ -4,6 +4,7 @@ import React, { type FunctionComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useAcount, useWindowDimensions } from "../../hooks";
+import { useDeviceMaintenance } from "../../hooks/useDeviceMaintenance";
 import { useUnreadMessageCount } from "../../hooks/useUnreadMessageCount";
 import { useAuthStore } from "../../store/authStore";
 import { IssueReportDialog } from "../molecules/IssueReportDialog";
@@ -19,6 +20,7 @@ export const AccountScreen: FunctionComponent = () => {
     const hasRoles = (user?.roles?.length ?? 0) > 0;
     const isAdmin = user?.roles?.some((role) => role.slug === "admin") ?? false;
     const unreadCount = useUnreadMessageCount();
+    const deviceMaintenance = useDeviceMaintenance();
 
     return (
         <View style={styles.container}>
@@ -126,6 +128,44 @@ export const AccountScreen: FunctionComponent = () => {
                         {Message.get(MessageKeys.about_title)}
                     </Text>
                 </TouchableOpacity>
+                <View style={styles.deviceSection}>
+                    <Text style={styles.deviceSectionTitle}>
+                        {Message.get(MessageKeys.device_section_title)}
+                    </Text>
+                    <View style={styles.deviceButtons}>
+                        <TouchableOpacity
+                            style={[
+                                styles.navButton,
+                                (!deviceMaintenance.connected || deviceMaintenance.busy) &&
+                                    styles.navButtonDisabled,
+                            ]}
+                            disabled={!deviceMaintenance.connected || deviceMaintenance.busy}
+                            onPress={deviceMaintenance.onFormatSdCardPress}
+                        >
+                            <Text style={styles.navButtonText}>
+                                {Message.get(MessageKeys.device_sd_format_button)}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                styles.navButton,
+                                (!deviceMaintenance.connected || deviceMaintenance.busy) &&
+                                    styles.navButtonDisabled,
+                            ]}
+                            disabled={!deviceMaintenance.connected || deviceMaintenance.busy}
+                            onPress={deviceMaintenance.onResetDevicePress}
+                        >
+                            <Text style={styles.navButtonText}>
+                                {Message.get(MessageKeys.device_reset_button)}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {!deviceMaintenance.connected ? (
+                        <Text style={styles.deviceHint}>
+                            {Message.get(MessageKeys.device_not_connected)}
+                        </Text>
+                    ) : null}
+                </View>
             </View>
         </View>
     );
@@ -151,6 +191,17 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     navButtonText: { color: Colors.first_accent_color, fontSize: 14 },
+    navButtonDisabled: { opacity: 0.4 },
+    deviceSection: {
+        width: "100%",
+        marginTop: 8,
+        paddingTop: 8,
+        borderTopWidth: 1,
+        borderTopColor: Colors.blue,
+    },
+    deviceSectionTitle: { color: Colors.cyan, fontSize: 13, marginBottom: 6 },
+    deviceButtons: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+    deviceHint: { color: Colors.white, opacity: 0.6, fontSize: 11, marginTop: 6 },
     navButtonContent: { flexDirection: "row", alignItems: "center", gap: 6 },
     unreadBadge: {
         minWidth: 18,
