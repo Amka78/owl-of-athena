@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { Questionnaire, QuestionnaireRespondent, QuestionResponse } from "../types";
 import QuestionnaireService from "../services/QuestionnaireService";
+import type { Questionnaire, QuestionnaireRespondent, QuestionResponse } from "../types";
 
 type QuestionnaireStore = {
     questionnaire?: Questionnaire;
@@ -11,12 +11,27 @@ type QuestionnaireStore = {
     onCompleteCallback?: () => void;
 
     loadQuestionnaire: (questionnaireId: string) => Promise<void>;
-    startQuestionnaire: (questionnaireId: string, onComplete?: () => void) => Promise<QuestionnaireRespondent>;
-    resumeQuestionnaire: (respondentId: string, onComplete?: () => void) => Promise<QuestionnaireRespondent>;
+    startQuestionnaire: (
+        questionnaireId: string,
+        onComplete?: () => void,
+    ) => Promise<QuestionnaireRespondent>;
+    resumeQuestionnaire: (
+        respondentId: string,
+        onComplete?: () => void,
+    ) => Promise<QuestionnaireRespondent>;
     stopQuestionnaire: () => void;
     setResponse: (response: QuestionResponse[]) => void;
     saveResponse: () => Promise<void>;
     revisitPrevious: () => Promise<void>;
+};
+
+const mergeResponses = (
+    existing: QuestionResponse[],
+    current: QuestionResponse[],
+    questionId?: string,
+): QuestionResponse[] => {
+    if (!questionId) return current;
+    return [...existing.filter((response) => response.question_id !== questionId), ...current];
 };
 
 export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => ({
@@ -40,12 +55,21 @@ export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => 
     startQuestionnaire: async (questionnaireId: string, onComplete?: () => void) => {
         set({ loading: true, error: undefined });
         try {
-            const questionnaire = get().questionnaire?.id === questionnaireId
-                ? get().questionnaire!
-                : await QuestionnaireService.getById(questionnaireId);
-            const respondent = await QuestionnaireService.startQuestionnaire(questionnaireId);
-            const response = respondent.current_question ? [] : [];
-            set({ questionnaire, respondent, response, loading: false, onCompleteCallback: onComplete });
+            const questionnaire =
+                get().questionnaire?.id === questionnaireId
+                    ? get().questionnaire!
+                    : await QuestionnaireService.getById(questionnaireId);
+            const respondent = await QuestionnaireService.startQuestionnaire(
+                questionnaireId,
+                questionnaire.questions ?? [],
+            );
+            set({
+                questionnaire,
+                respondent,
+                response: [],
+                loading: false,
+                onCompleteCallback: onComplete,
+            });
             return respondent;
         } catch (e: any) {
             set({ loading: false, error: e?.message ?? "Failed to start questionnaire" });
@@ -58,8 +82,20 @@ export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => 
         try {
             const respondent = await QuestionnaireService.resumeQuestionnaire(respondentId);
             const questionnaire = await QuestionnaireService.getById(respondent.questionnaire_id);
-            set({ questionnaire, respondent, loading: false, onCompleteCallback: onComplete });
-            return respondent;
+            const questions = questionnaire.questions ?? [];
+            const index = respondent.current_question_index ?? 0;
+            const resumed: QuestionnaireRespondent =
+                !respondent.current_question && !respondent.completed_at
+                    ? { ...respondent, current_question: questions[index] }
+                    : respondent;
+            set({
+                questionnaire,
+                respondent: resumed,
+                response: [],
+                loading: false,
+                onCompleteCallback: onComplete,
+            });
+            return resumed;
         } catch (e: any) {
             set({ loading: false, error: e?.message ?? "Failed to resume questionnaire" });
             throw e;
@@ -67,7 +103,12 @@ export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => 
     },
 
     stopQuestionnaire: () => {
-        set({ questionnaire: undefined, respondent: undefined, response: [], onCompleteCallback: undefined });
+        set({
+            questionnaire: undefined,
+            respondent: undefined,
+            response: [],
+            onCompleteCallback: undefined,
+        });
     },
 
     setResponse: (response: QuestionResponse[]) => {
@@ -75,22 +116,40 @@ export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => 
     },
 
     saveResponse: async () => {
-        const { respondent, response, onCompleteCallback } = get();
-        if (!respondent) return;
-        const updated = await QuestionnaireService.saveUserResponse(respondent.id, response);
-        set({ respondent: updated });
-        if (updated.completed_at && onCompleteCallback) {
-            onCompleteCallback();
-        }
+        const { respondent, response, questionnaire, onCompleteCallback } = get();
+        if (!respondent || !questionnaire) return;
+
+        const questions = questionnaire.questions ?? [];
+        const index = respondent.current_question_index ?? 0;
+        const merged = mergeResponses(
+            respondent.response ?? [],
+            response,
+            respondent.current_question?.id,
+        );
+        const nextIndex = index + 1;
+        const nextQuestion = questions[nextIndex];
+        const completed = !nextQuestion;
+
+        const updated = await QuestionnaireService.saveUserResponse(
+            respondent.id,
+            merged,
+            nextIndex,
+            nextQuestion,
+            completed,
+        );
+        set({ respondent: updated, response: [] });
+        if (completed && onCompleteCallback) onCompleteCallback();
     },
 
     revisitPrevious: async () => {
-        const { respondent } = get();
-        if (!respondent?.previous_question_id) return;
-        const updated = await QuestionnaireService.revisitQuestion(
-            respondent.id,
-            respondent.previous_question_id,
-        );
-        set({ respondent: updated });
+        const { respondent, questionnaire } = get();
+        if (!respondent || !questionnaire) return;
+
+        const index = (respondent.current_question_index ?? 0) - 1;
+        if (index < 0) return;
+
+        const question = questionnaire.questions?.[index];
+        const updated = await QuestionnaireService.revisitQuestion(respondent.id, index, question);
+        set({ respondent: updated, response: [] });
     },
 }));

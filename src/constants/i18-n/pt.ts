@@ -416,6 +416,7 @@ export default {
     [MessageKeys.questionnaire_close_button]: "Fechar",
     [MessageKeys.questionnaire_loading]: "Carregando questionário...",
     [MessageKeys.questionnaire_error]: "Falha ao carregar o questionário.",
+    [MessageKeys.questionnaire_text_placeholder]: "Digite sua resposta",
 
     // change password screen
     [MessageKeys.change_password_title]: "Alterar Senha",

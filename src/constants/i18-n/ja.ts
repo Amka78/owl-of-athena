@@ -409,6 +409,7 @@ export default {
     [MessageKeys.questionnaire_close_button]: "閉じる",
     [MessageKeys.questionnaire_loading]: "アンケートを読み込み中...",
     [MessageKeys.questionnaire_error]: "アンケートの読み込みに失敗しました。",
+    [MessageKeys.questionnaire_text_placeholder]: "回答を入力",
 
     // change password screen
     [MessageKeys.change_password_title]: "パスワード変更",

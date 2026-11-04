@@ -1,11 +1,17 @@
 //#region Import Modules
 import React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Dialog, RadioButton } from "react-native-paper";
+import { ActivityIndicator, Checkbox, Dialog, RadioButton } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
-import type { Question, QuestionChoice, QuestionResponse, Questionnaire, QuestionnaireRespondent } from "../../types";
 import { useQuestionnaireStore } from "../../store/questionnaireStore";
-import { ContentText, ContentTitle, FlatButton } from "../atoms";
+import type {
+    Question,
+    QuestionChoice,
+    Questionnaire,
+    QuestionnaireRespondent,
+    QuestionResponse,
+} from "../../types";
+import { ContentText, ContentTitle, FlatButton, TextBox } from "../atoms";
 
 //#endregion
 
@@ -21,6 +27,14 @@ type QuestionnaireDialogState = {
     settings?: QuestionnaireDialogSettings;
 };
 //#endregion
+
+const hasResponse = (question: Question | undefined, response: QuestionResponse[]): boolean => {
+    if (!question) return false;
+    if (question.type === "text") {
+        return (response[0]?.response_text ?? "").trim().length > 0;
+    }
+    return response.length > 0;
+};
 
 //#region Component
 export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialogState> {
@@ -67,9 +81,13 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
                     {questionnaire?.intro_title ?? "Questionnaire"}
                 </Dialog.Title>
                 <Dialog.ScrollArea style={styles.scrollArea}>
-                    <ScrollView>{this.renderContent(questionnaire, respondent, loading, error)}</ScrollView>
+                    <ScrollView>
+                        {this.renderContent(questionnaire, respondent, loading, error)}
+                    </ScrollView>
                 </Dialog.ScrollArea>
-                <Dialog.Actions>{this.renderActions(questionnaire, respondent, loading)}</Dialog.Actions>
+                <Dialog.Actions>
+                    {this.renderActions(questionnaire, respondent, loading)}
+                </Dialog.Actions>
             </Dialog>
         );
     }
@@ -94,8 +112,13 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
         if (respondent?.completed_at && questionnaire) {
             return (
                 <View style={styles.section}>
-                    <ContentTitle style={styles.sectionTitle}>{questionnaire.outro_title ?? Message.get(MessageKeys.questionnaire_complete_title)}</ContentTitle>
-                    {questionnaire.outro_text ? <ContentText>{questionnaire.outro_text}</ContentText> : null}
+                    <ContentTitle style={styles.sectionTitle}>
+                        {questionnaire.outro_title ??
+                            Message.get(MessageKeys.questionnaire_complete_title)}
+                    </ContentTitle>
+                    {questionnaire.outro_text ? (
+                        <ContentText>{questionnaire.outro_text}</ContentText>
+                    ) : null}
                 </View>
             );
         }
@@ -105,8 +128,14 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
         if (questionnaire && !respondent?.id) {
             return (
                 <View style={styles.section}>
-                    {questionnaire.intro_subtitle ? <ContentText style={styles.subtitle}>{questionnaire.intro_subtitle}</ContentText> : null}
-                    {questionnaire.intro_text ? <ContentText>{questionnaire.intro_text}</ContentText> : null}
+                    {questionnaire.intro_subtitle ? (
+                        <ContentText style={styles.subtitle}>
+                            {questionnaire.intro_subtitle}
+                        </ContentText>
+                    ) : null}
+                    {questionnaire.intro_text ? (
+                        <ContentText>{questionnaire.intro_text}</ContentText>
+                    ) : null}
                 </View>
             );
         }
@@ -115,27 +144,72 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
 
     private renderQuestion(question: Question): React.ReactNode {
         const { response, setResponse } = useQuestionnaireStore.getState();
+
+        const selectRadio = (choiceId: string): void => {
+            setResponse([{ question_id: question.id, question_choice_id: choiceId }]);
+        };
+
+        const toggleChoice = (choiceId: string): void => {
+            const selected = response.some((r) => r.question_choice_id === choiceId);
+            const others = response.filter((r) => r.question_choice_id !== choiceId);
+            setResponse(
+                selected
+                    ? others
+                    : [...others, { question_id: question.id, question_choice_id: choiceId }],
+            );
+        };
+
         return (
             <View style={styles.section}>
                 <ContentText style={styles.questionText}>{question.text}</ContentText>
-                {question.type === "radio" && question.choices?.map((choice: QuestionChoice) => {
-                    const selected = response.some((r) => r.question_choice_id === choice.id);
-                    return (
-                        <TouchableOpacity
-                            key={choice.id}
-                            style={styles.choiceRow}
-                            onPress={() => setResponse([{ question_id: question.id, question_choice_id: choice.id }])}
-                        >
-                            <RadioButton
-                                value={choice.id}
-                                status={selected ? "checked" : "unchecked"}
-                                color={Colors.cyan}
-                                onPress={() => setResponse([{ question_id: question.id, question_choice_id: choice.id }])}
-                            />
-                            <ContentText>{choice.label}</ContentText>
-                        </TouchableOpacity>
-                    );
-                })}
+                {question.type === "radio" &&
+                    question.choices?.map((choice: QuestionChoice) => {
+                        const selected = response.some((r) => r.question_choice_id === choice.id);
+                        return (
+                            <TouchableOpacity
+                                key={choice.id}
+                                style={styles.choiceRow}
+                                onPress={() => selectRadio(choice.id)}
+                            >
+                                <RadioButton
+                                    value={choice.id}
+                                    status={selected ? "checked" : "unchecked"}
+                                    color={Colors.cyan}
+                                    onPress={() => selectRadio(choice.id)}
+                                />
+                                <ContentText>{choice.label}</ContentText>
+                            </TouchableOpacity>
+                        );
+                    })}
+                {question.type === "checkbox" &&
+                    question.choices?.map((choice: QuestionChoice) => {
+                        const selected = response.some((r) => r.question_choice_id === choice.id);
+                        return (
+                            <TouchableOpacity
+                                key={choice.id}
+                                style={styles.choiceRow}
+                                onPress={() => toggleChoice(choice.id)}
+                            >
+                                <Checkbox
+                                    status={selected ? "checked" : "unchecked"}
+                                    color={Colors.cyan}
+                                />
+                                <ContentText>{choice.label}</ContentText>
+                            </TouchableOpacity>
+                        );
+                    })}
+                {question.type === "text" ? (
+                    <TextBox
+                        label={Message.get(MessageKeys.questionnaire_text_placeholder)}
+                        value={response[0]?.response_text ?? ""}
+                        onChangeText={(text: string) =>
+                            setResponse([{ question_id: question.id, response_text: text }])
+                        }
+                        multiline
+                        numberOfLines={3}
+                        style={styles.textInput}
+                    />
+                ) : null}
             </View>
         );
     }
@@ -157,9 +231,10 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
 
         if (respondent?.current_question) {
             const { response } = useQuestionnaireStore.getState();
+            const canGoBack = (respondent.current_question_index ?? 0) > 0;
             return (
                 <>
-                    {respondent.previous_question_id ? (
+                    {canGoBack ? (
                         <FlatButton
                             labelStyle={styles.secondaryButton}
                             onPress={() => useQuestionnaireStore.getState().revisitPrevious()}
@@ -169,8 +244,13 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
                     ) : null}
                     <FlatButton
                         labelStyle={styles.primaryButton}
-                        disabled={response.length === 0}
-                        onPress={() => useQuestionnaireStore.getState().saveResponse().then(() => this.forceUpdate())}
+                        disabled={!hasResponse(respondent.current_question, response)}
+                        onPress={() =>
+                            useQuestionnaireStore
+                                .getState()
+                                .saveResponse()
+                                .then(() => this.forceUpdate())
+                        }
                     >
                         {Message.get(MessageKeys.questionnaire_next_button)}
                     </FlatButton>
@@ -188,10 +268,12 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
                         labelStyle={styles.primaryButton}
                         onPress={() => {
                             if (this.state.settings?.questionnaireId) {
-                                useQuestionnaireStore.getState().startQuestionnaire(
-                                    this.state.settings.questionnaireId,
-                                    this.state.settings.onComplete,
-                                );
+                                useQuestionnaireStore
+                                    .getState()
+                                    .startQuestionnaire(
+                                        this.state.settings.questionnaireId,
+                                        this.state.settings.onComplete,
+                                    );
                             }
                         }}
                     >
@@ -225,6 +307,7 @@ const styles = StyleSheet.create({
     subtitle: { color: Colors.first_accent_color, marginBottom: 8 },
     questionText: { fontSize: 16, marginBottom: 12 },
     choiceRow: { flexDirection: "row", alignItems: "center", marginBottom: 8 },
+    textInput: { marginTop: 8 },
     sectionTitle: { color: Colors.cyan, marginBottom: 8 },
     primaryButton: { color: Colors.cyan },
     secondaryButton: { color: Colors.white },

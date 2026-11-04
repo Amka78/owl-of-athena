@@ -439,6 +439,7 @@ export const MessageKeys = {
     questionnaire_close_button: "questionnaire_close_button",
     questionnaire_loading: "questionnaire_loading",
     questionnaire_error: "questionnaire_error",
+    questionnaire_text_placeholder: "questionnaire_text_placeholder",
     //#endregion
 
     //#region Change password screen

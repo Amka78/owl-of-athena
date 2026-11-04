@@ -22,8 +22,10 @@ export type QuestionnaireRespondent = {
     id: string;
     questionnaire_id: string;
     current_question?: Question;
+    current_question_index?: number;
     next_question_id?: string;
     previous_question_id?: string;
+    response?: QuestionResponse[];
     completed_at?: string;
     started_at?: string;
 };
@@ -37,4 +39,5 @@ export type Questionnaire = {
     outro_title?: string;
     outro_subtitle?: string;
     outro_text?: string;
+    questions?: Question[];
 };
