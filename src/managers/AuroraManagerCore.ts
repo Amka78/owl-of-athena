@@ -52,7 +52,7 @@ import AlarmAudioInstance from "./alarm/AlarmAudio";
 import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
 import AlarmRuntimeInstance, { AlarmRuntimeEventList } from "./alarm/AlarmRuntime";
 import { nextAlarmEpochMs } from "./alarm/AlarmScheduler";
-import type { SessionSyncResult } from "./SessionSyncResult";
+import type { SessionSyncProgress, SessionSyncResult } from "./SessionSyncResult";
 
 //#endregion
 
@@ -360,10 +360,13 @@ export class AuroraManager extends EventEmitter {
         return await AuroraInstance.getUnsyncedSessions("*@*");
     }
 
-    public async readSessionContent(sessions: Array<FileInfo>): Promise<Map<string, any>> {
+    public async readSessionContent(
+        sessions: Array<FileInfo>,
+        onProgress?: (completed: number, total: number) => void,
+    ): Promise<Map<string, any>> {
         const readSessionContent = new Map<string, any>();
 
-        for (const sessionFileInfo of sessions) {
+        for (const [index, sessionFileInfo] of sessions.entries()) {
             const result = await AuroraInstance.readFile(sessionFileInfo.file, false, true);
 
             const dirName = sessionFileInfo.file.replace("/session.txt", "");
@@ -377,6 +380,7 @@ export class AuroraManager extends EventEmitter {
                 sessionDirReadCmd.response,
             );
             readSessionContent.set(sessionFileInfo.file, session);
+            onProgress?.(index + 1, sessions.length);
         }
 
         return readSessionContent;
@@ -385,8 +389,11 @@ export class AuroraManager extends EventEmitter {
     public async pushSessions(
         sessions: Array<FileInfo>,
         guestLogin: boolean,
+        onProgress?: (progress: SessionSyncProgress) => void,
     ): Promise<SessionSyncResult> {
-        const sessionList = await this.readSessionContent(sessions);
+        const sessionList = await this.readSessionContent(sessions, (completed, total) => {
+            onProgress?.({ phase: "reading", completed, total });
+        });
 
         const result: SessionSyncResult = {
             sessions: [],
@@ -396,6 +403,7 @@ export class AuroraManager extends EventEmitter {
             removedEmptyCount: 0,
         };
 
+        let processed = 0;
         for (const value of sessionList) {
             const sessionInfo = value[1];
             try {
@@ -432,6 +440,14 @@ export class AuroraManager extends EventEmitter {
                 // 失敗したセッションは端末に残し、次回の同期で再試行する
                 console.error(`[pushSessions] failed to sync ${sessionInfo.name}:`, e);
                 result.failedCount += 1;
+            } finally {
+                processed += 1;
+                onProgress?.({
+                    phase: "uploading",
+                    completed: processed,
+                    total: sessionList.size,
+                    fileName: sessionInfo.name,
+                });
             }
         }
 

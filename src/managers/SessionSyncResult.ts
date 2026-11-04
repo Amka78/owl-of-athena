@@ -12,4 +12,12 @@ export type SessionSyncResult = {
     failedCount: number;
     removedEmptyCount: number;
 };
+
+/** pushSessions の進捗。読み込みと転送で phase を分ける。 */
+export type SessionSyncProgress = {
+    phase: "reading" | "uploading";
+    completed: number;
+    total: number;
+    fileName?: string;
+};
 //#endregion

@@ -3,6 +3,7 @@ import React from "react";
 import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator, Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
+import type { SessionSyncProgress } from "../../managers";
 import type { FileInfo } from "../../sdk/AuroraTypes";
 import { useSessionTransferStore } from "../../store/sessionTransferStore";
 import { ContentText, FlatButton } from "../atoms";
@@ -21,6 +22,13 @@ type SessionTransferDialogState = {
     selectedSessions: FileInfo[];
 };
 //#endregion
+
+const MAX_PROGRESS = 1;
+
+const sessionName = (file: string): string => {
+    const match = file.match(/^sessions\/([^/]+)\/session\.txt$/);
+    return match?.[1] ?? file;
+};
 
 //#region Component
 export class SessionTransferDialog extends React.Component<{}, SessionTransferDialogState> {
@@ -77,14 +85,23 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
     public render(): React.ReactNode {
         if (!this.state.settings) return null;
         const store = useSessionTransferStore.getState();
-        const { status, unsyncedSessions, transferredCount, statusText, error } = store;
+        const { status, unsyncedSessions, transferredCount, statusText, progress, error } = store;
 
         return (
             <Dialog visible={true} style={styles.dialog}>
                 <Dialog.Title style={styles.title}>
                     {Message.get(MessageKeys.session_transfer_title)}
                 </Dialog.Title>
-                <Dialog.Content>{this.renderContent(status, unsyncedSessions, transferredCount, statusText, error)}</Dialog.Content>
+                <Dialog.Content>
+                    {this.renderContent(
+                        status,
+                        unsyncedSessions,
+                        transferredCount,
+                        statusText,
+                        error,
+                        progress,
+                    )}
+                </Dialog.Content>
                 <Dialog.Actions>{this.renderActions(status, unsyncedSessions)}</Dialog.Actions>
             </Dialog>
         );
@@ -96,9 +113,12 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
         transferredCount: number,
         statusText: string,
         error?: string,
+        progress?: SessionSyncProgress,
     ): React.ReactNode {
         if (!this.state.settings?.isAuroraConnected) {
-            return <ContentText>{Message.get(MessageKeys.session_transfer_not_connected)}</ContentText>;
+            return (
+                <ContentText>{Message.get(MessageKeys.session_transfer_not_connected)}</ContentText>
+            );
         }
         if (status === "scanning") {
             return (
@@ -109,25 +129,53 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
             );
         }
         if (status === "error") {
-            return <ContentText style={styles.errorText}>{error}</ContentText>;
+            return <ContentText style={styles.errorText}>{error ?? ""}</ContentText>;
         }
         if (status === "complete") {
             return (
                 <ContentText style={styles.successText}>
-                    {Message.get(MessageKeys.session_transfer_complete).replace("{0}", String(transferredCount))}
+                    {Message.get(MessageKeys.session_transfer_complete).replace(
+                        "{0}",
+                        String(transferredCount),
+                    )}
                 </ContentText>
             );
         }
         if (status === "transferring") {
+            const progressText = progress
+                ? Message.get(
+                      progress.phase === "reading"
+                          ? MessageKeys.session_transfer_reading
+                          : MessageKeys.session_transfer_uploading,
+                  )
+                      .replace("{0}", String(progress.completed))
+                      .replace("{1}", String(progress.total))
+                : statusText ||
+                  Message.get(MessageKeys.session_transfer_transferring).replace(
+                      "{0}",
+                      String(this.state.selectedSessions.length),
+                  );
+            const percent =
+                progress && progress.total > 0
+                    ? Math.min(MAX_PROGRESS, progress.completed / progress.total)
+                    : 0;
+
             return (
                 <View style={styles.centered}>
                     <ActivityIndicator color={Colors.cyan} />
-                    <ContentText>{statusText || Message.get(MessageKeys.session_transfer_transferring).replace("{0}", String(this.state.selectedSessions.length))}</ContentText>
+                    {progress ? (
+                        <View style={styles.progressTrack}>
+                            <View style={[styles.progressFill, { width: `${percent * 100}%` }]} />
+                        </View>
+                    ) : null}
+                    <ContentText>{progressText}</ContentText>
                 </View>
             );
         }
         if (unsyncedSessions.length === 0) {
-            return <ContentText>{Message.get(MessageKeys.session_transfer_no_sessions)}</ContentText>;
+            return (
+                <ContentText>{Message.get(MessageKeys.session_transfer_no_sessions)}</ContentText>
+            );
         }
 
         return (
@@ -141,8 +189,12 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
                             style={[styles.sessionRow, selected && styles.sessionRowSelected]}
                             onPress={() => this.toggleSession(item)}
                         >
-                            <ContentText style={styles.sessionName}>{item.name ?? item.file}</ContentText>
-                            <ContentText style={styles.sessionSize}>{item.size ? `${Math.round(item.size / 1024)} KB` : ""}</ContentText>
+                            <ContentText style={styles.sessionName}>
+                                {sessionName(item.file)}
+                            </ContentText>
+                            <ContentText style={styles.sessionSize}>
+                                {item.size ? `${Math.round(item.size / 1024)} KB` : ""}
+                            </ContentText>
                         </TouchableOpacity>
                     );
                 }}
@@ -154,7 +206,12 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
     private renderActions(status: string, unsyncedSessions: FileInfo[]): React.ReactNode {
         if (status === "scanning" || status === "transferring") return null;
 
-        if (status === "complete" || status === "error" || !this.state.settings?.isAuroraConnected || unsyncedSessions.length === 0) {
+        if (
+            status === "complete" ||
+            status === "error" ||
+            !this.state.settings?.isAuroraConnected ||
+            unsyncedSessions.length === 0
+        ) {
             return (
                 <FlatButton labelStyle={styles.primaryButton} onPress={() => this.close()}>
                     {Message.get(MessageKeys.session_transfer_continue)}
@@ -172,7 +229,9 @@ export class SessionTransferDialog extends React.Component<{}, SessionTransferDi
                     labelStyle={styles.primaryButton}
                     disabled={count === 0}
                     onPress={() =>
-                        useSessionTransferStore.getState().transferSessions(this.state.selectedSessions)
+                        useSessionTransferStore
+                            .getState()
+                            .transferSessions(this.state.selectedSessions)
                     }
                 >
                     {Message.get(MessageKeys.session_transfer_button).replace("{0}", String(count))}
@@ -194,6 +253,14 @@ const styles = StyleSheet.create({
     },
     title: { color: Colors.cyan, fontFamily: Fonts.primarySemiBold },
     centered: { alignItems: "center", padding: 16, gap: 8 },
+    progressTrack: {
+        width: 200,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: Colors.blue,
+        overflow: "hidden",
+    },
+    progressFill: { height: 6, backgroundColor: Colors.cyan },
     list: { maxHeight: 300 },
     sessionRow: {
         flexDirection: "row",

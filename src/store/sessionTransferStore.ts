@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { SessionSyncProgress } from "../managers";
 import { AuroraManagerInstance } from "../managers";
 import type { FileInfo } from "../sdk/AuroraTypes";
 
@@ -9,6 +10,7 @@ type SessionTransferStore = {
     unsyncedSessions: FileInfo[];
     transferredCount: number;
     statusText: string;
+    progress?: SessionSyncProgress;
     error?: string;
 
     scanSessions: () => Promise<void>;
@@ -21,6 +23,7 @@ export const useSessionTransferStore = create<SessionTransferStore>()((set) => (
     unsyncedSessions: [],
     transferredCount: 0,
     statusText: "",
+    progress: undefined,
     error: undefined,
 
     scanSessions: async () => {
@@ -37,17 +40,28 @@ export const useSessionTransferStore = create<SessionTransferStore>()((set) => (
         set({
             status: "transferring",
             transferredCount: 0,
-            statusText: "Transferring sessions...",
+            statusText: "",
+            progress: undefined,
+            error: undefined,
         });
         try {
-            const result = await AuroraManagerInstance.pushSessions(sessions, guestLogin);
+            const result = await AuroraManagerInstance.pushSessions(
+                sessions,
+                guestLogin,
+                (progress) => set({ progress }),
+            );
             set({
                 status: "complete",
                 transferredCount: result.syncedCount,
                 statusText: "",
+                progress: undefined,
             });
         } catch (e: any) {
-            set({ status: "error", error: e?.message ?? "Failed to transfer sessions" });
+            set({
+                status: "error",
+                progress: undefined,
+                error: e?.message ?? "Failed to transfer sessions",
+            });
         }
     },
 
@@ -57,6 +71,7 @@ export const useSessionTransferStore = create<SessionTransferStore>()((set) => (
             unsyncedSessions: [],
             transferredCount: 0,
             statusText: "",
+            progress: undefined,
             error: undefined,
         }),
 }));

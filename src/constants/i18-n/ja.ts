@@ -393,6 +393,8 @@ export default {
         "セッションを転送するにはAuroraに接続する必要があります。",
     [MessageKeys.session_transfer_no_sessions]: "Auroraにセッションが見つかりませんでした。",
     [MessageKeys.session_transfer_transferring]: "{0}件のセッションを転送中...",
+    [MessageKeys.session_transfer_reading]: "{0} / {1} 件を読み込み中...",
+    [MessageKeys.session_transfer_uploading]: "{0} / {1} 件を転送中...",
     [MessageKeys.session_transfer_complete]: "{0}件のセッションを正常に転送しました。",
     [MessageKeys.session_transfer_button]: "{0}件のセッションを転送",
     [MessageKeys.session_transfer_cancel]: "キャンセル",

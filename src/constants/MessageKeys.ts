@@ -423,6 +423,8 @@ export const MessageKeys = {
     session_transfer_not_connected: "session_transfer_not_connected",
     session_transfer_no_sessions: "session_transfer_no_sessions",
     session_transfer_transferring: "session_transfer_transferring",
+    session_transfer_reading: "session_transfer_reading",
+    session_transfer_uploading: "session_transfer_uploading",
     session_transfer_complete: "session_transfer_complete",
     session_transfer_button: "session_transfer_button",
     session_transfer_cancel: "session_transfer_cancel",

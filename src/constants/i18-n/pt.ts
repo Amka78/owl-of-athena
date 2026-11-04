@@ -400,6 +400,8 @@ export default {
         "Você precisa estar conectado ao Aurora para transferir sessões.",
     [MessageKeys.session_transfer_no_sessions]: "Nenhuma sessão encontrada no Aurora.",
     [MessageKeys.session_transfer_transferring]: "Transferindo {0} sessão(ões)...",
+    [MessageKeys.session_transfer_reading]: "Lendo {0} / {1} sessões...",
+    [MessageKeys.session_transfer_uploading]: "Transferindo {0} / {1} sessões...",
     [MessageKeys.session_transfer_complete]: "{0} sessão(ões) transferida(s) com sucesso.",
     [MessageKeys.session_transfer_button]: "Transferir {0} Sessão(ões)",
     [MessageKeys.session_transfer_cancel]: "Cancelar",
