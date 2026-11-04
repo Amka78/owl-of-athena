@@ -36,6 +36,8 @@
 - `expo-network` で接続状態を購読し、オフライン時は全画面の上部にバナーを表示（`OfflineBanner`）
 - Aurora デバイス情報に `buildDate` / `runningTime` / `bytesFree` を追加（`os-info` の値をモデルで保持し、空き容量は B/KB/MB に整形）
 - アカウント画面のメッセージ導線に未読件数バッジを追加。初回だけメッセージを読み込み、ログアウト時にキャッシュを破棄する
+- 質問票の `checkbox` / `text` 設問に対応。回答はクライアント側で蓄積し、次問への遷移・前問へ戻る・完了まで更新する
+- `FlatButton` の `disabled` を Paper の Button に渡すように修正（Next ボタンの無効化が効いていなかった）
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -43,6 +45,7 @@
    - `supabase/migrations/20261103000000_aurora_profiles_editor.sql`
    - `supabase/migrations/20261104000000_user_roles.sql`
    - `supabase/migrations/20261104000001_issue_logs.sql`（不具合報告のログ添付用）
+   - `supabase/migrations/20261105000000_questionnaire_response.sql`（質問票の回答蓄積用）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -71,6 +74,7 @@ WHERE id = '<user-uuid>';
 - オフライン時のバナー表示（機内モード / 機内モード解除、Web の offline イベント）
 - デバイス情報の `buildDate` / `runningTime` / `bytesFree` が実機の `os-info` で表示されること
 - 未読メッセージバッジの件数が実データと一致し、既読・ログアウト後に正しく更新されること
+- 質問票の checkbox / text 設問、前へ戻る、完了までの遷移
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 
 これらは「完了」ではなく未検証として扱う。
@@ -129,12 +133,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
+- 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **ファームウェア**: bootloader / BLE / bootstrap 更新、進捗状態（UPLOADING / FLASHING / VERIFYING）、失敗時の復旧案内、配布フィルタ（最低アプリバージョン・説明文）。
-3. **小物の parity**: 質問票の checkbox 設問、セッション転送のセッション単位進捗、SD フォーマット / デバイスリセット。
+3. **小物の parity**: セッション転送のセッション単位進捗、SD フォーマット / デバイスリセット。
 4. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
 
 ## 既知の制約
@@ -145,7 +150,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - コンソール画面は `admin` ロールを持つユーザーだけがアカウント画面から開ける。ディープリンクや直接遷移は想定していない。
 - オフライン検知は `expo-network` に依存する。初回取得が終わるまでは `unknown` としてバナーを出さない。iOS は `isInternetReachable` が `isConnected` と同じ値になるため、実際の到達性ではなく接続状態で判定する。ネイティブは prebuild と再インストールが必要。
 - デバイス情報の `buildDate` は UTC で表示する。古いファームウェアが値を返さない場合は `—` になる。
-- 質問票は `QuestionnaireDialog` が `radio` しか描画しない。`checkbox` / `text` を追加する前に、`QuestionnaireService.saveUserResponse` が更新する `questionnaire_respondents.response` 列がリポジトリの schema（`supabase_init.sql`）に無いことを確認する必要がある。実 DB に列があるか、マイグレーションを追加するかを先に決める。
+- 質問票の回答はクライアント側で `questionnaire_respondents.response` に蓄積し、`current_question_index` / `current_question` / `completed_at` を更新する。`response` 列を追加するマイグレーションの適用が必須。設問は `questionnaires.questions` の JSONB 配列を前提にしている。
+- `FlatButton` は `disabled` を Paper の Button に渡すようになった。以前は見た目だけで押せていた箇所がある。
 - ファームウェアの bootloader / BLE / bootstrap 更新は `Aurora.flash` が対応済みだが、`firmware_releases` は 1 バージョン 1 hex のみ。コンポーネント別の hex を配布するなら schema と管理画面の設計が先。
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
 - エクスポートはテキスト共有。イベント数が多いセッションは OS の共有上限に掛かる可能性がある。ファイル共有が必要なら `expo-file-system` + `expo-sharing` の追加とネイティブ再ビルドが必要。
