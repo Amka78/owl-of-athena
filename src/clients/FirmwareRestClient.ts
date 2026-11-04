@@ -9,6 +9,12 @@ const TABLE_NAME = "firmware_releases";
 const BUCKET_NAME = "firmware";
 //#endregion
 
+const optionalNumber = (value: unknown): number | undefined => {
+    if (value === null || value === undefined) return undefined;
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+};
+
 //#region Class
 /**
  * ファームウェア配布情報の取得。
@@ -16,9 +22,10 @@ const BUCKET_NAME = "firmware";
  */
 export class FirmwareRestClient {
     public async getLatest(): Promise<FirmwareRelease | undefined> {
+        // コンポーネント列が未適用の DB でもアプリ更新だけは動くよう * で読む。
         const { data, error } = await supabase
             .from(TABLE_NAME)
-            .select("version, hex_path, notes")
+            .select("*")
             .order("version", { ascending: false })
             .limit(1);
 
@@ -31,6 +38,13 @@ export class FirmwareRestClient {
             version: Number(row.version),
             hexPath: row.hex_path,
             notes: row.notes ?? undefined,
+            bootloaderVersion: optionalNumber(row.bootloader_version),
+            bootloaderHexPath: row.bootloader_hex_path ?? undefined,
+            bootloaderHasBootstrap: row.bootloader_has_bootstrap === true,
+            bootloaderNotes: row.bootloader_notes ?? undefined,
+            bleVersion: optionalNumber(row.ble_version),
+            bleHexPath: row.ble_hex_path ?? undefined,
+            bleNotes: row.ble_notes ?? undefined,
         };
     }
 

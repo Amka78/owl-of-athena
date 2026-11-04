@@ -81,6 +81,15 @@ export default {
     [MessageKeys.firmware_update_failed]: "ファームウェアの更新に失敗しました: {0}",
     [MessageKeys.firmware_update_battery_low]:
         "更新の前にAuroraを充電してください。電池が少ない状態で更新すると、端末が使えなくなる可能性があります。",
+    [MessageKeys.firmware_component_app]: "アプリファームウェア",
+    [MessageKeys.firmware_component_bootloader]: "ブートローダー",
+    [MessageKeys.firmware_component_ble]: "BLEファームウェア",
+    [MessageKeys.firmware_update_message_with_component]:
+        "{0} {1} が公開されています。今すぐ更新しますか? 更新中はAuroraの電源を切ったり、離したりしないでください。",
+    [MessageKeys.firmware_update_flashing_with_component]:
+        "{0}を更新しています。Auroraの電源を切ったり、アプリを閉じたりしないでください。",
+    [MessageKeys.firmware_update_success_with_component]: "{0}を {1} に更新しました。",
+    [MessageKeys.firmware_update_failed_with_component]: "{0}の更新に失敗しました: {1}",
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
     [MessageKeys.welcome_text]:
         "このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!",

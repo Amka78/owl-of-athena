@@ -45,7 +45,10 @@ import {
     Profile,
     type Settings,
 } from "../sdk/models";
-import { shouldUpdateFirmware } from "../services/FirmwareService";
+import {
+    firmwareFlashType,
+    selectFirmwareUpdate,
+} from "../services/FirmwareService";
 import type { AuroraSound, FirmwareUpdate } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
@@ -120,12 +123,16 @@ export class AuroraManager extends EventEmitter {
 
         const release = await FirmwareRestClientInstance.getLatest();
         if (release === undefined) return undefined;
-        if (!shouldUpdateFirmware(this.osInfo.version, release.version)) return undefined;
 
-        return {
-            ...release,
-            url: FirmwareRestClientInstance.getHexUrl(release.hexPath),
-        };
+        return selectFirmwareUpdate(
+            {
+                app: this.osInfo.version,
+                bootloader: this.osInfo.bootloaderVersion,
+                ble: this.osInfo.bleVersion,
+            },
+            release,
+            (hexPath) => FirmwareRestClientInstance.getHexUrl(hexPath),
+        );
     }
 
     /**
@@ -140,6 +147,7 @@ export class AuroraManager extends EventEmitter {
         const flashed = (await AuroraInstance.flashFile(
             update.url,
             update.version,
+            firmwareFlashType(update),
         )) as AuroraOSInfo;
         if (flashed !== undefined) {
             this.osInfo = flashed;

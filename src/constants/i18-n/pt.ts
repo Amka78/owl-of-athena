@@ -89,6 +89,15 @@ export default {
     [MessageKeys.firmware_update_failed]: "Falha na atualização do firmware: {0}",
     [MessageKeys.firmware_update_battery_low]:
         "Carregue o Aurora antes de atualizar o firmware. Atualizar com a bateria fraca pode deixar o dispositivo inutilizável.",
+    [MessageKeys.firmware_component_app]: "Firmware do aplicativo",
+    [MessageKeys.firmware_component_bootloader]: "Bootloader",
+    [MessageKeys.firmware_component_ble]: "Firmware BLE",
+    [MessageKeys.firmware_update_message_with_component]:
+        "{0} {1} está disponível. Atualizar agora? Não desligue nem mova o Aurora durante a atualização.",
+    [MessageKeys.firmware_update_flashing_with_component]:
+        "Atualizando {0}. Não desligue o Aurora nem feche o aplicativo.",
+    [MessageKeys.firmware_update_success_with_component]: "{0} atualizado para {1}.",
+    [MessageKeys.firmware_update_failed_with_component]: "Falha ao atualizar {0}: {1}",
     // welcome fragment
     [MessageKeys.welcome_title]: "Bem vindo ao Aurora!",
     [MessageKeys.welcome_text]:

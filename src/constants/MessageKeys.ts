@@ -62,6 +62,13 @@ export const MessageKeys = {
     firmware_update_success: "firmware_update_success",
     firmware_update_failed: "firmware_update_failed",
     firmware_update_battery_low: "firmware_update_battery_low",
+    firmware_component_app: "firmware_component_app",
+    firmware_component_bootloader: "firmware_component_bootloader",
+    firmware_component_ble: "firmware_component_ble",
+    firmware_update_message_with_component: "firmware_update_message_with_component",
+    firmware_update_flashing_with_component: "firmware_update_flashing_with_component",
+    firmware_update_success_with_component: "firmware_update_success_with_component",
+    firmware_update_failed_with_component: "firmware_update_failed_with_component",
     //#endregion
 
     //#region WelcomeScreen

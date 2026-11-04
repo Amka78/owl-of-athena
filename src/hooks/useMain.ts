@@ -16,6 +16,19 @@ import { type FirmwareUpdate, GuestUser } from "../types";
 import { useSessionDetailListSelector, useSessionListSelector, useUserSelector } from "./";
 //#endregion
 
+//#region Functions
+const firmwareComponentLabel = (component: FirmwareUpdate["component"]): string => {
+    switch (component) {
+        case "bootloader":
+            return Message.get(MessageKeys.firmware_component_bootloader);
+        case "ble":
+            return Message.get(MessageKeys.firmware_component_ble);
+        default:
+            return Message.get(MessageKeys.firmware_component_app);
+    }
+};
+//#endregion
+
 //#region Hooks
 export const useMain = (): {
     connect: ConnectionStates;
@@ -69,8 +82,11 @@ export const useMain = (): {
     }, [cacheSessions, sessionList.length, userId]);
 
     const installFirmware = useCallback(async (update: FirmwareUpdate): Promise<void> => {
+        const componentLabel = firmwareComponentLabel(update.component);
         LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.firmware_update_flashing),
+            dialogTitle: Message.get(MessageKeys.firmware_update_flashing_with_component, [
+                componentLabel,
+            ]),
         });
 
         let resultMessage: string;
@@ -79,12 +95,16 @@ export const useMain = (): {
             firmwareVersion.current = info.version.toString();
             osInfoRef.current = info;
             setBatteryLevel(info.batteryLevel);
-            resultMessage = Message.get(MessageKeys.firmware_update_success, [
-                versionToString(info.version),
+            resultMessage = Message.get(MessageKeys.firmware_update_success_with_component, [
+                componentLabel,
+                versionToString(update.version),
             ]);
         } catch (e) {
             console.error("[useMain] firmware update failed:", e);
-            resultMessage = Message.get(MessageKeys.firmware_update_failed, [String(e)]);
+            resultMessage = Message.get(MessageKeys.firmware_update_failed_with_component, [
+                componentLabel,
+                String(e),
+            ]);
         } finally {
             LoadingDialog.close();
         }
@@ -116,11 +136,16 @@ export const useMain = (): {
             return;
         }
 
+        const componentLabel = firmwareComponentLabel(update.component);
+        const baseMessage = Message.get(MessageKeys.firmware_update_message_with_component, [
+            componentLabel,
+            versionToString(update.version),
+        ]);
+        const message = update.notes ? `${baseMessage}\n\n${update.notes}` : baseMessage;
+
         ConfirmDialog.show({
             title: Message.get(MessageKeys.firmware_update_title),
-            message: Message.get(MessageKeys.firmware_update_message, [
-                versionToString(update.version),
-            ]),
+            message,
             isCancelable: true,
             onConfirm: () => {
                 void installFirmware(update);
