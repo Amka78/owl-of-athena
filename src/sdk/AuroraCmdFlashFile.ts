@@ -5,13 +5,15 @@ const AuroraCmdFlashFile = async function (
     fwPath: string,
     fwVersion: number | false | undefined = false,
     fwType = "app",
+    onPhase?: (phase: "uploading" | "flashing") => void,
 ): Promise<unknown> {
     //TODO: this condition is for backwards compatibility
     const filename = fwType == "app" ? "aurora.hex" : `aurora-${fwType}.hex`;
 
-    return this.uploadFile(fwPath, filename).then(() => {
-        return this.flash(filename, fwVersion, fwType);
-    });
+    onPhase?.("uploading");
+    await this.uploadFile(fwPath, filename);
+    onPhase?.("flashing");
+    return this.flash(filename, fwVersion, fwType);
 };
 
 export default AuroraCmdFlashFile;

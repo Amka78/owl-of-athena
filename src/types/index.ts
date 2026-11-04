@@ -24,7 +24,12 @@ export { GuestUser };
 
 //#endregion
 
-export type { FirmwareRelease, FirmwareUpdate } from "./Firmware";
+export type {
+    FirmwareComponent,
+    FirmwareRelease,
+    FirmwareUpdate,
+    FirmwareUpdatePhase,
+} from "./Firmware";
 export type { CreateIssue, Issue } from "./Issue";
 export type { Message, UserMessage } from "./Message";
 export type { Order } from "./Order";

@@ -12,7 +12,7 @@ import type { AuroraOSInfo, AuroraSession, AuroraSessionDetail } from "../sdk/mo
 import { versionToString } from "../sdk/util";
 import { onConnectionChange } from "../services/MainService";
 import { useSessionStore } from "../store/sessionStore";
-import { type FirmwareUpdate, GuestUser } from "../types";
+import { type FirmwareUpdate, type FirmwareUpdatePhase, GuestUser } from "../types";
 import { useSessionDetailListSelector, useSessionListSelector, useUserSelector } from "./";
 //#endregion
 
@@ -83,15 +83,22 @@ export const useMain = (): {
 
     const installFirmware = useCallback(async (update: FirmwareUpdate): Promise<void> => {
         const componentLabel = firmwareComponentLabel(update.component);
-        LoadingDialog.show({
-            dialogTitle: Message.get(MessageKeys.firmware_update_flashing_with_component, [
-                componentLabel,
-            ]),
-        });
+        const phaseTitle = (phase: FirmwareUpdatePhase): string => {
+            const key =
+                phase === "uploading"
+                    ? MessageKeys.firmware_update_uploading_with_component
+                    : phase === "verifying"
+                      ? MessageKeys.firmware_update_verifying_with_component
+                      : MessageKeys.firmware_update_flashing_with_component;
+            return Message.get(key, [componentLabel]);
+        };
+        LoadingDialog.show({ dialogTitle: phaseTitle("uploading") });
 
         let resultMessage: string;
         try {
-            const info = await AuroraManagerInstance.flashFirmware(update);
+            const info = await AuroraManagerInstance.flashFirmware(update, (phase) => {
+                LoadingDialog.show({ dialogTitle: phaseTitle(phase) });
+            });
             firmwareVersion.current = info.version.toString();
             osInfoRef.current = info;
             setBatteryLevel(info.batteryLevel);

@@ -93,7 +93,9 @@ export default {
     [MessageKeys.firmware_update_message_with_component]:
         "{0} {1} is available. Update now? Do not turn off or move Aurora during the update.",
     [MessageKeys.firmware_update_flashing_with_component]:
-        "Updating {0}. Do not turn off Aurora or close the app.",
+        "Flashing {0}... Do not turn off Aurora or close the app.",
+    [MessageKeys.firmware_update_uploading_with_component]: "Sending {0} to Aurora...",
+    [MessageKeys.firmware_update_verifying_with_component]: "Verifying {0}...",
     [MessageKeys.firmware_update_success_with_component]: "{0} updated to {1}.",
     [MessageKeys.firmware_update_failed_with_component]: "Failed to update {0}: {1}",
     // welcome fragment

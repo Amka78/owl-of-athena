@@ -16,6 +16,9 @@ export type FirmwareRelease = {
     bleNotes?: string;
 };
 
+/** 更新中のフェーズ。 */
+export type FirmwareUpdatePhase = "uploading" | "flashing" | "verifying";
+
 /** 端末に適用できる新しいファームウェア。 */
 export type FirmwareUpdate = FirmwareRelease & {
     url: string;

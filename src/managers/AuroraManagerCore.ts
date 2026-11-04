@@ -49,7 +49,7 @@ import {
     firmwareFlashType,
     selectFirmwareUpdate,
 } from "../services/FirmwareService";
-import type { AuroraSound, FirmwareUpdate } from "../types";
+import type { AuroraSound, FirmwareUpdate, FirmwareUpdatePhase } from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
 import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
@@ -139,21 +139,37 @@ export class AuroraManager extends EventEmitter {
      * ファームウェアを書き込む。書き込み中は接続が切れるため、
      * 睡眠セッション中は実行しない。
      */
-    public async flashFirmware(update: FirmwareUpdate): Promise<AuroraOSInfo> {
+    public async flashFirmware(
+        update: FirmwareUpdate,
+        onPhase?: (phase: FirmwareUpdatePhase) => void,
+    ): Promise<AuroraOSInfo> {
         if (this.currentSleepState === SleepStates.SLEEPING) {
             throw new Error("Cannot flash firmware while a sleep session is running.");
         }
 
-        const flashed = (await AuroraInstance.flashFile(
-            update.url,
-            update.version,
-            firmwareFlashType(update),
-        )) as AuroraOSInfo;
-        if (flashed !== undefined) {
-            this.osInfo = flashed;
+        const onFlashConnectionChange = (info: AuroraOSInfo | false): void => {
+            if (info) onPhase?.("verifying");
+        };
+        AuroraInstance.on(AuroraEventList.flashConnectionChange, onFlashConnectionChange);
+
+        try {
+            const flashed = (await AuroraInstance.flashFile(
+                update.url,
+                update.version,
+                firmwareFlashType(update),
+                onPhase,
+            )) as AuroraOSInfo;
+            if (flashed !== undefined) {
+                this.osInfo = flashed;
+            }
+            await this.setupAurora();
+            return this.osInfo!;
+        } finally {
+            AuroraInstance.removeListener(
+                AuroraEventList.flashConnectionChange,
+                onFlashConnectionChange,
+            );
         }
-        await this.setupAurora();
-        return this.osInfo!;
     }
 
     public async connect(): Promise<AuroraOSInfo | void> {
