@@ -29,6 +29,7 @@ import { LogoutIcon } from "./LogoutIcon";
 import { MenuContainer } from "./MenuContainer";
 import { MenuIcon } from "./MenuIcon";
 import { OfficialIcon } from "./OfficialIcon";
+import { OfflineBanner } from "./OfflineBanner";
 import { PrivateIcon } from "./PrivateIcon";
 import { ProfilesIcon } from "./ProfilesIcon";
 import { RefreshIcon } from "./RefreshIcon";
@@ -75,6 +76,7 @@ export {
     MenuContainer,
     MenuIcon,
     OfficialIcon,
+    OfflineBanner,
     PrivateIcon,
     ProfilesIcon,
     RefreshIcon,

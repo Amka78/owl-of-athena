@@ -19,6 +19,7 @@ export const MessageKeys = {
     pipe_separator: "pipe_separator",
     reloading: "reloading",
     preview: "preview",
+    offline_banner_message: "offline_banner_message",
     //#endregion
 
     //#region Sleep stages

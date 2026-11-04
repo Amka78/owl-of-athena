@@ -41,6 +41,8 @@ export default {
     [MessageKeys.reloading]: "{0} Recarregando...",
     [MessageKeys.choose]: "Escolha um(a) {0}",
     [MessageKeys.preview]: "Pré-visualizar {0}",
+    [MessageKeys.offline_banner_message]:
+        "Você está offline. Alguns recursos não estão disponíveis.",
     // sleep stages
     [MessageKeys.stage_awake]: "Acordado",
     [MessageKeys.stage_rem]: "REM",

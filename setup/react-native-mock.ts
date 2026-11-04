@@ -493,6 +493,27 @@ mock.module("expo-updates", () => ({
 }));
 
 // ---------------------------------------------------------------------------
+// expo-network  (used by useNetworkStatus / OfflineBanner)
+// ---------------------------------------------------------------------------
+mock.module("expo-network", () => ({
+    getNetworkStateAsync: () =>
+        Promise.resolve({ isConnected: true, isInternetReachable: true }),
+    addNetworkStateListener: () => ({ remove: () => {} }),
+    useNetworkState: () => ({ isConnected: true, isInternetReachable: true }),
+    NetworkStateType: {
+        NONE: "NONE",
+        UNKNOWN: "UNKNOWN",
+        CELLULAR: "CELLULAR",
+        WIFI: "WIFI",
+        BLUETOOTH: "BLUETOOTH",
+        ETHERNET: "ETHERNET",
+        WIMAX: "WIMAX",
+        VPN: "VPN",
+        OTHER: "OTHER",
+    },
+}));
+
+// ---------------------------------------------------------------------------
 // react-native subpath: ReactNativeViewConfigRegistry (used by gesture handler)
 // ---------------------------------------------------------------------------
 mock.module(

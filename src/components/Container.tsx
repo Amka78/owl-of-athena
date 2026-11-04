@@ -15,6 +15,7 @@ import { APP_SCHEME, Theme } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { isPasswordRecoveryUrl } from "../services/AuthLinkService";
 import { useRecoveryLinkStore } from "../store/recoveryLinkStore";
+import { OfflineBanner } from "./atoms/OfflineBanner";
 //#endregion
 
 //#region Types
@@ -122,6 +123,7 @@ export const Container: FunctionComponent<ContainerProps> = (props: ContainerPro
                         mode={"margin"}
                         style={[styles.container, { width: dimens.width, height: dimens.height }]}
                     >
+                        <OfflineBanner />
                         {props.children}
                     </SafeAreaView>
                 </SafeAreaProvider>

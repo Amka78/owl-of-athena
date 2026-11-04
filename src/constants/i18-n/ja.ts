@@ -32,6 +32,7 @@ export default {
     [MessageKeys.pipe_separator]: " | ",
     [MessageKeys.reloading]: "{0} 再読み込み中...",
     [MessageKeys.preview]: "{0}を確認",
+    [MessageKeys.offline_banner_message]: "オフラインです。一部の機能は利用できません。",
     // sleep stages
     [MessageKeys.stage_awake]: "起床中",
     [MessageKeys.stage_rem]: "REM",
