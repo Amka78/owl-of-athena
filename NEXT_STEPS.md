@@ -7,10 +7,10 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **500 pass / 8 fail**（165 ファイル・508 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **512 pass / 8 fail**（169 ファイル・520 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
-- 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories と `FlatButton` まわりの既存型エラーは残る）
+- 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
 
 ### このセッションで完了したもの
 
@@ -38,6 +38,7 @@
 - アカウント画面のメッセージ導線に未読件数バッジを追加。初回だけメッセージを読み込み、ログアウト時にキャッシュを破棄する
 - 質問票の `checkbox` / `text` 設問に対応。回答はクライアント側で蓄積し、次問への遷移・前問へ戻る・完了まで更新する
 - `FlatButton` の `disabled` を Paper の Button に渡すように修正（Next ボタンの無効化が効いていなかった）
+- セッション転送に読み込み / 転送のセッション単位進捗を追加し、ダイアログに進捗バーと件数を表示
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -75,6 +76,7 @@ WHERE id = '<user-uuid>';
 - デバイス情報の `buildDate` / `runningTime` / `bytesFree` が実機の `os-info` で表示されること
 - 未読メッセージバッジの件数が実データと一致し、既読・ログアウト後に正しく更新されること
 - 質問票の checkbox / text 設問、前へ戻る、完了までの遷移
+- セッション転送の進捗表示（複数セッション・失敗を含むケース）
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 
 これらは「完了」ではなく未検証として扱う。
@@ -134,12 +136,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
 - 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
+- セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **ファームウェア**: bootloader / BLE / bootstrap 更新、進捗状態（UPLOADING / FLASHING / VERIFYING）、失敗時の復旧案内、配布フィルタ（最低アプリバージョン・説明文）。
-3. **小物の parity**: セッション転送のセッション単位進捗、SD フォーマット / デバイスリセット。
+3. **小物の parity**: SD フォーマット / デバイスリセット。
 4. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
 
 ## 既知の制約
@@ -151,6 +154,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - オフライン検知は `expo-network` に依存する。初回取得が終わるまでは `unknown` としてバナーを出さない。iOS は `isInternetReachable` が `isConnected` と同じ値になるため、実際の到達性ではなく接続状態で判定する。ネイティブは prebuild と再インストールが必要。
 - デバイス情報の `buildDate` は UTC で表示する。古いファームウェアが値を返さない場合は `—` になる。
 - 質問票の回答はクライアント側で `questionnaire_respondents.response` に蓄積し、`current_question_index` / `current_question` / `completed_at` を更新する。`response` 列を追加するマイグレーションの適用が必須。設問は `questionnaires.questions` の JSONB 配列を前提にしている。
+- セッション転送の進捗は読み込み (`reading`) と転送 (`uploading`) の 2 段階で、セッションを 1 件処理するたびに更新する。失敗したセッションも進捗を進める。
 - `FlatButton` は `disabled` を Paper の Button に渡すようになった。以前は見た目だけで押せていた箇所がある。
 - ファームウェアの bootloader / BLE / bootstrap 更新は `Aurora.flash` が対応済みだが、`firmware_releases` は 1 バージョン 1 hex のみ。コンポーネント別の hex を配布するなら schema と管理画面の設計が先。
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
