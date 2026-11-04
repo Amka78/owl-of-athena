@@ -7,8 +7,9 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **330 pass / 61 fail**（163 ファイル・391 テスト）
-- 61 fail のうち 57 件は既存の Supabase URL 未設定によるスイート汚染。3 件はサポート系テスト、1 件は `AuroraInfoDialog.test.tsx` が同じ汚染に巻き込まれたもの。変更前の HEAD では 57 fail だったことを worktree で確認済み
+- 全件テスト: **500 pass / 8 fail**（165 ファイル・508 テスト、スナップショット 147 pass / 6 fail）
+- 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
+- これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories と `FlatButton` まわりの既存型エラーは残る）
 
 ### このセッションで完了したもの
@@ -34,6 +35,7 @@
 - 不具合報告に「ログを添付」チェック（既定 ON）。`issues.logs` に保存し、管理画面では行の下に抜粋を表示
 - `expo-network` で接続状態を購読し、オフライン時は全画面の上部にバナーを表示（`OfflineBanner`）
 - Aurora デバイス情報に `buildDate` / `runningTime` / `bytesFree` を追加（`os-info` の値をモデルで保持し、空き容量は B/KB/MB に整形）
+- アカウント画面のメッセージ導線に未読件数バッジを追加。初回だけメッセージを読み込み、ログアウト時にキャッシュを破棄する
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -68,6 +70,7 @@ WHERE id = '<user-uuid>';
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
 - オフライン時のバナー表示（機内モード / 機内モード解除、Web の offline イベント）
 - デバイス情報の `buildDate` / `runningTime` / `bytesFree` が実機の `os-info` で表示されること
+- 未読メッセージバッジの件数が実データと一致し、既読・ログアウト後に正しく更新されること
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 
 これらは「完了」ではなく未検証として扱う。
@@ -125,17 +128,19 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `supabase/migrations/20261104000001_issue_logs.sql`
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
+- 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **ファームウェア**: bootloader / BLE / bootstrap 更新、進捗状態（UPLOADING / FLASHING / VERIFYING）、失敗時の復旧案内、配布フィルタ（最低アプリバージョン・説明文）。
-3. **小物の parity**: 未読メッセージバッジ、質問票の checkbox 設問、セッション転送のセッション単位進捗、SD フォーマット / デバイスリセット。
+3. **小物の parity**: 質問票の checkbox 設問、セッション転送のセッション単位進捗、SD フォーマット / デバイスリセット。
 4. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
 
 ## 既知の制約
 
-- 全件テストの 61 fail のうち 57 件は Supabase の URL 未設定による既知の汚染。残りはサポート系テスト 3 ファイルと `AuroraInfoDialog.test.tsx` が同じ汚染に巻き込まれたもの。修正の前後で失敗ファイル集合を比較して判断する。
+- 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
+- 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
 - ログは `console.*` を起動時から最大 500 件保持するリングバッファ。アプリ起動より前のログと、ネイティブ側のログは含まれない。不具合報告に添付したログは Supabase の `issues.logs` にそのまま保存される。
 - コンソール画面は `admin` ロールを持つユーザーだけがアカウント画面から開ける。ディープリンクや直接遷移は想定していない。
 - オフライン検知は `expo-network` に依存する。初回取得が終わるまでは `unknown` としてバナーを出さない。iOS は `isInternetReachable` が `isConnected` と同じ値になるため、実際の到達性ではなく接続状態で判定する。ネイティブは prebuild と再インストールが必要。
