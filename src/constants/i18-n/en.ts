@@ -447,5 +447,8 @@ export default {
     [MessageKeys.aurora_info_ble]: "BLE Version",
     [MessageKeys.aurora_info_bootstrap]: "Bootstrap Version",
     [MessageKeys.aurora_info_battery]: "Battery Level",
+    [MessageKeys.aurora_info_build_date]: "Build Date",
+    [MessageKeys.aurora_info_running_time]: "Running Time",
+    [MessageKeys.aurora_info_storage]: "Free Storage",
 };
 //#endregion

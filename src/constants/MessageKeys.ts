@@ -475,5 +475,8 @@ export const MessageKeys = {
     aurora_info_ble: "aurora_info_ble",
     aurora_info_bootstrap: "aurora_info_bootstrap",
     aurora_info_battery: "aurora_info_battery",
+    aurora_info_build_date: "aurora_info_build_date",
+    aurora_info_running_time: "aurora_info_running_time",
+    aurora_info_storage: "aurora_info_storage",
     //#endregion
 };

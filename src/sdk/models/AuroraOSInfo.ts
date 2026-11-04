@@ -4,6 +4,9 @@ export class AuroraOSInfo {
     public bootloaderVersion: number;
     public bleVersion: number;
     public batteryLevel: number;
+    public buildDate?: number;
+    public bytesFree?: number;
+    public runningTime?: string;
     public profileLoaded: boolean;
     public profile?: string;
     constructor(osInfo: Partial<AuroraOSInfo>) {
@@ -15,6 +18,9 @@ export class AuroraOSInfo {
         this.batteryLevel = osInfo.batteryLevel
             ? Number(osInfo.batteryLevel.toString().replace("%", ""))
             : 0;
+        this.buildDate = osInfo.buildDate;
+        this.bytesFree = osInfo.bytesFree;
+        this.runningTime = osInfo.runningTime;
         this.profileLoaded = osInfo.profile ? osInfo.profile !== "NO" : false;
     }
 }

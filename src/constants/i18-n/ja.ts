@@ -443,4 +443,7 @@ export default {
     [MessageKeys.aurora_info_ble]: "BLEバージョン",
     [MessageKeys.aurora_info_bootstrap]: "ブートストラップバージョン",
     [MessageKeys.aurora_info_battery]: "バッテリーレベル",
+    [MessageKeys.aurora_info_build_date]: "ビルド日時",
+    [MessageKeys.aurora_info_running_time]: "稼働時間",
+    [MessageKeys.aurora_info_storage]: "空き容量",
 };
