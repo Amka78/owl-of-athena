@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **523 pass / 8 fail**（170 ファイル・531 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **528 pass / 8 fail**（171 ファイル・536 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -42,6 +42,7 @@
 - ファームウェアのコンポーネント別更新に対応。アプリ → ブートローダー → BLE の優先順で 1 件ずつ提示し、`bootloader_has_bootstrap` なら同時書き込みにする
 - ファームウェア更新中に UPLOADING / FLASHING / VERIFYING をローディングダイアログへ表示
 - ファームウェア更新失敗時にリセットボタンでの復帰案内を表示し、`min_app_version` 未満のアプリには更新を提示しない
+- アカウント画面に SD カードのフォーマットと Aurora のリセットを追加。接続中のみ有効で、実行前に確認ダイアログを出す
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -85,6 +86,7 @@ WHERE id = '<user-uuid>';
 - ファームウェアのブートローダー / BLE 更新（実機、`has_bootstrap` の有無、失敗時の復帰）
 - ファームウェア更新中の UPLOADING / FLASHING / VERIFYING の切り替わり
 - ファームウェア更新失敗時の案内表示と、`min_app_version` による更新の非表示
+- SD カードのフォーマットと Aurora のリセット（実機、実行後の再接続）
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 
 これらは「完了」ではなく未検証として扱う。
@@ -146,12 +148,12 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
+- デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
-2. **小物の parity**: SD フォーマット / デバイスリセット。
-3. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
+2. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
 
 ## 既知の制約
 
@@ -170,6 +172,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - ファームウェアのコンポーネント更新は、アプリ → ブートローダー → BLE の優先順で 1 回のチェックにつき 1 件だけ提示する。アプリが最新のときだけコンポーネントを見る。
 - ブートローダー / BLE の hex は `firmware_releases` の `bootloader_*` / `ble_*` 列と公開 `firmware` バケットに置く。`bootloader_has_bootstrap` が true なら `bootloader-and-bootstrap` として書き込む。各 version は hex の実バージョンと一致させる。
 - 最新行にコンポーネント列が無い場合、古い行には探しに行かない。配布時は最新行にまとめて記載する。
+- SD フォーマットは `sd-format`、デバイスリセットは `os-reset` を実行する。どちらも接続中のみ有効で、確認ダイアログの後に実行し、失敗時はエラーを表示する。SD フォーマットは未転送セッションを消すため、実行前に転送を促す文言を出している。
+- `os-reset` 後は端末が再起動するため、再接続が必要になる。
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
 - エクスポートはテキスト共有。イベント数が多いセッションは OS の共有上限に掛かる可能性がある。ファイル共有が必要なら `expo-file-system` + `expo-sharing` の追加とネイティブ再ビルドが必要。
 - セッションタイムラインは睡眠チャート表示時のみ。画面の高さが足りない場合は省略される。
