@@ -1,6 +1,7 @@
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import type { AuroraSession, AuroraSessionDetail } from "../../sdk/models";
 import {
+    buildLogReport,
     buildProfileExportContent,
     buildSessionEventsCsv,
     buildSessionExportJson,
@@ -76,5 +77,27 @@ describe("ExportService", () => {
         const profile = { content: "{stim-enabled:1}" } as AuroraProfile;
         expect(buildProfileExportContent(profile)).toBe("{stim-enabled:1}");
         expect(buildProfileExportContent(undefined)).toBe("");
+    });
+
+    it("builds a log report with app info and entries", () => {
+        const report = buildLogReport(
+            [
+                {
+                    type: "info",
+                    message: "connected",
+                    time: new Date("2026-11-04T00:00:00.000Z").getTime(),
+                    delta: 0,
+                },
+            ],
+            { appVersion: "1.2.3", build: "42", platform: "ios", osVersion: "17.0" },
+        );
+
+        expect(report).toContain("owl-of-athena log report");
+        expect(report).toContain("app_version: 1.2.3");
+        expect(report).toContain("build: 42");
+        expect(report).toContain("platform: ios");
+        expect(report).toContain("os_version: 17.0");
+        expect(report).toContain("entries: 1");
+        expect(report).toContain("2026-11-04T00:00:00.000Z [INFO] connected");
     });
 });

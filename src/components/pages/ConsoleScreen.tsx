@@ -3,8 +3,11 @@ import React, { type FunctionComponent, useRef, useState } from "react";
 import type { ScrollViewInstance } from "react-native";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
-import { useCheckLogging } from "../../hooks";
+import { useCheckLogging } from "../../hooks/useCheckLogging";
 import { AuroraManagerInstance } from "../../managers";
+import { buildLogReport, shareText } from "../../services/ExportService";
+import LogService from "../../services/LogService";
+import { getAppInfo } from "../../utils";
 
 //#endregion
 
@@ -57,6 +60,23 @@ export const ConsoleScreen: FunctionComponent = () => {
         setLines([{ id: nextId.current++, text: "Aurora Console Ready", type: "output" }]);
     };
 
+    const onShareLogsPress = async () => {
+        const info = getAppInfo();
+        try {
+            await shareText(
+                Message.get(MessageKeys.console_share_logs_title),
+                buildLogReport(LogService.getLogs(), {
+                    appVersion: info.version,
+                    build: info.build,
+                    platform: info.platform,
+                    osVersion: info.osVersion,
+                }),
+            );
+        } catch (e: any) {
+            addLine(e?.message ?? Message.get(MessageKeys.export_failed), "error");
+        }
+    };
+
     const lineColor = (type: ConsoleLine["type"]) => {
         if (type === "error") return "#ff4310";
         if (type === "input") return Colors.cyan;
@@ -66,6 +86,11 @@ export const ConsoleScreen: FunctionComponent = () => {
     return (
         <View style={styles.container}>
             <View style={styles.toolbar}>
+                <TouchableOpacity style={styles.clearButton} onPress={onShareLogsPress}>
+                    <Text style={styles.clearButtonText}>
+                        {Message.get(MessageKeys.console_share_logs_button)}
+                    </Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.clearButton} onPress={onClearPress}>
                     <Text style={styles.clearButtonText}>
                         {Message.get(MessageKeys.console_clear_button)}

@@ -9,7 +9,11 @@ export type Issue = {
     version?: string;
     status?: string;
     attachment_url?: string;
+    logs?: string;
     created_at?: string;
 };
 
-export type CreateIssue = Omit<Issue, "id" | "platform" | "version" | "status" | "attachment_url" | "created_at">;
+export type CreateIssue = Omit<
+    Issue,
+    "id" | "platform" | "version" | "status" | "attachment_url" | "created_at"
+>;

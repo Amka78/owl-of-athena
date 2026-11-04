@@ -17,7 +17,10 @@ import {
 } from "./src/managers";
 import { alarmStorage } from "./src/managers/alarm/AlarmRuntimeStorage";
 import { InitialNavigator } from "./src/navigation";
+import LogService from "./src/services/LogService";
 //#endregion
+
+LogService.install();
 
 SplashScreen.preventAutoHideAsync();
 

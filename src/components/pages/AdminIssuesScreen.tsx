@@ -28,14 +28,21 @@ export const AdminIssuesScreen: FunctionComponent = () => {
                 data={issues}
                 keyExtractor={(item, index) => item.id ?? String(index)}
                 renderItem={({ item }) => (
-                    <View style={styles.row}>
-                        <Text style={[styles.cell, styles.flex3]}>{item.title ?? "—"}</Text>
-                        <Text style={[styles.cell, styles.flex1]}>{item.platform ?? "—"}</Text>
-                        <Text style={[styles.cell, styles.flex1]}>{item.version ?? "—"}</Text>
-                        <Text style={[styles.cell, styles.flex1]}>
-                            {item.critical ? "Yes" : "No"}
-                        </Text>
-                        <Text style={[styles.cell, styles.flex1]}>{item.status ?? "—"}</Text>
+                    <View style={styles.rowContainer}>
+                        <View style={styles.row}>
+                            <Text style={[styles.cell, styles.flex3]}>{item.title ?? "—"}</Text>
+                            <Text style={[styles.cell, styles.flex1]}>{item.platform ?? "—"}</Text>
+                            <Text style={[styles.cell, styles.flex1]}>{item.version ?? "—"}</Text>
+                            <Text style={[styles.cell, styles.flex1]}>
+                                {item.critical ? "Yes" : "No"}
+                            </Text>
+                            <Text style={[styles.cell, styles.flex1]}>{item.status ?? "—"}</Text>
+                        </View>
+                        {item.logs ? (
+                            <Text style={styles.logs} numberOfLines={4}>
+                                {item.logs}
+                            </Text>
+                        ) : null}
                     </View>
                 )}
                 ListEmptyComponent={
@@ -52,8 +59,17 @@ const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: Colors.navy },
     header: { flexDirection: "row", backgroundColor: Colors.navy_darker, padding: 8 },
     headerCell: { color: Colors.first_accent_color, fontWeight: "bold", fontSize: 12 },
-    row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: Colors.blue, padding: 8 },
+    row: { flexDirection: "row", padding: 8 },
+    rowContainer: { borderBottomWidth: 1, borderBottomColor: Colors.blue },
     cell: { color: Colors.white, fontSize: 12 },
+    logs: {
+        color: Colors.white,
+        opacity: 0.6,
+        fontFamily: "monospace",
+        fontSize: 10,
+        paddingHorizontal: 8,
+        paddingBottom: 8,
+    },
     flex1: { flex: 1 },
     flex3: { flex: 3 },
     loading: { color: Colors.cyan, textAlign: "center", padding: 16 },

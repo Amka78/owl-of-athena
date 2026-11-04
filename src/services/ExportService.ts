@@ -3,6 +3,7 @@ import { Platform, Share } from "react-native";
 
 import type { AuroraProfile } from "../sdk/AuroraTypes";
 import type { AuroraEvent, AuroraSession, AuroraSessionDetail, AuroraStream } from "../sdk/models";
+import { formatLogEntries, type LogEntry } from "./LogService";
 
 //#endregion
 
@@ -12,6 +13,13 @@ type ExportedEvent = {
     eventAt: number;
     flags: number;
     time: number;
+};
+
+export type LogReportInfo = {
+    appVersion?: string;
+    build?: string;
+    platform?: string;
+    osVersion?: string;
 };
 //#endregion
 
@@ -67,6 +75,21 @@ export const buildSessionEventsCsv = (
 
 export const buildProfileExportContent = (profile: AuroraProfile | undefined): string => {
     return profile?.content ?? "";
+};
+
+export const buildLogReport = (logs: LogEntry[], info: LogReportInfo = {}): string => {
+    const header = [
+        "owl-of-athena log report",
+        `exported_at: ${new Date().toISOString()}`,
+        `app_version: ${info.appVersion ?? "unknown"}`,
+        `build: ${info.build ?? "unknown"}`,
+        `platform: ${info.platform ?? "unknown"}`,
+        `os_version: ${info.osVersion ?? "unknown"}`,
+        `entries: ${logs.length}`,
+        "",
+    ];
+
+    return [...header, formatLogEntries(logs)].join("\n");
 };
 //#endregion
 

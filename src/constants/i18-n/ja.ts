@@ -350,6 +350,17 @@ export default {
     [MessageKeys.console_clear_button]: "クリア",
     [MessageKeys.console_not_connected]:
         "Auroraが接続されていません。コンソールを使うにはAuroraに接続してください。",
+    [MessageKeys.console_share_logs_button]: "ログを共有",
+    [MessageKeys.console_share_logs_title]: "コンソールログ",
+
+    // about screen
+    [MessageKeys.about_title]: "アプリ情報",
+    [MessageKeys.about_version_label]: "バージョン",
+    [MessageKeys.about_build_label]: "ビルド",
+    [MessageKeys.about_sdk_label]: "SDK",
+    [MessageKeys.about_platform_label]: "プラットフォーム",
+    [MessageKeys.about_os_label]: "OS",
+    [MessageKeys.about_repository_label]: "リポジトリ",
 
     // messages screen
     [MessageKeys.messages_mark_as_read]: "既読にする",
@@ -368,6 +379,7 @@ export default {
     [MessageKeys.issue_report_input_reproduce_steps]: "再現手順",
     [MessageKeys.issue_report_check_critical]: "重大な問題",
     [MessageKeys.issue_report_check_anonymous]: "匿名で送信",
+    [MessageKeys.issue_report_check_attach_logs]: "ログを添付",
     [MessageKeys.issue_report_send_button]: "レポートを送信",
     [MessageKeys.issue_report_success]: "問題を報告しました。フィードバックありがとうございます！",
     [MessageKeys.issue_report_error]: "問題レポートの送信に失敗しました。",

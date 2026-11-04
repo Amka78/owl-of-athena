@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Checkbox, Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
+import LogService from "../../services/LogService";
 import { useIssueStore } from "../../store/issueStore";
 import { ContentText, FlatButton } from "../atoms";
 import { ValidatableTextBox } from "./ValidatableTextBox";
@@ -21,6 +22,7 @@ type IssueReportDialogState = {
     reproduce_steps: string;
     critical: boolean;
     anonymous: boolean;
+    attachLogs: boolean;
 };
 //#endregion
 
@@ -41,6 +43,7 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
             reproduce_steps: "",
             critical: false,
             anonymous: false,
+            attachLogs: true,
         };
     }
 
@@ -57,6 +60,7 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
             reproduce_steps: "",
             critical: false,
             anonymous: false,
+            attachLogs: true,
         });
         useIssueStore.getState().reset();
     }
@@ -122,6 +126,13 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
                                             labelStyle={styles.checkLabel}
                                         />
                                     </View>
+                                    <Checkbox.Item
+                                        label={Message.get(MessageKeys.issue_report_check_attach_logs)}
+                                        status={this.state.attachLogs ? "checked" : "unchecked"}
+                                        onPress={() => this.setState((s) => ({ attachLogs: !s.attachLogs }))}
+                                        color={Colors.cyan}
+                                        labelStyle={styles.checkLabel}
+                                    />
                                     {error ? (
                                         <ContentText style={styles.errorText}>{error}</ContentText>
                                     ) : null}
@@ -149,8 +160,16 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
     }
 
     private async onSend(): Promise<void> {
-        const { title, description, reproduce_steps, critical, anonymous } = this.state;
-        await useIssueStore.getState().createIssue({ title, description, reproduce_steps, critical, anonymous });
+        const { title, description, reproduce_steps, critical, anonymous, attachLogs } = this.state;
+        const logs = attachLogs ? LogService.toText() : undefined;
+        await useIssueStore.getState().createIssue({
+            title,
+            description,
+            reproduce_steps,
+            critical,
+            anonymous,
+            logs: logs || undefined,
+        });
         this.forceUpdate();
     }
 }

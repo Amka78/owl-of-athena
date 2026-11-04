@@ -356,6 +356,17 @@ export default {
     [MessageKeys.console_clear_button]: "Limpar",
     [MessageKeys.console_not_connected]:
         "O Aurora não está conectado. Conecte o Aurora para usar o console.",
+    [MessageKeys.console_share_logs_button]: "Compartilhar logs",
+    [MessageKeys.console_share_logs_title]: "Logs do console",
+
+    // about screen
+    [MessageKeys.about_title]: "Sobre",
+    [MessageKeys.about_version_label]: "Versão",
+    [MessageKeys.about_build_label]: "Build",
+    [MessageKeys.about_sdk_label]: "SDK",
+    [MessageKeys.about_platform_label]: "Plataforma",
+    [MessageKeys.about_os_label]: "SO",
+    [MessageKeys.about_repository_label]: "Repositório",
 
     // messages screen
     [MessageKeys.messages_mark_as_read]: "Marcar como Lida",
@@ -374,6 +385,7 @@ export default {
     [MessageKeys.issue_report_input_reproduce_steps]: "PASSOS PARA REPRODUZIR",
     [MessageKeys.issue_report_check_critical]: "Problema crítico",
     [MessageKeys.issue_report_check_anonymous]: "Enviar anonimamente",
+    [MessageKeys.issue_report_check_attach_logs]: "Anexar logs",
     [MessageKeys.issue_report_send_button]: "Enviar Relatório",
     [MessageKeys.issue_report_success]: "Problema reportado. Obrigado pelo seu retorno!",
     [MessageKeys.issue_report_error]: "Falha ao enviar o relatório do problema.",

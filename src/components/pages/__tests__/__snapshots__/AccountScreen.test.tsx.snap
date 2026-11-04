@@ -1822,6 +1822,36 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                   },
                   "type": "TouchableOpacity",
                 },
+                {
+                  "$$typeof": Symbol(react.test.json),
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "About",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#00ffe6",
+                          "fontSize": 14,
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
+                    "accessible": true,
+                    "onPress": [Function],
+                    "style": {
+                      "borderColor": "#00ffe6",
+                      "borderRadius": 4,
+                      "borderWidth": 1,
+                      "paddingHorizontal": 16,
+                      "paddingVertical": 8,
+                    },
+                  },
+                  "type": "TouchableOpacity",
+                },
               ],
               "props": {
                 "style": {

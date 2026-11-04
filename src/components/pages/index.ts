@@ -1,9 +1,8 @@
 //#region Import Modules
+import { AboutScreen } from "./AboutScreen";
 import { AccountMessagesScreen } from "./AccountMessagesScreen";
 import { AccountRolesScreen } from "./AccountRolesScreen";
 import { AccountScreen } from "./AccountScreen";
-import { ChangeEmailScreen } from "./ChangeEmailScreen";
-import { ChangePasswordScreen } from "./ChangePasswordScreen";
 import { AdminAppSettingsScreen } from "./AdminAppSettingsScreen";
 import { AdminIssuesScreen } from "./AdminIssuesScreen";
 import { AdminMessagesScreen } from "./AdminMessagesScreen";
@@ -11,6 +10,8 @@ import { AdminOrdersScreen } from "./AdminOrdersScreen";
 import { AdminSessionsScreen } from "./AdminSessionsScreen";
 import { AdminUsersScreen } from "./AdminUsersScreen";
 import { AwakeScreen } from "./AwakeScreen";
+import { ChangeEmailScreen } from "./ChangeEmailScreen";
+import { ChangePasswordScreen } from "./ChangePasswordScreen";
 import { ConfirmEmailScreen } from "./ConfirmEmailScreen";
 import { ConsoleScreen } from "./ConsoleScreen";
 import { HomeScreen } from "./HomeScreen";
@@ -35,11 +36,10 @@ import { WelcomeScreen } from "./WelcomeScreen";
 
 //#region Export Modules
 export {
+    AboutScreen,
     AccountMessagesScreen,
     AccountRolesScreen,
     AccountScreen,
-    ChangeEmailScreen,
-    ChangePasswordScreen,
     AdminAppSettingsScreen,
     AdminIssuesScreen,
     AdminMessagesScreen,
@@ -47,6 +47,8 @@ export {
     AdminSessionsScreen,
     AdminUsersScreen,
     AwakeScreen,
+    ChangeEmailScreen,
+    ChangePasswordScreen,
     ConfirmEmailScreen,
     ConsoleScreen,
     HomeScreen,

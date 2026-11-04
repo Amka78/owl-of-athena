@@ -4,6 +4,7 @@ import type * as React from "react";
 import { View } from "react-native";
 
 import {
+    AboutScreen,
     AccountMessagesScreen,
     AccountRolesScreen,
     AccountScreen,
@@ -72,6 +73,13 @@ const SettingNavigator = (): React.ReactNode => {
                     component={ConsoleScreen}
                     options={{
                         headerTitle: Message.get(MessageKeys.console_title),
+                    }}
+                />
+                <Stack.Screen
+                    name={"About"}
+                    component={AboutScreen}
+                    options={{
+                        headerTitle: Message.get(MessageKeys.about_title),
                     }}
                 />
             </Stack.Navigator>

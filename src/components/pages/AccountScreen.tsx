@@ -16,6 +16,7 @@ export const AccountScreen: FunctionComponent = () => {
     const { navigate } = useNavigation<any>();
     const { user } = useAuthStore();
     const hasRoles = (user?.roles?.length ?? 0) > 0;
+    const isAdmin = user?.roles?.some((role) => role.slug === "admin") ?? false;
 
     return (
         <View style={styles.container}>
@@ -55,14 +56,28 @@ export const AccountScreen: FunctionComponent = () => {
                     style={styles.navButton}
                     onPress={() => navigate("AccountMessages")}
                 >
-                    <Text style={styles.navButtonText}>Messages</Text>
+                    <Text style={styles.navButtonText}>
+                        {Message.get(MessageKeys.account_messages_title)}
+                    </Text>
                 </TouchableOpacity>
                 {hasRoles && (
                     <TouchableOpacity
                         style={styles.navButton}
                         onPress={() => navigate("AccountRoles")}
                     >
-                        <Text style={styles.navButtonText}>Roles</Text>
+                        <Text style={styles.navButtonText}>
+                            {Message.get(MessageKeys.account_roles_title)}
+                        </Text>
+                    </TouchableOpacity>
+                )}
+                {isAdmin && (
+                    <TouchableOpacity
+                        style={styles.navButton}
+                        onPress={() => navigate("Console")}
+                    >
+                        <Text style={styles.navButtonText}>
+                            {Message.get(MessageKeys.console_title)}
+                        </Text>
                     </TouchableOpacity>
                 )}
                 <TouchableOpacity
@@ -87,6 +102,14 @@ export const AccountScreen: FunctionComponent = () => {
                 >
                     <Text style={styles.navButtonText}>
                         {Message.get(MessageKeys.issue_report_button)}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.navButton}
+                    onPress={() => navigate("About")}
+                >
+                    <Text style={styles.navButtonText}>
+                        {Message.get(MessageKeys.about_title)}
                     </Text>
                 </TouchableOpacity>
             </View>

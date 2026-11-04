@@ -1,3 +1,4 @@
+import { getAppInfo } from "./AppInfo";
 import BaseUrl from "./BaseUrl";
 
-export { BaseUrl };
+export { BaseUrl, getAppInfo };

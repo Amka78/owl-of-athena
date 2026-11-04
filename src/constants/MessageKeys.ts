@@ -377,6 +377,18 @@ export const MessageKeys = {
     console_send_button: "console_send_button",
     console_clear_button: "console_clear_button",
     console_not_connected: "console_not_connected",
+    console_share_logs_button: "console_share_logs_button",
+    console_share_logs_title: "console_share_logs_title",
+    //#endregion
+
+    //#region About screen
+    about_title: "about_title",
+    about_version_label: "about_version_label",
+    about_build_label: "about_build_label",
+    about_sdk_label: "about_sdk_label",
+    about_platform_label: "about_platform_label",
+    about_os_label: "about_os_label",
+    about_repository_label: "about_repository_label",
     //#endregion
 
     //#region Messages screen
@@ -397,6 +409,7 @@ export const MessageKeys = {
     issue_report_input_reproduce_steps: "issue_report_input_reproduce_steps",
     issue_report_check_critical: "issue_report_check_critical",
     issue_report_check_anonymous: "issue_report_check_anonymous",
+    issue_report_check_attach_logs: "issue_report_check_attach_logs",
     issue_report_send_button: "issue_report_send_button",
     issue_report_success: "issue_report_success",
     issue_report_error: "issue_report_error",

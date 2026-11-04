@@ -354,6 +354,17 @@ export default {
     [MessageKeys.console_clear_button]: "Clear",
     [MessageKeys.console_not_connected]:
         "Aurora is not connected. Connect Aurora to use the console.",
+    [MessageKeys.console_share_logs_button]: "Share logs",
+    [MessageKeys.console_share_logs_title]: "Console Logs",
+
+    // about screen
+    [MessageKeys.about_title]: "About",
+    [MessageKeys.about_version_label]: "Version",
+    [MessageKeys.about_build_label]: "Build",
+    [MessageKeys.about_sdk_label]: "SDK",
+    [MessageKeys.about_platform_label]: "Platform",
+    [MessageKeys.about_os_label]: "OS",
+    [MessageKeys.about_repository_label]: "Repository",
 
     // messages screen
     [MessageKeys.messages_mark_as_read]: "Mark as Read",
@@ -372,6 +383,7 @@ export default {
     [MessageKeys.issue_report_input_reproduce_steps]: "STEPS TO REPRODUCE",
     [MessageKeys.issue_report_check_critical]: "Critical issue",
     [MessageKeys.issue_report_check_anonymous]: "Submit anonymously",
+    [MessageKeys.issue_report_check_attach_logs]: "Attach logs",
     [MessageKeys.issue_report_send_button]: "Send Report",
     [MessageKeys.issue_report_success]: "Issue reported. Thank you for your feedback!",
     [MessageKeys.issue_report_error]: "Failed to send issue report.",
