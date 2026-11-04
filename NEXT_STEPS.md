@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **318 pass / 60 fail**（159 ファイル・378 テスト）
+- 全件テスト: **328 pass / 60 fail**（161 ファイル・388 テスト）
 - 60 fail のうち 57 件は既存の Supabase URL 未設定によるスイート汚染。残り 3 件は今回追加した `AboutScreen.test.tsx` / `AboutScreenTemplate.test.tsx` / `ConsoleScreen.test.tsx` が同じ汚染に巻き込まれたもの。変更前の HEAD では 57 fail だったことを worktree で確認済み
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories と `FlatButton` まわりの既存型エラーは残る）
 
@@ -32,6 +32,7 @@
 - 「アプリ情報」画面（バージョン・ビルド・SDK・プラットフォーム・OS・リポジトリ）
 - アカウント画面に About 導線、`admin` ロールがある場合のみコンソール導線
 - 不具合報告に「ログを添付」チェック（既定 ON）。`issues.logs` に保存し、管理画面では行の下に抜粋を表示
+- `expo-network` で接続状態を購読し、オフライン時は全画面の上部にバナーを表示（`OfflineBanner`）
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -41,7 +42,8 @@
    - `supabase/migrations/20261104000001_issue_logs.sql`（不具合報告のログ添付用）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
-4. 管理者ユーザーにロールを付与する。
+4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
+5. 管理者ユーザーにロールを付与する。
 
 ```sql
 UPDATE public.users
@@ -63,6 +65,7 @@ WHERE id = '<user-uuid>';
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
+- オフライン時のバナー表示（機内モード / 機内モード解除、Web の offline イベント）
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 
 これらは「完了」ではなく未検証として扱う。
@@ -105,6 +108,9 @@ bun test src/components/pages/__tests__/AboutScreen.test.tsx \
   src/components/templates/__tests__/AboutScreenTemplate.test.tsx \
   src/components/pages/__tests__/ConsoleScreen.test.tsx \
   src/components/pages/__tests__/AccountScreen.test.tsx
+
+bun test src/hooks/__tests__/useNetworkStatus.test.ts \
+  src/components/atoms/__tests__/OfflineBanner.test.tsx
 ```
 
 主な実装ファイル:
@@ -115,20 +121,21 @@ bun test src/components/pages/__tests__/AboutScreen.test.tsx \
 - セッション: `src/components/charts/SessionTimelineChart.tsx`, `src/components/organisms/sessions/SessionDetailsMenu.tsx`, `src/hooks/sessions/useSession.ts`
 - エクスポート: `src/services/ExportService.ts`
 - サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `supabase/migrations/20261104000001_issue_logs.sql`
+- オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
-2. **オフライン検知**: `expo-network`（または NetInfo）の追加が必要。ネイティブモジュールのため prebuild と再ビルドが要る。オフライン時のバナー表示か、書き込み・同期前のガードかを先に決める。
-3. **ファームウェア**: bootloader / BLE / bootstrap 更新、進捗状態（UPLOADING / FLASHING / VERIFYING）、失敗時の復旧案内、配布フィルタ（最低アプリバージョン・説明文）。
-4. **小物の parity**: 未読メッセージバッジ、質問票の checkbox 設問、セッション転送のセッション単位進捗、デバイス情報の buildDate / runningTime / bytesFree、SD フォーマット / デバイスリセット。
-5. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
+2. **ファームウェア**: bootloader / BLE / bootstrap 更新、進捗状態（UPLOADING / FLASHING / VERIFYING）、失敗時の復旧案内、配布フィルタ（最低アプリバージョン・説明文）。
+3. **小物の parity**: 未読メッセージバッジ、質問票の checkbox 設問、セッション転送のセッション単位進捗、デバイス情報の buildDate / runningTime / bytesFree、SD フォーマット / デバイスリセット。
+4. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
 
 ## 既知の制約
 
 - 全件テストの 60 fail のうち 57 件は Supabase の URL 未設定による既知の汚染。残り 3 件は今回追加したサポート系テスト 3 ファイルが同じ汚染に巻き込まれたもの。修正の前後で失敗ファイル集合を比較して判断する。
 - ログは `console.*` を起動時から最大 500 件保持するリングバッファ。アプリ起動より前のログと、ネイティブ側のログは含まれない。不具合報告に添付したログは Supabase の `issues.logs` にそのまま保存される。
 - コンソール画面は `admin` ロールを持つユーザーだけがアカウント画面から開ける。ディープリンクや直接遷移は想定していない。
+- オフライン検知は `expo-network` に依存する。初回取得が終わるまでは `unknown` としてバナーを出さない。iOS は `isInternetReachable` が `isConnected` と同じ値になるため、実際の到達性ではなく接続状態で判定する。ネイティブは prebuild と再インストールが必要。
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
 - エクスポートはテキスト共有。イベント数が多いセッションは OS の共有上限に掛かる可能性がある。ファイル共有が必要なら `expo-file-system` + `expo-sharing` の追加とネイティブ再ビルドが必要。
 - セッションタイムラインは睡眠チャート表示時のみ。画面の高さが足りない場合は省略される。
