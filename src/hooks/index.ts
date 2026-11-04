@@ -28,6 +28,7 @@ import { useSettingsSelector } from "./useSettingsSelector";
 import { useSignup } from "./useSignup";
 import { useTextBox } from "./useTextBox";
 import { useTokenSelector } from "./useTokenSelector";
+import { useUnreadMessageCount } from "./useUnreadMessageCount";
 import { useUserSelector } from "./useUserSelector";
 import { useWakeLockSelector } from "./useWakeLockSelector";
 import type { Dimensions } from "./useWindowDimensions";
@@ -68,6 +69,7 @@ export {
     useSignup,
     useTextBox,
     useTokenSelector,
+    useUnreadMessageCount,
     useUserSelector,
     useWakeLockSelector,
     useWindowDimensions,

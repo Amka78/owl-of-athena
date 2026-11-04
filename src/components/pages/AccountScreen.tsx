@@ -4,6 +4,7 @@ import React, { type FunctionComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useAcount, useWindowDimensions } from "../../hooks";
+import { useUnreadMessageCount } from "../../hooks/useUnreadMessageCount";
 import { useAuthStore } from "../../store/authStore";
 import { IssueReportDialog } from "../molecules/IssueReportDialog";
 import { AccountScreenTemplate } from "./../templates/AccountScreenTemplate";
@@ -17,6 +18,7 @@ export const AccountScreen: FunctionComponent = () => {
     const { user } = useAuthStore();
     const hasRoles = (user?.roles?.length ?? 0) > 0;
     const isAdmin = user?.roles?.some((role) => role.slug === "admin") ?? false;
+    const unreadCount = useUnreadMessageCount();
 
     return (
         <View style={styles.container}>
@@ -56,9 +58,21 @@ export const AccountScreen: FunctionComponent = () => {
                     style={styles.navButton}
                     onPress={() => navigate("AccountMessages")}
                 >
-                    <Text style={styles.navButtonText}>
-                        {Message.get(MessageKeys.account_messages_title)}
-                    </Text>
+                    <View style={styles.navButtonContent}>
+                        <Text style={styles.navButtonText}>
+                            {Message.get(MessageKeys.account_messages_title)}
+                        </Text>
+                        {unreadCount > 0 && (
+                            <View style={styles.unreadBadge}>
+                                <Text
+                                    style={styles.unreadBadgeText}
+                                    testID="unread-message-badge-text"
+                                >
+                                    {unreadCount > 99 ? "99+" : String(unreadCount)}
+                                </Text>
+                            </View>
+                        )}
+                    </View>
                 </TouchableOpacity>
                 {hasRoles && (
                     <TouchableOpacity
@@ -137,5 +151,16 @@ const styles = StyleSheet.create({
         borderRadius: 4,
     },
     navButtonText: { color: Colors.first_accent_color, fontSize: 14 },
+    navButtonContent: { flexDirection: "row", alignItems: "center", gap: 6 },
+    unreadBadge: {
+        minWidth: 18,
+        height: 18,
+        borderRadius: 9,
+        paddingHorizontal: 5,
+        backgroundColor: Colors.red,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    unreadBadgeText: { color: Colors.white, fontSize: 10, fontWeight: "bold" },
 });
 //#endregion

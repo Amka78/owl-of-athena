@@ -4,7 +4,8 @@ import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
 import { useAuthStore } from "../../../store/authStore";
-import type { User } from "../../../types";
+import { useMessageStore } from "../../../store/messageStore";
+import type { User, UserMessage } from "../../../types";
 import { AccountScreen } from "../AccountScreen";
 
 jest.mock("../../../hooks/useAccount", () => ({
@@ -54,13 +55,27 @@ jest.mock("../../../hooks", () => ({
     }),
 }));
 
-
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
 describe("AccountScreen UnitTest", () => {
+    beforeEach(() => {
+        useMessageStore.setState({
+            messages: [],
+            loaded: true,
+            loading: false,
+            error: undefined,
+        });
+    });
+
     afterEach(() => {
         useAuthStore.setState({ user: undefined });
+        useMessageStore.setState({
+            messages: [],
+            loaded: false,
+            loading: false,
+            error: undefined,
+        });
     });
 
     it("renders correctly", () => {
@@ -94,5 +109,24 @@ describe("AccountScreen UnitTest", () => {
 
         const { queryByText } = renderWithProvider(<AccountScreen />);
         expect(queryByText("Console")).toBeNull();
+    });
+
+    it("shows the unread message count", () => {
+        const messages: UserMessage[] = [
+            { id: "m1", title: "A", message: "", type: "info" },
+            { id: "m2", title: "B", message: "", type: "info" },
+            {
+                id: "m3",
+                title: "C",
+                message: "",
+                type: "info",
+                read_at: "2026-11-04T00:00:00.000Z",
+            },
+        ];
+        useMessageStore.setState({ messages });
+
+        const { getByTestId } = renderWithProvider(<AccountScreen />);
+
+        expect(getByTestId("unread-message-badge-text").props.children).toBe("2");
     });
 });

@@ -4,6 +4,7 @@ import { useCallback } from "react";
 
 import { useUserSelector } from "../hooks";
 import { useAuthStore } from "../store/authStore";
+import { useMessageStore } from "../store/messageStore";
 import { useProfileStore } from "../store/profileStore";
 import { useSessionStore } from "../store/sessionStore";
 import { GuestUser } from "../types";
@@ -16,16 +17,18 @@ export const useLogout = (): { onPress: () => Promise<void> } => {
     const { logout } = useAuthStore();
     const { initializeProfiles } = useProfileStore();
     const { initializeSession } = useSessionStore();
+    const resetMessages = useMessageStore((state) => state.resetMessages);
     const onPress = useCallback(async () => {
         console.debug("useSignout start");
 
+        resetMessages();
         if (user?.id !== GuestUser) {
             initializeProfiles();
             initializeSession();
         }
         logout();
         navigate("Unauthenticated", { screen: "Welcome" });
-    }, [initializeProfiles, initializeSession, logout, navigate, user?.id]);
+    }, [initializeProfiles, initializeSession, logout, navigate, resetMessages, user?.id]);
 
     return { onPress };
 };

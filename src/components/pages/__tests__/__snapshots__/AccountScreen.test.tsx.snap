@@ -1708,15 +1708,28 @@ exports[`AccountScreen UnitTest renders correctly 1`] = `
                     {
                       "$$typeof": Symbol(react.test.json),
                       "children": [
-                        "Messages",
+                        {
+                          "$$typeof": Symbol(react.test.json),
+                          "children": [
+                            "Messages",
+                          ],
+                          "props": {
+                            "style": {
+                              "color": "#00ffe6",
+                              "fontSize": 14,
+                            },
+                          },
+                          "type": "Text",
+                        },
                       ],
                       "props": {
                         "style": {
-                          "color": "#00ffe6",
-                          "fontSize": 14,
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                          "gap": 6,
                         },
                       },
-                      "type": "Text",
+                      "type": "View",
                     },
                   ],
                   "props": {
