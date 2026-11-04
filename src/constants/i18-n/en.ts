@@ -98,6 +98,8 @@ export default {
     [MessageKeys.firmware_update_verifying_with_component]: "Verifying {0}...",
     [MessageKeys.firmware_update_success_with_component]: "{0} updated to {1}.",
     [MessageKeys.firmware_update_failed_with_component]: "Failed to update {0}: {1}",
+    [MessageKeys.firmware_update_failed_hint]:
+        "Reset Aurora with the reset button, reconnect, and try again.",
     // welcome fragment
     [MessageKeys.welcome_title]: "Welcome to Aurora!",
     [MessageKeys.welcome_text]:

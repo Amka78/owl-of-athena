@@ -14,6 +14,7 @@ export type FirmwareRelease = {
     bleVersion?: number;
     bleHexPath?: string;
     bleNotes?: string;
+    minAppVersion?: number;
 };
 
 /** 更新中のフェーズ。 */

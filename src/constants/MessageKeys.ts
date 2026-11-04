@@ -71,6 +71,7 @@ export const MessageKeys = {
     firmware_update_verifying_with_component: "firmware_update_verifying_with_component",
     firmware_update_success_with_component: "firmware_update_success_with_component",
     firmware_update_failed_with_component: "firmware_update_failed_with_component",
+    firmware_update_failed_hint: "firmware_update_failed_hint",
     //#endregion
 
     //#region WelcomeScreen

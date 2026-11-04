@@ -108,10 +108,10 @@ export const useMain = (): {
             ]);
         } catch (e) {
             console.error("[useMain] firmware update failed:", e);
-            resultMessage = Message.get(MessageKeys.firmware_update_failed_with_component, [
+            resultMessage = `${Message.get(MessageKeys.firmware_update_failed_with_component, [
                 componentLabel,
                 String(e),
-            ]);
+            ])}\n\n${Message.get(MessageKeys.firmware_update_failed_hint)}`;
         } finally {
             LoadingDialog.close();
         }

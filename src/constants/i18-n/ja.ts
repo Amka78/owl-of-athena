@@ -92,6 +92,8 @@ export default {
     [MessageKeys.firmware_update_verifying_with_component]: "{0}を検証中...",
     [MessageKeys.firmware_update_success_with_component]: "{0}を {1} に更新しました。",
     [MessageKeys.firmware_update_failed_with_component]: "{0}の更新に失敗しました: {1}",
+    [MessageKeys.firmware_update_failed_hint]:
+        "Auroraのリセットボタンで再起動し、再接続してからもう一度お試しください。",
     [MessageKeys.welcome_title]: "Auroraにようこそ！",
     [MessageKeys.welcome_text]:
         "このソフトウェアは貴方のドリームリコールを向上させます。より良い睡眠を実現し、明晰夢を体験する可能性があがります。 良い夢を!",

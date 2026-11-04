@@ -55,6 +55,22 @@ describe("FirmwareService UnitTest", () => {
         expect(update?.url).toBe("https://example.test/app.hex");
     });
 
+    it("returns undefined when the app is below minAppVersion", () => {
+        expect(
+            selectFirmwareUpdate(installed, { ...release, minAppVersion: 10600 }, getUrl),
+        ).toBeUndefined();
+    });
+
+    it("allows the update when the app equals minAppVersion", () => {
+        const update = selectFirmwareUpdate(
+            installed,
+            { ...release, minAppVersion: installed.app },
+            getUrl,
+        );
+
+        expect(update?.component).toBe("app");
+    });
+
     it("selects the bootloader when the application is current", () => {
         const update = selectFirmwareUpdate({ ...installed, app: 10500 }, release, getUrl);
 

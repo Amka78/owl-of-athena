@@ -30,6 +30,10 @@ export const selectFirmwareUpdate = (
     release: FirmwareRelease,
     getUrl: (hexPath: string) => string,
 ): FirmwareUpdate | undefined => {
+    if (release.minAppVersion !== undefined && installed.app < release.minAppVersion) {
+        return undefined;
+    }
+
     if (shouldUpdateFirmware(installed.app, release.version)) {
         return {
             ...release,

@@ -45,6 +45,7 @@ export class FirmwareRestClient {
             bleVersion: optionalNumber(row.ble_version),
             bleHexPath: row.ble_hex_path ?? undefined,
             bleNotes: row.ble_notes ?? undefined,
+            minAppVersion: optionalNumber(row.min_app_version),
         };
     }
 
