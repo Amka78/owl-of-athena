@@ -5,6 +5,7 @@ import {
     buildProfileExportContent,
     buildSessionEventsCsv,
     buildSessionExportJson,
+    buildTableCsv,
 } from "../ExportService";
 
 const session = {
@@ -71,6 +72,24 @@ describe("ExportService", () => {
 
         const csv = buildSessionEventsCsv(session, undefined);
         expect(csv).toContain("type,event_at,flags,time");
+    });
+
+    it("builds a table CSV with a header row", () => {
+        const csv = buildTableCsv(
+            ["name", "score", "starred"],
+            [
+                ["Jane", 80, true],
+                [null, undefined, false],
+            ],
+        );
+
+        expect(csv.split("\r\n")).toEqual(["name,score,starred", "Jane,80,true", ",,false"]);
+    });
+
+    it("escapes commas, quotes, and newlines in table cells", () => {
+        const csv = buildTableCsv(["note"], [['a "quoted", value\nnext line']]);
+
+        expect(csv.split("\r\n")[1]).toBe('"a ""quoted"", value\nnext line"');
     });
 
     it("returns the raw profile content", () => {

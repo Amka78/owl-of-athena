@@ -1,4 +1,5 @@
 //#region Import Modules
+import { AdminTable } from "./AdminTable";
 import { AudioDialog, AudioList } from "./AudioDialog";
 import { AuroraInfoDialog } from "./AuroraInfoDialog";
 import { ConfirmDialog } from "./ConfirmDialog";
@@ -37,6 +38,8 @@ import { ValidatableTextBox } from "./ValidatableTextBox";
 
 //#region Export
 export {
+    AdminTable,
+    type AdminColumn,
     AudioDialog,
     AudioList as SoundList,
     AuroraInfoDialog,

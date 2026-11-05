@@ -21,6 +21,8 @@ export type LogReportInfo = {
     platform?: string;
     osVersion?: string;
 };
+
+export type CsvValue = string | number | boolean | null | undefined;
 //#endregion
 
 //#region Builders
@@ -71,6 +73,14 @@ export const buildSessionEventsCsv = (
     ];
 
     return rows.map((row) => row.map(escapeCsv).join(",")).join("\r\n");
+};
+
+export const buildTableCsv = (headers: string[], rows: CsvValue[][]): string => {
+    return [headers, ...rows]
+        .map((row) =>
+            row.map((value) => escapeCsv(value == null ? undefined : String(value))).join(","),
+        )
+        .join("\r\n");
 };
 
 export const buildProfileExportContent = (profile: AuroraProfile | undefined): string => {

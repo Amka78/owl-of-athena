@@ -353,6 +353,7 @@ export default {
     [MessageKeys.admin_issues_title]: "Issues",
     [MessageKeys.admin_messages_title]: "Messages",
     [MessageKeys.admin_app_settings_title]: "App Settings",
+    [MessageKeys.admin_export_csv_button]: "Share CSV",
     [MessageKeys.drawer_items_admin]: "Admin",
 
     // account messages

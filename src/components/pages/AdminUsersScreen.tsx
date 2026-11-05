@@ -1,58 +1,63 @@
 //#region Import Modules
-import React, { type FunctionComponent, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { Colors } from "../../constants";
+import { type FunctionComponent, useEffect, useState } from "react";
+import { Message, MessageKeys } from "../../constants";
 import { useAdmin } from "../../hooks/useAdmin";
+import { type AdminColumn, AdminTable } from "../molecules/AdminTable";
+
+//#endregion
+
+//#region Types
+type AdminUserRow = {
+    id?: string;
+    first_name?: string | null;
+    last_name?: string | null;
+    birthday?: string | null;
+    gender?: string | null;
+    roles?: { slug?: string; title?: string }[] | null;
+    created_at?: string | null;
+    updated_at?: string | null;
+};
+
+const formatRoles = (roles: AdminUserRow["roles"]): string => {
+    return (roles ?? [])
+        .map((role) => role.slug ?? role.title ?? "")
+        .filter(Boolean)
+        .join(", ");
+};
+
+const columns: AdminColumn<AdminUserRow>[] = [
+    {
+        title: "Name",
+        value: (user) => [user.first_name, user.last_name].filter(Boolean).join(" "),
+        flex: 2,
+    },
+    { title: "Birthday", value: (user) => user.birthday ?? "", flex: 2 },
+    { title: "Gender", value: (user) => user.gender ?? "", flex: 1 },
+    { title: "Roles", value: (user) => formatRoles(user.roles), flex: 2 },
+    { title: "Signup Date", value: (user) => user.created_at ?? "", flex: 2 },
+    { title: "ID", value: (user) => user.id ?? "", hidden: true },
+    { title: "Updated", value: (user) => user.updated_at ?? "", hidden: true },
+];
 //#endregion
 
 //#region Component
 export const AdminUsersScreen: FunctionComponent = () => {
     const { fetchUsers, loading } = useAdmin();
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<AdminUserRow[]>([]);
 
     useEffect(() => {
         fetchUsers().then(setUsers);
     }, [fetchUsers]);
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={[styles.headerCell, styles.flex2]}>Name</Text>
-                <Text style={[styles.headerCell, styles.flex3]}>Email</Text>
-                <Text style={[styles.headerCell, styles.flex2]}>Signup Date</Text>
-            </View>
-            {loading && <Text style={styles.loading}>Loading...</Text>}
-            <FlatList
-                data={users}
-                keyExtractor={(item, index) => item.id ?? String(index)}
-                renderItem={({ item }) => (
-                    <View style={styles.row}>
-                        <Text style={[styles.cell, styles.flex2]}>
-                            {[item.first_name, item.last_name].filter(Boolean).join(" ") || "—"}
-                        </Text>
-                        <Text style={[styles.cell, styles.flex3]}>{item.email ?? "—"}</Text>
-                        <Text style={[styles.cell, styles.flex2]}>{item.created_at ?? "—"}</Text>
-                    </View>
-                )}
-                ListEmptyComponent={
-                    !loading ? <Text style={styles.empty}>No users found.</Text> : undefined
-                }
-            />
-        </View>
+        <AdminTable
+            columns={columns}
+            rows={users}
+            loading={loading}
+            emptyText={"No users found."}
+            exportTitle={Message.get(MessageKeys.admin_users_title)}
+            keyExtractor={(user, index) => user.id ?? String(index)}
+        />
     );
 };
-//#endregion
-
-//#region Styles
-const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: Colors.navy },
-    header: { flexDirection: "row", backgroundColor: Colors.navy_darker, padding: 8 },
-    headerCell: { color: Colors.first_accent_color, fontWeight: "bold", fontSize: 12 },
-    row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: Colors.blue, padding: 8 },
-    cell: { color: Colors.white, fontSize: 12 },
-    flex2: { flex: 2 },
-    flex3: { flex: 3 },
-    loading: { color: Colors.cyan, textAlign: "center", padding: 16 },
-    empty: { color: Colors.white, textAlign: "center", padding: 16 },
-});
 //#endregion
