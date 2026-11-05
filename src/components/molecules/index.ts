@@ -8,6 +8,7 @@ import { ConvertibleListForm } from "./ConvertibleListForm";
 import { DatePicker } from "./DatePicker";
 import type { DatePickerProps } from "./DatePickerProps";
 import { InternalView } from "./InternalView";
+import { IssueLogDialog } from "./IssueLogDialog";
 import { IssueReportDialog } from "./IssueReportDialog";
 import { LabeledCheckBox } from "./LabeledCheckBox";
 import { LabeledRadioButton } from "./LabeledRadioButton";
@@ -38,8 +39,8 @@ import { ValidatableTextBox } from "./ValidatableTextBox";
 
 //#region Export
 export {
-    AdminTable,
     type AdminColumn,
+    AdminTable,
     AudioDialog,
     AudioList as SoundList,
     AuroraInfoDialog,
@@ -49,6 +50,7 @@ export {
     DatePicker,
     type DatePickerProps,
     InternalView,
+    IssueLogDialog,
     IssueReportDialog,
     LabeledCheckBox,
     LabeledRadioButton,

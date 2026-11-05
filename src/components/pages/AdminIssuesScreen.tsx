@@ -1,8 +1,9 @@
 //#region Import Modules
-import React, { type FunctionComponent, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { Colors } from "../../constants";
+import { type FunctionComponent, useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Colors, Message, MessageKeys } from "../../constants";
 import { useAdmin } from "../../hooks/useAdmin";
+import { IssueLogDialog } from "../molecules/IssueLogDialog";
 //#endregion
 
 //#region Component
@@ -16,6 +17,7 @@ export const AdminIssuesScreen: FunctionComponent = () => {
 
     return (
         <View style={styles.container}>
+            <IssueLogDialog />
             <View style={styles.header}>
                 <Text style={[styles.headerCell, styles.flex3]}>Title</Text>
                 <Text style={[styles.headerCell, styles.flex1]}>Platform</Text>
@@ -39,9 +41,19 @@ export const AdminIssuesScreen: FunctionComponent = () => {
                             <Text style={[styles.cell, styles.flex1]}>{item.status ?? "—"}</Text>
                         </View>
                         {item.logs ? (
-                            <Text style={styles.logs} numberOfLines={4}>
-                                {item.logs}
-                            </Text>
+                            <TouchableOpacity
+                                accessibilityRole="button"
+                                onPress={() =>
+                                    IssueLogDialog.show({ title: item.title, logs: item.logs })
+                                }
+                            >
+                                <Text style={styles.logs} numberOfLines={4}>
+                                    {item.logs}
+                                </Text>
+                                <Text style={styles.logsHint}>
+                                    {Message.get(MessageKeys.admin_issue_logs_open_hint)}
+                                </Text>
+                            </TouchableOpacity>
                         ) : null}
                     </View>
                 )}
@@ -66,6 +78,12 @@ const styles = StyleSheet.create({
         color: Colors.white,
         opacity: 0.6,
         fontFamily: "monospace",
+        fontSize: 10,
+        paddingHorizontal: 8,
+        paddingBottom: 8,
+    },
+    logsHint: {
+        color: Colors.cyan,
         fontSize: 10,
         paddingHorizontal: 8,
         paddingBottom: 8,

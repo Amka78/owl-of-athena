@@ -352,6 +352,8 @@ export default {
     [MessageKeys.admin_messages_title]: "メッセージ",
     [MessageKeys.admin_app_settings_title]: "アプリ設定",
     [MessageKeys.admin_export_csv_button]: "CSVを共有",
+    [MessageKeys.admin_issue_logs_title]: "ログ",
+    [MessageKeys.admin_issue_logs_open_hint]: "タップして全文を表示",
     [MessageKeys.drawer_items_admin]: "管理",
 
     // account messages
