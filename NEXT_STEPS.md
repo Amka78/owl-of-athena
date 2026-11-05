@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **535 pass / 8 fail**（173 ファイル・543 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **537 pass / 8 fail**（173 ファイル・545 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -46,6 +46,7 @@
 - 管理画面のユーザー / 注文 / セッションを共通の `AdminTable` にまとめ、「CSVを共有」（共有シート、Web は clipboard）を追加
 - 管理画面の列を実際の Supabase スキーマに合わせた。ユーザーは Email（`users` に列が無い）を外して誕生日・性別・ロールを表示、セッションは `sleep_score` / `session_duration`（列が無い）を外して就寝・起床・スター・日時を表示
 - 管理メニュー（`AdminMenuScreen`）を追加し、Admin を開いた直後にユーザー・注文・セッション・問題・メッセージを選べるようにした。各画面からは戻るでメニューへ戻る
+- ファームウェア更新の確認時に未転送セッションを数え、ある場合は「更新すると失われる」注意をダイアログ本文に追加。接続時に転送ダイアログを出した場合は、閉じたあとに件数を数え直してから更新を確認する
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -93,6 +94,7 @@ WHERE id = '<user-uuid>';
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
 - 管理画面の CSV 共有（共有シート / Web の clipboard）と、`admin` ロールでのユーザー・注文・セッション取得
 - 管理メニューから各画面への遷移と、戻るでメニューに戻ること
+- 未転送セッションがある状態でファームウェア更新の警告が出ること、転送後に警告が消えること
 
 これらは「完了」ではなく未検証として扱う。
 
@@ -152,7 +154,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
 - 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
-- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
+- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
 - 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
 
@@ -173,6 +175,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送の進捗は読み込み (`reading`) と転送 (`uploading`) の 2 段階で、セッションを 1 件処理するたびに更新する。失敗したセッションも進捗を進める。
 - `FlatButton` は `disabled` を Paper の Button に渡すようになった。以前は見た目だけで押せていた箇所がある。
 - ファームウェアの `min_app_version` はインストール済みアプリの version と比較し、下回る場合はアプリ / コンポーネントとも更新を提示しない。配布行に null を入れると制限なし。
+- 未転送セッションの警告は更新確認の時点で `getUnsyncedSessions()` を呼んで件数を数える。取得に失敗した場合は警告なしで更新を提示する。接続時の転送ダイアログを閉じたあとに数え直すため、転送済みなら警告は出ない。
+- ファームウェアのダウンロード段階・進捗表示は未実装（UPLOADING / FLASHING / VERIFYING のみ）。
 - ファームウェア更新失敗時は、エラーに加えてリセットボタンでの再起動・再接続を案内する。
 - ファームウェア更新の状態は、`flashFile` のアップロード前後で UPLOADING / FLASHING、`flashConnectionChange` で端末情報を受け取った時点を VERIFYING として表示する。端末が切断したまま再認識できない場合は FLASHING のままタイムアウトする。
 - ファームウェアのコンポーネント更新は、アプリ → ブートローダー → BLE の優先順で 1 回のチェックにつき 1 件だけ提示する。アプリが最新のときだけコンポーネントを見る。
