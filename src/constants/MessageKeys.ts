@@ -145,6 +145,7 @@ export const MessageKeys = {
     sessions_check_show_starred_description: "sessions_check_show_starred_description",
     sessions_check_show_notes_label: "sessions_check_show_notes_label",
     sessions_check_show_notes_description: "sessions_check_show_notes_description",
+    session_list_month_format: "session_list_month_format",
     //#endregion
 
     //#region Session picker fragment

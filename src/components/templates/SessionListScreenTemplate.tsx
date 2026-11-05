@@ -2,11 +2,12 @@
 import moment from "moment";
 import type React from "react";
 import type { FunctionComponent } from "react";
-import { View, type ViewStyle } from "react-native";
+import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { AuroraSession } from "../../sdk/models";
+import { buildSessionListRows } from "../../services/SessionListService";
 import { DeleteIcon, ListItem, ScrollableList, StandardView, StarIcon } from "../atoms";
 import type { ListItemComponentProps } from "../atoms/ListItem";
 import { ChartRadialProgress } from "../charts";
@@ -33,7 +34,7 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
     useLocale(props.locale);
 
     const screenDimens = useScreenDimensions();
-    let menu;
+    let menu: React.ReactNode;
     if (props.showFilter) {
         menu = (
             <SessionListMenu
@@ -46,11 +47,22 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
         <StandardView standardViewStyle={standardView} onLayout={screenDimens.onLayout}>
             {props.showFilter ? menu : undefined}
             <ScrollableList>
-                {props.sessionList.map((value: AuroraSession, index: number) => {
+                {buildSessionListRows(props.sessionList, (sessionAt) =>
+                    sessionAt.format(Message.get(MessageKeys.session_list_month_format)),
+                ).map((row, index) => {
+                    if (row.type === "month") {
+                        return (
+                            <Text key={row.key} style={monthHeader}>
+                                {row.label}
+                            </Text>
+                        );
+                    }
+
+                    const value = row.session;
                     const sessionAt = moment(value.sessionAt);
                     return (
                         <ListItem
-                            key={value.id}
+                            key={row.key}
                             left={(props: ListItemComponentProps): React.ReactNode => (
                                 <ChartRadialProgress
                                     width={38}
@@ -94,6 +106,16 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
 
 //#region Styles
 const standardView: ViewStyle = { justifyContent: "flex-start" };
+const monthHeader: TextStyle = {
+    color: Colors.cyan,
+    fontSize: 12,
+    fontWeight: "bold",
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.blue,
+};
 const starIconContainer: ViewStyle = {
     justifyContent: "center",
     alignItems: "center",
