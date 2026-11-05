@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **537 pass / 8 fail**（173 ファイル・545 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **544 pass / 8 fail**（174 ファイル・552 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -47,6 +47,7 @@
 - 管理画面の列を実際の Supabase スキーマに合わせた。ユーザーは Email（`users` に列が無い）を外して誕生日・性別・ロールを表示、セッションは `sleep_score` / `session_duration`（列が無い）を外して就寝・起床・スター・日時を表示
 - 管理メニュー（`AdminMenuScreen`）を追加し、Admin を開いた直後にユーザー・注文・セッション・問題・メッセージを選べるようにした。各画面からは戻るでメニューへ戻る
 - ファームウェア更新の確認時に未転送セッションを数え、ある場合は「更新すると失われる」注意をダイアログ本文に追加。接続時に転送ダイアログを出した場合は、閉じたあとに件数を数え直してから更新を確認する
+- 管理テーブルに検索（表示中の全列を部分一致）、列ヘッダーのタップによる昇順/降順ソート、20 件ずつのページングを追加。CSV は絞り込み・並べ替え後の全件を hidden 列込みで出力する
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -95,6 +96,7 @@ WHERE id = '<user-uuid>';
 - 管理画面の CSV 共有（共有シート / Web の clipboard）と、`admin` ロールでのユーザー・注文・セッション取得
 - 管理メニューから各画面への遷移と、戻るでメニューに戻ること
 - 未転送セッションがある状態でファームウェア更新の警告が出ること、転送後に警告が消えること
+- 管理テーブルの検索・ソート・ページングの操作感（自動テストはロジックのみ。行表示は FlatList モックの制約で未検証）
 
 これらは「完了」ではなく未検証として扱う。
 
@@ -156,12 +158,12 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
-- 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
+- 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/molecules/AdminTableModel.ts`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
-2. **管理画面の残り**: 不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。検索・ソート・ページング・列表示切替・行選択は未実装。
+2. **管理画面の残り**: 不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。列の表示切替・行選択・サーバ側ページングは未実装（現行は全件取得＋クライアント側の 20 件ページング）。
 
 ## 既知の制約
 
@@ -187,9 +189,10 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
 - エクスポートはテキスト共有。イベント数が多いセッションは OS の共有上限に掛かる可能性がある。ファイル共有が必要なら `expo-file-system` + `expo-sharing` の追加とネイティブ再ビルドが必要。
 - セッションタイムラインは睡眠チャート表示時のみ。画面の高さが足りない場合は省略される。
-- 管理画面の CSV はテキスト共有（ネイティブは共有シート、Web は clipboard）。`AdminTable` の hidden 列も CSV に含まれる。ID や notes など画面に出さない値を出力するため。
+- 管理画面の CSV はテキスト共有（ネイティブは共有シート、Web は clipboard）。`AdminTable` の hidden 列も CSV に含まれる。ID や notes など画面に出さない値を出力するため。検索・ソートを適用した結果を出力する（ページングは適用しない）。
+- 管理テーブルは全件取得してクライアント側で検索・ソート・20 件ページングする。件数が増えた場合はサーバ側ページングが必要。
 - 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users` に email 列は無いため Email は表示しない。セッションの睡眠スコアと duration もテーブルに無いため表示しない。
-- テスト環境の `FlatList` はモックが子要素を描画しないため、`AdminTable` の行表示は自動テストで検証していない（CSV とヘッダーのみ）。
+- テスト環境の `FlatList` はモックが子要素を描画しないため、`AdminTable` の行表示は自動テストで検証していない（CSV・ヘッダー・`AdminTableModel` の検索/ソート/ページングのみ）。
 - `AdminAppSettingsScreen` は旧 API 前提で到達不能のまま。管理メニューには出ていない。
 - `stream-debug` は有効な `admin` ロールがある場合のみ表示される。
 - `git push` は SSH 鍵のパスフレーズで止まるため、非対話環境からは実行していない。必要な場合は手動で push する。
