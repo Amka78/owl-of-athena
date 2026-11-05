@@ -81,6 +81,8 @@ export default {
     [MessageKeys.firmware_update_failed]: "ファームウェアの更新に失敗しました: {0}",
     [MessageKeys.firmware_update_battery_low]:
         "更新の前にAuroraを充電してください。電池が少ない状態で更新すると、端末が使えなくなる可能性があります。",
+    [MessageKeys.firmware_update_unsynced_warning]:
+        "未転送のセッションが {0} 件あります。更新すると失われます。先に転送してください。",
     [MessageKeys.firmware_component_app]: "アプリファームウェア",
     [MessageKeys.firmware_component_bootloader]: "ブートローダー",
     [MessageKeys.firmware_component_ble]: "BLEファームウェア",

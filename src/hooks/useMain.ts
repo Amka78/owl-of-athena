@@ -10,10 +10,12 @@ import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
 import type { AuroraOSInfo, AuroraSession, AuroraSessionDetail } from "../sdk/models";
 import { versionToString } from "../sdk/util";
+import { buildFirmwareUpdateMessage } from "../services/FirmwareService";
 import { onConnectionChange } from "../services/MainService";
 import { useSessionStore } from "../store/sessionStore";
 import { type FirmwareUpdate, type FirmwareUpdatePhase, GuestUser } from "../types";
 import { useSessionDetailListSelector, useSessionListSelector, useUserSelector } from "./";
+
 //#endregion
 
 //#region Functions
@@ -124,6 +126,8 @@ export const useMain = (): {
     }, []);
 
     const promptFirmwareUpdate = useCallback(async (): Promise<void> => {
+        if (!AuroraManagerInstance.isConnected()) return;
+
         let update: FirmwareUpdate | undefined;
         try {
             update = await AuroraManagerInstance.getFirmwareUpdate();
@@ -143,12 +147,23 @@ export const useMain = (): {
             return;
         }
 
+        let unsyncedCount = 0;
+        try {
+            unsyncedCount = (await AuroraManagerInstance.getUnsyncedSessions()).length;
+        } catch (e) {
+            // 取得できなくても更新自体は提示する
+            console.debug("[useMain] failed to check unsynced sessions:", e);
+        }
+
         const componentLabel = firmwareComponentLabel(update.component);
-        const baseMessage = Message.get(MessageKeys.firmware_update_message_with_component, [
-            componentLabel,
-            versionToString(update.version),
-        ]);
-        const message = update.notes ? `${baseMessage}\n\n${update.notes}` : baseMessage;
+        const message = buildFirmwareUpdateMessage({
+            baseMessage: Message.get(MessageKeys.firmware_update_message_with_component, [
+                componentLabel,
+                versionToString(update.version),
+            ]),
+            notes: update.notes,
+            unsyncedCount,
+        });
 
         ConfirmDialog.show({
             title: Message.get(MessageKeys.firmware_update_title),
@@ -164,13 +179,14 @@ export const useMain = (): {
         console.debug("Start configuring aurora.");
 
         let error = "";
+        let transferDialogShown = false;
         try {
             LoadingDialog.show({
                 dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
             });
 
             setError("");
-            await executeConfiguring(
+            transferDialogShown = await executeConfiguring(
                 connect === ConnectionStates.CONNECTED
                     ? ConnectionStates.DISCONNECTING
                     : ConnectionStates.CONNECTING,
@@ -208,6 +224,9 @@ export const useMain = (): {
                     );
                     setConnect(ConnectionStates.DISCONNECTED);
                 },
+                () => {
+                    void promptFirmwareUpdate();
+                },
             );
         } catch (e) {
             const err = e as Error;
@@ -218,8 +237,9 @@ export const useMain = (): {
             LoadingDialog.close();
         }
 
-        // 接続できたときだけファームウェアの更新を確認する
-        if (error === "" && connect !== ConnectionStates.CONNECTED) {
+        // 接続できたときだけファームウェアの更新を確認する。
+        // 転送ダイアログを出した場合は、閉じたあとに未転送件数を数え直して確認する。
+        if (error === "" && connect !== ConnectionStates.CONNECTED && !transferDialogShown) {
             void promptFirmwareUpdate();
         }
 
@@ -279,8 +299,10 @@ async function executeConfiguring(
     pushedSessionCallback: (session: [Array<AuroraSession>, Array<AuroraSessionDetail>]) => void,
     connectedCallback: (osInfo: AuroraOSInfo) => void,
     disconnectedCallback: () => void,
-): Promise<void> {
-    let result;
+    onTransferDialogClose: () => void,
+): Promise<boolean> {
+    let result: AuroraOSInfo | void;
+    let transferDialogShown = false;
 
     try {
         if (connectStatus === ConnectionStates.CONNECTING) {
@@ -301,8 +323,10 @@ async function executeConfiguring(
                 console.debug("Completed getUnsyncedSessions:", unsyncedSessions);
 
                 if (unsyncedSessions.length > 0 && AuroraManagerInstance.isConfiguring()) {
+                    transferDialogShown = true;
                     SessionTransferDialog.show({
                         isAuroraConnected: true,
+                        onClose: onTransferDialogClose,
                         onTransferComplete: async () => {
                             LoadingDialog.show({
                                 dialogTitle: Message.get(
@@ -332,5 +356,7 @@ async function executeConfiguring(
         console.error(e);
         throw e;
     }
+
+    return transferDialogShown;
 }
 //#endregion

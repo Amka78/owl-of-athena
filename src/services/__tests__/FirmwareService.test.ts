@@ -1,6 +1,11 @@
 //#region Import Modules
 import type { FirmwareRelease } from "../../types";
-import { firmwareFlashType, selectFirmwareUpdate, shouldUpdateFirmware } from "../FirmwareService";
+import {
+    buildFirmwareUpdateMessage,
+    firmwareFlashType,
+    selectFirmwareUpdate,
+    shouldUpdateFirmware,
+} from "../FirmwareService";
 
 //#endregion
 
@@ -27,6 +32,24 @@ const getUrl = (path: string): string => `https://example.test/${path}`;
 
 //#region Tests
 describe("FirmwareService UnitTest", () => {
+    it("appends the release notes and the unsynced session warning", () => {
+        const message = buildFirmwareUpdateMessage({
+            baseMessage: "Update now?",
+            notes: "release notes",
+            unsyncedCount: 2,
+        });
+
+        expect(message).toBe(
+            "Update now?\n\nrelease notes\n\n2 unsynced session(s) will be lost if you update. Transfer them first.",
+        );
+    });
+
+    it("omits the unsynced warning when there are no unsynced sessions", () => {
+        expect(buildFirmwareUpdateMessage({ baseMessage: "Update now?", unsyncedCount: 0 })).toBe(
+            "Update now?",
+        );
+        expect(buildFirmwareUpdateMessage({ baseMessage: "Update now?" })).toBe("Update now?");
+    });
     it("returns true when the release is newer than the device", () => {
         expect(shouldUpdateFirmware(10402, 10500)).toBe(true);
     });

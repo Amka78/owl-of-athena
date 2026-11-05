@@ -1,4 +1,5 @@
 //#region Import Modules
+import { Message, MessageKeys } from "../constants";
 import type { FirmwareRelease, FirmwareUpdate } from "../types";
 //#endregion
 
@@ -79,5 +80,30 @@ export const firmwareFlashType = (update: FirmwareUpdate): string => {
         return "bootloader-and-bootstrap";
     }
     return update.component;
+};
+
+/**
+ * 更新確認ダイアログの本文を組み立てる。
+ * 未転送セッションがある場合は、更新で失われることを本文に添える。
+ */
+export const buildFirmwareUpdateMessage = (options: {
+    baseMessage: string;
+    notes?: string;
+    unsyncedCount?: number;
+}): string => {
+    const parts = [options.baseMessage];
+
+    if (options.notes) {
+        parts.push(options.notes);
+    }
+    if ((options.unsyncedCount ?? 0) > 0) {
+        parts.push(
+            Message.get(MessageKeys.firmware_update_unsynced_warning, [
+                String(options.unsyncedCount),
+            ]),
+        );
+    }
+
+    return parts.join("\n\n");
 };
 //#endregion

@@ -89,6 +89,8 @@ export default {
     [MessageKeys.firmware_update_failed]: "Falha na atualização do firmware: {0}",
     [MessageKeys.firmware_update_battery_low]:
         "Carregue o Aurora antes de atualizar o firmware. Atualizar com a bateria fraca pode deixar o dispositivo inutilizável.",
+    [MessageKeys.firmware_update_unsynced_warning]:
+        "{0} sessão(ões) não sincronizada(s) serão perdidas se você atualizar. Transfira-as primeiro.",
     [MessageKeys.firmware_component_app]: "Firmware do aplicativo",
     [MessageKeys.firmware_component_bootloader]: "Bootloader",
     [MessageKeys.firmware_component_ble]: "Firmware BLE",
