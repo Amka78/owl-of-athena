@@ -5,6 +5,7 @@ import { AccountRolesScreen } from "./AccountRolesScreen";
 import { AccountScreen } from "./AccountScreen";
 import { AdminAppSettingsScreen } from "./AdminAppSettingsScreen";
 import { AdminIssuesScreen } from "./AdminIssuesScreen";
+import { AdminMenuScreen } from "./AdminMenuScreen";
 import { AdminMessagesScreen } from "./AdminMessagesScreen";
 import { AdminOrdersScreen } from "./AdminOrdersScreen";
 import { AdminSessionsScreen } from "./AdminSessionsScreen";
@@ -42,6 +43,7 @@ export {
     AccountScreen,
     AdminAppSettingsScreen,
     AdminIssuesScreen,
+    AdminMenuScreen,
     AdminMessagesScreen,
     AdminOrdersScreen,
     AdminSessionsScreen,

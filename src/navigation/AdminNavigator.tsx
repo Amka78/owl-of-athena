@@ -6,6 +6,7 @@ import { View } from "react-native";
 import {
     AdminAppSettingsScreen,
     AdminIssuesScreen,
+    AdminMenuScreen,
     AdminMessagesScreen,
     AdminOrdersScreen,
     AdminSessionsScreen,
@@ -29,8 +30,15 @@ const AdminNavigator = (): React.ReactNode => {
                     headerStyle: headerStyle,
                     headerTintColor: Colors.cyan,
                 }}
-                initialRouteName={"AdminUsers"}
+                initialRouteName={"AdminMenu"}
             >
+                <Stack.Screen
+                    name={"AdminMenu"}
+                    component={AdminMenuScreen}
+                    options={{
+                        headerTitle: Message.get(MessageKeys.admin_title),
+                    }}
+                />
                 <Stack.Screen
                     name={"AdminUsers"}
                     component={AdminUsersScreen}
