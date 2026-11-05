@@ -1,4 +1,4 @@
-# 再開用メモ（2026-11-04）
+# 再開用メモ（2026-11-06）
 
 このセッションで追加した機能と、次に再開するときの入口をまとめる。
 
@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **528 pass / 8 fail**（171 ファイル・536 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **532 pass / 8 fail**（172 ファイル・540 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -43,6 +43,8 @@
 - ファームウェア更新中に UPLOADING / FLASHING / VERIFYING をローディングダイアログへ表示
 - ファームウェア更新失敗時にリセットボタンでの復帰案内を表示し、`min_app_version` 未満のアプリには更新を提示しない
 - アカウント画面に SD カードのフォーマットと Aurora のリセットを追加。接続中のみ有効で、実行前に確認ダイアログを出す
+- 管理画面のユーザー / 注文 / セッションを共通の `AdminTable` にまとめ、「CSVを共有」（共有シート、Web は clipboard）を追加
+- 管理画面の列を実際の Supabase スキーマに合わせた。ユーザーは Email（`users` に列が無い）を外して誕生日・性別・ロールを表示、セッションは `sleep_score` / `session_duration`（列が無い）を外して就寝・起床・スター・日時を表示
 
 ## 手動セットアップ（未適用なら必須）
 
@@ -88,6 +90,7 @@ WHERE id = '<user-uuid>';
 - ファームウェア更新失敗時の案内表示と、`min_app_version` による更新の非表示
 - SD カードのフォーマットと Aurora のリセット（実機、実行後の再接続）
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
+- 管理画面の CSV 共有（共有シート / Web の clipboard）と、`admin` ロールでのユーザー・注文・セッション取得
 
 これらは「完了」ではなく未検証として扱う。
 
@@ -149,11 +152,12 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
+- 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
 
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
-2. **管理画面**: ユーザー・セッション・注文の列追加や CSV 出力（モバイルに不要なものは移植しない）。不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。
+2. **管理画面の残り**: 不具合報告のログは現状 4 行の抜粋のみなので、必要なら詳細表示を追加する。注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。
 
 ## 既知の制約
 
@@ -177,6 +181,9 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 既存の `aurora_profiles` 行は `content` が空のためクライアント側で非表示になる。必要なら作り直す。
 - エクスポートはテキスト共有。イベント数が多いセッションは OS の共有上限に掛かる可能性がある。ファイル共有が必要なら `expo-file-system` + `expo-sharing` の追加とネイティブ再ビルドが必要。
 - セッションタイムラインは睡眠チャート表示時のみ。画面の高さが足りない場合は省略される。
+- 管理画面の CSV はテキスト共有（ネイティブは共有シート、Web は clipboard）。`AdminTable` の hidden 列も CSV に含まれる。ID や notes など画面に出さない値を出力するため。
+- 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users` に email 列は無いため Email は表示しない。セッションの睡眠スコアと duration もテーブルに無いため表示しない。
+- テスト環境の `FlatList` はモックが子要素を描画しないため、`AdminTable` の行表示は自動テストで検証していない（CSV とヘッダーのみ）。
 - `AdminAppSettingsScreen` は旧 API 前提で到達不能のまま。管理メニューには出ていない。
 - `stream-debug` は有効な `admin` ロールがある場合のみ表示される。
 - `git push` は SSH 鍵のパスフレーズで止まるため、非対話環境からは実行していない。必要な場合は手動で push する。
