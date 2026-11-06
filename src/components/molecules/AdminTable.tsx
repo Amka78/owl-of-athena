@@ -1,9 +1,10 @@
 //#region Import Modules
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { buildTableCsv, shareText } from "../../services/ExportService";
+import { loadHiddenColumns, saveHiddenColumns } from "./AdminTableColumnPrefs";
 import type { AdminColumn, AdminSort } from "./AdminTableModel";
 import { paginateAdminRows, queryAdminRows, toAdminCsvRows } from "./AdminTableModel";
 
@@ -19,6 +20,8 @@ export type AdminTableProps<T> = {
     emptyText: string;
     exportTitle: string;
     keyExtractor: (row: T, index: number) => string;
+    /** 指定すると列の表示／非表示を端末に保存し、次回も復元する。 */
+    storageKey?: string;
 };
 //#endregion
 
@@ -28,10 +31,47 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState<AdminSort>();
     const [pageIndex, setPageIndex] = useState(0);
+    const [hiddenTitles, setHiddenTitles] = useState<string[]>();
+    const [showColumnMenu, setShowColumnMenu] = useState(false);
 
-    const visibleColumns = props.columns.filter((column) => !column.hidden);
+    useEffect(() => {
+        if (props.storageKey === undefined) {
+            return;
+        }
+        let active = true;
+        loadHiddenColumns(props.storageKey).then((stored) => {
+            if (active && stored !== undefined) {
+                setHiddenTitles(stored);
+            }
+        });
+        return () => {
+            active = false;
+        };
+    }, [props.storageKey]);
+
+    const isHidden = (column: AdminColumn<T>): boolean =>
+        hiddenTitles === undefined ? column.hidden === true : hiddenTitles.includes(column.title);
+
+    const visibleColumns = props.columns.filter((column) => !isHidden(column));
     const matchedRows = queryAdminRows(props.rows, visibleColumns, { search, sort });
     const { pageRows, page, totalPages } = paginateAdminRows(matchedRows, pageIndex);
+
+    const onColumnToggle = (title: string): void => {
+        const current =
+            hiddenTitles ??
+            props.columns.filter((column) => column.hidden).map((column) => column.title);
+        const next = current.includes(title)
+            ? current.filter((value) => value !== title)
+            : [...current, title];
+        if (props.columns.every((column) => next.includes(column.title))) {
+            return;
+        }
+        setHiddenTitles(next);
+        setPageIndex(0);
+        if (props.storageKey !== undefined) {
+            void saveHiddenColumns(props.storageKey, next);
+        }
+    };
 
     const onSearchChange = (value: string): void => {
         setSearch(value);
@@ -79,7 +119,38 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                         {Message.get(MessageKeys.admin_export_csv_button)}
                     </Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.exportButton}
+                    onPress={() => setShowColumnMenu((current) => !current)}
+                    testID="admin-columns-button"
+                >
+                    <Text style={styles.exportButtonText}>
+                        {Message.get(MessageKeys.admin_columns_button)}
+                    </Text>
+                </TouchableOpacity>
             </View>
+            {showColumnMenu && (
+                <View style={styles.columnMenu}>
+                    {props.columns.map((column) => {
+                        const visible = !isHidden(column);
+                        return (
+                            <TouchableOpacity
+                                key={column.title}
+                                style={styles.columnMenuItem}
+                                onPress={() => onColumnToggle(column.title)}
+                                testID={`admin-column-${column.title}`}
+                                accessibilityRole="checkbox"
+                                accessibilityState={{ checked: visible }}
+                            >
+                                <View style={[styles.checkbox, visible && styles.checkboxChecked]}>
+                                    {visible ? <Text style={styles.checkboxMark}>✓</Text> : null}
+                                </View>
+                                <Text style={styles.columnMenuLabel}>{column.title}</Text>
+                            </TouchableOpacity>
+                        );
+                    })}
+                </View>
+            )}
             {exportError ? <Text style={styles.error}>{exportError}</Text> : null}
             <View style={styles.header}>
                 {visibleColumns.map((column) => (
@@ -174,6 +245,28 @@ const styles = StyleSheet.create({
     },
     exportButton: { paddingHorizontal: 10, paddingVertical: 4 },
     exportButtonText: { color: Colors.first_accent_color, fontSize: 12 },
+    columnMenu: { backgroundColor: Colors.navy_darker, paddingVertical: 4 },
+    columnMenuItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+    },
+    checkbox: {
+        width: 14,
+        height: 14,
+        borderWidth: 1,
+        borderColor: Colors.white,
+        alignItems: "center",
+        justifyContent: "center",
+        marginRight: 8,
+    },
+    checkboxChecked: {
+        backgroundColor: Colors.first_accent_color,
+        borderColor: Colors.first_accent_color,
+    },
+    checkboxMark: { color: Colors.navy, fontSize: 10, lineHeight: 12 },
+    columnMenuLabel: { color: Colors.white, fontSize: 12 },
     header: { flexDirection: "row", backgroundColor: Colors.navy_darker, padding: 8 },
     headerCell: { color: Colors.first_accent_color, fontWeight: "bold", fontSize: 12 },
     row: { flexDirection: "row", padding: 8 },

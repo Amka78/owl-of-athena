@@ -57,6 +57,7 @@ export const AdminUsersScreen: FunctionComponent = () => {
             emptyText={"No users found."}
             exportTitle={Message.get(MessageKeys.admin_users_title)}
             keyExtractor={(user, index) => user.id ?? String(index)}
+            storageKey={"admin_users"}
         />
     );
 };

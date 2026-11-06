@@ -53,6 +53,7 @@ export const AdminSessionsScreen: FunctionComponent = () => {
             emptyText={"No sessions found."}
             exportTitle={Message.get(MessageKeys.admin_sessions_title)}
             keyExtractor={(session, index) => session.id ?? String(index)}
+            storageKey={"admin_sessions"}
         />
     );
 };

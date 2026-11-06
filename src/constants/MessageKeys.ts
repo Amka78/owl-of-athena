@@ -374,6 +374,7 @@ export const MessageKeys = {
     admin_messages_title: "admin_messages_title",
     admin_app_settings_title: "admin_app_settings_title",
     admin_export_csv_button: "admin_export_csv_button",
+    admin_columns_button: "admin_columns_button",
     admin_issue_logs_title: "admin_issue_logs_title",
     admin_issue_logs_open_hint: "admin_issue_logs_open_hint",
     drawer_items_admin: "drawer_items_admin",
