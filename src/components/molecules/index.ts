@@ -38,8 +38,9 @@ import { ValidatableTextBox } from "./ValidatableTextBox";
 //#endregion
 
 //#region Export
+export type { AdminColumn } from "./AdminTable";
+
 export {
-    type AdminColumn,
     AdminTable,
     AudioDialog,
     AudioList as SoundList,

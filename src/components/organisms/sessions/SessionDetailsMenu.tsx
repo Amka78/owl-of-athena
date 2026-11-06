@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { Switch } from "react-native-paper";
 
@@ -22,6 +22,7 @@ export type SessionDetailsMenuProps = {
     onButtonEventsToggle: () => void;
     onExportJsonPress: () => void;
     onExportCsvPress: () => void;
+    onDownloadZipPress: () => void;
     containerStyle?: ViewStyle;
 };
 //#endregion
@@ -91,6 +92,9 @@ export const SessionDetailsMenu: FunctionComponent<SessionDetailsMenuProps> = (
                 </FlatButton>
                 <FlatButton onPress={props.onExportCsvPress}>
                     {Message.get(MessageKeys.session_export_csv)}
+                </FlatButton>
+                <FlatButton onPress={props.onDownloadZipPress}>
+                    {Message.get(MessageKeys.download_zip)}
                 </FlatButton>
             </View>
         </MenuContainer>

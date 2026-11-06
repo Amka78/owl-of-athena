@@ -1,5 +1,5 @@
 //#region "Import modules"
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
 import { useSession } from "../../hooks/sessions/useSession";
 import { SessionScreenTemplate } from "./../templates/SessionScreenTemplate";
@@ -65,6 +65,7 @@ export const SessionScreen: FunctionComponent = () => {
                 onButtonEventsToggle: sessionHook.onButtonEventsToggle,
                 onExportJsonPress: sessionHook.onExportPress,
                 onExportCsvPress: sessionHook.onExportCsvPress,
+                onDownloadZipPress: sessionHook.onDownloadZipPress,
             }}
             sessionChartPie={{
                 session: sessionHook.selectedSession,

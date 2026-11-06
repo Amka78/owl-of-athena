@@ -39,6 +39,8 @@ export type AdminTableProps<T> = {
     selectable?: boolean;
     /** 指定すると検索・ソート・ページングをサーバ側で行う。 */
     dataSource?: AdminDataSource<T>;
+    /** 選択行を ZIP などでまとめてダウンロードする処理。 */
+    onDownloadSelected?: (rows: T[]) => Promise<void>;
 };
 
 type SelectedRow<T> = {
@@ -66,6 +68,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const [serverTotal, setServerTotal] = useState(0);
     const [serverLoading, setServerLoading] = useState(props.dataSource !== undefined);
     const [serverError, setServerError] = useState<string>();
+    const [selectionActionPending, setSelectionActionPending] = useState(false);
 
     useEffect(() => {
         if (props.storageKey === undefined) {
@@ -236,6 +239,21 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
         setPageIndex(0);
     };
 
+    const onDownloadSelectedPress = async (): Promise<void> => {
+        if (props.onDownloadSelected === undefined || selectionActionPending) {
+            return;
+        }
+        setSelectionActionPending(true);
+        try {
+            await props.onDownloadSelected(selectedRows.map((selected) => selected.row));
+            setExportError(undefined);
+        } catch (e: any) {
+            setExportError(e?.message ?? Message.get(MessageKeys.export_failed));
+        } finally {
+            setSelectionActionPending(false);
+        }
+    };
+
     const shareRows = async (rows: T[]): Promise<void> => {
         try {
             await shareText(
@@ -317,6 +335,23 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                             {Message.get(MessageKeys.admin_export_csv_button)}
                         </Text>
                     </TouchableOpacity>
+                    {props.onDownloadSelected !== undefined && (
+                        <TouchableOpacity
+                            style={styles.selectionAction}
+                            disabled={selectionActionPending}
+                            onPress={() => void onDownloadSelectedPress()}
+                            testID="admin-download-selected-button"
+                        >
+                            <Text
+                                style={[
+                                    styles.exportButtonText,
+                                    selectionActionPending && styles.pageButtonDisabled,
+                                ]}
+                            >
+                                {Message.get(MessageKeys.download_zip)}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
                     <TouchableOpacity
                         style={styles.selectionAction}
                         onPress={() => setSelectedRows([])}

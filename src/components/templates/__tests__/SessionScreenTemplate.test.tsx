@@ -55,6 +55,7 @@ const defaultProps = {
         onButtonEventsToggle: jest.fn(),
         onExportJsonPress: jest.fn(),
         onExportCsvPress: jest.fn(),
+        onDownloadZipPress: jest.fn(),
     },
     sessionChartPie: {
         session: null as unknown as AuroraSession,

@@ -177,6 +177,7 @@ export const MessageKeys = {
     session_export_title: "session_export_title",
     session_export_json: "session_export_json",
     session_export_csv: "session_export_csv",
+    download_zip: "download_zip",
     profile_export_button: "profile_export_button",
     profile_export_title: "profile_export_title",
     export_failed: "export_failed",

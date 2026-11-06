@@ -50,6 +50,7 @@ export const useSession = (): {
     onButtonEventsToggle: () => void;
     onExportPress: () => Promise<void>;
     onExportCsvPress: () => Promise<void>;
+    onDownloadZipPress: () => Promise<void>;
 } => {
     useCheckLogging();
     const selectedSession = useSelectedSessionSelector()!;
@@ -137,6 +138,21 @@ export const useSession = (): {
         [exportSession],
     );
 
+    const onDownloadZipPress = useCallback(async (): Promise<void> => {
+        if (!selectedSession) return;
+
+        try {
+            const { downloadSessionZip } = await import("../../services/SessionZipDownloadService");
+            await downloadSessionZip(selectedSession, selectedSessionDetail);
+        } catch (error) {
+            console.debug("session zip download failed:", error);
+            ConfirmDialog.show({
+                title: Message.get(MessageKeys.session_export_title),
+                message: Message.get(MessageKeys.export_failed),
+            });
+        }
+    }, [selectedSession, selectedSessionDetail]);
+
     return {
         selectedSession,
         selectedSessionDetail,
@@ -164,6 +180,7 @@ export const useSession = (): {
         onButtonEventsToggle,
         onExportPress,
         onExportCsvPress,
+        onDownloadZipPress,
     };
 };
 //#endregion

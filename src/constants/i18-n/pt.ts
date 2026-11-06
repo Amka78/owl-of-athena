@@ -198,6 +198,7 @@ export default {
     [MessageKeys.session_export_title]: "Dados da Sessão Aurora",
     [MessageKeys.session_export_json]: "Compartilhar JSON",
     [MessageKeys.session_export_csv]: "Compartilhar CSV",
+    [MessageKeys.download_zip]: "Baixar ZIP",
     [MessageKeys.profile_export_button]: "Exportar Perfil",
     [MessageKeys.profile_export_title]: "Perfil Aurora",
     [MessageKeys.export_failed]: "Falha ao exportar os dados.",

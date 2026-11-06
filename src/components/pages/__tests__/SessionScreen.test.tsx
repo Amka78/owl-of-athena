@@ -33,6 +33,7 @@ jest.mock("../../../hooks/sessions/useSession", () => ({
         onAwakeningEventsToggle: jest.fn(),
         onButtonEventsToggle: jest.fn(),
         onExportCsvPress: jest.fn(),
+        onDownloadZipPress: jest.fn(),
     }),
 }));
 

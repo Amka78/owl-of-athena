@@ -196,6 +196,7 @@ export default {
     [MessageKeys.session_export_title]: "Aurora セッションデータ",
     [MessageKeys.session_export_json]: "JSONを共有",
     [MessageKeys.session_export_csv]: "CSVを共有",
+    [MessageKeys.download_zip]: "ZIPをダウンロード",
     [MessageKeys.profile_export_button]: "プロフィールをエクスポート",
     [MessageKeys.profile_export_title]: "Aurora プロフィール",
     [MessageKeys.export_failed]: "データのエクスポートに失敗しました。",

@@ -21,6 +21,7 @@ const defaultProps = {
     onButtonEventsToggle: jest.fn(),
     onExportJsonPress: jest.fn(),
     onExportCsvPress: jest.fn(),
+    onDownloadZipPress: jest.fn(),
 };
 
 describe("SessionDetailsMenu", () => {
@@ -63,20 +64,24 @@ describe("SessionDetailsMenu", () => {
         expect(onFilterToggle).toHaveBeenCalledTimes(1);
     });
 
-    it("offers JSON and CSV exports", () => {
+    it("offers JSON, CSV, and ZIP downloads", () => {
         const onExportJsonPress = jest.fn();
         const onExportCsvPress = jest.fn();
+        const onDownloadZipPress = jest.fn();
         const { getByText } = renderWithProvider(
             <SessionDetailsMenu
                 {...defaultProps}
                 onExportJsonPress={onExportJsonPress}
                 onExportCsvPress={onExportCsvPress}
+                onDownloadZipPress={onDownloadZipPress}
             ></SessionDetailsMenu>,
         );
 
         fireEvent.press(getByText("Share JSON"));
         fireEvent.press(getByText("Share CSV"));
+        fireEvent.press(getByText("Download ZIP"));
         expect(onExportJsonPress).toHaveBeenCalledTimes(1);
         expect(onExportCsvPress).toHaveBeenCalledTimes(1);
+        expect(onDownloadZipPress).toHaveBeenCalledTimes(1);
     });
 });

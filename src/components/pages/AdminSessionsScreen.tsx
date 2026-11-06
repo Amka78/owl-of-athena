@@ -1,7 +1,9 @@
 //#region Import Modules
 import type { FunctionComponent } from "react";
+import SessionRestClient from "../../clients/SessionRestClient";
 import { Message, MessageKeys } from "../../constants";
 import { createSupabaseAdminDataSource } from "../../services/AdminQueryService";
+import type { SessionZipItem } from "../../services/SessionZipService";
 import { type AdminColumn, AdminTable } from "../molecules/AdminTable";
 
 //#endregion
@@ -90,6 +92,30 @@ const dataSource = createSupabaseAdminDataSource<AdminSessionRow>("aurora_sessio
 });
 //#endregion
 
+//#region Functions
+const onDownloadSelected = async (rows: AdminSessionRow[]): Promise<void> => {
+    const items = await Promise.all(
+        rows.map(async (row): Promise<SessionZipItem | undefined> => {
+            if (row.id === undefined) {
+                return undefined;
+            }
+            const session = await SessionRestClient.getById(row.id);
+            const detail = await SessionRestClient.getDetailsById(row.id);
+            return { session, detail };
+        }),
+    );
+
+    const validItems = items.filter((item): item is SessionZipItem => item !== undefined);
+    if (validItems.length === 0) {
+        return;
+    }
+    const { downloadSessionCollectionZip } = await import(
+        "../../services/SessionZipDownloadService"
+    );
+    await downloadSessionCollectionZip(validItems);
+};
+//#endregion
+
 //#region Component
 export const AdminSessionsScreen: FunctionComponent = () => {
     return (
@@ -101,6 +127,7 @@ export const AdminSessionsScreen: FunctionComponent = () => {
             keyExtractor={(session, index) => session.id ?? String(index)}
             storageKey={"admin_sessions"}
             selectable
+            onDownloadSelected={onDownloadSelected}
         />
     );
 };

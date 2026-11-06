@@ -83,6 +83,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     plugins: [
         "expo-dev-client",
         "expo-notifications",
+        "expo-sharing",
         // バックグラウンド再生用の前景サービスと UIBackgroundModes を有効にする。
         // 録音は使わないため RECORD_AUDIO は要求しない。
         [

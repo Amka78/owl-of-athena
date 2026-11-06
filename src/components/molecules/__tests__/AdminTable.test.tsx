@@ -20,6 +20,7 @@ type RenderOptions = {
     storageKey?: string;
     selectable?: boolean;
     dataSource?: AdminDataSource<Row>;
+    onDownloadSelected?: (rows: Row[]) => Promise<void>;
 };
 
 const renderTable = (rows: Row[], options: RenderOptions = {}) =>
@@ -34,6 +35,7 @@ const renderTable = (rows: Row[], options: RenderOptions = {}) =>
             storageKey={options.storageKey}
             selectable={options.selectable}
             dataSource={options.dataSource}
+            onDownloadSelected={options.onDownloadSelected}
         />,
     );
 
@@ -119,6 +121,25 @@ describe("AdminTable", () => {
                 ["John", "2"],
             ],
         );
+    });
+
+    it("downloads the selected rows", async () => {
+        const rows = [
+            { id: "1", name: "Jane" },
+            { id: "2", name: "John" },
+        ];
+        const onDownloadSelected = jest.fn(async () => {});
+        const { getByTestId } = renderTable(rows, {
+            selectable: true,
+            onDownloadSelected,
+        });
+
+        fireEvent.press(getByTestId("admin-select-all"));
+        fireEvent.press(getByTestId("admin-download-selected-button"));
+
+        await waitFor(() => {
+            expect(onDownloadSelected).toHaveBeenCalledWith(rows);
+        });
     });
 
     it("clears the selection", () => {
