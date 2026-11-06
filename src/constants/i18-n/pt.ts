@@ -416,6 +416,7 @@ export default {
     [MessageKeys.messages_mark_as_read]: "Marcar como Lida",
     [MessageKeys.messages_read_label]: "Lida",
     [MessageKeys.messages_unread_label]: "Não Lida",
+    [MessageKeys.messages_mark_all_read]: "Marcar todas como lidas",
     [MessageKeys.messages_begin_questionnaire]: "Iniciar Questionário",
     [MessageKeys.messages_continue_questionnaire]: "Continuar Questionário",
     [MessageKeys.messages_save_for_later]: "Salvar para Depois",

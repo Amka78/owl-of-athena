@@ -413,6 +413,7 @@ export default {
     [MessageKeys.messages_mark_as_read]: "Mark as Read",
     [MessageKeys.messages_read_label]: "Read",
     [MessageKeys.messages_unread_label]: "Unread",
+    [MessageKeys.messages_mark_all_read]: "Mark all as read",
     [MessageKeys.messages_begin_questionnaire]: "Begin Questionnaire",
     [MessageKeys.messages_continue_questionnaire]: "Continue Questionnaire",
     [MessageKeys.messages_save_for_later]: "Save for Later",

@@ -1,23 +1,36 @@
 //#region Import Modules
-import React, { type FunctionComponent, useEffect } from "react";
+import { type FunctionComponent, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useCheckLogging } from "../../hooks";
 import { useMessageStore } from "../../store/messageStore";
 import { useQuestionnaireStore } from "../../store/questionnaireStore";
+import type { UserMessage } from "../../types";
 import { MessageDialog } from "../molecules/MessageDialog";
 import { QuestionnaireDialog } from "../molecules/QuestionnaireDialog";
-import type { UserMessage } from "../../types";
 //#endregion
 
 //#region Component
 export const AccountMessagesScreen: FunctionComponent = () => {
     useCheckLogging();
-    const { messages, loading, loadMessages, markAsRead, updateMessageRespondent } = useMessageStore();
+    const { messages, loading, loadMessages, markAsRead, markAllAsRead, updateMessageRespondent } =
+        useMessageStore();
+    const [markingAll, setMarkingAll] = useState(false);
+    const unreadCount = messages.filter((message) => !message.read_at).length;
 
     useEffect(() => {
         loadMessages();
-    }, []);
+    }, [loadMessages]);
+
+    const onMarkAllAsReadPress = async (): Promise<void> => {
+        if (markingAll) return;
+        setMarkingAll(true);
+        try {
+            await markAllAsRead();
+        } finally {
+            setMarkingAll(false);
+        }
+    };
 
     const onMessagePress = (item: UserMessage) => {
         MessageDialog.show({
@@ -32,7 +45,10 @@ export const AccountMessagesScreen: FunctionComponent = () => {
                     });
                 } else if (msg.questionnaire_id) {
                     const store = useQuestionnaireStore.getState();
-                    const respondent = await store.startQuestionnaire(msg.questionnaire_id, onComplete);
+                    const respondent = await store.startQuestionnaire(
+                        msg.questionnaire_id,
+                        onComplete,
+                    );
                     await updateMessageRespondent(msg.id, respondent.id);
                     QuestionnaireDialog.show({
                         questionnaireId: msg.questionnaire_id,
@@ -47,6 +63,21 @@ export const AccountMessagesScreen: FunctionComponent = () => {
         <View style={styles.container}>
             <MessageDialog />
             <QuestionnaireDialog />
+            {unreadCount > 0 && (
+                <View style={styles.toolbar}>
+                    <TouchableOpacity
+                        onPress={() => void onMarkAllAsReadPress()}
+                        disabled={markingAll}
+                        testID="mark-all-read-button"
+                    >
+                        <Text
+                            style={[styles.markAllText, markingAll && styles.markAllTextDisabled]}
+                        >
+                            {Message.get(MessageKeys.messages_mark_all_read)}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             {loading && <Text style={styles.loading}>Loading...</Text>}
             <FlatList
                 data={messages}
@@ -56,7 +87,12 @@ export const AccountMessagesScreen: FunctionComponent = () => {
                         <View style={styles.row}>
                             <View style={styles.rowHeader}>
                                 <Text style={styles.title}>{item.title ?? "—"}</Text>
-                                <View style={[styles.badge, item.read_at ? styles.badgeRead : styles.badgeUnread]}>
+                                <View
+                                    style={[
+                                        styles.badge,
+                                        item.read_at ? styles.badgeRead : styles.badgeUnread,
+                                    ]}
+                                >
                                     <Text style={styles.badgeText}>
                                         {item.read_at
                                             ? Message.get(MessageKeys.messages_read_label)
@@ -64,19 +100,21 @@ export const AccountMessagesScreen: FunctionComponent = () => {
                                     </Text>
                                 </View>
                             </View>
-                            <Text style={styles.messagePreview} numberOfLines={2}>{item.message ?? "—"}</Text>
+                            <Text style={styles.messagePreview} numberOfLines={2}>
+                                {item.message ?? "—"}
+                            </Text>
                             <View style={styles.rowFooter}>
                                 <Text style={styles.date}>{item.created_at ?? "—"}</Text>
-                                {item.questionnaire_id && (
-                                    <Text style={styles.questTag}>📋</Text>
-                                )}
+                                {item.questionnaire_id && <Text style={styles.questTag}>📋</Text>}
                             </View>
                         </View>
                     </TouchableOpacity>
                 )}
                 ListEmptyComponent={
                     !loading ? (
-                        <Text style={styles.empty}>{Message.get(MessageKeys.messages_no_messages)}</Text>
+                        <Text style={styles.empty}>
+                            {Message.get(MessageKeys.messages_no_messages)}
+                        </Text>
                     ) : undefined
                 }
             />
@@ -88,6 +126,16 @@ export const AccountMessagesScreen: FunctionComponent = () => {
 //#region Styles
 const styles = StyleSheet.create({
     container: { flex: 1, backgroundColor: Colors.navy },
+    toolbar: {
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.blue,
+    },
+    markAllText: { color: Colors.cyan, fontSize: 12, fontWeight: "bold" },
+    markAllTextDisabled: { opacity: 0.5 },
     row: {
         padding: 12,
         borderBottomWidth: 1,

@@ -409,6 +409,7 @@ export default {
     [MessageKeys.messages_mark_as_read]: "既読にする",
     [MessageKeys.messages_read_label]: "既読",
     [MessageKeys.messages_unread_label]: "未読",
+    [MessageKeys.messages_mark_all_read]: "すべて既読にする",
     [MessageKeys.messages_begin_questionnaire]: "アンケートを開始する",
     [MessageKeys.messages_continue_questionnaire]: "アンケートを続ける",
     [MessageKeys.messages_save_for_later]: "後で確認する",

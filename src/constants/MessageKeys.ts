@@ -433,6 +433,7 @@ export const MessageKeys = {
     messages_mark_as_read: "messages_mark_as_read",
     messages_read_label: "messages_read_label",
     messages_unread_label: "messages_unread_label",
+    messages_mark_all_read: "messages_mark_all_read",
     messages_begin_questionnaire: "messages_begin_questionnaire",
     messages_continue_questionnaire: "messages_continue_questionnaire",
     messages_save_for_later: "messages_save_for_later",
