@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **569 pass / 8 fail**（178 ファイル・577 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **574 pass / 8 fail**（179 ファイル・582 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -50,6 +50,7 @@
 - 管理テーブルの検索・ソート・ページングをサーバ側に移した。Supabase の `range` で 20 件ずつ取得し、検索は表示中の列に対応する `searchFields` の `ilike`、ソートは列の `field` を使う。件数は `count: exact` で取得する。CSV は該当全件を追加取得して hidden 列込みで出力する
 - 管理画面の不具合報告で、4 行の抜粋をタップするとログ全文ダイアログ（等幅・選択可）を開けるようにした
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
+- 未転送セッション件数をメイン画面のセッションアイコン（下部タブ / ドロワー）にバッジ表示するようにした。件数は接続時のスキャンと転送完了で更新し、切断時に 0 に戻す。接続中のみ表示する
 - セッション詳細と管理画面の選択行から ZIP をダウンロードできるようにした。ZIP には `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` を入れ、複数選択時は `Sessions/<日時>_<ID>/` に分ける。生成は `fflate`、ネイティブは `expo-file-system` + `expo-sharing`、Web は Blob ダウンロード
 - 管理テーブルに列の表示切替を追加。ツールバーの「列」から各列の表示／非表示を切り替え、テーブルごとに端末へ保存する。最後の 1 列は非表示にできない
 - 管理テーブルに行選択を追加。行頭のチェックボックスとヘッダーの全選択で選択し、選択バーから「選択行だけの CSV 共有」と選択解除ができる。全選択は現在のページの中だけを対象にし、選択はページを跨いで保持する
@@ -87,6 +88,7 @@ WHERE id = '<user-uuid>';
 - 管理画面の実データ取得（`is_admin()` と RLS の適用後）
 - セッション JSON/CSV の共有シート、Web の clipboard フォールバック
 - セッション詳細と管理画面の ZIP ダウンロード（iOS/Android の共有シート、Web のブラウザダウンロード、ZIP の中身）
+- 未転送セッションバッジ（接続時のスキャン、転送後の減算、切断時のクリア、99+ 表示）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -171,6 +173,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
 - セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
+- 未転送バッジ: `src/store/sessionTransferStore.ts`, `src/components/atoms/SessionsIconWithBadge.tsx`, `src/components/templates/MainScreenTemplate.tsx`, `src/navigation/MainDrawerNavigator.tsx`, `src/hooks/useMain.ts`, `src/hooks/useAwake.ts`
 - 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/molecules/AdminTableModel.ts`, `src/components/molecules/AdminTableColumnPrefs.ts`, `src/services/AdminQueryModel.ts`, `src/services/AdminQueryService.ts`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
 
 ## 次の優先順
@@ -206,6 +209,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 管理テーブルはサーバ側で検索・ソート・20 件ページングする。検索対象は表示中の列の `searchFields` だけで、隠した列は検索されない。検索語の `, ( ) % * \` は空白に置換する。`searchFields` の `::text` は日付・数値・JSONB・UUID を文字列検索するためのキャスト。
 - 管理テーブルの列表示は `storageKey`（`admin_users` / `admin_orders` / `admin_sessions`）ごとに AsyncStorage へ非表示列名を保存する。列を追加した場合は定義の `hidden` が初期値になる。CSV は表示切替に関係なく全列（hidden 含む）を出力する。
 - 行選択は画面内の状態だけで、永続化しない。全選択は現在のページの行を対象にし、選択はページを跨いで保持する。選択行の CSV は保持している行から出力するため、検索で絞り込んでも選択件数と共有対象から外れない。
+- 未転送件数は `sessionTransferStore.unsyncedCount` で保持し、接続時のスキャンと転送完了（`syncedCount` を減算）で更新、切断時に 0 にする。バッジは接続中だけ表示し、他端末で増えた分は次回スキャンまで反映しない。
 - セッション ZIP は `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` で構成する。参照 desktop のように S3 の生ストリームファイルは含めない（`streams` は JSON 内のメタデータのみ）。ネイティブはキャッシュへ書き出して共有シートを開き、Web は Blob をブラウザにダウンロードさせる。`expo-sharing` の追加により prebuild と再インストールが必要。
 - セッション一覧の「新規」バッジは desktop の `session.new` に相当する列が `aurora_sessions` に無いため未実装。必要なら `is_new` 列か既読管理（最終閲覧日時）の追加が前提になる。
 - 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users` に email 列は無いため Email は表示しない。セッションの睡眠スコアと duration もテーブルに無いため表示しない。
