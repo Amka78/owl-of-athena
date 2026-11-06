@@ -6,7 +6,12 @@ import { Colors, Message, MessageKeys } from "../../constants";
 import { buildTableCsv, shareText } from "../../services/ExportService";
 import { loadHiddenColumns, saveHiddenColumns } from "./AdminTableColumnPrefs";
 import type { AdminColumn, AdminSort } from "./AdminTableModel";
-import { paginateAdminRows, queryAdminRows, toAdminCsvRows } from "./AdminTableModel";
+import {
+    paginateAdminRows,
+    queryAdminRows,
+    toAdminCsvRows,
+    toggleSelectedKey,
+} from "./AdminTableModel";
 
 //#endregion
 
@@ -22,10 +27,18 @@ export type AdminTableProps<T> = {
     keyExtractor: (row: T, index: number) => string;
     /** 指定すると列の表示／非表示を端末に保存し、次回も復元する。 */
     storageKey?: string;
+    /** 行頭にチェックボックスを表示し、選択行だけの CSV 共有を可能にする。 */
+    selectable?: boolean;
 };
 //#endregion
 
 //#region Component
+const CheckBoxMark = ({ checked }: { checked: boolean }): React.ReactElement => (
+    <View style={[styles.checkbox, checked && styles.checkboxChecked]}>
+        {checked ? <Text style={styles.checkboxMark}>✓</Text> : null}
+    </View>
+);
+
 export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement => {
     const [exportError, setExportError] = useState<string>();
     const [search, setSearch] = useState("");
@@ -33,6 +46,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const [pageIndex, setPageIndex] = useState(0);
     const [hiddenTitles, setHiddenTitles] = useState<string[]>();
     const [showColumnMenu, setShowColumnMenu] = useState(false);
+    const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
     useEffect(() => {
         if (props.storageKey === undefined) {
@@ -55,6 +69,29 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const visibleColumns = props.columns.filter((column) => !isHidden(column));
     const matchedRows = queryAdminRows(props.rows, visibleColumns, { search, sort });
     const { pageRows, page, totalPages } = paginateAdminRows(matchedRows, pageIndex);
+
+    const rowKeys = new Map<T, string>();
+    matchedRows.forEach((row, index) => {
+        rowKeys.set(row, props.keyExtractor(row, index));
+    });
+    const keyOf = (row: T): string => rowKeys.get(row) ?? "";
+
+    const selectedKeySet = new Set(selectedKeys);
+    const selectedRows = props.selectable
+        ? matchedRows.filter((row) => selectedKeySet.has(keyOf(row)))
+        : [];
+    const allSelected =
+        props.selectable === true &&
+        matchedRows.length > 0 &&
+        matchedRows.every((row) => selectedKeySet.has(keyOf(row)));
+
+    const onRowSelectPress = (key: string): void => {
+        setSelectedKeys((current) => toggleSelectedKey(current, key));
+    };
+
+    const onSelectAllPress = (): void => {
+        setSelectedKeys(allSelected ? [] : matchedRows.map((row) => keyOf(row)));
+    };
 
     const onColumnToggle = (title: string): void => {
         const current =
@@ -87,13 +124,13 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
         setPageIndex(0);
     };
 
-    const onExportPress = async () => {
+    const onExportPress = async (rows: T[]): Promise<void> => {
         try {
             await shareText(
                 props.exportTitle,
                 buildTableCsv(
                     props.columns.map((column) => column.title),
-                    toAdminCsvRows(matchedRows, props.columns),
+                    toAdminCsvRows(rows, props.columns),
                 ),
             );
             setExportError(undefined);
@@ -114,7 +151,10 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
-                <TouchableOpacity style={styles.exportButton} onPress={onExportPress}>
+                <TouchableOpacity
+                    style={styles.exportButton}
+                    onPress={() => void onExportPress(matchedRows)}
+                >
                     <Text style={styles.exportButtonText}>
                         {Message.get(MessageKeys.admin_export_csv_button)}
                     </Text>
@@ -129,6 +169,33 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     </Text>
                 </TouchableOpacity>
             </View>
+            {props.selectable && selectedRows.length > 0 && (
+                <View style={styles.selectionBar}>
+                    <Text style={styles.selectionCount}>
+                        {Message.get(MessageKeys.admin_selected_count, [
+                            String(selectedRows.length),
+                        ])}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.selectionAction}
+                        onPress={() => void onExportPress(selectedRows)}
+                        testID="admin-share-selected-button"
+                    >
+                        <Text style={styles.exportButtonText}>
+                            {Message.get(MessageKeys.admin_export_csv_button)}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.selectionAction}
+                        onPress={() => setSelectedKeys([])}
+                        testID="admin-clear-selection-button"
+                    >
+                        <Text style={styles.exportButtonText}>
+                            {Message.get(MessageKeys.admin_selection_clear)}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            )}
             {showColumnMenu && (
                 <View style={styles.columnMenu}>
                     {props.columns.map((column) => {
@@ -142,9 +209,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                                 accessibilityRole="checkbox"
                                 accessibilityState={{ checked: visible }}
                             >
-                                <View style={[styles.checkbox, visible && styles.checkboxChecked]}>
-                                    {visible ? <Text style={styles.checkboxMark}>✓</Text> : null}
-                                </View>
+                                <CheckBoxMark checked={visible} />
                                 <Text style={styles.columnMenuLabel}>{column.title}</Text>
                             </TouchableOpacity>
                         );
@@ -153,6 +218,17 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
             )}
             {exportError ? <Text style={styles.error}>{exportError}</Text> : null}
             <View style={styles.header}>
+                {props.selectable && (
+                    <TouchableOpacity
+                        style={styles.selectCell}
+                        onPress={onSelectAllPress}
+                        testID="admin-select-all"
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: allSelected }}
+                    >
+                        <CheckBoxMark checked={allSelected} />
+                    </TouchableOpacity>
+                )}
                 {visibleColumns.map((column) => (
                     <TouchableOpacity
                         key={column.title}
@@ -173,22 +249,37 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
             {props.loading && <Text style={styles.loading}>Loading...</Text>}
             <FlatList
                 data={pageRows}
-                keyExtractor={props.keyExtractor}
-                renderItem={({ item }) => (
-                    <View style={styles.rowContainer}>
-                        <View style={styles.row}>
-                            {visibleColumns.map((column) => (
-                                <Text
-                                    key={column.title}
-                                    style={[styles.cell, { flex: column.flex ?? 1 }]}
-                                    numberOfLines={1}
-                                >
-                                    {column.value(item) || "—"}
-                                </Text>
-                            ))}
+                keyExtractor={(item, index) => keyOf(item) || props.keyExtractor(item, index)}
+                renderItem={({ item, index }) => {
+                    const rowKey = keyOf(item) || props.keyExtractor(item, index);
+                    const selected = selectedKeySet.has(rowKey);
+                    return (
+                        <View style={styles.rowContainer}>
+                            <View style={styles.row}>
+                                {props.selectable && (
+                                    <TouchableOpacity
+                                        style={styles.selectCell}
+                                        onPress={() => onRowSelectPress(rowKey)}
+                                        testID={`admin-row-select-${rowKey}`}
+                                        accessibilityRole="checkbox"
+                                        accessibilityState={{ checked: selected }}
+                                    >
+                                        <CheckBoxMark checked={selected} />
+                                    </TouchableOpacity>
+                                )}
+                                {visibleColumns.map((column) => (
+                                    <Text
+                                        key={column.title}
+                                        style={[styles.cell, { flex: column.flex ?? 1 }]}
+                                        numberOfLines={1}
+                                    >
+                                        {column.value(item) || "—"}
+                                    </Text>
+                                ))}
+                            </View>
                         </View>
-                    </View>
-                )}
+                    );
+                }}
                 ListEmptyComponent={
                     !props.loading ? (
                         <Text style={styles.empty}>
@@ -267,6 +358,16 @@ const styles = StyleSheet.create({
     },
     checkboxMark: { color: Colors.navy, fontSize: 10, lineHeight: 12 },
     columnMenuLabel: { color: Colors.white, fontSize: 12 },
+    selectionBar: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        backgroundColor: Colors.third_accent_color,
+    },
+    selectionCount: { flex: 1, color: Colors.white, fontSize: 12 },
+    selectionAction: { paddingHorizontal: 8, paddingVertical: 2 },
+    selectCell: { width: 26, alignItems: "center", justifyContent: "center" },
     header: { flexDirection: "row", backgroundColor: Colors.navy_darker, padding: 8 },
     headerCell: { color: Colors.first_accent_color, fontWeight: "bold", fontSize: 12 },
     row: { flexDirection: "row", padding: 8 },

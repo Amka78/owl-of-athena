@@ -354,6 +354,8 @@ export default {
     [MessageKeys.admin_app_settings_title]: "アプリ設定",
     [MessageKeys.admin_export_csv_button]: "CSVを共有",
     [MessageKeys.admin_columns_button]: "列",
+    [MessageKeys.admin_selected_count]: "{0}件選択",
+    [MessageKeys.admin_selection_clear]: "選択解除",
     [MessageKeys.admin_issue_logs_title]: "ログ",
     [MessageKeys.admin_issue_logs_open_hint]: "タップして全文を表示",
     [MessageKeys.drawer_items_admin]: "管理",

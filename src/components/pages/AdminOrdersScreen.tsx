@@ -47,6 +47,7 @@ export const AdminOrdersScreen: FunctionComponent = () => {
             exportTitle={Message.get(MessageKeys.admin_orders_title)}
             keyExtractor={(order, index) => order.id ?? String(index)}
             storageKey={"admin_orders"}
+            selectable
         />
     );
 };

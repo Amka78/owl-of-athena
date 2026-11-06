@@ -54,6 +54,7 @@ export const AdminSessionsScreen: FunctionComponent = () => {
             exportTitle={Message.get(MessageKeys.admin_sessions_title)}
             keyExtractor={(session, index) => session.id ?? String(index)}
             storageKey={"admin_sessions"}
+            selectable
         />
     );
 };

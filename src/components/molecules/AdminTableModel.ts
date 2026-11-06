@@ -68,6 +68,11 @@ export const paginateAdminRows = <T>(
     return { pageRows: rows.slice(start, start + pageSize), page, totalPages };
 };
 
+/** 選択キーの追加と解除を切り替える。 */
+export const toggleSelectedKey = (selected: string[], key: string): string[] => {
+    return selected.includes(key) ? selected.filter((value) => value !== key) : [...selected, key];
+};
+
 /** 列の定義に従って CSV 用の行を作る。hidden 列も含める。 */
 export const toAdminCsvRows = <T>(rows: T[], columns: AdminColumn<T>[]): CsvValue[][] => {
     return rows.map((row) => columns.map((column) => (column.csv ?? column.value)(row)));

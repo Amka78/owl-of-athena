@@ -358,6 +358,8 @@ export default {
     [MessageKeys.admin_app_settings_title]: "App Settings",
     [MessageKeys.admin_export_csv_button]: "Share CSV",
     [MessageKeys.admin_columns_button]: "Columns",
+    [MessageKeys.admin_selected_count]: "{0} selected",
+    [MessageKeys.admin_selection_clear]: "Clear",
     [MessageKeys.admin_issue_logs_title]: "Logs",
     [MessageKeys.admin_issue_logs_open_hint]: "Tap to view the full log",
     [MessageKeys.drawer_items_admin]: "Admin",

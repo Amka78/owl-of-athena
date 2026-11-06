@@ -15,7 +15,12 @@ const columns: AdminColumn<Row>[] = [
     { title: "ID", value: (row) => row.id, hidden: true },
 ];
 
-const renderTable = (rows: Row[], storageKey?: string) =>
+type RenderOptions = {
+    storageKey?: string;
+    selectable?: boolean;
+};
+
+const renderTable = (rows: Row[], options: RenderOptions = {}) =>
     render(
         <AdminTable
             columns={columns}
@@ -24,7 +29,8 @@ const renderTable = (rows: Row[], storageKey?: string) =>
             emptyText={"No rows found."}
             exportTitle={"Users"}
             keyExtractor={(row) => row.id}
-            storageKey={storageKey}
+            storageKey={options.storageKey}
+            selectable={options.selectable}
         />,
     );
 
@@ -72,15 +78,79 @@ describe("AdminTable", () => {
     });
 
     it("restores the column visibility saved for the same table", async () => {
-        const first = renderTable([{ id: "1", name: "Jane" }], "admin-table-test");
+        const first = renderTable([{ id: "1", name: "Jane" }], {
+            storageKey: "admin-table-test",
+        });
         fireEvent.press(first.getByTestId("admin-columns-button"));
         fireEvent.press(first.getByTestId("admin-column-ID"));
         first.unmount();
 
-        const second = renderTable([{ id: "1", name: "Jane" }], "admin-table-test");
+        const second = renderTable([{ id: "1", name: "Jane" }], {
+            storageKey: "admin-table-test",
+        });
 
         await waitFor(() => {
             expect(second.getByText("ID")).toBeTruthy();
         });
+    });
+
+    it("shares the rows selected from the header as CSV", async () => {
+        const rows = [
+            { id: "1", name: "Jane" },
+            { id: "2", name: "John" },
+        ];
+        const { getByTestId, getByText } = renderTable(rows, { selectable: true });
+
+        fireEvent.press(getByTestId("admin-select-all"));
+        expect(getByText("2 selected")).toBeTruthy();
+
+        fireEvent.press(getByTestId("admin-share-selected-button"));
+
+        await waitFor(() => {
+            expect(shareText).toHaveBeenCalledWith("Users", "csv");
+        });
+        expect(buildTableCsv).toHaveBeenCalledWith(
+            ["Name", "ID"],
+            [
+                ["Jane", "1"],
+                ["John", "2"],
+            ],
+        );
+    });
+
+    it("clears the selection", () => {
+        const rows = [
+            { id: "1", name: "Jane" },
+            { id: "2", name: "John" },
+        ];
+        const { getByTestId, getByText, queryByText } = renderTable(rows, { selectable: true });
+
+        fireEvent.press(getByTestId("admin-select-all"));
+        expect(getByText("2 selected")).toBeTruthy();
+
+        fireEvent.press(getByTestId("admin-clear-selection-button"));
+
+        expect(queryByText("2 selected")).toBeNull();
+    });
+
+    it("selects all only within the search result", async () => {
+        const rows = [
+            { id: "1", name: "Jane" },
+            { id: "2", name: "John" },
+        ];
+        const { getByPlaceholderText, getByTestId, getByText } = renderTable(rows, {
+            selectable: true,
+        });
+
+        fireEvent.changeText(getByPlaceholderText("Search"), "Jane");
+        fireEvent.press(getByTestId("admin-select-all"));
+        expect(getByText("1 selected")).toBeTruthy();
+
+        fireEvent.press(getByTestId("admin-share-selected-button"));
+
+        await waitFor(() => {
+            expect(shareText).toHaveBeenCalledWith("Users", "csv");
+        });
+        expect(buildTableCsv).toHaveBeenCalledWith(["Name", "ID"], [["Jane", "1"]]);
     });
 });

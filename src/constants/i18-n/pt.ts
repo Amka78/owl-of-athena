@@ -361,6 +361,8 @@ export default {
     [MessageKeys.admin_app_settings_title]: "Ajustes do App",
     [MessageKeys.admin_export_csv_button]: "Compartilhar CSV",
     [MessageKeys.admin_columns_button]: "Colunas",
+    [MessageKeys.admin_selected_count]: "{0} selecionados",
+    [MessageKeys.admin_selection_clear]: "Limpar",
     [MessageKeys.admin_issue_logs_title]: "Registros",
     [MessageKeys.admin_issue_logs_open_hint]: "Toque para ver o registro completo",
     [MessageKeys.drawer_items_admin]: "Admin",

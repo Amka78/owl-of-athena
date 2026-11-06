@@ -1,5 +1,10 @@
 import type { AdminColumn } from "../AdminTableModel";
-import { paginateAdminRows, queryAdminRows, toAdminCsvRows } from "../AdminTableModel";
+import {
+    paginateAdminRows,
+    queryAdminRows,
+    toAdminCsvRows,
+    toggleSelectedKey,
+} from "../AdminTableModel";
 
 type Row = {
     id: string;
@@ -72,5 +77,11 @@ describe("AdminTableModel", () => {
 
     it("includes hidden columns in the CSV rows", () => {
         expect(toAdminCsvRows([rows[0]], columns)).toEqual([["Jane", "9", "1"]]);
+    });
+
+    it("toggles a selected key", () => {
+        expect(toggleSelectedKey([], "1")).toEqual(["1"]);
+        expect(toggleSelectedKey(["1", "2"], "2")).toEqual(["1"]);
+        expect(toggleSelectedKey(["1"], "1")).toEqual([]);
     });
 });
