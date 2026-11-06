@@ -1,5 +1,6 @@
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 
+import type { AdminDataSource, AdminPageQuery } from "../../../services/AdminQueryModel";
 import { buildTableCsv, shareText } from "../../../services/ExportService";
 import { type AdminColumn, AdminTable } from "../AdminTable";
 
@@ -11,13 +12,14 @@ jest.mock("../../../services/ExportService", () => ({
 type Row = { id: string; name: string };
 
 const columns: AdminColumn<Row>[] = [
-    { title: "Name", value: (row) => row.name },
-    { title: "ID", value: (row) => row.id, hidden: true },
+    { title: "Name", value: (row) => row.name, field: "name", searchFields: ["name"] },
+    { title: "ID", value: (row) => row.id, hidden: true, field: "id" },
 ];
 
 type RenderOptions = {
     storageKey?: string;
     selectable?: boolean;
+    dataSource?: AdminDataSource<Row>;
 };
 
 const renderTable = (rows: Row[], options: RenderOptions = {}) =>
@@ -31,6 +33,7 @@ const renderTable = (rows: Row[], options: RenderOptions = {}) =>
             keyExtractor={(row) => row.id}
             storageKey={options.storageKey}
             selectable={options.selectable}
+            dataSource={options.dataSource}
         />,
     );
 
@@ -152,5 +155,101 @@ describe("AdminTable", () => {
             expect(shareText).toHaveBeenCalledWith("Users", "csv");
         });
         expect(buildTableCsv).toHaveBeenCalledWith(["Name", "ID"], [["Jane", "1"]]);
+    });
+
+    it("loads pages from the data source", async () => {
+        const fetchPage = jest.fn(async ({ pageIndex }: AdminPageQuery) => ({
+            rows: pageIndex === 0 ? [{ id: "1", name: "Jane" }] : [{ id: "2", name: "John" }],
+            total: 25,
+        }));
+        const dataSource: AdminDataSource<Row> = {
+            fetchPage,
+            fetchAll: jest.fn(async () => []),
+        };
+        const { getByText } = renderTable([], { dataSource });
+
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenCalled();
+        });
+        expect(fetchPage.mock.calls[0][0]).toMatchObject({
+            pageIndex: 0,
+            pageSize: 20,
+            search: "",
+            searchFields: ["name"],
+        });
+        await waitFor(() => {
+            expect(getByText("1 / 2")).toBeTruthy();
+        });
+
+        fireEvent.press(getByText("Next ›"));
+
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenLastCalledWith(expect.objectContaining({ pageIndex: 1 }));
+        });
+    });
+
+    it("passes the search text to the data source", async () => {
+        const fetchPage = jest.fn(async () => ({ rows: [], total: 0 }));
+        const { getByPlaceholderText } = renderTable([], {
+            dataSource: { fetchPage, fetchAll: jest.fn(async () => []) },
+        });
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenCalledTimes(1);
+        });
+
+        fireEvent.changeText(getByPlaceholderText("Search"), "Jane");
+
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ search: "Jane", pageIndex: 0 }),
+            );
+        });
+    });
+
+    it("requests the server sort from the column header", async () => {
+        const fetchPage = jest.fn(async () => ({ rows: [], total: 0 }));
+        const { getByText } = renderTable([], {
+            dataSource: { fetchPage, fetchAll: jest.fn(async () => []) },
+        });
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenCalledTimes(1);
+        });
+
+        fireEvent.press(getByText("Name"));
+
+        await waitFor(() => {
+            expect(fetchPage).toHaveBeenLastCalledWith(
+                expect.objectContaining({ sort: { field: "name", ascending: true } }),
+            );
+        });
+    });
+
+    it("fetches every matched row when sharing CSV in server mode", async () => {
+        const fetchPage = jest.fn(async () => ({ rows: [], total: 2 }));
+        const fetchAll = jest.fn(async () => [
+            { id: "1", name: "Jane" },
+            { id: "2", name: "John" },
+        ]);
+        const { getByText } = renderTable([], {
+            dataSource: { fetchPage, fetchAll },
+        });
+
+        fireEvent.press(getByText("Share CSV"));
+
+        await waitFor(() => {
+            expect(fetchAll).toHaveBeenCalledWith(
+                expect.objectContaining({ search: "", searchFields: ["name"] }),
+            );
+        });
+        await waitFor(() => {
+            expect(shareText).toHaveBeenCalledWith("Users", "csv");
+        });
+        expect(buildTableCsv).toHaveBeenCalledWith(
+            ["Name", "ID"],
+            [
+                ["Jane", "1"],
+                ["John", "2"],
+            ],
+        );
     });
 });

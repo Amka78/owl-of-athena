@@ -1,60 +1,12 @@
 //#region Import Modules
 import { useCallback, useState } from "react";
 import { supabase } from "../clients/supabase";
-import type { Issue, Order, UserMessage } from "../types";
+import type { Issue } from "../types";
 //#endregion
 
 //#region Hooks
 export const useAdmin = () => {
     const [loading, setLoading] = useState(false);
-
-    const fetchUsers = useCallback(async (): Promise<any[]> => {
-        setLoading(true);
-        try {
-            const { data, error } = await supabase
-                .from("users")
-                .select("*")
-                .order("created_at", { ascending: false });
-            if (error) throw error;
-            return data ?? [];
-        } catch {
-            return [];
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    const fetchOrders = useCallback(async (): Promise<Order[]> => {
-        setLoading(true);
-        try {
-            const { data, error } = await supabase
-                .from("orders")
-                .select("*")
-                .order("created_at", { ascending: false });
-            if (error) throw error;
-            return (data ?? []) as Order[];
-        } catch {
-            return [];
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    const fetchSessions = useCallback(async (): Promise<any[]> => {
-        setLoading(true);
-        try {
-            const { data, error } = await supabase
-                .from("aurora_sessions")
-                .select("*")
-                .order("session_at", { ascending: false });
-            if (error) throw error;
-            return data ?? [];
-        } catch {
-            return [];
-        } finally {
-            setLoading(false);
-        }
-    }, []);
 
     const fetchIssues = useCallback(async (): Promise<Issue[]> => {
         setLoading(true);
@@ -90,9 +42,6 @@ export const useAdmin = () => {
 
     return {
         loading,
-        fetchUsers,
-        fetchOrders,
-        fetchSessions,
         fetchIssues,
         fetchMessages,
     };

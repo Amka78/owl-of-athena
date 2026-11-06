@@ -1,17 +1,24 @@
 //#region Import Modules
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
+import { ADMIN_PAGE_SIZE, type AdminDataSource } from "../../services/AdminQueryModel";
 import { buildTableCsv, shareText } from "../../services/ExportService";
 import { loadHiddenColumns, saveHiddenColumns } from "./AdminTableColumnPrefs";
 import type { AdminColumn, AdminSort } from "./AdminTableModel";
 import {
+    collectAdminSearchFields,
     paginateAdminRows,
     queryAdminRows,
+    resolveAdminSortField,
     toAdminCsvRows,
-    toggleSelectedKey,
 } from "./AdminTableModel";
+
+//#endregion
+
+//#region Constants
+const SEARCH_DEBOUNCE_MS = 250;
 
 //#endregion
 
@@ -20,8 +27,9 @@ export type { AdminColumn } from "./AdminTableModel";
 
 export type AdminTableProps<T> = {
     columns: AdminColumn<T>[];
-    rows: T[];
-    loading: boolean;
+    /** dataSource を渡さない場合に使う全件データ。 */
+    rows?: T[];
+    loading?: boolean;
     emptyText: string;
     exportTitle: string;
     keyExtractor: (row: T, index: number) => string;
@@ -29,6 +37,13 @@ export type AdminTableProps<T> = {
     storageKey?: string;
     /** 行頭にチェックボックスを表示し、選択行だけの CSV 共有を可能にする。 */
     selectable?: boolean;
+    /** 指定すると検索・ソート・ページングをサーバ側で行う。 */
+    dataSource?: AdminDataSource<T>;
+};
+
+type SelectedRow<T> = {
+    key: string;
+    row: T;
 };
 //#endregion
 
@@ -46,7 +61,11 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const [pageIndex, setPageIndex] = useState(0);
     const [hiddenTitles, setHiddenTitles] = useState<string[]>();
     const [showColumnMenu, setShowColumnMenu] = useState(false);
-    const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+    const [selectedRows, setSelectedRows] = useState<SelectedRow<T>[]>([]);
+    const [serverRows, setServerRows] = useState<T[]>([]);
+    const [serverTotal, setServerTotal] = useState(0);
+    const [serverLoading, setServerLoading] = useState(props.dataSource !== undefined);
+    const [serverError, setServerError] = useState<string>();
 
     useEffect(() => {
         if (props.storageKey === undefined) {
@@ -66,31 +85,118 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     const isHidden = (column: AdminColumn<T>): boolean =>
         hiddenTitles === undefined ? column.hidden === true : hiddenTitles.includes(column.title);
 
-    const visibleColumns = props.columns.filter((column) => !isHidden(column));
-    const matchedRows = queryAdminRows(props.rows, visibleColumns, { search, sort });
-    const { pageRows, page, totalPages } = paginateAdminRows(matchedRows, pageIndex);
+    const visibleColumns = useMemo(
+        () =>
+            props.columns.filter((column) =>
+                hiddenTitles === undefined
+                    ? column.hidden !== true
+                    : !hiddenTitles.includes(column.title),
+            ),
+        [props.columns, hiddenTitles],
+    );
+    const searchFields = useMemo(() => collectAdminSearchFields(visibleColumns), [visibleColumns]);
+    const sortField = resolveAdminSortField(visibleColumns, sort);
+    const isServerSide = props.dataSource !== undefined;
+    const sourceRows = isServerSide ? serverRows : (props.rows ?? []);
+    const matchedRows = isServerSide
+        ? sourceRows
+        : queryAdminRows(sourceRows, visibleColumns, { search, sort });
+    const totalCount = isServerSide ? serverTotal : matchedRows.length;
+    const totalPages = Math.max(1, Math.ceil(totalCount / ADMIN_PAGE_SIZE));
+    const clientPage = paginateAdminRows(matchedRows, pageIndex);
+    const page = isServerSide ? Math.min(pageIndex, totalPages - 1) : clientPage.page;
+    const pageRows = isServerSide ? matchedRows : clientPage.pageRows;
+
+    useEffect(() => {
+        if (pageIndex > totalPages - 1) {
+            setPageIndex(totalPages - 1);
+        }
+    }, [pageIndex, totalPages]);
+
+    useEffect(() => {
+        const dataSource = props.dataSource;
+        if (dataSource === undefined) {
+            return;
+        }
+        let active = true;
+        const timer = setTimeout(() => {
+            setServerLoading(true);
+            dataSource
+                .fetchPage({
+                    search,
+                    searchFields,
+                    sort:
+                        sortField === undefined
+                            ? undefined
+                            : { field: sortField, ascending: sort?.direction === "asc" },
+                    pageIndex,
+                    pageSize: ADMIN_PAGE_SIZE,
+                })
+                .then((result) => {
+                    if (!active) {
+                        return;
+                    }
+                    setServerRows(result.rows);
+                    setServerTotal(result.total);
+                    setServerError(undefined);
+                })
+                .catch((e: any) => {
+                    if (!active) {
+                        return;
+                    }
+                    setServerRows([]);
+                    setServerTotal(0);
+                    setServerError(e?.message ?? "Failed to load rows.");
+                })
+                .finally(() => {
+                    if (active) {
+                        setServerLoading(false);
+                    }
+                });
+        }, SEARCH_DEBOUNCE_MS);
+        return () => {
+            active = false;
+            clearTimeout(timer);
+        };
+    }, [props.dataSource, search, searchFields, sortField, sort?.direction, pageIndex]);
 
     const rowKeys = new Map<T, string>();
-    matchedRows.forEach((row, index) => {
-        rowKeys.set(row, props.keyExtractor(row, index));
+    pageRows.forEach((row, index) => {
+        rowKeys.set(row, props.keyExtractor(row, page * ADMIN_PAGE_SIZE + index));
     });
     const keyOf = (row: T): string => rowKeys.get(row) ?? "";
 
-    const selectedKeySet = new Set(selectedKeys);
-    const selectedRows = props.selectable
-        ? matchedRows.filter((row) => selectedKeySet.has(keyOf(row)))
-        : [];
+    const selectedKeySet = new Set(selectedRows.map((selected) => selected.key));
     const allSelected =
         props.selectable === true &&
-        matchedRows.length > 0 &&
-        matchedRows.every((row) => selectedKeySet.has(keyOf(row)));
+        pageRows.length > 0 &&
+        pageRows.every((row) => selectedKeySet.has(keyOf(row)));
 
-    const onRowSelectPress = (key: string): void => {
-        setSelectedKeys((current) => toggleSelectedKey(current, key));
+    const onRowSelectPress = (key: string, row: T): void => {
+        setSelectedRows((current) =>
+            current.some((selected) => selected.key === key)
+                ? current.filter((selected) => selected.key !== key)
+                : [...current, { key, row }],
+        );
     };
 
     const onSelectAllPress = (): void => {
-        setSelectedKeys(allSelected ? [] : matchedRows.map((row) => keyOf(row)));
+        const pageKeys = pageRows.map((row) => keyOf(row));
+        const allPageSelected =
+            pageKeys.length > 0 && pageKeys.every((key) => selectedKeySet.has(key));
+        if (allPageSelected) {
+            setSelectedRows((current) =>
+                current.filter((selected) => !pageKeys.includes(selected.key)),
+            );
+            return;
+        }
+        setSelectedRows((current) => {
+            const existing = new Set(current.map((selected) => selected.key));
+            const additions = pageRows
+                .filter((row) => !existing.has(keyOf(row)))
+                .map((row) => ({ key: keyOf(row), row }));
+            return [...current, ...additions];
+        });
     };
 
     const onColumnToggle = (title: string): void => {
@@ -116,6 +222,12 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
     };
 
     const onHeaderPress = (title: string): void => {
+        if (
+            props.dataSource !== undefined &&
+            props.columns.find((column) => column.title === title)?.field === undefined
+        ) {
+            return;
+        }
         setSort((current) =>
             current?.title === title
                 ? { title, direction: current.direction === "asc" ? "desc" : "asc" }
@@ -124,7 +236,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
         setPageIndex(0);
     };
 
-    const onExportPress = async (rows: T[]): Promise<void> => {
+    const shareRows = async (rows: T[]): Promise<void> => {
         try {
             await shareText(
                 props.exportTitle,
@@ -134,6 +246,26 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                 ),
             );
             setExportError(undefined);
+        } catch (e: any) {
+            setExportError(e?.message ?? Message.get(MessageKeys.export_failed));
+        }
+    };
+
+    const onExportAllPress = async (): Promise<void> => {
+        if (props.dataSource === undefined) {
+            await shareRows(matchedRows);
+            return;
+        }
+        try {
+            const rows = await props.dataSource.fetchAll({
+                search,
+                searchFields,
+                sort:
+                    sortField === undefined
+                        ? undefined
+                        : { field: sortField, ascending: sort?.direction === "asc" },
+            });
+            await shareRows(rows);
         } catch (e: any) {
             setExportError(e?.message ?? Message.get(MessageKeys.export_failed));
         }
@@ -153,7 +285,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                 />
                 <TouchableOpacity
                     style={styles.exportButton}
-                    onPress={() => void onExportPress(matchedRows)}
+                    onPress={() => void onExportAllPress()}
                 >
                     <Text style={styles.exportButtonText}>
                         {Message.get(MessageKeys.admin_export_csv_button)}
@@ -178,7 +310,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     </Text>
                     <TouchableOpacity
                         style={styles.selectionAction}
-                        onPress={() => void onExportPress(selectedRows)}
+                        onPress={() => void shareRows(selectedRows.map((selected) => selected.row))}
                         testID="admin-share-selected-button"
                     >
                         <Text style={styles.exportButtonText}>
@@ -187,7 +319,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.selectionAction}
-                        onPress={() => setSelectedKeys([])}
+                        onPress={() => setSelectedRows([])}
                         testID="admin-clear-selection-button"
                     >
                         <Text style={styles.exportButtonText}>
@@ -216,7 +348,9 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     })}
                 </View>
             )}
-            {exportError ? <Text style={styles.error}>{exportError}</Text> : null}
+            {(serverError ?? exportError) ? (
+                <Text style={styles.error}>{serverError ?? exportError}</Text>
+            ) : null}
             <View style={styles.header}>
                 {props.selectable && (
                     <TouchableOpacity
@@ -246,7 +380,9 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     </TouchableOpacity>
                 ))}
             </View>
-            {props.loading && <Text style={styles.loading}>Loading...</Text>}
+            {(props.loading === true || serverLoading) && (
+                <Text style={styles.loading}>Loading...</Text>
+            )}
             <FlatList
                 data={pageRows}
                 keyExtractor={(item, index) => keyOf(item) || props.keyExtractor(item, index)}
@@ -259,7 +395,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                                 {props.selectable && (
                                     <TouchableOpacity
                                         style={styles.selectCell}
-                                        onPress={() => onRowSelectPress(rowKey)}
+                                        onPress={() => onRowSelectPress(rowKey, item)}
                                         testID={`admin-row-select-${rowKey}`}
                                         accessibilityRole="checkbox"
                                         accessibilityState={{ checked: selected }}
@@ -281,7 +417,7 @@ export const AdminTable = <T,>(props: AdminTableProps<T>): React.ReactElement =>
                     );
                 }}
                 ListEmptyComponent={
-                    !props.loading ? (
+                    !(props.loading === true || serverLoading) ? (
                         <Text style={styles.empty}>
                             {search.trim() ? "No matching rows." : props.emptyText}
                         </Text>

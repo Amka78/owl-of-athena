@@ -9,6 +9,10 @@ export type AdminColumn<T> = {
     csv?: (row: T) => CsvValue;
     hidden?: boolean;
     flex?: number;
+    /** サーバ側ソートに使う Supabase の列名。 */
+    field?: string;
+    /** サーバ側検索の対象にする列名（`col::text` も可）。 */
+    searchFields?: string[];
 };
 
 export type AdminSort = {
@@ -68,9 +72,20 @@ export const paginateAdminRows = <T>(
     return { pageRows: rows.slice(start, start + pageSize), page, totalPages };
 };
 
-/** 選択キーの追加と解除を切り替える。 */
-export const toggleSelectedKey = (selected: string[], key: string): string[] => {
-    return selected.includes(key) ? selected.filter((value) => value !== key) : [...selected, key];
+/** 表示中の列からサーバ側検索の対象列を重複なく集める。 */
+export const collectAdminSearchFields = <T>(columns: AdminColumn<T>[]): string[] => {
+    return [...new Set(columns.flatMap((column) => column.searchFields ?? []))];
+};
+
+/** ソート中の列見出しに対応する Supabase の列名を返す。 */
+export const resolveAdminSortField = <T>(
+    columns: AdminColumn<T>[],
+    sort: AdminSort | undefined,
+): string | undefined => {
+    if (sort === undefined) {
+        return undefined;
+    }
+    return columns.find((column) => column.title === sort.title)?.field;
 };
 
 /** 列の定義に従って CSV 用の行を作る。hidden 列も含める。 */

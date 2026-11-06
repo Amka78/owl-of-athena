@@ -1,9 +1,10 @@
 import type { AdminColumn } from "../AdminTableModel";
 import {
+    collectAdminSearchFields,
     paginateAdminRows,
     queryAdminRows,
+    resolveAdminSortField,
     toAdminCsvRows,
-    toggleSelectedKey,
 } from "../AdminTableModel";
 
 type Row = {
@@ -25,6 +26,26 @@ const columns: AdminColumn<Row>[] = [
 ];
 
 const visibleColumns = columns.filter((column) => !column.hidden);
+
+const serverColumns: AdminColumn<Row>[] = [
+    {
+        title: "Name",
+        value: (row) => row.name,
+        field: "last_name",
+        searchFields: ["first_name", "last_name"],
+    },
+    {
+        title: "ID",
+        value: (row) => row.id,
+        field: "id",
+        searchFields: ["id::text"],
+    },
+    {
+        title: "Score",
+        value: (row) => row.score,
+        searchFields: ["first_name"],
+    },
+];
 
 describe("AdminTableModel", () => {
     it("filters rows across columns, ignoring case", () => {
@@ -79,9 +100,19 @@ describe("AdminTableModel", () => {
         expect(toAdminCsvRows([rows[0]], columns)).toEqual([["Jane", "9", "1"]]);
     });
 
-    it("toggles a selected key", () => {
-        expect(toggleSelectedKey([], "1")).toEqual(["1"]);
-        expect(toggleSelectedKey(["1", "2"], "2")).toEqual(["1"]);
-        expect(toggleSelectedKey(["1"], "1")).toEqual([]);
+    it("collects unique search fields from the columns", () => {
+        expect(collectAdminSearchFields(serverColumns)).toEqual([
+            "first_name",
+            "last_name",
+            "id::text",
+        ]);
+    });
+
+    it("resolves the sort field from the column title", () => {
+        expect(resolveAdminSortField(serverColumns, { title: "ID", direction: "asc" })).toBe("id");
+        expect(
+            resolveAdminSortField(serverColumns, { title: "Missing", direction: "asc" }),
+        ).toBeUndefined();
+        expect(resolveAdminSortField(serverColumns, undefined)).toBeUndefined();
     });
 });
