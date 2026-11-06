@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 //#endregion
 
 //#region Hooks
@@ -8,38 +8,59 @@ export const useAppUpdate = (): {
     dismissReloadCallback: () => void;
     showReload: boolean;
 } => {
-    //#region useState
-    const [showReload, setShowReload] = React.useState(false);
-    const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
-    //#endregion
+    const [showReload, setShowReload] = useState(false);
+    const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
 
-    //#region useEffect
     useEffect(() => {
-        navigator?.serviceWorker
-            ?.register("/expo-service-worker.js", {
+        if (!("serviceWorker" in navigator)) return;
+
+        let active = true;
+        navigator.serviceWorker
+            .register("/expo-service-worker.js", {
                 scope: "/",
             })
             .then((registration: ServiceWorkerRegistration) => {
-                registration.onupdatefound = (): void => {
+                if (!active) return;
+                registrationRef.current = registration;
+
+                if (registration.waiting && navigator.serviceWorker.controller) {
                     setShowReload(true);
-                    setWaitingWorker(registration.waiting);
+                }
+
+                registration.onupdatefound = (): void => {
+                    const worker = registration.installing;
+                    if (!worker) return;
+
+                    worker.onstatechange = (): void => {
+                        if (
+                            active &&
+                            worker.state === "installed" &&
+                            navigator.serviceWorker.controller
+                        ) {
+                            setShowReload(true);
+                        }
+                    };
                 };
-                console.debug(registration);
             })
             .catch((error: any) => {
                 console.error(error);
             });
+
+        return (): void => {
+            active = false;
+        };
     }, []);
-    //#endregion
 
     const reloadPageCallback = useCallback((): void => {
-        waitingWorker?.postMessage({ type: "SKIP_WAITING" });
+        registrationRef.current?.waiting?.postMessage({ type: "SKIP_WAITING" });
         setShowReload(false);
         window.location.reload();
-    }, [waitingWorker]);
+    }, []);
+
     const dismissReloadCallback = useCallback((): void => {
         setShowReload(false);
     }, []);
+
     return { reloadPageCallback, dismissReloadCallback, showReload };
 };
 //#endregion
