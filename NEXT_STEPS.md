@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **574 pass / 8 fail**（179 ファイル・582 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **576 pass / 8 fail**（180 ファイル・584 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -49,6 +49,7 @@
 - ファームウェア更新の確認時に未転送セッションを数え、ある場合は「更新すると失われる」注意をダイアログ本文に追加。接続時に転送ダイアログを出した場合は、閉じたあとに件数を数え直してから更新を確認する
 - 管理テーブルの検索・ソート・ページングをサーバ側に移した。Supabase の `range` で 20 件ずつ取得し、検索は表示中の列に対応する `searchFields` の `ilike`、ソートは列の `field` を使う。件数は `count: exact` で取得する。CSV は該当全件を追加取得して hidden 列込みで出力する
 - 管理画面の不具合報告で、4 行の抜粋をタップするとログ全文ダイアログ（等幅・選択可）を開けるようにした
+- メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
 - 未転送セッション件数をメイン画面のセッションアイコン（下部タブ / ドロワー）にバッジ表示するようにした。件数は接続時のスキャンと転送完了で更新し、切断時に 0 に戻す。接続中のみ表示する
 - セッション詳細と管理画面の選択行から ZIP をダウンロードできるようにした。ZIP には `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` を入れ、複数選択時は `Sessions/<日時>_<ID>/` に分ける。生成は `fflate`、ネイティブは `expo-file-system` + `expo-sharing`、Web は Blob ダウンロード
@@ -89,6 +90,7 @@ WHERE id = '<user-uuid>';
 - セッション JSON/CSV の共有シート、Web の clipboard フォールバック
 - セッション詳細と管理画面の ZIP ダウンロード（iOS/Android の共有シート、Web のブラウザダウンロード、ZIP の中身）
 - 未転送セッションバッジ（接続時のスキャン、転送後の減算、切断時のクリア、99+ 表示）
+- メッセージの「すべて既読にする」（実 Supabase への一括更新と、アカウント画面の未読バッジへの反映）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -167,6 +169,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
+- メッセージ: `src/components/pages/AccountMessagesScreen.tsx`, `src/store/messageStore.ts`, `src/services/MessageService.ts`
 - 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
@@ -180,11 +183,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。検索・ソート・サーバ側ページング・列表示切替・行選択は 2026-11-06 に実装済み。
+3. **残りの parity 差分**: アプリ更新通知 UI、不具合報告のスクリーンショット／ファイル添付、ファームウェアのダウンロード進捗、iOS の `MPVolumeView`、サインアップ項目、スキーマ依存の列（セッションの「新規」バッジを含む）。
 
 ## 既知の制約
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- メッセージの「すべて既読にする」は未読があるときだけ表示する。`markAllMessagesAsRead()` は `user_messages.read_at` が null の行を一括更新し、成功後にストアの `read_at` を埋める。API 失敗時はストアがエラーを握りつぶすため、ボタンは残るがエラー表示は出ない。
 - ログは `console.*` を起動時から最大 500 件保持するリングバッファ。アプリ起動より前のログと、ネイティブ側のログは含まれない。不具合報告に添付したログは Supabase の `issues.logs` にそのまま保存される。
 - コンソール画面は `admin` ロールを持つユーザーだけがアカウント画面から開ける。ディープリンクや直接遷移は想定していない。
 - オフライン検知は `expo-network` に依存する。初回取得が終わるまでは `unknown` としてバナーを出さない。iOS は `isInternetReachable` が `isConnected` と同じ値になるため、実際の到達性ではなく接続状態で判定する。ネイティブは prebuild と再インストールが必要。
