@@ -18,6 +18,24 @@ describe("sessionTransferStore UnitTest", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         useSessionTransferStore.getState().resetTransfer();
+        useSessionTransferStore.getState().clearUnsyncedCount();
+    });
+
+    it("tracks the unsynced count from scans and transfers", async () => {
+        (AuroraManagerInstance.getUnsyncedSessions as jest.Mock).mockResolvedValue(sessions);
+        (AuroraManagerInstance.pushSessions as jest.Mock).mockResolvedValue({
+            sessions: [],
+            sessionDetails: [],
+            syncedCount: 1,
+            failedCount: 0,
+            removedEmptyCount: 0,
+        });
+
+        await useSessionTransferStore.getState().scanSessions();
+        expect(useSessionTransferStore.getState().unsyncedCount).toBe(2);
+
+        await useSessionTransferStore.getState().transferSessions([sessions[0]]);
+        expect(useSessionTransferStore.getState().unsyncedCount).toBe(1);
     });
 
     it("exposes progress while pushing sessions", async () => {

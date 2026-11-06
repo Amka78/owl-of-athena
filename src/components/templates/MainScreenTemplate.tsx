@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { type FunctionComponent, useState } from "react";
+import { type FunctionComponent, useState } from "react";
 import { View } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
@@ -7,8 +7,14 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
-import { FlatButton, HomeIcon, ProfilesIcon, SessionsIcon, SettingsIcon } from "../atoms";
-import { ConfirmDialog, AuroraInfoDialog, IssueReportDialog, LoadingDialog, SessionTransferDialog } from "../molecules";
+import { FlatButton, HomeIcon, ProfilesIcon, SessionsIconWithBadge, SettingsIcon } from "../atoms";
+import {
+    AuroraInfoDialog,
+    ConfirmDialog,
+    IssueReportDialog,
+    LoadingDialog,
+    SessionTransferDialog,
+} from "../molecules";
 //#endregion
 
 //#region Types
@@ -19,6 +25,7 @@ export type MainScreenTemplateProps = {
     currentFirmwareVersion: string;
     error: string;
     batteryLevel: number;
+    unsyncedCount: number;
     onHomePress: () => void;
     onProfilesPress: () => void;
     onSessionsPress: () => void;
@@ -89,13 +96,16 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
                     props.onProfilesPress();
                 }}
             ></ProfilesIcon>
-            <SessionsIcon
+            <SessionsIconWithBadge
+                badgeCount={
+                    props.bluetoothConnect === ConnectionStates.CONNECTED ? props.unsyncedCount : 0
+                }
                 color={selectedMenu === "sessions" ? Colors.cyan : Colors.white}
                 onPress={() => {
                     setSelectedMenu("sessions");
                     props.onSessionsPress();
                 }}
-            ></SessionsIcon>
+            ></SessionsIconWithBadge>
             <SettingsIcon
                 color={selectedMenu === "settings" ? Colors.cyan : Colors.white}
                 onPress={() => {
@@ -114,6 +124,7 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
         >
             <MainDrawerNavigator
                 batteryLevel={props.batteryLevel}
+                unsyncedCount={props.unsyncedCount}
                 onBluetoothConnectPress={props.onBluetoothConnectPress}
                 onDeviceInfoPress={props.onDeviceInfoPress}
                 bluetoothConnect={props.bluetoothConnect}

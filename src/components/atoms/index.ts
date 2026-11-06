@@ -35,6 +35,7 @@ import { ProfilesIcon } from "./ProfilesIcon";
 import { RefreshIcon } from "./RefreshIcon";
 import { ScrollableList } from "./ScrollableList";
 import { SessionsIcon } from "./SessionsIcon";
+import { SessionsIconWithBadge } from "./SessionsIconWithBadge";
 import { SettingsIcon } from "./SettingsIcon";
 import { StandardView } from "./StandardView";
 import { StarIcon } from "./StarIcon";
@@ -82,6 +83,7 @@ export {
     RefreshIcon,
     ScrollableList,
     SessionsIcon,
+    SessionsIconWithBadge,
     SettingsIcon,
     StandardView,
     StarIcon,

@@ -12,7 +12,7 @@ import {
     LogoutIcon,
     MenuIcon,
     ProfilesIcon,
-    SessionsIcon,
+    SessionsIconWithBadge,
     SettingsIcon,
 } from "../components/atoms";
 import { ConfirmDialog } from "../components/molecules";
@@ -40,6 +40,7 @@ export type MainDrawerNavigatorProps = {
     onBluetoothConnectPress: () => Promise<string>;
     onDeviceInfoPress: () => void;
     batteryLevel: number;
+    unsyncedCount: number;
     bluetoothConnect: ConnectionStates;
 };
 //#endregion
@@ -51,6 +52,8 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
     const mainDrawerHook = useMainDrawerNavigator();
     const { user } = useAuthStore();
     const isAdmin = user?.roles?.some((r) => r.slug === "admin") ?? false;
+    const unsyncedBadgeCount =
+        props.bluetoothConnect === ConnectionStates.CONNECTED ? props.unsyncedCount : 0;
     return (
         <Drawer.Navigator
             initialRouteName={"Home"}
@@ -157,7 +160,12 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
                 }
                 options={{
                     drawerIcon: (props: DrawerIconProps) => {
-                        return <SessionsIcon {...props}></SessionsIcon>;
+                        return (
+                            <SessionsIconWithBadge
+                                {...props}
+                                badgeCount={unsyncedBadgeCount}
+                            ></SessionsIconWithBadge>
+                        );
                     },
                     drawerLabel: mainDrawerHook.isDesktop
                         ? Message.get(MessageKeys.drawer_items_sessions)

@@ -7,6 +7,7 @@ import { Message, MessageKeys } from "../constants";
 import { AuroraManagerInstance, type SessionSyncResult } from "../managers";
 import { SleepStates } from "../sdk";
 import { useSessionStore } from "../store/sessionStore";
+import { useSessionTransferStore } from "../store/sessionTransferStore";
 import { GuestUser } from "../types";
 import {
     useCheckLogging,
@@ -82,11 +83,17 @@ export const useAwake = (): {
         let syncResult: SessionSyncResult | undefined;
         try {
             const unsyncedSessions = await AuroraManagerInstance.getUnsyncedSessions();
+            useSessionTransferStore.getState().setUnsyncedCount(unsyncedSessions.length);
             if (unsyncedSessions.length > 0) {
                 syncResult = await AuroraManagerInstance.pushSessions(
                     unsyncedSessions,
                     userInfo?.id === GuestUser,
                 );
+                useSessionTransferStore
+                    .getState()
+                    .setUnsyncedCount(
+                        Math.max(0, unsyncedSessions.length - syncResult.syncedCount),
+                    );
 
                 if (syncResult.sessions.length > 0) {
                     sessionList.unshift(...syncResult.sessions);

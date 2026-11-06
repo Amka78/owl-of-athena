@@ -46,6 +46,7 @@ const defaultArgs = {
     currentFirmwareVersion: "2.1.0",
     error: "",
     batteryLevel: 85,
+    unsyncedCount: 0,
     onHomePress: fn(),
     onProfilesPress: fn(),
     onSessionsPress: fn(),

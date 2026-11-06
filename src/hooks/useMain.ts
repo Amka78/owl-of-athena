@@ -13,6 +13,7 @@ import { versionToString } from "../sdk/util";
 import { buildFirmwareUpdateMessage } from "../services/FirmwareService";
 import { onConnectionChange } from "../services/MainService";
 import { useSessionStore } from "../store/sessionStore";
+import { useSessionTransferStore } from "../store/sessionTransferStore";
 import { type FirmwareUpdate, type FirmwareUpdatePhase, GuestUser } from "../types";
 import { useSessionDetailListSelector, useSessionListSelector, useUserSelector } from "./";
 
@@ -43,11 +44,13 @@ export const useMain = (): {
     batteryLevel: number;
     currentFirmwareVersion: string;
     error: string;
+    unsyncedCount: number;
 } => {
     const { cacheSessions, cacheSessionDetails } = useSessionStore();
     const sessionList = useSessionListSelector();
     const sessionDetailList = useSessionDetailListSelector();
     const userInfo = useUserSelector();
+    const unsyncedCount = useSessionTransferStore((state) => state.unsyncedCount);
     const [connect, setConnect] = useState<ConnectionStates>(ConnectionStates.DISCONNECTED);
     const [batteryLevel, setBatteryLevel] = useState<number>(0);
     const [error, setError] = useState<string>("");
@@ -59,6 +62,9 @@ export const useMain = (): {
         console.debug("Called onConnectionChangeHandler");
         onConnectionChange(connectionState, connect, (state: ConnectionStates) => {
             setConnect(state);
+            if (state !== ConnectionStates.CONNECTED) {
+                useSessionTransferStore.getState().clearUnsyncedCount();
+            }
         });
     });
     const onBatteryLevelChangeEventHandler = useRef((batteryLevel: number): void => {
@@ -150,6 +156,7 @@ export const useMain = (): {
         let unsyncedCount = 0;
         try {
             unsyncedCount = (await AuroraManagerInstance.getUnsyncedSessions()).length;
+            useSessionTransferStore.getState().setUnsyncedCount(unsyncedCount);
         } catch (e) {
             // 取得できなくても更新自体は提示する
             console.debug("[useMain] failed to check unsynced sessions:", e);
@@ -288,6 +295,7 @@ export const useMain = (): {
         batteryLevel,
         currentFirmwareVersion,
         error,
+        unsyncedCount,
     };
 };
 //#endregion
@@ -321,6 +329,7 @@ async function executeConfiguring(
                 console.debug("Sart getUnsycedSessions.");
                 const unsyncedSessions = await AuroraManagerInstance.getUnsyncedSessions();
                 console.debug("Completed getUnsyncedSessions:", unsyncedSessions);
+                useSessionTransferStore.getState().setUnsyncedCount(unsyncedSessions.length);
 
                 if (unsyncedSessions.length > 0 && AuroraManagerInstance.isConfiguring()) {
                     transferDialogShown = true;
@@ -338,6 +347,11 @@ async function executeConfiguring(
                                     unsyncedSessions,
                                     isGuest,
                                 );
+                                useSessionTransferStore
+                                    .getState()
+                                    .setUnsyncedCount(
+                                        Math.max(0, unsyncedSessions.length - result.syncedCount),
+                                    );
                                 pushedSessionCallback([result.sessions, result.sessionDetails]);
                             } finally {
                                 LoadingDialog.close();
@@ -349,6 +363,7 @@ async function executeConfiguring(
         } else {
             result = await AuroraManagerInstance.disconnect();
 
+            useSessionTransferStore.getState().clearUnsyncedCount();
             disconnectedCallback();
         }
         console.debug("Succeed configuring aurora.", result);

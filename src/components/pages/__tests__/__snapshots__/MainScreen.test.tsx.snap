@@ -89,14 +89,26 @@ exports[`MainScreen UnitTest renders correctly 1`] = `
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
-                  "children": null,
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "#ffffff",
+                        "name": "blur",
+                        "onPress": [Function],
+                        "size": 40,
+                      },
+                      "type": "Icon",
+                    },
+                  ],
                   "props": {
-                    "color": "#ffffff",
-                    "name": "blur",
-                    "onPress": [Function],
-                    "size": 40,
+                    "style": {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
                   },
-                  "type": "Icon",
+                  "type": "View",
                 },
                 {
                   "$$typeof": Symbol(react.test.json),

@@ -1,5 +1,5 @@
 //#region Import modules
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { useWindowDimensions } from "../../hooks";
 
 import { useMain } from "../../hooks/useMain";
@@ -14,6 +14,7 @@ export const MainScreen: FunctionComponent = () => {
         <MainScreenTemplate
             bluetoothConnect={mainHook.connect}
             batteryLevel={mainHook.batteryLevel}
+            unsyncedCount={mainHook.unsyncedCount}
             currentFirmwareVersion={mainHook.currentFirmwareVersion}
             error={mainHook.error}
             onBluetoothConnectPress={mainHook.onConnectionStatesPress}

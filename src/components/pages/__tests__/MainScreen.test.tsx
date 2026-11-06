@@ -33,6 +33,7 @@ jest.mock("../../../hooks/useMain", () => ({
         batteryLevel: 85,
         currentFirmwareVersion: "1.0.0",
         error: "",
+        unsyncedCount: 0,
     }),
 }));
 
@@ -60,9 +61,9 @@ jest.mock("../../../hooks", () => ({
         batteryLevel: 85,
         currentFirmwareVersion: "1.0.0",
         error: "",
+        unsyncedCount: 0,
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

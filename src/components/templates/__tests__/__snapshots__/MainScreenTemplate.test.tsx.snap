@@ -89,14 +89,26 @@ exports[`MainScreenTemplate renders correctly in mobile mode 1`] = `
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
-                  "children": null,
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "#ffffff",
+                        "name": "blur",
+                        "onPress": [Function],
+                        "size": 40,
+                      },
+                      "type": "Icon",
+                    },
+                  ],
                   "props": {
-                    "color": "#ffffff",
-                    "name": "blur",
-                    "onPress": [Function],
-                    "size": 40,
+                    "style": {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
                   },
-                  "type": "Icon",
+                  "type": "View",
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
@@ -510,14 +522,26 @@ exports[`MainScreenTemplate renders correctly when connected 1`] = `
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
-                  "children": null,
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "#ffffff",
+                        "name": "blur",
+                        "onPress": [Function],
+                        "size": 40,
+                      },
+                      "type": "Icon",
+                    },
+                  ],
                   "props": {
-                    "color": "#ffffff",
-                    "name": "blur",
-                    "onPress": [Function],
-                    "size": 40,
+                    "style": {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
                   },
-                  "type": "Icon",
+                  "type": "View",
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
@@ -838,14 +862,26 @@ exports[`MainScreenTemplate renders error message when error is provided 1`] = `
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
-                  "children": null,
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "color": "#ffffff",
+                        "name": "blur",
+                        "onPress": [Function],
+                        "size": 40,
+                      },
+                      "type": "Icon",
+                    },
+                  ],
                   "props": {
-                    "color": "#ffffff",
-                    "name": "blur",
-                    "onPress": [Function],
-                    "size": 40,
+                    "style": {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
                   },
-                  "type": "Icon",
+                  "type": "View",
                 },
                 {
                   "$$typeof": Symbol(react.test.json),

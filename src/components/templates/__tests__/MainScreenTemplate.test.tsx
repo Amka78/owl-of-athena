@@ -61,6 +61,7 @@ const defaultProps = {
     currentFirmwareVersion: "2.1.0",
     error: "",
     batteryLevel: 85,
+    unsyncedCount: 0,
     onHomePress: jest.fn(),
     onProfilesPress: jest.fn(),
     onSessionsPress: jest.fn(),
@@ -80,6 +81,20 @@ describe("MainScreenTemplate", () => {
             <MainScreenTemplate {...defaultProps} dimens={desktopDimens} locale="en-US" />,
         );
         expect(toJSON()).toMatchSnapshot();
+    });
+
+    it("shows the unsynced session badge when connected", () => {
+        const { getByTestId } = renderWithProvider(
+            <MainScreenTemplate
+                {...defaultProps}
+                bluetoothConnect={ConnectionStates.CONNECTED}
+                unsyncedCount={3}
+                dimens={mobileDimens}
+                locale="en-US"
+            />,
+        );
+
+        expect(getByTestId("session-badge-text").props.children).toBe("3");
     });
 
     it("renders correctly when connected", () => {
