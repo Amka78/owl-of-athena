@@ -84,6 +84,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         "expo-dev-client",
         "expo-notifications",
         "expo-sharing",
+        [
+            "expo-image-picker",
+            {
+                photosPermission:
+                    "Allow $(PRODUCT_NAME) to access your photos to attach screenshots to issue reports.",
+            },
+        ],
         // バックグラウンド再生用の前景サービスと UIBackgroundModes を有効にする。
         // 録音は使わないため RECORD_AUDIO は要求しない。
         [

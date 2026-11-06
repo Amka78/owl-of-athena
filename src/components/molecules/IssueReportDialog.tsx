@@ -1,10 +1,15 @@
 //#region Import Modules
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React from "react";
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Checkbox, Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
+import {
+    isAttachmentSizeAllowed,
+    MAX_ISSUE_ATTACHMENTS,
+} from "../../services/IssueAttachmentModel";
 import LogService from "../../services/LogService";
 import { useIssueStore } from "../../store/issueStore";
+import type { IssueAttachmentInput } from "../../types";
 import { ContentText, FlatButton } from "../atoms";
 import { ValidatableTextBox } from "./ValidatableTextBox";
 
@@ -23,6 +28,8 @@ type IssueReportDialogState = {
     critical: boolean;
     anonymous: boolean;
     attachLogs: boolean;
+    attachments: IssueAttachmentInput[];
+    attachmentError?: string;
 };
 //#endregion
 
@@ -31,7 +38,11 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
     public static Instance?: IssueReportDialog;
 
     public static show(args: IssueReportDialogSettings = {}): void {
-        IssueReportDialog.Instance!.setState({ settings: args });
+        IssueReportDialog.Instance!.setState({
+            settings: args,
+            attachments: [],
+            attachmentError: undefined,
+        });
     }
 
     constructor(props: {}) {
@@ -44,6 +55,8 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
             critical: false,
             anonymous: false,
             attachLogs: true,
+            attachments: [],
+            attachmentError: undefined,
         };
     }
 
@@ -61,6 +74,8 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
             critical: false,
             anonymous: false,
             attachLogs: true,
+            attachments: [],
+            attachmentError: undefined,
         });
         useIssueStore.getState().reset();
     }
@@ -71,11 +86,7 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
         const { loading, success, error } = useIssueStore.getState();
 
         return (
-            <Dialog
-                visible={true}
-                onDismiss={() => this.close()}
-                style={styles.dialog}
-            >
+            <Dialog visible={true} onDismiss={() => this.close()} style={styles.dialog}>
                 <Dialog.Title style={styles.title}>
                     {Message.get(MessageKeys.issue_report_title)}
                 </Dialog.Title>
@@ -95,7 +106,9 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
                                         style={styles.input}
                                     />
                                     <ValidatableTextBox
-                                        label={Message.get(MessageKeys.issue_report_input_description)}
+                                        label={Message.get(
+                                            MessageKeys.issue_report_input_description,
+                                        )}
                                         value={this.state.description}
                                         onChangeText={(t) => this.setState({ description: t })}
                                         multiline
@@ -103,7 +116,9 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
                                         style={styles.input}
                                     />
                                     <ValidatableTextBox
-                                        label={Message.get(MessageKeys.issue_report_input_reproduce_steps)}
+                                        label={Message.get(
+                                            MessageKeys.issue_report_input_reproduce_steps,
+                                        )}
                                         value={this.state.reproduce_steps}
                                         onChangeText={(t) => this.setState({ reproduce_steps: t })}
                                         multiline
@@ -112,27 +127,77 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
                                     />
                                     <View style={styles.checkRow}>
                                         <Checkbox.Item
-                                            label={Message.get(MessageKeys.issue_report_check_critical)}
+                                            label={Message.get(
+                                                MessageKeys.issue_report_check_critical,
+                                            )}
                                             status={this.state.critical ? "checked" : "unchecked"}
-                                            onPress={() => this.setState((s) => ({ critical: !s.critical }))}
+                                            onPress={() =>
+                                                this.setState((s) => ({ critical: !s.critical }))
+                                            }
                                             color={Colors.cyan}
                                             labelStyle={styles.checkLabel}
                                         />
                                         <Checkbox.Item
-                                            label={Message.get(MessageKeys.issue_report_check_anonymous)}
+                                            label={Message.get(
+                                                MessageKeys.issue_report_check_anonymous,
+                                            )}
                                             status={this.state.anonymous ? "checked" : "unchecked"}
-                                            onPress={() => this.setState((s) => ({ anonymous: !s.anonymous }))}
+                                            onPress={() =>
+                                                this.setState((s) => ({ anonymous: !s.anonymous }))
+                                            }
                                             color={Colors.cyan}
                                             labelStyle={styles.checkLabel}
                                         />
                                     </View>
                                     <Checkbox.Item
-                                        label={Message.get(MessageKeys.issue_report_check_attach_logs)}
+                                        label={Message.get(
+                                            MessageKeys.issue_report_check_attach_logs,
+                                        )}
                                         status={this.state.attachLogs ? "checked" : "unchecked"}
-                                        onPress={() => this.setState((s) => ({ attachLogs: !s.attachLogs }))}
+                                        onPress={() =>
+                                            this.setState((s) => ({ attachLogs: !s.attachLogs }))
+                                        }
                                         color={Colors.cyan}
                                         labelStyle={styles.checkLabel}
                                     />
+                                    <View style={styles.attachmentSection}>
+                                        <Text style={styles.attachmentTitle}>
+                                            {Message.get(MessageKeys.issue_report_attachments)}
+                                        </Text>
+                                        <View style={styles.attachmentActions}>
+                                            <FlatButton onPress={() => void this.onPickImage()}>
+                                                {Message.get(MessageKeys.issue_report_attach_image)}
+                                            </FlatButton>
+                                            <FlatButton onPress={() => void this.onPickFile()}>
+                                                {Message.get(MessageKeys.issue_report_attach_file)}
+                                            </FlatButton>
+                                        </View>
+                                        {this.state.attachments.map((file, index) => (
+                                            <View key={file.uri} style={styles.attachmentRow}>
+                                                <Text
+                                                    style={styles.attachmentName}
+                                                    numberOfLines={1}
+                                                >
+                                                    {file.name}
+                                                </Text>
+                                                <TouchableOpacity
+                                                    accessibilityRole="button"
+                                                    accessibilityLabel={Message.get(
+                                                        MessageKeys.issue_report_remove_attachment,
+                                                    )}
+                                                    onPress={() => this.removeAttachment(index)}
+                                                    testID={`issue-attachment-remove-${index}`}
+                                                >
+                                                    <Text style={styles.attachmentRemove}>×</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        ))}
+                                        {this.state.attachmentError ? (
+                                            <Text style={styles.errorText}>
+                                                {this.state.attachmentError}
+                                            </Text>
+                                        ) : null}
+                                    </View>
                                     {error ? (
                                         <ContentText style={styles.errorText}>{error}</ContentText>
                                     ) : null}
@@ -151,7 +216,9 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
                             disabled={loading || !this.state.title.trim()}
                             onPress={() => this.onSend()}
                         >
-                            {loading ? "Sending..." : Message.get(MessageKeys.issue_report_send_button)}
+                            {loading
+                                ? "Sending..."
+                                : Message.get(MessageKeys.issue_report_send_button)}
                         </FlatButton>
                     )}
                 </Dialog.Actions>
@@ -159,17 +226,94 @@ export class IssueReportDialog extends React.Component<{}, IssueReportDialogStat
         );
     }
 
+    private addAttachments(files: IssueAttachmentInput[]): void {
+        const allowed = files.filter((file) => isAttachmentSizeAllowed(file.size));
+        const rejected = allowed.length !== files.length;
+
+        this.setState((state) => {
+            const remaining = Math.max(0, MAX_ISSUE_ATTACHMENTS - state.attachments.length);
+            const existing = new Set(state.attachments.map((file) => file.uri));
+            const additions = allowed.filter((file) => !existing.has(file.uri));
+            return {
+                attachments: [...state.attachments, ...additions.slice(0, remaining)],
+                attachmentError: rejected
+                    ? Message.get(MessageKeys.issue_report_attachment_too_large)
+                    : additions.length > remaining
+                      ? Message.get(MessageKeys.issue_report_attachment_limit)
+                      : undefined,
+            };
+        });
+    }
+
+    private removeAttachment(index: number): void {
+        this.setState((state) => ({
+            attachments: state.attachments.filter((_, current) => current !== index),
+            attachmentError: undefined,
+        }));
+    }
+
+    private async onPickImage(): Promise<void> {
+        const ImagePicker = await import("expo-image-picker");
+        if (Platform.OS !== "web") {
+            const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (!permission.granted) {
+                this.setState({
+                    attachmentError: Message.get(MessageKeys.issue_report_media_permission_error),
+                });
+                return;
+            }
+        }
+
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ["images"],
+            allowsMultipleSelection: true,
+            selectionLimit: MAX_ISSUE_ATTACHMENTS,
+            quality: 0.8,
+        });
+        if (result.canceled) return;
+
+        this.addAttachments(
+            result.assets.map((asset) => ({
+                uri: asset.uri,
+                name: asset.fileName ?? `image-${Date.now()}.jpg`,
+                contentType: asset.mimeType ?? "image/jpeg",
+                size: asset.fileSize,
+            })),
+        );
+    }
+
+    private async onPickFile(): Promise<void> {
+        const DocumentPicker = await import("expo-document-picker");
+        const result = await DocumentPicker.getDocumentAsync({
+            multiple: true,
+            copyToCacheDirectory: true,
+        });
+        if (result.canceled) return;
+
+        this.addAttachments(
+            result.assets.map((asset) => ({
+                uri: asset.uri,
+                name: asset.name,
+                contentType: asset.mimeType ?? "application/octet-stream",
+                size: asset.size,
+            })),
+        );
+    }
+
     private async onSend(): Promise<void> {
         const { title, description, reproduce_steps, critical, anonymous, attachLogs } = this.state;
         const logs = attachLogs ? LogService.toText() : undefined;
-        await useIssueStore.getState().createIssue({
-            title,
-            description,
-            reproduce_steps,
-            critical,
-            anonymous,
-            logs: logs || undefined,
-        });
+        await useIssueStore.getState().createIssue(
+            {
+                title,
+                description,
+                reproduce_steps,
+                critical,
+                anonymous,
+                logs: logs || undefined,
+            },
+            this.state.attachments,
+        );
         this.forceUpdate();
     }
 }
@@ -188,6 +332,18 @@ const styles = StyleSheet.create({
     input: { marginBottom: 8 },
     checkRow: { marginTop: 4 },
     checkLabel: { color: Colors.white },
+    attachmentSection: { marginTop: 8 },
+    attachmentTitle: { color: Colors.white, fontSize: 12, fontWeight: "bold" },
+    attachmentActions: { flexDirection: "row", flexWrap: "wrap" },
+    attachmentRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderTopWidth: 1,
+        borderTopColor: Colors.blue,
+        paddingVertical: 4,
+    },
+    attachmentName: { flex: 1, color: Colors.white, fontSize: 11 },
+    attachmentRemove: { color: Colors.cyan, fontSize: 18, paddingHorizontal: 8 },
     button: { color: Colors.cyan },
     successText: { color: Colors.first_accent_color, textAlign: "center", padding: 16 },
     errorText: { color: "#ff4310", marginTop: 8 },

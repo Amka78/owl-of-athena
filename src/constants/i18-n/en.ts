@@ -362,7 +362,8 @@ export default {
     [MessageKeys.admin_selected_count]: "{0} selected",
     [MessageKeys.admin_selection_clear]: "Clear",
     [MessageKeys.admin_issue_logs_title]: "Logs",
-    [MessageKeys.admin_issue_logs_open_hint]: "Tap to view the full log",
+    [MessageKeys.admin_issue_logs_open_hint]: "Tap to view details",
+    [MessageKeys.admin_issue_attachments_title]: "Attachments",
     [MessageKeys.drawer_items_admin]: "Admin",
 
     // account messages
@@ -428,6 +429,13 @@ export default {
     [MessageKeys.issue_report_check_critical]: "Critical issue",
     [MessageKeys.issue_report_check_anonymous]: "Submit anonymously",
     [MessageKeys.issue_report_check_attach_logs]: "Attach logs",
+    [MessageKeys.issue_report_attach_image]: "Attach screenshot / image",
+    [MessageKeys.issue_report_attach_file]: "Attach file",
+    [MessageKeys.issue_report_attachments]: "Attachments",
+    [MessageKeys.issue_report_attachment_too_large]: "Each attachment must be 10 MB or smaller.",
+    [MessageKeys.issue_report_attachment_limit]: "You can attach up to 5 files.",
+    [MessageKeys.issue_report_media_permission_error]: "Photo library access is not allowed.",
+    [MessageKeys.issue_report_remove_attachment]: "Remove attachment",
     [MessageKeys.issue_report_send_button]: "Send Report",
     [MessageKeys.issue_report_success]: "Issue reported. Thank you for your feedback!",
     [MessageKeys.issue_report_error]: "Failed to send issue report.",

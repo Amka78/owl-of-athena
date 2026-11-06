@@ -358,7 +358,8 @@ export default {
     [MessageKeys.admin_selected_count]: "{0}件選択",
     [MessageKeys.admin_selection_clear]: "選択解除",
     [MessageKeys.admin_issue_logs_title]: "ログ",
-    [MessageKeys.admin_issue_logs_open_hint]: "タップして全文を表示",
+    [MessageKeys.admin_issue_logs_open_hint]: "タップして詳細を表示",
+    [MessageKeys.admin_issue_attachments_title]: "添付ファイル",
     [MessageKeys.drawer_items_admin]: "管理",
 
     // account messages
@@ -424,6 +425,13 @@ export default {
     [MessageKeys.issue_report_check_critical]: "重大な問題",
     [MessageKeys.issue_report_check_anonymous]: "匿名で送信",
     [MessageKeys.issue_report_check_attach_logs]: "ログを添付",
+    [MessageKeys.issue_report_attach_image]: "スクリーンショット / 画像を添付",
+    [MessageKeys.issue_report_attach_file]: "ファイルを添付",
+    [MessageKeys.issue_report_attachments]: "添付ファイル",
+    [MessageKeys.issue_report_attachment_too_large]: "添付できるファイルは 1 件 10 MB までです。",
+    [MessageKeys.issue_report_attachment_limit]: "添付できるファイルは最大 5 件です。",
+    [MessageKeys.issue_report_media_permission_error]: "写真へのアクセスが許可されていません。",
+    [MessageKeys.issue_report_remove_attachment]: "添付を削除",
     [MessageKeys.issue_report_send_button]: "レポートを送信",
     [MessageKeys.issue_report_success]: "問題を報告しました。フィードバックありがとうございます！",
     [MessageKeys.issue_report_error]: "問題レポートの送信に失敗しました。",

@@ -1,9 +1,18 @@
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import type React from "react";
+import { Linking } from "react-native";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
+import IssueService from "../../../services/IssueService";
 import { IssueLogDialog } from "../IssueLogDialog";
+
+jest.mock("../../../services/IssueService", () => ({
+    __esModule: true,
+    default: {
+        getAttachments: jest.fn(),
+    },
+}));
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
@@ -24,6 +33,35 @@ describe("IssueLogDialog", () => {
 
         expect(getByText("Crash on launch")).toBeTruthy();
         expect(getByText("line 1\nline 2")).toBeTruthy();
+    });
+
+    it("shows attachments and opens the signed URL", async () => {
+        (IssueService.getAttachments as jest.Mock).mockResolvedValue([
+            {
+                id: "a1",
+                issue_id: "issue-1",
+                storage_path: "user-1/shot.png",
+                file_name: "shot.png",
+                url: "https://example.com/shot.png",
+            },
+        ]);
+        const openURL = jest.spyOn(Linking, "openURL").mockResolvedValue(true as any);
+        const { getByText } = renderWithProvider(<IssueLogDialog />);
+
+        await act(async () => {
+            IssueLogDialog.show({ title: "With file", logs: "", issueId: "issue-1" });
+        });
+        expect(IssueService.getAttachments).toHaveBeenCalledWith("issue-1");
+
+        await waitFor(() => {
+            expect(getByText("Attachments")).toBeTruthy();
+        });
+        expect(getByText("shot.png")).toBeTruthy();
+
+        fireEvent.press(getByText("shot.png"));
+
+        expect(openURL).toHaveBeenCalledWith("https://example.com/shot.png");
+        openURL.mockRestore();
     });
 
     it("closes when the OK button is pressed", async () => {

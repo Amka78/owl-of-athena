@@ -365,7 +365,8 @@ export default {
     [MessageKeys.admin_selected_count]: "{0} selecionados",
     [MessageKeys.admin_selection_clear]: "Limpar",
     [MessageKeys.admin_issue_logs_title]: "Registros",
-    [MessageKeys.admin_issue_logs_open_hint]: "Toque para ver o registro completo",
+    [MessageKeys.admin_issue_logs_open_hint]: "Toque para ver os detalhes",
+    [MessageKeys.admin_issue_attachments_title]: "Anexos",
     [MessageKeys.drawer_items_admin]: "Admin",
 
     // account messages
@@ -431,6 +432,14 @@ export default {
     [MessageKeys.issue_report_check_critical]: "Problema crítico",
     [MessageKeys.issue_report_check_anonymous]: "Enviar anonimamente",
     [MessageKeys.issue_report_check_attach_logs]: "Anexar logs",
+    [MessageKeys.issue_report_attach_image]: "Anexar captura de tela / imagem",
+    [MessageKeys.issue_report_attach_file]: "Anexar arquivo",
+    [MessageKeys.issue_report_attachments]: "Anexos",
+    [MessageKeys.issue_report_attachment_too_large]: "Cada anexo deve ter no máximo 10 MB.",
+    [MessageKeys.issue_report_attachment_limit]: "É possível anexar até 5 arquivos.",
+    [MessageKeys.issue_report_media_permission_error]:
+        "O acesso à biblioteca de fotos não foi permitido.",
+    [MessageKeys.issue_report_remove_attachment]: "Remover anexo",
     [MessageKeys.issue_report_send_button]: "Enviar Relatório",
     [MessageKeys.issue_report_success]: "Problema reportado. Obrigado pelo seu retorno!",
     [MessageKeys.issue_report_error]: "Falha ao enviar o relatório do problema.",

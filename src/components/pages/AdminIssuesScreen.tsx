@@ -40,21 +40,25 @@ export const AdminIssuesScreen: FunctionComponent = () => {
                             </Text>
                             <Text style={[styles.cell, styles.flex1]}>{item.status ?? "—"}</Text>
                         </View>
-                        {item.logs ? (
-                            <TouchableOpacity
-                                accessibilityRole="button"
-                                onPress={() =>
-                                    IssueLogDialog.show({ title: item.title, logs: item.logs })
-                                }
-                            >
+                        <TouchableOpacity
+                            accessibilityRole="button"
+                            onPress={() =>
+                                IssueLogDialog.show({
+                                    title: item.title,
+                                    logs: item.logs ?? "",
+                                    issueId: item.id,
+                                })
+                            }
+                        >
+                            {item.logs ? (
                                 <Text style={styles.logs} numberOfLines={4}>
                                     {item.logs}
                                 </Text>
-                                <Text style={styles.logsHint}>
-                                    {Message.get(MessageKeys.admin_issue_logs_open_hint)}
-                                </Text>
-                            </TouchableOpacity>
-                        ) : null}
+                            ) : null}
+                            <Text style={styles.logsHint}>
+                                {Message.get(MessageKeys.admin_issue_logs_open_hint)}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 )}
                 ListEmptyComponent={

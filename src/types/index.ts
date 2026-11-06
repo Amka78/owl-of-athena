@@ -30,7 +30,13 @@ export type {
     FirmwareUpdate,
     FirmwareUpdatePhase,
 } from "./Firmware";
-export type { CreateIssue, Issue } from "./Issue";
+export type {
+    CreateIssue,
+    Issue,
+    IssueAttachment,
+    IssueAttachmentInput,
+    IssueAttachmentWithUrl,
+} from "./Issue";
 export type { Message, UserMessage } from "./Message";
 export type { Order } from "./Order";
 export type {

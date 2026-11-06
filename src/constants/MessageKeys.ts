@@ -380,6 +380,7 @@ export const MessageKeys = {
     admin_selection_clear: "admin_selection_clear",
     admin_issue_logs_title: "admin_issue_logs_title",
     admin_issue_logs_open_hint: "admin_issue_logs_open_hint",
+    admin_issue_attachments_title: "admin_issue_attachments_title",
     drawer_items_admin: "drawer_items_admin",
     //#endregion
 
@@ -449,6 +450,13 @@ export const MessageKeys = {
     issue_report_check_critical: "issue_report_check_critical",
     issue_report_check_anonymous: "issue_report_check_anonymous",
     issue_report_check_attach_logs: "issue_report_check_attach_logs",
+    issue_report_attach_image: "issue_report_attach_image",
+    issue_report_attach_file: "issue_report_attach_file",
+    issue_report_attachments: "issue_report_attachments",
+    issue_report_attachment_too_large: "issue_report_attachment_too_large",
+    issue_report_attachment_limit: "issue_report_attachment_limit",
+    issue_report_media_permission_error: "issue_report_media_permission_error",
+    issue_report_remove_attachment: "issue_report_remove_attachment",
     issue_report_send_button: "issue_report_send_button",
     issue_report_success: "issue_report_success",
     issue_report_error: "issue_report_error",

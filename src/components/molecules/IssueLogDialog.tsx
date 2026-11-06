@@ -1,8 +1,10 @@
 //#region Import Modules
 import React from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { Linking, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
+import IssueService from "../../services/IssueService";
+import type { IssueAttachmentWithUrl } from "../../types";
 import { FlatButton } from "../atoms";
 
 //#endregion
@@ -11,24 +13,28 @@ import { FlatButton } from "../atoms";
 type IssueLogDialogSettings = {
     title?: string;
     logs: string;
+    issueId?: string;
 };
 
 type IssueLogDialogState = {
     settings?: IssueLogDialogSettings;
+    attachments: IssueAttachmentWithUrl[];
+    loadingAttachments: boolean;
 };
 //#endregion
 
 //#region Component
 export class IssueLogDialog extends React.Component<{}, IssueLogDialogState> {
     public static Instance?: IssueLogDialog;
+    private attachmentRequest?: string;
 
     public static show(args: IssueLogDialogSettings): void {
-        IssueLogDialog.Instance?.setState({ settings: args });
+        IssueLogDialog.Instance?.open(args);
     }
 
     constructor(props: {}) {
         super(props);
-        this.state = { settings: undefined };
+        this.state = { settings: undefined, attachments: [], loadingAttachments: false };
     }
 
     public componentDidMount(): void {
@@ -41,8 +47,35 @@ export class IssueLogDialog extends React.Component<{}, IssueLogDialogState> {
         }
     }
 
+    private open(args: IssueLogDialogSettings): void {
+        this.attachmentRequest = args.issueId;
+        this.setState({
+            settings: args,
+            attachments: [],
+            loadingAttachments: args.issueId !== undefined,
+        });
+        if (args.issueId) {
+            void this.loadAttachments(args.issueId);
+        }
+    }
+
+    private async loadAttachments(issueId: string): Promise<void> {
+        try {
+            const attachments = await IssueService.getAttachments(issueId);
+            if (this.attachmentRequest === issueId) {
+                this.setState({ attachments, loadingAttachments: false });
+            }
+        } catch (error) {
+            console.debug("Failed to load issue attachments:", error);
+            if (this.attachmentRequest === issueId) {
+                this.setState({ loadingAttachments: false });
+            }
+        }
+    }
+
     private close(): void {
-        this.setState({ settings: undefined });
+        this.attachmentRequest = undefined;
+        this.setState({ settings: undefined, attachments: [], loadingAttachments: false });
     }
 
     public render(): React.ReactNode {
@@ -56,9 +89,35 @@ export class IssueLogDialog extends React.Component<{}, IssueLogDialogState> {
                 </Dialog.Title>
                 <Dialog.ScrollArea style={styles.scrollArea}>
                     <ScrollView contentContainerStyle={styles.content}>
-                        <Text selectable style={styles.logs}>
-                            {settings.logs}
-                        </Text>
+                        {settings.logs ? (
+                            <Text selectable style={styles.logs}>
+                                {settings.logs}
+                            </Text>
+                        ) : null}
+                        {this.state.loadingAttachments ? (
+                            <Text style={styles.attachmentHint}>Loading...</Text>
+                        ) : null}
+                        {this.state.attachments.length > 0 ? (
+                            <View style={styles.attachments}>
+                                <Text style={styles.attachmentTitle}>
+                                    {Message.get(MessageKeys.admin_issue_attachments_title)}
+                                </Text>
+                                {this.state.attachments.map((attachment) => (
+                                    <FlatButton
+                                        key={attachment.id}
+                                        disabled={attachment.url === undefined}
+                                        labelStyle={styles.attachmentButton}
+                                        onPress={() => {
+                                            if (attachment.url) {
+                                                void Linking.openURL(attachment.url);
+                                            }
+                                        }}
+                                    >
+                                        {attachment.file_name}
+                                    </FlatButton>
+                                ))}
+                            </View>
+                        ) : null}
                     </ScrollView>
                 </Dialog.ScrollArea>
                 <Dialog.Actions>
@@ -88,6 +147,10 @@ const styles = StyleSheet.create({
         fontFamily: "monospace",
         fontSize: 11,
     },
+    attachments: { marginTop: 12 },
+    attachmentTitle: { color: Colors.cyan, fontSize: 12, fontWeight: "bold" },
+    attachmentButton: { color: Colors.white, textAlign: "left" },
+    attachmentHint: { color: Colors.white, fontSize: 11, opacity: 0.7 },
     button: { color: Colors.cyan },
 });
 //#endregion
