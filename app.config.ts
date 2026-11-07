@@ -27,6 +27,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     scheme: "owl-of-athena",
     platforms: ["ios", "android", "web"],
     githubUrl: "https://github.com/Amka78/owl-of-athena",
+    experiments: {
+        ...config.experiments,
+        // GitHub Pages のプロジェクトページ（/owl-of-athena/）で配信するときだけ
+        // CI からサブパスを渡す。ローカル開発では未設定のまま。
+        ...(process.env.PAGES_BASE_URL ? { baseUrl: process.env.PAGES_BASE_URL } : {}),
+    },
     // EAS Update の配信先。どのチャンネルへ届くかはビルド時の eas.json の channel が決める。
     updates: {
         url: `https://u.expo.dev/${EAS_PROJECT_ID}`,
