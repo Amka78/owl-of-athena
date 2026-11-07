@@ -15,6 +15,8 @@ type AdminUserRow = {
     last_name?: string | null;
     birthday?: string | null;
     gender?: string | null;
+    country_code?: string | null;
+    postal_code?: string | null;
     roles?: { slug?: string; title?: string }[] | null;
     created_at?: string | null;
     updated_at?: string | null;
@@ -63,6 +65,22 @@ const columns: AdminColumn<AdminUserRow>[] = [
         flex: 1,
         field: "gender",
         searchFields: ["gender"],
+    },
+    {
+        title: "Country",
+        value: (user) => user.country_code ?? "",
+        flex: 1,
+        hidden: true,
+        field: "country_code",
+        searchFields: ["country_code"],
+    },
+    {
+        title: "Postal Code",
+        value: (user) => user.postal_code ?? "",
+        flex: 1,
+        hidden: true,
+        field: "postal_code",
+        searchFields: ["postal_code"],
     },
     {
         title: "Roles",

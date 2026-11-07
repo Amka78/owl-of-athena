@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
@@ -26,6 +26,8 @@ export type AccountScreenTemplateProps = {
     };
     maleRadioButton: TemplateRadioButtonProps;
     femaleRadioButton: TemplateRadioButtonProps;
+    countryCode: TemplateTextBoxProps;
+    postalCode: TemplateTextBoxProps;
     saveButton: TemplateButtonProps;
     logoutButton: TemplateButtonProps;
     dimens: Dimensions;
@@ -116,6 +118,27 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
                         ></LabeledRadioButton>
                     </RadioButton.Group>
                 </View>
+            </View>
+            <View
+                style={{
+                    flexDirection: props.dimens.isHorizontal ? "row" : "column",
+                    maxWidth: Dimens.inner_screen_max_width,
+                }}
+            >
+                <TextBox
+                    {...props.countryCode}
+                    label={Message.get(MessageKeys.account_input_country_code)}
+                    style={{ marginRight: itemMargin }}
+                    maxWidth={splitWidth}
+                    autoCapitalize="characters"
+                    maxLength={2}
+                ></TextBox>
+                <TextBox
+                    {...props.postalCode}
+                    label={Message.get(MessageKeys.account_input_postal_code)}
+                    style={{ marginLeft: itemMargin }}
+                    maxWidth={splitWidth}
+                ></TextBox>
             </View>
             <ErrorText>{""}</ErrorText>
             {saveButton}

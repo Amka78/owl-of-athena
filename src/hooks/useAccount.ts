@@ -19,6 +19,10 @@ export const useAcount = (): {
     onBirthDayChange: (date: Date) => void;
     gender: string;
     onGenderChange: (value: string) => void;
+    countryCode: string;
+    onCountryCodeChangeText: (text: string) => void;
+    postalCode: string;
+    onPostalCodeChangeText: (text: string) => void;
     onSavePress: () => Promise<void>;
     onLogoutPress: () => void;
     generalError: string;
@@ -30,6 +34,8 @@ export const useAcount = (): {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [gender, setGender] = useState("");
+    const [countryCode, setCountryCode] = useState("");
+    const [postalCode, setPostalCode] = useState("");
     const [birthDay, setBirthDay] = useState(new Date());
     const useLogoutHook = useLogout();
 
@@ -60,6 +66,8 @@ export const useAcount = (): {
                     setFirstName(currentUser.first_name!);
                     setLastName(currentUser.last_name!);
                     setGender(currentUser.gender ? currentUser.gender : "male");
+                    setCountryCode(currentUser.country_code ?? "");
+                    setPostalCode(currentUser.postal_code ?? "");
                     setBirthDay(parseBirthday(currentUser.birthday));
                 } catch (ex) {
                     console.debug(ex);
@@ -88,6 +96,14 @@ export const useAcount = (): {
         setGender(gender);
     }, []);
 
+    const onCountryCodeChangeText = useCallback((text: string): void => {
+        setCountryCode(text.toUpperCase().slice(0, 2));
+    }, []);
+
+    const onPostalCodeChangeText = useCallback((text: string): void => {
+        setPostalCode(text);
+    }, []);
+
     const onSavePress = useCallback(async () => {
         if (userInfo === undefined) return;
 
@@ -102,6 +118,8 @@ export const useAcount = (): {
                 lastName,
                 gender,
                 birthDay,
+                countryCode,
+                postalCode,
             });
             if (!validate(edited, setGeneralError)) return;
 
@@ -114,7 +132,7 @@ export const useAcount = (): {
         } finally {
             setLoading(false);
         }
-    }, [userInfo, firstName, lastName, gender, birthDay, updateUser]);
+    }, [userInfo, firstName, lastName, gender, birthDay, countryCode, postalCode, updateUser]);
 
     const onLogoutPress = useLogoutHook.onPress;
     return {
@@ -127,6 +145,10 @@ export const useAcount = (): {
         onBirthDayChange,
         gender,
         onGenderChange,
+        countryCode,
+        onCountryCodeChangeText,
+        postalCode,
+        onPostalCodeChangeText,
         onSavePress,
         onLogoutPress,
         generalError,

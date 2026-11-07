@@ -207,6 +207,8 @@ export default {
     [MessageKeys.account_input_first_name]: input_first_name,
     [MessageKeys.account_input_last_name]: input_last_name,
     [MessageKeys.account_input_birthday]: input_birthday,
+    [MessageKeys.account_input_country_code]: "国コード（例: JP）",
+    [MessageKeys.account_input_postal_code]: "郵便番号",
     [MessageKeys.account_button]: update,
     [MessageKeys.account_signout]: "サインアウト",
     [MessageKeys.account_loading_message]: "セーブ中",

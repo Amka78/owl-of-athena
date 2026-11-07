@@ -137,6 +137,8 @@ export class AuroraRestClient {
                 last_name: user.last_name,
                 gender: user.gender,
                 birthday: user.birthday,
+                country_code: user.country_code,
+                postal_code: user.postal_code,
             })
             .eq("id", user.id)
             .select()

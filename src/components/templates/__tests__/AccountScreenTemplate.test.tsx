@@ -1,46 +1,53 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
-import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
-import { AccountScreenTemplate } from '../AccountScreenTemplate';
-
+import { fireEvent, render } from "@testing-library/react-native";
+import type React from "react";
+import { Provider } from "react-native-paper";
+import { Theme } from "../../../constants";
+import { AccountScreenTemplate } from "../AccountScreenTemplate";
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
 const mobileDimens = {
-    fontScale: 1, scale: 1, height: 800, width: 400,
-    isDesktop: false, isLargeWidth: false, isSmallHeight: false,
-    isVertical: true, isHorizontal: false,
+    fontScale: 1,
+    scale: 1,
+    height: 800,
+    width: 400,
+    isDesktop: false,
+    isLargeWidth: false,
+    isSmallHeight: false,
+    isVertical: true,
+    isHorizontal: false,
 };
 
 const defaultProps = {
-    firstName: { value: 'Jane', onChangeText: jest.fn() },
-    lastName: { value: 'Doe', onChangeText: jest.fn() },
+    firstName: { value: "Jane", onChangeText: jest.fn() },
+    lastName: { value: "Doe", onChangeText: jest.fn() },
     birthDay: { selected: new Date(1990, 0, 1), onChange: jest.fn() },
-    gender: { value: 'female', onValueChange: jest.fn() },
-    maleRadioButton: { value: 'male' },
-    femaleRadioButton: { value: 'female' },
+    gender: { value: "female", onValueChange: jest.fn() },
+    maleRadioButton: { value: "male" },
+    femaleRadioButton: { value: "female" },
+    countryCode: { value: "JP", onChangeText: jest.fn() },
+    postalCode: { value: "100-0001", onChangeText: jest.fn() },
     saveButton: { onPress: jest.fn() },
     logoutButton: { onPress: jest.fn() },
 };
 
-describe('AccountScreenTemplate', () => {
-    it('renders correctly with en-US locale', () => {
+describe("AccountScreenTemplate", () => {
+    it("renders correctly with en-US locale", () => {
         const { toJSON } = renderWithProvider(
-            <AccountScreenTemplate {...defaultProps} dimens={mobileDimens} locale="en-US" />
+            <AccountScreenTemplate {...defaultProps} dimens={mobileDimens} locale="en-US" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('renders correctly with ja-JP locale', () => {
+    it("renders correctly with ja-JP locale", () => {
         const { toJSON } = renderWithProvider(
-            <AccountScreenTemplate {...defaultProps} dimens={mobileDimens} locale="ja-JP" />
+            <AccountScreenTemplate {...defaultProps} dimens={mobileDimens} locale="ja-JP" />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
-    it('calls saveButton.onPress when save pressed', () => {
+    it("calls saveButton.onPress when save pressed", () => {
         const onPress = jest.fn();
         const { getByText } = renderWithProvider(
             <AccountScreenTemplate
@@ -48,7 +55,7 @@ describe('AccountScreenTemplate', () => {
                 saveButton={{ onPress }}
                 dimens={mobileDimens}
                 locale="en-US"
-            />
+            />,
         );
         fireEvent.press(getByText(/update/i));
         expect(onPress).toHaveBeenCalledTimes(1);

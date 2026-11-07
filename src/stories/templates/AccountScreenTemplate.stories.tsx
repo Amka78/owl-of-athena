@@ -40,6 +40,8 @@ const defaultArgs = {
     gender: { value: "female", onValueChange: fn() },
     maleRadioButton: { value: "male" },
     femaleRadioButton: { value: "female" },
+    countryCode: { value: "JP", onChangeText: fn() },
+    postalCode: { value: "100-0001", onChangeText: fn() },
     saveButton: { onPress: fn() },
     logoutButton: { onPress: fn() },
 };

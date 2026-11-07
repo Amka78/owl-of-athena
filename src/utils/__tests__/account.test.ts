@@ -24,12 +24,16 @@ describe("account utils", () => {
             lastName: "Family",
             gender: "female",
             birthDay: new Date(2001, 1, 3),
+            countryCode: " jp ",
+            postalCode: " 100-0001 ",
         });
 
         expect(updated.first_name).toBe("New");
         expect(updated.last_name).toBe("Family");
         expect(updated.gender).toBe("female");
         expect(updated.birthday).toBe("2001-02-03");
+        expect(updated.country_code).toBe("JP");
+        expect(updated.postal_code).toBe("100-0001");
         expect(updated.id).toBe("user-1");
     });
 

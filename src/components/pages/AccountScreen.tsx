@@ -1,6 +1,6 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useAcount, useWindowDimensions } from "../../hooks";
@@ -43,6 +43,14 @@ export const AccountScreen: FunctionComponent = () => {
                 }}
                 maleRadioButton={{
                     value: "male",
+                }}
+                countryCode={{
+                    value: accountHook.countryCode,
+                    onChangeText: accountHook.onCountryCodeChangeText,
+                }}
+                postalCode={{
+                    value: accountHook.postalCode,
+                    onChangeText: accountHook.onPostalCodeChangeText,
                 }}
                 femaleRadioButton={{
                     value: "female",
@@ -87,10 +95,7 @@ export const AccountScreen: FunctionComponent = () => {
                     </TouchableOpacity>
                 )}
                 {isAdmin && (
-                    <TouchableOpacity
-                        style={styles.navButton}
-                        onPress={() => navigate("Console")}
-                    >
+                    <TouchableOpacity style={styles.navButton} onPress={() => navigate("Console")}>
                         <Text style={styles.navButtonText}>
                             {Message.get(MessageKeys.console_title)}
                         </Text>
@@ -104,10 +109,7 @@ export const AccountScreen: FunctionComponent = () => {
                         {Message.get(MessageKeys.change_password_nav_button)}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.navButton}
-                    onPress={() => navigate("ChangeEmail")}
-                >
+                <TouchableOpacity style={styles.navButton} onPress={() => navigate("ChangeEmail")}>
                     <Text style={styles.navButtonText}>
                         {Message.get(MessageKeys.change_email_nav_button)}
                     </Text>
@@ -120,13 +122,8 @@ export const AccountScreen: FunctionComponent = () => {
                         {Message.get(MessageKeys.issue_report_button)}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.navButton}
-                    onPress={() => navigate("About")}
-                >
-                    <Text style={styles.navButtonText}>
-                        {Message.get(MessageKeys.about_title)}
-                    </Text>
+                <TouchableOpacity style={styles.navButton} onPress={() => navigate("About")}>
+                    <Text style={styles.navButtonText}>{Message.get(MessageKeys.about_title)}</Text>
                 </TouchableOpacity>
                 <View style={styles.deviceSection}>
                     <Text style={styles.deviceSectionTitle}>

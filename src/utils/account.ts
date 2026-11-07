@@ -10,6 +10,8 @@ export type AccountEdits = {
     lastName: string;
     gender: string;
     birthDay: Date;
+    countryCode: string;
+    postalCode: string;
 };
 //#endregion
 
@@ -33,5 +35,7 @@ export const buildAccountUpdate = (user: User, edits: AccountEdits): User => ({
     last_name: edits.lastName,
     gender: edits.gender,
     birthday: formatBirthday(edits.birthDay),
+    country_code: edits.countryCode.trim().toUpperCase(),
+    postal_code: edits.postalCode.trim(),
 });
 //#endregion

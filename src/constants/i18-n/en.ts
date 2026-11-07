@@ -213,6 +213,8 @@ export default {
     [MessageKeys.account_input_first_name]: input_first_name,
     [MessageKeys.account_input_last_name]: input_last_name,
     [MessageKeys.account_input_birthday]: input_birthday,
+    [MessageKeys.account_input_country_code]: "Country code (e.g. US)",
+    [MessageKeys.account_input_postal_code]: "Postal code",
     [MessageKeys.account_button]: update,
     [MessageKeys.account_signout]: "Sign Out",
     [MessageKeys.account_loading_message]: "Saving...",

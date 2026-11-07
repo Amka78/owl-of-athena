@@ -12,6 +12,10 @@ export type User = {
 
     gender?: string;
 
+    country_code?: string;
+
+    postal_code?: string;
+
     created_at: string;
 
     updatedAt: string;

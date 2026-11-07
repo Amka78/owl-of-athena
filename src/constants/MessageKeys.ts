@@ -190,6 +190,8 @@ export const MessageKeys = {
     account_input_first_name: "account_input_first_name",
     account_input_last_name: "account_input_last_name",
     account_input_birthday: "account_input_birthday",
+    account_input_country_code: "account_input_country_code",
+    account_input_postal_code: "account_input_postal_code",
     account_button: "account_button",
     account_signout: "account_signout",
     account_loading_message: "account_loading_message",

@@ -214,6 +214,8 @@ export default {
     [MessageKeys.account_input_first_name]: input_first_name,
     [MessageKeys.account_input_last_name]: input_last_name,
     [MessageKeys.account_input_birthday]: input_birthday,
+    [MessageKeys.account_input_country_code]: "Código do país (ex.: BR)",
+    [MessageKeys.account_input_postal_code]: "CEP / código postal",
     [MessageKeys.account_button]: update,
     [MessageKeys.account_signout]: "Sair",
     [MessageKeys.account_loading_message]: "Salvando...",
