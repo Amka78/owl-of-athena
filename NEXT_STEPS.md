@@ -179,6 +179,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - エクスポート: `src/services/ExportService.ts`
 - サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminIssuesScreen.tsx`, `src/services/IssueService.ts`, `src/services/IssueAttachmentModel.ts`, `src/services/AttachmentFileService.ts`（`.web.ts` 含む）, `supabase/migrations/20261107000005_consolidated_november.sql`
 - セキュリティ: `supabase/migrations/20261107000005_consolidated_november.sql`, `supabase/tests/rls_security.test.sql`, `supabase/tests/rls_security_behavior.test.sql`
+- Web 配信: `.github/workflows/pages.yml`, `WEB_DEPLOY.md`, `app.config.ts`（`PAGES_BASE_URL` で GitHub Pages のサブパスを設定）
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
@@ -206,6 +207,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- Web 版は `.github/workflows/pages.yml` で GitHub Pages へ配信する。プロジェクトページの `/owl-of-athena/` に合わせて CI だけ `PAGES_BASE_URL` を渡す。手順は `WEB_DEPLOY.md`。
+- Web export には Service Worker が含まれないため、Web の更新通知は現状動作しない。Pages 公開後に有効化するなら Service Worker の生成が必要。
 - 統合マイグレーションは `firmware_releases` と公開 `firmware` バケットが無い古いDBでも動くよう、両方を `IF NOT EXISTS` / `ON CONFLICT` で作成する。
 - P0 RLS 強化: `issues` は本人＋管理者のみ読取可、INSERT は `user_id = auth.uid()` 必須、一般ユーザーの UPDATE は削除。`orders` のクライアント INSERT/UPDATE は削除（サーバ専用）。`user_messages` の INSERT はサービスロール専用にし、UPDATE は本人の `read_at` と `questionnaire_respondent_id` だけに制限。`get_or_create_user_profile` は本人・管理者・service_role 以外を拒否する。
 - RLS テストは `supabase/tests/rls_security.test.sql`（ポリシー・トリガー・関数定義の構成）と `supabase/tests/rls_security_behavior.test.sql`（auth ユーザーを作り、anon / 一般ユーザー / 管理者の読み書きを検証）の2本。`supabase test db` で実行する。この環境には Supabase CLI が無いため未実行。
