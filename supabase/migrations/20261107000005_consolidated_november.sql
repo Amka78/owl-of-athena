@@ -376,3 +376,117 @@ BEGIN
     END IF;
 END
 $$;
+
+-- ====================================
+-- 9. P0 RLS 強化
+-- ====================================
+
+-- 不具合報告は本人と管理者だけが読める。匿名報告は user_id を持たせ、
+-- 管理者だけが参照する。全件読み取りと他人の報告の更新を禁止する。
+DROP POLICY IF EXISTS "Users can read all issues" ON public.issues;
+DROP POLICY IF EXISTS "Users can read their own issues" ON public.issues;
+CREATE POLICY "Users can read their own issues" ON public.issues
+    FOR SELECT USING (auth.uid() = user_id OR public.is_admin());
+
+DROP POLICY IF EXISTS "Authenticated users can create issues" ON public.issues;
+CREATE POLICY "Authenticated users can create their own issues" ON public.issues
+    FOR INSERT WITH CHECK (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can update their own issues" ON public.issues;
+
+-- メッセージの INSERT はサービスロール（RLS バイパス）だけにする。
+-- 一般ユーザーは自分のメッセージの read_at / questionnaire_respondent_id だけ更新できる。
+DROP POLICY IF EXISTS "System can insert messages for users" ON public.user_messages;
+DROP POLICY IF EXISTS "Users can update (mark as read) their own messages" ON public.user_messages;
+CREATE POLICY "Users can update their own message state" ON public.user_messages
+    FOR UPDATE
+    USING (auth.uid() = user_id)
+    WITH CHECK (auth.uid() = user_id);
+
+CREATE OR REPLACE FUNCTION public.protect_user_message_columns()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+BEGIN
+    IF auth.uid() IS NOT NULL AND NOT public.is_admin() THEN
+        NEW.message_id := OLD.message_id;
+        NEW.user_id := OLD.user_id;
+        NEW.title := OLD.title;
+        NEW.message := OLD.message;
+        NEW.type := OLD.type;
+        NEW.questionnaire_id := OLD.questionnaire_id;
+        NEW.created_at := OLD.created_at;
+    END IF;
+    RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS user_messages_protect_columns ON public.user_messages;
+CREATE TRIGGER user_messages_protect_columns
+    BEFORE UPDATE ON public.user_messages
+    FOR EACH ROW EXECUTE FUNCTION public.protect_user_message_columns();
+
+-- 注文の作成・更新は決済 Webhook / サービスロールに限定する。
+-- クライアントから amount_total / status を書き換えられないようにする。
+DROP POLICY IF EXISTS "Users can create their own orders" ON public.orders;
+DROP POLICY IF EXISTS "Users can update their own orders" ON public.orders;
+
+-- プロフィール RPC は本人・管理者・service_role 以外の user_id を受け付けない。
+CREATE OR REPLACE FUNCTION public.get_or_create_user_profile(p_user_id UUID)
+RETURNS SETOF public.users
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+    v_meta JSONB;
+    v_email TEXT;
+    v_email_confirmed_at TIMESTAMP WITH TIME ZONE;
+    v_last_sign_in_at TIMESTAMP WITH TIME ZONE;
+BEGIN
+    IF p_user_id IS DISTINCT FROM auth.uid()
+       AND auth.role() IS DISTINCT FROM 'service_role'
+       AND NOT public.is_admin() THEN
+        RAISE EXCEPTION 'not allowed';
+    END IF;
+
+    SELECT raw_user_meta_data, email, email_confirmed_at, last_sign_in_at
+    INTO v_meta, v_email, v_email_confirmed_at, v_last_sign_in_at
+    FROM auth.users
+    WHERE id = p_user_id;
+
+    INSERT INTO public.users (
+        id,
+        email,
+        activated,
+        first_name,
+        last_name,
+        birthday,
+        gender,
+        newsletter,
+        created_at,
+        updated_at
+    )
+    VALUES (
+        p_user_id,
+        v_email,
+        (v_email_confirmed_at IS NOT NULL OR v_last_sign_in_at IS NOT NULL),
+        NULLIF(v_meta->>'first_name', ''),
+        NULLIF(v_meta->>'last_name', ''),
+        NULLIF(v_meta->>'birthday', ''),
+        NULLIF(v_meta->>'gender', ''),
+        COALESCE((v_meta->>'newsletter')::BOOLEAN, FALSE),
+        NOW(),
+        NOW()
+    )
+    ON CONFLICT (id) DO UPDATE SET
+        email = EXCLUDED.email,
+        activated = EXCLUDED.activated;
+
+    RETURN QUERY SELECT * FROM public.users WHERE id = p_user_id;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.get_or_create_user_profile(UUID) TO authenticated;

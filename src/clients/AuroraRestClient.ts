@@ -79,6 +79,20 @@ export class AuroraRestClient {
 
         const authUser = data.user!;
 
+        if (data.session === null) {
+            // メール確認待ちの間はセッションが無く、プロフィール RPC を呼べない。
+            // 初回ログイン時に get_or_create_user_profile が作成する。
+            return {
+                id: authUser.id,
+                first_name: createUser.firstName,
+                last_name: createUser.lastName,
+                birthday: createUser.birthday ?? "",
+                gender: createUser.gender,
+                created_at: authUser.created_at,
+                updatedAt: authUser.updated_at ?? authUser.created_at,
+            } as User;
+        }
+
         return await this._getUserProfile(authUser.id);
     }
 
