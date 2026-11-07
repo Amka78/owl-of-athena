@@ -52,6 +52,7 @@
 - 不具合報告にスクリーンショット／画像とファイルを添付できるようにした。1 件 10 MB・最大 5 件まで選択でき、Supabase の非公開バケット `issue-attachments` へアップロードして `issue_attachments` に紐付ける。管理画面の詳細ダイアログから署名付き URL で開ける
 - ファームウェア更新にダウンロード段階を追加。hex の取得中は `LoadingDialog` に進捗バーとパーセントを表示し、ダウンロード完了後に Aurora への転送、書き込み、検証へ進む。ネイティブはキャッシュへダウンロードしながら進捗を取得し、Web/Node はレスポンスのストリームまたは完了時のサイズで進捗を出す
 - アプリ更新通知を強化。ネイティブは起動時に加えてフォアグラウンド復帰時にも OTA を確認し（15 分間隔で抑制）、取得済みなら Snackbar を表示する。Web は Service Worker の `installed` を待ち、既存の controller がある場合だけ更新を提示するようにした
+- サインアップに氏名（姓・名）・生年月日・性別・ニュースレター購読を追加。値は Supabase Auth の `raw_user_meta_data` に渡し、`get_or_create_user_profile` が `users` へ引き継ぐ。`users.newsletter` 列を追加した
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
 - 未転送セッション件数をメイン画面のセッションアイコン（下部タブ / ドロワー）にバッジ表示するようにした。件数は接続時のスキャンと転送完了で更新し、切断時に 0 に戻す。接続中のみ表示する
@@ -69,6 +70,7 @@
    - `supabase/migrations/20261105000001_firmware_components.sql`（ブートローダー / BLE の配布列）
    - `supabase/migrations/20261105000002_firmware_min_app_version.sql`（最低アプリバージョン）
    - `supabase/migrations/20261107000000_issue_attachments.sql`（不具合報告の添付ファイル。非公開バケット `issue-attachments` も作成）
+   - `supabase/migrations/20261107000001_signup_profile_fields.sql`（サインアップ時の氏名・生年月日・性別・ニュースレター。`users.newsletter` とプロフィール作成関数）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -99,6 +101,7 @@ WHERE id = '<user-uuid>';
 - アプリ更新通知（実 OTA 配信での Snackbar 表示、フォアグラウンド復帰時の再チェック、Web の Service Worker 更新）
 - 不具合報告の添付（実機の画像・ファイル選択、10 MB 制限、非公開バケットへのアップロード、管理画面の署名付き URL 表示）
 - ファームウェアのダウンロード進捗（実機での hex 取得、Content-Length が無い場合の不定表示、ダウンロードから書き込みへのフェーズ遷移）
+- サインアップ項目（氏名・生年月日・性別・ニュースレターの入力、Auth メタデータから `users` への引き継ぎ、メール確認後の再ログイン）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -184,6 +187,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
 - セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`
+- サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000001_signup_profile_fields.sql`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
 - 未転送バッジ: `src/store/sessionTransferStore.ts`, `src/components/atoms/SessionsIconWithBadge.tsx`, `src/components/templates/MainScreenTemplate.tsx`, `src/navigation/MainDrawerNavigator.tsx`, `src/hooks/useMain.ts`, `src/hooks/useAwake.ts`
 - 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/molecules/AdminTableModel.ts`, `src/components/molecules/AdminTableColumnPrefs.ts`, `src/services/AdminQueryModel.ts`, `src/services/AdminQueryService.ts`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
@@ -192,12 +196,14 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。検索・ソート・サーバ側ページング・列表示切替・行選択は 2026-11-06 に実装済み。
-3. **残りの parity 差分**: iOS の `MPVolumeView`、サインアップ項目、スキーマ依存の列（セッションの「新規」バッジを含む）。
+3. **残りの parity 差分**: iOS の `MPVolumeView`、管理画面のスキーマ列（Email / Activated / Origin）、セッションの「新規」バッジ。
 
 ## 既知の制約
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- サインアップのプロフィール項目は `supabase.auth.signUp` の `options.data`（`first_name` / `last_name` / `birthday` / `gender` / `newsletter`）に載せ、`get_or_create_user_profile` が初回作成時に `users` へコピーする。既存ユーザーには反映されない。`users.newsletter` の既定値は false。
+- `DatePicker` は選択時に `onChange` を呼ぶように修正した。生年月日を未選択のまま送信すると `birthday` は null になる。
 - ファームウェアの hex は一度テキストとしてメモリに読み、`writeFile` で Aurora へ送る。ネイティブのダウンロードは `expo-file-system/legacy` の `createDownloadResumable` を使い、キャッシュファイルは書き込み後に削除する。`Content-Length` が無い場合は進捗バーを不定表示にする。ダウンロード失敗時はフェーズを進めず、既存の失敗ダイアログに流す。
 - 不具合報告の添付は 1 件 10 MB・最大 5 件。画像はフォトライブラリ、その他はドキュメントピッカーから選ぶ。アップロード先は非公開バケット `issue-attachments` の `<user_id>/<unique>-<name>` で、管理画面は 1 時間有効の署名付き URL を開く。報告作成後に添付の紐付けだけ失敗した場合は、報告自体は送信済みとしてログに残す。`issues.user_id` は報告時に設定する。
 - アプリ更新通知（`UpdateSnackBar`）は `App.tsx` で全画面にマウント済み。ネイティブは `Updates.isEnabled === false` のとき確認せず、起動時とフォアグラウンド復帰時に確認する（復帰時は 15 分間隔で抑制）。Web は `/expo-service-worker.js` を登録し、controller が存在する状態で新しい Worker が `installed` になったときだけ表示する。`v*` タグの OTA 配信は `RELEASE.md` を参照。
