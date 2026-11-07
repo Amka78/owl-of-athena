@@ -45,11 +45,13 @@ import {
     Profile,
     type Settings,
 } from "../sdk/models";
-import {
-    firmwareFlashType,
-    selectFirmwareUpdate,
-} from "../services/FirmwareService";
-import type { AuroraSound, FirmwareUpdate, FirmwareUpdatePhase } from "../types";
+import { firmwareFlashType, selectFirmwareUpdate } from "../services/FirmwareService";
+import type {
+    AuroraSound,
+    FirmwareDownloadProgress,
+    FirmwareUpdate,
+    FirmwareUpdatePhase,
+} from "../types";
 import { AuroraManagerEventList } from "./AuroraManagerEventList";
 import AlarmAudioInstance from "./alarm/AlarmAudio";
 import AlarmKeepAliveInstance from "./alarm/AlarmKeepAlive";
@@ -142,6 +144,7 @@ export class AuroraManager extends EventEmitter {
     public async flashFirmware(
         update: FirmwareUpdate,
         onPhase?: (phase: FirmwareUpdatePhase) => void,
+        onDownloadProgress?: (progress: FirmwareDownloadProgress) => void,
     ): Promise<AuroraOSInfo> {
         if (this.currentSleepState === SleepStates.SLEEPING) {
             throw new Error("Cannot flash firmware while a sleep session is running.");
@@ -158,6 +161,7 @@ export class AuroraManager extends EventEmitter {
                 update.version,
                 firmwareFlashType(update),
                 onPhase,
+                onDownloadProgress,
             )) as AuroraOSInfo;
             if (flashed !== undefined) {
                 this.osInfo = flashed;

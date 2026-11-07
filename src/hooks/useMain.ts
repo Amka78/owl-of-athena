@@ -93,20 +93,35 @@ export const useMain = (): {
         const componentLabel = firmwareComponentLabel(update.component);
         const phaseTitle = (phase: FirmwareUpdatePhase): string => {
             const key =
-                phase === "uploading"
-                    ? MessageKeys.firmware_update_uploading_with_component
-                    : phase === "verifying"
-                      ? MessageKeys.firmware_update_verifying_with_component
-                      : MessageKeys.firmware_update_flashing_with_component;
+                phase === "downloading"
+                    ? MessageKeys.firmware_update_downloading_with_component
+                    : phase === "uploading"
+                      ? MessageKeys.firmware_update_uploading_with_component
+                      : phase === "verifying"
+                        ? MessageKeys.firmware_update_verifying_with_component
+                        : MessageKeys.firmware_update_flashing_with_component;
             return Message.get(key, [componentLabel]);
         };
-        LoadingDialog.show({ dialogTitle: phaseTitle("uploading") });
+        LoadingDialog.show({ dialogTitle: phaseTitle("downloading") });
 
         let resultMessage: string;
         try {
-            const info = await AuroraManagerInstance.flashFirmware(update, (phase) => {
-                LoadingDialog.show({ dialogTitle: phaseTitle(phase) });
-            });
+            const info = await AuroraManagerInstance.flashFirmware(
+                update,
+                (phase) => {
+                    LoadingDialog.show({ dialogTitle: phaseTitle(phase) });
+                },
+                (progress) => {
+                    const ratio =
+                        progress.total !== undefined && progress.total > 0
+                            ? progress.loaded / progress.total
+                            : undefined;
+                    LoadingDialog.show({
+                        dialogTitle: phaseTitle("downloading"),
+                        progress: ratio,
+                    });
+                },
+            );
             firmwareVersion.current = info.version.toString();
             osInfoRef.current = info;
             setBatteryLevel(info.batteryLevel);

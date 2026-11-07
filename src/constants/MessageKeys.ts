@@ -68,6 +68,7 @@ export const MessageKeys = {
     firmware_component_ble: "firmware_component_ble",
     firmware_update_message_with_component: "firmware_update_message_with_component",
     firmware_update_flashing_with_component: "firmware_update_flashing_with_component",
+    firmware_update_downloading_with_component: "firmware_update_downloading_with_component",
     firmware_update_uploading_with_component: "firmware_update_uploading_with_component",
     firmware_update_verifying_with_component: "firmware_update_verifying_with_component",
     firmware_update_success_with_component: "firmware_update_success_with_component",

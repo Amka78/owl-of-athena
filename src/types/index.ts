@@ -26,6 +26,7 @@ export { GuestUser };
 
 export type {
     FirmwareComponent,
+    FirmwareDownloadProgress,
     FirmwareRelease,
     FirmwareUpdate,
     FirmwareUpdatePhase,

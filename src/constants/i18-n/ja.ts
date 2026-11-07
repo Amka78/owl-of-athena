@@ -90,6 +90,7 @@ export default {
         "{0} {1} が公開されています。今すぐ更新しますか? 更新中はAuroraの電源を切ったり、離したりしないでください。",
     [MessageKeys.firmware_update_flashing_with_component]:
         "{0}を書き込み中...Auroraの電源を切ったり、アプリを閉じたりしないでください。",
+    [MessageKeys.firmware_update_downloading_with_component]: "{0}をダウンロード中...",
     [MessageKeys.firmware_update_uploading_with_component]: "{0}をAuroraへ転送中...",
     [MessageKeys.firmware_update_verifying_with_component]: "{0}を検証中...",
     [MessageKeys.firmware_update_success_with_component]: "{0}を {1} に更新しました。",

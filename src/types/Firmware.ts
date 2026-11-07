@@ -18,7 +18,13 @@ export type FirmwareRelease = {
 };
 
 /** 更新中のフェーズ。 */
-export type FirmwareUpdatePhase = "uploading" | "flashing" | "verifying";
+export type FirmwareUpdatePhase = "downloading" | "uploading" | "flashing" | "verifying";
+
+/** ファームウェアのダウンロード進捗（バイト）。 */
+export type FirmwareDownloadProgress = {
+    loaded: number;
+    total?: number;
+};
 
 /** 端末に適用できる新しいファームウェア。 */
 export type FirmwareUpdate = FirmwareRelease & {

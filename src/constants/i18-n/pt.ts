@@ -98,6 +98,7 @@ export default {
         "{0} {1} está disponível. Atualizar agora? Não desligue nem mova o Aurora durante a atualização.",
     [MessageKeys.firmware_update_flashing_with_component]:
         "Gravando {0}... Não desligue o Aurora nem feche o aplicativo.",
+    [MessageKeys.firmware_update_downloading_with_component]: "Baixando {0}...",
     [MessageKeys.firmware_update_uploading_with_component]: "Enviando {0} para o Aurora...",
     [MessageKeys.firmware_update_verifying_with_component]: "Verificando {0}...",
     [MessageKeys.firmware_update_success_with_component]: "{0} atualizado para {1}.",
