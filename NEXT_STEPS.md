@@ -44,7 +44,7 @@
 - ファームウェア更新失敗時にリセットボタンでの復帰案内を表示し、`min_app_version` 未満のアプリには更新を提示しない
 - アカウント画面に SD カードのフォーマットと Aurora のリセットを追加。接続中のみ有効で、実行前に確認ダイアログを出す
 - 管理画面のユーザー / 注文 / セッションを共通の `AdminTable` にまとめ、「CSVを共有」（共有シート、Web は clipboard）を追加
-- 管理画面の列を実際の Supabase スキーマに合わせた。ユーザーは Email（`users` に列が無い）を外して誕生日・性別・ロールを表示、セッションは `sleep_score` / `session_duration`（列が無い）を外して就寝・起床・スター・日時を表示
+- 管理画面の列を実際の Supabase スキーマに合わせた。ユーザーは誕生日・性別・ロール、セッションは就寝・起床・スター・日時を表示する。`users.email` / `users.activated` / `orders.transaction_origin` 列を追加し、Email は表示、Activated と Origin は列メニューから表示できる（既定は非表示）
 - 管理メニュー（`AdminMenuScreen`）を追加し、Admin を開いた直後にユーザー・注文・セッション・問題・メッセージを選べるようにした。各画面からは戻るでメニューへ戻る
 - ファームウェア更新の確認時に未転送セッションを数え、ある場合は「更新すると失われる」注意をダイアログ本文に追加。接続時に転送ダイアログを出した場合は、閉じたあとに件数を数え直してから更新を確認する
 - 管理テーブルの検索・ソート・ページングをサーバ側に移した。Supabase の `range` で 20 件ずつ取得し、検索は表示中の列に対応する `searchFields` の `ilike`、ソートは列の `field` を使う。件数は `count: exact` で取得する。CSV は該当全件を追加取得して hidden 列込みで出力する
@@ -52,6 +52,7 @@
 - 不具合報告にスクリーンショット／画像とファイルを添付できるようにした。1 件 10 MB・最大 5 件まで選択でき、Supabase の非公開バケット `issue-attachments` へアップロードして `issue_attachments` に紐付ける。管理画面の詳細ダイアログから署名付き URL で開ける
 - ファームウェア更新にダウンロード段階を追加。hex の取得中は `LoadingDialog` に進捗バーとパーセントを表示し、ダウンロード完了後に Aurora への転送、書き込み、検証へ進む。ネイティブはキャッシュへダウンロードしながら進捗を取得し、Web/Node はレスポンスのストリームまたは完了時のサイズで進捗を出す
 - アプリ更新通知を強化。ネイティブは起動時に加えてフォアグラウンド復帰時にも OTA を確認し（15 分間隔で抑制）、取得済みなら Snackbar を表示する。Web は Service Worker の `installed` を待ち、既存の controller がある場合だけ更新を提示するようにした
+- 管理画面のユーザーに Email / Activated、注文に Origin 列を追加。値は `users` / `orders` の新しい列から取得し、Activated と Origin は列メニューで表示を切り替えられる（既定は非表示）
 - サインアップに氏名（姓・名）・生年月日・性別・ニュースレター購読を追加。値は Supabase Auth の `raw_user_meta_data` に渡し、`get_or_create_user_profile` が `users` へ引き継ぐ。`users.newsletter` 列を追加した
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
@@ -71,6 +72,7 @@
    - `supabase/migrations/20261105000002_firmware_min_app_version.sql`（最低アプリバージョン）
    - `supabase/migrations/20261107000000_issue_attachments.sql`（不具合報告の添付ファイル。非公開バケット `issue-attachments` も作成）
    - `supabase/migrations/20261107000001_signup_profile_fields.sql`（サインアップ時の氏名・生年月日・性別・ニュースレター。`users.newsletter` とプロフィール作成関数）
+   - `supabase/migrations/20261107000002_admin_schema_columns.sql`（`users.email` / `users.activated` / `orders.transaction_origin` と auth.users 同期トリガー）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -195,8 +197,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 ## 次の優先順
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
-2. **管理画面の仕上げ**: 注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。検索・ソート・サーバ側ページング・列表示切替・行選択は 2026-11-06 に実装済み。
-3. **残りの parity 差分**: iOS の `MPVolumeView`、管理画面のスキーマ列（Email / Activated / Origin）、セッションの「新規」バッジ。
+2. **管理画面の仕上げ**: 検索・ソート・サーバ側ページング・列表示切替・行選択・参照元の列（Email / Activated / Origin）は 2026-11-07 に実装済み。
+3. **残りの parity 差分**: iOS の `MPVolumeView`、セッションの「新規」バッジ。
 
 ## 既知の制約
 
@@ -234,7 +236,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 未転送件数は `sessionTransferStore.unsyncedCount` で保持し、接続時のスキャンと転送完了（`syncedCount` を減算）で更新、切断時に 0 にする。バッジは接続中だけ表示し、他端末で増えた分は次回スキャンまで反映しない。
 - セッション ZIP は `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` で構成する。参照 desktop のように S3 の生ストリームファイルは含めない（`streams` は JSON 内のメタデータのみ）。ネイティブはキャッシュへ書き出して共有シートを開き、Web は Blob をブラウザにダウンロードさせる。`expo-sharing` の追加により prebuild と再インストールが必要。
 - セッション一覧の「新規」バッジは desktop の `session.new` に相当する列が `aurora_sessions` に無いため未実装。必要なら `is_new` 列か既読管理（最終閲覧日時）の追加が前提になる。
-- 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users` に email 列は無いため Email は表示しない。セッションの睡眠スコアと duration もテーブルに無いため表示しない。
+- 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users.email` / `users.activated` は auth.users からバックフィルし、`handle_user_updated` トリガーでメール確認・ログイン時に同期する。`orders.transaction_origin` は注文側で設定される想定で、アプリからは書き込まない。セッションの睡眠スコアと duration はテーブルに無いため表示しない。
 - テスト環境の `FlatList` はモックが子要素（`renderItem` の結果）を描画しないため、`AdminTable` の行表示と行チェックボックスの操作は自動テストで検証していない（CSV・ヘッダー・列メニュー・選択バー・偽データソースのページ取得・`AdminTableModel` の検索/ソート/ページング/検索列・ソート列解決のみ）。
 - `AdminAppSettingsScreen` は旧 API 前提で到達不能のまま。管理メニューには出ていない。
 - `stream-debug` は有効な `admin` ロールがある場合のみ表示される。
