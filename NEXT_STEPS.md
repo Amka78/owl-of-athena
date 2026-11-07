@@ -52,6 +52,7 @@
 - 不具合報告にスクリーンショット／画像とファイルを添付できるようにした。1 件 10 MB・最大 5 件まで選択でき、Supabase の非公開バケット `issue-attachments` へアップロードして `issue_attachments` に紐付ける。管理画面の詳細ダイアログから署名付き URL で開ける
 - ファームウェア更新にダウンロード段階を追加。hex の取得中は `LoadingDialog` に進捗バーとパーセントを表示し、ダウンロード完了後に Aurora への転送、書き込み、検証へ進む。ネイティブはキャッシュへダウンロードしながら進捗を取得し、Web/Node はレスポンスのストリームまたは完了時のサイズで進捗を出す
 - アプリ更新通知を強化。ネイティブは起動時に加えてフォアグラウンド復帰時にも OTA を確認し（15 分間隔で抑制）、取得済みなら Snackbar を表示する。Web は Service Worker の `installed` を待ち、既存の controller がある場合だけ更新を提示するようにした
+- iOS のアラーム鳴動時に `react-native-volume-manager` で端末音量を最大へ上げ、停止・スヌーズ時に元の音量へ戻すようにした。端末音量が 0 でも鳴ることを狙う。Android / Web は何もしない
 - 管理画面のユーザーに Email / Activated、注文に Origin 列を追加。値は `users` / `orders` の新しい列から取得し、Activated と Origin は列メニューで表示を切り替えられる（既定は非表示）
 - サインアップに氏名（姓・名）・生年月日・性別・ニュースレター購読を追加。値は Supabase Auth の `raw_user_meta_data` に渡し、`get_or_create_user_profile` が `users` へ引き継ぐ。`users.newsletter` 列を追加した
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
@@ -79,7 +80,8 @@
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
 5. `expo-sharing` / `expo-file-system` を追加済みのため、ZIP ダウンロードも **prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
 6. `expo-image-picker` / `expo-document-picker` を追加済みのため、添付ファイル選択も **prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
-7. 管理者ユーザーにロールを付与する。
+7. `react-native-volume-manager` を追加済みのため、iOS の音量ブーストも **prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
+8. 管理者ユーザーにロールを付与する。
 
 ```sql
 UPDATE public.users
@@ -87,7 +89,7 @@ SET roles = '[{"id":"admin","slug":"admin","title":"Admin"}]'::jsonb
 WHERE id = '<user-uuid>';
 ```
 
-8. `.env.local` の `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` を確認する（`.env` の `SUPABASE_*` は値が入れ替わっているため使わない）。
+9. `.env.local` の `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` を確認する（`.env` の `SUPABASE_*` は値が入れ替わっているため使わない）。
 
 詳細は `AUTH_SETUP.md` を参照。
 
@@ -106,6 +108,7 @@ WHERE id = '<user-uuid>';
 - ファームウェアのダウンロード進捗（実機での hex 取得、Content-Length が無い場合の不定表示、ダウンロードから書き込みへのフェーズ遷移）
 - サインアップ項目（氏名・生年月日・性別・ニュースレターの入力、Auth メタデータから `users` への引き継ぎ、メール確認後の再ログイン）
 - セッションの NEW バッジ（新規セッションの表示、詳細を開いたときの既読化、複数端末での同期）
+- iOS の音量ブースト（端末音量 0 での鳴動、停止・スヌーズ後の音量復元、音量 HUD が出ないこと）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -190,6 +193,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
+- アラーム音量: `src/managers/alarm/SystemVolumeBooster.ts` / `.native.ts`, `src/managers/alarm/AlarmAudio.ts`
 - セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`, `src/hooks/sessions/useSessionList.ts`, `src/sdk/models/AuroraSession.ts`, `supabase/migrations/20261107000003_session_is_new.sql`
 - サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000001_signup_profile_fields.sql`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
@@ -200,12 +204,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 検索・ソート・サーバ側ページング・列表示切替・行選択・参照元の列（Email / Activated / Origin）は 2026-11-07 に実装済み。
-3. **残りの parity 差分**: iOS の `MPVolumeView`。
+3. **残りの parity 差分**: 国・郵便番号（`users` に列が無く、プロフィール／サインアップの入力欄も未実装）のみ。それ以外の参照実装との差分は解消済みで、残りは実機検証。
 
 ## 既知の制約
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- iOS の音量ブーストは `react-native-volume-manager`（MPVolumeView）で、鳴動開始時に現在音量を保存して 1 にし、`AlarmAudio.stop()` で元へ戻す。復元前にアプリが強制終了した場合は端末音量が最大のまま残る可能性がある。
 - サインアップのプロフィール項目は `supabase.auth.signUp` の `options.data`（`first_name` / `last_name` / `birthday` / `gender` / `newsletter`）に載せ、`get_or_create_user_profile` が初回作成時に `users` へコピーする。既存ユーザーには反映されない。`users.newsletter` の既定値は false。
 - `DatePicker` は選択時に `onChange` を呼ぶように修正した。生年月日を未選択のまま送信すると `birthday` は null になる。
 - ファームウェアの hex は一度テキストとしてメモリに読み、`writeFile` で Aurora へ送る。ネイティブのダウンロードは `expo-file-system/legacy` の `createDownloadResumable` を使い、キャッシュファイルは書き込み後に削除する。`Content-Length` が無い場合は進捗バーを不定表示にする。ダウンロード失敗時はフェーズを進めず、既存の失敗ダイアログに流す。
