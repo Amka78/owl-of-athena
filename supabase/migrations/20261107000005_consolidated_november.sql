@@ -143,6 +143,30 @@ COMMENT ON COLUMN public.questionnaire_respondents.response IS 'Accumulated answ
 -- ====================================
 -- 5. ファームウェアのコンポーネント配布
 -- ====================================
+-- 古いベーススキーマには firmware_releases が無い場合があるため、
+-- 統合マイグレーションだけで配布テーブルと公開バケットを用意できるようにする。
+CREATE TABLE IF NOT EXISTS public.firmware_releases (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    version INTEGER NOT NULL UNIQUE,
+    hex_path TEXT NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE public.firmware_releases ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Anyone can read firmware releases" ON public.firmware_releases;
+CREATE POLICY "Anyone can read firmware releases" ON public.firmware_releases
+    FOR SELECT USING (TRUE);
+
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('firmware', 'firmware', TRUE)
+ON CONFLICT (id) DO UPDATE SET public = TRUE;
+
+DROP POLICY IF EXISTS "Public read firmware files" ON storage.objects;
+CREATE POLICY "Public read firmware files" ON storage.objects
+    FOR SELECT USING (bucket_id = 'firmware');
+
 ALTER TABLE public.firmware_releases
     ADD COLUMN IF NOT EXISTS bootloader_version INTEGER,
     ADD COLUMN IF NOT EXISTS bootloader_hex_path TEXT,
