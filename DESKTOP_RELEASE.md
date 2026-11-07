@@ -5,10 +5,11 @@
 ## Canary ビルド
 
 - ワークフロー: **Canary Desktop Build (Electrobun)**
-- `main` への push（`src/**` / `src-electrobun/**` / `assets/**` / 設定・依存ファイル変更時）または手動実行で開始
-- バージョンは `1.0.0-canary.<GitHub run number>`、ビルドは `bunx electrobun build --env=canary`
+- `main` への push では実行せず、**GitHub Actions からの手動実行のみ**
+- 入力 `version` は任意。空なら `1.0.0-canary.<GitHub run number>` を使う
+- ビルドは `bunx electrobun build --env=canary`
 - 成果物は Actions の `canary-linux` / `canary-windows` / `canary-macos` アーティファクトに7日間保存する
-- Canary は GitHub Release を作らない。配布物を確認したいときは Actions の実行画面からダウンロードする
+- すべて成功すると `v<version>` の GitHub **Pre-Release** を作成し、配布物を添付する。既存タグならアセットを上書きする
 - `baseUrl` が未設定のため、Electrobun の差分パッチ生成はスキップされる
 
 ```bash
@@ -33,6 +34,7 @@ Canary の出力例: `canary-linux-x64-OwlofAthena-canary-Setup.tar.gz`、`canar
   - `EXPO_PUBLIC_SUPABASE_URL`
   - `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 - `GITHUB_TOKEN` はワークフローの `permissions: contents: write` で Release 作成に使う。
+- Canary の Pre-Release も同じシークレットと権限を使う。
 
 ## 実行方法
 
