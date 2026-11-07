@@ -178,6 +178,7 @@ export default {
     [MessageKeys.sessions_check_show_starred_description]: "Somente sessões favoritas",
     [MessageKeys.sessions_check_show_notes_label]: "Mostrar Notas",
     [MessageKeys.sessions_check_show_notes_description]: "Somente sessões com notas",
+    [MessageKeys.session_list_new]: "NOVO",
     [MessageKeys.session_list_month_format]: "MM/YYYY",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "adormeceu às",

@@ -175,6 +175,7 @@ export default {
     [MessageKeys.sessions_check_show_notes_label]: "ノートを表示",
     [MessageKeys.sessions_check_show_notes_description]:
         "ノートを記述しているセッションのみ表示します。",
+    [MessageKeys.session_list_new]: "新規",
     [MessageKeys.session_list_month_format]: "YYYY年M月",
 
     // session fragment

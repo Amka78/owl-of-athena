@@ -56,8 +56,6 @@ export const useSessinList = (): {
     const dimens = useWindowDimensions();
     useCheckLogging();
 
-
-
     const onPressedFilter = useCallback(async () => {
         setShowFilter(!showFilter);
     }, [showFilter]);
@@ -150,6 +148,16 @@ export const useSessinList = (): {
         async (value: AuroraSession, index: number): Promise<void> => {
             selectSession(value);
 
+            if (value.isNew && user?.id !== GuestUser) {
+                try {
+                    await SessionRestClientInstance.updateById(value.id, { is_new: false });
+                    value.isNew = false;
+                    updateSession(value);
+                } catch (e) {
+                    console.debug("Failed to mark the session as read:", e);
+                }
+            }
+
             let sessionDetail;
             if (sessionDetailList.length > 0) {
                 sessionDetail = sessionDetailList.find((detailValue: AuroraSessionDetail) => {
@@ -178,6 +186,7 @@ export const useSessinList = (): {
             selectSession,
             selectSessionDetail,
             sessionDetailList,
+            updateSession,
             user?.id,
         ],
     );

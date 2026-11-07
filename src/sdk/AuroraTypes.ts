@@ -216,6 +216,7 @@ export type AuroraSessionJson = {
     rem_duration: number;
     sleep_score: number;
     starred: boolean;
+    is_new?: boolean;
     notes?: string;
     asleep_at: number;
     awake_at: number;

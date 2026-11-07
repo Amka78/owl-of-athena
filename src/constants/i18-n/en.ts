@@ -177,6 +177,7 @@ export default {
     [MessageKeys.sessions_check_show_starred_description]: "Only starred sessions",
     [MessageKeys.sessions_check_show_notes_label]: "Show Notes",
     [MessageKeys.sessions_check_show_notes_description]: "Only sessions with notes",
+    [MessageKeys.session_list_new]: "NEW",
     [MessageKeys.session_list_month_format]: "MMMM YYYY",
     // session fragment
     [MessageKeys.session_asleep_time_label]: "asleep at",

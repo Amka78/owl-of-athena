@@ -52,6 +52,30 @@ describe("SessionListScreenTemplate", () => {
         expect(toJSON()).toMatchSnapshot();
     });
 
+    it("shows the NEW badge for unread sessions", () => {
+        const session = {
+            id: "session-new",
+            sessionAt: Date.UTC(2026, 0, 1),
+            sleepScore: 80,
+            starred: false,
+            isNew: true,
+        } as unknown as AuroraSession;
+
+        const { getByText } = renderWithProvider(
+            <SessionListScreenTemplate
+                showFilter={false}
+                filterMenuProps={filterMenuProps}
+                sessionList={[session]}
+                onStarPress={jest.fn()}
+                onDeletePress={jest.fn()}
+                onMenuPress={jest.fn()}
+                locale="en-US"
+            />,
+        );
+
+        expect(getByText("NEW")).toBeTruthy();
+    });
+
     it("shows the raw sleep score without rewriting out-of-range values", () => {
         const session = {
             id: "session-1",

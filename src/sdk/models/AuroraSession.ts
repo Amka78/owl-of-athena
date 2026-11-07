@@ -18,6 +18,7 @@ export class AuroraSession {
     public sleepScore: number;
     public incomplete: boolean;
     public starred: boolean;
+    public isNew: boolean;
     public notes?: string;
     public asleepAt: number;
     public awakeAt: number;
@@ -45,6 +46,7 @@ export class AuroraSession {
             this.remDuration = src.rem_duration;
             this.sleepScore = src.sleep_score;
             this.starred = src.starred;
+            this.isNew = src.is_new ?? false;
             this.notes = src.notes;
             this.asleepAt = src.asleep_at;
             this.awakeAt = src.awake_at;
@@ -65,6 +67,7 @@ export class AuroraSession {
             this.remDuration = src.sleepDuration.rem;
             this.sleepScore = src.sleepScore;
             this.starred = false;
+            this.isNew = false;
             this.asleepAt = src.asleespAt;
             this.awakeAt = src.awakeAt;
             this.sessionAt = src.date;

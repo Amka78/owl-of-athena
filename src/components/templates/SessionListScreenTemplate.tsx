@@ -75,6 +75,13 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                             )}
                             right={(rightProps: ListItemComponentProps): React.ReactNode => (
                                 <View {...rightProps} style={starIconContainer}>
+                                    {value.isNew ? (
+                                        <View style={newBadge}>
+                                            <Text style={newBadgeText}>
+                                                {Message.get(MessageKeys.session_list_new)}
+                                            </Text>
+                                        </View>
+                                    ) : null}
                                     <StarIcon
                                         starred={value.starred}
                                         onPress={async () => {
@@ -121,4 +128,12 @@ const starIconContainer: ViewStyle = {
     alignItems: "center",
     flexDirection: "row",
 };
+const newBadge: ViewStyle = {
+    backgroundColor: Colors.first_accent_color,
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 1,
+    marginRight: 6,
+};
+const newBadgeText: TextStyle = { color: Colors.white, fontSize: 9, fontWeight: "bold" };
 //#endregion
