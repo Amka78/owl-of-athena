@@ -1,6 +1,7 @@
 //#region Import Modules
 import { type AudioPlayer, setAudioModeAsync } from "expo-audio";
 import { Platform } from "react-native";
+import { boostSystemVolume, restoreSystemVolume } from "./SystemVolumeBooster";
 
 //#endregion
 
@@ -68,6 +69,7 @@ export class AlarmAudio {
             await sound.seekTo(0);
             sound.play();
             this.activeSound = sound;
+            await boostSystemVolume();
         } catch (e) {
             this.activeSound = undefined;
             throw e;
@@ -84,6 +86,8 @@ export class AlarmAudio {
             await sound.seekTo(0);
         } catch (e) {
             console.error("[AlarmAudio] failed to stop alarm sound", e);
+        } finally {
+            await restoreSystemVolume();
         }
     }
 
