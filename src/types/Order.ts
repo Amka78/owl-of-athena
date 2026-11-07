@@ -4,5 +4,6 @@ export type Order = {
     billing_email?: string;
     amount_total?: number;
     status?: string;
+    transaction_origin?: string;
     created_at?: string;
 };

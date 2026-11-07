@@ -36,6 +36,14 @@ const columns: AdminColumn<AdminOrderRow>[] = [
         searchFields: ["amount_total::text"],
     },
     {
+        title: "Origin",
+        value: (order) => order.transaction_origin ?? "",
+        flex: 2,
+        hidden: true,
+        field: "transaction_origin",
+        searchFields: ["transaction_origin"],
+    },
+    {
         title: "Status",
         value: (order) => order.status ?? "",
         flex: 1,

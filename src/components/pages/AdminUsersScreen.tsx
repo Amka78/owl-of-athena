@@ -9,6 +9,8 @@ import { type AdminColumn, AdminTable } from "../molecules/AdminTable";
 //#region Types
 type AdminUserRow = {
     id?: string;
+    email?: string | null;
+    activated?: boolean | null;
     first_name?: string | null;
     last_name?: string | null;
     birthday?: string | null;
@@ -32,6 +34,21 @@ const columns: AdminColumn<AdminUserRow>[] = [
         flex: 2,
         field: "last_name",
         searchFields: ["first_name", "last_name"],
+    },
+    {
+        title: "Email",
+        value: (user) => user.email ?? "",
+        flex: 3,
+        field: "email",
+        searchFields: ["email"],
+    },
+    {
+        title: "Activated",
+        value: (user) => (user.activated ? "Yes" : "No"),
+        flex: 1,
+        hidden: true,
+        field: "activated",
+        searchFields: ["activated::text"],
     },
     {
         title: "Birthday",
