@@ -4,7 +4,7 @@ P0（一晩装着してアラームで起きる）と P1（通知・起床フロ
 
 対象コミット: `fbcea99`（着手前）→ `c83e679`（P1 完了）→ `6075632`（P2 完了）
 
-> **SDK 58 へ更新済み（2026-11-01）。** `expo-av` は SDK 56 以降サポート外のため `expo-audio` に移行した。`expo-audio` の config plugin が Android の前景サービス（`AudioControlsService` / `FOREGROUND_SERVICE_MEDIA_PLAYBACK`）と iOS の `UIBackgroundModes: audio` を追加するので、**prebuild とアプリの再インストールが必須**。`bunx expo install --fix` は `.env` の `REACT_NATIVE_PACKAGER_HOSTNAME` を拒否するため、`EXPO_NO_DOTENV=1` を付けて実行する。
+> **SDK 58 へ更新済み（2026-11-01）。** `expo-av` は SDK 56 以降サポート外のため `expo-audio` に移行した。`expo-audio` の config plugin が Android の前景サービス（`AudioControlsService` / `FOREGROUND_SERVICE_MEDIA_PLAYBACK`）と iOS の `UIBackgroundModes: audio` を追加するので、**prebuild とアプリの再インストールが必須**。`REACT_NATIVE_PACKAGER_HOSTNAME` は `.env.local` に置くこと（`.env` に書くと SDK 58 の `@expo/env` が personal env として起動を拒否する）。
 
 ## 事前準備
 
