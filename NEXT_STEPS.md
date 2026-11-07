@@ -7,7 +7,7 @@
 - HEAD: `main` の最新コミット（`git log --oneline -1` で確認）
 - 作業ツリー: クリーン
 - ローカルの `main` は `origin/main` より進んでいる（push は未実施）
-- 全件テスト: **586 pass / 8 fail**（183 ファイル・594 テスト、スナップショット 147 pass / 6 fail）
+- 全件テスト: **589 pass / 8 fail**（183 ファイル・597 テスト、スナップショット 147 pass / 6 fail）
 - 8 fail は `OptionSlider` / `OptionCheckBoxes` / `OptionToggle` / `SessionListScreenTemplate` / `ProfileScreen` / `SettingsScreen` / `SessionListMenu` の既存スナップショット差分。変更前の HEAD でも個別実行で同じ失敗を確認済み
 - これまで全件実行を汚染していた Supabase URL のエラーは、今回の変更後の全件実行では発生しなかった。順序依存の可能性があるため、テスト構成を変えたら再確認する
 - 変更した実装ファイルの TypeScript 新規エラーなし（テスト・stories の既存型エラーは残る）
@@ -40,7 +40,7 @@
 - `FlatButton` の `disabled` を Paper の Button に渡すように修正（Next ボタンの無効化が効いていなかった）
 - セッション転送に読み込み / 転送のセッション単位進捗を追加し、ダイアログに進捗バーと件数を表示
 - ファームウェアのコンポーネント別更新に対応。アプリ → ブートローダー → BLE の優先順で 1 件ずつ提示し、`bootloader_has_bootstrap` なら同時書き込みにする
-- ファームウェア更新中に UPLOADING / FLASHING / VERIFYING をローディングダイアログへ表示
+- ファームウェア更新中に DOWNLOADING / UPLOADING / FLASHING / VERIFYING をローディングダイアログへ表示（ダウンロード中は進捗バーとパーセント）
 - ファームウェア更新失敗時にリセットボタンでの復帰案内を表示し、`min_app_version` 未満のアプリには更新を提示しない
 - アカウント画面に SD カードのフォーマットと Aurora のリセットを追加。接続中のみ有効で、実行前に確認ダイアログを出す
 - 管理画面のユーザー / 注文 / セッションを共通の `AdminTable` にまとめ、「CSVを共有」（共有シート、Web は clipboard）を追加
@@ -50,6 +50,7 @@
 - 管理テーブルの検索・ソート・ページングをサーバ側に移した。Supabase の `range` で 20 件ずつ取得し、検索は表示中の列に対応する `searchFields` の `ilike`、ソートは列の `field` を使う。件数は `count: exact` で取得する。CSV は該当全件を追加取得して hidden 列込みで出力する
 - 管理画面の不具合報告で、4 行の抜粋をタップするとログ全文ダイアログ（等幅・選択可）を開けるようにした
 - 不具合報告にスクリーンショット／画像とファイルを添付できるようにした。1 件 10 MB・最大 5 件まで選択でき、Supabase の非公開バケット `issue-attachments` へアップロードして `issue_attachments` に紐付ける。管理画面の詳細ダイアログから署名付き URL で開ける
+- ファームウェア更新にダウンロード段階を追加。hex の取得中は `LoadingDialog` に進捗バーとパーセントを表示し、ダウンロード完了後に Aurora への転送、書き込み、検証へ進む。ネイティブはキャッシュへダウンロードしながら進捗を取得し、Web/Node はレスポンスのストリームまたは完了時のサイズで進捗を出す
 - アプリ更新通知を強化。ネイティブは起動時に加えてフォアグラウンド復帰時にも OTA を確認し（15 分間隔で抑制）、取得済みなら Snackbar を表示する。Web は Service Worker の `installed` を待ち、既存の controller がある場合だけ更新を提示するようにした
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
@@ -97,6 +98,7 @@ WHERE id = '<user-uuid>';
 - メッセージの「すべて既読にする」（実 Supabase への一括更新と、アカウント画面の未読バッジへの反映）
 - アプリ更新通知（実 OTA 配信での Snackbar 表示、フォアグラウンド復帰時の再チェック、Web の Service Worker 更新）
 - 不具合報告の添付（実機の画像・ファイル選択、10 MB 制限、非公開バケットへのアップロード、管理画面の署名付き URL 表示）
+- ファームウェアのダウンロード進捗（実機での hex 取得、Content-Length が無い場合の不定表示、ダウンロードから書き込みへのフェーズ遷移）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -106,7 +108,7 @@ WHERE id = '<user-uuid>';
 - 質問票の checkbox / text 設問、前へ戻る、完了までの遷移
 - セッション転送の進捗表示（複数セッション・失敗を含むケース）
 - ファームウェアのブートローダー / BLE 更新（実機、`has_bootstrap` の有無、失敗時の復帰）
-- ファームウェア更新中の UPLOADING / FLASHING / VERIFYING の切り替わり
+- ファームウェア更新中の DOWNLOADING / UPLOADING / FLASHING / VERIFYING の切り替わりと、ダウンロード進捗の表示
 - ファームウェア更新失敗時の案内表示と、`min_app_version` による更新の非表示
 - SD カードのフォーマットと Aurora のリセット（実機、実行後の再接続）
 - 小さい画面での睡眠チャートとタイムラインの高さ配分
@@ -179,7 +181,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - アプリ更新: `src/hooks/useAppUpdate.ts`（Web）, `src/hooks/useAppUpdate.native.ts`（ネイティブ）, `src/components/atoms/UpdateSnackBar.tsx`, `App.tsx`
 - 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
-- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
+- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
 - セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
@@ -190,12 +192,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 注文の `transaction_origin` など参照元にある列は現在のスキーマに無いため、必要になった時点で列追加のマイグレーションとセットで検討する。検索・ソート・サーバ側ページング・列表示切替・行選択は 2026-11-06 に実装済み。
-3. **残りの parity 差分**: ファームウェアのダウンロード進捗、iOS の `MPVolumeView`、サインアップ項目、スキーマ依存の列（セッションの「新規」バッジを含む）。
+3. **残りの parity 差分**: iOS の `MPVolumeView`、サインアップ項目、スキーマ依存の列（セッションの「新規」バッジを含む）。
 
 ## 既知の制約
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- ファームウェアの hex は一度テキストとしてメモリに読み、`writeFile` で Aurora へ送る。ネイティブのダウンロードは `expo-file-system/legacy` の `createDownloadResumable` を使い、キャッシュファイルは書き込み後に削除する。`Content-Length` が無い場合は進捗バーを不定表示にする。ダウンロード失敗時はフェーズを進めず、既存の失敗ダイアログに流す。
 - 不具合報告の添付は 1 件 10 MB・最大 5 件。画像はフォトライブラリ、その他はドキュメントピッカーから選ぶ。アップロード先は非公開バケット `issue-attachments` の `<user_id>/<unique>-<name>` で、管理画面は 1 時間有効の署名付き URL を開く。報告作成後に添付の紐付けだけ失敗した場合は、報告自体は送信済みとしてログに残す。`issues.user_id` は報告時に設定する。
 - アプリ更新通知（`UpdateSnackBar`）は `App.tsx` で全画面にマウント済み。ネイティブは `Updates.isEnabled === false` のとき確認せず、起動時とフォアグラウンド復帰時に確認する（復帰時は 15 分間隔で抑制）。Web は `/expo-service-worker.js` を登録し、controller が存在する状態で新しい Worker が `installed` になったときだけ表示する。`v*` タグの OTA 配信は `RELEASE.md` を参照。
 - メッセージの「すべて既読にする」は未読があるときだけ表示する。`markAllMessagesAsRead()` は `user_messages.read_at` が null の行を一括更新し、成功後にストアの `read_at` を埋める。API 失敗時はストアがエラーを握りつぶすため、ボタンは残るがエラー表示は出ない。
@@ -208,9 +211,8 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - `FlatButton` は `disabled` を Paper の Button に渡すようになった。以前は見た目だけで押せていた箇所がある。
 - ファームウェアの `min_app_version` はインストール済みアプリの version と比較し、下回る場合はアプリ / コンポーネントとも更新を提示しない。配布行に null を入れると制限なし。
 - 未転送セッションの警告は更新確認の時点で `getUnsyncedSessions()` を呼んで件数を数える。取得に失敗した場合は警告なしで更新を提示する。接続時の転送ダイアログを閉じたあとに数え直すため、転送済みなら警告は出ない。
-- ファームウェアのダウンロード段階・進捗表示は未実装（UPLOADING / FLASHING / VERIFYING のみ）。
 - ファームウェア更新失敗時は、エラーに加えてリセットボタンでの再起動・再接続を案内する。
-- ファームウェア更新の状態は、`flashFile` のアップロード前後で UPLOADING / FLASHING、`flashConnectionChange` で端末情報を受け取った時点を VERIFYING として表示する。端末が切断したまま再認識できない場合は FLASHING のままタイムアウトする。
+- ファームウェア更新の状態は、hex の取得中を DOWNLOADING（進捗バー）、`flashFile` の Aurora への転送前後を UPLOADING / FLASHING、`flashConnectionChange` で端末情報を受け取った時点を VERIFYING として表示する。端末が切断したまま再認識できない場合は FLASHING のままタイムアウトする。
 - ファームウェアのコンポーネント更新は、アプリ → ブートローダー → BLE の優先順で 1 回のチェックにつき 1 件だけ提示する。アプリが最新のときだけコンポーネントを見る。
 - ブートローダー / BLE の hex は `firmware_releases` の `bootloader_*` / `ble_*` 列と公開 `firmware` バケットに置く。`bootloader_has_bootstrap` が true なら `bootloader-and-bootstrap` として書き込む。各 version は hex の実バージョンと一致させる。
 - 最新行にコンポーネント列が無い場合、古い行には探しに行かない。配布時は最新行にまとめて記載する。
