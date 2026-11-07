@@ -19,76 +19,32 @@ exports[`AboutScreen UnitTest renders correctly 1`] = `
                     {
                       "$$typeof": Symbol(react.test.json),
                       "children": [
-                        "owl-of-athena",
-                      ],
-                      "props": {
-                        "onPress": undefined,
-                        "style": [
-                          {
-                            "flex": 1,
-                            "fontFamily": "calibre_app_regular",
-                            "fontSize": 16,
-                          },
-                          {
-                            "color": "rgba(98, 91, 113, 1)",
-                          },
-                          {
-                            "color": "#ffffff",
-                            "flex": 0,
-                            "fontFamily": "calibre_app_semibold",
-                            "fontSize": 24,
-                            "marginBottom": 8,
-                          },
-                        ],
-                      },
-                      "type": "Text",
-                    },
-                    {
-                      "$$typeof": Symbol(react.test.json),
-                      "children": [
                         {
                           "$$typeof": Symbol(react.test.json),
                           "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "Version",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#00ffe6",
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                  "width": 120,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "unknown",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#ffffff",
-                                  "flex": 1,
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                },
-                              },
-                              "type": "Text",
-                            },
+                            "owl-of-athena",
                           ],
                           "props": {
-                            "style": {
-                              "borderBottomColor": "#001438",
-                              "borderBottomWidth": 1,
-                              "flexDirection": "row",
-                              "paddingVertical": 8,
-                            },
+                            "onPress": undefined,
+                            "style": [
+                              {
+                                "flex": 1,
+                                "fontFamily": "calibre_app_regular",
+                                "fontSize": 16,
+                              },
+                              {
+                                "color": "rgba(98, 91, 113, 1)",
+                              },
+                              {
+                                "color": "#ffffff",
+                                "flex": 0,
+                                "fontFamily": "calibre_app_semibold",
+                                "fontSize": 24,
+                                "marginBottom": 8,
+                              },
+                            ],
                           },
-                          "type": "View",
+                          "type": "Text",
                         },
                         {
                           "$$typeof": Symbol(react.test.json),
@@ -96,172 +52,227 @@ exports[`AboutScreen UnitTest renders correctly 1`] = `
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                "Build",
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Version",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#00ffe6",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                      "width": 120,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "unknown",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "flex": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
                               ],
                               "props": {
                                 "style": {
-                                  "color": "#00ffe6",
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                  "width": 120,
+                                  "borderBottomColor": "#001438",
+                                  "borderBottomWidth": 1,
+                                  "flexDirection": "row",
+                                  "paddingVertical": 8,
                                 },
                               },
-                              "type": "Text",
+                              "type": "View",
                             },
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                "—",
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Build",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#00ffe6",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                      "width": 120,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "—",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "flex": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
                               ],
                               "props": {
                                 "style": {
-                                  "color": "#ffffff",
-                                  "flex": 1,
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
+                                  "borderBottomColor": "#001438",
+                                  "borderBottomWidth": 1,
+                                  "flexDirection": "row",
+                                  "paddingVertical": 8,
                                 },
                               },
-                              "type": "Text",
+                              "type": "View",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "SDK",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#00ffe6",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                      "width": 120,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "—",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "flex": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "borderBottomColor": "#001438",
+                                  "borderBottomWidth": 1,
+                                  "flexDirection": "row",
+                                  "paddingVertical": 8,
+                                },
+                              },
+                              "type": "View",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Platform",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#00ffe6",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                      "width": 120,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "ios",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "flex": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "borderBottomColor": "#001438",
+                                  "borderBottomWidth": 1,
+                                  "flexDirection": "row",
+                                  "paddingVertical": 8,
+                                },
+                              },
+                              "type": "View",
+                            },
+                            {
+                              "$$typeof": Symbol(react.test.json),
+                              "children": [
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "OS",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#00ffe6",
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                      "width": 120,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "14",
+                                  ],
+                                  "props": {
+                                    "style": {
+                                      "color": "#ffffff",
+                                      "flex": 1,
+                                      "fontFamily": "calibre_app_regular",
+                                      "fontSize": 16,
+                                    },
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": {
+                                  "borderBottomColor": "#001438",
+                                  "borderBottomWidth": 1,
+                                  "flexDirection": "row",
+                                  "paddingVertical": 8,
+                                },
+                              },
+                              "type": "View",
                             },
                           ],
                           "props": {
                             "style": {
-                              "borderBottomColor": "#001438",
-                              "borderBottomWidth": 1,
-                              "flexDirection": "row",
-                              "paddingVertical": 8,
-                            },
-                          },
-                          "type": "View",
-                        },
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "SDK",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#00ffe6",
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                  "width": 120,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "—",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#ffffff",
-                                  "flex": 1,
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                          ],
-                          "props": {
-                            "style": {
-                              "borderBottomColor": "#001438",
-                              "borderBottomWidth": 1,
-                              "flexDirection": "row",
-                              "paddingVertical": 8,
-                            },
-                          },
-                          "type": "View",
-                        },
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "Platform",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#00ffe6",
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                  "width": 120,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "ios",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#ffffff",
-                                  "flex": 1,
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                          ],
-                          "props": {
-                            "style": {
-                              "borderBottomColor": "#001438",
-                              "borderBottomWidth": 1,
-                              "flexDirection": "row",
-                              "paddingVertical": 8,
-                            },
-                          },
-                          "type": "View",
-                        },
-                        {
-                          "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "OS",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#00ffe6",
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                  "width": 120,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": [
-                                "14",
-                              ],
-                              "props": {
-                                "style": {
-                                  "color": "#ffffff",
-                                  "flex": 1,
-                                  "fontFamily": "calibre_app_regular",
-                                  "fontSize": 16,
-                                },
-                              },
-                              "type": "Text",
-                            },
-                          ],
-                          "props": {
-                            "style": {
-                              "borderBottomColor": "#001438",
-                              "borderBottomWidth": 1,
-                              "flexDirection": "row",
-                              "paddingVertical": 8,
+                              "marginBottom": 32,
                             },
                           },
                           "type": "View",
@@ -269,7 +280,8 @@ exports[`AboutScreen UnitTest renders correctly 1`] = `
                       ],
                       "props": {
                         "style": {
-                          "marginBottom": 32,
+                          "alignSelf": "stretch",
+                          "maxWidth": 650,
                         },
                       },
                       "type": "View",

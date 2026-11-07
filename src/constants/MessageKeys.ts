@@ -5,6 +5,7 @@ export const MessageKeys = {
     save_as_new: "save_as_new",
     overwrite_save: "overwrite_save",
     ok: "ok",
+    close: "close",
     cancel: "cancel",
     app_name: "app_name",
     signup: "signup",

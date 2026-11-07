@@ -7,6 +7,7 @@ import { useAcount, useWindowDimensions } from "../../hooks";
 import { useDeviceMaintenance } from "../../hooks/useDeviceMaintenance";
 import { useUnreadMessageCount } from "../../hooks/useUnreadMessageCount";
 import { useAuthStore } from "../../store/authStore";
+import { AboutDialog } from "../molecules/AboutDialog";
 import { IssueReportDialog } from "../molecules/IssueReportDialog";
 import { AccountScreenTemplate } from "./../templates/AccountScreenTemplate";
 //#endregion
@@ -122,7 +123,16 @@ export const AccountScreen: FunctionComponent = () => {
                         {Message.get(MessageKeys.issue_report_button)}
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.navButton} onPress={() => navigate("About")}>
+                <TouchableOpacity
+                    style={styles.navButton}
+                    onPress={() => {
+                        if (dimens.isDesktop) {
+                            AboutDialog.show();
+                        } else {
+                            navigate("About");
+                        }
+                    }}
+                >
                     <Text style={styles.navButtonText}>{Message.get(MessageKeys.about_title)}</Text>
                 </TouchableOpacity>
                 <View style={styles.deviceSection}>

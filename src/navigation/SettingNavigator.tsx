@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import type * as React from "react";
 import { View } from "react-native";
 
+import { AboutDialog } from "../components/molecules";
 import {
     AboutScreen,
     AccountMessagesScreen,
@@ -83,6 +84,7 @@ const SettingNavigator = (): React.ReactNode => {
                     }}
                 />
             </Stack.Navigator>
+            <AboutDialog />
         </View>
     );
 };

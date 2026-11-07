@@ -22,6 +22,7 @@ const update = "Update";
 //#region Export
 export default {
     [MessageKeys.ok]: "OK",
+    [MessageKeys.close]: "Close",
     [MessageKeys.app_name]: "Aurora",
     [MessageKeys.save]: "SAVE",
     [MessageKeys.save_as_new]: "Save As New",

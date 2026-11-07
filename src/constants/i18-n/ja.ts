@@ -18,6 +18,8 @@ export default {
     [MessageKeys.save]: "保存",
     [MessageKeys.save_as_new]: "新規保存",
     [MessageKeys.overwrite_save]: "上書き保存",
+    [MessageKeys.ok]: "OK",
+    [MessageKeys.close]: "閉じる",
     [MessageKeys.cancel]: "キャンセル",
     [MessageKeys.signup]: signup,
     [MessageKeys.login]: login,
