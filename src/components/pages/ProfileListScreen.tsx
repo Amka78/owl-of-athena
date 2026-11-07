@@ -4,12 +4,14 @@ import type { NativeStackHeaderItemProps } from "@react-navigation/native-stack"
 import React, { type FunctionComponent, useLayoutEffect } from "react";
 import { useWindowDimensions } from "../../hooks";
 import { useProfileList } from "../../hooks/profiles/useProfileList";
+import { traceRender } from "../../utils/renderTrace";
 import { FilterIcon, RefreshIcon } from "../atoms";
 import { ProfileListScreenTemplate } from "../templates/ProfileListScreenTemplate";
 //#endregion
 
 //#region Component
 export const ProfileListScreen: FunctionComponent = () => {
+    traceRender("ProfileListScreen");
     const profileListHook = useProfileList();
     const dimens = useWindowDimensions();
     const { setOptions } = useNavigation<any>();

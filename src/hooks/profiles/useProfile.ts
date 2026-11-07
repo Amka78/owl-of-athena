@@ -22,6 +22,7 @@ import {
 import { useAuthStore } from "../../store/authStore";
 import { useProfileStore } from "../../store/profileStore";
 import { GuestUser } from "../../types/Auth";
+import { traceRender } from "../../utils/renderTrace";
 import { useCheckLogging } from "../useCheckLogging";
 import { useWindowDimensions } from "../useWindowDimensions";
 //#endregion
@@ -43,6 +44,11 @@ export const useProfile = () => {
     } = useProfileStore();
     const { user, inactiveRoles } = useAuthStore();
     const dimens = useWindowDimensions();
+    traceRender("useProfile", {
+        selectedId: selected?.id,
+        listLength: list.length,
+        optionValuesProfileId,
+    });
     const [auroraConnected, setAuroraConnected] = useState(AuroraManagerInstance.isConnected());
     const [optionValuesKey, setOptionValuesKey] = useState(0);
 

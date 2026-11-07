@@ -4,10 +4,12 @@ import React, { type FunctionComponent } from "react";
 import { ProfileDesktopScreenTemplate } from "../../components/templates/ProfileDesktopScreenTemplate";
 import { useWindowDimensions } from "../../hooks";
 import { useProfileList } from "../../hooks/profiles/useProfileList";
+import { traceRender } from "../../utils/renderTrace";
 //#endregion
 
 //#region Component
 export const ProfileDesktopScreen: FunctionComponent = () => {
+    traceRender("ProfileDesktopScreen");
     const profileListHook = useProfileList();
     const dimens = useWindowDimensions();
 

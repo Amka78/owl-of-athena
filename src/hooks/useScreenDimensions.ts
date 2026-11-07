@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 
+import { traceLayout } from "../utils/renderTrace";
+
 export type ScreenDimensions = {
     width: number;
     height: number;
@@ -17,6 +19,7 @@ export const useScreenDimensions = (): {
 
     const onLayout = useCallback((event: LayoutChangeEvent): void => {
         const { width, height } = event.nativeEvent.layout;
+        traceLayout(width, height);
         setScreenDimens((current) =>
             current.width === width && current.height === height ? current : { width, height },
         );

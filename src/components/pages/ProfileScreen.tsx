@@ -3,11 +3,13 @@ import React, { type FunctionComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Colors } from "../../constants";
 import { useProfile } from "../../hooks/profiles/useProfile";
+import { traceRender } from "../../utils/renderTrace";
 import { ProfileScreenTemplate } from "../templates/ProfileScreenTemplate";
 //#endregion
 
 //#region Component
 export const ProfileScreen: FunctionComponent = () => {
+    traceRender("ProfileScreen");
     const hook = useProfile();
 
     if (!hook.selectedProfile) {

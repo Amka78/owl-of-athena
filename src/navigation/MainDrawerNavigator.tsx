@@ -21,6 +21,7 @@ import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
 import { ConnectionStates } from "../sdk";
 import { useAuthStore } from "../store/authStore";
+import { traceRender } from "../utils/renderTrace";
 import AdminNavigator from "./AdminNavigator";
 import HomeNavigator from "./HomeNavigator";
 import ProfileNavigator from "./ProfileNavigator";
@@ -51,6 +52,10 @@ const Drawer = createDrawerNavigator();
 const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode => {
     const mainDrawerHook = useMainDrawerNavigator();
     const { user } = useAuthStore();
+    traceRender("MainDrawerNavigator", {
+        desktop: mainDrawerHook.isDesktop,
+        horizontal: mainDrawerHook.isHorizontal,
+    });
     const isAdmin = user?.roles?.some((r) => r.slug === "admin") ?? false;
     const unsyncedBadgeCount =
         props.bluetoothConnect === ConnectionStates.CONNECTED ? props.unsyncedCount : 0;

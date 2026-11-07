@@ -6,6 +6,7 @@ import { View, type ViewStyle } from "react-native";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
+import { traceRender } from "../../utils/renderTrace";
 import {
     CommunityIcon,
     DeleteIcon,
@@ -40,6 +41,7 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
     props: ProfileListScreenTemplateProps,
 ) => {
     useLocale(props.locale);
+    traceRender("ProfileListScreenTemplate", { listLength: props.list?.length });
 
     const screenDimens = useScreenDimensions();
     let menu: React.ReactNode;
