@@ -1,5 +1,6 @@
 import { render } from "@testing-library/react-native";
 import type React from "react";
+import { ScrollView } from "react-native";
 import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { defaultOptions, groupingProfileOptionList } from "../../../services/ProfileService";
@@ -84,5 +85,12 @@ describe("ProfileScreenTemplate", () => {
             <ProfileScreenTemplate {...defaultProps} locale="en-US" />,
         );
         expect(getByText("Default Profile")).toBeTruthy();
+    });
+
+    it("renders the profile options inside a scroll view", () => {
+        const { UNSAFE_getByType } = renderWithProvider(
+            <ProfileScreenTemplate {...defaultProps} locale="en-US" />,
+        );
+        expect(UNSAFE_getByType(ScrollView)).toBeTruthy();
     });
 });

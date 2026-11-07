@@ -1,6 +1,7 @@
 //#region Import Modules
 import type React from "react";
 import type { FunctionComponent } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 import { Dimens } from "../../constants";
 
 import { useLocale, useScreenDimensions } from "../../hooks";
@@ -81,16 +82,33 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                     marginTop: Dimens.menu_list_margin,
                 }}
             ></ProfileSecondMenu>
-            <ProfileOptionList
-                key={`${props.selectedProfile.id}-${props.optionValuesKey ?? 0}`}
-                groupedOptionList={props.grouedOptionList}
-                optionValues={props.optionValues ?? {}}
-                onValueChange={props.onOptionValueChange}
-                onPreviewEffectPress={props.onPreviewEffectPress}
-                onPreviewSongPress={props.onPreviewSongPress}
-                style={{ width: screenDimens.width }}
-            ></ProfileOptionList>
+            <ScrollView
+                style={[styles.optionScroll, { width: screenDimens.width }]}
+                contentContainerStyle={styles.optionScrollContent}
+            >
+                <ProfileOptionList
+                    key={`${props.selectedProfile.id}-${props.optionValuesKey ?? 0}`}
+                    groupedOptionList={props.grouedOptionList}
+                    optionValues={props.optionValues ?? {}}
+                    onValueChange={props.onOptionValueChange}
+                    onPreviewEffectPress={props.onPreviewEffectPress}
+                    onPreviewSongPress={props.onPreviewSongPress}
+                    style={{ width: screenDimens.width }}
+                ></ProfileOptionList>
+            </ScrollView>
             <ProfileEditDialog />
         </StandardView>
     );
 };
+//#endregion
+
+//#region Styles
+const styles = StyleSheet.create({
+    optionScroll: {
+        flex: 1,
+    },
+    optionScrollContent: {
+        paddingBottom: Dimens.profile_list_option_list_margin,
+    },
+});
+//#endregion
