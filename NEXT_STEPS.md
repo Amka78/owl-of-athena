@@ -54,6 +54,7 @@
 - アプリ更新通知を強化。ネイティブは起動時に加えてフォアグラウンド復帰時にも OTA を確認し（15 分間隔で抑制）、取得済みなら Snackbar を表示する。Web は Service Worker の `installed` を待ち、既存の controller がある場合だけ更新を提示するようにした
 - iOS のアラーム鳴動時に `react-native-volume-manager` で端末音量を最大へ上げ、停止・スヌーズ時に元の音量へ戻すようにした。端末音量が 0 でも鳴ることを狙う。Android / Web は何もしない
 - 管理画面のユーザーに Email / Activated、注文に Origin 列を追加。値は `users` / `orders` の新しい列から取得し、Activated と Origin は列メニューで表示を切り替えられる（既定は非表示）
+- アカウント画面に国コード（ISO 3166-1 alpha-2、2文字）と郵便番号を追加。`users.country_code` / `users.postal_code` に保存し、管理画面のユーザー列（既定は非表示）からも確認できる
 - サインアップに氏名（姓・名）・生年月日・性別・ニュースレター購読を追加。値は Supabase Auth の `raw_user_meta_data` に渡し、`get_or_create_user_profile` が `users` へ引き継ぐ。`users.newsletter` 列を追加した
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
 - セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。`aurora_sessions.is_new` を追加し、未読セッションに NEW バッジを表示、詳細を開いた時点で既読にする
@@ -75,6 +76,7 @@
    - `supabase/migrations/20261107000001_signup_profile_fields.sql`（サインアップ時の氏名・生年月日・性別・ニュースレター。`users.newsletter` とプロフィール作成関数）
    - `supabase/migrations/20261107000002_admin_schema_columns.sql`（`users.email` / `users.activated` / `orders.transaction_origin` と auth.users 同期トリガー）
    - `supabase/migrations/20261107000003_session_is_new.sql`（セッション一覧の「新規」バッジ用 `aurora_sessions.is_new`）
+   - `supabase/migrations/20261107000004_user_country_postal.sql`（`users.country_code` / `users.postal_code`）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -109,6 +111,7 @@ WHERE id = '<user-uuid>';
 - サインアップ項目（氏名・生年月日・性別・ニュースレターの入力、Auth メタデータから `users` への引き継ぎ、メール確認後の再ログイン）
 - セッションの NEW バッジ（新規セッションの表示、詳細を開いたときの既読化、複数端末での同期）
 - iOS の音量ブースト（端末音量 0 での鳴動、停止・スヌーズ後の音量復元、音量 HUD が出ないこと）
+- 国コード・郵便番号の保存と再読み込み、管理画面の Country / Postal Code 列
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -193,6 +196,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
+- プロフィール: `src/hooks/useAccount.ts`, `src/utils/account.ts`, `src/components/templates/AccountScreenTemplate.tsx`, `src/clients/AuroraRestClient.ts`, `supabase/migrations/20261107000004_user_country_postal.sql`
 - アラーム音量: `src/managers/alarm/SystemVolumeBooster.ts` / `.native.ts`, `src/managers/alarm/AlarmAudio.ts`
 - セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`, `src/hooks/sessions/useSessionList.ts`, `src/sdk/models/AuroraSession.ts`, `supabase/migrations/20261107000003_session_is_new.sql`
 - サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000001_signup_profile_fields.sql`
@@ -204,12 +208,13 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 検索・ソート・サーバ側ページング・列表示切替・行選択・参照元の列（Email / Activated / Origin）は 2026-11-07 に実装済み。
-3. **残りの parity 差分**: 国・郵便番号（`users` に列が無く、プロフィール／サインアップの入力欄も未実装）のみ。それ以外の参照実装との差分は解消済みで、残りは実機検証。
+3. **残りの parity 差分**: 参照実装との未実装差分は解消済み。残りは実機検証と、追加要望への対応。
 
 ## 既知の制約
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- 国コードは自由入力の 2 文字（ISO 3166-1 alpha-2）で、選択式ではない。郵便番号は自由入力。どちらも任意項目で、空のまま保存できる。管理画面の Country / Postal Code 列は既定で非表示。
 - iOS の音量ブーストは `react-native-volume-manager`（MPVolumeView）で、鳴動開始時に現在音量を保存して 1 にし、`AlarmAudio.stop()` で元へ戻す。復元前にアプリが強制終了した場合は端末音量が最大のまま残る可能性がある。
 - サインアップのプロフィール項目は `supabase.auth.signUp` の `options.data`（`first_name` / `last_name` / `birthday` / `gender` / `newsletter`）に載せ、`get_or_create_user_profile` が初回作成時に `users` へコピーする。既存ユーザーには反映されない。`users.newsletter` の既定値は false。
 - `DatePicker` は選択時に `onChange` を呼ぶように修正した。生年月日を未選択のまま送信すると `birthday` は null になる。
