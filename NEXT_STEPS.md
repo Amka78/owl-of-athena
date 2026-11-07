@@ -66,7 +66,7 @@
 ## 手動セットアップ（未適用なら必須）
 
 1. Supabase に次のマイグレーションを適用する。
-   - `supabase/migrations/20261107000005_consolidated_november.sql`（2026年11月のマイグレーション統合版。プロフィール拡張・ロール/RLS・ログ・質問票・ファームウェア・添付・サインアップ項目・管理列・セッション NEW・国／郵便番号をすべて含む）
+   - `supabase/migrations/20261107000005_consolidated_november.sql`（2026年11月のマイグレーション統合版。プロフィール拡張・ロール/RLS・ログ・質問票・ファームウェア・添付・サインアップ項目・管理列・セッション NEW・国／郵便番号・P0 RLS 強化をすべて含む）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -102,6 +102,7 @@ WHERE id = '<user-uuid>';
 - セッションの NEW バッジ（新規セッションの表示、詳細を開いたときの既読化、複数端末での同期）
 - iOS の音量ブースト（端末音量 0 での鳴動、停止・スヌーズ後の音量復元、音量 HUD が出ないこと）
 - 国コード・郵便番号の保存と再読み込み、管理画面の Country / Postal Code 列
+- P0 RLS 強化（anon / 一般ユーザー / 管理者の3ロールでの読み書き、Supabase の Security Advisor での確認）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -177,6 +178,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション: `src/components/charts/SessionTimelineChart.tsx`, `src/components/organisms/sessions/SessionDetailsMenu.tsx`, `src/hooks/sessions/useSession.ts`
 - エクスポート: `src/services/ExportService.ts`
 - サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminIssuesScreen.tsx`, `src/services/IssueService.ts`, `src/services/IssueAttachmentModel.ts`, `src/services/AttachmentFileService.ts`（`.web.ts` 含む）, `supabase/migrations/20261107000005_consolidated_november.sql`
+- セキュリティ: `supabase/migrations/20261107000005_consolidated_november.sql`, `supabase/tests/rls_security.test.sql`, `supabase/tests/rls_security_behavior.test.sql`
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
@@ -204,8 +206,11 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- P0 RLS 強化: `issues` は本人＋管理者のみ読取可、INSERT は `user_id = auth.uid()` 必須、一般ユーザーの UPDATE は削除。`orders` のクライアント INSERT/UPDATE は削除（サーバ専用）。`user_messages` の INSERT はサービスロール専用にし、UPDATE は本人の `read_at` と `questionnaire_respondent_id` だけに制限。`get_or_create_user_profile` は本人・管理者・service_role 以外を拒否する。
+- RLS テストは `supabase/tests/rls_security.test.sql`（ポリシー・トリガー・関数定義の構成）と `supabase/tests/rls_security_behavior.test.sql`（auth ユーザーを作り、anon / 一般ユーザー / 管理者の読み書きを検証）の2本。`supabase test db` で実行する。この環境には Supabase CLI が無いため未実行。
 - 国コードは自由入力の 2 文字（ISO 3166-1 alpha-2）で、選択式ではない。郵便番号は自由入力。どちらも任意項目で、空のまま保存できる。管理画面の Country / Postal Code 列は既定で非表示。
 - iOS の音量ブーストは `react-native-volume-manager`（MPVolumeView）で、鳴動開始時に現在音量を保存して 1 にし、`AlarmAudio.stop()` で元へ戻す。復元前にアプリが強制終了した場合は端末音量が最大のまま残る可能性がある。
+- メール確認が有効な場合、サインアップ直後は Supabase のセッションが無いため `get_or_create_user_profile` を呼ばず、最小限の User を返す。実際の `users` 行は初回ログイン時に作成される。
 - サインアップのプロフィール項目は `supabase.auth.signUp` の `options.data`（`first_name` / `last_name` / `birthday` / `gender` / `newsletter`）に載せ、`get_or_create_user_profile` が初回作成時に `users` へコピーする。既存ユーザーには反映されない。`users.newsletter` の既定値は false。
 - `DatePicker` は選択時に `onChange` を呼ぶように修正した。生年月日を未選択のまま送信すると `birthday` は null になる。
 - ファームウェアの hex は一度テキストとしてメモリに読み、`writeFile` で Aurora へ送る。ネイティブのダウンロードは `expo-file-system/legacy` の `createDownloadResumable` を使い、キャッシュファイルは書き込み後に削除する。`Content-Length` が無い場合は進捗バーを不定表示にする。ダウンロード失敗時はフェーズを進めず、既存の失敗ダイアログに流す。
