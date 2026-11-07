@@ -1,23 +1,23 @@
 import type { ElectrobunConfig } from "electrobun";
 
 const config: ElectrobunConfig = {
-    appName: "Owl of Athena",
-    productName: "Owl of Athena",
-    version: "1.0.0",
-    main: "./src-electrobun/main.ts",
+    app: {
+        name: "Owl of Athena",
+        identifier: "org.iwinks.owl-of-athena",
+        // CI の手動リリースでは入力バージョンを渡す。
+        version: process.env.ELECTROBUN_APP_VERSION ?? "1.0.0",
+    },
     build: {
-        outDir: "./dist-desktop",
-        webview: {
-            // Expo web output directory
-            staticDir: "./dist",
+        // Expo web の出力をアプリの Resources へコピーする。
+        // main.ts は ../dist/index.html を読む。
+        bun: {
+            entrypoint: "./src-electrobun/main.ts",
         },
-    },
-    mac: {
-        bundleId: "org.iwinks.owl-of-athena",
-        icon: "./assets/icon.png",
-    },
-    win: {
-        icon: "./assets/icon.png",
+        copy: {
+            "./dist": "dist",
+        },
+        buildFolder: "./dist-desktop",
+        artifactFolder: "./dist-desktop-artifacts",
     },
 };
 

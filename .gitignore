@@ -76,6 +76,8 @@ buck-out/
 .expo/*
 web-build/
 dist/
+dist-desktop/
+dist-desktop-artifacts/
 
 # Bun
 .yarnrc

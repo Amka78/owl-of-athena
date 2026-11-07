@@ -30,6 +30,7 @@
     "test:coverage": "bun test --coverage",
     "desktop": "bun run src-electrobun/main.ts",
     "build:desktop": "bun run build:web && bunx electrobun build",
+    "build:desktop:release": "bun run build:web && bunx electrobun build --env=stable",
     "desktop:dev": "concurrently \"expo start --web\" \"sleep 5 && bunx electrobun dev\"",
     "format": "biome format --write src/",
     "check": "biome check src/",

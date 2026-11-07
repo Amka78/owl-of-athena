@@ -1,45 +1,20 @@
-import { Electrobun, BrowserWindow } from "electrobun";
-import path from "path";
+import { BrowserWindow } from "electrobun/bun";
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 
-//#region App configuration
-const app = new Electrobun({
-    appName: "Owl of Athena",
-});
-//#endregion
+// Expo の Web 出力。electrobun.config.ts の build.copy で
+// Resources/dist にコピーされる。
+const distPath = path.resolve(import.meta.dir, "..", "dist", "index.html");
 
-//#region Main window
-app.on("ready", () => {
-    const distPath = path.resolve(import.meta.dir, "..", "dist", "index.html");
-
-    const mainWindow = new BrowserWindow({
-        title: "Owl of Athena",
+const mainWindow = new BrowserWindow({
+    title: "Owl of Athena",
+    frame: {
+        x: 0,
+        y: 0,
         width: 1280,
         height: 800,
-        minWidth: 800,
-        minHeight: 600,
-        html: distPath,
-    });
-
-    mainWindow.webview.loadURL(
-        process.env.NODE_ENV === "development"
-            ? "http://localhost:19006"
-            : `file://${distPath}`
-    );
-
-    mainWindow.show();
+    },
+    url: pathToFileURL(distPath).href,
 });
-//#endregion
 
-//#region RPC handlers
-app.on("rpc", (event: any) => {
-    const { method } = event;
-    switch (method) {
-        case "getAppVersion":
-            return { version: "1.0.0" };
-        case "getPlatform":
-            return { platform: process.platform };
-        default:
-            return { error: `Unknown method: ${method}` };
-    }
-});
-//#endregion
+mainWindow.show();

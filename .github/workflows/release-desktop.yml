@@ -1,0 +1,97 @@
+name: Release Desktop (Electrobun)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "リリースバージョン（例: 1.1.0）"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux x64
+            os: ubuntu-latest
+            artifact: desktop-linux
+          - name: Windows x64
+            os: windows-latest
+            artifact: desktop-windows
+          - name: macOS
+            os: macos-latest
+            artifact: desktop-macos
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Linux は Electrobun のネイティブラッパー用に GTK / WebKit の開発パッケージが必要。
+      - name: Install Linux build dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev
+
+      # Expo web を先に作り、electrobun の build.copy で Resources へ入れる。
+      # EXPO_PUBLIC_* はクライアントへ埋め込まれる公開値のみを渡す。
+      - name: Export web
+        env:
+          EXPO_NO_DOTENV: "1"
+          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+        run: bunx expo export --platform web --output-dir dist
+
+      # --env=stable で配布用アーティファクト（更新用 tar.zst、インストーラ）を作る。
+      - name: Build desktop (stable)
+        env:
+          ELECTROBUN_APP_VERSION: ${{ inputs.version }}
+        run: bunx electrobun build --env=stable
+
+      - name: Upload desktop artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist-desktop-artifacts/
+          if-no-files-found: error
+          retention-days: 7
+
+  release:
+    name: Create GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download desktop artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: desktop-*
+          path: release-assets
+          merge-multiple: true
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          TAG="v${VERSION}"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" release-assets/* --clobber
+          else
+            gh release create "$TAG" release-assets/* \
+              --title "Owl of Athena ${VERSION}" \
+              --generate-notes
+          fi
