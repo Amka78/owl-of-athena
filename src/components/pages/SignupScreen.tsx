@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
 import { MessageKeys } from "../../constants";
 import { useConvertibleHeader, useSignup, useWindowDimensions } from "../../hooks";
@@ -14,6 +14,19 @@ export const SignupScreen: FunctionComponent = () => {
     return (
         <SignupScreenTemplate
             dimens={dimens}
+            firstNameTextBox={signupHooks.firstNameHooks}
+            lastNameTextBox={signupHooks.lastNameHooks}
+            birthDay={{
+                selected: signupHooks.birthDay,
+                onChange: signupHooks.onBirthDayChange,
+            }}
+            gender={{
+                value: signupHooks.gender,
+                onValueChange: signupHooks.onGenderChange,
+            }}
+            maleRadioButton={{ value: "male" }}
+            femaleRadioButton={{ value: "female" }}
+            newsletterCheckBox={signupHooks.newsletterHooks}
             emailTextBox={{
                 ...signupHooks.emailHooks,
                 errorText: signupHooks.emailError,

@@ -14,6 +14,10 @@ describe("SignupService - validate", () => {
         password: "pass123",
         passwordConfirm: "pass123",
         agreeToTerm: true,
+        firstName: "Jane",
+        lastName: "Doe",
+        gender: "female",
+        newsletter: false,
     };
 
     it("returns true for a valid signup", () => {

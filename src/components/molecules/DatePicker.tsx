@@ -1,7 +1,7 @@
 //#region Import Modules
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
-import React, { type FunctionComponent, useCallback, useState } from "react";
+import { type FunctionComponent, useCallback, useState } from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -11,10 +11,12 @@ import type { DatePickerProps } from "./DatePickerProps";
 
 //#region Component
 export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePickerProps) => {
-    const [date, setDate] = useState(moment(props.selected));
+    const [date, setDate] = useState<moment.Moment | undefined>(
+        props.selected ? moment(props.selected) : undefined,
+    );
     const [showDateTimePicker, setShowDateTimePicker] = useState(false);
 
-    const showDate = props.format ? date.format(props.format) : date.toString();
+    const showDate = date ? (props.format ? date.format(props.format) : date.toString()) : "";
     const onFocus = useCallback(() => {
         setShowDateTimePicker(true);
     }, []);
@@ -25,11 +27,17 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePicker
         }
     }, [showDateTimePicker]);
 
-    const onChange = useCallback((event: Event, date?: Date) => {
-        console.debug(`event:${event}`);
-        setShowDateTimePicker(false);
-        setDate(moment(date));
-    }, []);
+    const onChange = useCallback(
+        (event: Event, selectedDate?: Date) => {
+            console.debug(`event:${event}`);
+            setShowDateTimePicker(false);
+            if (selectedDate) {
+                setDate(moment(selectedDate));
+                props.onChange?.(selectedDate);
+            }
+        },
+        [props.onChange],
+    );
 
     return (
         <TouchableOpacity onPressIn={onFocus}>
@@ -43,7 +51,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePicker
                 {showDateTimePicker && (
                     <DateTimePicker
                         testID="dateTimePicker"
-                        value={date.toDate()}
+                        value={date?.toDate() ?? new Date()}
                         mode={"date"}
                         is24Hour={true}
                         display="default"

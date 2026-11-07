@@ -31,6 +31,15 @@ const desktopDimens = {
 
 const textBoxProps = { value: "", onChangeText: fn() };
 const checkBoxProps = { status: "unchecked" as const, onPress: fn(), onLabelPress: fn() };
+const commonProps = {
+    firstNameTextBox: textBoxProps,
+    lastNameTextBox: textBoxProps,
+    birthDay: { selected: new Date("2000-01-01"), onChange: fn() },
+    gender: { value: "male", onValueChange: fn() },
+    maleRadioButton: { value: "male" },
+    femaleRadioButton: { value: "female" },
+    newsletterCheckBox: checkBoxProps,
+};
 
 const meta = {
     title: "Templates/SignupScreenTemplate",
@@ -50,6 +59,7 @@ type Story = StoryObj<typeof meta>;
 
 export const EnUSLocale: Story = {
     args: {
+        ...commonProps,
         emailTextBox: textBoxProps,
         passwordTextBox: textBoxProps,
         passwordConfirmTextBox: textBoxProps,
@@ -66,6 +76,7 @@ export const EnUSLocale: Story = {
 
 export const JaJPLocale: Story = {
     args: {
+        ...commonProps,
         emailTextBox: textBoxProps,
         passwordTextBox: textBoxProps,
         passwordConfirmTextBox: textBoxProps,
@@ -82,6 +93,7 @@ export const JaJPLocale: Story = {
 
 export const Desktop: Story = {
     args: {
+        ...commonProps,
         emailTextBox: textBoxProps,
         passwordTextBox: textBoxProps,
         passwordConfirmTextBox: textBoxProps,

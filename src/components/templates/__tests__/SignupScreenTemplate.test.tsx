@@ -21,11 +21,21 @@ const mobileDimens = {
 
 const textBoxProps = { value: "", onChangeText: jest.fn() };
 const checkBoxProps = { status: "unchecked" as const, onPress: jest.fn(), onLabelPress: jest.fn() };
+const commonProps = {
+    firstNameTextBox: textBoxProps,
+    lastNameTextBox: textBoxProps,
+    birthDay: { selected: new Date("2000-01-01"), onChange: jest.fn() },
+    gender: { value: "male", onValueChange: jest.fn() },
+    maleRadioButton: { value: "male" },
+    femaleRadioButton: { value: "female" },
+    newsletterCheckBox: checkBoxProps,
+};
 
 describe("SignupScreenTemplate", () => {
     it("renders correctly with en-US locale", () => {
         const { toJSON } = renderWithProvider(
             <SignupScreenTemplate
+                {...commonProps}
                 emailTextBox={textBoxProps}
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
@@ -42,6 +52,7 @@ describe("SignupScreenTemplate", () => {
     it("renders correctly with ja-JP locale", () => {
         const { toJSON } = renderWithProvider(
             <SignupScreenTemplate
+                {...commonProps}
                 emailTextBox={textBoxProps}
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
@@ -59,6 +70,7 @@ describe("SignupScreenTemplate", () => {
         const onSignupPress = jest.fn();
         const { getByText } = renderWithProvider(
             <SignupScreenTemplate
+                {...commonProps}
                 emailTextBox={textBoxProps}
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
@@ -76,6 +88,7 @@ describe("SignupScreenTemplate", () => {
     it("shows error text when provided", () => {
         const { getAllByText } = renderWithProvider(
             <SignupScreenTemplate
+                {...commonProps}
                 emailTextBox={textBoxProps}
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}

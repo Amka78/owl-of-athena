@@ -1,5 +1,6 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
 import { useCallback, useState } from "react";
 import { Linking } from "react-native";
 
@@ -20,6 +21,13 @@ export const useSignup = (
     emailHooks: useTextBoxReturn;
     passwordHooks: useTextBoxReturn;
     passwordConfirmHooks: useTextBoxReturn;
+    firstNameHooks: useTextBoxReturn;
+    lastNameHooks: useTextBoxReturn;
+    birthDay?: Date;
+    onBirthDayChange: (date: Date) => void;
+    gender: string;
+    onGenderChange: (gender: string) => void;
+    newsletterHooks: checkBoxCoreFunctions;
     checkBoxHooks: checkBoxCoreFunctions;
     onSignupPress: () => Promise<void>;
     onCancelPress: () => void;
@@ -38,6 +46,11 @@ export const useSignup = (
     const emailHooks = useTextBox("");
     const passwordHooks = useTextBox("");
     const passwordConfirmHooks = useTextBox("");
+    const firstNameHooks = useTextBox("");
+    const lastNameHooks = useTextBox("");
+    const [birthDay, setBirthDay] = useState<Date>();
+    const [gender, setGender] = useState("male");
+    const newsletterHooks = useCheckBox(false);
     const checkBoxHooks = useCheckBox(false);
 
     const onSignupPress = useCallback(async () => {
@@ -47,7 +60,12 @@ export const useSignup = (
             email: emailHooks.value,
             password: passwordHooks.value,
             passwordConfirm: passwordConfirmHooks.value,
-            agreeToTerm: checkBoxHooks.status == "checked",
+            agreeToTerm: checkBoxHooks.status === "checked",
+            firstName: firstNameHooks.value,
+            lastName: lastNameHooks.value,
+            birthday: birthDay,
+            gender,
+            newsletter: newsletterHooks.status === "checked",
         };
         try {
             if (
@@ -70,6 +88,13 @@ export const useSignup = (
                 await AuroraRestClientInstance.signup({
                     email: signup.email,
                     password: signup.password,
+                    firstName: signup.firstName,
+                    lastName: signup.lastName,
+                    birthday: signup.birthday
+                        ? moment(signup.birthday).format("YYYY-MM-DD")
+                        : undefined,
+                    gender: signup.gender,
+                    newsletter: signup.newsletter,
                 });
                 navigate("ConfirmEmail", { email: signup.email });
             }
@@ -83,11 +108,16 @@ export const useSignup = (
             setLoading(false);
         }
     }, [
+        birthDay,
         checkBoxHooks.status,
         emailHooks.value,
+        firstNameHooks.value,
+        gender,
+        lastNameHooks.value,
+        navigate,
+        newsletterHooks.status,
         passwordConfirmHooks.value,
         passwordHooks.value,
-        navigate,
     ]);
 
     const onCancelPress = useCallback((): void => {
@@ -103,6 +133,13 @@ export const useSignup = (
         emailHooks,
         passwordHooks,
         passwordConfirmHooks,
+        firstNameHooks,
+        lastNameHooks,
+        birthDay,
+        onBirthDayChange: setBirthDay,
+        gender,
+        onGenderChange: setGender,
+        newsletterHooks,
         checkBoxHooks,
         onSignupPress,
         onCancelPress,

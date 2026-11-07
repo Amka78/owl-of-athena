@@ -16,6 +16,23 @@ jest.mock("../../../hooks/useSignup", () => ({
             onEndEditing: jest.fn(),
             error: "",
         },
+        firstNameHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
+        lastNameHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
+        birthDay: undefined,
+        onBirthDayChange: jest.fn(),
+        gender: "male",
+        onGenderChange: jest.fn(),
+        newsletterHooks: { checked: false, onPress: jest.fn() },
         checkBoxHooks: { checked: false, onPress: jest.fn() },
         onSignupPress: jest.fn(),
         onCancelPress: jest.fn(),
@@ -48,6 +65,23 @@ jest.mock("../../../hooks", () => ({
             onEndEditing: jest.fn(),
             error: "",
         },
+        firstNameHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
+        lastNameHooks: {
+            value: "",
+            onChangeText: jest.fn(),
+            onEndEditing: jest.fn(),
+            error: "",
+        },
+        birthDay: undefined,
+        onBirthDayChange: jest.fn(),
+        gender: "male",
+        onGenderChange: jest.fn(),
+        newsletterHooks: { checked: false, onPress: jest.fn() },
         checkBoxHooks: { checked: false, onPress: jest.fn() },
         onSignupPress: jest.fn(),
         onCancelPress: jest.fn(),
@@ -55,7 +89,6 @@ jest.mock("../../../hooks", () => ({
         generalError: "",
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

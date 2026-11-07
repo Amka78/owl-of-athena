@@ -6,4 +6,10 @@ export type Signup = {
     passwordConfirm: string;
 
     agreeToTerm: boolean;
+
+    firstName: string;
+    lastName: string;
+    birthday?: Date;
+    gender: string;
+    newsletter: boolean;
 };
