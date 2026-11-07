@@ -55,7 +55,7 @@
 - 管理画面のユーザーに Email / Activated、注文に Origin 列を追加。値は `users` / `orders` の新しい列から取得し、Activated と Origin は列メニューで表示を切り替えられる（既定は非表示）
 - サインアップに氏名（姓・名）・生年月日・性別・ニュースレター購読を追加。値は Supabase Auth の `raw_user_meta_data` に渡し、`get_or_create_user_profile` が `users` へ引き継ぐ。`users.newsletter` 列を追加した
 - メッセージ画面に「すべて既読にする」を追加。未読があるときだけ表示し、`MessageService.markAllMessagesAsRead()` で未読を一括更新して、画面内のメッセージとアカウント画面の未読バッジに反映する
-- セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。「新規」バッジは `aurora_sessions` に該当列が無いため未対応
+- セッション一覧に月見出しを追加（ja: `YYYY年M月` / en: `MMMM YYYY` / pt: `MM/YYYY`）。`aurora_sessions.is_new` を追加し、未読セッションに NEW バッジを表示、詳細を開いた時点で既読にする
 - 未転送セッション件数をメイン画面のセッションアイコン（下部タブ / ドロワー）にバッジ表示するようにした。件数は接続時のスキャンと転送完了で更新し、切断時に 0 に戻す。接続中のみ表示する
 - セッション詳細と管理画面の選択行から ZIP をダウンロードできるようにした。ZIP には `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` を入れ、複数選択時は `Sessions/<日時>_<ID>/` に分ける。生成は `fflate`、ネイティブは `expo-file-system` + `expo-sharing`、Web は Blob ダウンロード
 - 管理テーブルに列の表示切替を追加。ツールバーの「列」から各列の表示／非表示を切り替え、テーブルごとに端末へ保存する。最後の 1 列は非表示にできない
@@ -73,6 +73,7 @@
    - `supabase/migrations/20261107000000_issue_attachments.sql`（不具合報告の添付ファイル。非公開バケット `issue-attachments` も作成）
    - `supabase/migrations/20261107000001_signup_profile_fields.sql`（サインアップ時の氏名・生年月日・性別・ニュースレター。`users.newsletter` とプロフィール作成関数）
    - `supabase/migrations/20261107000002_admin_schema_columns.sql`（`users.email` / `users.activated` / `orders.transaction_origin` と auth.users 同期トリガー）
+   - `supabase/migrations/20261107000003_session_is_new.sql`（セッション一覧の「新規」バッジ用 `aurora_sessions.is_new`）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -104,6 +105,7 @@ WHERE id = '<user-uuid>';
 - 不具合報告の添付（実機の画像・ファイル選択、10 MB 制限、非公開バケットへのアップロード、管理画面の署名付き URL 表示）
 - ファームウェアのダウンロード進捗（実機での hex 取得、Content-Length が無い場合の不定表示、ダウンロードから書き込みへのフェーズ遷移）
 - サインアップ項目（氏名・生年月日・性別・ニュースレターの入力、Auth メタデータから `users` への引き継ぎ、メール確認後の再ログイン）
+- セッションの NEW バッジ（新規セッションの表示、詳細を開いたときの既読化、複数端末での同期）
 - コンソールの「ログを共有」と、Web での clipboard フォールバック
 - About 画面の表示内容（ビルド番号は EAS ビルド後に確定）とリポジトリリンク
 - 不具合報告のログ添付（`issues.logs` マイグレーション適用後）と管理画面での抜粋表示
@@ -188,7 +190,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
 - ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
-- セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`
+- セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`, `src/hooks/sessions/useSessionList.ts`, `src/sdk/models/AuroraSession.ts`, `supabase/migrations/20261107000003_session_is_new.sql`
 - サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000001_signup_profile_fields.sql`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
 - 未転送バッジ: `src/store/sessionTransferStore.ts`, `src/components/atoms/SessionsIconWithBadge.tsx`, `src/components/templates/MainScreenTemplate.tsx`, `src/navigation/MainDrawerNavigator.tsx`, `src/hooks/useMain.ts`, `src/hooks/useAwake.ts`
@@ -198,7 +200,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 1. **実機検証**: `DEVICE_VERIFICATION.md` の 5 項目と、上記の未検証項目。
 2. **管理画面の仕上げ**: 検索・ソート・サーバ側ページング・列表示切替・行選択・参照元の列（Email / Activated / Origin）は 2026-11-07 に実装済み。
-3. **残りの parity 差分**: iOS の `MPVolumeView`、セッションの「新規」バッジ。
+3. **残りの parity 差分**: iOS の `MPVolumeView`。
 
 ## 既知の制約
 
@@ -235,7 +237,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - 行選択は画面内の状態だけで、永続化しない。全選択は現在のページの行を対象にし、選択はページを跨いで保持する。選択行の CSV は保持している行から出力するため、検索で絞り込んでも選択件数と共有対象から外れない。
 - 未転送件数は `sessionTransferStore.unsyncedCount` で保持し、接続時のスキャンと転送完了（`syncedCount` を減算）で更新、切断時に 0 にする。バッジは接続中だけ表示し、他端末で増えた分は次回スキャンまで反映しない。
 - セッション ZIP は `session.json`（メタデータ＋ストリーム＋イベント）と `events.csv` で構成する。参照 desktop のように S3 の生ストリームファイルは含めない（`streams` は JSON 内のメタデータのみ）。ネイティブはキャッシュへ書き出して共有シートを開き、Web は Blob をブラウザにダウンロードさせる。`expo-sharing` の追加により prebuild と再インストールが必要。
-- セッション一覧の「新規」バッジは desktop の `session.new` に相当する列が `aurora_sessions` に無いため未実装。必要なら `is_new` 列か既読管理（最終閲覧日時）の追加が前提になる。
+- セッションの NEW バッジは `aurora_sessions.is_new` で管理する。既存セッションはマイグレーション時に false にし、以降の追加分だけ true になる。詳細を開いたときに false へ更新するため、同じアカウントの別端末でも既読が共有される。オフラインや更新失敗時はバッジが残る。
 - 管理画面の列は `public.users` / `orders` / `aurora_sessions` の実カラムに合わせている。`users.email` / `users.activated` は auth.users からバックフィルし、`handle_user_updated` トリガーでメール確認・ログイン時に同期する。`orders.transaction_origin` は注文側で設定される想定で、アプリからは書き込まない。セッションの睡眠スコアと duration はテーブルに無いため表示しない。
 - テスト環境の `FlatList` はモックが子要素（`renderItem` の結果）を描画しないため、`AdminTable` の行表示と行チェックボックスの操作は自動テストで検証していない（CSV・ヘッダー・列メニュー・選択バー・偽データソースのページ取得・`AdminTableModel` の検索/ソート/ページング/検索列・ソート列解決のみ）。
 - `AdminAppSettingsScreen` は旧 API 前提で到達不能のまま。管理メニューには出ていない。
