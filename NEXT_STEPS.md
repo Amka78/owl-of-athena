@@ -180,6 +180,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 - サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminIssuesScreen.tsx`, `src/services/IssueService.ts`, `src/services/IssueAttachmentModel.ts`, `src/services/AttachmentFileService.ts`（`.web.ts` 含む）, `supabase/migrations/20261107000005_consolidated_november.sql`
 - セキュリティ: `supabase/migrations/20261107000005_consolidated_november.sql`, `supabase/tests/rls_security.test.sql`, `supabase/tests/rls_security_behavior.test.sql`
 - Web 配信: `.github/workflows/pages.yml`, `WEB_DEPLOY.md`, `app.config.ts`（`PAGES_BASE_URL` で GitHub Pages のサブパスを設定）
+- デスクトップ配信: `.github/workflows/release-desktop.yml`, `DESKTOP_RELEASE.md`, `electrobun.config.ts`, `src-electrobun/main.ts`
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
