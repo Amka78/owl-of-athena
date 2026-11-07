@@ -66,17 +66,7 @@
 ## 手動セットアップ（未適用なら必須）
 
 1. Supabase に次のマイグレーションを適用する。
-   - `supabase/migrations/20261103000000_aurora_profiles_editor.sql`
-   - `supabase/migrations/20261104000000_user_roles.sql`
-   - `supabase/migrations/20261104000001_issue_logs.sql`（不具合報告のログ添付用）
-   - `supabase/migrations/20261105000000_questionnaire_response.sql`（質問票の回答蓄積用）
-   - `supabase/migrations/20261105000001_firmware_components.sql`（ブートローダー / BLE の配布列）
-   - `supabase/migrations/20261105000002_firmware_min_app_version.sql`（最低アプリバージョン）
-   - `supabase/migrations/20261107000000_issue_attachments.sql`（不具合報告の添付ファイル。非公開バケット `issue-attachments` も作成）
-   - `supabase/migrations/20261107000001_signup_profile_fields.sql`（サインアップ時の氏名・生年月日・性別・ニュースレター。`users.newsletter` とプロフィール作成関数）
-   - `supabase/migrations/20261107000002_admin_schema_columns.sql`（`users.email` / `users.activated` / `orders.transaction_origin` と auth.users 同期トリガー）
-   - `supabase/migrations/20261107000003_session_is_new.sql`（セッション一覧の「新規」バッジ用 `aurora_sessions.is_new`）
-   - `supabase/migrations/20261107000004_user_country_postal.sql`（`users.country_code` / `users.postal_code`）
+   - `supabase/migrations/20261107000005_consolidated_november.sql`（2026年11月のマイグレーション統合版。プロフィール拡張・ロール/RLS・ログ・質問票・ファームウェア・添付・サインアップ項目・管理列・セッション NEW・国／郵便番号をすべて含む）
 2. Supabase Dashboard → Authentication → URL Configuration の Redirect URLs に `owl-of-athena://reset-password` を追加する。
 3. `app.config.ts` の `scheme: "owl-of-athena"` はネイティブビルドに埋め込まれるため、**新しい APK / IPA をビルドする**（OTA だけでは有効にならない）。
 4. `expo-network` を追加済みのため、**prebuild とアプリの再インストールが必要**（OTA だけではネイティブモジュールが入らない）。
@@ -183,23 +173,23 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 - プロフィール: `src/services/ProfileService.ts`, `src/hooks/profiles/useProfile.ts`, `src/components/atoms/FieldLedEffect.tsx`, `src/components/atoms/FieldBuzzSong.tsx`
 - 認証: `src/hooks/usePasswordReset.ts`, `src/services/AuthLinkService.ts`, `src/components/pages/ResetPasswordScreen.tsx`
-- ロール: `src/store/authStore.ts`, `src/components/pages/AccountRolesScreen.tsx`, `supabase/migrations/20261104000000_user_roles.sql`
+- ロール: `src/store/authStore.ts`, `src/components/pages/AccountRolesScreen.tsx`, `supabase/migrations/20261107000005_consolidated_november.sql`
 - セッション: `src/components/charts/SessionTimelineChart.tsx`, `src/components/organisms/sessions/SessionDetailsMenu.tsx`, `src/hooks/sessions/useSession.ts`
 - エクスポート: `src/services/ExportService.ts`
-- サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminIssuesScreen.tsx`, `src/services/IssueService.ts`, `src/services/IssueAttachmentModel.ts`, `src/services/AttachmentFileService.ts`（`.web.ts` 含む）, `supabase/migrations/20261104000001_issue_logs.sql`, `supabase/migrations/20261107000000_issue_attachments.sql`
+- サポート: `src/services/LogService.ts`, `src/utils/AppInfo.ts`, `src/components/pages/ConsoleScreen.tsx`, `src/components/pages/AboutScreen.tsx`, `src/components/molecules/IssueReportDialog.tsx`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminIssuesScreen.tsx`, `src/services/IssueService.ts`, `src/services/IssueAttachmentModel.ts`, `src/services/AttachmentFileService.ts`（`.web.ts` 含む）, `supabase/migrations/20261107000005_consolidated_november.sql`
 - オフライン検知: `src/hooks/useNetworkStatus.ts`, `src/components/atoms/OfflineBanner.tsx`, `src/components/Container.tsx`
 - デバイス情報: `src/sdk/models/AuroraOSInfo.ts`, `src/components/molecules/AuroraInfoDialog.tsx`
 - 未読バッジ: `src/store/messageStore.ts`, `src/hooks/useUnreadMessageCount.ts`, `src/hooks/useLogout.ts`, `src/components/pages/AccountScreen.tsx`
 - メッセージ: `src/components/pages/AccountMessagesScreen.tsx`, `src/store/messageStore.ts`, `src/services/MessageService.ts`
 - アプリ更新: `src/hooks/useAppUpdate.ts`（Web）, `src/hooks/useAppUpdate.native.ts`（ネイティブ）, `src/components/atoms/UpdateSnackBar.tsx`, `App.tsx`
-- 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261105000000_questionnaire_response.sql`
+- 質問票: `src/services/QuestionnaireService.ts`, `src/store/questionnaireStore.ts`, `src/components/molecules/QuestionnaireDialog.tsx`, `supabase/migrations/20261107000005_consolidated_november.sql`
 - セッション転送: `src/managers/AuroraManagerCore.ts`, `src/managers/SessionSyncResult.ts`, `src/store/sessionTransferStore.ts`, `src/components/molecules/SessionTransferDialog.tsx`
-- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261105000001_firmware_components.sql`, `supabase/migrations/20261105000002_firmware_min_app_version.sql`
+- ファームウェア: `src/types/Firmware.ts`, `src/clients/FirmwareRestClient.ts`, `src/services/FirmwareService.ts`（`buildFirmwareUpdateMessage`）, `src/managers/AuroraManagerCore.ts`, `src/sdk/AuroraCmdFlashFile.ts`, `src/sdk/AuroraCmdUploadFile.ts` / `.native.ts`, `src/components/molecules/LoadingDialog.tsx`, `src/hooks/useMain.ts`, `supabase/migrations/20261107000005_consolidated_november.sql`
 - デバイス保守: `src/hooks/useDeviceMaintenance.ts`, `src/components/pages/AccountScreen.tsx`
-- プロフィール: `src/hooks/useAccount.ts`, `src/utils/account.ts`, `src/components/templates/AccountScreenTemplate.tsx`, `src/clients/AuroraRestClient.ts`, `supabase/migrations/20261107000004_user_country_postal.sql`
+- プロフィール: `src/hooks/useAccount.ts`, `src/utils/account.ts`, `src/components/templates/AccountScreenTemplate.tsx`, `src/clients/AuroraRestClient.ts`, `supabase/migrations/20261107000005_consolidated_november.sql`
 - アラーム音量: `src/managers/alarm/SystemVolumeBooster.ts` / `.native.ts`, `src/managers/alarm/AlarmAudio.ts`
-- セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`, `src/hooks/sessions/useSessionList.ts`, `src/sdk/models/AuroraSession.ts`, `supabase/migrations/20261107000003_session_is_new.sql`
-- サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000001_signup_profile_fields.sql`
+- セッション一覧: `src/services/SessionListService.ts`, `src/components/templates/SessionListScreenTemplate.tsx`, `src/hooks/sessions/useSessionList.ts`, `src/sdk/models/AuroraSession.ts`, `supabase/migrations/20261107000005_consolidated_november.sql`
+- サインアップ: `src/components/templates/SignupScreenTemplate.tsx`, `src/hooks/useSignup.ts`, `src/clients/AuroraRestClient.ts`, `src/components/molecules/DatePicker.tsx`, `supabase/migrations/20261107000005_consolidated_november.sql`
 - セッション ZIP: `src/services/SessionZipService.ts`, `src/services/SessionZipDownloadService.ts`, `src/services/ZipDownloadService.ts`（ネイティブ）, `src/services/ZipDownloadService.web.ts`（Web）
 - 未転送バッジ: `src/store/sessionTransferStore.ts`, `src/components/atoms/SessionsIconWithBadge.tsx`, `src/components/templates/MainScreenTemplate.tsx`, `src/navigation/MainDrawerNavigator.tsx`, `src/hooks/useMain.ts`, `src/hooks/useAwake.ts`
 - 管理画面: `src/components/molecules/AdminTable.tsx`, `src/components/molecules/AdminTableModel.ts`, `src/components/molecules/AdminTableColumnPrefs.ts`, `src/services/AdminQueryModel.ts`, `src/services/AdminQueryService.ts`, `src/components/molecules/IssueLogDialog.tsx`, `src/components/pages/AdminMenuScreen.tsx`, `src/navigation/AdminNavigator.tsx`, `src/components/pages/AdminUsersScreen.tsx`, `src/components/pages/AdminOrdersScreen.tsx`, `src/components/pages/AdminSessionsScreen.tsx`, `src/services/ExportService.ts`（`buildTableCsv`）
