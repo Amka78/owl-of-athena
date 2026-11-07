@@ -206,6 +206,7 @@ bun test src/hooks/__tests__/useNetworkStatus.test.ts \
 
 - 全件テストの 8 fail は既存スナップショット差分。Supabase の URL 未設定による汚染は今回の変更後の全件実行では発生しなかったが、順序依存の可能性があるためテスト構成を変えたら失敗集合を再確認する。
 - 未読バッジはメッセージを初回だけ読み込み、ログアウト時に破棄する。新しいメッセージはアプリ再起動かメッセージ画面を開くまでバッジに反映されない。
+- 統合マイグレーションは `firmware_releases` と公開 `firmware` バケットが無い古いDBでも動くよう、両方を `IF NOT EXISTS` / `ON CONFLICT` で作成する。
 - P0 RLS 強化: `issues` は本人＋管理者のみ読取可、INSERT は `user_id = auth.uid()` 必須、一般ユーザーの UPDATE は削除。`orders` のクライアント INSERT/UPDATE は削除（サーバ専用）。`user_messages` の INSERT はサービスロール専用にし、UPDATE は本人の `read_at` と `questionnaire_respondent_id` だけに制限。`get_or_create_user_profile` は本人・管理者・service_role 以外を拒否する。
 - RLS テストは `supabase/tests/rls_security.test.sql`（ポリシー・トリガー・関数定義の構成）と `supabase/tests/rls_security_behavior.test.sql`（auth ユーザーを作り、anon / 一般ユーザー / 管理者の読み書きを検証）の2本。`supabase test db` で実行する。この環境には Supabase CLI が無いため未実行。
 - 国コードは自由入力の 2 文字（ISO 3166-1 alpha-2）で、選択式ではない。郵便番号は自由入力。どちらも任意項目で、空のまま保存できる。管理画面の Country / Postal Code 列は既定で非表示。
