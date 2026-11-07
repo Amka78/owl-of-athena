@@ -1,6 +1,6 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-import type { TextStyle, ViewStyle } from "react-native";
+import { Platform, type TextStyle, type ViewStyle } from "react-native";
 import { Button as PaperButton, useTheme } from "react-native-paper";
 
 import { Dimens, Fonts } from "../../constants";
@@ -33,6 +33,7 @@ export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
             disabled={props.disabled !== undefined ? props.disabled : false}
             mode={"contained"}
             labelStyle={[labelStyle, props.labelStyle]}
+            contentStyle={Platform.OS === "web" ? webContentStyle : undefined}
             style={[containerStyle, { width }, props.style]}
             theme={theme}
         >
@@ -53,4 +54,6 @@ const containerStyle: ViewStyle = {
     marginBottom: Dimens.button_margin,
     height: Dimens.button_height,
 };
+// Web の Surface は子要素を縦に伸ばさないため、コンテンツをボタン高まで広げて中央寄せにする。
+const webContentStyle: ViewStyle = { minHeight: Dimens.button_height };
 //#endregion

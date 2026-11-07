@@ -2,8 +2,9 @@
 
 import { render } from "@testing-library/react-native";
 import type React from "react";
+import { Platform, StyleSheet, View } from "react-native";
 import { Provider } from "react-native-paper";
-import { Theme } from "../../../constants";
+import { Dimens, Theme } from "../../../constants";
 import { Button } from "../Button";
 
 //#endregion
@@ -25,6 +26,24 @@ describe("Button UnitTest", () => {
             </Button>,
         );
         expect(toJSON()).toMatchSnapshot();
+    });
+
+    it("spreads the content to the button height on web", () => {
+        const originalOS = Platform.OS;
+        (Platform as { OS: string }).OS = "web";
+        try {
+            const { UNSAFE_getAllByType } = renderWithProvider(
+                <Button screenWidth={375}>Test</Button>,
+            );
+            const content = UNSAFE_getAllByType(View).find(
+                (node) => StyleSheet.flatten(node.props.style)?.flexDirection === "row",
+            );
+            expect(StyleSheet.flatten(content?.props.style)).toMatchObject({
+                minHeight: Dimens.button_height,
+            });
+        } finally {
+            (Platform as { OS: string }).OS = originalOS;
+        }
     });
 });
 //#endregion
