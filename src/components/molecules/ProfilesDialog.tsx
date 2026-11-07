@@ -81,7 +81,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
                                 (value: AuroraProfile, index: number) => {
                                     return (
                                         <LabeledRadioButton
-                                            key={index}
+                                            key={value.id ?? value.title ?? index}
                                             value={value.title!}
                                             label={value.title!}
                                         ></LabeledRadioButton>
@@ -113,7 +113,7 @@ export class ProfilesDialog extends React.Component<{}, ProfilesDialogState> {
         return (value: string): void => {
             const selectedProfile = this.state.dialogSettings!.profileList.find(
                 (profile: AuroraProfile) => {
-                    return profile.title! == value;
+                    return profile.title! === value;
                 },
             );
             this.setState({

@@ -42,7 +42,7 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
     useLocale(props.locale);
 
     const screenDimens = useScreenDimensions();
-    let menu;
+    let menu: React.ReactNode;
     if (props.showFilter) {
         menu = (
             <ProfileListMenu
@@ -95,7 +95,7 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
                             )}
                             title={value.title}
                             description={value.name}
-                            style={{ width: screenDimens.width }}
+                            style={styles.listItem}
                             onPress={() => {
                                 props.onMenuPress(value, index);
                             }}
@@ -115,4 +115,7 @@ const iconContainer: ViewStyle = {
     flexDirection: "row",
 };
 const standardView: ViewStyle = { justifyContent: "flex-start" };
+const styles = {
+    listItem: { width: "100%" } as ViewStyle,
+};
 //#endregion

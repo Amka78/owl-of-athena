@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
+
 export type ScreenDimensions = {
     width: number;
     height: number;
@@ -14,12 +15,12 @@ export const useScreenDimensions = (): {
         height: 0,
     });
 
-    const onLayout = (event: LayoutChangeEvent): void => {
-        setScreenDimens({
-            width: event.nativeEvent.layout.width,
-            height: event.nativeEvent.layout.height,
-        });
-    };
+    const onLayout = useCallback((event: LayoutChangeEvent): void => {
+        const { width, height } = event.nativeEvent.layout;
+        setScreenDimens((current) =>
+            current.width === width && current.height === height ? current : { width, height },
+        );
+    }, []);
 
     return {
         width: screenDimens.width,
