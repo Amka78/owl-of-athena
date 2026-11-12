@@ -43,6 +43,9 @@ build/
 local.properties
 *.iml
 
+# ネイティブディレクトリは prebuild で再生成するため追跡しない（CNG）
+android/
+
 # node.js
 #
 node_modules/
