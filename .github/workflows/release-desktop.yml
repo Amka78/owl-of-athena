@@ -7,6 +7,10 @@ on:
         description: "リリースバージョン（例: 1.1.0）"
         required: true
         type: string
+      ref:
+        description: "ビルドするブランチ／タグ。空なら main"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -31,6 +35,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 既定ブランチは master のままなので、ref 未指定なら main を明示する。
+          ref: ${{ inputs.ref || 'main' }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -75,6 +82,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      # gh が git リポジトリからリポジトリ名を特定するため、checkout を用意する。
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: Download desktop artifacts
         uses: actions/download-artifact@v4
         with:
@@ -85,6 +98,7 @@ jobs:
       - name: Create or update release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           VERSION: ${{ inputs.version }}
         run: |
           TAG="v${VERSION}"

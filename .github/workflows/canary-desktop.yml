@@ -7,6 +7,10 @@ on:
         description: "Canary バージョン（例: 1.1.0-canary.1）。空なら 1.0.0-canary.<run_number>"
         required: false
         type: string
+      ref:
+        description: "ビルドするブランチ／タグ。空なら main"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -37,6 +41,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 既定ブランチは master のままなので、ref 未指定なら main を明示する。
+          ref: ${{ inputs.ref || 'main' }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v1
@@ -80,6 +87,12 @@ jobs:
     env:
       VERSION: ${{ inputs.version != '' && inputs.version || format('1.0.0-canary.{0}', github.run_number) }}
     steps:
+      # gh が git リポジトリからリポジトリ名を特定するため、checkout を用意する。
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: Download canary artifacts
         uses: actions/download-artifact@v4
         with:
@@ -90,6 +103,7 @@ jobs:
       - name: Create or update canary pre-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           VERSION: ${{ env.VERSION }}
         run: |
           TAG="v${VERSION}"
