@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
+import { StyleSheet } from 'react-native';
 import { Provider } from 'react-native-paper';
-import { Theme } from '../../../constants';
+import { Message, MessageKeys, Theme } from '../../../constants';
 import { WelcomeScreenTemplate } from '../WelcomeScreenTemplate';
 
 
@@ -73,5 +74,21 @@ describe('WelcomeScreenTemplate', () => {
         );
         fireEvent.press(getByText(/log in/i));
         expect(onLoginPress).toHaveBeenCalledTimes(1);
+    });
+
+    it('centers the title and the body text', () => {
+        const { getByText } = renderWithProvider(
+            <WelcomeScreenTemplate
+                onLoginPress={jest.fn()}
+                onSignupPress={jest.fn()}
+                onStandalonePress={jest.fn()}
+                dimens={mobileDimens}
+                locale="ja-JP"
+            />
+        );
+        const titleStyle = StyleSheet.flatten(getByText(Message.get(MessageKeys.welcome_title)).props.style);
+        expect(titleStyle.textAlign).toBe('center');
+        const bodyStyle = StyleSheet.flatten(getByText(Message.get(MessageKeys.welcome_text)).props.style);
+        expect(bodyStyle.textAlign).toBe('center');
     });
 });

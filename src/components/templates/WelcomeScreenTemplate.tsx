@@ -1,6 +1,6 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-import { View } from "react-native";
+import { type TextStyle, View } from "react-native";
 
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
@@ -28,8 +28,12 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
     const isTwoColumnsBottoms = props.dimens.isHorizontal || props.dimens.isLargeWidth;
     return (
         <InternalView>
-            <ContentTitle>{Message.get(MessageKeys.welcome_title)}</ContentTitle>
-            <ContentText>{Message.get(MessageKeys.welcome_text)}</ContentText>
+            <ContentTitle style={welcomeTextStyle}>
+                {Message.get(MessageKeys.welcome_title)}
+            </ContentTitle>
+            <ContentText style={welcomeTextStyle}>
+                {Message.get(MessageKeys.welcome_text)}
+            </ContentText>
             <View style={{ alignItems: "center" }}>
                 <View
                     style={{
@@ -58,4 +62,9 @@ export const WelcomeScreenTemplate: FunctionComponent<WelcomeScreenTemplateProps
         </InternalView>
     );
 };
+//#endregion
+
+//#region Styles
+// 複数行に折り返す文言は既定の textAlign(left) だと左寄せに見えるため、中央揃えを明示する。
+const welcomeTextStyle: TextStyle = { textAlign: "center" };
 //#endregion

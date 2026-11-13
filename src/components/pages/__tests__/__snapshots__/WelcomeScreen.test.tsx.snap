@@ -29,7 +29,9 @@ exports[`WelcomeScreen UnitTest renders correctly 1`] = `
                       {
                         "color": "rgba(98, 91, 113, 1)",
                       },
-                      undefined,
+                      {
+                        "textAlign": "center",
+                      },
                     ],
                   },
                   "type": "Text",
@@ -50,7 +52,9 @@ exports[`WelcomeScreen UnitTest renders correctly 1`] = `
                       {
                         "color": "rgba(98, 91, 113, 1)",
                       },
-                      undefined,
+                      {
+                        "textAlign": "center",
+                      },
                     ],
                   },
                   "type": "Text",
@@ -126,6 +130,7 @@ exports[`WelcomeScreen UnitTest renders correctly 1`] = `
                                                     {
                                                       "fontFamily": "calibre_app_semibold",
                                                       "fontSize": 24,
+                                                      "lineHeight": 29,
                                                     },
                                                     undefined,
                                                   ],
@@ -302,6 +307,7 @@ exports[`WelcomeScreen UnitTest renders correctly 1`] = `
                                                     {
                                                       "fontFamily": "calibre_app_semibold",
                                                       "fontSize": 24,
+                                                      "lineHeight": 29,
                                                     },
                                                     undefined,
                                                   ],
@@ -486,6 +492,7 @@ exports[`WelcomeScreen UnitTest renders correctly 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
