@@ -276,20 +276,23 @@ export const useMain = (): {
         userInfo?.id,
     ]);
 
+    // タブバーは Drawer の外側（Stack 直下の MainScreen）に描画されるため、
+    // navigate("Home") ではアクションは親へしか伝播せず Drawer に届かない。
+    // Stack のルート "Main" を指定し、ネストした { screen } パラメータで Drawer 側へ遷移させる。
     const onHomePress = useCallback(() => {
-        navigate("Home");
+        navigate("Main", { screen: "Home" });
     }, [navigate]);
 
     const onProfilesPress = useCallback(() => {
-        navigate("Profiles");
+        navigate("Main", { screen: "Profiles" });
     }, [navigate]);
 
     const onSessionsPress = useCallback(() => {
-        navigate("Sessions");
+        navigate("Main", { screen: "Sessions" });
     }, [navigate]);
 
     const onSettingsPress = useCallback(() => {
-        navigate("Settings");
+        navigate("Main", { screen: "Settings" });
     }, [navigate]);
 
     const onDeviceInfoPress = useCallback(() => {
