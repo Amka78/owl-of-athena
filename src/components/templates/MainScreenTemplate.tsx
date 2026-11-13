@@ -44,23 +44,31 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
     useLocale(props.locale);
     const [selectedMenu, setSelectedMenu] = useState<BottomMenus>("home");
 
+    const connectionColor =
+        props.bluetoothConnect === ConnectionStates.CONNECTED
+            ? Colors.aurora_connected
+            : Colors.aurora_disconnected;
+
     const statusBar = !props.dimens.isDesktop ? (
-        <FlatButton
-            contentStyle={{
-                backgroundColor:
-                    props.bluetoothConnect === ConnectionStates.CONNECTED
-                        ? Colors.aurora_connected
-                        : Colors.aurora_disconnected,
-                marginBottom: 0,
-            }}
-            labelStyle={{
-                color:
-                    props.bluetoothConnect === ConnectionStates.CONNECTED
-                        ? Colors.aurora_connected_text
-                        : Colors.aurora_disconnected_text,
-            }}
-            onPress={props.onBluetoothConnectPress}
-        >
+        // PaperButton は内部の TouchableRipple（borderRadius 10px、overflow hidden）で
+        // 背景を角丸にクリップするため、四隅に白い素地が見える。同色の矩形で背面を覆い四角のバーに見せる。
+        <View style={{ backgroundColor: connectionColor }}>
+            <FlatButton
+                contentStyle={{
+                    backgroundColor: connectionColor,
+                    marginBottom: 0,
+                    // 共通 contentStyle の marginTop(16px) が残るとタブバーとの間に白い隙間ができる。
+                    // ステータスバーはタブバーの直下に密着させるため 0 に上書きする。
+                    marginTop: 0,
+                }}
+                labelStyle={{
+                    color:
+                        props.bluetoothConnect === ConnectionStates.CONNECTED
+                            ? Colors.aurora_connected_text
+                            : Colors.aurora_disconnected_text,
+                }}
+                onPress={props.onBluetoothConnectPress}
+            >
             {props.error !== ""
                 ? props.error
                 : props.bluetoothConnect === ConnectionStates.CONNECTED
@@ -69,7 +77,8 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
                         props.batteryLevel.toString(),
                     ])
                   : Message.get(MessageKeys.aurora_disconnected)}
-        </FlatButton>
+            </FlatButton>
+        </View>
     ) : undefined;
 
     const bottomTabBar = props.dimens.isVertical ? (

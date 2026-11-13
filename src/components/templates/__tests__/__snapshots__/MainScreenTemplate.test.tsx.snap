@@ -148,125 +148,154 @@ exports[`MainScreenTemplate renders correctly in mobile mode 1`] = `
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                "Aurora disconnected.",
-                              ],
-                              "props": {
-                                "maxFontSizeMultiplier": undefined,
-                                "numberOfLines": 1,
-                                "ref": {
-                                  "current": null,
-                                },
-                                "selectable": false,
-                                "style": [
-                                  {
-                                    "textAlign": "left",
-                                  },
-                                  {
-                                    "color": "rgba(28, 27, 31, 1)",
-                                    "writingDirection": "ltr",
-                                  },
-                                  [
-                                    {
-                                      "fontFamily": "System",
-                                      "fontSize": 14,
-                                      "fontWeight": "500",
-                                      "letterSpacing": 0.1,
-                                      "lineHeight": 20,
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Aurora disconnected.",
+                                  ],
+                                  "props": {
+                                    "maxFontSizeMultiplier": undefined,
+                                    "numberOfLines": 1,
+                                    "ref": {
+                                      "current": null,
                                     },
-                                    [
+                                    "selectable": false,
+                                    "style": [
                                       {
-                                        "marginHorizontal": 16,
-                                        "marginVertical": 9,
-                                        "textAlign": "center",
+                                        "textAlign": "left",
                                       },
-                                      false,
                                       {
-                                        "marginHorizontal": 12,
-                                      },
-                                      undefined,
-                                      false,
-                                      {
-                                        "color": "#00ffe6",
-                                        "fontFamily": "System",
-                                        "fontSize": 14,
-                                        "fontWeight": "500",
-                                        "letterSpacing": 0.1,
-                                        "lineHeight": 20,
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "writingDirection": "ltr",
                                       },
                                       [
                                         {
-                                          "fontFamily": "calibre_app_semibold",
+                                          "fontFamily": "System",
                                           "fontSize": 14,
+                                          "fontWeight": "500",
+                                          "letterSpacing": 0.1,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": "rgba(28, 27, 31, 1)",
-                                        },
-                                        {
-                                          "color": "#ffffff",
-                                        },
+                                        [
+                                          {
+                                            "marginHorizontal": 16,
+                                            "marginVertical": 9,
+                                            "textAlign": "center",
+                                          },
+                                          false,
+                                          {
+                                            "marginHorizontal": 12,
+                                          },
+                                          undefined,
+                                          false,
+                                          {
+                                            "color": "#00ffe6",
+                                            "fontFamily": "System",
+                                            "fontSize": 14,
+                                            "fontWeight": "500",
+                                            "letterSpacing": 0.1,
+                                            "lineHeight": 20,
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "calibre_app_semibold",
+                                              "fontSize": 14,
+                                              "marginVertical": 0,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            {
+                                              "color": "#ffffff",
+                                            },
+                                          ],
+                                        ],
                                       ],
                                     ],
+                                    "testID": "button-text",
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  [
+                                    {
+                                      "height": 28,
+                                      "marginBottom": 12,
+                                      "marginTop": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#4a2fba",
+                                      "marginBottom": 0,
+                                      "marginTop": 0,
+                                    },
                                   ],
                                 ],
-                                "testID": "button-text",
                               },
-                              "type": "Text",
+                              "type": "View",
                             },
                           ],
                           "props": {
-                            "style": [
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "center",
-                              },
-                              [
-                                {
-                                  "height": 28,
-                                  "marginBottom": 12,
-                                  "marginTop": 16,
-                                },
-                                {
-                                  "backgroundColor": "#4a2fba",
-                                  "marginBottom": 0,
-                                },
-                              ],
-                            ],
+                            "accessibilityHint": undefined,
+                            "accessibilityLabel": undefined,
+                            "accessibilityRole": "button",
+                            "accessibilityState": {
+                              "disabled": undefined,
+                            },
+                            "accessible": undefined,
+                            "delayLongPress": undefined,
+                            "disabled": false,
+                            "hitSlop": undefined,
+                            "onLongPress": undefined,
+                            "onPress": [class Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": "button",
                           },
-                          "type": "View",
+                          "type": "Pressable",
                         },
                       ],
                       "props": {
-                        "accessibilityHint": undefined,
-                        "accessibilityLabel": undefined,
-                        "accessibilityRole": "button",
-                        "accessibilityState": {
-                          "disabled": undefined,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "borderRadius": 10,
+                          "borderStyle": "solid",
+                          "borderWidth": 0,
+                          "flex": undefined,
+                          "minWidth": 64,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
                         },
-                        "accessible": undefined,
-                        "delayLongPress": undefined,
-                        "disabled": false,
-                        "hitSlop": undefined,
-                        "onLongPress": undefined,
-                        "onPress": [class Function],
-                        "onPressIn": [Function],
-                        "onPressOut": [Function],
-                        "ref": null,
-                        "style": [Function],
-                        "testID": "button",
+                        "testID": "button-container",
                       },
-                      "type": "Pressable",
+                      "type": "Animated.View",
                     },
                   ],
                   "props": {
+                    "ref": null,
                     "style": {
                       "backgroundColor": "transparent",
-                      "borderColor": "transparent",
                       "borderRadius": 10,
-                      "borderStyle": "solid",
-                      "borderWidth": 0,
-                      "flex": undefined,
-                      "minWidth": 64,
                       "shadowColor": "#000",
                       "shadowOffset": {
                         "height": AnimatedValue {
@@ -281,33 +310,17 @@ exports[`MainScreenTemplate renders correctly in mobile mode 1`] = `
                         "_v": 0,
                       },
                     },
-                    "testID": "button-container",
+                    "testID": "button-container-outer-layer",
                   },
                   "type": "Animated.View",
                 },
               ],
               "props": {
-                "ref": null,
                 "style": {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 10,
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": AnimatedValue {
-                      "_v": 0,
-                    },
-                    "width": 0,
-                  },
-                  "shadowOpacity": AnimatedValue {
-                    "_v": 0,
-                  },
-                  "shadowRadius": AnimatedValue {
-                    "_v": 0,
-                  },
+                  "backgroundColor": "#4a2fba",
                 },
-                "testID": "button-container-outer-layer",
               },
-              "type": "Animated.View",
+              "type": "View",
             },
           ],
           "props": {
@@ -581,125 +594,154 @@ exports[`MainScreenTemplate renders correctly when connected 1`] = `
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                "AuroraStatus:Connected Version:2.1.0 Battery:85%",
-                              ],
-                              "props": {
-                                "maxFontSizeMultiplier": undefined,
-                                "numberOfLines": 1,
-                                "ref": {
-                                  "current": null,
-                                },
-                                "selectable": false,
-                                "style": [
-                                  {
-                                    "textAlign": "left",
-                                  },
-                                  {
-                                    "color": "rgba(28, 27, 31, 1)",
-                                    "writingDirection": "ltr",
-                                  },
-                                  [
-                                    {
-                                      "fontFamily": "System",
-                                      "fontSize": 14,
-                                      "fontWeight": "500",
-                                      "letterSpacing": 0.1,
-                                      "lineHeight": 20,
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "AuroraStatus:Connected Version:2.1.0 Battery:85%",
+                                  ],
+                                  "props": {
+                                    "maxFontSizeMultiplier": undefined,
+                                    "numberOfLines": 1,
+                                    "ref": {
+                                      "current": null,
                                     },
-                                    [
+                                    "selectable": false,
+                                    "style": [
                                       {
-                                        "marginHorizontal": 16,
-                                        "marginVertical": 9,
-                                        "textAlign": "center",
+                                        "textAlign": "left",
                                       },
-                                      false,
                                       {
-                                        "marginHorizontal": 12,
-                                      },
-                                      undefined,
-                                      false,
-                                      {
-                                        "color": "#00ffe6",
-                                        "fontFamily": "System",
-                                        "fontSize": 14,
-                                        "fontWeight": "500",
-                                        "letterSpacing": 0.1,
-                                        "lineHeight": 20,
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "writingDirection": "ltr",
                                       },
                                       [
                                         {
-                                          "fontFamily": "calibre_app_semibold",
+                                          "fontFamily": "System",
                                           "fontSize": 14,
+                                          "fontWeight": "500",
+                                          "letterSpacing": 0.1,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": "rgba(28, 27, 31, 1)",
-                                        },
-                                        {
-                                          "color": "#4a2fba",
-                                        },
+                                        [
+                                          {
+                                            "marginHorizontal": 16,
+                                            "marginVertical": 9,
+                                            "textAlign": "center",
+                                          },
+                                          false,
+                                          {
+                                            "marginHorizontal": 12,
+                                          },
+                                          undefined,
+                                          false,
+                                          {
+                                            "color": "#00ffe6",
+                                            "fontFamily": "System",
+                                            "fontSize": 14,
+                                            "fontWeight": "500",
+                                            "letterSpacing": 0.1,
+                                            "lineHeight": 20,
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "calibre_app_semibold",
+                                              "fontSize": 14,
+                                              "marginVertical": 0,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            {
+                                              "color": "#4a2fba",
+                                            },
+                                          ],
+                                        ],
                                       ],
                                     ],
+                                    "testID": "button-text",
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  [
+                                    {
+                                      "height": 28,
+                                      "marginBottom": 12,
+                                      "marginTop": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#00ffe6",
+                                      "marginBottom": 0,
+                                      "marginTop": 0,
+                                    },
                                   ],
                                 ],
-                                "testID": "button-text",
                               },
-                              "type": "Text",
+                              "type": "View",
                             },
                           ],
                           "props": {
-                            "style": [
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "center",
-                              },
-                              [
-                                {
-                                  "height": 28,
-                                  "marginBottom": 12,
-                                  "marginTop": 16,
-                                },
-                                {
-                                  "backgroundColor": "#00ffe6",
-                                  "marginBottom": 0,
-                                },
-                              ],
-                            ],
+                            "accessibilityHint": undefined,
+                            "accessibilityLabel": undefined,
+                            "accessibilityRole": "button",
+                            "accessibilityState": {
+                              "disabled": undefined,
+                            },
+                            "accessible": undefined,
+                            "delayLongPress": undefined,
+                            "disabled": false,
+                            "hitSlop": undefined,
+                            "onLongPress": undefined,
+                            "onPress": [class Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": "button",
                           },
-                          "type": "View",
+                          "type": "Pressable",
                         },
                       ],
                       "props": {
-                        "accessibilityHint": undefined,
-                        "accessibilityLabel": undefined,
-                        "accessibilityRole": "button",
-                        "accessibilityState": {
-                          "disabled": undefined,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "borderRadius": 10,
+                          "borderStyle": "solid",
+                          "borderWidth": 0,
+                          "flex": undefined,
+                          "minWidth": 64,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
                         },
-                        "accessible": undefined,
-                        "delayLongPress": undefined,
-                        "disabled": false,
-                        "hitSlop": undefined,
-                        "onLongPress": undefined,
-                        "onPress": [class Function],
-                        "onPressIn": [Function],
-                        "onPressOut": [Function],
-                        "ref": null,
-                        "style": [Function],
-                        "testID": "button",
+                        "testID": "button-container",
                       },
-                      "type": "Pressable",
+                      "type": "Animated.View",
                     },
                   ],
                   "props": {
+                    "ref": null,
                     "style": {
                       "backgroundColor": "transparent",
-                      "borderColor": "transparent",
                       "borderRadius": 10,
-                      "borderStyle": "solid",
-                      "borderWidth": 0,
-                      "flex": undefined,
-                      "minWidth": 64,
                       "shadowColor": "#000",
                       "shadowOffset": {
                         "height": AnimatedValue {
@@ -714,33 +756,17 @@ exports[`MainScreenTemplate renders correctly when connected 1`] = `
                         "_v": 0,
                       },
                     },
-                    "testID": "button-container",
+                    "testID": "button-container-outer-layer",
                   },
                   "type": "Animated.View",
                 },
               ],
               "props": {
-                "ref": null,
                 "style": {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 10,
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": AnimatedValue {
-                      "_v": 0,
-                    },
-                    "width": 0,
-                  },
-                  "shadowOpacity": AnimatedValue {
-                    "_v": 0,
-                  },
-                  "shadowRadius": AnimatedValue {
-                    "_v": 0,
-                  },
+                  "backgroundColor": "#00ffe6",
                 },
-                "testID": "button-container-outer-layer",
               },
-              "type": "Animated.View",
+              "type": "View",
             },
           ],
           "props": {
@@ -921,125 +947,154 @@ exports[`MainScreenTemplate renders error message when error is provided 1`] = `
                             {
                               "$$typeof": Symbol(react.test.json),
                               "children": [
-                                "Connection failed",
-                              ],
-                              "props": {
-                                "maxFontSizeMultiplier": undefined,
-                                "numberOfLines": 1,
-                                "ref": {
-                                  "current": null,
-                                },
-                                "selectable": false,
-                                "style": [
-                                  {
-                                    "textAlign": "left",
-                                  },
-                                  {
-                                    "color": "rgba(28, 27, 31, 1)",
-                                    "writingDirection": "ltr",
-                                  },
-                                  [
-                                    {
-                                      "fontFamily": "System",
-                                      "fontSize": 14,
-                                      "fontWeight": "500",
-                                      "letterSpacing": 0.1,
-                                      "lineHeight": 20,
+                                {
+                                  "$$typeof": Symbol(react.test.json),
+                                  "children": [
+                                    "Connection failed",
+                                  ],
+                                  "props": {
+                                    "maxFontSizeMultiplier": undefined,
+                                    "numberOfLines": 1,
+                                    "ref": {
+                                      "current": null,
                                     },
-                                    [
+                                    "selectable": false,
+                                    "style": [
                                       {
-                                        "marginHorizontal": 16,
-                                        "marginVertical": 9,
-                                        "textAlign": "center",
+                                        "textAlign": "left",
                                       },
-                                      false,
                                       {
-                                        "marginHorizontal": 12,
-                                      },
-                                      undefined,
-                                      false,
-                                      {
-                                        "color": "#00ffe6",
-                                        "fontFamily": "System",
-                                        "fontSize": 14,
-                                        "fontWeight": "500",
-                                        "letterSpacing": 0.1,
-                                        "lineHeight": 20,
+                                        "color": "rgba(28, 27, 31, 1)",
+                                        "writingDirection": "ltr",
                                       },
                                       [
                                         {
-                                          "fontFamily": "calibre_app_semibold",
+                                          "fontFamily": "System",
                                           "fontSize": 14,
+                                          "fontWeight": "500",
+                                          "letterSpacing": 0.1,
+                                          "lineHeight": 20,
                                         },
-                                        {
-                                          "color": "rgba(28, 27, 31, 1)",
-                                        },
-                                        {
-                                          "color": "#ffffff",
-                                        },
+                                        [
+                                          {
+                                            "marginHorizontal": 16,
+                                            "marginVertical": 9,
+                                            "textAlign": "center",
+                                          },
+                                          false,
+                                          {
+                                            "marginHorizontal": 12,
+                                          },
+                                          undefined,
+                                          false,
+                                          {
+                                            "color": "#00ffe6",
+                                            "fontFamily": "System",
+                                            "fontSize": 14,
+                                            "fontWeight": "500",
+                                            "letterSpacing": 0.1,
+                                            "lineHeight": 20,
+                                          },
+                                          [
+                                            {
+                                              "fontFamily": "calibre_app_semibold",
+                                              "fontSize": 14,
+                                              "marginVertical": 0,
+                                            },
+                                            {
+                                              "color": "rgba(28, 27, 31, 1)",
+                                            },
+                                            {
+                                              "color": "#ffffff",
+                                            },
+                                          ],
+                                        ],
                                       ],
                                     ],
+                                    "testID": "button-text",
+                                  },
+                                  "type": "Text",
+                                },
+                              ],
+                              "props": {
+                                "style": [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  [
+                                    {
+                                      "height": 28,
+                                      "marginBottom": 12,
+                                      "marginTop": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#4a2fba",
+                                      "marginBottom": 0,
+                                      "marginTop": 0,
+                                    },
                                   ],
                                 ],
-                                "testID": "button-text",
                               },
-                              "type": "Text",
+                              "type": "View",
                             },
                           ],
                           "props": {
-                            "style": [
-                              {
-                                "alignItems": "center",
-                                "flexDirection": "row",
-                                "justifyContent": "center",
-                              },
-                              [
-                                {
-                                  "height": 28,
-                                  "marginBottom": 12,
-                                  "marginTop": 16,
-                                },
-                                {
-                                  "backgroundColor": "#4a2fba",
-                                  "marginBottom": 0,
-                                },
-                              ],
-                            ],
+                            "accessibilityHint": undefined,
+                            "accessibilityLabel": undefined,
+                            "accessibilityRole": "button",
+                            "accessibilityState": {
+                              "disabled": undefined,
+                            },
+                            "accessible": undefined,
+                            "delayLongPress": undefined,
+                            "disabled": false,
+                            "hitSlop": undefined,
+                            "onLongPress": undefined,
+                            "onPress": [class Function],
+                            "onPressIn": [Function],
+                            "onPressOut": [Function],
+                            "ref": null,
+                            "style": [Function],
+                            "testID": "button",
                           },
-                          "type": "View",
+                          "type": "Pressable",
                         },
                       ],
                       "props": {
-                        "accessibilityHint": undefined,
-                        "accessibilityLabel": undefined,
-                        "accessibilityRole": "button",
-                        "accessibilityState": {
-                          "disabled": undefined,
+                        "style": {
+                          "backgroundColor": "transparent",
+                          "borderColor": "transparent",
+                          "borderRadius": 10,
+                          "borderStyle": "solid",
+                          "borderWidth": 0,
+                          "flex": undefined,
+                          "minWidth": 64,
+                          "shadowColor": "#000",
+                          "shadowOffset": {
+                            "height": AnimatedValue {
+                              "_v": 0,
+                            },
+                            "width": 0,
+                          },
+                          "shadowOpacity": AnimatedValue {
+                            "_v": 0,
+                          },
+                          "shadowRadius": AnimatedValue {
+                            "_v": 0,
+                          },
                         },
-                        "accessible": undefined,
-                        "delayLongPress": undefined,
-                        "disabled": false,
-                        "hitSlop": undefined,
-                        "onLongPress": undefined,
-                        "onPress": [class Function],
-                        "onPressIn": [Function],
-                        "onPressOut": [Function],
-                        "ref": null,
-                        "style": [Function],
-                        "testID": "button",
+                        "testID": "button-container",
                       },
-                      "type": "Pressable",
+                      "type": "Animated.View",
                     },
                   ],
                   "props": {
+                    "ref": null,
                     "style": {
                       "backgroundColor": "transparent",
-                      "borderColor": "transparent",
                       "borderRadius": 10,
-                      "borderStyle": "solid",
-                      "borderWidth": 0,
-                      "flex": undefined,
-                      "minWidth": 64,
                       "shadowColor": "#000",
                       "shadowOffset": {
                         "height": AnimatedValue {
@@ -1054,33 +1109,17 @@ exports[`MainScreenTemplate renders error message when error is provided 1`] = `
                         "_v": 0,
                       },
                     },
-                    "testID": "button-container",
+                    "testID": "button-container-outer-layer",
                   },
                   "type": "Animated.View",
                 },
               ],
               "props": {
-                "ref": null,
                 "style": {
-                  "backgroundColor": "transparent",
-                  "borderRadius": 10,
-                  "shadowColor": "#000",
-                  "shadowOffset": {
-                    "height": AnimatedValue {
-                      "_v": 0,
-                    },
-                    "width": 0,
-                  },
-                  "shadowOpacity": AnimatedValue {
-                    "_v": 0,
-                  },
-                  "shadowRadius": AnimatedValue {
-                    "_v": 0,
-                  },
+                  "backgroundColor": "#4a2fba",
                 },
-                "testID": "button-container-outer-layer",
               },
-              "type": "Animated.View",
+              "type": "View",
             },
           ],
           "props": {
