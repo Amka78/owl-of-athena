@@ -1,8 +1,9 @@
 //#region "Import Modules"
 import type { AudioPlayer } from "expo-audio";
 import React from "react";
-import { Platform, StyleSheet, type ViewStyle } from "react-native";
-import { Dialog, RadioButton } from "react-native-paper";
+import { StyleSheet, type ViewStyle } from "react-native";
+import { Dialog, Portal, RadioButton } from "react-native-paper";
+import { SafeAreaInsetsContext } from "react-native-safe-area-context";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { AudioList } from "../../sdk/models/AudioList";
@@ -13,6 +14,9 @@ import { LabeledRadioButton } from "../molecules";
 //#endregion
 
 export { AudioList };
+
+/** paper の Modal は SafeArea インセットを余白に足すため、モーダル領域ではインセットを 0 にする。 */
+const zeroInsets = { top: 0, left: 0, right: 0, bottom: 0 };
 
 type AudioDialogSettings = {
     onConfirm: (showName: AudioList, fileName: string) => void;
@@ -93,46 +97,53 @@ export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogSt
             width = width - Dimens.content_margin_horizontal * 2;
         }
         return this.state.dialogSettings !== undefined ? (
-            <Dialog
-                visible={true}
-                onDismiss={this.onDialogDismissed()}
-                style={[styles.dialogContainer, this.props.dialogContainer, { width }]}
-            >
-                <Dialog.Title style={styles.dialogTitle}>
-                    {Message.get(MessageKeys.alarm_sound_dialog_title)}
-                </Dialog.Title>
-                <Dialog.Content style={styles.audioRadioButtonList}>
-                    <RadioButton.Group
-                        onValueChange={this.onRadioButtonSelected()}
-                        value={this.getSelectedAudio()}
+            // Portal でモーダルをアプリ最上位にホストし、背面の曇りを画面全域（ステータスバー等を含む）に効かせる。
+            // paper の Modal は SafeArea インセットを余白に足すため、SafeAreaView 配下のアプリでそのまま
+            // Portal 化するとモーダルが下にずれる。モーダルは全画面に描画されるのでインセット 0 で上書きする。
+            <Portal>
+                <SafeAreaInsetsContext.Provider value={zeroInsets}>
+                    <Dialog
+                        visible={true}
+                        onDismiss={this.onDialogDismissed()}
+                        style={[styles.dialogContainer, this.props.dialogContainer, { width }]}
                     >
-                        {this.soundList.map((value: AudioType, index: number) => {
-                            return (
-                                <LabeledRadioButton
-                                    key={index}
-                                    value={value.showName}
-                                    label={Message.get(value.showName)}
-                                    onLabelPress={this.onLabelPressed(value)}
-                                ></LabeledRadioButton>
-                            );
-                        })}
-                    </RadioButton.Group>
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <FlatButton
-                        labelStyle={styles.dialogButton}
-                        onPress={this.onCancelButtonPressed()}
-                    >
-                        {Message.get(MessageKeys.cancel)}
-                    </FlatButton>
-                    <FlatButton
-                        labelStyle={styles.dialogButton}
-                        onPress={this.onConfirmButtonPressed()}
-                    >
-                        {Message.get(MessageKeys.save)}
-                    </FlatButton>
-                </Dialog.Actions>
-            </Dialog>
+                        <Dialog.Title style={styles.dialogTitle}>
+                            {Message.get(MessageKeys.alarm_sound_dialog_title)}
+                        </Dialog.Title>
+                        <Dialog.Content style={styles.audioRadioButtonList}>
+                            <RadioButton.Group
+                                onValueChange={this.onRadioButtonSelected()}
+                                value={this.getSelectedAudio()}
+                            >
+                                {this.soundList.map((value: AudioType, index: number) => {
+                                    return (
+                                        <LabeledRadioButton
+                                            key={index}
+                                            value={value.showName}
+                                            label={Message.get(value.showName)}
+                                            onLabelPress={this.onLabelPressed(value)}
+                                        ></LabeledRadioButton>
+                                    );
+                                })}
+                            </RadioButton.Group>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <FlatButton
+                                labelStyle={styles.dialogButton}
+                                onPress={this.onCancelButtonPressed()}
+                            >
+                                {Message.get(MessageKeys.cancel)}
+                            </FlatButton>
+                            <FlatButton
+                                labelStyle={styles.dialogButton}
+                                onPress={this.onConfirmButtonPressed()}
+                            >
+                                {Message.get(MessageKeys.save)}
+                            </FlatButton>
+                        </Dialog.Actions>
+                    </Dialog>
+                </SafeAreaInsetsContext.Provider>
+            </Portal>
         ) : null;
     }
 
@@ -219,14 +230,14 @@ export class AudioDialog extends React.Component<AudioDialogProps, AudioDialogSt
 
 const styles = StyleSheet.create({
     audioRadioButtonList: {
-        flex: 1,
+        // `flex: 1` は Content が行の自然高さ（7×40px）に足りず Actions と高さを分け合って
+        // 行がタイトルと重なったりボタン下に余白が出るため使わない。
         alignItems: "flex-start",
         justifyContent: "center",
     },
     dialogContainer: {
         alignSelf: "center",
         backgroundColor: Colors.navy_darker,
-        height: Platform.OS !== "web" ? "70%" : undefined,
     },
     dialogTitle: {
         color: Colors.cyan,

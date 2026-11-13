@@ -47,8 +47,8 @@ export const LabeledRadioButton: FunctionComponent<LabeledRadioButtonProps> = (
 //#region Styles
 const styles = StyleSheet.create({
     radioButtonContainer: {
-        flex: 1,
-        height: 40,
+        // `flex: 1` は高さ不定の列（Web の Dialog 等）で行を高さ 0 に潰して重ねてしまうため使わない。
+        minHeight: 40,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",

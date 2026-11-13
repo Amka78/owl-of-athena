@@ -2363,10 +2363,9 @@ exports[`SignupScreenTemplate renders correctly with en-US locale 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -2456,10 +2455,9 @@ exports[`SignupScreenTemplate renders correctly with en-US locale 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -2869,6 +2867,7 @@ exports[`SignupScreenTemplate renders correctly with en-US locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -5420,10 +5419,9 @@ exports[`SignupScreenTemplate renders correctly with ja-JP locale 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -5513,10 +5511,9 @@ exports[`SignupScreenTemplate renders correctly with ja-JP locale 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -5926,6 +5923,7 @@ exports[`SignupScreenTemplate renders correctly with ja-JP locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],

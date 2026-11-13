@@ -2389,10 +2389,9 @@ exports[`SignupScreen UnitTest renders correctly 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -2482,10 +2481,9 @@ exports[`SignupScreen UnitTest renders correctly 1`] = `
                                     "style": [
                                       {
                                         "alignItems": "center",
-                                        "flex": 1,
                                         "flexDirection": "row",
-                                        "height": 40,
                                         "justifyContent": "flex-start",
+                                        "minHeight": 40,
                                       },
                                       undefined,
                                     ],
@@ -2896,6 +2894,7 @@ exports[`SignupScreen UnitTest renders correctly 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
