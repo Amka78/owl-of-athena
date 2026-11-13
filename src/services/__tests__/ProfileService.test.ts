@@ -1,5 +1,17 @@
 import type { Mock } from "bun:test";
 
+jest.mock("expo-asset", () => ({
+    Asset: {
+        fromModule: () => ({
+            downloadAsync: async () => {
+                return {};
+            },
+            localUri: "file:///default_profile_content.ttf",
+            uri: "file:///default_profile_content.ttf",
+        }),
+    },
+}));
+
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import {
     checkProfileOptionConditions,
@@ -29,7 +41,10 @@ describe("ProfileService-test", () => {
         expect(officialProfile.id).toBe("F367G2");
         expect(officialProfile.options).toEqual(defaultOptions);
         expect(officialProfile.content).toBe("test");
+        // ネイティブでは require() の数値ID を fetch に渡すと "no protocol" で失敗するため、
+        // expo-asset で解決した実 URI を渡していること（回帰検証）。
         expect(fetchMock.mock.calls.length).toBe(1);
+        expect(fetchMock.mock.calls[0][0]).toBe("file:///default_profile_content.ttf");
     });
 
     it("Successful grouping profile options", () => {

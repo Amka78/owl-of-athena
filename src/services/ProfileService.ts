@@ -21,8 +21,16 @@ export type ProfileOptionValues = Record<string, unknown>;
 
 //#region Functions
 export const createOfficialProfile = async (): Promise<AuroraProfile> => {
-    const defaultProfileTxt = require("../../assets/profiles/default_profile_content.ttf");
-    const response = await fetch(defaultProfileTxt);
+    // ネイティブでは require() は数値のモジュールID（例: 35）を返し、直接 fetch すると
+    // "no protocol: 35" で失敗する（Web だけ URL 文字列になり動いていた）。
+    // expo-asset で実 URI に解決してから読み込む。import を関数内に置くのは
+    // bun test がトップレベル import のグラフ走査で expo-asset を実解析して落ちるため。
+    const { Asset } = require("expo-asset") as typeof import("expo-asset");
+    const defaultProfileAsset = Asset.fromModule(
+        require("../../assets/profiles/default_profile_content.ttf"),
+    );
+    await defaultProfileAsset.downloadAsync();
+    const response = await fetch(defaultProfileAsset.localUri ?? defaultProfileAsset.uri);
     const profileContent = await response.text();
     const officialProfile: AuroraProfile = {
         id: "F367G2",

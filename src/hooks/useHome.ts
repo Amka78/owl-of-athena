@@ -115,10 +115,15 @@ export const useHome = (): {
                 if (auroraProfiles.length <= 0) {
                     console.log("At the first start-up, the initial values are read.");
 
-                    const profile = await createOfficialProfile();
+                    try {
+                        const profile = await createOfficialProfile();
 
-                    auroraProfiles.push(profile);
-                    cacheProfiles(auroraProfiles);
+                        auroraProfiles.push(profile);
+                        cacheProfiles(auroraProfiles);
+                    } catch (e) {
+                        // 初期プロフィールの読み込み失敗でも未処理 rejection で再試行ループにしない。
+                        console.error("failed to create the official profile:", e);
+                    }
                 }
 
                 if (auroraProfiles.length > 0) {
