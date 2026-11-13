@@ -411,6 +411,7 @@ exports[`ProfileListScreenTemplate renders correctly 1`] = `
                     "backgroundColor": "#070724",
                   },
                   {
+                    "alignItems": "stretch",
                     "justifyContent": "flex-start",
                   },
                 ],
@@ -429,7 +430,9 @@ exports[`ProfileListScreenTemplate renders correctly 1`] = `
               {
                 "backgroundColor": "#070724",
               },
-              undefined,
+              {
+                "alignItems": "stretch",
+              },
             ],
           },
           "type": "View",
@@ -868,6 +871,7 @@ exports[`ProfileListScreenTemplate renders with ja-JP locale 1`] = `
                     "backgroundColor": "#070724",
                   },
                   {
+                    "alignItems": "stretch",
                     "justifyContent": "flex-start",
                   },
                 ],
@@ -886,7 +890,9 @@ exports[`ProfileListScreenTemplate renders with ja-JP locale 1`] = `
               {
                 "backgroundColor": "#070724",
               },
-              undefined,
+              {
+                "alignItems": "stretch",
+              },
             ],
           },
           "type": "View",
@@ -1973,6 +1979,7 @@ exports[`ProfileListScreenTemplate shows filter menu when showFilter is true 1`]
                     "backgroundColor": "#070724",
                   },
                   {
+                    "alignItems": "stretch",
                     "justifyContent": "flex-start",
                   },
                 ],
@@ -1991,7 +1998,9 @@ exports[`ProfileListScreenTemplate shows filter menu when showFilter is true 1`]
               {
                 "backgroundColor": "#070724",
               },
-              undefined,
+              {
+                "alignItems": "stretch",
+              },
             ],
           },
           "type": "View",

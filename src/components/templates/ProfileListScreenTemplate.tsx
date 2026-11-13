@@ -54,7 +54,11 @@ export const ProfileListScreenTemplate: FunctionComponent<ProfileListScreenTempl
         );
     }
     return props.list ? (
-        <StandardView standardViewStyle={standardView} onLayout={screenDimens.onLayout}>
+        <StandardView
+            rootViewStyle={rootViewStyle}
+            standardViewStyle={standardView}
+            onLayout={screenDimens.onLayout}
+        >
             {menu}
             <ScrollableList>
                 {props.list.map((value: AuroraProfile, index: number) => {
@@ -116,7 +120,11 @@ const iconContainer: ViewStyle = {
     alignItems: "center",
     flexDirection: "row",
 };
-const standardView: ViewStyle = { justifyContent: "flex-start" };
+// StandardView は既定で alignItems: "center" のため、List の行がコンテンツ幅まで縮んで
+// 中央寄せの細い列になる。root とコンテンツ列を stretch に上書きして、
+// 行をリストの横幅いっぱい（標準マージン内）に広げる。
+const rootViewStyle: ViewStyle = { alignItems: "stretch" };
+const standardView: ViewStyle = { alignItems: "stretch", justifyContent: "flex-start" };
 const styles = {
     listItem: { width: "100%" } as ViewStyle,
 };

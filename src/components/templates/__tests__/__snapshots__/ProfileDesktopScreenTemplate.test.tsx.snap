@@ -275,6 +275,7 @@ exports[`ProfileDesktopScreenTemplate renders correctly 1`] = `
                                 "backgroundColor": "#070724",
                               },
                               {
+                                "alignItems": "stretch",
                                 "justifyContent": "flex-start",
                               },
                             ],
@@ -293,7 +294,9 @@ exports[`ProfileDesktopScreenTemplate renders correctly 1`] = `
                           {
                             "backgroundColor": "#070724",
                           },
-                          undefined,
+                          {
+                            "alignItems": "stretch",
+                          },
                         ],
                       },
                       "type": "View",

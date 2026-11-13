@@ -275,6 +275,7 @@ exports[`ProfileDesktopScreen UnitTest renders correctly 1`] = `
                                 "backgroundColor": "#070724",
                               },
                               {
+                                "alignItems": "stretch",
                                 "justifyContent": "flex-start",
                               },
                             ],
@@ -293,7 +294,9 @@ exports[`ProfileDesktopScreen UnitTest renders correctly 1`] = `
                           {
                             "backgroundColor": "#070724",
                           },
-                          undefined,
+                          {
+                            "alignItems": "stretch",
+                          },
                         ],
                       },
                       "type": "View",
