@@ -65,6 +65,14 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     android: {
         ...config.android,
         package: `${config.android?.package ?? "com.amka78.owlofminerva"}${APP_ID_SUFFIX}`,
+        // 丸・角丸などのランチャーマスクに合わせて描画されるアダプティブアイコン。
+        // 未設定だとレガシーアイコンが縮小表示され、白い隙間が生じる。
+        adaptiveIcon: {
+            foregroundImage: "./assets/images/adaptive-icon.png",
+            backgroundColor: "#001438",
+            // Android 13+ のテーマアイコン（モノクロ表示）にも同じ絵柄を使う
+            monochromeImage: "./assets/images/adaptive-icon.png",
+        },
         permissions: [
             "android.permission.BLUETOOTH",
             "android.permission.BLUETOOTH_ADMIN",
