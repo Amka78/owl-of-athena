@@ -75,6 +75,7 @@ exports[`ProfileSecondMenu renders correctly when connected 1`] = `
                                         {
                                           "fontFamily": "calibre_app_semibold",
                                           "fontSize": 24,
+                                          "lineHeight": 29,
                                         },
                                         undefined,
                                       ],
@@ -249,6 +250,7 @@ exports[`ProfileSecondMenu renders correctly when connected 1`] = `
                                         {
                                           "fontFamily": "calibre_app_semibold",
                                           "fontSize": 14,
+                                          "marginVertical": 0,
                                         },
                                         {
                                           "color": "rgba(28, 27, 31, 1)",
@@ -471,6 +473,7 @@ exports[`ProfileSecondMenu renders correctly when disconnected 1`] = `
                                         {
                                           "fontFamily": "calibre_app_semibold",
                                           "fontSize": 24,
+                                          "lineHeight": 29,
                                         },
                                         undefined,
                                       ],
@@ -645,6 +648,7 @@ exports[`ProfileSecondMenu renders correctly when disconnected 1`] = `
                                         {
                                           "fontFamily": "calibre_app_semibold",
                                           "fontSize": 14,
+                                          "marginVertical": 0,
                                         },
                                         {
                                           "color": "rgba(28, 27, 31, 1)",

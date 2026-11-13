@@ -1,7 +1,7 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-import { TouchableWithoutFeedback, View } from "react-native";
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { type TextStyle, TouchableWithoutFeedback, View } from "react-native";
+import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
@@ -48,10 +48,12 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
                             fontSize: Dimens.home_alarm_meridian_text_size,
                         }}
                     ></TimeView>
-                    <FlatButton>{Message.get(MessageKeys.home_edit_alarm_button)}</FlatButton>
+                    <FlatButton labelStyle={flatLinkLabelStyle}>
+                        {Message.get(MessageKeys.home_edit_alarm_button)}
+                    </FlatButton>
                 </View>
             </TouchableWithoutFeedback>
-            <FlatButton {...props.profileButton}>
+            <FlatButton {...props.profileButton} labelStyle={flatLinkLabelStyle}>
                 {Message.get(MessageKeys.home_default_profile)}
             </FlatButton>
             <View style={{ alignItems: "center" }}>
@@ -63,4 +65,10 @@ export const HomeScreenTemplate: FunctionComponent<HomeScreenTemplateProps> = (
         </InternalView>
     );
 };
+//#endregion
+
+//#region Styles
+// 背景が navy の画面に直接置くテキストリンクは、MD3 既定の onSurface（暗色）では視認性が低いため、
+// ログイン画面と同じ Colors.cyan で描画する。
+const flatLinkLabelStyle: TextStyle = { color: Colors.cyan };
 //#endregion

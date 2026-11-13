@@ -141,11 +141,14 @@ exports[`HomeScreenTemplate renders correctly with en-US locale 1`] = `
                                                     {
                                                       "fontFamily": "calibre_app_semibold",
                                                       "fontSize": 14,
+                                                      "marginVertical": 0,
                                                     },
                                                     {
                                                       "color": "rgba(28, 27, 31, 1)",
                                                     },
-                                                    undefined,
+                                                    {
+                                                      "color": "#bcfeff",
+                                                    },
                                                   ],
                                                 ],
                                               ],
@@ -323,11 +326,14 @@ exports[`HomeScreenTemplate renders correctly with en-US locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 14,
+                                              "marginVertical": 0,
                                             },
                                             {
                                               "color": "rgba(28, 27, 31, 1)",
                                             },
-                                            undefined,
+                                            {
+                                              "color": "#bcfeff",
+                                            },
                                           ],
                                         ],
                                       ],
@@ -516,6 +522,7 @@ exports[`HomeScreenTemplate renders correctly with en-US locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -837,11 +844,14 @@ exports[`HomeScreenTemplate renders correctly with ja-JP locale 1`] = `
                                                     {
                                                       "fontFamily": "calibre_app_semibold",
                                                       "fontSize": 14,
+                                                      "marginVertical": 0,
                                                     },
                                                     {
                                                       "color": "rgba(28, 27, 31, 1)",
                                                     },
-                                                    undefined,
+                                                    {
+                                                      "color": "#bcfeff",
+                                                    },
                                                   ],
                                                 ],
                                               ],
@@ -1019,11 +1029,14 @@ exports[`HomeScreenTemplate renders correctly with ja-JP locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 14,
+                                              "marginVertical": 0,
                                             },
                                             {
                                               "color": "rgba(28, 27, 31, 1)",
                                             },
-                                            undefined,
+                                            {
+                                              "color": "#bcfeff",
+                                            },
                                           ],
                                         ],
                                       ],
@@ -1212,6 +1225,7 @@ exports[`HomeScreenTemplate renders correctly with ja-JP locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],

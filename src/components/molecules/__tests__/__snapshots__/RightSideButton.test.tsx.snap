@@ -72,6 +72,7 @@ exports[`RightSideButton renders correctly with margin 1`] = `
                                     {
                                       "fontFamily": "calibre_app_semibold",
                                       "fontSize": 24,
+                                      "lineHeight": 29,
                                     },
                                     undefined,
                                   ],

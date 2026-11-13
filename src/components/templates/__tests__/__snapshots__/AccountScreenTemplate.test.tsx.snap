@@ -1164,10 +1164,9 @@ exports[`AccountScreenTemplate renders correctly with en-US locale 1`] = `
                                 "style": [
                                   {
                                     "alignItems": "center",
-                                    "flex": 1,
                                     "flexDirection": "row",
-                                    "height": 40,
                                     "justifyContent": "flex-start",
+                                    "minHeight": 40,
                                   },
                                   undefined,
                                 ],
@@ -1257,10 +1256,9 @@ exports[`AccountScreenTemplate renders correctly with en-US locale 1`] = `
                                 "style": [
                                   {
                                     "alignItems": "center",
-                                    "flex": 1,
                                     "flexDirection": "row",
-                                    "height": 40,
                                     "justifyContent": "flex-start",
+                                    "minHeight": 40,
                                   },
                                   undefined,
                                 ],
@@ -2078,6 +2076,7 @@ exports[`AccountScreenTemplate renders correctly with en-US locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 24,
+                                              "lineHeight": 29,
                                             },
                                             undefined,
                                           ],
@@ -2250,11 +2249,14 @@ exports[`AccountScreenTemplate renders correctly with en-US locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 14,
+                                              "marginVertical": 0,
                                             },
                                             {
                                               "color": "rgba(28, 27, 31, 1)",
                                             },
-                                            undefined,
+                                            {
+                                              "color": "#bcfeff",
+                                            },
                                           ],
                                         ],
                                       ],
@@ -3585,10 +3587,9 @@ exports[`AccountScreenTemplate renders correctly with ja-JP locale 1`] = `
                                 "style": [
                                   {
                                     "alignItems": "center",
-                                    "flex": 1,
                                     "flexDirection": "row",
-                                    "height": 40,
                                     "justifyContent": "flex-start",
+                                    "minHeight": 40,
                                   },
                                   undefined,
                                 ],
@@ -3678,10 +3679,9 @@ exports[`AccountScreenTemplate renders correctly with ja-JP locale 1`] = `
                                 "style": [
                                   {
                                     "alignItems": "center",
-                                    "flex": 1,
                                     "flexDirection": "row",
-                                    "height": 40,
                                     "justifyContent": "flex-start",
+                                    "minHeight": 40,
                                   },
                                   undefined,
                                 ],
@@ -4499,6 +4499,7 @@ exports[`AccountScreenTemplate renders correctly with ja-JP locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 24,
+                                              "lineHeight": 29,
                                             },
                                             undefined,
                                           ],
@@ -4671,11 +4672,14 @@ exports[`AccountScreenTemplate renders correctly with ja-JP locale 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 14,
+                                              "marginVertical": 0,
                                             },
                                             {
                                               "color": "rgba(28, 27, 31, 1)",
                                             },
-                                            undefined,
+                                            {
+                                              "color": "#bcfeff",
+                                            },
                                           ],
                                         ],
                                       ],

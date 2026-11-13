@@ -150,6 +150,7 @@ exports[`WakingScreenTemplate renders correctly with en-US locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -323,6 +324,7 @@ exports[`WakingScreenTemplate renders correctly with en-US locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -674,6 +676,7 @@ exports[`WakingScreenTemplate renders correctly with ja-JP locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -847,6 +850,7 @@ exports[`WakingScreenTemplate renders correctly with ja-JP locale 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -1219,6 +1223,7 @@ exports[`WakingScreenTemplate renders in desktop mode 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],
@@ -1392,6 +1397,7 @@ exports[`WakingScreenTemplate renders in desktop mode 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 24,
+                                                  "lineHeight": 29,
                                                 },
                                                 undefined,
                                               ],

@@ -1,9 +1,9 @@
 //#region Import Modules
 import type { FunctionComponent } from "react";
-import { View } from "react-native";
+import { type TextStyle, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 
-import { Dimens, Message, MessageKeys } from "../../constants";
+import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ErrorText, FlatButton, TextBox } from "../atoms";
@@ -55,7 +55,9 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
         </Button>
     );
     const logoutButton = props.dimens.isDesktop ? undefined : (
-        <FlatButton {...props.logoutButton}>{Message.get(MessageKeys.account_signout)}</FlatButton>
+        <FlatButton {...props.logoutButton} labelStyle={flatLinkLabelStyle}>
+            {Message.get(MessageKeys.account_signout)}
+        </FlatButton>
     );
 
     const splitWidth = props.dimens.isHorizontal ? Dimens.input_text_max_width / 2 : undefined;
@@ -148,3 +150,9 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
         </InternalView>
     );
 };
+
+//#region Styles
+// 背景が navy の画面に直接置くテキストリンクは、MD3 既定の onSurface（暗色）では視認性が低いため、
+// ログイン画面と同じ Colors.cyan で描画する。
+const flatLinkLabelStyle: TextStyle = { color: Colors.cyan };
+//#endregion

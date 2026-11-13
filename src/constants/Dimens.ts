@@ -28,6 +28,8 @@ export default {
     error_text_margin_bottom: 18,
 
     button_text_size: 24,
+    // Calibre の自然行高の実測値（1.187em × 24px ≈ 28.5px）を上回るよう設定する。
+    button_text_line_height: 29,
     button_height: 50,
     button_margin: 16,
     button_radius: 16,

@@ -16,6 +16,11 @@ describe("Dimens", () => {
         expect(Dimens.content_text_size).toBeGreaterThan(0);
     });
 
+    it("keeps the button label line height at least the font size", () => {
+        expect(typeof Dimens.button_text_line_height).toBe("number");
+        expect(Dimens.button_text_line_height).toBeGreaterThanOrEqual(Dimens.button_text_size);
+    });
+
     it("exports inner_screen_max_height and inner_screen_max_width", () => {
         expect(typeof Dimens.inner_screen_max_height).toBe("number");
         expect(typeof Dimens.inner_screen_max_width).toBe("number");

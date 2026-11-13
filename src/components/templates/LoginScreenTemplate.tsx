@@ -1,8 +1,8 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-import { View } from "react-native";
+import { type TextStyle, View } from "react-native";
 
-import { Message, MessageKeys } from "../../constants";
+import { Colors, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
@@ -59,13 +59,13 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
         </RightSideButton>
     );
     const forgotPasswordFlatButton = (
-        <FlatButton {...props.forgotPasswordButton}>
+        <FlatButton {...props.forgotPasswordButton} labelStyle={flatLinkLabelStyle}>
             {Message.get(MessageKeys.login_forgot_password_button)}
         </FlatButton>
     );
 
     const signupFlatButton = (
-        <FlatButton {...props.signupButton}>
+        <FlatButton {...props.signupButton} labelStyle={flatLinkLabelStyle}>
             {Message.get(MessageKeys.login_no_account_button)}
         </FlatButton>
     );
@@ -115,4 +115,10 @@ export const LoginScreenTemplate: FunctionComponent<LoginScreenTemplateProps> = 
         </InternalView>
     );
 };
+//#endregion
+
+//#region Styles
+// 背景が navy の画面に直接置くテキストリンクは、MD3 既定の onSurface（暗色）では視認性が低い。
+// iOS 参照実装（Login.storyboard）の titleColor #BCFEFF（Colors.cyan）と同じ色で描画する。
+const flatLinkLabelStyle: TextStyle = { color: Colors.cyan };
 //#endregion

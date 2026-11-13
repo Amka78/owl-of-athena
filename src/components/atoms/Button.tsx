@@ -44,9 +44,12 @@ export const Button: FunctionComponent<ButtonProps> = (props: ButtonProps) => {
 //#endregion
 
 //#region Styles
+// Paper 既定の labelLarge の lineHeight(20px) は fontSize 24px の Calibre（実測の自然行高 28.5px）に
+// 足りず、Android では行ボックスでグリフの下側がクリップされるため行高を明示する。
 const labelStyle: TextStyle = {
     fontFamily: Fonts.primarySemiBold,
     fontSize: Dimens.button_text_size,
+    lineHeight: Dimens.button_text_line_height,
 };
 const containerStyle: ViewStyle = {
     borderRadius: Dimens.button_radius,

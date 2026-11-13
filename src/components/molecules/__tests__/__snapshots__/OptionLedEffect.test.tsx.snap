@@ -274,6 +274,7 @@ exports[`OptionLedEffect renders correctly 1`] = `
                                                 {
                                                   "fontFamily": "calibre_app_semibold",
                                                   "fontSize": 14,
+                                                  "marginVertical": 0,
                                                 },
                                                 {
                                                   "color": "rgba(28, 27, 31, 1)",

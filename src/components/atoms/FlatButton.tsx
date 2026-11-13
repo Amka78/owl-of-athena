@@ -35,9 +35,12 @@ export const FlatButton: FunctionComponent<FlatButtonProps> = (props: FlatButton
 //#endregion
 
 //#region Styles
+// paper 既定の marginVertical(9px) を残すとラベル（lineHeight 20px + 上下 18px）が
+// コンテンツ高（28px）からはみ出し、クリップされるため 0 にする。
 const labelStyle: TextStyle = {
     fontFamily: Fonts.primarySemiBold,
     fontSize: Dimens.button_flat_text_size,
+    marginVertical: 0,
 };
 const contentStyle: ViewStyle = {
     marginTop: Dimens.button_margin,

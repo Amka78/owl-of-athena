@@ -168,6 +168,7 @@ exports[`SleepingScreen UnitTest renders correctly 1`] = `
                                             {
                                               "fontFamily": "calibre_app_semibold",
                                               "fontSize": 24,
+                                              "lineHeight": 29,
                                             },
                                             undefined,
                                           ],
