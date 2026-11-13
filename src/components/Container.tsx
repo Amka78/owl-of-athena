@@ -123,6 +123,13 @@ export const Container: FunctionComponent<ContainerProps> = (props: ContainerPro
                 <SafeAreaProvider>
                     <SafeAreaView
                         mode={"margin"}
+                        // classic Android（API 35 未満）ではウィンドウが既にステータスバーの下から始まるため、
+                        // 上端インセットを足すとステータスバーとヘッダーの間に隙間ができる。上端だけ除外する。
+                        edges={
+                            Platform.OS === "android" && Number(Platform.Version) < 35
+                                ? ["left", "right", "bottom"]
+                                : undefined
+                        }
                         style={[styles.container, { width: dimens.width, height: dimens.height }]}
                     >
                         <OfflineBanner />
