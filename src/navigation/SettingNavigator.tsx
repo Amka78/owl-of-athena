@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { AboutDialog } from "../components/molecules";
 import {
     AboutScreen,
+    AccountEditScreen,
     AccountMessagesScreen,
     AccountRolesScreen,
     AccountScreen,
@@ -39,6 +40,13 @@ const SettingNavigator = (): React.ReactNode => {
                     options={{
                         headerLeft: voidLeftHeader,
                         headerTitle: Message.get(MessageKeys.account_title),
+                    }}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name={"AccountEdit"}
+                    component={AccountEditScreen}
+                    options={{
+                        headerTitle: Message.get(MessageKeys.account_edit_title),
                     }}
                 ></Stack.Screen>
                 <Stack.Screen

@@ -188,6 +188,8 @@ export const MessageKeys = {
 
     //#region AccountScreen
     account_title: "account_title",
+    account_edit_title: "account_edit_title",
+    account_edit_button: "account_edit_button",
     account_input_first_name: "account_input_first_name",
     account_input_last_name: "account_input_last_name",
     account_input_birthday: "account_input_birthday",

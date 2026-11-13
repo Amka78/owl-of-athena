@@ -212,6 +212,8 @@ export default {
     [MessageKeys.session_no_signal_pie_chart_label]: "Sem Sinal - {0}",
     // account fragment
     [MessageKeys.account_title]: "Conta",
+    [MessageKeys.account_edit_title]: "Editar conta",
+    [MessageKeys.account_edit_button]: "Editar conta",
     [MessageKeys.account_input_first_name]: input_first_name,
     [MessageKeys.account_input_last_name]: input_last_name,
     [MessageKeys.account_input_birthday]: input_birthday,

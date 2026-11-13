@@ -3,18 +3,17 @@ import { useNavigation } from "@react-navigation/native";
 import type { FunctionComponent } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
-import { useAcount, useWindowDimensions } from "../../hooks";
+import { useWindowDimensions } from "../../hooks";
 import { useDeviceMaintenance } from "../../hooks/useDeviceMaintenance";
 import { useUnreadMessageCount } from "../../hooks/useUnreadMessageCount";
 import { useAuthStore } from "../../store/authStore";
 import { AboutDialog } from "../molecules/AboutDialog";
 import { IssueReportDialog } from "../molecules/IssueReportDialog";
-import { AccountScreenTemplate } from "./../templates/AccountScreenTemplate";
+import { AccountEditForm } from "./AccountEditScreen";
 //#endregion
 
 //#region Component
 export const AccountScreen: FunctionComponent = () => {
-    const accountHook = useAcount();
     const dimens = useWindowDimensions();
     const { navigate } = useNavigation<any>();
     const { user } = useAuthStore();
@@ -23,48 +22,18 @@ export const AccountScreen: FunctionComponent = () => {
     const unreadCount = useUnreadMessageCount();
     const deviceMaintenance = useDeviceMaintenance();
 
+    // モバイルでは編集フォームを別画面（AccountEdit）に分離し、この画面はボタン一覧にする。
+    const editAccountButton = !dimens.isDesktop ? (
+        <TouchableOpacity style={styles.navButton} onPress={() => navigate("AccountEdit")}>
+            <Text style={styles.navButtonText}>{Message.get(MessageKeys.account_edit_button)}</Text>
+        </TouchableOpacity>
+    ) : undefined;
+
     return (
         <View style={styles.container}>
-            <AccountScreenTemplate
-                firstName={{
-                    onChangeText: accountHook.onFirstNameChangeText,
-                    value: accountHook.firstName,
-                }}
-                lastName={{
-                    onChangeText: accountHook.onLastNameChangeText,
-                    value: accountHook.lastName,
-                }}
-                birthDay={{
-                    onChange: accountHook.onBirthDayChange,
-                    selected: accountHook.birthDay,
-                }}
-                gender={{
-                    onValueChange: accountHook.onGenderChange,
-                    value: accountHook.gender,
-                }}
-                maleRadioButton={{
-                    value: "male",
-                }}
-                countryCode={{
-                    value: accountHook.countryCode,
-                    onChangeText: accountHook.onCountryCodeChangeText,
-                }}
-                postalCode={{
-                    value: accountHook.postalCode,
-                    onChangeText: accountHook.onPostalCodeChangeText,
-                }}
-                femaleRadioButton={{
-                    value: "female",
-                }}
-                saveButton={{
-                    onPress: accountHook.onSavePress,
-                }}
-                logoutButton={{
-                    onPress: accountHook.onLogoutPress,
-                }}
-                dimens={dimens}
-            ></AccountScreenTemplate>
+            {dimens.isDesktop ? <AccountEditForm dimens={dimens} /> : null}
             <View style={styles.navSection}>
+                {editAccountButton}
                 <TouchableOpacity
                     style={styles.navButton}
                     onPress={() => navigate("AccountMessages")}

@@ -206,6 +206,8 @@ export default {
     [MessageKeys.export_failed]: "データのエクスポートに失敗しました。",
     // account fragment
     [MessageKeys.account_title]: "アカウント",
+    [MessageKeys.account_edit_title]: "アカウント編集",
+    [MessageKeys.account_edit_button]: "アカウント編集",
     [MessageKeys.account_input_first_name]: input_first_name,
     [MessageKeys.account_input_last_name]: input_last_name,
     [MessageKeys.account_input_birthday]: input_birthday,

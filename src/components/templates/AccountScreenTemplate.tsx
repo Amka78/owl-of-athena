@@ -31,6 +31,8 @@ export type AccountScreenTemplateProps = {
     saveButton: TemplateButtonProps;
     logoutButton: TemplateButtonProps;
     dimens: Dimensions;
+    // ヘッダータイトルに使う文言キー。省略時は account_title。
+    titleKey?: string;
     locale?: string;
 };
 //#endregion
@@ -42,7 +44,7 @@ export const AccountScreenTemplate: FunctionComponent<AccountScreenTemplateProps
     useLocale(props.locale);
 
     useConvertibleHeader(
-        Message.get(MessageKeys.account_title),
+        props.titleKey ?? MessageKeys.account_title,
         props.dimens.isDesktop,
         props.dimens.isSmallHeight,
     );

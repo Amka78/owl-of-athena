@@ -1,5 +1,6 @@
 //#region Import Modules
 import { AboutScreen } from "./AboutScreen";
+import { AccountEditScreen } from "./AccountEditScreen";
 import { AccountMessagesScreen } from "./AccountMessagesScreen";
 import { AccountRolesScreen } from "./AccountRolesScreen";
 import { AccountScreen } from "./AccountScreen";
@@ -38,6 +39,7 @@ import { WelcomeScreen } from "./WelcomeScreen";
 //#region Export Modules
 export {
     AboutScreen,
+    AccountEditScreen,
     AccountMessagesScreen,
     AccountRolesScreen,
     AccountScreen,
