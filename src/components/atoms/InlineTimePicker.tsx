@@ -10,7 +10,7 @@ import type { ThemeType } from "../../constants/Theme";
 //#endregion
 
 //#region Types
-type TimePickerStyle = {
+export type TimePickerStyle = {
     textColor?: string;
     backgroundColor?: string;
     activeColor?: string;
