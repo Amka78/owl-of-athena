@@ -1,16 +1,47 @@
-# リリース手順（Preview APK と OTA）
+# リリース手順（バージョン更新と OTA 配信）
 
 Android の preview ビルドと OTA 配信の**メンテナー向け**手順です。
-ネイティブ変更が無い限り APK を作り直さず、`v*` タグの push で EAS Update を配信します。
+バージョン更新は `scripts/version.sh` が唯一の入口で、ネイティブ変更が無い限り `v*` タグの push だけで EAS Update を配信します。
 
-## ワークフロー一覧
+## 使い方（バージョン更新）
+
+```sh
+bun run version <patch|minor|major|x.y.z> [--push]
+```
+
+- `patch` / `minor` / `major`：現在のバージョンから自動で加算
+- `x.y.z`：明示的なバージョン指定
+- `--push`：ブランチとタグの push を対話確認付きで行う（既定は push しない）
+
+### 実行前の自動チェック
+
+- 作業ツリーに変更された tracked ファイルがないこと（untracked は警告のみ）
+- `origin/<現在のブランチ>` と同期していること（ahead/behind 0）
+- `v<新バージョン>` タグがローカル・リモートのどちらにも存在しないこと
+- 更新後、`package.json` と `app.config.ts` と `electrobun.config.ts` の version が一致していること（不一致なら変更を元に戻して中止）
+
+### 実行されること
+
+1. `package.json` / `app.config.ts` / `electrobun.config.ts` の `version` を更新
+   - `electrobun.config.ts` は `ELECTROBUN_APP_VERSION` のフォールバック値だけを更新する（CI の env 上書きは維持）
+2. コミット（メッセージ: `vX.Y.Z にバージョンアップ`）+ annotated タグ `vX.Y.Z` を作成
+3. `--push` 指定時のみ、確認の上で `git push origin HEAD` と `git push origin vX.Y.Z` を実行
+
+### バージョン番号の扱い
+
+実機のバージョン番号（Android versionName / iOS CFBundleShortVersionString）は EAS 側（`eas.json` の `appVersionSource: "remote"`）で管理されています。`version.sh` が揃える 3 ファイルの値は**配布物の識別子**として使い、タグとリリースの対応付けに使います。
+
+## 重要な注意: タグ push で OTA が起動する
+
+`v*` タグの push で `preview-release.yml` が起動し、**preview チャンネルへの EAS Update（OTA）配信が無条件で走ります**。push は意図的に済ませること。また、ブランチ（main）の push では `pages.yml` による Web 版の GitHub Pages 公開も起動します。
 
 | ワークフロー | トリガー | 内容 |
 | --- | --- | --- |
 | `preview-apk.yml`（Preview APK Build (Manual)） | 手動（Actions タブ） | `eas build --local` で preview APK を作成し、GitHub Pre-Release に添付 |
 | `preview-release.yml`（Preview OTA Release） | `v*` タグの push | `eas update --channel preview` で JS/アセットだけを OTA 配信 |
+| `pages.yml`（Web deploy） | `main` への push | `expo export --platform web` を GitHub Pages へ公開 |
 
-`v*` タグ push では **APK はビルドされません**。ネイティブ構成（config plugin、`eas.json`、SDK、依存のネイティブモジュール）を変えたときだけ `preview-apk.yml` を手動実行してください。
+`v*` タグ push では **APK はビルドされません**。ネイティブ構成（config plugin、`eas.json`、SDK、依存のネイティブモジュール）を変えたときだけ `preview-apk.yml` を手動実行してください。詳細は [WEB_DEPLOY.md](./WEB_DEPLOY.md)。
 
 ## 初回セットアップ（GitHub / EAS）
 
@@ -64,17 +95,23 @@ eas channel:create preview # 未作成なら作成（作成済みならエラー
 ## OTA 配信（バージョン更新時）
 
 ```sh
-git tag -a v1.1.0 -m "v1.1.0"
-git push origin HEAD
-git push origin v1.1.0
+bun run version minor --push   # 例: 1.1.0 へ上げて push まで行う
 ```
 
-タグ push で `preview-release.yml` が起動し、preview チャンネルへ配信されます。
+`--push` は対話確認付きです（[y/N] で No を選ぶと push はされません）。タグ push で `preview-release.yml` が起動し、preview チャンネルへ配信されます。
 
 - 配信先は `eas.json` の `preview` プロファイルの `channel: "preview"` を購読している APK（`com.amka78.owlofminerva.preview`）です
 - 反映は**アプリの次回起動時**（`fallbackToCacheTimeout: 0`）
 - `runtimeVersion` は `sdkVersion` ポリシーなので、Expo SDK 58 のままなら同じ APK に配信され続けます。SDK を上げた場合は APK の再ビルドが必要です
-- バージョン番号は EAS 側（`eas.json` の `appVersionSource: "remote"`）で管理されているため、タグは配布物の識別子として使います。`package.json` の `version` と揃えたい場合はタグ作成前に更新してください
+
+## 手動で push する場合
+
+`bun run version <bump>`（`--push` なし）でコミットとタグまで作って止めたときは、手動で push します。
+
+```sh
+git push origin HEAD
+git push origin vX.Y.Z
+```
 
 ## 手動 APK ビルド
 
@@ -105,6 +142,10 @@ EAS 側にチャンネルがありません。`eas channel:create preview` を�
 3. `eas update:list --channel preview` で配信が作成されているか確認する
 4. 配信時の `runtimeVersion` と APK のそれが一致しているか確認する（SDK を上げた直後は不一致になりやすい）
 
+### タグ `vX.Y.Z` は既に存在します
+
+`version.sh` のローカル・リモート両方のタグ重複チェックに掛かっています。すでに配布済みのバージョンは再利用できません（OTA の識別子のため）。別のバージョンを指定してください。どうしても同じバージョンで配信したい場合は、先にタグを削除したうえで `gh workflow run preview-release.yml --ref main` で再実行します。
+
 ### APK が「Supabase is not configured」になる
 
 `EXPO_PUBLIC_SUPABASE_URL` / `EXPO_PUBLIC_SUPABASE_ANON_KEY` がシークレットに未登録、または空です。登録後に APK を再ビルドしてください（OTA でも JS は差し替えられますが、原因がシークレット側なら再配信が必要です）。
@@ -116,3 +157,5 @@ EAS 側にチャンネルがありません。`eas channel:create preview` を�
 ## 関連
 
 - ローカルビルドとプロファイル: [EAS_BUILD.md](./EAS_BUILD.md)
+- Web 版の公開: [WEB_DEPLOY.md](./WEB_DEPLOY.md)
+- デスクトップ版のリリース: [DESKTOP_RELEASE.md](./DESKTOP_RELEASE.md)
