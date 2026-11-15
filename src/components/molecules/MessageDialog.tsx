@@ -60,7 +60,8 @@ export class MessageDialog extends React.Component<{}, MessageDialogState> {
             >
                 <Dialog.Title style={styles.title}>{message.title ?? "—"}</Dialog.Title>
                 <Dialog.Content>
-                    <ContentText>{message.message}</ContentText>
+                    {/* ContentText の既定 flex:1 はダイアログ本文を縦に伸ばすため、無効化する */}
+                    <ContentText style={styles.messageText}>{message.message}</ContentText>
                     {alreadyRespondedToQuestionnaire && (
                         <ContentText style={styles.completedNote}>
                             {Message.get(MessageKeys.messages_already_completed)}
@@ -127,6 +128,7 @@ const styles = StyleSheet.create({
         width: "90%",
     },
     title: { color: Colors.cyan, fontFamily: Fonts.primarySemiBold },
+    messageText: { flex: 0 },
     primaryButton: { color: Colors.cyan },
     secondaryButton: { color: Colors.white },
     completedNote: { color: Colors.first_accent_color, marginTop: 8, fontStyle: "italic" },
