@@ -4,6 +4,7 @@ import type Stream from "stream";
 import type { AuroraBluetooth } from "./AuroraBluetooth";
 import type { ConnectorTypes, EventIds } from "./AuroraConstants";
 import type { AuroraUsb } from "./AuroraUsb";
+import type { AuroraBluetoothTransport } from "./virtual/types";
 //#endregion
 
 //#region Types
@@ -164,7 +165,7 @@ export type CommandRejectType = (rejected?: any) => void;
 export type Command = {
     commandStr: string;
     connectorType: ConnectorTypes;
-    connector?: AuroraBluetooth | AuroraUsb;
+    connector?: AuroraBluetooth | AuroraUsb | AuroraBluetoothTransport;
     onCmdBegin?: Function;
     onCmdEnd?: Function;
     resolve: CommandResolverType;
@@ -178,7 +179,7 @@ export type CommandResult<T> = {
     args?: string[];
     command?: string;
     connectorType?: ConnectorTypes;
-    connector?: AuroraBluetooth | AuroraUsb;
+    connector?: AuroraBluetooth | AuroraUsb | AuroraBluetoothTransport;
     error?: boolean;
     response?: T;
     inputStream?: Stream.Writable;

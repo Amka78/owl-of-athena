@@ -4,7 +4,6 @@ import _ from "lodash";
 import Stream from "stream";
 
 import type { AuroraEvent } from "../model/AuroraEvent";
-import { AuroraBluetooth } from "./AuroraBluetooth";
 import AuroraCmdDownloadFile from "./AuroraCmdDownloadFile";
 import AuroraCmdDownloadStream from "./AuroraCmdDownloadStream";
 import AuroraCmdFileInfo from "./AuroraCmdFileInfo";
@@ -24,6 +23,7 @@ import { AuroraEventList } from "./AuroraEventList";
 import type { Command, CommandResolverType, CommandResult, EventResponse } from "./AuroraTypes";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { Event } from "./models/Event";
+import { createAuroraBluetooth, type AuroraBluetoothTransport } from "./virtual";
 import { stringToVersion, versionToString } from "./util";
 
 //#endregion
@@ -48,7 +48,7 @@ type GetUnsyncedSessions = typeof AuroraCmdGetUnSyncedSessions;
  * Uses Bluetooth-only connectivity.
  */
 class Aurora extends EventEmitter {
-    private bluetooth: AuroraBluetooth;
+    private bluetooth: AuroraBluetoothTransport;
     private cmdQueue: Command[];
     private cmdCurrent?: Command;
     private isFlashing: boolean;
@@ -59,7 +59,7 @@ class Aurora extends EventEmitter {
     constructor() {
         super();
 
-        this.bluetooth = new AuroraBluetooth();
+        this.bluetooth = createAuroraBluetooth();
         this.bluetooth.on(
             AuroraConstants.DeviceEventList.connectionStateChange,
             this.onBluetoothConnectionStateChange,
