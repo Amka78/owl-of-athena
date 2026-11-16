@@ -16,6 +16,7 @@ export type ProfileOptionProps = {
     profileOption: AuroraProfileOption;
     value?: unknown;
     failed: boolean;
+    isLargeWidth?: boolean;
     onHelpIconPress?: () => void;
     onValueChange: (value: unknown) => void;
     onPreviewEffectPress?: (value: StimLedValue) => void;
@@ -37,6 +38,7 @@ export const ProfileOption: FunctionComponent<ProfileOptionProps> = (props: Prof
             left={(): React.ReactNode => infoIcon}
             field={props.profileOption.field}
             value={props.value ?? props.profileOption.value}
+            isLargeWidth={props.isLargeWidth}
             onValueChange={props.onValueChange}
             onPreviewEffectPress={props.onPreviewEffectPress}
             onPreviewSongPress={props.onPreviewSongPress}

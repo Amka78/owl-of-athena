@@ -19,6 +19,18 @@ const mobileDimens = {
     isHorizontal: false,
 };
 
+const wideDimens = {
+    fontScale: 1,
+    scale: 1,
+    height: 900,
+    width: 800,
+    isDesktop: true,
+    isLargeWidth: true,
+    isSmallHeight: false,
+    isVertical: false,
+    isHorizontal: true,
+};
+
 describe("ProfileSecondMenu", () => {
     it("renders correctly when connected", () => {
         const { toJSON } = renderWithProvider(
@@ -41,6 +53,20 @@ describe("ProfileSecondMenu", () => {
                 selectedProfileHasUnsavedChanges={true}
                 showAdvancedOptions={false}
                 dimens={mobileDimens}
+                onSaveToAuroraPress={jest.fn()}
+                onShowAdvancedOptionsPress={jest.fn()}
+            />,
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it("renders correctly in row layout for large widths", () => {
+        const { toJSON } = renderWithProvider(
+            <ProfileSecondMenu
+                auroraConnected={true}
+                selectedProfileHasUnsavedChanges={false}
+                showAdvancedOptions={false}
+                dimens={wideDimens}
                 onSaveToAuroraPress={jest.fn()}
                 onShowAdvancedOptionsPress={jest.fn()}
             />,

@@ -47,7 +47,7 @@ exports[`OptionSlider renders correctly 1`] = `
                       "props": {
                         "ellipsizeMode": undefined,
                         "maxFontSizeMultiplier": undefined,
-                        "numberOfLines": 1,
+                        "numberOfLines": 2,
                         "ref": {
                           "current": null,
                         },
@@ -147,22 +147,37 @@ exports[`OptionSlider renders correctly 1`] = `
                 },
                 {
                   "$$typeof": Symbol(react.test.json),
-                  "children": null,
-                  "props": {
-                    "description": "Set stimulation delay",
-                    "disabled": false,
-                    "field": {
-                      "format": "minutes",
-                      "max": 120,
-                      "min": 0,
-                      "step": 5,
-                      "type": "slider",
+                  "children": [
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": null,
+                      "props": {
+                        "disabled": false,
+                        "maximumValue": 120,
+                        "minimumValue": 0,
+                        "onValueChange": [class Function],
+                        "step": 5,
+                        "value": 30,
+                      },
+                      "type": "Slider",
                     },
-                    "left": [Function],
-                    "maximumValue": 120,
-                    "minimumValue": 0,
-                    "onValueChange": [class Function],
-                    "step": 5,
+                    {
+                      "$$typeof": Symbol(react.test.json),
+                      "children": [
+                        "30 min",
+                      ],
+                      "props": {
+                        "style": {
+                          "color": "#ffffff",
+                          "fontSize": 12,
+                          "marginTop": -4,
+                          "textAlign": "center",
+                        },
+                      },
+                      "type": "Text",
+                    },
+                  ],
+                  "props": {
                     "style": [
                       {
                         "alignSelf": "center",
@@ -173,10 +188,8 @@ exports[`OptionSlider renders correctly 1`] = `
                         "alignSelf": "center",
                       },
                     ],
-                    "title": "Delay (minutes)",
-                    "value": 30,
                   },
-                  "type": "Slider",
+                  "type": "View",
                 },
               ],
               "props": {

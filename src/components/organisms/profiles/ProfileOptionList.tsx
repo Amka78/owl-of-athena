@@ -18,6 +18,7 @@ import { ProfileOption } from "./ProfileOption";
 export type ProfileOptionListProps = {
     groupedOptionList: GroupedProfileOptionList;
     optionValues?: ProfileOptionValues;
+    isLargeWidth?: boolean;
     onHelpIconPress?: () => void;
     onValueChange?: (optionName: string, value: unknown) => void;
     onPreviewEffectPress?: (value: StimLedValue) => void;
@@ -58,6 +59,7 @@ export const ProfileOptionList: FunctionComponent<ProfileOptionListProps> = (
                                     <ProfileOption
                                         profileOption={value}
                                         value={optionValues[value.name]}
+                                        isLargeWidth={props.isLargeWidth}
                                         onValueChange={(nextValue: unknown): void =>
                                             props.onValueChange?.(value.name, nextValue)
                                         }

@@ -19,6 +19,7 @@ export type OptionProps = {
     disabled: boolean;
     field: ToggleField | SliderField | CheckBoxField | TimeField | LedEffectField | BuzzSongField;
     value?: unknown;
+    isLargeWidth?: boolean;
     onValueChange: (value: unknown) => void;
     onPreviewEffectPress?: (value: StimLedValue) => void;
     onPreviewSongPress?: (value: SongValue) => void;

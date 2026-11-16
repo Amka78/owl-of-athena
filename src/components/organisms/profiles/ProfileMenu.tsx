@@ -31,7 +31,6 @@ export const ProfileMenu: FunctionComponent<ProfileMenuProps> = (props: ProfileM
 const menuStyle: ViewStyle = {
     alignItems: "center",
     backgroundColor: Colors.third_accent_color,
-    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",
     marginLeft: 10,

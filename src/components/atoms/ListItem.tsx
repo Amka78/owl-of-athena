@@ -22,6 +22,7 @@ export type ListItemProps = {
     style?: ViewStyle;
     title: string;
     titleStyle?: ViewStyle;
+    titleNumberOfLines?: number;
     description?: string;
     descriptionStyle?: TextStyle;
     disabled?: boolean;
@@ -36,6 +37,7 @@ export const ListItem: FunctionComponent<ListItemProps> = (props: ListItemProps)
         //@ts-expect-error
         <List.Item
             {...props}
+            titleNumberOfLines={props.titleNumberOfLines ?? 2}
             titleStyle={[menuLabel, props.titleStyle]}
             descriptionStyle={[menuDescription, props.descriptionStyle]}
         ></List.Item>

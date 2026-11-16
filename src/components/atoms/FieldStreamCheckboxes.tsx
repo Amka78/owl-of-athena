@@ -24,14 +24,7 @@ export const FieldStreamCheckBoxes: FunctionComponent<FieldStreamCheckBoxesProps
     const selected = toStreamIds(props.value);
 
     return (
-        <View
-            style={{
-                flex: 1,
-                maxWidth: 500,
-                flexDirection: "row",
-                flexWrap: "wrap",
-            }}
-        >
+        <View style={[props.style, rowWrapStyle]}>
             {streamOptions.map((value: { label: string; value: number }) => {
                 const checked = selected.includes(value.value);
 
@@ -107,4 +100,10 @@ const streamOptions: { label: string; value: number }[] = [
     { label: "Temperature", value: StreamIds.TEMPERATURE },
     { label: "Battery", value: StreamIds.BATTERY },
 ];
+
+// 幅・余白は呼び出し側（広幅は right スロット、狭幅はタイトル下全幅）が style で与える。
+const rowWrapStyle: ViewStyle = {
+    flexDirection: "row",
+    flexWrap: "wrap",
+};
 //#endregion

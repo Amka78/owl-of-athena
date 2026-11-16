@@ -44,7 +44,9 @@ export const UnsavedProfileMenu: FunctionComponent<UnsavedProfileMenuProps> = (
     ) : undefined;
 
     const cancelButton: React.ReactNode = (
-        <FlatButton onPress={props.onCancelPress}>{Message.get(MessageKeys.cancel)}</FlatButton>
+        <FlatButton onPress={props.onCancelPress} labelStyle={{ color: Colors.cyan }}>
+            {Message.get(MessageKeys.cancel)}
+        </FlatButton>
     );
 
     return (

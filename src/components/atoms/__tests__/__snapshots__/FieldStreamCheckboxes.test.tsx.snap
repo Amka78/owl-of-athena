@@ -3276,12 +3276,13 @@ exports[`FieldStreamCheckBoxes UnitTest renders correctly 1`] = `
             },
           ],
           "props": {
-            "style": {
-              "flex": 1,
-              "flexDirection": "row",
-              "flexWrap": "wrap",
-              "maxWidth": 500,
-            },
+            "style": [
+              undefined,
+              {
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+              },
+            ],
           },
           "type": "View",
         },

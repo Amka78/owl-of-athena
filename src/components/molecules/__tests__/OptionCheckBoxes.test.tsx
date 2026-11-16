@@ -31,6 +31,13 @@ describe("OptionCheckBoxes", () => {
         expect(toJSON()).toMatchSnapshot();
     });
 
+    it("stacks checkboxes below the title on narrow screens", () => {
+        const { toJSON } = renderWithProvider(
+            <OptionCheckBoxes {...defaultProps} value={1} isLargeWidth={false} />,
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
     it("renders title", () => {
         const { getByText } = renderWithProvider(<OptionCheckBoxes {...defaultProps} />);
         expect(getByText("File Streams")).toBeTruthy();

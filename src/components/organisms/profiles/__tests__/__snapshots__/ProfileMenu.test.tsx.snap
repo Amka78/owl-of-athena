@@ -41,7 +41,6 @@ exports[`ProfileMenu renders correctly 1`] = `
               {
                 "alignItems": "center",
                 "backgroundColor": "#250D6D",
-                "flex": 1,
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
                 "marginLeft": 10,

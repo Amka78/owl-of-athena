@@ -24,7 +24,7 @@ exports[`ListItem UnitTest renders correctly with title and description 1`] = `
                       "props": {
                         "ellipsizeMode": undefined,
                         "maxFontSizeMultiplier": undefined,
-                        "numberOfLines": 1,
+                        "numberOfLines": 2,
                         "ref": {
                           "current": null,
                         },

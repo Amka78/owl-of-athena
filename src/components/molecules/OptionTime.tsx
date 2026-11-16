@@ -14,13 +14,14 @@ export type OptionTimeProps = OptionProps & {
 
 //#region Component
 export const OptionTime: FunctionComponent<OptionTimeProps> = (props: OptionTimeProps) => {
+    const { isLargeWidth: _isLargeWidth, ...listProps } = props;
     return (
         <ListItem
-            {...props}
+            {...listProps}
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldTime
-                        {...(props as any)}
+                        {...(listProps as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldTime>
                 );

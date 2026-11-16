@@ -47,7 +47,7 @@ exports[`OptionToggle renders correctly 1`] = `
                       "props": {
                         "ellipsizeMode": undefined,
                         "maxFontSizeMultiplier": undefined,
-                        "numberOfLines": 1,
+                        "numberOfLines": 2,
                         "ref": {
                           "current": null,
                         },
@@ -149,15 +149,8 @@ exports[`OptionToggle renders correctly 1`] = `
                   "$$typeof": Symbol(react.test.json),
                   "children": null,
                   "props": {
-                    "description": "Receive alerts",
                     "disabled": false,
-                    "field": {
-                      "type": "toggle",
-                      "valueDisabled": "disabled",
-                      "valueEnabled": "enabled",
-                    },
-                    "left": [Function],
-                    "onValueChange": [class Function],
+                    "onValueChange": [Function],
                     "style": [
                       {
                         "alignSelf": "center",
@@ -169,7 +162,6 @@ exports[`OptionToggle renders correctly 1`] = `
                       },
                     ],
                     "thumbColor": undefined,
-                    "title": "Enable Notifications",
                     "trackColor": {
                       "false": "#00ffe6",
                       "true": "#00ffe6",

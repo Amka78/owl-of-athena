@@ -14,13 +14,14 @@ export type OptionToggleProps = OptionProps & {
 
 //#region Component
 export const OptionToggle: FunctionComponent<OptionToggleProps> = (props: OptionToggleProps) => {
+    const { isLargeWidth: _isLargeWidth, ...listProps } = props;
     return (
         <ListItem
-            {...props}
+            {...listProps}
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldToggle
-                        {...(props as any)}
+                        {...(listProps as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldToggle>
                 );

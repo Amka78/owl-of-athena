@@ -433,7 +433,9 @@ exports[`UnsavedProfileMenu renders correctly for user profile 1`] = `
                                         {
                                           "color": "rgba(28, 27, 31, 1)",
                                         },
-                                        undefined,
+                                        {
+                                          "color": "#bcfeff",
+                                        },
                                       ],
                                     ],
                                   ],
@@ -829,7 +831,9 @@ exports[`UnsavedProfileMenu renders correctly for non-user profile (no overwrite
                                         {
                                           "color": "rgba(28, 27, 31, 1)",
                                         },
-                                        undefined,
+                                        {
+                                          "color": "#bcfeff",
+                                        },
                                       ],
                                     ],
                                   ],

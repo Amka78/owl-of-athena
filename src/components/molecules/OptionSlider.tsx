@@ -12,13 +12,14 @@ export type OptionSliderProps = OptionProps & { value?: number };
 
 //#region Component
 export const OptionSlider: FunctionComponent<OptionSliderProps> = (props: OptionSliderProps) => {
+    const { isLargeWidth: _isLargeWidth, ...listProps } = props;
     return (
         <ListItem
-            {...props}
+            {...listProps}
             right={(rightProps: ListItemComponentProps) => {
                 return (
                     <FieldSlider
-                        {...(props as any)}
+                        {...(listProps as any)}
                         style={[rightProps.style, { alignSelf: "center" }]}
                     ></FieldSlider>
                 );

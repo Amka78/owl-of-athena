@@ -1,5 +1,6 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
+import { View, type ViewStyle } from "react-native";
 
 import { FieldStreamCheckBoxes, ListItem } from "../atoms";
 import type { ListItemComponentProps } from "../atoms/ListItem";
@@ -16,18 +17,43 @@ export type OptionCheckBoxesProps = OptionProps & {
 export const OptionCheckBoxes: FunctionComponent<OptionCheckBoxesProps> = (
     props: OptionCheckBoxesProps,
 ) => {
+    const { isLargeWidth = true, ...listProps } = props;
+
+    if (!isLargeWidth) {
+        // 狭幅（モバイル）ではチップを right スロットに押し込まず、
+        // OptionLedEffect / OptionBuzzSong と同じ「タイトル下に全幅」に並べる。
+        return (
+            <View>
+                <ListItem {...listProps}></ListItem>
+                <FieldStreamCheckBoxes
+                    {...(listProps as any)}
+                    style={stackedFieldStyle}
+                ></FieldStreamCheckBoxes>
+            </View>
+        );
+    }
+
     return (
         <ListItem
-            {...props}
-            right={(rightProps: ListItemComponentProps) => {
+            {...listProps}
+            right={(_rightProps: ListItemComponentProps) => {
                 return (
                     <FieldStreamCheckBoxes
-                        {...(props as any)}
-                        style={[rightProps.style]}
+                        {...(listProps as any)}
+                        style={{ flex: 1, maxWidth: 500 }}
                     ></FieldStreamCheckBoxes>
                 );
             }}
         ></ListItem>
     );
+};
+//#endregion
+
+//#region Styles
+// FieldLedEffect / FieldBuzzSong のタイトル下コンテナと揃える。
+const stackedFieldStyle: ViewStyle = {
+    width: "100%",
+    paddingHorizontal: 8,
+    paddingBottom: 8,
 };
 //#endregion

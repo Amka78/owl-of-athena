@@ -90,6 +90,7 @@ export const ProfileScreenTemplate: FunctionComponent<ProfileScreenTemplateProps
                     key={`${props.selectedProfile.id}-${props.optionValuesKey ?? 0}`}
                     groupedOptionList={props.grouedOptionList}
                     optionValues={props.optionValues ?? {}}
+                    isLargeWidth={props.dimens.isLargeWidth}
                     onValueChange={props.onOptionValueChange}
                     onPreviewEffectPress={props.onPreviewEffectPress}
                     onPreviewSongPress={props.onPreviewSongPress}
