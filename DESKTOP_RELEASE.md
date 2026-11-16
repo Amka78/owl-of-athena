@@ -81,6 +81,29 @@ bun run build:desktop:release
 
 `dist-desktop/` と `dist-desktop-artifacts/` は `.gitignore` 済み。
 
+## Windows 版をローカルでデバッグする（WSL ソース → Windows 起動）
+
+ElectroBun のランタイムは OS 固有のため、Windows 版の `desktop:dev` は Windows 側の bun で実行する必要がある。
+WSL2 を正本にしたまま Windows 側へミラーを同期して起動するスクリプトを使う。
+
+```bash
+# 初回（依存 install + web export まで一括で行う。Windows に bun が必須: winget install Oven-sh.Bun）
+# Windows パスは引用符で囲むか、スラッシュ区切り（D:/dev/...）で指定する（バックスラッシュは bash に解釈される）
+./scripts/desktop-win.sh "C:\dev\owl-of-athena-win" setup
+
+# 2 回目以降（同期 + 必要時のみ install/export + デバッグ起動）
+./scripts/desktop-win.sh "C:\dev\owl-of-athena-win" dev
+
+# 同期だけ / ドライラン
+./scripts/desktop-win.sh "C:\dev\owl-of-athena-win" sync
+./scripts/desktop-win.sh "C:\dev\owl-of-athena-win" sync --dry-run
+```
+
+- ミラー先は `/mnt/c/dev/...` または `C:\dev\...` 形式で指定する。`.env` / `.env.local`（Supabase キー）も同期される。
+- 同期は `.git` / `node_modules` / `dist` / `build` / `android` / `ios` / `*.apk` を除外する（`--delete` のミラー整合あり。除外済みディレクトリは消さない）。
+- ウィンドウは Windows デスクトップに表示される（WSL 内では出ない）。
+- `desktop:dev` は `concurrently "expo start --web" "bunx electrobun dev"`。React 側の変更は HMR で即反映、`src-electrobun/main.ts` の変更は `electrobun dev` の再起動で反映。
+
 ## Aurora メニュー（デスクトップ版のデバイス保守）
 
 参照実装（iwinks-desktop-app）と同じく、デバイス保守はネイティブメニューバーの **Aurora** メニューに配置している（`src-electrobun/main.ts`）。
