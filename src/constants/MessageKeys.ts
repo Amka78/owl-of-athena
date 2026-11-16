@@ -420,7 +420,7 @@ export const MessageKeys = {
     //#endregion
 
     //#region Device maintenance
-    device_section_title: "device_section_title",
+    device_screen_title: "device_screen_title",
     device_sd_format_button: "device_sd_format_button",
     device_reset_button: "device_reset_button",
     device_sd_format_confirm_title: "device_sd_format_confirm_title",

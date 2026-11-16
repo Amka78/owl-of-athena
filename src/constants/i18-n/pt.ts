@@ -402,7 +402,7 @@ export default {
     [MessageKeys.about_repository_label]: "Repositório",
 
     // device maintenance
-    [MessageKeys.device_section_title]: "Dispositivo Aurora",
+    [MessageKeys.device_screen_title]: "Dispositivo Aurora",
     [MessageKeys.device_sd_format_button]: "Formatar cartão SD",
     [MessageKeys.device_reset_button]: "Redefinir Aurora",
     [MessageKeys.device_sd_format_confirm_title]: "Formatar o cartão SD?",

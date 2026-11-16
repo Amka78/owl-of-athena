@@ -14,6 +14,7 @@ import { useCheckLogging } from "./useCheckLogging";
 import { useConfirmEmail } from "./useConfirmEmail";
 import { useConvertibleHeader } from "./useConvertibleHeader";
 import { useDatePicker } from "./useDatePicker";
+import { useDeviceInfo } from "./useDeviceInfo";
 import { useDeviceMaintenance } from "./useDeviceMaintenance";
 import { useForgotPassword } from "./useForgotPassword";
 import { useGetUser } from "./useGetUser";
@@ -52,6 +53,7 @@ export {
     useConfirmEmail,
     useConvertibleHeader,
     useDatePicker,
+    useDeviceInfo,
     useDeviceMaintenance,
     useFilterConditionSelector,
     useForgotPassword,

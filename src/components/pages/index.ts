@@ -16,6 +16,7 @@ import { ChangeEmailScreen } from "./ChangeEmailScreen";
 import { ChangePasswordScreen } from "./ChangePasswordScreen";
 import { ConfirmEmailScreen } from "./ConfirmEmailScreen";
 import { ConsoleScreen } from "./ConsoleScreen";
+import { DeviceScreen } from "./DeviceScreen";
 import { HomeScreen } from "./HomeScreen";
 import { LoginScreen } from "./LoginScreen";
 import { MainScreen } from "./MainScreen";
@@ -55,6 +56,7 @@ export {
     ChangePasswordScreen,
     ConfirmEmailScreen,
     ConsoleScreen,
+    DeviceScreen,
     HomeScreen,
     LoginScreen,
     MainScreen,

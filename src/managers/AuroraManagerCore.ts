@@ -109,6 +109,11 @@ export class AuroraManager extends EventEmitter {
         return this.batteryLevel;
     }
 
+    /** 接続中端末の OS 情報（未接続・未取得なら undefined）。 */
+    public getOSInfo(): AuroraOSInfo | undefined {
+        return this.osInfo;
+    }
+
     /** 電池残量が不明（0）のときは false。 */
     public isBatteryLow(): boolean {
         return this.batteryLevel > 0 && this.batteryLevel < LOW_BATTERY_THRESHOLD;

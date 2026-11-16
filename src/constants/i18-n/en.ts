@@ -399,7 +399,7 @@ export default {
     [MessageKeys.about_repository_label]: "Repository",
 
     // device maintenance
-    [MessageKeys.device_section_title]: "Aurora device",
+    [MessageKeys.device_screen_title]: "Aurora Device",
     [MessageKeys.device_sd_format_button]: "Format SD card",
     [MessageKeys.device_reset_button]: "Reset Aurora",
     [MessageKeys.device_sd_format_confirm_title]: "Format the SD card?",

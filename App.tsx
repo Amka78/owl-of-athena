@@ -17,10 +17,11 @@ import {
 } from "./src/managers";
 import { alarmStorage } from "./src/managers/alarm/AlarmRuntimeStorage";
 import { InitialNavigator } from "./src/navigation";
-import LogService from "./src/services/LogService";
+import { installDesktopMenuBridge, LogService } from "./src/services";
 //#endregion
 
 LogService.install();
+installDesktopMenuBridge();
 
 SplashScreen.preventAutoHideAsync();
 

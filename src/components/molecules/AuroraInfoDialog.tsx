@@ -2,10 +2,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Dialog } from "react-native-paper";
-import moment from "moment";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraOSInfo } from "../../sdk/models";
+import { buildAuroraInfoRows } from "../../utils/AuroraInfoRows";
 import { ContentText, FlatButton } from "../atoms";
 //#endregion
 
@@ -18,12 +18,6 @@ type AuroraInfoDialogState = {
     settings?: AuroraInfoDialogSettings;
 };
 //#endregion
-
-const formatBytes = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-};
 
 //#region Component
 export class AuroraInfoDialog extends React.Component<{}, AuroraInfoDialogState> {
@@ -51,43 +45,7 @@ export class AuroraInfoDialog extends React.Component<{}, AuroraInfoDialogState>
         if (!settings) return null;
 
         const { osInfo } = settings;
-        const rows: Array<{ label: string; value: string }> = [
-            {
-                label: Message.get(MessageKeys.aurora_info_firmware),
-                value: osInfo.version.toString(),
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_bootloader),
-                value: osInfo.bootloaderVersion.toString(),
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_ble),
-                value: osInfo.bleVersion.toString(),
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_bootstrap),
-                value: osInfo.bootstrapVersion.toString(),
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_battery),
-                value: `${osInfo.batteryLevel}%`,
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_build_date),
-                value:
-                    typeof osInfo.buildDate === "number"
-                        ? moment(osInfo.buildDate).utc().format("YYYY-MM-DD HH:mm [UTC]")
-                        : "—",
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_running_time),
-                value: osInfo.runningTime || "—",
-            },
-            {
-                label: Message.get(MessageKeys.aurora_info_storage),
-                value: osInfo.bytesFree === undefined ? "—" : formatBytes(osInfo.bytesFree),
-            },
-        ];
+        const rows = buildAuroraInfoRows(osInfo);
 
         return (
             <Dialog

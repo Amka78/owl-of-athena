@@ -396,7 +396,7 @@ export default {
     [MessageKeys.about_repository_label]: "リポジトリ",
 
     // device maintenance
-    [MessageKeys.device_section_title]: "Auroraデバイス",
+    [MessageKeys.device_screen_title]: "Auroraデバイス",
     [MessageKeys.device_sd_format_button]: "SDカードをフォーマット",
     [MessageKeys.device_reset_button]: "Auroraをリセット",
     [MessageKeys.device_sd_format_confirm_title]: "SDカードをフォーマットしますか?",

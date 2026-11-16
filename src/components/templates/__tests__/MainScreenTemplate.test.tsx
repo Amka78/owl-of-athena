@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import type React from "react";
 import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
@@ -66,6 +66,8 @@ const defaultProps = {
     onProfilesPress: jest.fn(),
     onSessionsPress: jest.fn(),
     onSettingsPress: jest.fn(),
+    onDeviceInfoPress: jest.fn(),
+    onDevicePress: jest.fn(),
 };
 
 describe("MainScreenTemplate", () => {
@@ -95,6 +97,22 @@ describe("MainScreenTemplate", () => {
         );
 
         expect(getByTestId("session-badge-text").props.children).toBe("3");
+    });
+
+    it("opens the device screen from the status bar", () => {
+        const onDevicePress = jest.fn();
+        const { getByTestId } = renderWithProvider(
+            <MainScreenTemplate
+                {...defaultProps}
+                dimens={mobileDimens}
+                locale="en-US"
+                onDevicePress={onDevicePress}
+            />,
+        );
+
+        fireEvent.press(getByTestId("device-info-icon"));
+
+        expect(onDevicePress).toHaveBeenCalledTimes(1);
     });
 
     it("renders correctly when connected", () => {

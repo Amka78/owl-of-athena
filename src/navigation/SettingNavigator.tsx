@@ -13,6 +13,7 @@ import {
     ChangeEmailScreen,
     ChangePasswordScreen,
     ConsoleScreen,
+    DeviceScreen,
 } from "../components/pages";
 import { Colors, Message, MessageKeys } from "../constants";
 import { headerStyle } from "./HeaderStyles";
@@ -89,6 +90,13 @@ const SettingNavigator = (): React.ReactNode => {
                     component={AboutScreen}
                     options={{
                         headerTitle: Message.get(MessageKeys.about_title),
+                    }}
+                />
+                <Stack.Screen
+                    name={"Device"}
+                    component={DeviceScreen}
+                    options={{
+                        headerTitle: Message.get(MessageKeys.device_screen_title),
                     }}
                 />
             </Stack.Navigator>

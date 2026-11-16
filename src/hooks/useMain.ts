@@ -41,6 +41,7 @@ export const useMain = (): {
     onSessionsPress: () => void;
     onSettingsPress: () => void;
     onDeviceInfoPress: () => void;
+    onDevicePress: () => void;
     batteryLevel: number;
     currentFirmwareVersion: string;
     error: string;
@@ -301,6 +302,11 @@ export const useMain = (): {
         }
     }, []);
 
+    // ステータスバーのデバイスボタン → Settings スタックの Device 画面を開く。
+    const onDevicePress = useCallback(() => {
+        navigate("Main", { screen: "Settings", params: { screen: "Device" } });
+    }, [navigate]);
+
     const currentFirmwareVersion = firmwareVersion.current;
     return {
         connect,
@@ -310,6 +316,7 @@ export const useMain = (): {
         onSessionsPress,
         onSettingsPress,
         onDeviceInfoPress,
+        onDevicePress,
         batteryLevel,
         currentFirmwareVersion,
         error,

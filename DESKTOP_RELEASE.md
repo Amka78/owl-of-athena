@@ -81,6 +81,15 @@ bun run build:desktop:release
 
 `dist-desktop/` と `dist-desktop-artifacts/` は `.gitignore` 済み。
 
+## Aurora メニュー（デスクトップ版のデバイス保守）
+
+参照実装（iwinks-desktop-app）と同じく、デバイス保守はネイティブメニューバーの **Aurora** メニューに配置している（`src-electrobun/main.ts`）。
+
+- **Firmware Info** … 接続中端末の OS 情報ダイアログ。未接続時は案内が出る
+- **Reset Device** / **Format SD Card** … 確認ダイアログ後に `os-reset` / `sd-format` を実行。未接続時は案内が出る
+- メニュークリックはビュー側の `window.__owlAuroraMenu`（`src/services/DesktopMenuBridge.ts`）に渡り、モバイルの Aurora デバイス画面と同じ `DeviceMaintenanceService` の確認・実行フローを使う
+- メニュー項目は接続状態に関わらず有効（未接続時はメニュー側ではなくビュー側で案内を表示する）
+
 ## 注意点
 
 - コード署名・公証は未設定。macOS は Gatekeeper、Windows は SmartScreen の警告が出る可能性がある。配布時に署名が必要なら Apple Developer ID / Windows 証明書を追加する。

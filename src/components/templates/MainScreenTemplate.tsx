@@ -7,7 +7,14 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
-import { FlatButton, HomeIcon, ProfilesIcon, SessionsIconWithBadge, SettingsIcon } from "../atoms";
+import {
+    FlatButton,
+    HomeIcon,
+    InfoIcon,
+    ProfilesIcon,
+    SessionsIconWithBadge,
+    SettingsIcon,
+} from "../atoms";
 import {
     AuroraInfoDialog,
     ConfirmDialog,
@@ -21,6 +28,7 @@ import {
 export type MainScreenTemplateProps = {
     onBluetoothConnectPress: () => Promise<string>;
     onDeviceInfoPress: () => void;
+    onDevicePress: () => void;
     bluetoothConnect: ConnectionStates;
     currentFirmwareVersion: string;
     error: string;
@@ -52,32 +60,52 @@ export const MainScreenTemplate: FunctionComponent<MainScreenTemplateProps> = (
     const statusBar = !props.dimens.isDesktop ? (
         // PaperButton は内部の TouchableRipple（borderRadius 10px、overflow hidden）で
         // 背景を角丸にクリップするため、四隅に白い素地が見える。同色の矩形で背面を覆い四角のバーに見せる。
-        <View style={{ backgroundColor: connectionColor }}>
-            <FlatButton
-                contentStyle={{
-                    backgroundColor: connectionColor,
-                    marginBottom: 0,
-                    // 共通 contentStyle の marginTop(16px) が残るとタブバーとの間に白い隙間ができる。
-                    // ステータスバーはタブバーの直下に密着させるため 0 に上書きする。
-                    marginTop: 0,
-                }}
-                labelStyle={{
-                    color:
-                        props.bluetoothConnect === ConnectionStates.CONNECTED
-                            ? Colors.aurora_connected_text
-                            : Colors.aurora_disconnected_text,
-                }}
-                onPress={props.onBluetoothConnectPress}
-            >
-            {props.error !== ""
-                ? props.error
-                : props.bluetoothConnect === ConnectionStates.CONNECTED
-                  ? Message.get(MessageKeys.aurora_connected, [
-                        props.currentFirmwareVersion,
-                        props.batteryLevel.toString(),
-                    ])
-                  : Message.get(MessageKeys.aurora_disconnected)}
-            </FlatButton>
+        // 右隅のアイコンは Aurora デバイス画面（DeviceScreen）への導線。
+        <View
+            style={{
+                alignItems: "center",
+                backgroundColor: connectionColor,
+                flexDirection: "row",
+            }}
+        >
+            <View style={{ flex: 1, justifyContent: "center" }}>
+                <FlatButton
+                    contentStyle={{
+                        backgroundColor: connectionColor,
+                        marginBottom: 0,
+                        // 共通 contentStyle の marginTop(16px) が残るとタブバーとの間に白い隙間ができる。
+                        // ステータスバーはタブバーの直下に密着させるため 0 に上書きする。
+                        marginTop: 0,
+                    }}
+                    labelStyle={{
+                        color:
+                            props.bluetoothConnect === ConnectionStates.CONNECTED
+                                ? Colors.aurora_connected_text
+                                : Colors.aurora_disconnected_text,
+                    }}
+                    onPress={props.onBluetoothConnectPress}
+                >
+                    {props.error !== ""
+                        ? props.error
+                        : props.bluetoothConnect === ConnectionStates.CONNECTED
+                          ? Message.get(MessageKeys.aurora_connected, [
+                                props.currentFirmwareVersion,
+                                props.batteryLevel.toString(),
+                            ])
+                          : Message.get(MessageKeys.aurora_disconnected)}
+                </FlatButton>
+            </View>
+            <InfoIcon
+                color={
+                    props.bluetoothConnect === ConnectionStates.CONNECTED
+                        ? Colors.aurora_connected_text
+                        : Colors.aurora_disconnected_text
+                }
+                size={28}
+                style={{ marginRight: 8 }}
+                testID="device-info-icon"
+                onPress={props.onDevicePress}
+            />
         </View>
     ) : undefined;
 

@@ -19,6 +19,7 @@ export const MainScreen: FunctionComponent = () => {
             error={mainHook.error}
             onBluetoothConnectPress={mainHook.onConnectionStatesPress}
             onDeviceInfoPress={mainHook.onDeviceInfoPress}
+            onDevicePress={mainHook.onDevicePress}
             onHomePress={mainHook.onHomePress}
             onProfilesPress={mainHook.onProfilesPress}
             onSessionsPress={mainHook.onSessionsPress}
