@@ -1,7 +1,16 @@
 //#region Import Modules
 import React from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Checkbox, Dialog, RadioButton } from "react-native-paper";
+import {
+    ActivityIndicator,
+    Modal,
+    Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import { Checkbox, RadioButton } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { useQuestionnaireStore } from "../../store/questionnaireStore";
 import type {
@@ -76,19 +85,31 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
         const { questionnaire, respondent, loading, error } = useQuestionnaireStore.getState();
 
         return (
-            <Dialog visible={true} style={styles.dialog}>
-                <Dialog.Title style={styles.title}>
-                    {questionnaire?.intro_title ?? "Questionnaire"}
-                </Dialog.Title>
-                <Dialog.ScrollArea style={styles.scrollArea}>
-                    <ScrollView>
-                        {this.renderContent(questionnaire, respondent, loading, error)}
-                    </ScrollView>
-                </Dialog.ScrollArea>
-                <Dialog.Actions>
-                    {this.renderActions(questionnaire, respondent, loading)}
-                </Dialog.Actions>
-            </Dialog>
+            // paper の Dialog（内部 Modal）はこの環境（RN 0.88 + ナビゲータ配下）で
+            // スクリムが画面全域を覆えず中央ずれになる（2026-11-16 実測）。
+            // ネイティブ Modal + フルスクリーン backdrop で全面カバーと中央配置を担保する。
+            <Modal
+                visible={true}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={() => this.close()}
+            >
+                <Pressable style={styles.backdrop}>
+                    <View style={styles.centerBox}>
+                        <View style={styles.dialog}>
+                            <Text style={styles.title}>
+                                {questionnaire?.intro_title ?? "Questionnaire"}
+                            </Text>
+                            <ScrollView style={styles.scrollArea}>
+                                {this.renderContent(questionnaire, respondent, loading, error)}
+                            </ScrollView>
+                            <View style={styles.actionsRow}>
+                                {this.renderActions(questionnaire, respondent, loading)}
+                            </View>
+                        </View>
+                    </View>
+                </Pressable>
+            </Modal>
         );
     }
 
@@ -294,14 +315,36 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
 
 //#region Styles
 const styles = StyleSheet.create({
+    backdrop: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.5)" },
+    centerBox: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+        paddingHorizontal: Dimens.content_margin_horizontal,
+    },
     dialog: {
-        alignSelf: "center",
         backgroundColor: Colors.navy_darker,
+        borderRadius: 4,
         maxWidth: Dimens.inner_screen_max_width,
+        paddingBottom: 8,
+        paddingHorizontal: 24,
+        paddingTop: 20,
         width: "90%",
     },
-    title: { color: Colors.cyan, fontFamily: Fonts.primarySemiBold },
+    title: {
+        color: Colors.cyan,
+        fontFamily: Fonts.primarySemiBold,
+        fontSize: 22,
+        marginBottom: 12,
+    },
     scrollArea: { maxHeight: 400 },
+    actionsRow: {
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        gap: 8,
+        paddingTop: 8,
+    },
     centered: { alignItems: "center", padding: 16, gap: 8 },
     section: { padding: 8 },
     subtitle: { color: Colors.first_accent_color, marginBottom: 8 },
