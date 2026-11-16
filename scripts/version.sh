@@ -118,7 +118,7 @@ node -e "
   for (const file of versionTargets) {
     const cfg = fs.readFileSync(file, 'utf8');
     const re = file === 'electrobun.config.ts'
-      ? /(version:\s*process\.env\.ELECTROBUN_APP_VERSION[^\n]*\")[^\"]*(\")/
+      ? /(version:\s*process\.env\.ELECTROBUN_APP_VERSION[^\n]*\")[^\n\"]*(\")/
       : /(version:\s*\")[^\"]*(\")/;
     const m = cfg.match(re);
     if (!m) {
@@ -140,7 +140,7 @@ VERIFY_CFG=$(node -e "
   process.stdout.write(m ? m[1] : '');
 ")
 VERIFY_DESKTOP=$(node -e "
-  const m = require('fs').readFileSync('electrobun.config.ts', 'utf8').match(/ELECTROBUN_APP_VERSION[^\n]*\"([^\"]*)\"/);
+  const m = require('fs').readFileSync('electrobun.config.ts', 'utf8').match(/ELECTROBUN_APP_VERSION[^\n]*\"([^\n\"]*)\"/);
   process.stdout.write(m ? m[1] : '');
 ")
 if [ "$VERIFY_PKG" != "$NEW_VERSION" ] || [ "$VERIFY_CFG" != "$NEW_VERSION" ] || [ "$VERIFY_DESKTOP" != "$NEW_VERSION" ]; then
