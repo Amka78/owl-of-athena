@@ -93,3 +93,6 @@ dist-desktop-artifacts/
 # @end expo-cli
 # Expo のローカル状態（端末履歴・dev server 設定）
 .expo/
+
+# Qwen Code の作業ディレクトリ
+.qwen/
