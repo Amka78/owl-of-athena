@@ -34,9 +34,11 @@ function toStandardUUID(hex: string): string {
 
 const BLE_SERVICE_UUID = toStandardUUID(BleAuroraService);
 
+// 呼び出し側（setupConnection / charWrite / charRead など）は BleAuroraChars.XXX の値（32 桁 hex）を
+// charKey として渡すため、キーは hex のまま標準 UUID へ変換する（web 版のマップと同じ規約）
 const BLE_CHAR_UUIDS: Record<string, string> = {};
-for (const [key, value] of Object.entries(BleAuroraChars)) {
-    BLE_CHAR_UUIDS[key] = toStandardUUID(value);
+for (const value of Object.values(BleAuroraChars)) {
+    BLE_CHAR_UUIDS[value] = toStandardUUID(value);
 }
 
 // Map from standard UUID back to the original short UUID used by the parser keying
