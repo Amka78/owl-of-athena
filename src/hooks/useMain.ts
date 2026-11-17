@@ -252,9 +252,11 @@ export const useMain = (): {
                 },
             );
         } catch (e) {
-            const err = e as Error;
-            setError(err.message);
-            error = err.message;
+            // SDK の接続失敗は文字列で reject される（例: "Timeout waiting for bluetooth connection."）。
+            // Error 型を仮定して .message を読むと undefined になり、ステータスバーが空欄になるため文字列をそのまま表示する。
+            const message = typeof e === "string" ? e : e instanceof Error ? e.message : String(e);
+            setError(message);
+            error = message;
             console.error(e);
         } finally {
             LoadingDialog.close();
