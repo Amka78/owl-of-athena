@@ -38,6 +38,7 @@ bun run version <patch|minor|major|x.y.z> [--push]
 | ワークフロー | トリガー | 内容 |
 | --- | --- | --- |
 | `preview-apk.yml`（Preview APK Build (Manual)） | 手動（Actions タブ） | `eas build --local` で preview APK を作成し、GitHub Pre-Release に添付 |
+| `development-apk.yml`（Development APK Build (Manual)） | 手動（Actions タブ） | `eas build --local` で development（dev client）APK を作成し、GitHub Pre-Release に添付 |
 | `preview-release.yml`（Preview OTA Release） | `v*` タグの push | `eas update --channel preview` で JS/アセットだけを OTA 配信 |
 | `pages.yml`（Web deploy） | `main` への push | `expo export --platform web` を GitHub Pages へ公開 |
 
@@ -118,6 +119,8 @@ git push origin vX.Y.Z
 1. GitHub の **Actions → Preview APK Build (Manual) → Run workflow**
 2. リリースバージョン（例: `v1.1.0`）を入力して実行
 3. 完了後、`owl-of-minerva-<version>-preview.apk` が **GitHub Pre-Release** に添付される（Actions の artifact にも 7 日間保存）
+
+Development 版（dev client 付き、`com.amka78.owlofminerva.dev` / アプリ名 `owl-of-minerva Dev`）も同様に **Actions → Development APK Build (Manual)** からビルドできます。こちらはタグが `<version>-dev` になるため、preview と同じバージョンでも Release 名・タグが衝突しません。
 
 同じバージョンの Release が既にあると `gh release create` が失敗します。その場合は新しいバージョンを指定するか、既存の Release を削除してください。
 
