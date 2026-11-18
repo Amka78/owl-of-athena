@@ -112,10 +112,16 @@ src/sdk/virtual/
 `event-output-enable` でアプリは以下を購読する（`AuroraManagerCore.createEventList`）:
 BUTTON_MONITOR / BATTERY_MONITOR / SMART_ALARM / CLOCK_ALARM_FIRE / STIM_PRESENTED。
 
-- バッテリー: `event-output-enable` 後 150ms で BATTERY_MONITOR（100%）を 1 度通知する（Header の BatteryIcon 表示確認用）。
+- バッテリー: `event-output-enable` 後 150ms で BATTERY_MONITOR を通知し、以後も実機と同じく
+  5 秒間隔で継続通知する（イベント購読タイミングや再接続で初回を取りこぼしても、定期分で
+  0 表示から残量へ収束する）。残量は既定 100% で、`EXPO_PUBLIC_VIRTUAL_AURORA_BATTERY` で上書きできる。
 - 就寝シナリオ（`prof-load default.prof` を検知して予約）:
   1. アラーム発火（CLOCK_ALARM_FIRE）→ アプリは WAKING → Waking 画面へ遷移・着信音が鳴る。
   2. その 8 秒後に BUTTON_MONITOR（flags=1）→ アプリは AWAKE → Awake 画面へ遷移 → 未転送セッションの同期へ。
+- セッション生成: アラーム発火時に「その晩寝た分」のセッション（`sessions/YYYY-MM-DD@HHmm/session.txt`
+  + stream ファイル）を仮想 SD へ生成する。起床後の未転送セッション同期（transfer ダイアログ →
+  `pushSessions`）でアプリが読み取り、サーバ（aurora_sessions）へ登録されるため、
+  Sessions 画面にその晩のセッションが出ることを実機なしで確認できる。
 - 発火タイミング:
   - FAST モード（`EXPO_PUBLIC_VIRTUAL_AURORA_FAST=1`）: 既定 20 秒後に発火。
     `EXPO_PUBLIC_VIRTUAL_AURORA_SLEEP_SECONDS` で秒数を変更できる。

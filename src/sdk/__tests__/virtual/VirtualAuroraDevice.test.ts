@@ -63,6 +63,29 @@ describe("VirtualAuroraDevice", () => {
         expect(emitted).toEqual([EventIds.BATTERY_MONITOR, 100]);
     });
 
+    test("バッテリーイベントは有効化中は定期通知され、無効化で止まる", async () => {
+        const device = new VirtualAuroraDevice({ batteryEventIntervalMs: 50 });
+        const emitted: Array<[number, number]> = [];
+        device.on("deviceEvent", (eventId: number, flags: number) => {
+            emitted.push([eventId, flags]);
+        });
+
+        device.execute(`event-output-enable ${1 << EventIds.BATTERY_MONITOR} 16`);
+        await wait(350);
+
+        // 初回（150ms）+ 定期分（50ms 間隔）が届く
+        expect(emitted.length).toBeGreaterThanOrEqual(3);
+        for (const [eventId, flags] of emitted) {
+            expect(eventId).toBe(EventIds.BATTERY_MONITOR);
+            expect(flags).toBe(100);
+        }
+
+        device.execute("event-output-disable");
+        const countAfterDisable = emitted.length;
+        await wait(200);
+        expect(emitted.length).toBe(countAfterDisable);
+    });
+
     test("sd-file-write の入力が完了すると writeFinished とファイル保存が起きる", async () => {
         const device = new VirtualAuroraDevice();
         const finished: Array<{ kind: string; lines: string[] }> = [];

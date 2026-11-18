@@ -92,6 +92,57 @@ describe("VirtualAuroraDevice セッション・就寝シナリオ", () => {
         expect(emitted.length).toBe(0);
     });
 
+    test("就寝シナリオ完了でその晩のセッションが生成され、パーサを通る", async () => {
+        const device = new VirtualAuroraDevice({
+            sleepScenarioSeconds: 1,
+            buttonPressDelayMs: 50,
+        });
+
+        device.execute("prof-load default.prof");
+        await wait(1400);
+
+        // サンプル 2 件 + 就寝分の 1 件が一覧される
+        const dirs = device.execute("sd-dir-read sessions 0 *@*");
+        expect(dirs.kind).toBe("table");
+        if (dirs.kind !== "table") return;
+        expect(dirs.rows.length).toBe(3);
+
+        // 生成されたのは「今日」の日時ディレクトリ
+        const today = new Date();
+        const todayPrefix = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+        const newDir = dirs.rows.find((row) => String(row[0]).startsWith(todayPrefix));
+        expect(newDir).toBeDefined();
+        const dirName = String(newDir![0]);
+
+        // sd-file-read（compress=1）→ heatshrink 復号 → AuroraSessionReader.read まで通す
+        const read = device.execute(`sd-file-read session.txt ${dirName} 1`);
+        expect(read.kind).toBe("output");
+        if (read.kind !== "output") return;
+
+        const encoded = Buffer.concat(read.chunks);
+        const decoder = new HeatshrinkDecoder(8, 4, encoded.byteLength);
+        decoder.process(encoded);
+        const sessionTxt = new TextDecoder().decode(decoder.getOutput());
+        expect(sessionTxt.length).toBeGreaterThan(75);
+
+        const dirFiles = device.execute(`sd-dir-read ${dirName} 1`);
+        const session = await AuroraSessionReader.read(
+            `sessions/${dirName}`,
+            sessionTxt,
+            dirFiles.kind === "table"
+                ? dirFiles.rows.map((row) => ({
+                      name: String(row[0]),
+                      isFile: Boolean(row[1]),
+                      size: Number(row[2]),
+                  }))
+                : undefined,
+        );
+
+        expect(session.name).toBe(dirName);
+        expect(session.profile).toBe("default.prof");
+        expect(session.events.length).toBeGreaterThan(0);
+    });
+
     test("wakeup-time を書き込んだプロフィールから起床時刻を読める（実時間モード）", async () => {
         const device = new VirtualAuroraDevice();
         const finished: Array<{ kind: string }> = [];

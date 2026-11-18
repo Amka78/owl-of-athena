@@ -40,9 +40,9 @@ describe("VirtualAuroraBluetooth", () => {
         const bt = new VirtualAuroraBluetooth();
         await bt.connect(500);
 
-        const events: Array<{ eventId: number }> = [];
+        const events: Array<{ eventId: number; flags: number }> = [];
         bt.on(DeviceEventList.auroraEvent, (auroraEvent) => {
-            events.push(auroraEvent as { eventId: number });
+            events.push(auroraEvent as { eventId: number; flags: number });
         });
 
         await bt.writeCmd(`event-output-enable ${1 << EventIds.BATTERY_MONITOR} 16`);
@@ -50,6 +50,7 @@ describe("VirtualAuroraBluetooth", () => {
 
         expect(events.length).toBe(1);
         expect(events[0].eventId).toBe(EventIds.BATTERY_MONITOR);
+        expect(events[0].flags).toBe(100);
     });
 
     test("sd-file-write は入力を待ち、完了後に crc を含むオブジェクト応答を返す", async () => {

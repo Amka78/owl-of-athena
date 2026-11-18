@@ -32,6 +32,8 @@ const WRITE_FINISHED = "writeFinished";
 const INPUT_IDLE_COMPLETE_MS = 500;
 const OUTPUT_CHUNK_MAX = 120;
 const BATTERY_EVENT_DELAY_MS = 150;
+/** 実機と同じく、バッテリー残量を定期通知する間隔。 */
+const BATTERY_EVENT_INTERVAL_MS = 5000;
 /** 就寝シナリオを短縮するときの、アラーム発火までの既定秒数。 */
 const DEFAULT_SLEEP_SCENARIO_SECONDS = 20;
 /** アラーム発火から「起床ボタン押下（BUTTON_MONITOR）」までの秒数。 */
@@ -51,6 +53,7 @@ const PROFILE_WAKEUP_TIME_KEY = "{wakeup-time:";
  *
  * 端末の残り状態（バッテリー量・ファームウェアバージョン）は env で上書きできる:
  *  - EXPO_PUBLIC_VIRTUAL_AURORA_VERSION: os-info の Version（既定 99900 = 更新提示が出ない高値）
+ *  - EXPO_PUBLIC_VIRTUAL_AURORA_BATTERY: BATTERY_MONITOR / os-info の残量 %（既定 100）
  *
  * 就寝シナリオ（Phase 3）:
  *  - GO TO BED（prof-load default.prof）を検知するとアラーム発火を予約する。
@@ -69,17 +72,21 @@ export class VirtualAuroraDevice extends EventEmitter {
     private pendingWrite?: { key: string; chunks: Buffer[]; rename: boolean };
     private inputIdleTimer?: ReturnType<typeof setTimeout>;
     private batteryEventTimer?: ReturnType<typeof setTimeout>;
+    private batteryInterval?: ReturnType<typeof setInterval>;
     private alarmTimer?: ReturnType<typeof setTimeout>;
     private buttonTimer?: ReturnType<typeof setTimeout>;
     private wakeupTimeOfDayMs?: number;
     private sleepScenarioSeconds?: number;
     private buttonPressDelayMs: number;
+    private batteryEventIntervalMs: number;
+    private sleepStartMs?: number;
 
     constructor(options?: {
         osVersion?: number;
         batteryLevel?: number;
         sleepScenarioSeconds?: number;
         buttonPressDelayMs?: number;
+        batteryEventIntervalMs?: number;
     }) {
         super();
 
@@ -89,13 +96,19 @@ export class VirtualAuroraDevice extends EventEmitter {
             (Number.isFinite(envVersion) && envVersion > 0
                 ? envVersion
                 : VIRTUAL_DEFAULT_OS_VERSION);
-        this.batteryLevel = options?.batteryLevel ?? VIRTUAL_DEFAULT_BATTERY_LEVEL;
+        const envBattery = Number(process.env.EXPO_PUBLIC_VIRTUAL_AURORA_BATTERY);
+        this.batteryLevel =
+            options?.batteryLevel ??
+            (Number.isFinite(envBattery) && envBattery > 0 && envBattery <= 100
+                ? envBattery
+                : VIRTUAL_DEFAULT_BATTERY_LEVEL);
         // 更新提示（app→bootloader→BLE の優先順）が出ないよう、bootloader/BLE は高値にしておく。
         // フラッシュフローの検証は EXPO_PUBLIC_VIRTUAL_AURORA_VERSION で古い Version を指定する。
         this.bootloaderVersion = 99900;
         this.bleVersion = 99900;
         this.enabledEventMask = 0;
         this.buttonPressDelayMs = options?.buttonPressDelayMs ?? BUTTON_PRESS_DELAY_MS;
+        this.batteryEventIntervalMs = options?.batteryEventIntervalMs ?? BATTERY_EVENT_INTERVAL_MS;
 
         const envSleepSeconds = Number(process.env.EXPO_PUBLIC_VIRTUAL_AURORA_SLEEP_SECONDS);
         this.sleepScenarioSeconds =
@@ -117,6 +130,7 @@ export class VirtualAuroraDevice extends EventEmitter {
         this.pendingWrite = undefined;
         this.loadedProfile = undefined;
         this.wakeupTimeOfDayMs = undefined;
+        this.sleepStartMs = undefined;
     }
 
     public disconnect(): void {
@@ -138,11 +152,13 @@ export class VirtualAuroraDevice extends EventEmitter {
 
             case "prof-load":
                 this.loadedProfile = args[0] ?? "default.prof";
+                this.sleepStartMs = Date.now();
                 this.scheduleSleepScenario();
                 return { kind: "plain" };
 
             case "prof-unload":
                 this.loadedProfile = undefined;
+                this.sleepStartMs = undefined;
                 this.cancelSleepScenario();
                 return { kind: "plain" };
 
@@ -303,6 +319,9 @@ export class VirtualAuroraDevice extends EventEmitter {
             this.batteryEventTimer = setTimeout(() => {
                 this.emit(DEVICE_EVENT, EventIds.BATTERY_MONITOR, this.batteryLevel);
             }, BATTERY_EVENT_DELAY_MS);
+            // 実機と同じく残量を定期通知する。初回通知を取りこぼしても
+            // （購読タイミング・再接続）定期分で 0 表示から収束する。
+            this.startBatteryInterval();
         }
 
         return { kind: "plain" };
@@ -499,6 +518,21 @@ export class VirtualAuroraDevice extends EventEmitter {
             clearTimeout(this.batteryEventTimer);
             this.batteryEventTimer = undefined;
         }
+        this.stopBatteryInterval();
+    }
+
+    private startBatteryInterval(): void {
+        this.stopBatteryInterval();
+        this.batteryInterval = setInterval(() => {
+            this.emit(DEVICE_EVENT, EventIds.BATTERY_MONITOR, this.batteryLevel);
+        }, this.batteryEventIntervalMs);
+    }
+
+    private stopBatteryInterval(): void {
+        if (this.batteryInterval !== undefined) {
+            clearInterval(this.batteryInterval);
+            this.batteryInterval = undefined;
+        }
     }
 
     /** プロフィールの `{wakeup-time:<ms-after-midnight>}` を抽出する。 */
@@ -551,6 +585,10 @@ export class VirtualAuroraDevice extends EventEmitter {
     }
 
     private fireAlarm(): void {
+        // その晩寝た分のセッションを仮想 SD へ生成する。起床後の未転送セッション同期で
+        // アプリが読み取り、サーバへ登録（pushSessions）される。
+        this.createSleepSession();
+
         // CLOCK_ALARM_FIRE で AuroraManager が WAKING → Waking 画面へ遷移する
         this.emit(DEVICE_EVENT, EventIds.CLOCK_ALARM_FIRE, 1);
 
@@ -559,6 +597,50 @@ export class VirtualAuroraDevice extends EventEmitter {
             this.buttonTimer = undefined;
             this.emit(DEVICE_EVENT, EventIds.BUTTON_MONITOR, 1);
         }, this.buttonPressDelayMs);
+    }
+
+    /**
+     * 就寝シナリオのセッション（session.txt + stream ファイル）を生成する。
+     * サンプルセッションと同じ実機フォーマットで、短縮シナリオでも時系列が
+     * 壊れないようイベント時刻を duration 内にクランプする。
+     */
+    private createSleepSession(): void {
+        if (this.sleepStartMs === undefined) {
+            this.sleepStartMs = Date.now();
+        }
+        const startedAt = new Date(this.sleepStartMs);
+        const durationMs = Math.max(Date.now() - startedAt.getTime(), 1);
+
+        const dirName = `${formatSampleDate(startedAt)}@${String(startedAt.getHours()).padStart(2, "0")}${String(startedAt.getMinutes()).padStart(2, "0")}`;
+        const startEpoch = startedAt.getTime();
+        const streamFile = `${startEpoch.toString(16)}.dat`;
+        const fallAsleepAt = Math.min(300000, Math.floor(durationMs / 4));
+        const wakeAt = Math.max(0, durationMs - Math.floor(durationMs / 4));
+
+        const sessionTxt = [
+            "version: 30000",
+            `date: ${startEpoch}`,
+            "profile: default.prof",
+            `duration: ${durationMs}`,
+            "events.0.id: 1",
+            `events.0.time: ${fallAsleepAt}`,
+            "events.0.flags: 2",
+            "events.1.id: 1",
+            `events.1.time: ${wakeAt}`,
+            "events.1.flags: 1",
+            "streams.0.id: 0",
+            "streams.0.time: 0",
+            "streams.0.type: BOOL",
+            `streams.0.file: ${streamFile}`,
+            "streams.0.asleepAt: 1000",
+            "",
+        ].join("\n");
+
+        this.files.set(`sessions/${dirName}/session.txt`, Buffer.from(sessionTxt));
+        this.files.set(
+            `sessions/${dirName}/${streamFile}`,
+            Buffer.alloc(Math.max(8, Math.floor(durationMs / 3600000) * 8), 7),
+        );
     }
 
     private cancelSleepScenario(): void {
