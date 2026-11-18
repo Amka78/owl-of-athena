@@ -55,7 +55,9 @@ class NativeAlarmNotifier implements AlarmNotifier {
                 await Notifications.setNotificationChannelAsync(CHANNEL_ID, {
                     name: Message.get(MessageKeys.alarm_notification_title),
                     importance: Notifications.AndroidImportance.MAX,
-                    sound: "default",
+                    // sound は指定しない。Android のチャンネルは未指定ならシステム標準音を使い、
+                    // ここで "default" を渡すと expo-notifications がカスタム音名として扱い
+                    // "Custom sound 'default' not found in native app" エラーになる。
                     vibrationPattern: [0, 250, 250, 250],
                 });
             }
@@ -177,7 +179,9 @@ class NativeAlarmNotifier implements AlarmNotifier {
             title: Message.get(MessageKeys.alarm_notification_title),
             body: Message.get(MessageKeys.alarm_notification_body),
             categoryIdentifier: CATEGORY_ID,
-            sound: "default",
+            // iOS では "default" がシステム標準音として扱われる。Android は
+            // チャンネルが音を決めるため content 側には渡さない（渡すとカスタム音名扱いになる）。
+            ...(Platform.OS === "ios" ? { sound: "default" } : {}),
             ...(Platform.OS === "android" ? { channelId: CHANNEL_ID } : {}),
         };
     }
