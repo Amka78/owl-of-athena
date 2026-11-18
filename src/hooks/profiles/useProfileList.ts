@@ -9,7 +9,6 @@ import { Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { type ProfileFilterCondition, useProfileStore } from "../../store/profileStore";
 import { GuestUser } from "../../types/Auth";
-import { traceRender } from "../../utils/renderTrace";
 import { useCheckLogging } from "../useCheckLogging";
 import { useUserSelector } from "../useUserSelector";
 import { useWindowDimensions } from "../useWindowDimensions";
@@ -41,7 +40,6 @@ export const useProfileList = (): {
     const [showFilter, setShowFilter] = useState<boolean>(false);
     const dimens = useWindowDimensions();
     useCheckLogging();
-    traceRender("useProfileList", { listLength: list.length, showFilter });
 
     const onPressedRefresh = useCallback(async () => {
         if (!user || user.id === GuestUser) return;

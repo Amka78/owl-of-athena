@@ -15,7 +15,6 @@ import { APP_SCHEME, Theme } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { isPasswordRecoveryUrl } from "../services/AuthLinkService";
 import { useRecoveryLinkStore } from "../store/recoveryLinkStore";
-import { traceRender } from "../utils/renderTrace";
 import { OfflineBanner } from "./atoms/OfflineBanner";
 //#endregion
 
@@ -28,7 +27,6 @@ export type ContainerProps = {
 //#region Component
 export const Container: FunctionComponent<ContainerProps> = (props: ContainerProps) => {
     const dimens = useWindowDimensions();
-    traceRender("Container", { width: dimens.width, height: dimens.height });
     const setPendingUrl = useRecoveryLinkStore((state) => state.setPendingUrl);
     const navigationRef = useRef(createNavigationContainerRef()).current;
 

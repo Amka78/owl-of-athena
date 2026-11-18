@@ -5,7 +5,6 @@ import type * as React from "react";
 import { ProfileListScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
 import { useWindowDimensions } from "../hooks";
-import { traceRender } from "../utils/renderTrace";
 import ProfileTabNavigator from "./ProfileTabNavigator";
 import { StackCommonScreenOptions } from "./StackSettings";
 
@@ -15,7 +14,6 @@ import { StackCommonScreenOptions } from "./StackSettings";
 const Stack = createNativeStackNavigator();
 
 const ProfileNavigator = (): React.ReactNode => {
-    traceRender("ProfileNavigator");
     const dimens = useWindowDimensions();
 
     return (
