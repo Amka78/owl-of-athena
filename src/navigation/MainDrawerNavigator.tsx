@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 //#region Import Modules
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, type DrawerNavigationProp } from "@react-navigation/drawer";
+import type { ParamListBase } from "@react-navigation/native";
 import type React from "react";
+import { useRef } from "react";
 import { View } from "react-native";
 
 import {
@@ -49,7 +51,10 @@ export type MainDrawerNavigatorProps = {
 const Drawer = createDrawerNavigator();
 
 const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode => {
-    const mainDrawerHook = useMainDrawerNavigator();
+    // このコンポーネントの useNavigation() は親（Stack）の navigation を返すため、
+    // Drawer 自身へのアクション（toggle/close）はここで捕捉した Drawer の navigation へ投げる。
+    const drawerNavigationRef = useRef<DrawerNavigationProp<ParamListBase> | null>(null);
+    const mainDrawerHook = useMainDrawerNavigator(drawerNavigationRef);
     const { user } = useAuthStore();
     const isAdmin = user?.roles?.some((r) => r.slug === "admin") ?? false;
     const unsyncedBadgeCount =
@@ -60,67 +65,70 @@ const MainDrawerNavigator = (props: MainDrawerNavigatorProps): React.ReactNode =
             defaultStatus={
                 mainDrawerHook.isDesktop && mainDrawerHook.isHorizontal ? "open" : "closed"
             }
-            screenOptions={{
-                drawerType: mainDrawerHook.drawerType,
-                drawerStyle: {
-                    backgroundColor: Colors.blue,
-                    width: mainDrawerHook.isDesktop ? undefined : 60,
-                },
-                drawerActiveBackgroundColor: Colors.navy_darker,
-                drawerActiveTintColor: Colors.cyan,
-                drawerInactiveTintColor: Colors.white,
-                headerLeft: () => {
-                    return (
-                        <MenuIcon
-                            color={mainDrawerHook.isDrawerOpen ? Colors.cyan : Colors.white}
-                            onPress={mainDrawerHook.onDrawerMenuPress}
-                        ></MenuIcon>
-                    );
-                },
-                headerRight: () => {
-                    let batteryIcon;
-                    if (props.bluetoothConnect === ConnectionStates.CONNECTED) {
-                        batteryIcon = (
-                            <BatteryIcon
-                                isUSBConnected={false}
-                                batteryLevel={props.batteryLevel}
-                                style={{ marginRight: 10 }}
-                                onPress={props.onDeviceInfoPress}
-                            ></BatteryIcon>
+            screenOptions={(screenOptionsProps) => {
+                drawerNavigationRef.current = screenOptionsProps.navigation;
+                return {
+                    drawerType: mainDrawerHook.drawerType,
+                    drawerStyle: {
+                        backgroundColor: Colors.blue,
+                        width: mainDrawerHook.isDesktop ? undefined : 60,
+                    },
+                    drawerActiveBackgroundColor: Colors.navy_darker,
+                    drawerActiveTintColor: Colors.cyan,
+                    drawerInactiveTintColor: Colors.white,
+                    headerLeft: () => {
+                        return (
+                            <MenuIcon
+                                color={mainDrawerHook.isDrawerOpen ? Colors.cyan : Colors.white}
+                                onPress={mainDrawerHook.onDrawerMenuPress}
+                            ></MenuIcon>
                         );
-                    }
-                    return (
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                justifyContent: "flex-end",
-                            }}
-                        >
-                            {batteryIcon}
-                            <BluetoothIcon
-                                connectionStates={props.bluetoothConnect}
-                                onPress={async () => {
-                                    const result = await props.onBluetoothConnectPress();
-
-                                    if (result !== "") {
-                                        ConfirmDialog.show({
-                                            title: Message.get(MessageKeys.connection_error),
-                                            message: result,
-                                        });
-                                    }
+                    },
+                    headerRight: () => {
+                        let batteryIcon;
+                        if (props.bluetoothConnect === ConnectionStates.CONNECTED) {
+                            batteryIcon = (
+                                <BatteryIcon
+                                    isUSBConnected={false}
+                                    batteryLevel={props.batteryLevel}
+                                    style={{ marginRight: 10 }}
+                                    onPress={props.onDeviceInfoPress}
+                                ></BatteryIcon>
+                            );
+                        }
+                        return (
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    justifyContent: "flex-end",
                                 }}
-                                style={{ marginRight: 10 }}
-                            ></BluetoothIcon>
-                            <LogoutIcon
-                                color={Colors.white}
-                                onPress={mainDrawerHook.onLogoutPress}
-                            ></LogoutIcon>
-                        </View>
-                    );
-                },
-                headerShown: mainDrawerHook.isDesktop,
-                headerTitle: "",
-                headerStyle: { backgroundColor: Colors.blue },
+                            >
+                                {batteryIcon}
+                                <BluetoothIcon
+                                    connectionStates={props.bluetoothConnect}
+                                    onPress={async () => {
+                                        const result = await props.onBluetoothConnectPress();
+
+                                        if (result !== "") {
+                                            ConfirmDialog.show({
+                                                title: Message.get(MessageKeys.connection_error),
+                                                message: result,
+                                            });
+                                        }
+                                    }}
+                                    style={{ marginRight: 10 }}
+                                ></BluetoothIcon>
+                                <LogoutIcon
+                                    color={Colors.white}
+                                    onPress={mainDrawerHook.onLogoutPress}
+                                ></LogoutIcon>
+                            </View>
+                        );
+                    },
+                    headerShown: mainDrawerHook.isDesktop,
+                    headerTitle: "",
+                    headerStyle: { backgroundColor: Colors.blue },
+                };
             }}
         >
             <Drawer.Screen

@@ -1,7 +1,8 @@
 //#region Import Modules
 
-import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { useCallback, useLayoutEffect, useState } from "react";
+import type { DrawerNavigationProp } from "@react-navigation/drawer";
+import { DrawerActions, type ParamListBase } from "@react-navigation/native";
+import { type RefObject, useCallback, useLayoutEffect, useState } from "react";
 
 import { useCheckLogging, useLogout, useWindowDimensions } from "./";
 
@@ -12,7 +13,9 @@ type DrawerType = "slide" | "front" | "back" | "permanent" | undefined;
 //#endregion
 
 //#region Component
-export const useMainDrawerNavigator = (): {
+export const useMainDrawerNavigator = (
+    drawerNavigationRef: RefObject<DrawerNavigationProp<ParamListBase> | null>,
+): {
     isDesktop: boolean;
     isHorizontal: boolean;
     drawerType: DrawerType;
@@ -27,17 +30,20 @@ export const useMainDrawerNavigator = (): {
     const [drawerType, setDrawerType] = useState<DrawerType>(
         dimens.isDesktop ? "permanent" : "slide",
     );
-    const { dispatch } = useNavigation();
 
     const isDesktop = dimens.isDesktop;
     const isHorizontal = dimens.isHorizontal;
 
+    // useNavigation() はこのフックの呼び出し元（Drawer をレンダーする親の Stack）の
+    // navigation を返すため、Drawer 自身を操作するアクションをその経路で dispatch すると
+    // "The action 'CLOSE_DRAWER' was not handled by any navigator" になる。
+    // Drawer の navigation（screenOptions の関数引数で捕捉したもの）へ投げ直す。
     useLayoutEffect(() => {
         if (!dimens.isDesktop) {
             setDrawerType("slide");
 
             if (dimens.isVertical) {
-                dispatch(DrawerActions.closeDrawer());
+                drawerNavigationRef.current?.dispatch(DrawerActions.closeDrawer());
             }
         } else {
             setDrawerType("permanent");
@@ -45,7 +51,7 @@ export const useMainDrawerNavigator = (): {
         return () => {
             return;
         };
-    }, [dimens.isDesktop, dimens.isVertical, dispatch]);
+    }, [dimens.isDesktop, dimens.isVertical, drawerNavigationRef]);
 
     const onDrawerMenuPress = useCallback(() => {
         if (isDrawerOpen) {
@@ -60,8 +66,8 @@ export const useMainDrawerNavigator = (): {
             setIsDrawerOpen(true);
         }
 
-        dispatch(DrawerActions.toggleDrawer());
-    }, [dimens.isDesktop, dispatch, drawerType, isDrawerOpen]);
+        drawerNavigationRef.current?.dispatch(DrawerActions.toggleDrawer());
+    }, [dimens.isDesktop, drawerNavigationRef, drawerType, isDrawerOpen]);
 
     const onLogoutPress = logout.onPress;
 
