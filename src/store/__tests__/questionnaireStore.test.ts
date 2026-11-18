@@ -7,6 +7,7 @@ jest.mock("../../services/QuestionnaireService", () => ({
     default: {
         getById: jest.fn(),
         getBySlug: jest.fn(),
+        getLatest: jest.fn(),
         startQuestionnaire: jest.fn(),
         resumeQuestionnaire: jest.fn(),
         saveUserResponse: jest.fn(),
@@ -178,5 +179,36 @@ describe("questionnaireStore UnitTest", () => {
         await useQuestionnaireStore.getState().resumeQuestionnaire("r");
 
         expect(useQuestionnaireStore.getState().respondent?.current_question?.id).toBe("q2");
+    });
+
+    it("loads the latest questionnaire for the awake screen", async () => {
+        (QuestionnaireService.getLatest as jest.Mock).mockResolvedValue(questionnaire);
+
+        await useQuestionnaireStore.getState().loadLatestQuestionnaire();
+
+        expect(QuestionnaireService.getLatest).toHaveBeenCalledTimes(1);
+        expect(useQuestionnaireStore.getState().questionnaire?.id).toBe("q");
+        expect(useQuestionnaireStore.getState().loading).toBe(false);
+        expect(useQuestionnaireStore.getState().error).toBeUndefined();
+    });
+
+    it("clears the questionnaire when no questionnaire exists", async () => {
+        (QuestionnaireService.getLatest as jest.Mock).mockResolvedValue(null);
+        useQuestionnaireStore.setState({ questionnaire });
+
+        await useQuestionnaireStore.getState().loadLatestQuestionnaire();
+
+        expect(useQuestionnaireStore.getState().questionnaire).toBeUndefined();
+        expect(useQuestionnaireStore.getState().loading).toBe(false);
+    });
+
+    it("keeps the error when loading the latest questionnaire fails", async () => {
+        (QuestionnaireService.getLatest as jest.Mock).mockRejectedValue(new Error("network down"));
+
+        await useQuestionnaireStore.getState().loadLatestQuestionnaire();
+
+        expect(useQuestionnaireStore.getState().questionnaire).toBeUndefined();
+        expect(useQuestionnaireStore.getState().error).toBe("network down");
+        expect(useQuestionnaireStore.getState().loading).toBe(false);
     });
 });

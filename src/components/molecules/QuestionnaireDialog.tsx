@@ -26,6 +26,8 @@ import { ContentText, ContentTitle, FlatButton, TextBox } from "../atoms";
 
 //#region Types
 type QuestionnaireDialogSettings = {
+    /** 最新の質問票（introduction から）を開く。questionnaireId / respondentId と排他。 */
+    latest?: boolean;
     questionnaireId?: string;
     respondentId?: string;
     onComplete?: () => void;
@@ -53,7 +55,9 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
     public static show(args: QuestionnaireDialogSettings): void {
         QuestionnaireDialog.Instance!.setState({ settings: args });
         const store = useQuestionnaireStore.getState();
-        if (args.respondentId) {
+        if (args.latest) {
+            store.loadLatestQuestionnaire();
+        } else if (args.respondentId) {
             store.resumeQuestionnaire(args.respondentId, args.onComplete);
         } else if (args.questionnaireId) {
             store.loadQuestionnaire(args.questionnaireId);
@@ -159,6 +163,9 @@ export class QuestionnaireDialog extends React.Component<{}, QuestionnaireDialog
                     ) : null}
                 </View>
             );
+        }
+        if (this.state.settings?.latest) {
+            return <ContentText>{Message.get(MessageKeys.questionnaire_not_found)}</ContentText>;
         }
         return null;
     }

@@ -31,6 +31,18 @@ class QuestionnaireService {
         return data as Questionnaire;
     }
 
+    async getLatest(): Promise<Questionnaire | null> {
+        const { data, error } = await supabase
+            .from("questionnaires")
+            .select("*")
+            .order("created_at", { ascending: false })
+            .limit(1)
+            .maybeSingle();
+
+        if (error) throw error;
+        return (data as Questionnaire | null) ?? null;
+    }
+
     async startQuestionnaire(
         questionnaireId: string,
         questions: Question[] = [],

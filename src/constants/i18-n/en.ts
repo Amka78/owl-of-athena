@@ -473,6 +473,7 @@ export default {
     [MessageKeys.questionnaire_close_button]: "Close",
     [MessageKeys.questionnaire_loading]: "Loading questionnaire...",
     [MessageKeys.questionnaire_error]: "Failed to load questionnaire.",
+    [MessageKeys.questionnaire_not_found]: "No questionnaire available.",
     [MessageKeys.questionnaire_text_placeholder]: "Enter your answer",
 
     // change password screen

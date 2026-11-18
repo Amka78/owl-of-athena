@@ -470,6 +470,7 @@ export default {
     [MessageKeys.questionnaire_close_button]: "閉じる",
     [MessageKeys.questionnaire_loading]: "アンケートを読み込み中...",
     [MessageKeys.questionnaire_error]: "アンケートの読み込みに失敗しました。",
+    [MessageKeys.questionnaire_not_found]: "対象の質問票が見つかりません。",
     [MessageKeys.questionnaire_text_placeholder]: "回答を入力",
 
     // change password screen

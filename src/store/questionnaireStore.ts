@@ -11,6 +11,7 @@ type QuestionnaireStore = {
     onCompleteCallback?: () => void;
 
     loadQuestionnaire: (questionnaireId: string) => Promise<void>;
+    loadLatestQuestionnaire: () => Promise<void>;
     startQuestionnaire: (
         questionnaireId: string,
         onComplete?: () => void,
@@ -47,6 +48,16 @@ export const useQuestionnaireStore = create<QuestionnaireStore>()((set, get) => 
         try {
             const questionnaire = await QuestionnaireService.getById(questionnaireId);
             set({ questionnaire, loading: false });
+        } catch (e: any) {
+            set({ loading: false, error: e?.message ?? "Failed to load questionnaire" });
+        }
+    },
+
+    loadLatestQuestionnaire: async () => {
+        set({ loading: true, error: undefined });
+        try {
+            const questionnaire = await QuestionnaireService.getLatest();
+            set({ questionnaire: questionnaire ?? undefined, loading: false });
         } catch (e: any) {
             set({ loading: false, error: e?.message ?? "Failed to load questionnaire" });
         }

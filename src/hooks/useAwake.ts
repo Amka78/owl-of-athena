@@ -52,7 +52,9 @@ export const useAwake = (): {
     const sessionDetailList = useSessionDetailListSelector();
 
     const questionnaireButtonPress = useCallback((): void => {
+        // 起床画面の質問票は「最新の質問票」を introduction から開く
         QuestionnaireDialog.show({
+            latest: true,
             onComplete: () => navigate("Home"),
             onClose: () => navigate("Home"),
         });

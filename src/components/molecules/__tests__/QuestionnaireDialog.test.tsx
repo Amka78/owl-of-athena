@@ -1,11 +1,25 @@
-import { act, fireEvent, render } from "@testing-library/react-native";
+import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import type React from "react";
 import { Provider } from "react-native-paper";
 
-import { Theme } from "../../../constants";
+import { Message, MessageKeys, Theme } from "../../../constants";
+import QuestionnaireService from "../../../services/QuestionnaireService";
 import { useQuestionnaireStore } from "../../../store/questionnaireStore";
 import type { Question } from "../../../types";
 import { QuestionnaireDialog } from "../QuestionnaireDialog";
+
+jest.mock("../../../services/QuestionnaireService", () => ({
+    __esModule: true,
+    default: {
+        getById: jest.fn(),
+        getBySlug: jest.fn(),
+        getLatest: jest.fn(),
+        startQuestionnaire: jest.fn(),
+        resumeQuestionnaire: jest.fn(),
+        saveUserResponse: jest.fn(),
+        revisitQuestion: jest.fn(),
+    },
+}));
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
@@ -75,5 +89,30 @@ describe("QuestionnaireDialog UnitTest", () => {
         expect(useQuestionnaireStore.getState().response).toEqual([
             { question_id: "q1", response_text: "A good night" },
         ]);
+    });
+
+    it("shows the latest questionnaire introduction when opened with latest", async () => {
+        (QuestionnaireService.getLatest as jest.Mock).mockResolvedValue({
+            id: "latest-q",
+            intro_title: "Morning Survey",
+            intro_text: "Welcome",
+            questions: [],
+        });
+        const { getByText } = renderWithProvider(<QuestionnaireDialog />);
+        QuestionnaireDialog.show({ latest: true });
+
+        expect(await waitFor(() => getByText("Morning Survey"))).toBeTruthy();
+        expect(getByText("Welcome")).toBeTruthy();
+        expect(getByText(Message.get(MessageKeys.questionnaire_begin_button))).toBeTruthy();
+    });
+
+    it("shows a notice when no questionnaire exists", async () => {
+        (QuestionnaireService.getLatest as jest.Mock).mockResolvedValue(null);
+        const { getByText } = renderWithProvider(<QuestionnaireDialog />);
+        QuestionnaireDialog.show({ latest: true });
+
+        expect(
+            await waitFor(() => getByText(Message.get(MessageKeys.questionnaire_not_found))),
+        ).toBeTruthy();
     });
 });
