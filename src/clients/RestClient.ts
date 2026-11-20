@@ -9,6 +9,9 @@ export default class RestClient {
 
     private _getTokenCallback?: () => string;
 
+    /** サーバが応答しないまま永遠に同期処理が止まらないよう、通信には必ず上限を設ける。 */
+    private static readonly REQUEST_TIMEOUT_MS = 60_000;
+
     constructor(baseUrl = "", { headers = {}, devMode = false, simulatedDelay = 0 } = {}) {
         if (!baseUrl) {
             throw new Error("missing baseUrl");
@@ -167,6 +170,14 @@ export default class RestClient {
             await this.createSimulateDelay();
         }
 
-        return await fetch(fullRoute, opts);
+        const controller = new AbortController();
+        const timer = setTimeout(() => {
+            controller.abort();
+        }, RestClient.REQUEST_TIMEOUT_MS);
+        try {
+            return await fetch(fullRoute, { ...opts, signal: controller.signal });
+        } finally {
+            clearTimeout(timer);
+        }
     }
 }

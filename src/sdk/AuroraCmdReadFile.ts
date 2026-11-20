@@ -50,7 +50,16 @@ const AuroraCmdReadFile = async function (
             });
         },
     ).then((cmdWithResponse: ReadCommandResult) => {
-        return promisifyStream(stream!).then(() => {
+        // コマンド完了（cmdResponse）時点で出力データは outputChunks に揃っている。
+        // RN の stream 実装では push(null) の後に end / close イベントが発火せず
+        // promisifyStream が永久に未解決になることがあるため、上限付きで待つ。
+        // （未解決のままではセッション同期が最初のファイル読み取りで止まる。）
+        const streamClosed = promisifyStream(stream!);
+        const settled = Promise.race([
+            streamClosed,
+            new Promise((resolve) => setTimeout(resolve, 2000)),
+        ]);
+        return settled.then(() => {
             console.debug("Calculated Crc:", crc);
             console.debug("Aurora crc:", cmdWithResponse.response!.crc);
             /*if (cmdWithResponse.response.crc != crc)
