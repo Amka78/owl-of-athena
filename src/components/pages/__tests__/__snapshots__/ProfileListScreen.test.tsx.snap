@@ -221,6 +221,8 @@ exports[`ProfileListScreen UnitTest renders correctly 1`] = `
                   {
                     "alignItems": "stretch",
                     "justifyContent": "flex-start",
+                    "marginLeft": 0,
+                    "marginRight": 0,
                   },
                 ],
               },

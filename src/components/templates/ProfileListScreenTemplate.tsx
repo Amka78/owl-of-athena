@@ -118,11 +118,17 @@ const iconContainer: ViewStyle = {
     alignItems: "center",
     flexDirection: "row",
 };
-// StandardView は既定で alignItems: "center" のため、List の行がコンテンツ幅まで縮んで
-// 中央寄せの細い列になる。root とコンテンツ列を stretch に上書きして、
-// 行をリストの横幅いっぱい（標準マージン内）に広げる。
+// StandardView は既定で alignItems: "center" + 左右 48px（Dimens.content_margin_horizontal）の
+// 中央寄せレイアウト。一覧はモバイルで画面幅いっぱいに描画したいため、
+// root とコンテンツ列を stretch に、既定の左右余白を 0 に上書きする
+// （セッション一覧と同様。余白を残すと行が細く中央寄せになり左右が大きく空く）。
 const rootViewStyle: ViewStyle = { alignItems: "stretch" };
-const standardView: ViewStyle = { alignItems: "stretch", justifyContent: "flex-start" };
+const standardView: ViewStyle = {
+    alignItems: "stretch",
+    justifyContent: "flex-start",
+    marginLeft: 0,
+    marginRight: 0,
+};
 const styles = {
     listItem: { width: "100%" } as ViewStyle,
 };
