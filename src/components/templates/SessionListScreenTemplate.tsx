@@ -64,14 +64,18 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                         <ListItem
                             key={row.key}
                             left={(props: ListItemComponentProps): React.ReactNode => (
-                                <ChartRadialProgress
-                                    width={38}
-                                    height={38}
-                                    value={value.sleepScore}
-                                    fgColor={Colors.teal}
-                                    bgColor={props.color}
-                                    valueLabel={String(value.sleepScore)}
-                                />
+                                // paper が渡す style（marginLeft / alignSelf: "center"）を反映する。
+                                // これを捨てると行の既定 alignSelf（stretch）でスコア円が上寄せになる。
+                                <View style={[props.style, { justifyContent: "center" }]}>
+                                    <ChartRadialProgress
+                                        width={38}
+                                        height={38}
+                                        value={value.sleepScore}
+                                        fgColor={Colors.teal}
+                                        bgColor={props.color}
+                                        valueLabel={String(value.sleepScore)}
+                                    />
+                                </View>
                             )}
                             right={(rightProps: ListItemComponentProps): React.ReactNode => (
                                 <View {...rightProps} style={starIconContainer}>
@@ -98,6 +102,10 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                             )}
                             title={sessionAt.format("dddd")}
                             description={sessionAt.format(Message.get(MessageKeys.date_format))}
+                            // 左右の要素（スコア円グラフ / NEWバッジ・アイコン）の幅を確保するため、
+                            // 曜日・日付は各 1 行固定にして折り返しによる行高の乱れを防ぐ
+                            titleNumberOfLines={1}
+                            descriptionNumberOfLines={1}
                             style={{ width: screenDimens.width }}
                             onPress={async () => {
                                 props.onMenuPress(value, index);
@@ -112,7 +120,15 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
 //#endregion
 
 //#region Styles
-const standardView: ViewStyle = { justifyContent: "flex-start" };
+// 一覧行（ListItem）は width を画面幅いっぱいにして描画するため、
+// StandardView の既定の左右余白（Dimens.content_margin_horizontal = 48）を打ち消す。
+// 余白を残すと行がコンテンツ領域よりはみ出し、右端の NEW バッジ/アイコンが
+// 画面端で見切れる。
+const standardView: ViewStyle = {
+    justifyContent: "flex-start",
+    marginLeft: 0,
+    marginRight: 0,
+};
 const monthHeader: TextStyle = {
     color: Colors.cyan,
     fontSize: 12,

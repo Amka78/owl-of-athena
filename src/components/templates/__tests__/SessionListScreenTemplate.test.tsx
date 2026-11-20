@@ -37,6 +37,72 @@ describe("SessionListScreenTemplate", () => {
         expect(toJSON()).toMatchSnapshot();
     });
 
+    it("keeps title and description on a single line so rows stay aligned", () => {
+        const session = {
+            id: "session-1",
+            sessionAt: Date.UTC(2026, 0, 1),
+            sleepScore: 80,
+            starred: false,
+        } as unknown as AuroraSession;
+
+        const { toJSON } = renderWithProvider(
+            <SessionListScreenTemplate
+                showFilter={false}
+                filterMenuProps={filterMenuProps}
+                sessionList={[session]}
+                onStarPress={jest.fn()}
+                onDeletePress={jest.fn()}
+                onMenuPress={jest.fn()}
+                locale="en-US"
+            />,
+        );
+
+        const rendered = JSON.stringify(toJSON());
+        // title（曜日）と description（日付）の Text がどちらも numberOfLines=1 で描画される
+        const oneLineTexts = rendered.match(/"numberOfLines":1/g) ?? [];
+        expect(oneLineTexts.length).toBeGreaterThanOrEqual(2);
+    });
+
+    it("vertically centers the score chart within the row", () => {
+        const session = {
+            id: "session-centered",
+            sessionAt: Date.UTC(2026, 0, 1),
+            sleepScore: 80,
+            starred: false,
+        } as unknown as AuroraSession;
+
+        const { toJSON } = renderWithProvider(
+            <SessionListScreenTemplate
+                showFilter={false}
+                filterMenuProps={filterMenuProps}
+                sessionList={[session]}
+                onStarPress={jest.fn()}
+                onDeletePress={jest.fn()}
+                onMenuPress={jest.fn()}
+                locale="en-US"
+            />,
+        );
+
+        const hasSvgDescendant = (node: any): boolean =>
+            (typeof node?.type === "string" && node.type.includes("Svg")) ||
+            (Array.isArray(node?.children) && node.children.some(hasSvgDescendant));
+
+        const isCenteredChartWrapper = (node: any): boolean => {
+            if (!node || typeof node !== "object") return false;
+            const style = node.props?.style;
+            const appliesPaperAlignment =
+                Array.isArray(style) &&
+                style.some((s: any) => s?.alignSelf === "center") &&
+                style.some((s: any) => s?.justifyContent === "center");
+            if (appliesPaperAlignment && hasSvgDescendant(node)) return true;
+            return Array.isArray(node.children) && node.children.some(isCenteredChartWrapper);
+        };
+
+        // paper の left スタイル（alignSelf: "center"）と中央寄せが
+        // スコア円（Svg）を包む view に適用されていること
+        expect(isCenteredChartWrapper(toJSON())).toBe(true);
+    });
+
     it("renders correctly with ja-JP locale", () => {
         const { toJSON } = renderWithProvider(
             <SessionListScreenTemplate

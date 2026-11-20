@@ -276,6 +276,8 @@ exports[`SessionDesktopScreenTemplate renders correctly with empty session list 
                               },
                               {
                                 "justifyContent": "flex-start",
+                                "marginLeft": 0,
+                                "marginRight": 0,
                               },
                             ],
                           },
@@ -702,6 +704,8 @@ exports[`SessionDesktopScreenTemplate renders blank screen when no session selec
                               },
                               {
                                 "justifyContent": "flex-start",
+                                "marginLeft": 0,
+                                "marginRight": 0,
                               },
                             ],
                           },

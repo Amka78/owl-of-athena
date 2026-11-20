@@ -220,6 +220,8 @@ exports[`SessionListScreenTemplate renders correctly with empty session list 1`]
                   },
                   {
                     "justifyContent": "flex-start",
+                    "marginLeft": 0,
+                    "marginRight": 0,
                   },
                 ],
               },
@@ -485,6 +487,8 @@ exports[`SessionListScreenTemplate renders correctly with ja-JP locale 1`] = `
                   },
                   {
                     "justifyContent": "flex-start",
+                    "marginLeft": 0,
+                    "marginRight": 0,
                   },
                 ],
               },
@@ -564,51 +568,18 @@ exports[`SessionListScreenTemplate shows filter menu when showFilter is true 1`]
                         },
                         {
                           "$$typeof": Symbol(react.test.json),
-                          "children": [
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Any Time",
-                                "value": "any_time",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Past Week",
-                                "value": "past_week",
-                              },
-                              "type": "Picker.Item",
-                            },
-                            {
-                              "$$typeof": Symbol(react.test.json),
-                              "children": null,
-                              "props": {
-                                "label": "Past Month",
-                                "value": "past_month",
-                              },
-                              "type": "Picker.Item",
-                            },
-                          ],
+                          "children": null,
                           "props": {
-                            "itemStyle": {
-                              "borderColor": "#ffffff",
-                              "textDecorationColor": "#ffffff",
-                            },
-                            "onValueChange": [class Function],
-                            "selectedValue": "any_time",
-                            "style": {
-                              "backgroundColor": "#4a2fba",
-                              "borderBottomColor": "#bcfeff",
-                              "borderLeftWidth": 0,
-                              "borderRightWidth": 0,
-                              "borderTopWidth": 0,
-                            },
+                            "style": [
+                              {
+                                "alignSelf": "flex-start",
+                                "borderColor": "red",
+                                "borderWidth": 1,
+                              },
+                              undefined,
+                            ],
                           },
-                          "type": "Picker",
+                          "type": "View",
                         },
                       ],
                       "props": {
@@ -1234,6 +1205,8 @@ exports[`SessionListScreenTemplate shows filter menu when showFilter is true 1`]
                   },
                   {
                     "justifyContent": "flex-start",
+                    "marginLeft": 0,
+                    "marginRight": 0,
                   },
                 ],
               },

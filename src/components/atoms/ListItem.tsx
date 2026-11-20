@@ -25,6 +25,7 @@ export type ListItemProps = {
     titleNumberOfLines?: number;
     description?: string;
     descriptionStyle?: TextStyle;
+    descriptionNumberOfLines?: number;
     disabled?: boolean;
     onPress?: () => void;
 };
