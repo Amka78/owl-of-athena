@@ -1,4 +1,12 @@
 import type { AuroraSessionCSV, AuroraSessionJson } from "../AuroraTypes";
+
+/**
+ * Supabase の行には type 列が無いため、構造化カラム（user_id）の有無で判別する
+ * （raw CSV セッションには user_id が無い）。
+ */
+const isJsonSessionRow = (src: AuroraSessionJson | AuroraSessionCSV): src is AuroraSessionJson =>
+    src.type === "json" || (src as unknown as AuroraSessionJson).user_id !== undefined;
+
 export class AuroraSession {
     public id: string;
     public userId: string;
@@ -30,7 +38,7 @@ export class AuroraSession {
         this.appPlatform = src.app_platform;
         this.appVersion = src.app_version;
         this.incomplete = src.incomplete;
-        if (src.type === "json") {
+        if (isJsonSessionRow(src)) {
             this.id = src.id;
             this.userId = src.user_id;
             this.auroraProfileId = src.aurora_profile_id;
@@ -68,7 +76,7 @@ export class AuroraSession {
             this.sleepScore = src.sleepScore;
             this.starred = false;
             this.isNew = false;
-            this.asleepAt = src.asleespAt;
+            this.asleepAt = src.asleepAt;
             this.awakeAt = src.awakeAt;
             this.sessionAt = src.date;
         }

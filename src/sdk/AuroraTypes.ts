@@ -229,7 +229,7 @@ export type AuroraSessionJson = {
 
 export type AuroraSessionCSV = {
     type: "csv";
-    asleespAt: number;
+    asleepAt: number;
     auroraDir: string;
     awakeAt: number;
     awakening: number;

@@ -9,6 +9,24 @@ import { AuroraEvent, AuroraSession, AuroraSessionDetail, AuroraStream } from ".
 import { supabase } from "./supabase";
 
 /**
+ * 数値を ms 整数へ丸める（CSV 由来の値に小数があると bigint カラムへの
+ * キャストが失敗するため）。undefined/null は undefined のまま返す。
+ */
+const toIntOrUndefined = (value: number | undefined): number | undefined => {
+    if (value === undefined || value === null || !Number.isFinite(value)) return undefined;
+    return Math.round(value);
+};
+
+/**
+ * epoch ms（数値）を ISO 文字列へ変換する。0 / 不正値は undefined を返し、
+ * カラムを NULL のままにする。
+ */
+const toIsoStringOrUndefined = (epochMs: number | undefined): string | undefined => {
+    if (epochMs === undefined || !Number.isFinite(epochMs) || epochMs <= 0) return undefined;
+    return new Date(epochMs).toISOString();
+};
+
+/**
  * Managing session-related Supabase communication
  *
  * @export
@@ -22,20 +40,77 @@ export class SessionRestClient {
     /**
      * Register a session.
      *
+     * CSV セッションはそのまま INSERT できない（PostgREST は未知カラムを PGRST204 で
+     * 拒否する）ため、読み出し側（AuroraSessionJson / セッション一覧）と同じ
+     * 構造化カラムへマッピングして保存する。
+     *
      * @param {AuroraSessionCSV} sessionJson
      * @returns {Promise<AuroraSession>}
      * @memberof SessionRestClient
      */
     public async create(sessionJson: AuroraSessionCSV): Promise<AuroraSession> {
+        const {
+            data: { user },
+        } = await supabase.auth.getUser();
+
+        const auroraProfileId = await this.resolveAuroraProfileId(sessionJson.profile?.id);
+
+        const sleepDuration = sessionJson.sleepDuration ?? {};
+
+        const sessionPayload = {
+            user_id: user?.id,
+            aurora_profile_id: auroraProfileId,
+            aurora_profile_name: sessionJson.profile?.name ?? null,
+            firmware_version: toIntOrUndefined(sessionJson.version),
+            sleep_onset: toIntOrUndefined(sessionJson.sleepOnset),
+            session_duration: toIntOrUndefined(sessionJson.duration),
+            sleep_duration: toIntOrUndefined(sleepDuration.total),
+            no_signal_duration: toIntOrUndefined(sleepDuration.unknown),
+            awake_duration: toIntOrUndefined(sleepDuration.awake),
+            light_duration: toIntOrUndefined(sleepDuration.light),
+            deep_duration: toIntOrUndefined(sleepDuration.deep),
+            rem_duration: toIntOrUndefined(sleepDuration.rem),
+            sleep_score: toIntOrUndefined(sessionJson.sleepScore),
+            incomplete: sessionJson.incomplete,
+            asleep_at: toIsoStringOrUndefined(sessionJson.asleepAt),
+            awake_at: toIsoStringOrUndefined(sessionJson.awakeAt),
+            // session_at は NOT NULL。date が無い場合は現在時刻で代用する
+            session_at: toIsoStringOrUndefined(sessionJson.date) ?? new Date().toISOString(),
+            app_platform: sessionJson.app_platform,
+            app_version: sessionJson.app_version,
+            session_txt: sessionJson.content,
+        };
+
         const { data, error } = await supabase
             .from("aurora_sessions")
-            .insert(sessionJson)
+            .insert(sessionPayload)
             .select()
             .single();
 
         if (error) throw error;
 
         return new AuroraSession(data as AuroraSessionJson);
+    }
+
+    /**
+     * デバイス上のプロフィール id がこのアプリの aurora_profiles に存在する場合のみ
+     * セッションへ紐付ける。存在しない id を送ると外部キー制約でセッション保存自体が
+     * 失敗するため、見つからない場合は未設定（NULL）にする。
+     */
+    private async resolveAuroraProfileId(profileId?: string): Promise<string | undefined> {
+        if (!profileId) return undefined;
+
+        try {
+            const { data } = await supabase
+                .from("aurora_profiles")
+                .select("id")
+                .eq("id", profileId)
+                .maybeSingle();
+
+            return data?.id;
+        } catch {
+            return undefined;
+        }
     }
 
     /**
