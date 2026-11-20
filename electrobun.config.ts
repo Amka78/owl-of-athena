@@ -5,7 +5,7 @@ const config: ElectrobunConfig = {
         name: "Owl of Athena",
         identifier: "org.iwinks.owl-of-athena",
         // CI の手動リリースでは入力バージョンを渡す。
-        version: process.env.ELECTROBUN_APP_VERSION ?? "1.0.5",
+        version: process.env.ELECTROBUN_APP_VERSION ?? "1.0.6",
     },
     build: {
         // Expo web の出力をアプリの Resources へコピーする。

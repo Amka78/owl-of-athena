@@ -21,7 +21,7 @@ const APP_ID_SUFFIX =
 export default ({ config }: ConfigContext): ExpoConfig => ({
     ...config,
     // app.json には未設定のため明示する。v* タグを作る scripts/version.sh が package.json と同時に更新する
-    version: "1.0.5",
+    version: "1.0.6",
     // app.json に未設定のため、現在使われている package.json 由来の名前を明示する
     name: `${config.name ?? "owl-of-minerva"}${APP_NAME_SUFFIX}`,
     slug: config.slug ?? "owl-of-minerva",
