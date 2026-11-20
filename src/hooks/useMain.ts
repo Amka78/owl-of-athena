@@ -6,6 +6,7 @@ import { SessionRestClientInstance } from "../clients";
 import { ConfirmDialog, LoadingDialog, SessionTransferDialog } from "../components/molecules";
 import { AuroraInfoDialog } from "../components/molecules/AuroraInfoDialog";
 import { Message, MessageKeys } from "../constants";
+import type { SessionSyncResult } from "../managers";
 import { AuroraManagerEventList, AuroraManagerInstance } from "../managers";
 import { ConnectionStates } from "../sdk";
 import type { AuroraOSInfo, AuroraSession, AuroraSessionDetail } from "../sdk/models";
@@ -361,15 +362,15 @@ async function executeConfiguring(
                 if (unsyncedSessions.length > 0 && AuroraManagerInstance.isConfiguring()) {
                     transferDialogShown = true;
                     SessionTransferDialog.show({
-                        isAuroraConnected: true,
+                        unsyncedCount: unsyncedSessions.length,
                         onClose: onTransferDialogClose,
-                        onTransferComplete: async () => {
+                        onConfirm: async () => {
                             LoadingDialog.show({
-                                dialogTitle: Message.get(
-                                    MessageKeys.home_go_to_sleep_loading_message,
-                                ),
+                                dialogTitle: Message.get(MessageKeys.session_transfer_syncing),
                             });
                             try {
+                                // iOS 版と同じく、確認後に未同期セッションを全件一括で同期する。
+                                // 空セッションは端末から削除され、成功分は端末側でリネームされる。
                                 const result = await AuroraManagerInstance.pushSessions(
                                     unsyncedSessions,
                                     isGuest,
@@ -380,6 +381,23 @@ async function executeConfiguring(
                                         Math.max(0, unsyncedSessions.length - result.syncedCount),
                                     );
                                 pushedSessionCallback([result.sessions, result.sessionDetails]);
+                                showSyncResult(result);
+                            } catch (e) {
+                                // 同期全体が中断された（読み取り失敗等）場合も、必ず結果を
+                                // 表示して終了させる。catch が無いと何も出ずに終わらないように見える。
+                                const message =
+                                    typeof e === "string"
+                                        ? e
+                                        : e instanceof Error
+                                          ? e.message
+                                          : String(e);
+                                ConfirmDialog.show({
+                                    title: Message.get(MessageKeys.session_transfer_title),
+                                    message: Message.get(MessageKeys.session_transfer_error, [
+                                        message,
+                                    ]),
+                                    isCancelable: false,
+                                });
                             } finally {
                                 LoadingDialog.close();
                             }
@@ -400,5 +418,26 @@ async function executeConfiguring(
     }
 
     return transferDialogShown;
+}
+
+/** iOS 版と同じ 3 パターン（全成功 / 一部失敗 / 全失敗）で同期結果を表示する。 */
+function showSyncResult(result: SessionSyncResult): void {
+    const { syncedCount, failedCount, removedEmptyCount } = result;
+    const successCount = syncedCount + removedEmptyCount;
+    const title = Message.get(MessageKeys.session_transfer_title);
+
+    let message: string;
+    if (failedCount === 0) {
+        message = Message.get(MessageKeys.session_transfer_complete, [String(successCount)]);
+    } else if (successCount > 0) {
+        message = Message.get(MessageKeys.session_transfer_sync_mixed, [
+            String(successCount),
+            String(failedCount),
+        ]);
+    } else {
+        message = Message.get(MessageKeys.session_transfer_sync_failed, [String(failedCount)]);
+    }
+
+    ConfirmDialog.show({ title, message, isCancelable: false });
 }
 //#endregion

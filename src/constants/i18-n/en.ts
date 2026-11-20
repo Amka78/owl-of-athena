@@ -449,7 +449,7 @@ export default {
     [MessageKeys.issue_report_button]: "Report an Issue",
 
     // session transfer dialog
-    [MessageKeys.session_transfer_title]: "Session Transfer",
+    [MessageKeys.session_transfer_title]: "Sync Sessions",
     [MessageKeys.session_transfer_scanning]: "Scanning Aurora for sessions...",
     [MessageKeys.session_transfer_not_connected]:
         "You must be connected to Aurora to transfer sessions.",
@@ -457,10 +457,17 @@ export default {
     [MessageKeys.session_transfer_transferring]: "Transferring {0} session(s)...",
     [MessageKeys.session_transfer_reading]: "Reading {0} / {1} sessions...",
     [MessageKeys.session_transfer_uploading]: "Transferring {0} / {1} sessions...",
-    [MessageKeys.session_transfer_complete]: "{0} session(s) transferred successfully.",
+    [MessageKeys.session_transfer_complete]: "Successfully synced {0} session(s)!",
     [MessageKeys.session_transfer_button]: "Transfer {0} Session(s)",
     [MessageKeys.session_transfer_cancel]: "Cancel",
     [MessageKeys.session_transfer_continue]: "Continue",
+    [MessageKeys.session_transfer_syncing]: "Syncing sessions, please wait...",
+    [MessageKeys.session_transfer_confirm_message]: "You have {0} unsynced sessions. Sync now?",
+    [MessageKeys.session_transfer_sync]: "Sync",
+    [MessageKeys.session_transfer_sync_mixed]:
+        "Successfully synced {0} sessions, but {1} sessions failed to sync.",
+    [MessageKeys.session_transfer_sync_failed]: "{0} sessions failed to sync. Try again later.",
+    [MessageKeys.session_transfer_error]: "Failed to sync sessions. {0}",
     [MessageKeys.session_transfer_delete_confirm_title]: "Delete Session?",
     [MessageKeys.session_transfer_delete_confirm_message]:
         "This session has not been transferred. Are you sure you want to delete it?",

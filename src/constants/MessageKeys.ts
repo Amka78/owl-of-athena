@@ -482,6 +482,12 @@ export const MessageKeys = {
     session_transfer_button: "session_transfer_button",
     session_transfer_cancel: "session_transfer_cancel",
     session_transfer_continue: "session_transfer_continue",
+    session_transfer_syncing: "session_transfer_syncing",
+    session_transfer_confirm_message: "session_transfer_confirm_message",
+    session_transfer_sync: "session_transfer_sync",
+    session_transfer_sync_mixed: "session_transfer_sync_mixed",
+    session_transfer_sync_failed: "session_transfer_sync_failed",
+    session_transfer_error: "session_transfer_error",
     session_transfer_delete_confirm_title: "session_transfer_delete_confirm_title",
     session_transfer_delete_confirm_message: "session_transfer_delete_confirm_message",
     //#endregion

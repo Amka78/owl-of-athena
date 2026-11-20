@@ -446,7 +446,7 @@ export default {
     [MessageKeys.issue_report_button]: "問題を報告する",
 
     // session transfer dialog
-    [MessageKeys.session_transfer_title]: "セッション転送",
+    [MessageKeys.session_transfer_title]: "セッションの同期",
     [MessageKeys.session_transfer_scanning]: "Auroraのセッションをスキャン中...",
     [MessageKeys.session_transfer_not_connected]:
         "セッションを転送するにはAuroraに接続する必要があります。",
@@ -454,10 +454,19 @@ export default {
     [MessageKeys.session_transfer_transferring]: "{0}件のセッションを転送中...",
     [MessageKeys.session_transfer_reading]: "{0} / {1} 件を読み込み中...",
     [MessageKeys.session_transfer_uploading]: "{0} / {1} 件を転送中...",
-    [MessageKeys.session_transfer_complete]: "{0}件のセッションを正常に転送しました。",
+    [MessageKeys.session_transfer_complete]: "{0}件のセッションを正常に同期しました。",
     [MessageKeys.session_transfer_button]: "{0}件のセッションを転送",
     [MessageKeys.session_transfer_cancel]: "キャンセル",
     [MessageKeys.session_transfer_continue]: "続ける",
+    [MessageKeys.session_transfer_syncing]: "セッションを同期しています。しばらくお待ちください...",
+    [MessageKeys.session_transfer_confirm_message]:
+        "未同期のセッションが{0}件あります。今すぐ同期しますか？",
+    [MessageKeys.session_transfer_sync]: "同期",
+    [MessageKeys.session_transfer_sync_mixed]:
+        "セッションを{0}件正常に同期しましたが、{1}件の同期に失敗しました。",
+    [MessageKeys.session_transfer_sync_failed]:
+        "{0}件のセッションの同期に失敗しました。後でもう一度お試しください。",
+    [MessageKeys.session_transfer_error]: "セッションの同期に失敗しました。{0}",
     [MessageKeys.session_transfer_delete_confirm_title]: "セッションを削除しますか?",
     [MessageKeys.session_transfer_delete_confirm_message]:
         "このセッションはまだ転送されていません。本当に削除しますか?",

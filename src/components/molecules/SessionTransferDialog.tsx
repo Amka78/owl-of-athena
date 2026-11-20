@@ -1,280 +1,148 @@
 //#region Import Modules
 import React from "react";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Dialog } from "react-native-paper";
+import { Modal, StyleSheet, Text, View } from "react-native";
+
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
-import type { SessionSyncProgress } from "../../managers";
-import type { FileInfo } from "../../sdk/AuroraTypes";
-import { useSessionTransferStore } from "../../store/sessionTransferStore";
 import { ContentText, FlatButton } from "../atoms";
 
 //#endregion
 
 //#region Types
 type SessionTransferDialogSettings = {
-    isAuroraConnected: boolean;
-    onTransferComplete?: () => void;
+    unsyncedCount: number;
+    onConfirm?: () => void;
     onClose?: () => void;
 };
 
 type SessionTransferDialogState = {
     settings?: SessionTransferDialogSettings;
-    selectedSessions: FileInfo[];
 };
 //#endregion
 
-const MAX_PROGRESS = 1;
-
-const sessionName = (file: string): string => {
-    const match = file.match(/^sessions\/([^/]+)\/session\.txt$/);
-    return match?.[1] ?? file;
-};
-
 //#region Component
+/**
+ * 未同期セッションの同期確認ダイアログ。
+ * iOS 版（StatsController の "You have %i unsynced sessions. Sync now?"）と同じく、
+ * セッション一覧での選択は行わず、確認後に全件一括で同期する。
+ */
 export class SessionTransferDialog extends React.Component<{}, SessionTransferDialogState> {
     public static Instance?: SessionTransferDialog;
-    private _unsubscribe?: () => void;
 
     public static show(args: SessionTransferDialogSettings): void {
-        SessionTransferDialog.Instance!.setState({ settings: args, selectedSessions: [] });
-        if (args.isAuroraConnected) {
-            useSessionTransferStore.getState().scanSessions();
-        }
+        SessionTransferDialog.Instance!.setState({ settings: args });
     }
 
     constructor(props: {}) {
         super(props);
-        this.state = { settings: undefined, selectedSessions: [] };
+        this.state = { settings: undefined };
     }
 
-    public async componentDidMount(): Promise<void> {
+    public componentDidMount(): void {
         SessionTransferDialog.Instance = this;
-        this._unsubscribe = useSessionTransferStore.subscribe((state) => {
-            if (state.status === "idle" && state.unsyncedSessions.length > 0) {
-                this.setState({ selectedSessions: state.unsyncedSessions });
-            }
-            if (state.status === "complete") {
-                this.state.settings?.onTransferComplete?.();
-            }
-            this.forceUpdate();
-        });
     }
 
-    public componentWillUnmount(): void {
-        this._unsubscribe?.();
-    }
-
-    private close(): void {
-        const { settings } = this.state;
-        useSessionTransferStore.getState().resetTransfer();
-        settings?.onClose?.();
-        this.setState({ settings: undefined, selectedSessions: [] });
-    }
-
-    private toggleSession(session: FileInfo): void {
-        this.setState((state) => {
-            const exists = state.selectedSessions.some((s) => s.file === session.file);
-            return {
-                selectedSessions: exists
-                    ? state.selectedSessions.filter((s) => s.file !== session.file)
-                    : [...state.selectedSessions, session],
-            };
-        });
+    private close(onClose?: () => void): void {
+        onClose?.();
+        this.setState({ settings: undefined });
     }
 
     public render(): React.ReactNode {
-        if (!this.state.settings) return null;
-        const store = useSessionTransferStore.getState();
-        const { status, unsyncedSessions, transferredCount, statusText, progress, error } = store;
+        const settings = this.state.settings;
+        if (!settings) return null;
 
         return (
-            <Dialog visible={true} style={styles.dialog}>
-                <Dialog.Title style={styles.title}>
-                    {Message.get(MessageKeys.session_transfer_title)}
-                </Dialog.Title>
-                <Dialog.Content>
-                    {this.renderContent(
-                        status,
-                        unsyncedSessions,
-                        transferredCount,
-                        statusText,
-                        error,
-                        progress,
-                    )}
-                </Dialog.Content>
-                <Dialog.Actions>{this.renderActions(status, unsyncedSessions)}</Dialog.Actions>
-            </Dialog>
-        );
-    }
-
-    private renderContent(
-        status: string,
-        unsyncedSessions: FileInfo[],
-        transferredCount: number,
-        statusText: string,
-        error?: string,
-        progress?: SessionSyncProgress,
-    ): React.ReactNode {
-        if (!this.state.settings?.isAuroraConnected) {
-            return (
-                <ContentText>{Message.get(MessageKeys.session_transfer_not_connected)}</ContentText>
-            );
-        }
-        if (status === "scanning") {
-            return (
-                <View style={styles.centered}>
-                    <ActivityIndicator color={Colors.cyan} />
-                    <ContentText>{Message.get(MessageKeys.session_transfer_scanning)}</ContentText>
-                </View>
-            );
-        }
-        if (status === "error") {
-            return <ContentText style={styles.errorText}>{error ?? ""}</ContentText>;
-        }
-        if (status === "complete") {
-            return (
-                <ContentText style={styles.successText}>
-                    {Message.get(MessageKeys.session_transfer_complete).replace(
-                        "{0}",
-                        String(transferredCount),
-                    )}
-                </ContentText>
-            );
-        }
-        if (status === "transferring") {
-            const progressText = progress
-                ? Message.get(
-                      progress.phase === "reading"
-                          ? MessageKeys.session_transfer_reading
-                          : MessageKeys.session_transfer_uploading,
-                  )
-                      .replace("{0}", String(progress.completed))
-                      .replace("{1}", String(progress.total))
-                : statusText ||
-                  Message.get(MessageKeys.session_transfer_transferring).replace(
-                      "{0}",
-                      String(this.state.selectedSessions.length),
-                  );
-            const percent =
-                progress && progress.total > 0
-                    ? Math.min(MAX_PROGRESS, progress.completed / progress.total)
-                    : 0;
-
-            return (
-                <View style={styles.centered}>
-                    <ActivityIndicator color={Colors.cyan} />
-                    {progress ? (
-                        <View style={styles.progressTrack}>
-                            <View style={[styles.progressFill, { width: `${percent * 100}%` }]} />
+            // paper の Dialog（Modal）はこの環境（RN 0.88 + ナビゲータ配下）で背面レイヤーが
+            // 画面全域を覆えず、スクリムが上半分のみ・中央ずれになる（2026-11-16 ConfirmDialog で実測）。
+            // ネイティブの <Modal> は常に全画面ウィンドウとして描画されるため、
+            // スクリム・中央配置・コンテンツ寸法を確実に担保できる。
+            <Modal
+                visible={true}
+                transparent={true}
+                animationType="fade"
+                onRequestClose={this.onRequestClose()}
+            >
+                <View style={styles.backdrop}>
+                    <View style={styles.centerBox}>
+                        <View style={styles.dialog}>
+                            <Text style={styles.title}>
+                                {Message.get(MessageKeys.session_transfer_title)}
+                            </Text>
+                            <View style={styles.content}>
+                                <ContentText style={styles.message}>
+                                    {Message.get(MessageKeys.session_transfer_confirm_message, [
+                                        String(settings.unsyncedCount),
+                                    ])}
+                                </ContentText>
+                            </View>
+                            <View style={styles.actions}>
+                                <FlatButton
+                                    labelStyle={styles.secondaryButton}
+                                    onPress={(): void => this.close(settings.onClose)}
+                                >
+                                    {Message.get(MessageKeys.session_transfer_cancel)}
+                                </FlatButton>
+                                <FlatButton
+                                    labelStyle={styles.primaryButton}
+                                    onPress={(): void => this.close(settings.onConfirm)}
+                                >
+                                    {Message.get(MessageKeys.session_transfer_sync)}
+                                </FlatButton>
+                            </View>
                         </View>
-                    ) : null}
-                    <ContentText>{progressText}</ContentText>
+                    </View>
                 </View>
-            );
-        }
-        if (unsyncedSessions.length === 0) {
-            return (
-                <ContentText>{Message.get(MessageKeys.session_transfer_no_sessions)}</ContentText>
-            );
-        }
-
-        return (
-            <FlatList
-                data={unsyncedSessions}
-                keyExtractor={(item) => item.file}
-                renderItem={({ item }) => {
-                    const selected = this.state.selectedSessions.some((s) => s.file === item.file);
-                    return (
-                        <TouchableOpacity
-                            style={[styles.sessionRow, selected && styles.sessionRowSelected]}
-                            onPress={() => this.toggleSession(item)}
-                        >
-                            <ContentText style={styles.sessionName}>
-                                {sessionName(item.file)}
-                            </ContentText>
-                            <ContentText style={styles.sessionSize}>
-                                {item.size ? `${Math.round(item.size / 1024)} KB` : ""}
-                            </ContentText>
-                        </TouchableOpacity>
-                    );
-                }}
-                style={styles.list}
-            />
+            </Modal>
         );
     }
 
-    private renderActions(status: string, unsyncedSessions: FileInfo[]): React.ReactNode {
-        if (status === "scanning" || status === "transferring") return null;
-
-        if (
-            status === "complete" ||
-            status === "error" ||
-            !this.state.settings?.isAuroraConnected ||
-            unsyncedSessions.length === 0
-        ) {
-            return (
-                <FlatButton labelStyle={styles.primaryButton} onPress={() => this.close()}>
-                    {Message.get(MessageKeys.session_transfer_continue)}
-                </FlatButton>
-            );
-        }
-
-        const count = this.state.selectedSessions.length;
-        return (
-            <>
-                <FlatButton labelStyle={styles.secondaryButton} onPress={() => this.close()}>
-                    {Message.get(MessageKeys.session_transfer_cancel)}
-                </FlatButton>
-                <FlatButton
-                    labelStyle={styles.primaryButton}
-                    disabled={count === 0}
-                    onPress={() =>
-                        useSessionTransferStore
-                            .getState()
-                            .transferSessions(this.state.selectedSessions)
-                    }
-                >
-                    {Message.get(MessageKeys.session_transfer_button).replace("{0}", String(count))}
-                </FlatButton>
-            </>
-        );
+    /** 同期の確認前に戻るキーでダイアログを閉じさせない（paper の Dialog と同等の挙動）。 */
+    private onRequestClose(): () => void {
+        return (): void => {
+            // no-op
+        };
     }
 }
 //#endregion
 
 //#region Styles
 const styles = StyleSheet.create({
+    backdrop: {
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        flex: 1,
+    },
+    centerBox: {
+        alignItems: "center",
+        flex: 1,
+        justifyContent: "center",
+        paddingHorizontal: Dimens.content_margin_horizontal,
+    },
     dialog: {
-        alignSelf: "center",
         backgroundColor: Colors.navy_darker,
+        borderRadius: 4,
         maxWidth: Dimens.inner_screen_max_width,
+        paddingBottom: 8,
+        paddingHorizontal: 24,
+        paddingTop: 20,
         width: "90%",
-        maxHeight: "80%",
     },
-    title: { color: Colors.cyan, fontFamily: Fonts.primarySemiBold },
-    centered: { alignItems: "center", padding: 16, gap: 8 },
-    progressTrack: {
-        width: 200,
-        height: 6,
-        borderRadius: 3,
-        backgroundColor: Colors.blue,
-        overflow: "hidden",
+    title: {
+        color: Colors.cyan,
+        fontFamily: Fonts.primarySemiBold,
+        fontSize: 22,
+        marginBottom: 16,
     },
-    progressFill: { height: 6, backgroundColor: Colors.cyan },
-    list: { maxHeight: 300 },
-    sessionRow: {
+    content: {
+        paddingBottom: 16,
+    },
+    message: {
+        flex: 0,
+    },
+    actions: {
+        alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-between",
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.blue,
+        justifyContent: "flex-end",
     },
-    sessionRowSelected: { backgroundColor: `${Colors.cyan}22` },
-    sessionName: { flex: 1 },
-    sessionSize: { color: Colors.first_accent_color, fontSize: 12 },
     primaryButton: { color: Colors.cyan },
     secondaryButton: { color: Colors.white },
-    successText: { color: Colors.first_accent_color, textAlign: "center" },
-    errorText: { color: "#ff4310" },
 });
 //#endregion

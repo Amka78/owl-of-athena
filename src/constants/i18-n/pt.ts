@@ -453,7 +453,7 @@ export default {
     [MessageKeys.issue_report_button]: "Reportar um Problema",
 
     // session transfer dialog
-    [MessageKeys.session_transfer_title]: "Transferência de Sessões",
+    [MessageKeys.session_transfer_title]: "Sincronizar sessões",
     [MessageKeys.session_transfer_scanning]: "Procurando sessões no Aurora...",
     [MessageKeys.session_transfer_not_connected]:
         "Você precisa estar conectado ao Aurora para transferir sessões.",
@@ -461,10 +461,19 @@ export default {
     [MessageKeys.session_transfer_transferring]: "Transferindo {0} sessão(ões)...",
     [MessageKeys.session_transfer_reading]: "Lendo {0} / {1} sessões...",
     [MessageKeys.session_transfer_uploading]: "Transferindo {0} / {1} sessões...",
-    [MessageKeys.session_transfer_complete]: "{0} sessão(ões) transferida(s) com sucesso.",
+    [MessageKeys.session_transfer_complete]: "{0} sessão(ões) sincronizada(s) com sucesso!",
     [MessageKeys.session_transfer_button]: "Transferir {0} Sessão(ões)",
     [MessageKeys.session_transfer_cancel]: "Cancelar",
     [MessageKeys.session_transfer_continue]: "Continuar",
+    [MessageKeys.session_transfer_syncing]: "Sincronizando sessões, aguarde...",
+    [MessageKeys.session_transfer_confirm_message]:
+        "Você possui {0} sessões novas. Sincronizar agora?",
+    [MessageKeys.session_transfer_sync]: "Sincronizar",
+    [MessageKeys.session_transfer_sync_mixed]:
+        "Você sincronizou {0} sessões com sucesso, porém {1} sessões apresentaram falha ao sincronizar.",
+    [MessageKeys.session_transfer_sync_failed]:
+        "{0} sessões apresentaram falhas ao sincronizar. Tente novamente mais tarde.",
+    [MessageKeys.session_transfer_error]: "Falha ao sincronizar as sessões. {0}",
     [MessageKeys.session_transfer_delete_confirm_title]: "Excluir Sessão?",
     [MessageKeys.session_transfer_delete_confirm_message]:
         "Esta sessão não foi transferida. Tem certeza de que deseja excluí-la?",

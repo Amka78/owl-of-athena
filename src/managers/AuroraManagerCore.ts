@@ -400,19 +400,25 @@ export class AuroraManager extends EventEmitter {
         const readSessionContent = new Map<string, any>();
 
         for (const [index, sessionFileInfo] of sessions.entries()) {
-            const result = await AuroraInstance.readFile(sessionFileInfo.file, false, true);
+            try {
+                const result = await AuroraInstance.readFile(sessionFileInfo.file, false, true);
 
-            const dirName = sessionFileInfo.file.replace("/session.txt", "");
-            console.debug("Start reading session.");
-            const sessionDirReadCmd = await AuroraInstance.queueCmd<
-                CommandResult<Array<DirectoryInfo>>
-            >(`sd-dir-read ${dirName} 1`);
-            const session = await AuroraSessionReader.read(
-                dirName,
-                result.output,
-                sessionDirReadCmd.response,
-            );
-            readSessionContent.set(sessionFileInfo.file, session);
+                const dirName = sessionFileInfo.file.replace("/session.txt", "");
+                console.debug("Start reading session.");
+                const sessionDirReadCmd = await AuroraInstance.queueCmd<
+                    CommandResult<Array<DirectoryInfo>>
+                >(`sd-dir-read ${dirName} 1`);
+                const session = await AuroraSessionReader.read(
+                    dirName,
+                    result.output,
+                    sessionDirReadCmd.response,
+                );
+                readSessionContent.set(sessionFileInfo.file, session);
+            } catch (e) {
+                // 1 件の読み取り失敗（BLE タイムアウト等）で同期全体を中断せず、
+                // 残りのセッションを読み続ける。失敗分は pushSessions 側で集計する。
+                console.error(`[readSessionContent] failed to read ${sessionFileInfo.file}:`, e);
+            }
             onProgress?.(index + 1, sessions.length);
         }
 
@@ -432,7 +438,8 @@ export class AuroraManager extends EventEmitter {
             sessions: [],
             sessionDetails: [],
             syncedCount: 0,
-            failedCount: 0,
+            // 読み込みに失敗したセッションも失敗件数として数える
+            failedCount: sessions.length - sessionList.size,
             removedEmptyCount: 0,
         };
 
