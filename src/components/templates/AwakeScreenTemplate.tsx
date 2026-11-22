@@ -8,7 +8,12 @@ import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { ContentText, LeftSideButton } from "../atoms";
 import type { ContentTextProps } from "../atoms/ContentText";
 import type { ContentTitleProps } from "../atoms/ContentTitle";
-import { ConvertibleContentTitle, InternalView, QuestionnaireDialog, RightSideButton } from "../molecules";
+import {
+    ConvertibleContentTitle,
+    InternalView,
+    QuestionnaireDialog,
+    RightSideButton,
+} from "../molecules";
 import type { TemplateButtonProps } from "./TempatedProps";
 //#endregion
 

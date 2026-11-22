@@ -1,8 +1,36 @@
 import * as d3 from "d3";
+import "d3-selection-multi";
 import type * as d3Multi from "d3-selection-multi";
 import moment from "moment";
 import PropTypes from "prop-types";
 import Chart, { type ChartProps } from "./Chart";
+
+// d3-selection-multi の .styles/.attrs は prototype パッチ依存で、browser の
+// モジュール解決（pre-bundle）では効かないことがある。d3 標準 API で等価実装する。
+const applyStyles = (selection: any, styles: Record<string, unknown> | undefined | null): any => {
+    if (styles) {
+        for (const [name, value] of Object.entries(styles)) {
+            selection.style(name, value);
+        }
+    }
+    return selection;
+};
+
+const applyAttrs = (
+    selection: any,
+    attrs: Record<string, unknown> | ((d: any, i: number) => Record<string, unknown>),
+): any => {
+    if (!attrs) return selection;
+    selection.each(function (this: any, d: any, i: number) {
+        const resolved = typeof attrs === "function" ? attrs(d, i) : attrs;
+        if (resolved) {
+            for (const [name, value] of Object.entries(resolved)) {
+                selection.attr(name, value);
+            }
+        }
+    });
+    return selection;
+};
 
 export type ChartTimeLineProps = ChartProps & {
     eventIconSize: number;
@@ -94,9 +122,10 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .merge(eventTicks as any)
             .attr("stroke", (d) => d.tickColor || eventTickColor)
             .attr("stroke-width", (d) => d.tickWidth || eventTickWidth)
-            // @ts-expect-error - d3-selection-multi type augmentation
-            .styles(this.props.eventTickStyle)
-            .attrs(this.getEventTickPositionProps);
+            .call((sel: any) => {
+                applyStyles(sel, this.props.eventTickStyle);
+                applyAttrs(sel, this.getEventTickPositionProps);
+            });
 
         eventTicks.exit().remove();
 
@@ -107,14 +136,15 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .merge(eventLabels as any)
             .attr("fill", (d) => d.labelColor || eventLabelColor)
             .attr("font-size", (d) => d.labelSize || eventLabelSize)
-            // @ts-expect-error - d3-selection-multi type augmentation
-            .styles(this.props.eventLabelStyle)
             .text((d: any) => {
                 return d.label
                     .replace("${time}", moment(d.date).utc().format("h:mm a").slice(0, -1))
                     .replace("${flags}", d.flags > 1 ? d.flags : "");
             })
-            .attrs(this.getEventLabelPositionProps);
+            .call((sel: any) => {
+                applyStyles(sel, this.props.eventLabelStyle);
+                applyAttrs(sel, this.getEventLabelPositionProps);
+            });
 
         eventLabels.exit().remove();
 
@@ -127,9 +157,10 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .attr("height", (d) => d.iconSize || eventIconSize)
             .attr("fill", (d) => d.iconColor || eventIconColor)
             .attr("href", (d) => `#${d.icon}`)
-            // @ts-expect-error - d3-selection-multi type augmentation
-            .styles(this.props.eventIconStyle)
-            .attrs(this.getEventIconPositionProps);
+            .call((sel: any) => {
+                applyStyles(sel, this.props.eventIconStyle);
+                applyAttrs(sel, this.getEventIconPositionProps);
+            });
 
         eventIcons.exit().remove();
     }
@@ -142,7 +173,6 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         const placement = d.placement || eventPlacement;
 
         const props = {
-            // @ts-expect-error
             x: this.scaleX!(d.date) - iconSize / 2,
             y: 0,
         };
@@ -175,18 +205,13 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         };
 
         if (placement == "below") {
-            // @ts-expect-error
             props.y1 = this.scaleY!(0);
-            // @ts-expect-error
             props.y2 = this.scaleY!(-tickSize);
         } else {
-            // @ts-expect-error
             props.y1 = this.scaleY!(-1);
-            // @ts-expect-error
             props.y2 = this.scaleY!(tickSize);
         }
 
-        // @ts-expect-error
         return props;
     };
 
@@ -206,7 +231,6 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
 
         if (d.icon) {
             if (labelPosition != "center") {
-                // @ts-expect-error
                 props.x += (iconSize / 2 + 10) * (labelPosition == "left" ? -1 : 1);
                 props.y += iconSize / 2;
             } else {

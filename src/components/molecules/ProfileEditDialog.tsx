@@ -1,5 +1,5 @@
 //#region Import Modules
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Dialog } from "react-native-paper";
 
@@ -8,6 +8,7 @@ import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { useProfileStore } from "../../store/profileStore";
 import { FlatButton } from "../atoms";
 import { ValidatableTextBox } from "./ValidatableTextBox";
+
 //#endregion
 
 //#region Types
@@ -71,11 +72,7 @@ export class ProfileEditDialog extends React.Component<{}, ProfileEditDialogStat
         if (!this.state.settings) return null;
 
         return (
-            <Dialog
-                visible={true}
-                onDismiss={() => this.close()}
-                style={styles.dialog}
-            >
+            <Dialog visible={true} onDismiss={() => this.close()} style={styles.dialog}>
                 <Dialog.Title style={styles.dialogTitle}>
                     {Message.get(MessageKeys.profile_edit_title)}
                 </Dialog.Title>
@@ -96,10 +93,7 @@ export class ProfileEditDialog extends React.Component<{}, ProfileEditDialogStat
                     </View>
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <FlatButton
-                        labelStyle={styles.cancelButton}
-                        onPress={() => this.close()}
-                    >
+                    <FlatButton labelStyle={styles.cancelButton} onPress={() => this.close()}>
                         {Message.get(MessageKeys.cancel)}
                     </FlatButton>
                     <FlatButton

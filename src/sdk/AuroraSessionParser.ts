@@ -122,7 +122,6 @@ export default class AuroraSessionParser {
         let currentStageTime = 0;
         let currentStageDate = 0;
 
-        // @ts-expect-error
         const stageDurations = new Array(getEnumlength(SleepStages)).fill(0);
 
         for (const event of session.events) {

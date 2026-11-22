@@ -39,7 +39,6 @@ const AuroraCmdUploadFile = async function (
     stream.pause();
     stream.on("data", (chunk) => {
         //crc = crc32.unsigned(chunk);
-        // @ts-expect-error
         crc = crc32.unsigned(chunk);
     });
 

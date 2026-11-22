@@ -20,7 +20,9 @@ export const useConvertibleHeader = (
         console.debug(ex);
     }
     useLayoutEffect(() => {
-        if (navigation !== undefined) {
+        // storybook 等の navigation コンテキスト外では navigation が取得できない
+        // （useNavigation が非オブジェクトを返す場合もある）ため、実体チェック。
+        if (navigation !== undefined && typeof navigation.setOptions === "function") {
             navigation.setOptions({
                 headerTitle: Message.get(headerTitleKey),
                 headerShown: !isDesktop && !isSmallHeight,

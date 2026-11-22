@@ -80,11 +80,17 @@ export const ChartSleep: FC<ChartSleepProps> = (props: ChartSleepProps) => {
     const yChartRange = getYChartRange(chartHeight, axisMargin);
     const yScale = getYScale(yChartRange, [0, sleepStageLabels.length - 1]);
     const xChartRange = getXChartRange(chartWidth, axisMargin);
-    const xScale = getXScale(xChartRange, [sleep[0].eventAt, sleep[sleep.length - 1].eventAt]);
+    // データが空の場合はグラフ全体を描画できないため、座標計算用の
+    // ダミーレンジを使い、軸のみを描画する（sleep[0] にアクセスしない）。
+    const xScale = getXScale(
+        xChartRange,
+        sleep.length > 0
+            ? [sleep[0].eventAt, sleep[sleep.length - 1].eventAt]
+            : [props.xScaleDomain![0], props.xScaleDomain![1]],
+    );
 
     const xAxisLabels = buildXAxisLabels(xScale, props.tickInterval, props.totalSleepHour);
     const yAxisLabels = buildYAxisLabels(yScale);
-    // @ts-expect-error
     const line = d3
         .line<AuroraEvent>()
         .curve(d3.curveStepAfter)

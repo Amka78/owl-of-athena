@@ -7,6 +7,7 @@ import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraOSInfo } from "../../sdk/models";
 import { buildAuroraInfoRows } from "../../utils/AuroraInfoRows";
 import { ContentText, FlatButton } from "../atoms";
+
 //#endregion
 
 //#region Types
@@ -48,11 +49,7 @@ export class AuroraInfoDialog extends React.Component<{}, AuroraInfoDialogState>
         const rows = buildAuroraInfoRows(osInfo);
 
         return (
-            <Dialog
-                visible={true}
-                onDismiss={() => this.close()}
-                style={styles.dialog}
-            >
+            <Dialog visible={true} onDismiss={() => this.close()} style={styles.dialog}>
                 <Dialog.Title style={styles.dialogTitle}>
                     {Message.get(MessageKeys.aurora_info_title)}
                 </Dialog.Title>
@@ -67,10 +64,7 @@ export class AuroraInfoDialog extends React.Component<{}, AuroraInfoDialogState>
                     </View>
                 </Dialog.Content>
                 <Dialog.Actions>
-                    <FlatButton
-                        labelStyle={styles.closeButton}
-                        onPress={() => this.close()}
-                    >
+                    <FlatButton labelStyle={styles.closeButton} onPress={() => this.close()}>
                         {Message.get(MessageKeys.ok)}
                     </FlatButton>
                 </Dialog.Actions>

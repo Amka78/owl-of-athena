@@ -17,7 +17,6 @@ const AuroraCmdSetProfiles = async function AuroraCmdSetProfiles(
     for (let i = 0; i < newProfiles.length; i++) {
         const profWriteCmd = await this.writeFile(
             `profiles/${newProfiles[i].name}`,
-            // @ts-expect-error
             newProfiles[i].content,
             true,
             connectorType as unknown as number,

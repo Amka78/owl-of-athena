@@ -53,7 +53,9 @@ export const Container: FunctionComponent<ContainerProps> = (props: ContainerPro
             navigateToReset(url);
         };
 
-        Linking.getInitialURL().then(handleUrl).catch(() => undefined);
+        Linking.getInitialURL()
+            .then(handleUrl)
+            .catch(() => undefined);
         const subscription = Linking.addEventListener("url", ({ url }) => handleUrl(url));
 
         return (): void => subscription.remove();
@@ -113,11 +115,7 @@ export const Container: FunctionComponent<ContainerProps> = (props: ContainerPro
 
     return (
         <Provider theme={Theme}>
-            <NavigationContainer
-                ref={navigationRef}
-                linking={linking}
-                onReady={onNavigationReady}
-            >
+            <NavigationContainer ref={navigationRef} linking={linking} onReady={onNavigationReady}>
                 <SafeAreaProvider>
                     <SafeAreaView
                         mode={"margin"}

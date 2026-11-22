@@ -63,7 +63,6 @@ export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
         0,
     );
     return (
-        // @ts-expect-error
         <ChartPie
             width={props.width}
             height={props.height}
@@ -75,7 +74,7 @@ export const SessionChartPie: FunctionComponent<SessionChartPieProps> = (
             categoryLabels={stages.map((stage) => {
                 const duration = getDuration(props.session[stage.key]);
                 return Message.get(stage.label, [
-                    `${duration.hours > 0 ? duration.hours + "h" : ""} ${duration.minutes}m`,
+                    `${duration.hours > 0 ? `${duration.hours}h` : ""} ${duration.minutes}m`,
                 ]);
             })}
             categoryColors={stages.map((stage) => stage.color)}

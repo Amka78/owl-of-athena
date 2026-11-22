@@ -1,6 +1,6 @@
 //#region Import Modules
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { UserMessage } from "../../types";
@@ -53,11 +53,7 @@ export class MessageDialog extends React.Component<{}, MessageDialogState> {
         const alreadyRespondedToQuestionnaire = isRead && !!message.questionnaire_respondent_id;
 
         return (
-            <Dialog
-                visible={true}
-                onDismiss={() => this.close()}
-                style={styles.dialog}
-            >
+            <Dialog visible={true} onDismiss={() => this.close()} style={styles.dialog}>
                 <Dialog.Title style={styles.title}>{message.title ?? "—"}</Dialog.Title>
                 <Dialog.Content>
                     {/* ContentText の既定 flex:1 はダイアログ本文を縦に伸ばすため、無効化する */}

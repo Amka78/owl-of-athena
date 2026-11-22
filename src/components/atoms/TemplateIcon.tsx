@@ -1,24 +1,31 @@
 //#region Import Modules
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { type FunctionComponent } from "react";
-import type { IconProps } from "react-native-vector-icons/Icon";
+import type React from "react";
+import type { FunctionComponent } from "react";
 import { Colors } from "../../constants";
+
 //#endregion
 
 //#region Types
-export type TemplateIconProps = IconProps & { disabled?: boolean };
+type MaterialIconProps = React.ComponentProps<typeof MaterialCommunityIcons>;
+
+export type TemplateIconProps = Omit<MaterialIconProps, "name" | "color" | "size"> & {
+    name?: string;
+    color?: string | number;
+    size?: number;
+    disabled?: boolean;
+};
 //#endregion
 
 //#region Component
 export const TemplateIcon: FunctionComponent<TemplateIconProps> = (props: TemplateIconProps) => {
     const color = props.disabled ? Colors.gray : Colors.white;
     return (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-expect-error
         <MaterialCommunityIcons
-            {...props}
-            color={props.color ? props.color : color}
+            {...(props as unknown as MaterialIconProps)}
+            name={props.name as MaterialIconProps["name"]}
+            color={(props.color ? props.color : color) as string}
             size={props.size ? props.size : 40}
             onPress={props.disabled === true ? undefined : props.onPress}
         ></MaterialCommunityIcons>

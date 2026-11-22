@@ -7,6 +7,7 @@ import type { Issue } from "../types";
 //#region Hooks
 export const useAdmin = () => {
     const [loading, setLoading] = useState(false);
+    const [apiBaseUrl, setApiBaseUrl] = useState("https://api.iwinks.org");
 
     const fetchIssues = useCallback(async (): Promise<Issue[]> => {
         setLoading(true);
@@ -44,6 +45,8 @@ export const useAdmin = () => {
         loading,
         fetchIssues,
         fetchMessages,
+        apiBaseUrl,
+        setApiBaseUrl,
     };
 };
 //#endregion

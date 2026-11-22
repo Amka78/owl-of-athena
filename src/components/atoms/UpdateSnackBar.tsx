@@ -19,8 +19,6 @@ export const UpdateSnackBarCore: FunctionComponent<UpdateSnackBarProps> = (
     props: UpdateSnackBarProps,
 ) => {
     return (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-expect-error
         <Snackbar
             visible={props.showReload}
             onDismiss={props.dismissReloadCallback ?? (() => undefined)}

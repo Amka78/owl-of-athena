@@ -127,31 +127,28 @@ export default class ChartPie extends React.Component<ChartPieProps, {}> {
                             ></Path>
                         );
                     })}
-                    {pie(this.props.categoryPercents).map(
-                        // @ts-expect-error
-                        (value: any, index: number) => {
-                            return (
-                                <Text
-                                    key={index}
-                                    dy={".4em"}
-                                    textAnchor={"middle"}
-                                    fontSize={percentLabelSize + "px"}
-                                    fill={
-                                        d3.hsl(categoryColors[index]).l >= 0.5
-                                            ? this.props.percentLabelColorDark
-                                            : this.props.percentLabelColorLight
-                                    }
-                                    transform={`translate(${arc
-                                        .startAngle(value.startAngle)
-                                        .endAngle(value.endAngle)
-                                        .padAngle(value.padAngle)
-                                        .centroid(value)})`}
-                                >
-                                    {value.data >= 5 ? `${Math.round(value.data)}%` : ""}
-                                </Text>
-                            );
-                        },
-                    )}
+                    {pie(this.props.categoryPercents).map((value: any, index: number) => {
+                        return (
+                            <Text
+                                key={index}
+                                dy={".4em"}
+                                textAnchor={"middle"}
+                                fontSize={percentLabelSize + "px"}
+                                fill={
+                                    d3.hsl(categoryColors[index]).l >= 0.5
+                                        ? this.props.percentLabelColorDark
+                                        : this.props.percentLabelColorLight
+                                }
+                                transform={`translate(${arc
+                                    .startAngle(value.startAngle)
+                                    .endAngle(value.endAngle)
+                                    .padAngle(value.padAngle)
+                                    .centroid(value)})`}
+                            >
+                                {value.data >= 5 ? `${Math.round(value.data)}%` : ""}
+                            </Text>
+                        );
+                    })}
                 </G>
                 <G transform={`translate(${legendTranslateX}, ${legendTranslateY})`}>
                     {this.props.categoryLabels.map((value: string, index: number) => {
