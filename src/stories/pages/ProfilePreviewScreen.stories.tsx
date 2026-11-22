@@ -1,20 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { ProfilePreviewScreen } from "../../components/pages/ProfilePreviewScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/profiles/useProfilePreview", () => ({
+vi.mock("../../hooks/profiles/useProfilePreview", () => ({
     useProfilePreview: () => ({
         content: '{"name":"Sleep Optimizer","description":"Optimized for deep sleep"}',
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

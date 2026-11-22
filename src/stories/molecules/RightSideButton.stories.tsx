@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
 import { RightSideButton } from "../../components/molecules/RightSideButton";
 import { Theme } from "../../constants";
 

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import type React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
 import ChartTimeline from "../../components/charts/ChartTimeline";
 import { Theme } from "../../constants";
 

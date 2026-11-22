@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
 import { SleepingScreenTemplate } from "../../components/templates/SleepingScreenTemplate";
 import { Theme } from "../../constants";
 

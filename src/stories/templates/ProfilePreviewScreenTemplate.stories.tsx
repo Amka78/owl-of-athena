@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
 import { ProfilePreviewScreenTemplate } from "../../components/templates/ProfilePreviewScreenTemplate";
 import { Theme } from "../../constants";
 
@@ -24,6 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
     args: {
         content: JSON.stringify({ name: "default.prof", version: "1.0.0" }, null, 2),
+        onExportPress: fn(),
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
@@ -33,6 +34,7 @@ export const Primary: Story = {
 export const Empty: Story = {
     args: {
         content: "",
+        onExportPress: fn(),
     },
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();

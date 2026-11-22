@@ -1,25 +1,51 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { MainScreen } from "../../components/pages/MainScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useMain", () => ({
+vi.mock("../../navigation/MainDrawerNavigator", () => {
+    const React = require("react");
+    const { View, Text } = require("react-native");
+    return {
+        default: () => (
+            <View>
+                <Text>MainDrawerNavigator</Text>
+            </View>
+        ),
+    };
+});
+
+vi.mock("../../hooks/useMain", () => ({
     useMain: () => ({
         connect: "DISCONNECTED",
-        onConnectionStatesPress: jest.fn(),
-        onHomePress: jest.fn(),
-        onProfilesPress: jest.fn(),
-        onSessionsPress: jest.fn(),
-        onSettingsPress: jest.fn(),
+        onConnectionStatesPress: vi.fn(),
+        onHomePress: vi.fn(),
+        onProfilesPress: vi.fn(),
+        onSessionsPress: vi.fn(),
+        onSettingsPress: vi.fn(),
         batteryLevel: 85,
         currentFirmwareVersion: "1.0.0",
         error: "",
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -33,21 +59,21 @@ jest.mock("../../hooks", () => ({
     }),
     useMain: () => ({
         connect: "DISCONNECTED",
-        onConnectionStatesPress: jest.fn(),
-        onHomePress: jest.fn(),
-        onProfilesPress: jest.fn(),
-        onSessionsPress: jest.fn(),
-        onSettingsPress: jest.fn(),
+        onConnectionStatesPress: vi.fn(),
+        onHomePress: vi.fn(),
+        onProfilesPress: vi.fn(),
+        onSessionsPress: vi.fn(),
+        onSettingsPress: vi.fn(),
         batteryLevel: 85,
         currentFirmwareVersion: "1.0.0",
         error: "",
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import type React from "react";
 import { Text } from "react-native";
+import { expect } from "storybook/test";
 import { MenuContainer } from "../../components/atoms/MenuContainer";
 
 const meta = {

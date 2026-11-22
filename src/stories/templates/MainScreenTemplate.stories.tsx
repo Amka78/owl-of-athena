@@ -1,19 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
+import { vi } from "vitest";
 import { MainScreenTemplate } from "../../components/templates/MainScreenTemplate";
 import { Theme } from "../../constants";
 import { ConnectionStates } from "../../sdk";
 
-jest.mock("../../navigation/MainDrawerNavigator", () => {
+vi.mock("../../navigation/MainDrawerNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>MainDrawerNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>MainDrawerNavigator</Text>
+            </View>
+        ),
+    };
 });
 
 const mobileDimens = {
@@ -42,6 +45,8 @@ const desktopDimens = {
 
 const defaultArgs = {
     onBluetoothConnectPress: fn(),
+    onDeviceInfoPress: fn(),
+    onDevicePress: fn(),
     bluetoothConnect: ConnectionStates.DISCONNECTED,
     currentFirmwareVersion: "2.1.0",
     error: "",

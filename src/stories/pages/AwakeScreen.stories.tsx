@@ -1,18 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { AwakeScreen } from "../../components/pages/AwakeScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useAwake", () => ({
+vi.mock("../../hooks/useAwake", () => ({
     useAwake: () => ({
-        questionnaireButtonPress: jest.fn(),
-        skipButtonPress: jest.fn(),
+        questionnaireButtonPress: vi.fn(),
+        skipButtonPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -25,15 +39,15 @@ jest.mock("../../hooks", () => ({
         scale: 2,
     }),
     useAwake: () => ({
-        questionnaireButtonPress: jest.fn(),
-        skipButtonPress: jest.fn(),
+        questionnaireButtonPress: vi.fn(),
+        skipButtonPress: vi.fn(),
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

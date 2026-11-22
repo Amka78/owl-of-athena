@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Text } from "react-native";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
 import { InternalView } from "../../components/molecules/InternalView";
 import { Theme } from "../../constants";
 

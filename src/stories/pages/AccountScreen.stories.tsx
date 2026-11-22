@@ -1,41 +1,55 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { AccountScreen } from "../../components/pages/AccountScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useAccount", () => ({
+vi.mock("../../hooks/useAccount", () => ({
     useAcount: () => ({
         loading: false,
         firstName: "Jane",
-        onFirstNameChangeText: jest.fn(),
+        onFirstNameChangeText: vi.fn(),
         lastName: "Doe",
-        onLastNameChangeText: jest.fn(),
+        onLastNameChangeText: vi.fn(),
         birthDay: new Date("1990-01-15"),
-        onBirthDayChange: jest.fn(),
+        onBirthDayChange: vi.fn(),
         gender: "female",
-        onGenderChange: jest.fn(),
-        onSavePress: jest.fn(),
-        onLogoutPress: jest.fn(),
+        onGenderChange: vi.fn(),
+        onSavePress: vi.fn(),
+        onLogoutPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("../../hooks/useUnreadMessageCount", () => ({
+vi.mock("../../hooks/useUnreadMessageCount", () => ({
     useUnreadMessageCount: () => 2,
 }));
 
-jest.mock("../../hooks/useDeviceMaintenance", () => ({
+vi.mock("../../hooks/useDeviceMaintenance", () => ({
     useDeviceMaintenance: () => ({
         connected: true,
         busy: false,
-        onFormatSdCardPress: jest.fn(),
-        onResetDevicePress: jest.fn(),
+        onFormatSdCardPress: vi.fn(),
+        onResetDevicePress: vi.fn(),
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -50,23 +64,23 @@ jest.mock("../../hooks", () => ({
     useAcount: () => ({
         loading: false,
         firstName: "Jane",
-        onFirstNameChangeText: jest.fn(),
+        onFirstNameChangeText: vi.fn(),
         lastName: "Doe",
-        onLastNameChangeText: jest.fn(),
+        onLastNameChangeText: vi.fn(),
         birthDay: new Date("1990-01-15"),
-        onBirthDayChange: jest.fn(),
+        onBirthDayChange: vi.fn(),
         gender: "female",
-        onGenderChange: jest.fn(),
-        onSavePress: jest.fn(),
-        onLogoutPress: jest.fn(),
+        onGenderChange: vi.fn(),
+        onSavePress: vi.fn(),
+        onLogoutPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

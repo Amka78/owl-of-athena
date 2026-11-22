@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
 import { ProfileOptionList } from "../../../components/organisms/profiles/ProfileOptionList";
 import { Theme } from "../../../constants";
 import { defaultOptions, groupingProfileOptionList } from "../../../services/ProfileService";
 
 const meta = {
-    title: "Organisms/ProfileOptionList",
+    title: "Organisms/ProfileOptionsList",
     component: ProfileOptionList,
     decorators: [
         (Story: any) => (

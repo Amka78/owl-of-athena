@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider, RadioButton } from "react-native-paper";
+import { expect } from "storybook/test";
 import { LabeledRadioButton } from "../../components/molecules/LabeledRadioButton";
 import { Theme } from "../../constants";
 

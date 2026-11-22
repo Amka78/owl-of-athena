@@ -1,9 +1,9 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { View } from "react-native";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
 import { OptionLedEffect } from "../../components/molecules/OptionLedEffect";
 import { Theme } from "../../constants";
 

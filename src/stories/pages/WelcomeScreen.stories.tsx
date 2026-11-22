@@ -1,24 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { WelcomeScreen } from "../../components/pages/WelcomeScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useWelcome", () => ({
+vi.mock("../../hooks/useWelcome", () => ({
     useWelcome: () => ({
-        onStandalonePress: jest.fn(),
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onStandalonePress: vi.fn(),
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../hooks/useAutoLogin", () => ({
-    useAutoLogin: jest.fn(),
+vi.mock("../../hooks/useAutoLogin", () => ({
+    useAutoLogin: vi.fn(),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -31,17 +45,17 @@ jest.mock("../../hooks", () => ({
         scale: 2,
     }),
     useWelcome: () => ({
-        onStandalonePress: jest.fn(),
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onStandalonePress: vi.fn(),
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

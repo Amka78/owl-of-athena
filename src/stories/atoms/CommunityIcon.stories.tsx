@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
+import { expect, fn } from "storybook/test";
 import { CommunityIcon } from "../../components/atoms/CommunityIcon";
 
 const meta = {

@@ -1,20 +1,34 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { ForgotPasswordScreen } from "../../components/pages/ForgotPassswordScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useForgotPassword", () => ({
+vi.mock("../../hooks/useForgotPassword", () => ({
     useForgotPassword: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onSendPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onSendPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -27,21 +41,21 @@ jest.mock("../../hooks", () => ({
         scale: 2,
     }),
     useForgotPassword: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onSendPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onSendPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
+vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({
-        navigate: jest.fn(),
-        goBack: jest.fn(),
-        setOptions: jest.fn(),
+        navigate: vi.fn(),
+        goBack: vi.fn(),
+        setOptions: vi.fn(),
     }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

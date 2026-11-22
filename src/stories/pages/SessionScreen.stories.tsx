@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { SessionScreen } from "../../components/pages/SessionScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/sessions/useSession", () => ({
+vi.mock("../../hooks/sessions/useSession", () => ({
     useSession: () => ({
         selectedSession: {},
         selectedSessionDetail: {},
@@ -15,16 +16,16 @@ jest.mock("../../hooks/sessions/useSession", () => ({
         remDuration: { hours: 1, minutes: 45 },
         deepDuration: { hours: 2, minutes: 15 },
         radialProgress: 82,
-        chartSelectButtonPress: jest.fn(),
+        chartSelectButtonPress: vi.fn(),
         currentChart: "PieChart",
         scaleXDomain: [Date.now() - 3600000 * 8, Date.now()],
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

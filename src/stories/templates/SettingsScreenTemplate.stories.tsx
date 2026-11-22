@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
+import { vi } from "vitest";
 import { SettingsScreenTemplate } from "../../components/templates/SettingsScreenTemplate";
 import { Theme } from "../../constants";
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
 }));
 
 const mobileDimens = {

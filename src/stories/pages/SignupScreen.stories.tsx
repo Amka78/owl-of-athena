@@ -1,30 +1,43 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { SignupScreen } from "../../components/pages/SignupScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useSignup", () => ({
+vi.mock("../../hooks/useSignup", () => ({
     useSignup: () => ({
         loading: false,
-        emailHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        passwordHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
+        emailHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        passwordHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
         passwordConfirmHooks: {
             value: "",
-            onChangeText: jest.fn(),
-            onEndEditing: jest.fn(),
+            onChangeText: vi.fn(),
+            onEndEditing: vi.fn(),
             error: "",
         },
-        checkBoxHooks: { checked: false, onPress: jest.fn() },
-        onSignupPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onLinkTextPress: jest.fn(),
+        checkBoxHooks: { checked: false, onPress: vi.fn() },
+        onSignupPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onLinkTextPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -36,29 +49,29 @@ jest.mock("../../hooks", () => ({
         fontScale: 1,
         scale: 2,
     }),
-    useConvertibleHeader: jest.fn(),
+    useConvertibleHeader: vi.fn(),
     useSignup: () => ({
         loading: false,
-        emailHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        passwordHooks: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
+        emailHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        passwordHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
         passwordConfirmHooks: {
             value: "",
-            onChangeText: jest.fn(),
-            onEndEditing: jest.fn(),
+            onChangeText: vi.fn(),
+            onEndEditing: vi.fn(),
             error: "",
         },
-        checkBoxHooks: { checked: false, onPress: jest.fn() },
-        onSignupPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onLinkTextPress: jest.fn(),
+        checkBoxHooks: { checked: false, onPress: vi.fn() },
+        onSignupPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onLinkTextPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
+import { expect, fn } from "storybook/test";
 import { TemplateIcon } from "../../components/atoms/TemplateIcon";
 
 const meta = {
@@ -16,7 +16,7 @@ export const Primary: Story = {
         name: "home",
         size: 40,
     },
-    play: async ({ canvasElement }) => {
+    play: async ({ canvasElement }: { canvasElement: HTMLElement }) => {
         expect(canvasElement).toBeTruthy();
     },
 };

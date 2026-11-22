@@ -1,9 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { ProfileScreen } from "../../components/pages/ProfileScreen";
 import { Theme } from "../../constants";
+
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
+    useRoute: () => ({ params: {} }),
+    useFocusEffect: vi.fn(),
+}));
 
 const meta = {
     title: "Pages/ProfileScreen",

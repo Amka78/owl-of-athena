@@ -1,18 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
+import { vi } from "vitest";
 import { ProfileDesktopScreenTemplate } from "../../components/templates/ProfileDesktopScreenTemplate";
 import { Theme } from "../../constants";
 
-jest.mock("../../navigation/ProfileTabNavigator", () => {
+vi.mock("../../navigation/ProfileTabNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>ProfileTabNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>ProfileTabNavigator</Text>
+            </View>
+        ),
+    };
 });
 
 const filterMenuProps = {

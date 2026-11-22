@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
 import { LabeledTimeView } from "../../components/molecules/LabeledTimeView";
 import { Theme } from "../../constants";
 

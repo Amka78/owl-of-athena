@@ -1,23 +1,37 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { LoginScreen } from "../../components/pages/LoginScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useLogin", () => ({
+vi.mock("../../hooks/useLogin", () => ({
     useLogin: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        password: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
-        onForgotPasswordPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onForgotPasswordPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -30,20 +44,20 @@ jest.mock("../../hooks", () => ({
         scale: 2,
     }),
     useLogin: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        password: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
-        onForgotPasswordPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onForgotPasswordPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
 import { SessionScreenTemplate } from "../../components/templates/SessionScreenTemplate";
 import { Theme } from "../../constants";
 import type { AuroraSession } from "../../sdk/models";
@@ -29,6 +29,37 @@ const defaultArgs = {
     leftSelectButton: { onPress: fn() },
     rightSelectButton: { onPress: fn() },
     currentChart: "SleepChart" as const,
+    sessionTimeline: {
+        scaleXDomain: [],
+        asleepAt: undefined,
+        awakeAt: undefined,
+        stimEvents: [],
+        awakeningEvents: [],
+        buttonEvents: [],
+        showStimEvents: true,
+        showAwakeningEvents: true,
+        showButtonEvents: true,
+    },
+    showTimeline: true,
+    hasSleepData: true,
+    sessionDetailsMenu: {
+        isFilterEnabled: false,
+        showTimeline: true,
+        showStimEvents: true,
+        showAwakeningEvents: true,
+        showButtonEvents: true,
+        onFilterToggle: fn(),
+        onTimelineToggle: fn(),
+        onStimEventsToggle: fn(),
+        onAwakeningEventsToggle: fn(),
+        onButtonEventsToggle: fn(),
+        onExportJsonPress: fn(),
+        onExportCsvPress: fn(),
+        onDownloadZipPress: fn(),
+    },
+    showSettings: true,
+    onSettingsPress: fn(),
+    onExportPress: fn(),
     sessionSleepChart: {
         scaleXDomain: [],
         isFilterEnabled: false,

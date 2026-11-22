@@ -1,19 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect, fn } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect, fn } from "storybook/test";
+import { vi } from "vitest";
 import { SessionDesktopScreenTemplate } from "../../components/templates/SessionDesktopScreenTemplate";
 import { Theme } from "../../constants";
 import { FilterByDateValues } from "../../store/sessionStore";
 
-jest.mock("../../navigation/SessionTabNavigator", () => {
+vi.mock("../../navigation/SessionTabNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>SessionTabNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>SessionTabNavigator</Text>
+            </View>
+        ),
+    };
 });
 
 const filterMenuProps = {

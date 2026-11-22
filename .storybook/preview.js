@@ -23,9 +23,10 @@ export const parameters = {
 };
 
 export const decorators = [
-  (Story) => (
-    <Provider theme={Theme}>
-      <Story />
-    </Provider>
-  ),
+  (Story) =>
+    React.createElement(
+      Provider,
+      { theme: Theme },
+      React.createElement(Story),
+    ),
 ];

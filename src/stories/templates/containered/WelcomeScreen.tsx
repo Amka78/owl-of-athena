@@ -1,5 +1,5 @@
 //#region Import Moduels
-import React, { type FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
 import {
     WelcomeScreenTemplate,

@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { WakingScreen } from "../../components/pages/WakingScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/useWaking ", () => ({
+vi.mock("../../hooks/useWaking ", () => ({
     useWaking: () => ({
-        wakeupButtonPress: jest.fn(),
+        wakeupButtonPress: vi.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -18,7 +19,19 @@ jest.mock("../../hooks/useWaking ", () => ({
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -30,9 +43,9 @@ jest.mock("../../hooks", () => ({
         fontScale: 1,
         scale: 2,
     }),
-    useConvertibleHeader: jest.fn(),
+    useConvertibleHeader: vi.fn(),
     useWaking: () => ({
-        wakeupButtonPress: jest.fn(),
+        wakeupButtonPress: vi.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -43,10 +56,10 @@ jest.mock("../../hooks", () => ({
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
-    useNavigation: () => ({ navigate: jest.fn(), goBack: jest.fn() }),
+vi.mock("@react-navigation/native", () => ({
+    useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

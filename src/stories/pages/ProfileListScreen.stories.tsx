@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { ProfileListScreen } from "../../components/pages/ProfileListScreen";
 import { Theme } from "../../constants";
 
-jest.mock("../../hooks/profiles/useProfileList", () => ({
+vi.mock("../../hooks/profiles/useProfileList", () => ({
     useProfileList: () => ({
         showFilter: false,
         filterCondition: {
@@ -13,20 +14,33 @@ jest.mock("../../hooks/profiles/useProfileList", () => ({
             showCommunity: true,
             showPrivate: true,
         },
-        onShowOfficialPress: jest.fn(),
-        onShowCommunityPress: jest.fn(),
-        onShowPrivatePress: jest.fn(),
-        onFilterPress: jest.fn(),
-        onRefreshPress: jest.fn(),
+        onShowOfficialPress: vi.fn(),
+        onShowCommunityPress: vi.fn(),
+        onShowPrivatePress: vi.fn(),
+        onFilterPress: vi.fn(),
+        onRefreshPress: vi.fn(),
         userId: "guest",
         list: [],
-        onStarPress: jest.fn(),
-        onSelectProfile: jest.fn(),
-        onDeleteProfile: jest.fn(),
+        onStarPress: vi.fn(),
+        onSelectProfile: vi.fn(),
+        onDeleteProfile: vi.fn(),
     }),
 }));
 
-jest.mock("../../hooks", () => ({
+vi.mock("../../hooks", () => ({
+    useLocale: () => undefined,
+    useConvertibleHeader: () => undefined,
+    useScreenDimensions: () => ({
+        width: 375,
+        height: 800,
+        isDesktop: false,
+        isLargeWidth: false,
+        isSmallHeight: false,
+        isVertical: true,
+        isHorizontal: false,
+        fontScale: 1,
+        scale: 2,
+    }),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -40,14 +54,14 @@ jest.mock("../../hooks", () => ({
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
+vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({
-        navigate: jest.fn(),
-        goBack: jest.fn(),
-        setOptions: jest.fn(),
+        navigate: vi.fn(),
+        goBack: vi.fn(),
+        setOptions: vi.fn(),
     }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { expect } from "@storybook/test";
 import React from "react";
 import { Provider } from "react-native-paper";
+import { expect } from "storybook/test";
+import { vi } from "vitest";
 import { SessionListScreen } from "../../components/pages/SessionListScreen";
 import { Theme } from "../../constants";
 import { FilterByDateValues } from "../../store/sessionStore";
 
-jest.mock("../../hooks/sessions/useSessionList", () => ({
+vi.mock("../../hooks/sessions/useSessionList", () => ({
     useSessinList: () => ({
         showFilter: false,
         filterCondition: {
@@ -14,25 +15,25 @@ jest.mock("../../hooks/sessions/useSessionList", () => ({
             showNotes: false,
             showStarred: false,
         },
-        onFilterPress: jest.fn(),
-        onRefreshPress: jest.fn(),
+        onFilterPress: vi.fn(),
+        onRefreshPress: vi.fn(),
         list: [],
-        onSelectSession: jest.fn(),
-        onDeleteSession: jest.fn(),
-        onStarPress: jest.fn(),
-        onNotePress: jest.fn(),
+        onSelectSession: vi.fn(),
+        onDeleteSession: vi.fn(),
+        onStarPress: vi.fn(),
+        onNotePress: vi.fn(),
         userId: "guest",
     }),
 }));
 
-jest.mock("@react-navigation/native", () => ({
+vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({
-        navigate: jest.fn(),
-        goBack: jest.fn(),
-        setOptions: jest.fn(),
+        navigate: vi.fn(),
+        goBack: vi.fn(),
+        setOptions: vi.fn(),
     }),
     useRoute: () => ({ params: {} }),
-    useFocusEffect: jest.fn(),
+    useFocusEffect: vi.fn(),
 }));
 
 const meta = {
