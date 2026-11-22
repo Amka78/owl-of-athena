@@ -1,5 +1,5 @@
 //#region Import Modules
-import { type AudioPlayer, setAudioModeAsync } from "expo-audio";
+import { type AudioMetadata, type AudioPlayer, setAudioModeAsync } from "expo-audio";
 import { Platform } from "react-native";
 import { boostSystemVolume, restoreSystemVolume } from "./SystemVolumeBooster";
 
@@ -7,6 +7,15 @@ import { boostSystemVolume, restoreSystemVolume } from "./SystemVolumeBooster";
 
 //#region Constants
 const DEFAULT_ALARM_VOLUME = 0.8;
+
+/**
+ * Android はロック画面コントロールを有効にしないとバックグラウンド再生が
+ * 約3分で停止する（OS 制約）。鳴音中のロック画面表示に使うメタデータ。
+ */
+const LOCK_SCREEN_METADATA: AudioMetadata = {
+    title: "アラーム",
+    artist: "Owl of Athena",
+};
 
 /** Web の自動再生ポリシーを解除するために再生を試みる時間。 */
 const WEB_UNLOCK_DURATION_MS = 120;
@@ -64,6 +73,9 @@ export class AlarmAudio {
             await this.stop();
         }
         try {
+            if (Platform.OS === "android") {
+                sound.setActiveForLockScreen(true, LOCK_SCREEN_METADATA);
+            }
             sound.loop = true;
             sound.volume = clampVolume(volume);
             await sound.seekTo(0);
@@ -81,6 +93,9 @@ export class AlarmAudio {
         if (sound === undefined) return;
         this.activeSound = undefined;
         try {
+            if (Platform.OS === "android") {
+                sound.setActiveForLockScreen(false);
+            }
             sound.pause();
             sound.loop = false;
             await sound.seekTo(0);

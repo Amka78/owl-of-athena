@@ -1,5 +1,6 @@
 //#region Import Modules
-import { type AudioPlayer, createAudioPlayer } from "expo-audio";
+import { type AudioMetadata, type AudioPlayer, createAudioPlayer } from "expo-audio";
+import { Platform } from "react-native";
 
 import type { AlarmKeepAlive, AlarmKeepAliveReason } from "./AlarmKeepAliveTypes";
 
@@ -11,6 +12,15 @@ import type { AlarmKeepAlive, AlarmKeepAliveReason } from "./AlarmKeepAliveTypes
  * 可聴域外のごく小さい音量で無音ループを鳴らし続ける。
  */
 const SILENCE_VOLUME = 0.001;
+
+/**
+ * Android はロック画面コントロールを有効にしないとバックグラウンド再生が
+ * 約3分で停止する（OS 制約）。このメタデータがロック画面の再生表示に出る。
+ */
+const LOCK_SCREEN_METADATA: AudioMetadata = {
+    title: "Aurora",
+    artist: "Owl of Athena",
+};
 //#endregion
 
 //#region Class
@@ -34,6 +44,9 @@ class NativeAlarmKeepAlive implements AlarmKeepAlive {
                     keepAudioSessionActive: true,
                 });
             }
+            if (Platform.OS === "android") {
+                this.player.setActiveForLockScreen(true, LOCK_SCREEN_METADATA);
+            }
             this.player.loop = true;
             this.player.volume = SILENCE_VOLUME;
             this.player.play();
@@ -52,6 +65,9 @@ class NativeAlarmKeepAlive implements AlarmKeepAlive {
 
         this.acquired = false;
         try {
+            if (Platform.OS === "android") {
+                this.player.setActiveForLockScreen(false);
+            }
             this.player.pause();
             await this.player.seekTo(0);
             console.debug("[AlarmKeepAlive] released.");

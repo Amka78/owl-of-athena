@@ -17,8 +17,7 @@ export class AuroraUsb extends EventEmitter {
                 (port.pnpId && port.pnpId.indexOf("5740") !== -1) ||
                 (port.pnpId && port.pnpId.indexOf("0483") !== -1) ||
                 (port.productId && port.productId.indexOf("5740") !== -1) ||
-                (port.vendorId &&
-                    port.vendorId.indexOf(AuroraConstants.AURORA_USB_VID) !== -1) ||
+                (port.vendorId && port.vendorId.indexOf(AuroraConstants.AURORA_USB_VID) !== -1) ||
                 port.manufacturer == "iWinks"
             ) {
                 auroraPorts.push(port.path.replace("cu.", "tty."));
@@ -100,9 +99,7 @@ export class AuroraUsb extends EventEmitter {
                         if (this.disconnectPending) break;
 
                         try {
-                            this.serialPort = (await this.connectSerialPort(
-                                auroraPort,
-                            ));
+                            this.serialPort = await this.connectSerialPort(auroraPort);
 
                             this.setConnectionState(AuroraConstants.ConnectionStates.IDLE);
 
@@ -116,7 +113,7 @@ export class AuroraUsb extends EventEmitter {
                         `Failed connecting to Aurora on port(s): ${auroraPorts.join(",")}`,
                     );
                 }
-                this.serialPort = (await this.connectSerialPort(port));
+                this.serialPort = await this.connectSerialPort(port);
 
                 this.setConnectionState(AuroraConstants.ConnectionStates.IDLE);
 

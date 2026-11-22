@@ -89,7 +89,56 @@ export class SessionRestClient {
 
         if (error) throw error;
 
-        return new AuroraSession(data as AuroraSessionJson);
+        const newSession = data as AuroraSessionJson;
+
+        // 詳細画面のグラフ用にイベント（睡眠ステージ・刺激・覚醒等）も保存する。
+        // Electron 版はサーバが session_text を解析して events を保存しており、
+        // get_session_events RPC がこのデータを返すことでクロスデバイスでも
+        // グラフを描画できる（端末フォールバック不要になる）。
+        try {
+            await this.insertSessionEvents(newSession.id, sessionJson.events);
+        } catch (e) {
+            // セッション行だけ残ると次回同期で重複するため、行ごと取り消して失敗扱いにする
+            // （端末側はリネームされず、次回の同期で再送される）。
+            try {
+                await supabase.from("aurora_sessions").delete().eq("id", newSession.id);
+            } catch {
+                // ロールバックに失敗しても元のエラーを優先して報告する
+            }
+            throw e;
+        }
+
+        return new AuroraSession(newSession);
+    }
+
+    /**
+     * セッションのイベントを aurora_events に一括 INSERT する。
+     * 件数が多いセッションを想定し、チャンク単位で送る。
+     */
+    private async insertSessionEvents(
+        sessionId: string,
+        events: Array<AuroraEventJson>,
+    ): Promise<void> {
+        if (!events?.length) return;
+
+        const eventRows = events
+            .filter((event) => event && Number.isFinite(event.time) && Number.isFinite(event.flags))
+            .map((event) => ({
+                aurora_session_id: sessionId,
+                aurora_event_id: toIntOrUndefined(event.id) ?? 0,
+                event_at: toIntOrUndefined(event.date),
+                time: toIntOrUndefined(event.time) ?? 0,
+                flags: toIntOrUndefined(event.flags) ?? 0,
+            }));
+
+        const chunkSize = 500;
+        for (let i = 0; i < eventRows.length; i += chunkSize) {
+            const { error } = await supabase
+                .from("aurora_events")
+                .insert(eventRows.slice(i, i + chunkSize));
+
+            if (error) throw error;
+        }
     }
 
     /**

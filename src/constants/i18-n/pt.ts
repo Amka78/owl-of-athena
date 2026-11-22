@@ -40,6 +40,7 @@ export default {
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
     [MessageKeys.reloading]: "{0} Recarregando...",
+    [MessageKeys.loading_aurora_comm_waiting]: "Aguardando comunicação…",
     [MessageKeys.choose]: "Escolha um(a) {0}",
     [MessageKeys.preview]: "Pré-visualizar {0}",
     [MessageKeys.offline_banner_message]:
@@ -192,6 +193,7 @@ export default {
     [MessageKeys.session_notes_label]: "Notas",
     [MessageKeys.session_notes_hint_text]: "toque para adicionar uma nota",
     [MessageKeys.session_no_sleep_data]: "Nenhum dado de sono disponível",
+    [MessageKeys.session_detail_loading]: "Carregando dados da sessão...",
     [MessageKeys.session_detail_filter_data]: "Filtrar Dados",
     [MessageKeys.session_detail_show_timeline]: "Mostrar Linha do Tempo",
     [MessageKeys.session_detail_show_stim_events]: "Mostrar Estímulos REM",

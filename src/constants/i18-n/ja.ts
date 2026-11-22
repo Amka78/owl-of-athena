@@ -33,6 +33,7 @@ export default {
     [MessageKeys.long_dash]: "\u2014",
     [MessageKeys.pipe_separator]: " | ",
     [MessageKeys.reloading]: "{0} 再読み込み中...",
+    [MessageKeys.loading_aurora_comm_waiting]: "通信の開始を待っています…",
     [MessageKeys.preview]: "{0}を確認",
     [MessageKeys.offline_banner_message]: "オフラインです。一部の機能は利用できません。",
     // sleep stages
@@ -191,6 +192,7 @@ export default {
     [MessageKeys.session_notes_label]: "ノート",
     [MessageKeys.session_notes_hint_text]: "タップして、ノートを追加します。",
     [MessageKeys.session_no_sleep_data]: "睡眠データがありません",
+    [MessageKeys.session_detail_loading]: "セッション情報を読み込み中...",
     [MessageKeys.session_detail_filter_data]: "データを間引く",
     [MessageKeys.session_detail_show_timeline]: "タイムラインを表示",
     [MessageKeys.session_detail_show_stim_events]: "REM刺激を表示",

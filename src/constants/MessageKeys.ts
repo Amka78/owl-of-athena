@@ -19,6 +19,7 @@ export const MessageKeys = {
     long_dash: "long_dash",
     pipe_separator: "pipe_separator",
     reloading: "reloading",
+    loading_aurora_comm_waiting: "loading_aurora_comm_waiting",
     preview: "preview",
     offline_banner_message: "offline_banner_message",
     //#endregion
@@ -171,6 +172,7 @@ export const MessageKeys = {
     session_awake_pie_chart_label: "session_awake_pie_chart_label",
     session_no_signal_pie_chart_label: "session_no_signal_pie_chart_label",
     session_no_sleep_data: "session_no_sleep_data",
+    session_detail_loading: "session_detail_loading",
     session_detail_filter_data: "session_detail_filter_data",
     session_detail_show_timeline: "session_detail_show_timeline",
     session_detail_show_stim_events: "session_detail_show_stim_events",

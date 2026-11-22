@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 //#region Import Modules
 
+import { Asset } from "expo-asset";
 import groupBy from "lodash/groupBy";
 import isEqual from "lodash/isEqual";
 import { MessageKeys } from "../constants";
@@ -23,9 +24,9 @@ export type ProfileOptionValues = Record<string, unknown>;
 export const createOfficialProfile = async (): Promise<AuroraProfile> => {
     // ネイティブでは require() は数値のモジュールID（例: 35）を返し、直接 fetch すると
     // "no protocol: 35" で失敗する（Web だけ URL 文字列になり動いていた）。
-    // expo-asset で実 URI に解決してから読み込む。import を関数内に置くのは
-    // bun test がトップレベル import のグラフ走査で expo-asset を実解析して落ちるため。
-    const { Asset } = require("expo-asset") as typeof import("expo-asset");
+    // expo-asset で実 URI に解決してから読み込む。
+    // （bun test 時代はトップレベル import がグラフ走査で落ちたため関数内 require に
+    //   していたが、vitest では静的 import で問題ない）
     const defaultProfileAsset = Asset.fromModule(
         require("../../assets/profiles/default_profile_content.ttf"),
     );

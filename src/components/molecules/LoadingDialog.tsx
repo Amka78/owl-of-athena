@@ -3,12 +3,16 @@ import React from "react";
 import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native";
 import { ProgressBar } from "react-native-paper";
 import { Colors, Dimens, Fonts } from "../../constants";
+import type { AuroraCommLogEntry } from "../../services/AuroraCommLog";
+import * as AuroraCommLog from "../../services/AuroraCommLog";
+import { AuroraCommLogPanel } from "./AuroraCommLogPanel";
 
 //#endregion
 
 //#region Types
 type LoadingDialogState = {
     settings?: LoadingDialogSettings;
+    commEntries: readonly AuroraCommLogEntry[];
 };
 
 type LoadingDialogSettings = {
@@ -16,9 +20,17 @@ type LoadingDialogSettings = {
     dialogTitle: string;
     /** 0〜1。指定時は不定プログレスではなく進捗バーを表示する。 */
     progress?: number;
+    /**
+     * true にするとスピナーの代わりに Aurora との通信履歴
+     * （送信コマンド / 応答 / 接続状態）を表示する。
+     */
+    auroraCommLog?: boolean;
 };
 
 type LoadingDialogProps = {};
+
+/** スピナー表示（非通信モード）の検証用。 */
+const TEST_ID_LOADING_INDICATOR = "loading-indicator";
 //#endregion
 
 //#region Component
@@ -26,6 +38,12 @@ export class LoadingDialog extends React.Component<LoadingDialogProps, LoadingDi
     public static Instance?: LoadingDialog;
 
     public static show(args: LoadingDialogSettings): void {
+        // 通信ログが既に開いているダイアログの進捗更新（= 同じ呼び出し元の再 show）では
+        // 途中で履歴が消えないよう、開き直しのときだけ clear する。
+        const previous = LoadingDialog.Instance?.state.settings;
+        if (args.auroraCommLog === true && previous?.auroraCommLog !== true) {
+            AuroraCommLog.clear();
+        }
         LoadingDialog.Instance!.setState({ settings: args });
     }
 
@@ -37,16 +55,43 @@ export class LoadingDialog extends React.Component<LoadingDialogProps, LoadingDi
         super(props);
         this.state = {
             settings: undefined,
+            commEntries: [],
         };
     }
 
-    public async componentDidMount(): Promise<void> {
+    public componentDidMount(): void {
         LoadingDialog.Instance = this;
+        this.unsubscribeCommLog = AuroraCommLog.subscribe((commEntries) => {
+            this.setState({ commEntries });
+        });
     }
+
+    public componentWillUnmount(): void {
+        this.unsubscribeCommLog?.();
+        if (LoadingDialog.Instance === this) {
+            LoadingDialog.Instance = undefined;
+        }
+    }
+
+    private unsubscribeCommLog?: () => void;
 
     public render(): React.ReactNode {
         const settings = this.state.settings;
         if (!settings) return null;
+
+        const progressView =
+            settings.progress !== undefined ? (
+                <>
+                    <ProgressBar
+                        progress={Math.max(0, Math.min(1, settings.progress))}
+                        color={Colors.cyan}
+                        style={styles.progress}
+                    />
+                    <Text style={styles.progressText}>
+                        {Math.round(Math.max(0, Math.min(1, settings.progress)) * 100)}%
+                    </Text>
+                </>
+            ) : null;
 
         return (
             // paper の Dialog（Modal）はこの環境（RN 0.88 + ナビゲータ配下）で背面レイヤーが
@@ -61,28 +106,35 @@ export class LoadingDialog extends React.Component<LoadingDialogProps, LoadingDi
             >
                 <View style={styles.backdrop}>
                     <View style={styles.centerBox}>
-                        <View style={styles.dialogContainer}>
+                        <View
+                            style={[
+                                styles.dialogContainer,
+                                settings.auroraCommLog && styles.dialogContainerLog,
+                            ]}
+                        >
                             <Text style={styles.dialogTitle}>{settings.dialogTitle}</Text>
-                            <View style={styles.dialogBody}>
-                                {settings.progress === undefined ? (
+                            <View
+                                style={[
+                                    styles.dialogBody,
+                                    settings.auroraCommLog && styles.dialogBodyLog,
+                                ]}
+                            >
+                                {settings.auroraCommLog ? (
+                                    <>
+                                        <AuroraCommLogPanel entries={this.state.commEntries} />
+                                        {progressView}
+                                    </>
+                                ) : settings.progress === undefined ? (
                                     // paper の ActivityIndicator は二重円（2 本の回転アーク）を
                                     // 描画するため、単一スピナーに見えない。RN コアの
                                     // ActivityIndicator（Android ではネイティブ ProgressBar）を使う。
-                                    <ActivityIndicator color={Colors.cyan} size={48} />
+                                    <ActivityIndicator
+                                        testID={TEST_ID_LOADING_INDICATOR}
+                                        color={Colors.cyan}
+                                        size={48}
+                                    />
                                 ) : (
-                                    <>
-                                        <ProgressBar
-                                            progress={Math.max(0, Math.min(1, settings.progress))}
-                                            color={Colors.cyan}
-                                            style={styles.progress}
-                                        />
-                                        <Text style={styles.progressText}>
-                                            {Math.round(
-                                                Math.max(0, Math.min(1, settings.progress)) * 100,
-                                            )}
-                                            %
-                                        </Text>
-                                    </>
+                                    progressView
                                 )}
                             </View>
                         </View>
@@ -130,10 +182,19 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         textAlign: "center",
     },
+    // 通信ログ表示時はパネルが入るよう背を高くする。
+    dialogContainerLog: {
+        minHeight: 320,
+    },
     dialogBody: {
         alignItems: "center",
         flex: 1,
         justifyContent: "center",
+    },
+    // 通信ログ表示時はログを上寄せで敷き詰める。
+    dialogBodyLog: {
+        alignItems: "stretch",
+        justifyContent: "flex-start",
     },
     progress: { marginTop: 4, width: "100%" },
     progressText: { color: Colors.white, fontSize: 12, marginTop: 8, textAlign: "center" },

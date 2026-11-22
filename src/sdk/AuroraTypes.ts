@@ -291,5 +291,7 @@ export type AuroraEventJson = {
     flags: number;
     id: number;
     time: number;
+    /** 端末の CSV 由来イベントは epoch ms を date に持つ（サーバ行は event_at のみ）。 */
+    date?: number;
 };
 //#endregion

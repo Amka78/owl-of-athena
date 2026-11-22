@@ -425,6 +425,35 @@ export class AuroraManager extends EventEmitter {
         return readSessionContent;
     }
 
+    /**
+     * 端末上のセッションファイルから詳細（streams + 集計済みイベント）を組み立てる。
+     *
+     * Supabase にはイベント/ストリームが保存されないため（Electron 版ではサーバが
+     * session_text を解析して events を保存し、詳細画面のグラフはその集計を使う）、
+     * グラフ用データがサーバに無い場合のフォールバックとして端末側の実データから読む。
+     * 端末未接続・読み取り失敗時は undefined を返す。
+     */
+    public async getSessionDetailFromDevice(
+        sessionId: string,
+    ): Promise<AuroraSessionDetail | undefined> {
+        if (!this.isConnected()) return undefined;
+
+        const fileInfo: FileInfo = { file: `sessions/${sessionId}/session.txt` };
+        const readSessionContent = await this.readSessionContent([fileInfo]);
+        const uploadSession = readSessionContent.get(fileInfo.file);
+        if (!uploadSession) return undefined;
+
+        try {
+            return this.createSessionDetail(new AuroraSession(uploadSession), uploadSession);
+        } catch (e) {
+            console.error(
+                `[getSessionDetailFromDevice] failed to build detail for ${sessionId}:`,
+                e,
+            );
+            return undefined;
+        }
+    }
+
     public async pushSessions(
         sessions: Array<FileInfo>,
         guestLogin: boolean,

@@ -215,6 +215,77 @@ CREATE POLICY "Users can create stream data for their own sessions" ON public.au
     );
 
 -- ====================================
+-- 4-2. aurora_events テーブル（セッション詳細グラフ用）
+--      アプリは同期時にイベントを保存し、get_session_events RPC で読み出す
+-- ====================================
+CREATE TABLE public.aurora_events (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    aurora_session_id UUID NOT NULL REFERENCES public.aurora_sessions(id) ON DELETE CASCADE,
+    aurora_event_id INTEGER NOT NULL,
+    event_at BIGINT NOT NULL, -- epoch ms
+    "time" BIGINT NOT NULL,   -- セッション開始からの ms
+    flags INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE INDEX idx_aurora_events_session_event
+    ON public.aurora_events (aurora_session_id, aurora_event_id);
+
+ALTER TABLE public.aurora_events ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Users can read events of their own sessions" ON public.aurora_events
+    FOR SELECT USING (
+        aurora_session_id IN (
+            SELECT id FROM public.aurora_sessions WHERE user_id = auth.uid()
+        )
+    );
+
+CREATE POLICY "Users can create events of their own sessions" ON public.aurora_events
+    FOR INSERT WITH CHECK (
+        aurora_session_id IN (
+            SELECT id FROM public.aurora_sessions WHERE user_id = auth.uid()
+        )
+    );
+
+CREATE OR REPLACE FUNCTION public.get_session_events(
+    p_session_id UUID,
+    p_aurora_event_id INTEGER,
+    p_bins TEXT,
+    p_group_by TEXT,
+    p_flags INTEGER
+)
+RETURNS TABLE (
+    id BIGINT,
+    aurora_event_id INTEGER,
+    event_at BIGINT,
+    "date" BIGINT,
+    "time" BIGINT,
+    flags INTEGER,
+    bins JSONB
+)
+LANGUAGE sql
+STABLE
+SET search_path = public
+AS $$
+    SELECT e.id,
+           e.aurora_event_id,
+           e.event_at,
+           e.event_at AS "date",
+           e."time" AS "time",
+           e.flags,
+           NULL::jsonb AS bins
+    FROM public.aurora_events e
+    JOIN public.aurora_sessions s ON s.id = e.aurora_session_id
+    WHERE e.aurora_session_id = p_session_id
+      AND e.aurora_event_id = p_aurora_event_id
+      AND (p_flags IS NULL OR e.flags = p_flags)
+      AND s.user_id = auth.uid()
+    ORDER BY e."time";
+$$;
+
+GRANT EXECUTE ON FUNCTION public.get_session_events(UUID, INTEGER, TEXT, TEXT, INTEGER)
+    TO authenticated;
+
+-- ====================================
 -- 5. questionnaires テーブル
 -- ====================================
 CREATE TABLE public.questionnaires (

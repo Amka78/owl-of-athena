@@ -123,7 +123,9 @@ const stringToVersion = (versionString: string): number => {
 
     if (version.length != 3) return 0;
 
-    return parseInt(version[0], 10) * 10000 + parseInt(version[1], 10) * 100 + parseInt(version[2], 10);
+    return (
+        parseInt(version[0], 10) * 10000 + parseInt(version[1], 10) * 100 + parseInt(version[2], 10)
+    );
 };
 
 const buzzSongObjToCmd = (songObj: any): any => {

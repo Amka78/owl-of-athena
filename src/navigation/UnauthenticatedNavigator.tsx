@@ -4,12 +4,7 @@ import type * as React from "react";
 import { View } from "react-native";
 
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
-import {
-    LoginScreen,
-    ResetPasswordScreen,
-    SignupScreen,
-    WelcomeScreen,
-} from "../components/pages";
+import { LoginScreen, ResetPasswordScreen, SignupScreen, WelcomeScreen } from "../components/pages";
 import { ConfirmEmailScreen } from "../components/pages/ConfirmEmailScreen";
 import { ForgotPasswordScreen } from "../components/pages/ForgotPassswordScreen";
 import { useWindowDimensions } from "../hooks";
@@ -29,10 +24,7 @@ export const UnauthenticatedNavigator = (): React.ReactNode => {
                     name={"ForgotPassword"}
                     component={ForgotPasswordScreen}
                 ></Stack.Screen>
-                <Stack.Screen
-                    name={"ResetPassword"}
-                    component={ResetPasswordScreen}
-                ></Stack.Screen>
+                <Stack.Screen name={"ResetPassword"} component={ResetPasswordScreen}></Stack.Screen>
                 <Stack.Screen name={"Signup"} component={SignupScreen}></Stack.Screen>
                 <Stack.Screen name={"Login"} component={LoginScreen}></Stack.Screen>
                 <Stack.Screen

@@ -80,6 +80,7 @@ export const useAwake = (): {
 
         LoadingDialog.show({
             dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
+            auroraCommLog: true,
         });
 
         let syncResult: SessionSyncResult | undefined;

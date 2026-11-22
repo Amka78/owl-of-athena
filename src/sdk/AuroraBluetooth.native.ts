@@ -26,6 +26,17 @@ import { sleep } from "./util";
 const INIT_DELAY_MS = 5000;
 const DISCONNECT_RETRY_DELAY_MS = 3000;
 
+// Android の startDeviceScan は「アドバタイズパケットにサービス UUID を含む」デバイスしか返さず、
+// Aurora 側の広告タイミングによっては 1 回では見つからないことがある（実機で Timeout → 再試行で成功の事例あり）。
+// iOS 版（見つかるまでタイムアウト無しで探し続ける）の代わりに、1 回の connect で複数回スキャンし直す。
+const MAX_SCAN_ATTEMPTS = 3;
+const SCAN_ATTEMPT_DELAY_MS = 10000;
+
+// iOS 版の maintainConnection（切断のたびに自動再接続する）に相当するバックオフ。
+// 最初の 5 回は短い間隔で試し、以降は 5 分間隔で継続する（Android の無制限スキャンはバッテリー消費が大きいため）。
+const RECONNECT_BACKOFF_MS = [2000, 4000, 8000, 16000, 32000];
+const RECONNECT_IDLE_INTERVAL_MS = 5 * 60 * 1000;
+
 // Convert 32-char hex UUID to standard 8-4-4-4-12 format
 function toStandardUUID(hex: string): string {
     const h = hex.toLowerCase();
@@ -68,6 +79,9 @@ export class AuroraBluetooth extends EventEmitter {
     private device?: Device;
     private connectPromise?: any;
     private connectTimer?: any;
+    private reconnectLoopActive: boolean;
+    private reconnectAttempt: number;
+    private reconnectTimer?: ReturnType<typeof setTimeout>;
     private subscriptions: Subscription[];
     private disconnectSubscription?: Subscription;
     private stateSubscription?: Subscription;
@@ -78,6 +92,8 @@ export class AuroraBluetooth extends EventEmitter {
         this.initializing = false;
         this.connectionState = ConnectionStates.INIT;
         this.disconnectPending = false;
+        this.reconnectLoopActive = false;
+        this.reconnectAttempt = 0;
         this.subscriptions = [];
 
         this.bluetoothParser = new AuroraBluetoothParser();
@@ -132,6 +148,10 @@ export class AuroraBluetooth extends EventEmitter {
         }
 
         await this.requestPermissions();
+
+        // 自動再接続ループの待機中に手動接続を始めたら、二重スキャンを防ぐため先に止める。
+        this.stopAutoReconnectLoop();
+
         this.setConnectionState(ConnectionStates.CONNECTING);
 
         try {
@@ -225,6 +245,9 @@ export class AuroraBluetooth extends EventEmitter {
     }
 
     public async disconnect(): Promise<void> {
+        // 明示的な切断では自動再接続しない（iOS 版の cancelConnection 相当）。
+        this.stopAutoReconnectLoop();
+
         if (this.connectionState == ConnectionStates.DISCONNECTED || this.disconnectPending) {
             return;
         }
@@ -342,16 +365,49 @@ export class AuroraBluetooth extends EventEmitter {
             throw new Error("Already have a pending connection.");
         }
 
+        let lastError: unknown = "Unknown scan error.";
+
+        // スキャンは 1 回で必ず見つかるとは限らない（広告タイミング依存）ため、
+        // 失敗したら SCAN_ATTEMPT_DELAY_MS 待って再スキャンする（最大 MAX_SCAN_ATTEMPTS 回）。
+        for (let attempt = 1; attempt <= MAX_SCAN_ATTEMPTS; attempt++) {
+            if (attempt > 1) {
+                console.debug(
+                    `Scan attempt ${attempt}/${MAX_SCAN_ATTEMPTS} after ${SCAN_ATTEMPT_DELAY_MS}ms.`,
+                );
+                await sleep(SCAN_ATTEMPT_DELAY_MS);
+            }
+
+            try {
+                return await this.scanAttempt(timeoutMs);
+            } catch (error) {
+                console.error(`Scan attempt ${attempt}/${MAX_SCAN_ATTEMPTS} failed:`, error);
+                lastError = error;
+            }
+        }
+
+        // 最終失敗は connect() の catch が DISCONNECTED へ遷移させる
+        throw lastError;
+    }
+
+    /**
+     * 1 回分のスキャン＋接続。ここでは接続状態を変えずに reject する
+     * （残りのリトライは connectDevice が行う）。
+     */
+    private scanAttempt(timeoutMs: number): Promise<Device> {
         return new Promise<Device>((resolve, reject) => {
             this.connectPromise = { resolve, reject };
 
             console.debug("bluetooth scanning start.");
 
             this.bleManager.startDeviceScan([BLE_SERVICE_UUID], null, (error, device) => {
+                if (!this.connectPromise) {
+                    // タイムアウト・発見などで既に確定した試行の後続コールバックは無視する
+                    return;
+                }
                 if (error) {
                     console.error("Scan error:", error);
                     this.connectPromise = undefined;
-                    this.setConnectionState(ConnectionStates.DISCONNECTED);
+                    this.bleManager.stopDeviceScan();
                     reject(error.message);
                     return;
                 }
@@ -361,14 +417,18 @@ export class AuroraBluetooth extends EventEmitter {
                 }
             });
 
-            clearTimeout(this.connectTimer!);
+            if (this.connectTimer) {
+                clearTimeout(this.connectTimer);
+            }
 
             if (timeoutMs > 0) {
                 console.log(`waiting scanning:${timeoutMs}ms`);
                 this.connectTimer = setTimeout(() => {
+                    if (!this.connectPromise) {
+                        return;
+                    }
                     this.connectPromise = undefined;
                     this.bleManager.stopDeviceScan();
-                    this.setConnectionState(ConnectionStates.DISCONNECTED);
                     reject("Timeout waiting for bluetooth connection.");
                 }, timeoutMs);
             }
@@ -489,66 +549,103 @@ export class AuroraBluetooth extends EventEmitter {
 
         this.cleanupSubscriptions();
 
-        if (this.disconnectPending || !this.reconnect()) {
-            this.setConnectionState(ConnectionStates.DISCONNECTED);
+        // 明示的な切断（disconnect()）でなければ、iOS 版の maintainConnection と同じく自動再接続する。
+        this.setConnectionState(ConnectionStates.DISCONNECTED);
+
+        if (!this.disconnectPending && this.device) {
+            this.startAutoReconnectLoop();
         }
     };
 
-    private reconnect(): boolean {
-        if (!this.device) return false;
+    /**
+     * 意図しない切断からの自動再接続ループを開始する。
+     * RECONNECT_BACKOFF_MS（2/4/8/16/32 秒）を試した後は RECONNECT_IDLE_INTERVAL_MS（5 分）間隔で継続し、
+     * iOS 版の maintainConnection 相当の「繋がり続ける」挙動を Android でも再現する。
+     * 止まるのは disconnect() による明示切断か connect() による手動接続のときだけ。
+     */
+    private startAutoReconnectLoop(): void {
+        if (this.reconnectLoopActive || this.disconnectPending) {
+            return;
+        }
 
-        let reconnectResult = false;
-        const deviceId = this.device.id;
-
-        this.exponentialBackoff(
-            3,
-            2,
-            async () => {
-                console.log("Called toTry - reconnecting.");
-                this.time("Connecting to Bluetooth Device... ");
-
-                const device = await this.bleManager.connectToDevice(deviceId, {
-                    requestMTU: 185,
-                });
-                this.device = device;
-
-                this.disconnectSubscription = this.bleManager.onDeviceDisconnected(
-                    device.id,
-                    this.onPeripheralDisconnect,
-                );
-
-                await this.setupConnection(device);
-                reconnectResult = true;
-            },
-            () => {
-                console.log("> Bluetooth Device reconnected.");
-            },
-            () => {
-                this.time("Failed to reconnect.");
-            },
-        );
-
-        return reconnectResult;
+        this.reconnectLoopActive = true;
+        this.reconnectAttempt = 0;
+        console.log("Starts automatic reconnection loop.");
+        void this.runReconnectAttempt();
     }
 
-    private exponentialBackoff(
-        max: number,
-        delay: number,
-        toTry: any,
-        success: () => void,
-        fail: () => void,
-    ): void {
-        toTry()
-            .then(() => success())
-            .catch(() => {
-                if (max === 0) {
-                    return fail();
-                }
-                this.time("Retrying in " + delay + "s... (" + max + " tries left)");
-                setTimeout(() => {
-                    this.exponentialBackoff(--max, delay * 2, toTry, success, fail);
-                }, delay * 1000);
+    private stopAutoReconnectLoop(): void {
+        this.reconnectLoopActive = false;
+        if (this.reconnectTimer) {
+            clearTimeout(this.reconnectTimer);
+            this.reconnectTimer = undefined;
+        }
+    }
+
+    private nextReconnectDelay(): number {
+        if (this.reconnectAttempt < RECONNECT_BACKOFF_MS.length) {
+            return RECONNECT_BACKOFF_MS[this.reconnectAttempt++];
+        }
+        return RECONNECT_IDLE_INTERVAL_MS;
+    }
+
+    private async runReconnectAttempt(): Promise<void> {
+        if (!this.reconnectLoopActive || this.disconnectPending) {
+            return;
+        }
+
+        try {
+            if (!this.device) {
+                throw new Error("No device to reconnect to.");
+            }
+
+            console.log("Called toTry - reconnecting.");
+            this.time("Connecting to Bluetooth Device... ");
+
+            // CONNECTING へ遷移させることで、再接続成功時（CONNECTING → IDLE）に
+            // Aurora.ts 側の os-info 読み出しと flashConnectionChange(findBluetoothDevice) 通知が動く
+            this.setConnectionState(ConnectionStates.CONNECTING);
+
+            const device = await this.bleManager.connectToDevice(this.device.id, {
+                requestMTU: 185,
             });
+            this.device = device;
+
+            this.disconnectSubscription = this.bleManager.onDeviceDisconnected(
+                device.id,
+                this.onPeripheralDisconnect,
+            );
+
+            // 成功時は setupConnection 内で IDLE へ遷移し、ループを終える
+            await this.setupConnection(device);
+
+            // セットアップ中に切断イベントが割り込んだ場合は、再接続ループを続行する
+            // （このままループを止めると「接続中のままイベントが来ない」状態になる）
+            if (!device.isConnected()) {
+                throw new Error("Device disconnected during reconnection setup.");
+            }
+
+            this.reconnectLoopActive = false;
+
+            console.log("> Bluetooth Device reconnected.");
+        } catch (error) {
+            console.error("Failed to reconnect:", error);
+
+            this.cleanupSubscriptions();
+
+            if (!this.reconnectLoopActive || this.disconnectPending) {
+                return;
+            }
+
+            this.setConnectionState(ConnectionStates.DISCONNECTED);
+
+            const delay = this.nextReconnectDelay();
+            this.time("Retrying in " + delay + "ms...");
+            this.reconnectTimer = setTimeout(() => {
+                this.reconnectTimer = undefined;
+                void this.runReconnectAttempt();
+            }, delay);
+        }
     }
 
     private time(text: string): void {

@@ -104,14 +104,14 @@ export const useMain = (): {
                         : MessageKeys.firmware_update_flashing_with_component;
             return Message.get(key, [componentLabel]);
         };
-        LoadingDialog.show({ dialogTitle: phaseTitle("downloading") });
+        LoadingDialog.show({ dialogTitle: phaseTitle("downloading"), auroraCommLog: true });
 
         let resultMessage: string;
         try {
             const info = await AuroraManagerInstance.flashFirmware(
                 update,
                 (phase) => {
-                    LoadingDialog.show({ dialogTitle: phaseTitle(phase) });
+                    LoadingDialog.show({ dialogTitle: phaseTitle(phase), auroraCommLog: true });
                 },
                 (progress) => {
                     const ratio =
@@ -121,6 +121,7 @@ export const useMain = (): {
                     LoadingDialog.show({
                         dialogTitle: phaseTitle("downloading"),
                         progress: ratio,
+                        auroraCommLog: true,
                     });
                 },
             );
@@ -207,6 +208,7 @@ export const useMain = (): {
         try {
             LoadingDialog.show({
                 dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
+                auroraCommLog: true,
             });
 
             setError("");
@@ -367,6 +369,7 @@ async function executeConfiguring(
                         onConfirm: async () => {
                             LoadingDialog.show({
                                 dialogTitle: Message.get(MessageKeys.session_transfer_syncing),
+                                auroraCommLog: true,
                             });
                             try {
                                 // iOS 版と同じく、確認後に未同期セッションを全件一括で同期する。

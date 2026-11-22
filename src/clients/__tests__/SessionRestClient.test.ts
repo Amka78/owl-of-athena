@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { AuroraProfile, AuroraSessionCSV, AuroraSessionJson } from "../../sdk/AuroraTypes";
 import { AuroraSession } from "../../sdk/models";
 
@@ -10,27 +10,51 @@ import { AuroraSession } from "../../sdk/models";
 
 const state: {
     tables: string[];
-    insertPayload?: Record<string, any>;
-} = { tables: [] };
+    captures: Record<string, any[]>;
+    deletedSessionIds: string[];
+    failNextEventsInsert: boolean;
+} = {
+    tables: [],
+    captures: {},
+    deletedSessionIds: [],
+    failNextEventsInsert: false,
+};
 
 const knownProfiles = new Set(["profile-uuid-123"]);
 let profileLookupValue: unknown;
+let currentTable: string | undefined;
+let deleting = false;
 
 const queryBuilder: any = {
     insert: (payload: any) => {
-        state.insertPayload = payload;
+        if (currentTable) {
+            state.captures[currentTable] ??= [];
+            state.captures[currentTable].push(payload);
+        }
+        if (currentTable === "aurora_events" && state.failNextEventsInsert) {
+            return Promise.resolve({ error: { message: "events insert failed" } });
+        }
         return queryBuilder;
     },
     select: () => queryBuilder,
     eq: (_column: string, value: unknown) => {
+        if (deleting) {
+            deleting = false;
+            state.deletedSessionIds.push(String(value));
+            return Promise.resolve({ error: null });
+        }
         profileLookupValue = value;
         return queryBuilder;
     },
     order: () => queryBuilder,
-    single: async () => ({
-        data: { ...(state.insertPayload ?? {}), id: "server-session-id" },
-        error: null,
-    }),
+    delete: () => {
+        deleting = true;
+        return queryBuilder;
+    },
+    single: async () => {
+        const sessionPayload = state.captures.aurora_sessions?.at(-1) ?? {};
+        return { data: { ...sessionPayload, id: "server-session-id" }, error: null };
+    },
     maybeSingle: async () => ({
         data: knownProfiles.has(String(profileLookupValue)) ? { id: profileLookupValue } : null,
         error: null,
@@ -43,11 +67,12 @@ const fakeSupabase = {
     },
     from: (table: string) => {
         state.tables.push(table);
+        currentTable = table;
         return queryBuilder;
     },
 };
 
-mock.module("../supabase", () => ({ supabase: fakeSupabase }));
+vi.mock("../supabase", () => ({ supabase: fakeSupabase }));
 
 const buildSessionJson = (overrides: Partial<AuroraSessionCSV> = {}): AuroraSessionCSV =>
     ({
@@ -84,8 +109,12 @@ const buildSessionJson = (overrides: Partial<AuroraSessionCSV> = {}): AuroraSess
 describe("SessionRestClient.create", () => {
     beforeEach(() => {
         state.tables = [];
-        state.insertPayload = undefined;
+        state.captures = {};
+        state.deletedSessionIds = [];
+        state.failNextEventsInsert = false;
         profileLookupValue = undefined;
+        currentTable = undefined;
+        deleting = false;
     });
 
     it("CSV セッションを構造化カラムへマッピングして INSERT する", async () => {
@@ -93,10 +122,11 @@ describe("SessionRestClient.create", () => {
 
         const result = await client.create(buildSessionJson());
 
-        // プロフィール解決 → セッション保存の順でアクセスする
+        // プロフィール解決 → セッション保存の順でアクセスする（イベントなしは aurora_events 無し）
         expect(state.tables).toEqual(["aurora_profiles", "aurora_sessions"]);
+        expect(state.captures.aurora_events).toBeUndefined();
 
-        const payload = state.insertPayload!;
+        const payload = (state.captures.aurora_sessions ?? []).at(-1)!;
         expect(payload.user_id).toBe("auth-user-1");
         expect(payload.aurora_profile_id).toBe("profile-uuid-123");
         expect(payload.aurora_profile_name).toBe("Deep Sleep");
@@ -139,7 +169,7 @@ describe("SessionRestClient.create", () => {
             buildSessionJson({ profile: { id: "unknown-profile", name: "X" } as AuroraProfile }),
         );
 
-        const payload = state.insertPayload!;
+        const payload = (state.captures.aurora_sessions ?? []).at(-1)!;
         expect(payload.aurora_profile_id).toBeUndefined();
         expect(payload.aurora_profile_name).toBe("X");
         expect(result.id).toBe("server-session-id");
@@ -156,10 +186,77 @@ describe("SessionRestClient.create", () => {
             }),
         );
 
-        const payload = state.insertPayload!;
+        const payload = (state.captures.aurora_sessions ?? []).at(-1)!;
         expect(payload.asleep_at).toBeUndefined();
         expect(payload.awake_at).toBe(new Date(28800000.5).toISOString());
         expect(payload.session_duration).toBe(28800000);
+    });
+
+    it("セッションのイベントを aurora_events へ保存する", async () => {
+        const { default: client } = await import("../SessionRestClient");
+
+        const result = await client.create(
+            buildSessionJson({
+                events: [
+                    {
+                        aurora_event_id: 1,
+                        bins: [],
+                        event_at: 0,
+                        flags: 2,
+                        id: 1,
+                        time: 10000,
+                        date: 1731912810000,
+                    },
+                    {
+                        aurora_event_id: 2,
+                        bins: [],
+                        event_at: 0,
+                        flags: 1,
+                        id: 2,
+                        time: 20000,
+                        date: 1731912820000,
+                    },
+                ] as any,
+            }),
+        );
+
+        expect(state.tables).toEqual(["aurora_profiles", "aurora_sessions", "aurora_events"]);
+        expect(state.captures.aurora_events).toEqual([
+            [
+                {
+                    aurora_session_id: "server-session-id",
+                    aurora_event_id: 1,
+                    event_at: 1731912810000,
+                    time: 10000,
+                    flags: 2,
+                },
+                {
+                    aurora_session_id: "server-session-id",
+                    aurora_event_id: 2,
+                    event_at: 1731912820000,
+                    time: 20000,
+                    flags: 1,
+                },
+            ],
+        ]);
+        expect(result.id).toBe("server-session-id");
+    });
+
+    it("イベント保存に失敗したらセッション行を取り消して失敗扱いにする", async () => {
+        const { default: client } = await import("../SessionRestClient");
+
+        state.failNextEventsInsert = true;
+
+        await expect(
+            client.create(
+                buildSessionJson({
+                    events: [{ id: 1, time: 10000, flags: 2, date: 1731912810000 }] as any,
+                }),
+            ),
+        ).rejects.toThrow("events insert failed");
+
+        // セッション行が削除され、次回同期で再送できる状態になる
+        expect(state.deletedSessionIds).toEqual(["server-session-id"]);
     });
 });
 

@@ -163,10 +163,7 @@ export const useProfileList = (): {
 const isLocalProfile = (profile: AuroraProfile): boolean => profile.id.startsWith("local-");
 
 /** サーバー上の自分のプロフィールだけが更新・削除の対象。 */
-const isOwnServerProfile = (
-    profile: AuroraProfile,
-    userId: string | undefined,
-): boolean => {
+const isOwnServerProfile = (profile: AuroraProfile, userId: string | undefined): boolean => {
     return (
         !!userId &&
         userId !== GuestUser &&

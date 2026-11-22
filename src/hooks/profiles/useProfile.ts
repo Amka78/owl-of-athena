@@ -195,7 +195,10 @@ export const useProfile = () => {
             return;
         }
 
-        LoadingDialog.show({ dialogTitle: Message.get(MessageKeys.profile_save_to_aurora) });
+        LoadingDialog.show({
+            dialogTitle: Message.get(MessageKeys.profile_save_to_aurora),
+            auroraCommLog: true,
+        });
         let message = "";
 
         try {

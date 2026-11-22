@@ -166,7 +166,38 @@ export const useSessinList = (): {
             }
 
             if (!sessionDetail && user?.id !== GuestUser) {
-                sessionDetail = await SessionRestClientInstance.getDetailsById(value.id);
+                try {
+                    sessionDetail = await SessionRestClientInstance.getDetailsById(value.id);
+                } catch (e) {
+                    console.error(
+                        "[onMenuPress] failed to fetch session detail from the server:",
+                        e,
+                    );
+                }
+            }
+
+            // Supabase にはイベント/ストリームが保存されないため、サーバ側の詳細に
+            // グラフ用データ（sleepEvents 等）が無い場合は端末上のセッションファイルから
+            // 詳細を組み立てる（Electron 版の「サーバが session_text を解析して events を
+            // 保存しグラフを描画する」挙動に相当するフォールバック）。
+            if (!sessionDetail?.sleepEvents?.length && AuroraManagerInstance.isConnected()) {
+                LoadingDialog.show({
+                    dialogTitle: Message.get(MessageKeys.session_detail_loading),
+                    auroraCommLog: true,
+                });
+                try {
+                    const deviceDetail = await AuroraManagerInstance.getSessionDetailFromDevice(
+                        value.id,
+                    );
+                    if (deviceDetail) sessionDetail = deviceDetail;
+                } catch (e) {
+                    console.error(
+                        "[onMenuPress] failed to read session detail from the device:",
+                        e,
+                    );
+                } finally {
+                    LoadingDialog.close();
+                }
             }
 
             if (sessionDetail) {

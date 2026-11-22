@@ -23,8 +23,8 @@ import { AuroraEventList } from "./AuroraEventList";
 import type { Command, CommandResolverType, CommandResult, EventResponse } from "./AuroraTypes";
 import { AuroraOSInfo } from "./models/AuroraOSInfo";
 import { Event } from "./models/Event";
-import { createAuroraBluetooth, type AuroraBluetoothTransport } from "./virtual";
 import { stringToVersion, versionToString } from "./util";
+import { type AuroraBluetoothTransport, createAuroraBluetooth } from "./virtual";
 
 //#endregion
 
@@ -492,11 +492,8 @@ class Aurora extends EventEmitter {
         ) {
             if (this.isFlashing) this.emit(AuroraEventList.flashConnectionChange, false);
 
-            if (this.isAutoConnectBluetooth) {
-                this.bluetooth.connect(0).catch(() => {
-                    return;
-                });
-            }
+            // 自動再接続は AuroraBluetooth（iOS 版 maintainConnection 相当）が自前のバックオフで行うため、
+            // ここから connect(0) を呼ぶとスキャンが二重になり、状態遷移も壊れる。呼び出さない。
         }
         this.emit(AuroraEventList.bluetoothConnectionChange, connectionState);
     };

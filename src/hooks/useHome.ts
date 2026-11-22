@@ -57,20 +57,9 @@ export const useHome = (): {
         }
     }, []);
 
-    const onSleepingEvent = useRef(
-        onSleeping(
-            () => {
-                useAppStore.getState().setWakeLock(true);
-            },
-            () => {
-                useAppStore.getState().setWakeLock(false);
-                WakeLockService.release();
-            },
-            () => {
-                navigate("Sleeping");
-            },
-        ),
-    );
+    const onSleepingEvent = useRef(() => {
+        navigate("Sleeping");
+    });
 
     const wakeEvent = useRef(() => {
         useAppStore.getState().setWakeLock(false);
@@ -194,6 +183,7 @@ export const useHome = (): {
                 clearPendingTimeout();
                 LoadingDialog.show({
                     dialogTitle: Message.get(MessageKeys.home_go_to_sleep_loading_message),
+                    auroraCommLog: true,
                 });
                 await AuroraManagerInstance.goToSleep(selectedProfile.current!, settings);
             } else {
@@ -238,21 +228,4 @@ export const useHome = (): {
 
     return { settings, timeViewPress, goToSleepPress, errorText };
 };
-//#endregion
-
-//#region Function
-function onSleeping(
-    succeedWakeLockCallback: () => void,
-    releaseWakeLockCallback: () => void,
-    postSleepingCallback: () => void,
-): (...args: any[]) => void {
-    return async (): Promise<void> => {
-        try {
-            await WakeLockService.request(succeedWakeLockCallback, releaseWakeLockCallback);
-            postSleepingCallback();
-        } catch (err) {
-            console.error(`${(err as Error).name}, ${(err as Error).message}`);
-        }
-    };
-}
 //#endregion
