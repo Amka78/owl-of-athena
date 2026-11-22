@@ -4,22 +4,44 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { MainScreenTemplate } from "../MainScreenTemplate";
 
-jest.mock("../../../navigation/MainDrawerNavigator", () => {
+vi.mock("../../../navigation/MainDrawerNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>MainDrawerNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>MainDrawerNavigator</Text>
+            </View>
+        ),
+    };
 });
 
-jest.mock("../../../sdk", () => ({
+vi.mock("../../../sdk", () => ({
     ConnectionStates: {
         IDLE: 0,
         CONNECTED: 4,
         DISCONNECTED: 7,
     },
+    SleepStates: {
+        INIT: 0,
+        CONFIGURING: 1,
+        SLEEPING: 2,
+        WAKING: 3,
+        AWAKE: 4,
+        SYNCING: 5,
+        SYNCING_ERROR: 6,
+    },
+    AuroraInstance: {
+        on: () => () => {},
+        off: () => {},
+        once: () => () => {},
+        emit: () => {},
+        queueCmd: async () => undefined,
+        connect: async () => undefined,
+        disconnect: async () => undefined,
+        destroy: async () => undefined,
+    },
+    Aurora: class Aurora {},
 }));
 
 const renderWithProvider = (ui: React.ReactElement) =>
@@ -56,18 +78,18 @@ const desktopDimens = {
 };
 
 const defaultProps = {
-    onBluetoothConnectPress: jest.fn(),
+    onBluetoothConnectPress: vi.fn(),
     bluetoothConnect: ConnectionStates.DISCONNECTED,
     currentFirmwareVersion: "2.1.0",
     error: "",
     batteryLevel: 85,
     unsyncedCount: 0,
-    onHomePress: jest.fn(),
-    onProfilesPress: jest.fn(),
-    onSessionsPress: jest.fn(),
-    onSettingsPress: jest.fn(),
-    onDeviceInfoPress: jest.fn(),
-    onDevicePress: jest.fn(),
+    onHomePress: vi.fn(),
+    onProfilesPress: vi.fn(),
+    onSessionsPress: vi.fn(),
+    onSettingsPress: vi.fn(),
+    onDeviceInfoPress: vi.fn(),
+    onDevicePress: vi.fn(),
 };
 
 describe("MainScreenTemplate", () => {
@@ -100,7 +122,7 @@ describe("MainScreenTemplate", () => {
     });
 
     it("opens the device screen from the status bar", () => {
-        const onDevicePress = jest.fn();
+        const onDevicePress = vi.fn();
         const { getByTestId } = renderWithProvider(
             <MainScreenTemplate
                 {...defaultProps}

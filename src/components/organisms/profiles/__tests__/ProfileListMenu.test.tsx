@@ -9,16 +9,16 @@ const renderWithProvider = (ui: React.ReactElement) =>
 
 const defaultProps = {
     showOfficialCheckBoxStatus: "checked" as const,
-    onShowOfficialCheckBoxPress: jest.fn(),
+    onShowOfficialCheckBoxPress: vi.fn(),
     showCommunityCheckBoxStatus: "unchecked" as const,
-    onShowCommunityCheckBoxPress: jest.fn(),
+    onShowCommunityCheckBoxPress: vi.fn(),
     showPrivateCheckBoxStatus: "indeterminate" as const,
-    onShowPrivateCheckBoxPress: jest.fn(),
+    onShowPrivateCheckBoxPress: vi.fn(),
 };
 
 describe("ProfileListMenu", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("renders correctly", () => {
@@ -27,7 +27,7 @@ describe("ProfileListMenu", () => {
     });
 
     it("calls onShowOfficialCheckBoxPress when official checkbox pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getAllByRole } = renderWithProvider(
             <ProfileListMenu {...defaultProps} onShowOfficialCheckBoxPress={onPress} />,
         );

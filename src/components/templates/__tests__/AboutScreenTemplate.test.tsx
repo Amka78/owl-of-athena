@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -31,7 +31,7 @@ describe("AboutScreenTemplate", () => {
                     { label: "Build", value: "42" },
                 ]}
                 repositoryUrl="https://github.com/Amka78/owl-of-athena"
-                onRepositoryPress={jest.fn()}
+                onRepositoryPress={vi.fn()}
                 dimens={dimens}
             />,
         );
@@ -45,7 +45,7 @@ describe("AboutScreenTemplate", () => {
     });
 
     it("opens the repository when the link is pressed", () => {
-        const onRepositoryPress = jest.fn();
+        const onRepositoryPress = vi.fn();
         const { getByText } = renderWithProvider(
             <AboutScreenTemplate
                 appName="Aurora"
@@ -69,7 +69,7 @@ describe("AboutScreenTemplate", () => {
                 description=""
                 rows={[]}
                 repositoryUrl=""
-                onRepositoryPress={jest.fn()}
+                onRepositoryPress={vi.fn()}
                 dimens={dimens}
             />,
         );

@@ -3,10 +3,10 @@ import { validate } from "../SignupService";
 
 describe("SignupService - validate", () => {
     const makeCallbacks = () => ({
-        emailError: jest.fn(),
-        passwordError: jest.fn(),
-        passwordConfirmError: jest.fn(),
-        generalError: jest.fn(),
+        emailError: vi.fn(),
+        passwordError: vi.fn(),
+        passwordConfirmError: vi.fn(),
+        generalError: vi.fn(),
     });
 
     const validSignup: Signup = {

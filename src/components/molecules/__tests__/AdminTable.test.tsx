@@ -4,9 +4,9 @@ import type { AdminDataSource, AdminPageQuery } from "../../../services/AdminQue
 import { buildTableCsv, shareText } from "../../../services/ExportService";
 import { type AdminColumn, AdminTable } from "../AdminTable";
 
-jest.mock("../../../services/ExportService", () => ({
-    buildTableCsv: jest.fn(() => "csv"),
-    shareText: jest.fn(() => Promise.resolve()),
+vi.mock("../../../services/ExportService", () => ({
+    buildTableCsv: vi.fn(() => "csv"),
+    shareText: vi.fn(() => Promise.resolve()),
 }));
 
 type Row = { id: string; name: string };
@@ -41,7 +41,7 @@ const renderTable = (rows: Row[], options: RenderOptions = {}) =>
 
 describe("AdminTable", () => {
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("renders only the visible column headers", () => {
@@ -128,7 +128,7 @@ describe("AdminTable", () => {
             { id: "1", name: "Jane" },
             { id: "2", name: "John" },
         ];
-        const onDownloadSelected = jest.fn(async () => {});
+        const onDownloadSelected = vi.fn(async () => {});
         const { getByTestId } = renderTable(rows, {
             selectable: true,
             onDownloadSelected,
@@ -179,13 +179,13 @@ describe("AdminTable", () => {
     });
 
     it("loads pages from the data source", async () => {
-        const fetchPage = jest.fn(async ({ pageIndex }: AdminPageQuery) => ({
+        const fetchPage = vi.fn(async ({ pageIndex }: AdminPageQuery) => ({
             rows: pageIndex === 0 ? [{ id: "1", name: "Jane" }] : [{ id: "2", name: "John" }],
             total: 25,
         }));
         const dataSource: AdminDataSource<Row> = {
             fetchPage,
-            fetchAll: jest.fn(async () => []),
+            fetchAll: vi.fn(async () => []),
         };
         const { getByText } = renderTable([], { dataSource });
 
@@ -210,9 +210,9 @@ describe("AdminTable", () => {
     });
 
     it("passes the search text to the data source", async () => {
-        const fetchPage = jest.fn(async () => ({ rows: [], total: 0 }));
+        const fetchPage = vi.fn(async () => ({ rows: [], total: 0 }));
         const { getByPlaceholderText } = renderTable([], {
-            dataSource: { fetchPage, fetchAll: jest.fn(async () => []) },
+            dataSource: { fetchPage, fetchAll: vi.fn(async () => []) },
         });
         await waitFor(() => {
             expect(fetchPage).toHaveBeenCalledTimes(1);
@@ -228,9 +228,9 @@ describe("AdminTable", () => {
     });
 
     it("requests the server sort from the column header", async () => {
-        const fetchPage = jest.fn(async () => ({ rows: [], total: 0 }));
+        const fetchPage = vi.fn(async () => ({ rows: [], total: 0 }));
         const { getByText } = renderTable([], {
-            dataSource: { fetchPage, fetchAll: jest.fn(async () => []) },
+            dataSource: { fetchPage, fetchAll: vi.fn(async () => []) },
         });
         await waitFor(() => {
             expect(fetchPage).toHaveBeenCalledTimes(1);
@@ -246,8 +246,8 @@ describe("AdminTable", () => {
     });
 
     it("fetches every matched row when sharing CSV in server mode", async () => {
-        const fetchPage = jest.fn(async () => ({ rows: [], total: 2 }));
-        const fetchAll = jest.fn(async () => [
+        const fetchPage = vi.fn(async () => ({ rows: [], total: 2 }));
+        const fetchAll = vi.fn(async () => [
             { id: "1", name: "Jane" },
             { id: "2", name: "John" },
         ]);

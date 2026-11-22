@@ -5,21 +5,21 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { IssueReportDialog } from "../IssueReportDialog";
 
-jest.mock("expo-image-picker", () => ({
-    requestMediaLibraryPermissionsAsync: jest.fn(),
-    launchImageLibraryAsync: jest.fn(),
+vi.mock("expo-image-picker", () => ({
+    requestMediaLibraryPermissionsAsync: vi.fn(),
+    launchImageLibraryAsync: vi.fn(),
 }));
 
-jest.mock("expo-document-picker", () => ({
-    getDocumentAsync: jest.fn(),
+vi.mock("expo-document-picker", () => ({
+    getDocumentAsync: vi.fn(),
 }));
 
-jest.mock("../../../services/IssueService", () => ({
+vi.mock("../../../services/IssueService", () => ({
     __esModule: true,
     default: {
-        createIssue: jest.fn(),
-        getIssues: jest.fn(),
-        getAttachments: jest.fn(),
+        createIssue: vi.fn(),
+        getIssues: vi.fn(),
+        getAttachments: vi.fn(),
     },
 }));
 
@@ -34,7 +34,7 @@ const showDialog = async (): Promise<void> => {
 
 describe("IssueReportDialog attachments", () => {
     beforeEach(async () => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         const ImagePicker = await import("expo-image-picker");
         (ImagePicker.requestMediaLibraryPermissionsAsync as jest.Mock).mockResolvedValue({
             granted: true,

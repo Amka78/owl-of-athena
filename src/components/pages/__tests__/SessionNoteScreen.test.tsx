@@ -5,14 +5,13 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { SessionNoteScreen } from "../SessionNoteScreen";
 
-jest.mock("../../../hooks/sessions/useSessionNote", () => ({
+vi.mock("../../../hooks/sessions/useSessionNote", () => ({
     useSessionNote: () => ({
-        onBlur: jest.fn(),
-        onChangeText: jest.fn(),
+        onBlur: vi.fn(),
+        onChangeText: vi.fn(),
         notes: "Great sleep tonight!",
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

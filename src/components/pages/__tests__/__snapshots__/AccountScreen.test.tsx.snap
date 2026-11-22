@@ -1,4 +1,204 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AccountScreen UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "#070724",
+          "flex": 1,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "borderTopColor": "#001438",
+            "borderTopWidth": 1,
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "gap": 8,
+            "padding": 12,
+          }
+        }
+      >
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#00ffe6",
+                "fontSize": 14,
+              }
+            }
+          >
+            Edit Account
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "gap": 6,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#00ffe6",
+                  "fontSize": 14,
+                }
+              }
+            >
+              Messages
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#00ffe6",
+                "fontSize": 14,
+              }
+            }
+          >
+            Change Password
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#00ffe6",
+                "fontSize": 14,
+              }
+            }
+          >
+            Change Email
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#00ffe6",
+                "fontSize": 14,
+              }
+            }
+          >
+            Report an Issue
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          accessible={true}
+          onPress={[Function]}
+          style={
+            {
+              "borderColor": "#00ffe6",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#00ffe6",
+                "fontSize": 14,
+              }
+            }
+          >
+            About
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`AccountScreen UnitTest renders correctly 1`] = `
 {

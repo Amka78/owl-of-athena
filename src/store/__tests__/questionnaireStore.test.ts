@@ -2,16 +2,16 @@ import QuestionnaireService from "../../services/QuestionnaireService";
 import type { Questionnaire, QuestionnaireRespondent } from "../../types";
 import { useQuestionnaireStore } from "../questionnaireStore";
 
-jest.mock("../../services/QuestionnaireService", () => ({
+vi.mock("../../services/QuestionnaireService", () => ({
     __esModule: true,
     default: {
-        getById: jest.fn(),
-        getBySlug: jest.fn(),
-        getLatest: jest.fn(),
-        startQuestionnaire: jest.fn(),
-        resumeQuestionnaire: jest.fn(),
-        saveUserResponse: jest.fn(),
-        revisitQuestion: jest.fn(),
+        getById: vi.fn(),
+        getBySlug: vi.fn(),
+        getLatest: vi.fn(),
+        startQuestionnaire: vi.fn(),
+        resumeQuestionnaire: vi.fn(),
+        saveUserResponse: vi.fn(),
+        revisitQuestion: vi.fn(),
     },
 }));
 
@@ -48,7 +48,7 @@ const respondent = (overrides: Partial<QuestionnaireRespondent> = {}): Questionn
 
 describe("questionnaireStore UnitTest", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         useQuestionnaireStore.setState({
             questionnaire: undefined,
             respondent: undefined,
@@ -112,7 +112,7 @@ describe("questionnaireStore UnitTest", () => {
     });
 
     it("completes after the last question and calls onComplete", async () => {
-        const onComplete = jest.fn();
+        const onComplete = vi.fn();
         useQuestionnaireStore.setState({
             questionnaire,
             respondent: respondent({

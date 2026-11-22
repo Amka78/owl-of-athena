@@ -5,10 +5,10 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { ProfileDesktopScreen } from "../ProfileDesktopScreen";
 
-jest.mock("../../../navigation/ProfileTabNavigator", () => () => null);
-jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
+vi.mock("../../../navigation/ProfileTabNavigator", () => ({ default: () => null }));
+vi.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
 
-jest.mock("../../../hooks/profiles/useProfileList", () => ({
+vi.mock("../../../hooks/profiles/useProfileList", () => ({
     useProfileList: () => ({
         showFilter: false,
         filterCondition: {
@@ -16,23 +16,23 @@ jest.mock("../../../hooks/profiles/useProfileList", () => ({
             showCommunity: true,
             showPrivate: true,
         },
-        onShowOfficialPress: jest.fn(),
-        onShowCommunityPress: jest.fn(),
-        onShowPrivatePress: jest.fn(),
-        onFilterPress: jest.fn(),
-        onRefreshPress: jest.fn(),
+        onShowOfficialPress: vi.fn(),
+        onShowCommunityPress: vi.fn(),
+        onShowPrivatePress: vi.fn(),
+        onFilterPress: vi.fn(),
+        onRefreshPress: vi.fn(),
         userId: "guest",
         list: [],
-        onStarPress: jest.fn(),
-        onSelectProfile: jest.fn(),
-        onDeleteProfile: jest.fn(),
+        onStarPress: vi.fn(),
+        onSelectProfile: vi.fn(),
+        onDeleteProfile: vi.fn(),
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
+vi.mock("../../../hooks", () => ({
     useScreenDimensions: () => ({ isDesktop: false, isSmallHeight: false }),
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 1200,
         height: 900,
@@ -45,7 +45,6 @@ jest.mock("../../../hooks", () => ({
         scale: 1,
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

@@ -39,8 +39,8 @@ describe("ProfileSecondMenu", () => {
                 selectedProfileHasUnsavedChanges={false}
                 showAdvancedOptions={false}
                 dimens={mobileDimens}
-                onSaveToAuroraPress={jest.fn()}
-                onShowAdvancedOptionsPress={jest.fn()}
+                onSaveToAuroraPress={vi.fn()}
+                onShowAdvancedOptionsPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -53,8 +53,8 @@ describe("ProfileSecondMenu", () => {
                 selectedProfileHasUnsavedChanges={true}
                 showAdvancedOptions={false}
                 dimens={mobileDimens}
-                onSaveToAuroraPress={jest.fn()}
-                onShowAdvancedOptionsPress={jest.fn()}
+                onSaveToAuroraPress={vi.fn()}
+                onShowAdvancedOptionsPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -67,22 +67,22 @@ describe("ProfileSecondMenu", () => {
                 selectedProfileHasUnsavedChanges={false}
                 showAdvancedOptions={false}
                 dimens={wideDimens}
-                onSaveToAuroraPress={jest.fn()}
-                onShowAdvancedOptionsPress={jest.fn()}
+                onSaveToAuroraPress={vi.fn()}
+                onShowAdvancedOptionsPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("calls onShowAdvancedOptionsPress when advanced options pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <ProfileSecondMenu
                 auroraConnected={true}
                 selectedProfileHasUnsavedChanges={false}
                 showAdvancedOptions={false}
                 dimens={mobileDimens}
-                onSaveToAuroraPress={jest.fn()}
+                onSaveToAuroraPress={vi.fn()}
                 onShowAdvancedOptionsPress={onPress}
             />,
         );
@@ -93,7 +93,7 @@ describe("ProfileSecondMenu", () => {
     });
 
     it("saves the edited values to Aurora even before saving the profile", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <ProfileSecondMenu
                 auroraConnected={true}
@@ -101,7 +101,7 @@ describe("ProfileSecondMenu", () => {
                 showAdvancedOptions={false}
                 dimens={mobileDimens}
                 onSaveToAuroraPress={onPress}
-                onShowAdvancedOptionsPress={jest.fn()}
+                onShowAdvancedOptionsPress={vi.fn()}
             />,
         );
 

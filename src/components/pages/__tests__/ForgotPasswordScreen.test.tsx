@@ -5,18 +5,18 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { ForgotPasswordScreen } from "../ForgotPassswordScreen";
 
-jest.mock("../../../hooks/useForgotPassword", () => ({
+vi.mock("../../../hooks/useForgotPassword", () => ({
     useForgotPassword: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onSendPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onSendPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -29,13 +29,12 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useForgotPassword: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onSendPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onSendPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

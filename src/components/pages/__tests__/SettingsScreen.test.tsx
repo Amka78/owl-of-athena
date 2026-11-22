@@ -5,30 +5,30 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { SettingsScreen } from "../SettingsScreen";
 
-jest.mock("../../../hooks/useSetting", () => ({
+vi.mock("../../../hooks/useSetting", () => ({
     useSetting: () => ({
-        inlineTimePickerOnChangeTime: jest.fn(),
+        inlineTimePickerOnChangeTime: vi.fn(),
         datePickerState: { hours: 7, minutes: 30 },
         smartAlarmAudio: { name: "birds", path: "" },
-        smartAlarmAudioMenuOnPress: jest.fn(),
+        smartAlarmAudioMenuOnPress: vi.fn(),
         remStimAudio: { name: "white_noise", path: "" },
-        remStimAudioMenuOnPress: jest.fn(),
+        remStimAudioMenuOnPress: vi.fn(),
         profileState: { profileId: "1", profileTitle: "Default Profile" },
-        profileMenuOnPress: jest.fn(),
+        profileMenuOnPress: vi.fn(),
         profiles: [{ title: "Default Profile" }],
         smartAlarmEnabledStatus: "checked",
-        smartAlarmEnabledOnPress: jest.fn(),
+        smartAlarmEnabledOnPress: vi.fn(),
         remStimEnabledStatus: "unchecked",
-        remStimEnabledOnPress: jest.fn(),
+        remStimEnabledOnPress: vi.fn(),
         dslEnabledStatus: "unchecked",
-        dslEnabledOnPress: jest.fn(),
-        onSavePress: jest.fn(),
+        dslEnabledOnPress: vi.fn(),
+        onSavePress: vi.fn(),
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -41,24 +41,23 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useSetting: () => ({
-        inlineTimePickerOnChangeTime: jest.fn(),
+        inlineTimePickerOnChangeTime: vi.fn(),
         datePickerState: { hours: 7, minutes: 30 },
         smartAlarmAudio: { name: "birds" },
         remStimAudio: { name: "white_noise" },
         smartAlarmEnabled: true,
         remStimEnabled: false,
         dslEnabled: false,
-        onSmartAlarmEnabledPress: jest.fn(),
-        onRemStimEnabledPress: jest.fn(),
-        onDslEnabledPress: jest.fn(),
-        onSmartAlarmAudioPress: jest.fn(),
-        onRemStimAudioPress: jest.fn(),
-        onSavePress: jest.fn(),
+        onSmartAlarmEnabledPress: vi.fn(),
+        onRemStimEnabledPress: vi.fn(),
+        onDslEnabledPress: vi.fn(),
+        onSmartAlarmAudioPress: vi.fn(),
+        onRemStimAudioPress: vi.fn(),
+        onSavePress: vi.fn(),
         selectedProfile: { title: "Default Profile" },
-        onProfilesPress: jest.fn(),
+        onProfilesPress: vi.fn(),
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

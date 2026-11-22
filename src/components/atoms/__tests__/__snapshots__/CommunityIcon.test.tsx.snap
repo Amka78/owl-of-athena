@@ -1,4 +1,12 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CommunityIcon UnitTest > renders correctly 1`] = `
+<Icon
+  color="#ffffff"
+  name="account-check"
+  size={40}
+/>
+`;
 
 exports[`CommunityIcon UnitTest renders correctly 1`] = `
 {

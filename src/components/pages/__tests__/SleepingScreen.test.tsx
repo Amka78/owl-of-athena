@@ -5,11 +5,11 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { SleepingScreen } from "../SleepingScreen";
 
-jest.mock("../../../hooks/useSleeping", () => ({
+vi.mock("../../../hooks/useSleeping", () => ({
     useSleeping: () => ({
         wakeLockTextKey: "sleeping_wakelock_enabled",
-        onRelockPress: jest.fn(),
-        onWakeupPress: jest.fn(),
+        onRelockPress: vi.fn(),
+        onWakeupPress: vi.fn(),
         isSnoozing: false,
         settings: {
             alarmHour: 7,
@@ -21,9 +21,9 @@ jest.mock("../../../hooks/useSleeping", () => ({
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -37,8 +37,8 @@ jest.mock("../../../hooks", () => ({
     }),
     useSleeping: () => ({
         wakeLockTextKey: "sleeping_wakelock_enabled",
-        onRelockPress: jest.fn(),
-        onWakeupPress: jest.fn(),
+        onRelockPress: vi.fn(),
+        onWakeupPress: vi.fn(),
         isSnoozing: false,
         settings: {
             alarmHour: 7,

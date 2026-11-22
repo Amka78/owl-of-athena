@@ -21,11 +21,11 @@ const mobileDimens = {
 
 const filterMenuProps = {
     showOfficialCheckBoxStatus: "checked" as const,
-    onShowOfficialCheckBoxPress: jest.fn(),
+    onShowOfficialCheckBoxPress: vi.fn(),
     showCommunityCheckBoxStatus: "unchecked" as const,
-    onShowCommunityCheckBoxPress: jest.fn(),
+    onShowCommunityCheckBoxPress: vi.fn(),
     showPrivateCheckBoxStatus: "checked" as const,
-    onShowPrivateCheckBoxPress: jest.fn(),
+    onShowPrivateCheckBoxPress: vi.fn(),
 };
 
 const sampleProfiles = [
@@ -49,9 +49,9 @@ const defaultProps = {
     showFilter: false,
     filterMenuProps,
     list: sampleProfiles,
-    onStarPress: jest.fn(),
-    onDeletePress: jest.fn(),
-    onMenuPress: jest.fn(),
+    onStarPress: vi.fn(),
+    onDeletePress: vi.fn(),
+    onMenuPress: vi.fn(),
     dimens: mobileDimens,
 };
 

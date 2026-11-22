@@ -1,4 +1,1017 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SessionScreen UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          {
+            "backgroundColor": "#070724",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "marginLeft": 48,
+              "marginRight": 48,
+            },
+            {
+              "backgroundColor": "#070724",
+            },
+            {
+              "alignItems": undefined,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "flex-start",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "space-around",
+                "marginTop": 30,
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ]
+              }
+            >
+              asleep at
+            </Text>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_semibold",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 15,
+                    },
+                  ]
+                }
+              >
+                10:30
+              </Text>
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 11,
+                    },
+                  ]
+                }
+              >
+                pm
+              </Text>
+            </View>
+          </View>
+          <Svg
+            height={45}
+            width={45}
+          >
+            <Path
+              d="M1.3777276490407724e-15,-22.5A22.5,22.5,0,1,1,-1.3777276490407724e-15,22.5A22.5,22.5,0,1,1,1.3777276490407724e-15,-22.5M-3.7657889073781105e-15,-20.5A20.5,20.5,0,1,0,3.7657889073781105e-15,20.5A20.5,20.5,0,1,0,-3.7657889073781105e-15,-20.5Z"
+              stroke="#66000000"
+              transform="translate(22.5, 22.5)"
+            />
+            <SvgText
+              alignmentBaseline="middle"
+              fill="#00ffe6"
+              fontSize={25}
+              textAnchor="middle"
+              x={22.5}
+              y={22.5}
+            >
+              82
+            </SvgText>
+            <Path
+              d="M1.3777276490407724e-15,-22.5A22.5,22.5,0,1,1,-20.35860868048545,-9.580034060214118L-18.54895457555341,-8.728475477083974A20.5,20.5,0,1,0,1.255262969126037e-15,-20.5Z"
+              fill="#00ffe6"
+              transform="translate(22.5, 22.5)"
+            />
+          </Svg>
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ]
+              }
+            >
+              awake at
+            </Text>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_semibold",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 15,
+                    },
+                  ]
+                }
+              >
+                6:00
+              </Text>
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 11,
+                    },
+                  ]
+                }
+              >
+                am
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            [
+              {
+                "flex": 1,
+                "flexDirection": "row",
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+        >
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 28,
+                "height": 56,
+                "margin": 6,
+                "marginLeft": 30,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 56,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 28,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 40,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+          <View
+            style={
+              {
+                "flex": 1,
+              }
+            }
+          />
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 22,
+                "height": 44,
+                "margin": 6,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 44,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 22,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityLabel="Export Session"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 28,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 22,
+                "height": 44,
+                "margin": 6,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 44,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 22,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 28,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 28,
+                "height": 56,
+                "margin": 6,
+                "marginRight": 30,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 56,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 28,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 40,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+        </View>
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flex": 5,
+                "marginLeft": 30,
+                "marginRight": 30,
+              },
+            ]
+          }
+        >
+          <Svg
+            height={-64}
+            style={
+              {
+                "marginBottom": 32,
+                "marginLeft": 32,
+                "marginRight": 32,
+                "marginTop": 32,
+              }
+            }
+            width={-124}
+          >
+            <G
+              transform="translate(-125, -26.666666666666668)"
+            >
+              <Path
+                d="M0.9449645628986815,-62.99291263288963L0.5999775002531311,-39.99550008437437Z"
+                fill="#00ffe6"
+              />
+              <Path
+                d="M2.8340432843725942,-62.93622326341408L1.799392561506409,-39.9595068339137Z"
+                fill="#4a2fba"
+              />
+              <Path
+                d="M4.720571558182782,-62.822895541069066L2.997188290909703,-39.887552724488295Z"
+                fill="#ff8260"
+              />
+              <Path
+                d="M6.6028516362196,-62.653031453155336L4.192286753155302,-39.779702509939895Z"
+                fill="#daf392"
+              />
+              <Path
+                d="M8.479189593462948,-62.42678386588652L5.383612440293936,-39.636053248181916Z"
+                fill="#000000"
+              />
+              <SvgText
+                dy=".4em"
+                fill="#001438"
+                fontSize="6px"
+                textAnchor="middle"
+                transform="translate(0.7724710315758948,-51.494206358632)"
+              />
+              <SvgText
+                dy=".4em"
+                fill="#d0d0d0"
+                fontSize="6px"
+                textAnchor="middle"
+                transform="translate(2.316717922939502,-51.447865048663886)"
+              />
+              <SvgText
+                dy=".4em"
+                fill="#001438"
+                fontSize="6px"
+                textAnchor="middle"
+                transform="translate(3.858879924546231,-51.35522413277869)"
+              />
+              <SvgText
+                dy=".4em"
+                fill="#001438"
+                fontSize="6px"
+                textAnchor="middle"
+                transform="translate(5.397569194687451,-51.216366981547615)"
+              />
+              <SvgText
+                dy=".4em"
+                fill="#d0d0d0"
+                fontSize="6px"
+                textAnchor="middle"
+                transform="translate(6.931401016878442,-51.03141855703422)"
+              />
+            </G>
+            <G
+              transform="translate(-42, -10.666666666666666)"
+            >
+              <G
+                transform="translate(0, 0)"
+              >
+                <Rect
+                  fill="transparent"
+                  height={18}
+                  rx={18}
+                  ry={18}
+                  stroke="#00ffe6"
+                  strokeWidth={2}
+                  width={18}
+                />
+                <SvgText
+                  fill="#929DAF"
+                  fontSize={12}
+                  x={30}
+                  y={15}
+                >
+                  Light -  NaNm
+                </SvgText>
+              </G>
+              <G
+                transform="translate(0, 30)"
+              >
+                <Rect
+                  fill="transparent"
+                  height={18}
+                  rx={18}
+                  ry={18}
+                  stroke="#4a2fba"
+                  strokeWidth={2}
+                  width={18}
+                />
+                <SvgText
+                  fill="#929DAF"
+                  fontSize={12}
+                  x={30}
+                  y={15}
+                >
+                  Deep -  NaNm
+                </SvgText>
+              </G>
+              <G
+                transform="translate(0, 60)"
+              >
+                <Rect
+                  fill="transparent"
+                  height={18}
+                  rx={18}
+                  ry={18}
+                  stroke="#ff8260"
+                  strokeWidth={2}
+                  width={18}
+                />
+                <SvgText
+                  fill="#929DAF"
+                  fontSize={12}
+                  x={30}
+                  y={15}
+                >
+                  REM -  NaNm
+                </SvgText>
+              </G>
+              <G
+                transform="translate(0, 90)"
+              >
+                <Rect
+                  fill="transparent"
+                  height={18}
+                  rx={18}
+                  ry={18}
+                  stroke="#daf392"
+                  strokeWidth={2}
+                  width={18}
+                />
+                <SvgText
+                  fill="#929DAF"
+                  fontSize={12}
+                  x={30}
+                  y={15}
+                >
+                  Awake -  NaNm
+                </SvgText>
+              </G>
+              <G
+                transform="translate(0, 120)"
+              >
+                <Rect
+                  fill="transparent"
+                  height={18}
+                  rx={18}
+                  ry={18}
+                  stroke="#000000"
+                  strokeWidth={2}
+                  width={18}
+                />
+                <SvgText
+                  fill="#929DAF"
+                  fontSize={12}
+                  x={30}
+                  y={15}
+                >
+                  No Signal -  NaNm
+                </SvgText>
+              </G>
+            </G>
+          </Svg>
+        </View>
+        <View
+          style={
+            [
+              {
+                "alignItems": "flex-start",
+                "flex": 1,
+                "flexDirection": "row",
+                "justifyContent": "space-around",
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ]
+              }
+            >
+              sleep time
+            </Text>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_semibold",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 15,
+                    },
+                  ]
+                }
+              >
+                7h 30m
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ]
+              }
+            >
+              REM time
+            </Text>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_semibold",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 15,
+                    },
+                  ]
+                }
+              >
+                1h 45m
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "fontSize": 20,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "fontSize": 15,
+                  },
+                ]
+              }
+            >
+              deep time
+            </Text>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_semibold",
+                      "fontSize": 20,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    {
+                      "fontSize": 15,
+                    },
+                  ]
+                }
+              >
+                2h 15m
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`SessionScreen UnitTest renders correctly 1`] = `
 {

@@ -1,4 +1,34 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BatteryIcon UnitTest > renders correctly 1`] = `
+<Icon
+  batteryLevel={100}
+  color="#00ffe6"
+  isUSBConnected={true}
+  name="battery-charging"
+  size={40}
+/>
+`;
+
+exports[`BatteryIcon UnitTest > renders with USB connected 1`] = `
+<Icon
+  batteryLevel={80}
+  color="#00ffe6"
+  isUSBConnected={true}
+  name="battery-charging-80"
+  size={40}
+/>
+`;
+
+exports[`BatteryIcon UnitTest > renders without USB connected 1`] = `
+<Icon
+  batteryLevel={80}
+  color="#00ffe6"
+  isUSBConnected={false}
+  name="battery-80"
+  size={40}
+/>
+`;
 
 exports[`BatteryIcon UnitTest renders correctly 1`] = `
 {

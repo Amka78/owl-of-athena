@@ -5,22 +5,22 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { WelcomeScreen } from "../WelcomeScreen";
 
-jest.mock("../../../hooks/useWelcome", () => ({
+vi.mock("../../../hooks/useWelcome", () => ({
     useWelcome: () => ({
-        onStandalonePress: jest.fn(),
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onStandalonePress: vi.fn(),
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../../hooks/useAutoLogin", () => ({
-    useAutoLogin: jest.fn(),
+vi.mock("../../../hooks/useAutoLogin", () => ({
+    useAutoLogin: vi.fn(),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -33,13 +33,12 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useWelcome: () => ({
-        onStandalonePress: jest.fn(),
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onStandalonePress: vi.fn(),
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

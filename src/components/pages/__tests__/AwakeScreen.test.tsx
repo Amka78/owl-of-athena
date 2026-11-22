@@ -5,16 +5,16 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { AwakeScreen } from "../AwakeScreen";
 
-jest.mock("../../../hooks/useAwake", () => ({
+vi.mock("../../../hooks/useAwake", () => ({
     useAwake: () => ({
-        questionnaireButtonPress: jest.fn(),
-        skipButtonPress: jest.fn(),
+        questionnaireButtonPress: vi.fn(),
+        skipButtonPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -27,11 +27,10 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useAwake: () => ({
-        questionnaireButtonPress: jest.fn(),
-        skipButtonPress: jest.fn(),
+        questionnaireButtonPress: vi.fn(),
+        skipButtonPress: vi.fn(),
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

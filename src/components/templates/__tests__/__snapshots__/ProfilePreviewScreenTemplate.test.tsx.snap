@@ -1,4 +1,376 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProfilePreviewScreenTemplate > renders correctly with content 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          {
+            "backgroundColor": "#070724",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "marginLeft": 48,
+              "marginRight": 48,
+            },
+            {
+              "backgroundColor": "#070724",
+            },
+            {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+        >
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 20,
+                "height": 40,
+                "margin": 6,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 40,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 20,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityLabel="Export Profile"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 24,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+        </View>
+        <TextInput
+          multiline={true}
+          style={
+            [
+              {
+                "alignSelf": "stretch",
+                "color": "#ffffff",
+                "flex": 1,
+                "fontSize": 18,
+                "lineHeight": 18,
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+          value="{"name":"default.prof"}"
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ProfilePreviewScreenTemplate > renders correctly with empty content 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onLayout={[Function]}
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          {
+            "backgroundColor": "#070724",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "marginLeft": 48,
+              "marginRight": 48,
+            },
+            {
+              "backgroundColor": "#070724",
+            },
+            {
+              "marginLeft": 0,
+              "marginRight": 0,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            [
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+        >
+          <Animated.View
+            ref={null}
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderRadius": 20,
+                "height": 40,
+                "margin": 6,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": 0,
+                  "width": 0,
+                },
+                "shadowOpacity": 0,
+                "shadowRadius": 0,
+                "width": 40,
+              }
+            }
+            testID="icon-button-container-outer-layer"
+          >
+            <Animated.View
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "borderColor": "rgba(121, 116, 126, 1)",
+                  "borderRadius": 20,
+                  "borderWidth": 0,
+                  "elevation": 0,
+                  "flex": 1,
+                  "overflow": "hidden",
+                  "shadowColor": "#000",
+                  "shadowOffset": {
+                    "height": 0,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0,
+                  "shadowRadius": 0,
+                }
+              }
+              testID="icon-button-container"
+            >
+              <Pressable
+                accessibilityComponentType="button"
+                accessibilityLabel="Export Profile"
+                accessibilityRole="button"
+                accessibilityState={
+                  {
+                    "disabled": undefined,
+                  }
+                }
+                accessibilityTraits="button"
+                accessible={true}
+                centered={true}
+                disabled={false}
+                hitSlop={
+                  {
+                    "bottom": 6,
+                    "left": 6,
+                    "right": 6,
+                    "top": 6,
+                  }
+                }
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                testID="icon-button"
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "backgroundColor": "transparent",
+                      },
+                      {
+                        "color": "#ffffff",
+                        "fontSize": 24,
+                      },
+                    ]
+                  }
+                >
+                  □
+                </Text>
+              </Pressable>
+            </Animated.View>
+          </Animated.View>
+        </View>
+        <TextInput
+          multiline={true}
+          style={
+            [
+              {
+                "alignSelf": "stretch",
+                "color": "#ffffff",
+                "flex": 1,
+                "fontSize": 18,
+                "lineHeight": 18,
+              },
+              {
+                "width": 0,
+              },
+            ]
+          }
+          value=""
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`ProfilePreviewScreenTemplate renders correctly with content 1`] = `
 {

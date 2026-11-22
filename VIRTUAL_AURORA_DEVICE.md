@@ -164,7 +164,7 @@ BUTTON_MONITOR / BATTERY_MONITOR / SMART_ALARM / CLOCK_ALARM_FIRE / STIM_PRESENT
 
 ## テスト
 
-- `src/sdk/__tests__/virtual/` に 28 本（`bun test src/sdk/__tests__/virtual/` で実行）。
+- `src/sdk/__tests__/virtual/` に 28 本（`bun run test src/sdk/__tests__/virtual/` で実行）。
   1. heatshrink エンコーダ: 実デコーダ（heatshrink-ts）との往復で検証（圧縮・バイナリ・窓境界）。
   2. デバイス: コマンド応答・仮想 FS・サンプルセッションのパース・就寝シナリオ。
   3. アダプタ: パーサ経由の統合（接続 → os-info → イベント → 入出力）。

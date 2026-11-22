@@ -4,14 +4,16 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { ProfileDesktopScreenTemplate } from "../ProfileDesktopScreenTemplate";
 
-jest.mock("../../../navigation/ProfileTabNavigator", () => {
+vi.mock("../../../navigation/ProfileTabNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>ProfileTabNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>ProfileTabNavigator</Text>
+            </View>
+        ),
+    };
 });
 
 const renderWithProvider = (ui: React.ReactElement) =>
@@ -31,11 +33,11 @@ const mobileDimens = {
 
 const filterMenuProps = {
     showOfficialCheckBoxStatus: "checked" as const,
-    onShowOfficialCheckBoxPress: jest.fn(),
+    onShowOfficialCheckBoxPress: vi.fn(),
     showCommunityCheckBoxStatus: "unchecked" as const,
-    onShowCommunityCheckBoxPress: jest.fn(),
+    onShowCommunityCheckBoxPress: vi.fn(),
     showPrivateCheckBoxStatus: "checked" as const,
-    onShowPrivateCheckBoxPress: jest.fn(),
+    onShowPrivateCheckBoxPress: vi.fn(),
 };
 
 const defaultProps = {
@@ -43,11 +45,11 @@ const defaultProps = {
     showFilter: false,
     filterMenuProps,
     list: [],
-    onStarPress: jest.fn(),
-    onDeletePress: jest.fn(),
-    onMenuPress: jest.fn(),
-    onRefreshPress: jest.fn(),
-    onFilterPress: jest.fn(),
+    onStarPress: vi.fn(),
+    onDeletePress: vi.fn(),
+    onMenuPress: vi.fn(),
+    onRefreshPress: vi.fn(),
+    onFilterPress: vi.fn(),
     dimens: mobileDimens,
 };
 

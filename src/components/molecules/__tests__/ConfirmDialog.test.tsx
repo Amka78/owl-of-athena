@@ -14,8 +14,8 @@ describe("ConfirmDialog", () => {
     });
 
     it("shows dialog after ConfirmDialog.show() is called", async () => {
-        const onConfirm = jest.fn();
-        const onDissmiss = jest.fn();
+        const onConfirm = vi.fn();
+        const onDissmiss = vi.fn();
         const { getByText } = renderWithProvider(<ConfirmDialog />);
 
         await act(async () => {
@@ -32,7 +32,7 @@ describe("ConfirmDialog", () => {
     });
 
     it("calls onConfirm when OK is pressed", async () => {
-        const onConfirm = jest.fn();
+        const onConfirm = vi.fn();
         const { getByText } = renderWithProvider(<ConfirmDialog />);
 
         await act(async () => {
@@ -55,7 +55,7 @@ describe("ConfirmDialog", () => {
                 title: "Delete",
                 message: "Delete this item?",
                 isCancelable: true,
-                onConfirm: jest.fn(),
+                onConfirm: vi.fn(),
             });
         });
 

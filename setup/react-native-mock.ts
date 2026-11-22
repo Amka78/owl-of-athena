@@ -1,18 +1,61 @@
 /**
- * Preload script for bun test: mocks react-native and related packages
- * that use Flow type syntax Bun cannot parse.
+ * Vitest setup: mocks react-native and related RN packages that either ship
+ * Flow syntax or native bindings. Loaded via vitest.config.mts setupFiles.
  *
- * This file is listed in bunfig.toml [test].preload and runs before every
- * test file.  mock.module() calls placed here prevent Bun from ever touching
- * the real (unparseable) source files.
+ * react-native itself is replaced through the resolve.alias in vitest.config.mts
+ * (alias also covers imports issued from inside node_modules, e.g. RNTL).
  */
-import { mock } from "bun:test";
+import { readFileSync } from "node:fs";
+import Module from "node:module";
+import path from "node:path";
 import React from "react";
+import { vi } from "vitest";
+import * as RNMock from "../test/mocks/react-native";
+
+// ---------------------------------------------------------------------------
+// Binary asset requires (.m4a/.wav/.ttf)
+//
+// bun mapped [loader] ".m4a" = "file" (require returns the file path) and
+// ".ttf" = "text" (require returns the file contents). Node cannot require
+// binary assets, so intercept them at the CJS loader level.
+// ---------------------------------------------------------------------------
+const originalLoad = (Module as any)._load;
+(Module as any)._load = function (request: string, parent: any, _isMain: boolean) {
+    if (typeof request === "string") {
+        // Native require("react-native") (e.g. from vi.mock factories, or CJS
+        // builds of deps like react-native-paper) bypasses Vite and would load
+        // the real Flow-syntax package. Return the same mock instance that the
+        // Vite alias serves, so component identity stays consistent.
+        if (request === "react-native") return RNMock;
+        // vite-node forwards relative asset specifiers here still unresolved;
+        // resolve them against the requiring file like Node would.
+        if (request.endsWith(".m4a") || request.endsWith(".wav") || request.endsWith(".ttf")) {
+            const resolved = path.resolve(path.dirname(parent?.filename ?? process.cwd()), request);
+            if (request.endsWith(".ttf")) return readFileSync(resolved, "utf8");
+            return resolved;
+        }
+    }
+    return (originalLoad as any).apply(this, arguments);
+};
+
+// ---------------------------------------------------------------------------
+// expo-asset  (used by ProfileService / dialogs; requires native module)
+// ---------------------------------------------------------------------------
+vi.mock("expo-asset", () => {
+    const asset = () => ({
+        uri: "file:///mocked-asset",
+        localUri: "file:///mocked-asset",
+        downloadAsync: async () => ({ uri: "" }),
+    });
+    return {
+        Asset: { fromModule: () => asset(), fromURI: () => asset() },
+    };
+});
 
 // ---------------------------------------------------------------------------
 // Globals expected by React Native / Expo at module init time
 // ---------------------------------------------------------------------------
-globalThis.__DEV__ = true;
+(globalThis as any).__DEV__ = true;
 process.env.EXPO_OS = process.env.EXPO_OS ?? "ios";
 
 // expo-modules-core reads globalThis.expo.EventEmitter
@@ -38,350 +81,7 @@ function makeHost(name: string) {
 }
 
 // ---------------------------------------------------------------------------
-// react-native
-// ---------------------------------------------------------------------------
-mock.module("react-native", () => {
-    class AnimatedValue {
-        _v: number;
-        constructor(v: number) {
-            this._v = v;
-        }
-        setValue(v: number) {
-            this._v = v;
-        }
-        setOffset(_v: number) {}
-        flattenOffset() {}
-        extractOffset() {}
-        addListener(_cb: any) {
-            return "";
-        }
-        removeListener(_id: string) {}
-        removeAllListeners() {}
-        stopAnimation(_cb?: any) {}
-        resetAnimation(_cb?: any) {}
-        interpolate(_cfg: any) {
-            return this;
-        }
-        animate(_animation: any, _cb: any) {}
-    }
-
-    const animation = () => ({
-        start: (cb?: (result: { finished: boolean }) => void) => {
-            cb?.({ finished: true });
-        },
-        stop: () => {},
-        reset: () => {},
-    });
-
-    return {
-        // Core
-        Platform: {
-            OS: "ios",
-            select: (obj: any) =>
-                obj.ios ?? obj.native ?? obj.default ?? undefined,
-            Version: 14,
-            isTesting: true,
-            isPad: false,
-            isTV: false,
-        },
-        TurboModuleRegistry: {
-            get: (_name: string) => null,
-            getEnforcing: (_name: string) => ({}),
-        },
-        StyleSheet: {
-            create: (s: any) => s,
-            flatten: (s: any) =>
-                Array.isArray(s) ? Object.assign({}, ...s) : s,
-            hairlineWidth: 1,
-            absoluteFill: { position: "absolute", left: 0, right: 0, top: 0, bottom: 0 },
-            absoluteFillObject: { position: "absolute", left: 0, right: 0, top: 0, bottom: 0 },
-            compose: (a: any, b: any) => [a, b],
-        },
-        // Host components
-        View: makeHost("View"),
-        Text: makeHost("Text"),
-        TextInput: makeHost("TextInput"),
-        Image: makeHost("Image"),
-        ScrollView: makeHost("ScrollView"),
-        FlatList: makeHost("FlatList"),
-        SectionList: makeHost("SectionList"),
-        VirtualizedList: makeHost("VirtualizedList"),
-        // Touchable/pressable components: always accessible=true by default
-        // so that @testing-library/react-native getByRole() can find them.
-        // Pressable also supports render-prop children (function(state) => element).
-        TouchableOpacity: (props: any) =>
-            React.createElement("TouchableOpacity", { accessible: true, ...props }),
-        TouchableHighlight: (props: any) =>
-            React.createElement("TouchableHighlight", { accessible: true, ...props }),
-        TouchableNativeFeedback: (props: any) =>
-            React.createElement("TouchableNativeFeedback", { accessible: true, ...props }),
-        TouchableWithoutFeedback: (props: any) =>
-            React.createElement("TouchableWithoutFeedback", { accessible: true, ...props }),
-        Pressable: ({ children, ...rest }: any) => {
-            const resolved =
-                typeof children === "function"
-                    ? children({ pressed: false, hovered: false, focused: false })
-                    : children;
-            return React.createElement("Pressable", {
-                accessible: true,
-                ...rest,
-                children: resolved,
-            });
-        },
-        Modal: makeHost("Modal"),
-        Switch: makeHost("Switch"),
-        ActivityIndicator: makeHost("ActivityIndicator"),
-        KeyboardAvoidingView: makeHost("KeyboardAvoidingView"),
-        SafeAreaView: makeHost("SafeAreaView"),
-        StatusBar: makeHost("StatusBar"),
-        DrawerLayoutAndroid: makeHost("DrawerLayoutAndroid"),
-        RefreshControl: makeHost("RefreshControl"),
-        // react-native-svg's SvgTouchableMixin accesses Touchable.Mixin at import time
-        Touchable: { Mixin: {} },
-        // Animated
-        Easing: {
-            linear: (t: number) => t,
-            ease: (t: number) => t,
-            quad: (t: number) => t,
-            cubic: (t: number) => t,
-            poly: (_n: number) => (t: number) => t,
-            sin: (t: number) => t,
-            circle: (t: number) => t,
-            exp: (t: number) => t,
-            elastic: (_b?: number) => (t: number) => t,
-            back: (_s?: number) => (t: number) => t,
-            bounce: (t: number) => t,
-            bezier: (_x1: number, _y1: number, _x2: number, _y2: number) =>
-                (t: number) => t,
-            in: (f: any) => f,
-            out: (f: any) => f,
-            inOut: (f: any) => f,
-            step0: (n: number) => (n > 0 ? 1 : 0),
-            step1: (n: number) => (n >= 1 ? 1 : 0),
-        },
-        Animated: {
-            View: makeHost("Animated.View"),
-            // Use "Text" so @testing-library/react-native's isHostText() recognises it.
-            Text: makeHost("Text"),
-            Image: makeHost("Animated.Image"),
-            ScrollView: makeHost("Animated.ScrollView"),
-            FlatList: makeHost("Animated.FlatList"),
-            createAnimatedComponent: (C: any) => C,
-            Value: AnimatedValue,
-            ValueXY: class AnimatedValueXY {
-                x: AnimatedValue;
-                y: AnimatedValue;
-                constructor(value?: { x: number; y: number }) {
-                    this.x = new AnimatedValue(value?.x ?? 0);
-                    this.y = new AnimatedValue(value?.y ?? 0);
-                }
-                setValue(v: { x: number; y: number }) {
-                    this.x.setValue(v.x);
-                    this.y.setValue(v.y);
-                }
-                getLayout() {
-                    return {};
-                }
-                getTranslateTransform() {
-                    return [];
-                }
-                addListener(_cb: any) {
-                    return "";
-                }
-                removeListener(_id: string) {}
-                removeAllListeners() {}
-                stopAnimation() {}
-                resetAnimation() {}
-            },
-            timing: animation,
-            spring: animation,
-            decay: animation,
-            sequence: (_anims: any[]) => animation(),
-            parallel: (_anims: any[], _cfg?: any) => animation(),
-            stagger: (_ms: number, _anims: any[]) => animation(),
-            loop: (_anim: any, _cfg?: any) => ({
-                start: () => {},
-                stop: () => {},
-                reset: () => {},
-            }),
-            delay: (_ms: number) => animation(),
-            event: (_mapping: any[], _cfg?: any) => () => {},
-            add: (a: any, _b: any) => a,
-            subtract: (a: any, _b: any) => a,
-            multiply: (a: any, _b: any) => a,
-            divide: (a: any, _b: any) => a,
-            modulo: (a: any, _b: any) => a,
-            diffClamp: (v: any, _min: number, _max: number) => v,
-        },
-        // Utilities
-        Dimensions: {
-            get: (_dim: string) => ({ width: 375, height: 812, scale: 2, fontScale: 1 }),
-            addEventListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeEventListener: () => {},
-            set: () => {},
-        },
-        I18nManager: {
-            isRTL: false,
-            allowRTL: () => {},
-            forceRTL: () => {},
-            swapLeftAndRightInRTL: () => {},
-            getConstants: () => ({ isRTL: false, doLeftAndRightSwapInRTL: true }),
-        },
-        Keyboard: {
-            addListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeListener: () => {},
-            removeAllListeners: () => {},
-            dismiss: () => {},
-            scheduleLayoutAnimation: () => {},
-        },
-        BackHandler: {
-            addEventListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeEventListener: () => {},
-            exitApp: () => {},
-        },
-        AppState: {
-            currentState: "active",
-            addEventListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeEventListener: () => {},
-        },
-        Alert: { alert: () => {}, prompt: () => {} },
-        Linking: {
-            openURL: () => Promise.resolve(),
-            canOpenURL: () => Promise.resolve(true),
-            getInitialURL: () => Promise.resolve(null),
-            addEventListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeEventListener: () => {},
-            sendIntent: () => Promise.resolve(),
-            openSettings: () => Promise.resolve(),
-        },
-        NativeModules: {},
-        NativeEventEmitter: class NativeEventEmitter extends _EventEmitter {
-            constructor(_nativeModule?: any) {
-                super();
-            }
-        },
-        DeviceEventEmitter: {
-            addListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            removeAllListeners: () => {},
-            emit: () => {},
-        },
-        AccessibilityInfo: {
-            addEventListener: (_event: string, _handler: any) => ({
-                remove: () => {},
-            }),
-            fetch: () => Promise.resolve(false),
-            isAccessibilityServiceEnabled: () => Promise.resolve(false),
-            isColorInversionEnabled: () => Promise.resolve(false),
-            isGrayscaleEnabled: () => Promise.resolve(false),
-            isReduceMotionEnabled: () => Promise.resolve(false),
-            isReduceTransparencyEnabled: () => Promise.resolve(false),
-            isScreenReaderEnabled: () => Promise.resolve(false),
-            setAccessibilityFocus: () => {},
-            announceForAccessibility: () => {},
-        },
-        InteractionManager: {
-            runAfterInteractions: (task: any) => {
-                if (typeof task === "function") task();
-                return {
-                    then: (f: any) => {
-                        f();
-                        return { done: (f2: any) => f2?.() };
-                    },
-                    cancel: () => {},
-                };
-            },
-            createInteractionHandle: () => 1,
-            clearInteractionHandle: () => {},
-        },
-        PixelRatio: {
-            get: () => 2,
-            getFontScale: () => 1,
-            getPixelSizeForLayoutSize: (s: number) => s * 2,
-            roundToNearestPixel: (s: number) => Math.round(s * 2) / 2,
-        },
-        PanResponder: {
-            create: () => ({ panHandlers: {} }),
-        },
-        Vibration: { vibrate: () => {}, cancel: () => {} },
-        Share: {
-            share: () => Promise.resolve({ action: "sharedAction" }),
-        },
-        Clipboard: {
-            getString: () => Promise.resolve(""),
-            setString: () => {},
-        },
-        findNodeHandle: () => null,
-        UIManager: {
-            measure: () => {},
-            measureInWindow: () => {},
-            measureLayout: () => {},
-            hasViewManagerConfig: () => false,
-            getViewManagerConfig: () => ({}),
-            dispatchViewManagerCommand: () => {},
-        },
-        requireNativeComponent: (name: string) => makeHost(name),
-        processColor: (color: any) => color,
-        useWindowDimensions: () => ({
-            width: 375,
-            height: 812,
-            scale: 2,
-            fontScale: 1,
-        }),
-        useColorScheme: () => null,
-        ColorPropType: {},
-        // Appearance API
-        Appearance: {
-            getColorScheme: () => null,
-            addChangeListener: (_handler: any) => ({ remove: () => {} }),
-            removeChangeListener: () => {},
-        },
-        LogBox: { ignoreLogs: () => {}, ignoreAllLogs: () => {} },
-    };
-});
-
-// ---------------------------------------------------------------------------
-// react-native subpath: codegenNativeComponent
-// ---------------------------------------------------------------------------
-mock.module("react-native/Libraries/Utilities/codegenNativeComponent", () => ({
-    default: (name: string) => makeHost(name),
-}));
-
-// ---------------------------------------------------------------------------
-// react-native subpath: NativeComponentRegistry (used by slider, etc.)
-// ---------------------------------------------------------------------------
-mock.module("react-native/Libraries/NativeComponent/NativeComponentRegistry", () => ({
-    get: (name: string, _viewConfigProvider: any) => makeHost(name),
-    getWithDevWhiteList: (name: string, _viewConfigProvider: any) => makeHost(name),
-    register: (name: string, _viewConfigProvider: any) => makeHost(name),
-}));
-
-// ---------------------------------------------------------------------------
-// react-native subpath: ReactNativeViewConfigRegistry (used by gesture handler)
-// ---------------------------------------------------------------------------
-mock.module(
-    "react-native/Libraries/Renderer/shims/ReactNativeViewConfigRegistry",
-    () => ({
-        customBubblingEventTypes: {},
-        customDirectEventTypes: {},
-        get: (_name: string) => ({}),
-        register: (_name: string, _cfg: any) => ({}),
-        registerLazy: (_name: string, _cfg: any) => {},
-    })
-);
-// ---------------------------------------------------------------------------
-mock.module("react-native-safe-area-context", () => {
+vi.mock("react-native-safe-area-context", () => {
     const SafeAreaProvider = ({ children }: any) =>
         React.createElement(React.Fragment, null, children);
     const SafeAreaView = makeHost("SafeAreaView");
@@ -415,7 +115,7 @@ mock.module("react-native-safe-area-context", () => {
 // ---------------------------------------------------------------------------
 // @expo/vector-icons
 // ---------------------------------------------------------------------------
-mock.module("@expo/vector-icons", () => {
+vi.mock("@expo/vector-icons", () => {
     const Icon = makeHost("Icon");
     return {
         MaterialCommunityIcons: Icon,
@@ -440,7 +140,7 @@ mock.module("@expo/vector-icons", () => {
 // ---------------------------------------------------------------------------
 // expo-constants  (needs globalThis.expo already set above)
 // ---------------------------------------------------------------------------
-mock.module("expo-constants", () => {
+vi.mock("expo-constants", () => {
     const Constants = {
         expoConfig: {
             name: "owl-of-athena",
@@ -475,7 +175,7 @@ mock.module("expo-constants", () => {
 // ---------------------------------------------------------------------------
 // expo-keep-awake  (used in WakeLockService.native.ts; no direct test imports)
 // ---------------------------------------------------------------------------
-mock.module("expo-keep-awake", () => ({
+vi.mock("expo-keep-awake", () => ({
     activateKeepAwakeAsync: () => Promise.resolve(),
     deactivateKeepAwake: () => Promise.resolve(),
     useKeepAwake: () => {},
@@ -484,20 +184,23 @@ mock.module("expo-keep-awake", () => ({
 // ---------------------------------------------------------------------------
 // expo-updates  (used in useAppUpdate.native.ts; no direct test imports)
 // ---------------------------------------------------------------------------
-mock.module("expo-updates", () => ({
+vi.mock("expo-updates", () => ({
     checkForUpdateAsync: () => Promise.resolve({ isAvailable: false }),
     fetchUpdateAsync: () => Promise.resolve({ isNew: false }),
     reloadAsync: () => Promise.resolve(),
     useUpdates: () => ({ isUpdateAvailable: false, isUpdatePending: false }),
-    UpdateEventType: { ERROR: "error", NO_UPDATE_AVAILABLE: "noUpdateAvailable", UPDATE_AVAILABLE: "updateAvailable" },
+    UpdateEventType: {
+        ERROR: "error",
+        NO_UPDATE_AVAILABLE: "noUpdateAvailable",
+        UPDATE_AVAILABLE: "updateAvailable",
+    },
 }));
 
 // ---------------------------------------------------------------------------
 // expo-network  (used by useNetworkStatus / OfflineBanner)
 // ---------------------------------------------------------------------------
-mock.module("expo-network", () => ({
-    getNetworkStateAsync: () =>
-        Promise.resolve({ isConnected: true, isInternetReachable: true }),
+vi.mock("expo-network", () => ({
+    getNetworkStateAsync: () => Promise.resolve({ isConnected: true, isInternetReachable: true }),
     addNetworkStateListener: () => ({ remove: () => {} }),
     useNetworkState: () => ({ isConnected: true, isInternetReachable: true }),
     NetworkStateType: {
@@ -516,30 +219,65 @@ mock.module("expo-network", () => ({
 // ---------------------------------------------------------------------------
 // react-native subpath: ReactNativeViewConfigRegistry (used by gesture handler)
 // ---------------------------------------------------------------------------
-mock.module(
-    "react-native/Libraries/Renderer/shims/ReactNativeViewConfigRegistry",
-    () => ({
-        customBubblingEventTypes: {},
-        customDirectEventTypes: {},
-        get: (_name: string) => ({}),
-        register: (_name: string, _cfg: any) => ({}),
-        registerLazy: (_name: string, _cfg: any) => {},
-    })
-);
+vi.mock("react-native/Libraries/Renderer/shims/ReactNativeViewConfigRegistry", () => ({
+    customBubblingEventTypes: {},
+    customDirectEventTypes: {},
+    get: (_name: string) => ({}),
+    register: (_name: string, _cfg: any) => ({}),
+    registerLazy: (_name: string, _cfg: any) => {},
+}));
 
 // ---------------------------------------------------------------------------
-// @react-native-community/picker  (used by FieldLedEffect, SessionListMenu)
+// @react-native-picker/picker  (used by FieldLedEffect, SessionListMenu, etc.)
 // ---------------------------------------------------------------------------
-mock.module("@react-native-community/picker", () => {
+vi.mock("@react-native-picker/picker", () => {
     const PickerItem = makeHost("Picker.Item");
     const Picker = Object.assign(makeHost("Picker"), { Item: PickerItem });
     return { Picker, PickerIOS: Picker };
 });
 
 // ---------------------------------------------------------------------------
+// @react-navigation/material-top-tabs  (used by MainScreen tab navigators)
+// ---------------------------------------------------------------------------
+vi.mock("@react-navigation/material-top-tabs", () => ({
+    createMaterialTopTabNavigator: () => ({
+        Navigator: ({ children }: any) => children ?? null,
+        Screen: makeHost("TopTabScreen"),
+        Group: makeHost("TopTabGroup"),
+    }),
+}));
+
+// ---------------------------------------------------------------------------
+// react-native-ble-plx  (native BLE module; used by AuroraBluetooth.native)
+// ---------------------------------------------------------------------------
+vi.mock("react-native-ble-plx", () => {
+    class BleManager {
+        constructor() {}
+        destroy() {}
+    }
+    return { BleManager, BleErrorCode: {} };
+});
+
+// ---------------------------------------------------------------------------
+// react-native-volume-manager  (native volume module; used by SystemVolumeBooster.native)
+// ---------------------------------------------------------------------------
+vi.mock("react-native-volume-manager", () => {
+    const addVolumeListener = () => ({ remove: () => {} });
+    return {
+        VolumeManager: {
+            getVolume: () => Promise.resolve(0.5),
+            setVolume: () => Promise.resolve(),
+            addVolumeListener,
+        },
+        addVolumeListener,
+        useVolume: () => 0.5,
+    };
+});
+
+// ---------------------------------------------------------------------------
 // @react-native-community/slider  (used by FieldSlider)
 // ---------------------------------------------------------------------------
-mock.module("@react-native-community/slider", () => {
+vi.mock("@react-native-community/slider", () => {
     const Slider = makeHost("Slider");
     return { default: Slider, Slider };
 });
@@ -547,18 +285,18 @@ mock.module("@react-native-community/slider", () => {
 // ---------------------------------------------------------------------------
 // react-native-gesture-handler  (used by ScrollableList via ScrollView import)
 // ---------------------------------------------------------------------------
-mock.module("react-native-gesture-handler", () => {
-    const mkPressable = (name: string) => ({ children, ...rest }: any) => {
-        const resolved =
-            typeof children === "function"
-                ? children({ pressed: false })
-                : children;
-        return React.createElement(name, {
-            accessible: true,
-            ...rest,
-            children: resolved,
-        });
-    };
+vi.mock("react-native-gesture-handler", () => {
+    const mkPressable =
+        (name: string) =>
+        ({ children, ...rest }: any) => {
+            const resolved =
+                typeof children === "function" ? children({ pressed: false }) : children;
+            return React.createElement(name, {
+                accessible: true,
+                ...rest,
+                children: resolved,
+            });
+        };
     return {
         ScrollView: makeHost("ScrollView"),
         FlatList: makeHost("FlatList"),
@@ -607,7 +345,7 @@ mock.module("react-native-gesture-handler", () => {
 // ---------------------------------------------------------------------------
 // @react-native-community/datetimepicker  (used by DatePicker molecule)
 // ---------------------------------------------------------------------------
-mock.module("@react-native-community/datetimepicker", () => ({
+vi.mock("@react-native-community/datetimepicker", () => ({
     default: makeHost("DateTimePicker"),
     DateTimePickerAndroid: {
         open: () => {},
@@ -615,7 +353,12 @@ mock.module("@react-native-community/datetimepicker", () => ({
     },
     IOSMode: { time: "time", date: "date", datetime: "datetime", countdown: "countdown" },
     AndroidMode: { date: "date", time: "time" },
-    AndroidDisplay: { default: "default", spinner: "spinner", clock: "clock", calendar: "calendar" },
+    AndroidDisplay: {
+        default: "default",
+        spinner: "spinner",
+        clock: "clock",
+        calendar: "calendar",
+    },
 }));
 
 // ---------------------------------------------------------------------------
@@ -626,7 +369,7 @@ mock.module("@react-native-community/datetimepicker", () => ({
 // ---------------------------------------------------------------------------
 // expo-audio  (requires the native audio module unavailable in test env)
 // ---------------------------------------------------------------------------
-mock.module("expo-audio", () => {
+vi.mock("expo-audio", () => {
     const createMockPlayer = () => ({
         id: "mock-player",
         playing: false,
@@ -645,6 +388,7 @@ mock.module("expo-audio", () => {
         replace: () => undefined,
         remove: () => undefined,
         setPlaybackRate: () => undefined,
+        setActiveForLockScreen: () => undefined,
         addListener: () => ({ remove: () => undefined }),
     });
     return {
@@ -654,16 +398,14 @@ mock.module("expo-audio", () => {
         setIsAudioActiveAsync: () => Promise.resolve(undefined),
         preload: () => Promise.resolve(undefined),
         AudioModule: {},
-        AudioPlayer: function () {
-            return createMockPlayer();
-        },
+        AudioPlayer: () => createMockPlayer(),
     };
 });
 
 // ---------------------------------------------------------------------------
 // noble  (Bluetooth LE library; requires native bindings)
 // ---------------------------------------------------------------------------
-mock.module("noble", () => {
+vi.mock("noble", () => {
     const { EventEmitter } = require("events") as typeof import("events");
     class Noble extends EventEmitter {
         startScanning() {}
@@ -676,15 +418,27 @@ mock.module("noble", () => {
 // ---------------------------------------------------------------------------
 // serialport  (requires native bindings)
 // ---------------------------------------------------------------------------
-mock.module("serialport", () => {
+vi.mock("serialport", () => {
     const { EventEmitter } = require("events") as typeof import("events");
     class SerialPort extends EventEmitter {
-        constructor() { super(); }
-        open(cb?: (err: null) => void) { cb?.(null); }
-        close(cb?: (err: null) => void) { cb?.(null); }
-        write(_data: any, cb?: (err: null) => void) { cb?.(null); }
-        read() { return null; }
-        pipe() { return this; }
+        constructor() {
+            super();
+        }
+        open(cb?: (err: null) => void) {
+            cb?.(null);
+        }
+        close(cb?: (err: null) => void) {
+            cb?.(null);
+        }
+        write(_data: any, cb?: (err: null) => void) {
+            cb?.(null);
+        }
+        read() {
+            return null;
+        }
+        pipe() {
+            return this;
+        }
     }
     (SerialPort as any).list = () => Promise.resolve([]);
     return { default: SerialPort, SerialPort };
@@ -700,14 +454,26 @@ if (typeof document === "undefined") {
         namespaceURI: "http://www.w3.org/2000/svg",
         ownerDocument: (globalThis as any).document,
         setAttribute(_k: string, _v: string) {},
-        getAttribute(_k: string) { return null; },
-        appendChild(child: any) { return child; },
+        getAttribute(_k: string) {
+            return null;
+        },
+        appendChild(child: any) {
+            return child;
+        },
         addEventListener(_e: string, _fn: any) {},
         removeEventListener(_e: string, _fn: any) {},
-        dispatchEvent() { return true; },
-        createElementNS(_ns: string, t: string) { return makeEl(t); },
-        querySelectorAll() { return []; },
-        querySelector() { return null; },
+        dispatchEvent() {
+            return true;
+        },
+        createElementNS(_ns: string, t: string) {
+            return makeEl(t);
+        },
+        querySelectorAll() {
+            return [];
+        },
+        querySelector() {
+            return null;
+        },
     });
     const doc: any = {
         createElement: (tag: string) => makeEl(tag),
@@ -730,7 +496,7 @@ if (typeof document === "undefined") {
 // react-native-svg  (uses Touchable.Mixin and DOM APIs not available in bun)
 // ---------------------------------------------------------------------------
 const _svgHost = (name: string) => makeHost(name);
-mock.module("react-native-svg", () => ({
+vi.mock("react-native-svg", () => ({
     default: _svgHost("Svg"),
     Svg: _svgHost("Svg"),
     Circle: _svgHost("Circle"),
@@ -761,12 +527,37 @@ mock.module("react-native-svg", () => ({
 // @react-navigation/*  (needs NavigationContainer in real app; mock for tests)
 // ---------------------------------------------------------------------------
 const _navFn = () => {};
-const _navContext = () => ({ navigate: _navFn, goBack: _navFn, dispatch: _navFn, reset: _navFn, setParams: _navFn, setOptions: _navFn, isFocused: () => true, canGoBack: () => false, getParent: () => undefined, getState: () => ({}) });
+const _navContext = () => ({
+    navigate: _navFn,
+    goBack: _navFn,
+    dispatch: _navFn,
+    reset: _navFn,
+    setParams: _navFn,
+    setOptions: _navFn,
+    isFocused: () => true,
+    canGoBack: () => false,
+    getParent: () => undefined,
+    getState: () => ({}),
+});
 
-const _mockTheme = { dark: false, colors: { primary: "#000", background: "#fff", card: "#fff", text: "#000", border: "#ccc", notification: "#f00" } };
-const _mockContext = { Provider: ({ children }: any) => children, Consumer: () => null, displayName: "MockContext" } as any;
+const _mockTheme = {
+    dark: false,
+    colors: {
+        primary: "#000",
+        background: "#fff",
+        card: "#fff",
+        text: "#000",
+        border: "#ccc",
+        notification: "#f00",
+    },
+};
+const _mockContext = {
+    Provider: ({ children }: any) => children,
+    Consumer: () => null,
+    displayName: "MockContext",
+} as any;
 
-mock.module("@react-navigation/native", () => ({
+vi.mock("@react-navigation/native", () => ({
     // hooks
     useNavigation: _navContext,
     useRoute: () => ({ key: "mock", name: "mock", params: {} }),
@@ -802,7 +593,10 @@ mock.module("@react-navigation/native", () => ({
     DrawerActions: { openDrawer: _navFn, closeDrawer: _navFn, toggleDrawer: _navFn },
     // utility fns
     createNavigationContainerRef: () => ({ current: null }),
-    createNavigatorFactory: (_comp: any) => () => ({ Navigator: ({ children }: any) => children, Screen: () => null }),
+    createNavigatorFactory: (_comp: any) => () => ({
+        Navigator: ({ children }: any) => children,
+        Screen: () => null,
+    }),
     createStaticNavigation: (_nav: any) => () => null,
     findFocusedRoute: _navFn,
     getActionFromState: _navFn,
@@ -826,13 +620,21 @@ mock.module("@react-navigation/native", () => ({
     CurrentRenderContext: _mockContext,
     UNSTABLE_UnhandledLinkingContext: _mockContext,
     // routers (re-exported from @react-navigation/routers via @react-navigation/core)
-    BaseRouter: { type: "base", getInitialState: _navFn, getRehydratedState: _navFn, getStateForRouteNamesChange: _navFn, getStateForRouteFocus: _navFn, getStateForAction: _navFn, shouldActionChangeFocus: _navFn },
+    BaseRouter: {
+        type: "base",
+        getInitialState: _navFn,
+        getRehydratedState: _navFn,
+        getStateForRouteNamesChange: _navFn,
+        getStateForRouteFocus: _navFn,
+        getStateForAction: _navFn,
+        shouldActionChangeFocus: _navFn,
+    },
     DrawerRouter: _navFn,
     StackRouter: _navFn,
     TabRouter: _navFn,
 }));
 
-mock.module("@react-navigation/drawer", () => ({
+vi.mock("@react-navigation/drawer", () => ({
     createDrawerNavigator: () => ({
         Navigator: ({ children }: any) => children ?? null,
         Screen: makeHost("DrawerScreen"),
@@ -845,7 +647,7 @@ mock.module("@react-navigation/drawer", () => ({
     useDrawerProgress: () => ({ value: 0 }),
 }));
 
-mock.module("@react-navigation/bottom-tabs", () => ({
+vi.mock("@react-navigation/bottom-tabs", () => ({
     createBottomTabNavigator: () => ({
         Navigator: ({ children }: any) => children ?? null,
         Screen: makeHost("BottomTabScreen"),
@@ -854,7 +656,7 @@ mock.module("@react-navigation/bottom-tabs", () => ({
     useBottomTabBarHeight: () => 50,
 }));
 
-mock.module("@react-navigation/stack", () => ({
+vi.mock("@react-navigation/stack", () => ({
     createStackNavigator: () => ({
         Navigator: ({ children }: any) => children ?? null,
         Screen: makeHost("StackScreen"),
@@ -865,7 +667,7 @@ mock.module("@react-navigation/stack", () => ({
     HeaderStyleInterpolators: {},
 }));
 
-mock.module("@react-navigation/native-stack", () => ({
+vi.mock("@react-navigation/native-stack", () => ({
     createNativeStackNavigator: () => ({
         Navigator: ({ children }: any) => children ?? null,
         Screen: makeHost("NativeStackScreen"),
@@ -878,7 +680,7 @@ mock.module("@react-navigation/native-stack", () => ({
 // Supabase auth と zustand persist が web 版の window.localStorage を
 // 参照してテスト環境で落ちるため、メモリ実装に差し替える。
 // ---------------------------------------------------------------------------
-mock.module("@react-native-async-storage/async-storage", () => {
+vi.mock("@react-native-async-storage/async-storage", () => {
     const storage = new Map<string, string>();
     const AsyncStorage = {
         getItem: async (key: string) => storage.get(key) ?? null,
@@ -925,4 +727,3 @@ mock.module("@react-native-async-storage/async-storage", () => {
         }),
     };
 });
-

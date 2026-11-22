@@ -3,7 +3,7 @@ import type { AuroraSession } from "../../sdk/models";
 import { buildSessionListRows } from "../SessionListService";
 
 const session = (id: string, sessionAt: string): AuroraSession =>
-    ({ id, sessionAt }) as AuroraSession;
+    ({ id, sessionAt }) as unknown as AuroraSession;
 
 const formatMonth = (sessionAt: Moment): string => sessionAt.format("YYYY-MM");
 

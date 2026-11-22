@@ -4,18 +4,18 @@ import { AppState } from "react-native";
 
 import { useAppUpdate } from "../useAppUpdate.native";
 
-jest.mock("expo-updates", () => ({
+vi.mock("expo-updates", () => ({
     isEnabled: true,
-    checkForUpdateAsync: jest.fn(),
-    fetchUpdateAsync: jest.fn(),
-    reloadAsync: jest.fn(),
+    checkForUpdateAsync: vi.fn(),
+    fetchUpdateAsync: vi.fn(),
+    reloadAsync: vi.fn(),
 }));
 
 describe("useAppUpdate (native)", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
-        jest.spyOn(AppState, "addEventListener").mockImplementation(
-            () => ({ remove: jest.fn() }) as any,
+        vi.clearAllMocks();
+        vi.spyOn(AppState, "addEventListener").mockImplementation(
+            () => ({ remove: vi.fn() }) as any,
         );
         (Updates.fetchUpdateAsync as jest.Mock).mockResolvedValue({});
         (Updates.reloadAsync as jest.Mock).mockResolvedValue(undefined);

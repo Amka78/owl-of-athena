@@ -19,8 +19,8 @@ describe("FieldLedEffect UnitTest", () => {
             <FieldLedEffect
                 value={LED_EFFECT_DEFAULTS.blink}
                 disabled={false}
-                onPreviewEffectPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewEffectPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -31,8 +31,8 @@ describe("FieldLedEffect UnitTest", () => {
             <FieldLedEffect
                 value={LED_EFFECT_DEFAULTS.blink}
                 disabled={false}
-                onPreviewEffectPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewEffectPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
 
@@ -46,8 +46,8 @@ describe("FieldLedEffect UnitTest", () => {
             <FieldLedEffect
                 value={LED_EFFECT_DEFAULTS.set}
                 disabled={false}
-                onPreviewEffectPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewEffectPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(withEffect.queryByText("Preview Effect")).toBeTruthy();
@@ -56,21 +56,21 @@ describe("FieldLedEffect UnitTest", () => {
             <FieldLedEffect
                 value={{}}
                 disabled={false}
-                onPreviewEffectPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewEffectPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(withoutEffect.queryByText("Preview Effect")).toBeNull();
     });
 
     it("previews the current effect value", () => {
-        const onPreviewEffectPress = jest.fn();
+        const onPreviewEffectPress = vi.fn();
         const { getByText } = renderWithProvider(
             <FieldLedEffect
                 value={LED_EFFECT_DEFAULTS.blink}
                 disabled={false}
                 onPreviewEffectPress={onPreviewEffectPress}
-                onValueChange={jest.fn()}
+                onValueChange={vi.fn()}
             />,
         );
 

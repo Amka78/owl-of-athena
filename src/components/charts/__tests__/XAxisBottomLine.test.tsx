@@ -2,6 +2,7 @@
 
 import { render } from "@testing-library/react-native";
 import React from "react";
+import { Line } from "react-native-svg";
 import { XAxisBottomLine } from "../XAxisBottomLine";
 
 //#endregion
@@ -23,7 +24,7 @@ describe("XAxisBottomLine UnitTest", () => {
         const { UNSAFE_getByType } = render(
             <XAxisBottomLine width={400} height={100} color="#ff0000" />,
         );
-        const line = UNSAFE_getByType(require("react-native-svg").Line);
+        const line = UNSAFE_getByType(Line);
         expect(line.props.x1).toBe(0);
         expect(line.props.x2).toBe(400);
         expect(line.props.y1).toBe(100);

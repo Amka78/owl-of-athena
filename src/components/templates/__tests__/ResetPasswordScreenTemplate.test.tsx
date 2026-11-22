@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import React from "react";
+import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
@@ -22,12 +22,12 @@ const mobileDimens = {
 
 const defaultProps = {
     state: "ready" as const,
-    newPassword: { value: "", onChangeText: jest.fn(), set: jest.fn() },
-    confirmPassword: { value: "", onChangeText: jest.fn(), set: jest.fn() },
+    newPassword: { value: "", onChangeText: vi.fn(), set: vi.fn() },
+    confirmPassword: { value: "", onChangeText: vi.fn(), set: vi.fn() },
     errorText: { children: "" },
-    saveButton: { onPress: jest.fn() },
-    loginButton: { onPress: jest.fn() },
-    requestButton: { onPress: jest.fn() },
+    saveButton: { onPress: vi.fn() },
+    loginButton: { onPress: vi.fn() },
+    requestButton: { onPress: vi.fn() },
     dimens: mobileDimens,
     locale: "en-US",
 };
@@ -43,7 +43,7 @@ describe("ResetPasswordScreenTemplate", () => {
     });
 
     it("shows the invalid link message and requests a new link", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <ResetPasswordScreenTemplate
                 {...defaultProps}
@@ -58,7 +58,7 @@ describe("ResetPasswordScreenTemplate", () => {
     });
 
     it("shows the success message and goes to login", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <ResetPasswordScreenTemplate
                 {...defaultProps}

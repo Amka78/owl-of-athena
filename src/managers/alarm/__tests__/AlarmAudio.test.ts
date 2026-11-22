@@ -10,9 +10,9 @@ const createPlayer = () => ({
     loop: false,
     volume: 1,
     playing: false,
-    play: jest.fn(),
-    pause: jest.fn(),
-    seekTo: jest.fn(() => Promise.resolve()),
+    play: vi.fn(),
+    pause: vi.fn(),
+    seekTo: vi.fn(() => Promise.resolve()),
 });
 
 const asPlayer = (player: ReturnType<typeof createPlayer>): AudioPlayer =>

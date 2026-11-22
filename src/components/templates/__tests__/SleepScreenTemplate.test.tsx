@@ -36,8 +36,8 @@ describe("SleepingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
-                onWakeupPress={jest.fn()}
+                onRelockPress={vi.fn()}
+                onWakeupPress={vi.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
                 dimens={mobileDimens}
@@ -51,8 +51,8 @@ describe("SleepingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
-                onWakeupPress={jest.fn()}
+                onRelockPress={vi.fn()}
+                onWakeupPress={vi.fn()}
                 isSnoozing={false}
                 wakeLockMessage="画面はロックされています"
                 dimens={mobileDimens}
@@ -66,8 +66,8 @@ describe("SleepingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
-                onWakeupPress={jest.fn()}
+                onRelockPress={vi.fn()}
+                onWakeupPress={vi.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
                 dimens={desktopDimens}
@@ -78,11 +78,11 @@ describe("SleepingScreenTemplate", () => {
     });
 
     it("calls onWakeupPress when wakeup button pressed", () => {
-        const onWakeupPress = jest.fn();
+        const onWakeupPress = vi.fn();
         const { getByText } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
+                onRelockPress={vi.fn()}
                 onWakeupPress={onWakeupPress}
                 isSnoozing={false}
                 wakeLockMessage="Screen is locked"
@@ -98,8 +98,8 @@ describe("SleepingScreenTemplate", () => {
         const { getByText } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
-                onWakeupPress={jest.fn()}
+                onRelockPress={vi.fn()}
+                onWakeupPress={vi.fn()}
                 isSnoozing={false}
                 wakeLockMessage="Tap to relock screen"
                 dimens={mobileDimens}
@@ -113,8 +113,8 @@ describe("SleepingScreenTemplate", () => {
         const { getByText } = renderWithProvider(
             <SleepingScreenTemplate
                 timeView={{ hours: 23, minutes: 0 }}
-                onRelockPress={jest.fn()}
-                onWakeupPress={jest.fn()}
+                onRelockPress={vi.fn()}
+                onWakeupPress={vi.fn()}
                 isSnoozing={true}
                 wakeLockMessage="Screen is locked"
                 dimens={mobileDimens}

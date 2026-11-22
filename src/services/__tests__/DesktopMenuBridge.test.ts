@@ -9,13 +9,13 @@ import {
     installDesktopMenuBridge,
 } from "../DesktopMenuBridge";
 
-jest.mock("../../managers", () => ({
+vi.mock("../../managers", () => ({
     AuroraManagerInstance: {
-        executeCommand: jest.fn(),
-        isConnected: jest.fn(),
-        getOSInfo: jest.fn(),
-        on: jest.fn(),
-        off: jest.fn(),
+        executeCommand: vi.fn(),
+        isConnected: vi.fn(),
+        getOSInfo: vi.fn(),
+        on: vi.fn(),
+        off: vi.fn(),
     },
 }));
 
@@ -33,20 +33,20 @@ describe("DesktopMenuBridge", () => {
     });
 
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         executeCommand.mockResolvedValue(undefined);
         isConnected.mockReturnValue(true);
         getOSInfo.mockReturnValue(undefined);
 
-        confirmDialogShow = jest.spyOn(ConfirmDialog, "show").mockImplementation(() => {});
+        confirmDialogShow = vi.spyOn(ConfirmDialog, "show").mockImplementation(() => {});
         // LoadingDialog は Instance 未マウントでも動くよう静的に差し替える。
-        jest.spyOn(LoadingDialog, "show").mockImplementation(() => {});
-        jest.spyOn(LoadingDialog, "close").mockImplementation(() => {});
-        auroraInfoDialogShow = jest.spyOn(AuroraInfoDialog, "show").mockImplementation(() => {});
+        vi.spyOn(LoadingDialog, "show").mockImplementation(() => {});
+        vi.spyOn(LoadingDialog, "close").mockImplementation(() => {});
+        auroraInfoDialogShow = vi.spyOn(AuroraInfoDialog, "show").mockImplementation(() => {});
     });
 
     afterAll(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
     });
 
     it("registers the window handler", () => {

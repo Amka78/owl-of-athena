@@ -29,7 +29,7 @@ describe("CheckBox UnitTest", () => {
     });
 
     it("calls onPress when pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByRole } = renderWithProvider(<CheckBox status="unchecked" onPress={onPress} />);
         fireEvent.press(getByRole("checkbox"));
         expect(onPress).toHaveBeenCalledTimes(1);

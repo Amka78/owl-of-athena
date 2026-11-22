@@ -24,7 +24,7 @@ describe("SessionTransferDialog UnitTest", () => {
     });
 
     it("calls onConfirm when Sync is pressed", () => {
-        const onConfirm = jest.fn();
+        const onConfirm = vi.fn();
         const { getByText } = renderWithProvider(<SessionTransferDialog />);
         act(() => {
             SessionTransferDialog.show({ unsyncedCount: 3, onConfirm });
@@ -35,7 +35,7 @@ describe("SessionTransferDialog UnitTest", () => {
     });
 
     it("calls onClose when Cancel is pressed", () => {
-        const onClose = jest.fn();
+        const onClose = vi.fn();
         const { getByText } = renderWithProvider(<SessionTransferDialog />);
         act(() => {
             SessionTransferDialog.show({ unsyncedCount: 3, onClose });

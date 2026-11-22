@@ -27,7 +27,7 @@ describe("LabeledRadioButton", () => {
     });
 
     it("calls onLabelPress when label is pressed", () => {
-        const onLabelPress = jest.fn();
+        const onLabelPress = vi.fn();
         const { getByText } = renderWithProvider(
             <LabeledRadioButton value="opt1" label="Click me" onLabelPress={onLabelPress} />,
         );

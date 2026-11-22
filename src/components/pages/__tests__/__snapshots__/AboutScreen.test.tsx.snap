@@ -1,4 +1,294 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AboutScreen UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          {
+            "backgroundColor": "#070724",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "marginLeft": 48,
+              "marginRight": 48,
+            },
+            {
+              "backgroundColor": "#070724",
+            },
+            [
+              {
+                "maxHeight": 650,
+                "maxWidth": 650,
+              },
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "stretch",
+              "flex": 1,
+              "maxWidth": 650,
+              "paddingTop": 32,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignSelf": "stretch",
+                "maxWidth": 650,
+              }
+            }
+          >
+            <Text
+              style={
+                [
+                  {
+                    "flex": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                  },
+                  {
+                    "color": "#ffffff",
+                    "flex": 0,
+                    "fontFamily": "calibre_app_semibold",
+                    "fontSize": 24,
+                    "marginBottom": 8,
+                  },
+                ]
+              }
+            >
+              owl-of-athena
+            </Text>
+            <View
+              style={
+                {
+                  "marginBottom": 32,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#001438",
+                    "borderBottomWidth": 1,
+                    "flexDirection": "row",
+                    "paddingVertical": 8,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#00ffe6",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                      "width": 120,
+                    }
+                  }
+                >
+                  Version
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  unknown
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#001438",
+                    "borderBottomWidth": 1,
+                    "flexDirection": "row",
+                    "paddingVertical": 8,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#00ffe6",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                      "width": 120,
+                    }
+                  }
+                >
+                  Build
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  —
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#001438",
+                    "borderBottomWidth": 1,
+                    "flexDirection": "row",
+                    "paddingVertical": 8,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#00ffe6",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                      "width": 120,
+                    }
+                  }
+                >
+                  SDK
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  —
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#001438",
+                    "borderBottomWidth": 1,
+                    "flexDirection": "row",
+                    "paddingVertical": 8,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#00ffe6",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                      "width": 120,
+                    }
+                  }
+                >
+                  Platform
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  ios
+                </Text>
+              </View>
+              <View
+                style={
+                  {
+                    "borderBottomColor": "#001438",
+                    "borderBottomWidth": 1,
+                    "flexDirection": "row",
+                    "paddingVertical": 8,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#00ffe6",
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                      "width": 120,
+                    }
+                  }
+                >
+                  OS
+                </Text>
+                <Text
+                  style={
+                    {
+                      "color": "#ffffff",
+                      "flex": 1,
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  14
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`AboutScreen UnitTest renders correctly 1`] = `
 {

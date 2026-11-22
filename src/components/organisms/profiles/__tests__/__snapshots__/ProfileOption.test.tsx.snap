@@ -1,4 +1,326 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProfileOption > renders a toggle option correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Pressable
+      accessible={true}
+      disabled={true}
+      field={
+        {
+          "type": "toggle",
+        }
+      }
+      onPressIn={[Function]}
+      onPressOut={[Function]}
+      onValueChange={[MockFunction]}
+      ref={null}
+      style={[Function]}
+      value={false}
+    >
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "marginVertical": 6,
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Icon
+          color="#ffffff"
+          name="information-outline"
+          onPress={[MockFunction]}
+          size={40}
+        />
+        <View
+          style={
+            [
+              {
+                "paddingLeft": 16,
+              },
+              {
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="undefined-content"
+        >
+          <Text
+            numberOfLines={2}
+            ref={
+              {
+                "current": null,
+              }
+            }
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                  },
+                  [
+                    {
+                      "color": "#ffffff",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            REM Stimulation
+          </Text>
+        </View>
+        <Switch
+          disabled={false}
+          onValueChange={[Function]}
+          style={
+            [
+              {
+                "alignSelf": "center",
+                "marginLeft": 16,
+                "marginRight": 0,
+                "marginVertical": 0,
+              },
+              {
+                "alignSelf": "center",
+              },
+            ]
+          }
+          trackColor={
+            {
+              "false": "#00ffe6",
+              "true": "#00ffe6",
+            }
+          }
+          value={false}
+        />
+      </View>
+    </Pressable>
+  </View>
+</View>
+`;
+
+exports[`ProfileOption > renders in failed state with failedConditionMessage 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Pressable
+      accessible={true}
+      disabled={true}
+      field={
+        {
+          "type": "toggle",
+        }
+      }
+      onPressIn={[Function]}
+      onPressOut={[Function]}
+      onValueChange={[MockFunction]}
+      ref={null}
+      style={[Function]}
+      value={false}
+    >
+      <View
+        style={
+          [
+            {
+              "flexDirection": "row",
+              "marginVertical": 6,
+              "width": "100%",
+            },
+            undefined,
+          ]
+        }
+      >
+        <Icon
+          color="#ffffff"
+          name="information-outline"
+          onPress={[MockFunction]}
+          size={40}
+        />
+        <View
+          style={
+            [
+              {
+                "paddingLeft": 16,
+              },
+              {
+                "flexGrow": 1,
+                "flexShrink": 1,
+                "justifyContent": "center",
+              },
+              undefined,
+            ]
+          }
+          testID="undefined-content"
+        >
+          <Text
+            numberOfLines={2}
+            ref={
+              {
+                "current": null,
+              }
+            }
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 16,
+                  },
+                  {
+                    "color": "rgba(28, 27, 31, 1)",
+                  },
+                  [
+                    {
+                      "color": "#ffffff",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            REM Stimulation
+          </Text>
+          <Text
+            numberOfLines={2}
+            onTextLayout={[Function]}
+            ref={
+              {
+                "current": null,
+              }
+            }
+            selectable={false}
+            style={
+              [
+                {
+                  "textAlign": "left",
+                },
+                {
+                  "color": "rgba(28, 27, 31, 1)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "letterSpacing": 0,
+                },
+                {
+                  "writingDirection": "ltr",
+                },
+                [
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "color": "rgba(73, 69, 79, 1)",
+                  },
+                  [
+                    {
+                      "color": "#9B9B9B",
+                    },
+                    undefined,
+                  ],
+                ],
+              ]
+            }
+          >
+            Requires firmware &gt;= 2.0
+          </Text>
+        </View>
+        <Switch
+          disabled={true}
+          style={
+            [
+              {
+                "alignSelf": "center",
+                "marginLeft": 16,
+                "marginRight": 0,
+              },
+              {
+                "alignSelf": "center",
+              },
+            ]
+          }
+          trackColor={
+            {
+              "false": "#00ffe6",
+              "true": "#00ffe6",
+            }
+          }
+          value={false}
+        />
+      </View>
+    </Pressable>
+  </View>
+</View>
+`;
 
 exports[`ProfileOption renders a toggle option correctly 1`] = `
 {

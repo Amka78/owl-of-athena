@@ -10,15 +10,15 @@ const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
 const filterMenuProps = {
-    onPickerValueChange: jest.fn(),
+    onPickerValueChange: vi.fn(),
     selectedPickerValue: FilterByDateValues.ANY_TIME,
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
     showStarredCheckBoxStatus: "unchecked" as const,
-    onShowStarredCheckBoxPress: jest.fn(),
+    onShowStarredCheckBoxPress: vi.fn(),
     showNoteCheckBoxStatus: "unchecked" as const,
-    onShowNoteCheckBoxPress: jest.fn(),
+    onShowNoteCheckBoxPress: vi.fn(),
 };
 
 describe("SessionListScreenTemplate", () => {
@@ -28,9 +28,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -50,9 +50,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[session]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -76,9 +76,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[session]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -109,9 +109,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="ja-JP"
             />,
         );
@@ -132,9 +132,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[session]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -155,9 +155,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={[session]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -173,9 +173,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={false}
                 filterMenuProps={filterMenuProps}
                 sessionList={undefined}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );
@@ -189,9 +189,9 @@ describe("SessionListScreenTemplate", () => {
                 showFilter={true}
                 filterMenuProps={filterMenuProps}
                 sessionList={[]}
-                onStarPress={jest.fn()}
-                onDeletePress={jest.fn()}
-                onMenuPress={jest.fn()}
+                onStarPress={vi.fn()}
+                onDeletePress={vi.fn()}
+                onMenuPress={vi.fn()}
                 locale="en-US"
             />,
         );

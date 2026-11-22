@@ -30,10 +30,10 @@ const renderHarness = (manager: DeviceMaintenanceManager) =>
 const createManager = (
     connected = true,
 ): DeviceMaintenanceManager & { executeCommand: jest.Mock } => ({
-    isConnected: jest.fn(() => connected),
-    on: jest.fn(),
-    off: jest.fn(),
-    executeCommand: jest.fn(() => Promise.resolve()),
+    isConnected: vi.fn(() => connected),
+    on: vi.fn(),
+    off: vi.fn(),
+    executeCommand: vi.fn(() => Promise.resolve()),
 });
 
 describe("useDeviceMaintenance", () => {

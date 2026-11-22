@@ -14,7 +14,7 @@ describe("FieldSlider UnitTest", () => {
                 field={{ type: "slider", format: "minutes", min: 0, max: 60, step: 5 }}
                 value={30}
                 disabled={false}
-                onValueChange={jest.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();

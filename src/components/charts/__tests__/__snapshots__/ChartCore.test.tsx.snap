@@ -1,4 +1,68 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ChartCore UnitTest > renders correctly with minimal props 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Svg
+      height={200}
+      width={400}
+    />
+  </View>
+</View>
+`;
+
+exports[`ChartCore UnitTest > renders with svg style margins 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Svg
+      height={184}
+      style={
+        {
+          "marginBottom": 8,
+          "marginLeft": 16,
+          "marginRight": 16,
+          "marginTop": 8,
+        }
+      }
+      width={368}
+    />
+  </View>
+</View>
+`;
 
 exports[`ChartCore UnitTest renders correctly with minimal props 1`] = `
 {

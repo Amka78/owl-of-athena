@@ -18,8 +18,8 @@ describe("ProfileOptionList", () => {
                 optionValues={{}}
                 locale="en-US"
                 style={{ flex: 1 }}
-                onHelpIconPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onHelpIconPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toBeTruthy();
@@ -32,8 +32,8 @@ describe("ProfileOptionList", () => {
                 optionValues={{}}
                 locale="ja-JP"
                 style={{ flex: 1 }}
-                onHelpIconPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onHelpIconPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toBeTruthy();
@@ -44,7 +44,7 @@ describe("ProfileOptionList", () => {
             <ProfileOptionList
                 groupedOptionList={[]}
                 optionValues={{}}
-                onValueChange={jest.fn()}
+                onValueChange={vi.fn()}
                 style={{ flex: 1 }}
             />,
         );

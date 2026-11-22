@@ -5,9 +5,9 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { SessionDesktopScreen } from "../SessionDesktopScreen";
 
-jest.mock("../../../navigation/SessionTabNavigator", () => () => null);
-jest.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
-jest.mock("../../../hooks/sessions/useSessionList", () => ({
+vi.mock("../../../navigation/SessionTabNavigator", () => ({ default: () => null }));
+vi.mock("react-native-reanimated", () => require("react-native-reanimated/mock"));
+vi.mock("../../../hooks/sessions/useSessionList", () => ({
     useSessinList: () => ({
         showFilter: false,
         filterCondition: {
@@ -15,17 +15,16 @@ jest.mock("../../../hooks/sessions/useSessionList", () => ({
             showNotes: false,
             showStarred: false,
         },
-        onFilterPress: jest.fn(),
-        onRefreshPress: jest.fn(),
+        onFilterPress: vi.fn(),
+        onRefreshPress: vi.fn(),
         list: [],
-        onSelectSession: jest.fn(),
-        onDeleteSession: jest.fn(),
-        onStarPress: jest.fn(),
-        onNotePress: jest.fn(),
+        onSelectSession: vi.fn(),
+        onDeleteSession: vi.fn(),
+        onStarPress: vi.fn(),
+        onNotePress: vi.fn(),
         userId: "guest",
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

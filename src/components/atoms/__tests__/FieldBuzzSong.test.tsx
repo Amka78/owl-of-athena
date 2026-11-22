@@ -26,8 +26,8 @@ describe("FieldBuzzSong UnitTest", () => {
             <FieldBuzzSong
                 value={song}
                 disabled={false}
-                onPreviewSongPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewSongPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
 
@@ -43,8 +43,8 @@ describe("FieldBuzzSong UnitTest", () => {
             <FieldBuzzSong
                 value={{}}
                 disabled={false}
-                onPreviewSongPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onPreviewSongPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
 
@@ -52,13 +52,13 @@ describe("FieldBuzzSong UnitTest", () => {
     });
 
     it("calls onPreviewSongPress with the current value", () => {
-        const onPreviewSongPress = jest.fn();
+        const onPreviewSongPress = vi.fn();
         const { getByText } = renderWithProvider(
             <FieldBuzzSong
                 value={song}
                 disabled={false}
                 onPreviewSongPress={onPreviewSongPress}
-                onValueChange={jest.fn()}
+                onValueChange={vi.fn()}
             />,
         );
 

@@ -25,7 +25,7 @@ const defaultProps = {
         minutesStep: 5,
         defaultTime: 0,
     },
-    onValueChange: jest.fn(),
+    onValueChange: vi.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>

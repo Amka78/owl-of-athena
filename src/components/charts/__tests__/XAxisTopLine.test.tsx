@@ -2,6 +2,7 @@
 
 import { render } from "@testing-library/react-native";
 import React from "react";
+import { Line } from "react-native-svg";
 import { XAxisTopLine } from "../XAxisTopLine";
 
 //#endregion
@@ -20,7 +21,7 @@ describe("XAxisTopLine UnitTest", () => {
 
     it("renders a Line at y=0", () => {
         const { UNSAFE_getByType } = render(<XAxisTopLine width={500} color="#00ff00" />);
-        const line = UNSAFE_getByType(require("react-native-svg").Line);
+        const line = UNSAFE_getByType(Line);
         expect(line.props.x1).toBe(0);
         expect(line.props.x2).toBe(500);
         expect(line.props.y1).toBe(0);

@@ -4,21 +4,21 @@ import React from "react";
 import { buildLogReport, shareText } from "../../../services/ExportService";
 import { ConsoleScreen } from "../ConsoleScreen";
 
-jest.mock("../../../managers", () => ({
+vi.mock("../../../managers", () => ({
     AuroraManagerInstance: {
         isConnected: () => false,
-        executeCommand: jest.fn(),
+        executeCommand: vi.fn(),
     },
 }));
 
-jest.mock("../../../services/ExportService", () => ({
-    buildLogReport: jest.fn(() => "log report"),
-    shareText: jest.fn(() => Promise.resolve()),
+vi.mock("../../../services/ExportService", () => ({
+    buildLogReport: vi.fn(() => "log report"),
+    shareText: vi.fn(() => Promise.resolve()),
 }));
 
 describe("ConsoleScreen UnitTest", () => {
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("shares the console logs", async () => {

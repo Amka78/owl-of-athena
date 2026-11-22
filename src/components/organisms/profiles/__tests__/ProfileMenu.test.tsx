@@ -24,7 +24,7 @@ const sampleProfile = {
 describe("ProfileMenu", () => {
     it("renders correctly", () => {
         const { toJSON } = renderWithProvider(
-            <ProfileMenu selectedProfile={sampleProfile} onEditPress={jest.fn()} />,
+            <ProfileMenu selectedProfile={sampleProfile} onEditPress={vi.fn()} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
@@ -35,7 +35,7 @@ describe("ProfileMenu", () => {
     });
 
     it("calls onEditPress when edit icon pressed", () => {
-        const onEditPress = jest.fn();
+        const onEditPress = vi.fn();
         const { UNSAFE_getAllByType: _UNSAFE_getAllByType } = renderWithProvider(
             <ProfileMenu selectedProfile={sampleProfile} onEditPress={onEditPress} />,
         );

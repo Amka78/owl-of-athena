@@ -14,7 +14,7 @@ describe("AudioDialog", () => {
     });
 
     it("shows dialog after AudioDialog.show() is called", async () => {
-        const onConfirm = jest.fn();
+        const onConfirm = vi.fn();
         const { getByText } = renderWithProvider(<AudioDialog auroraSoundList={[]} />);
 
         await act(async () => {

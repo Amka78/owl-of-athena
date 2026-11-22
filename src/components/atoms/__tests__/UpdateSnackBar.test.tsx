@@ -24,7 +24,7 @@ describe("UpdateSnackBar UnitTest", () => {
     });
 
     it("reloads when the update action is pressed", () => {
-        const reloadPageCallback = jest.fn();
+        const reloadPageCallback = vi.fn();
         const { getByText } = renderWithProvider(
             <UpdateSnackBarCore showReload={true} reloadPageCallback={reloadPageCallback} />,
         );

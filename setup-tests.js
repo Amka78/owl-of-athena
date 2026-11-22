@@ -1,4 +1,4 @@
-import { afterEach } from "bun:test";
+import { afterEach } from "vitest";
 import { Message } from "./src/constants";
 
 // Reset locale to en-US after each test to prevent locale state bleeding between tests

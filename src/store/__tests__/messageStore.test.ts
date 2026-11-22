@@ -2,13 +2,13 @@ import MessageService from "../../services/MessageService";
 import type { UserMessage } from "../../types";
 import { useMessageStore } from "../messageStore";
 
-jest.mock("../../services/MessageService", () => ({
+vi.mock("../../services/MessageService", () => ({
     __esModule: true,
     default: {
-        getUserMessages: jest.fn(),
-        markMessageAsRead: jest.fn(),
-        markAllMessagesAsRead: jest.fn(),
-        updateMessage: jest.fn(),
+        getUserMessages: vi.fn(),
+        markMessageAsRead: vi.fn(),
+        markAllMessagesAsRead: vi.fn(),
+        updateMessage: vi.fn(),
     },
 }));
 
@@ -28,7 +28,7 @@ describe("messageStore UnitTest", () => {
             loaded: false,
             error: undefined,
         });
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("stores messages and marks them as loaded", async () => {

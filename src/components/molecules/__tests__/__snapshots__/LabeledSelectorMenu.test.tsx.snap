@@ -1,4 +1,86 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LabeledSelectorMenu > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={{}}
+    >
+      <TouchableOpacity
+        accessible={true}
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "color": "#bcfeff",
+              "flex": 1,
+              "fontFamily": "calibre_app_regular",
+              "fontSize": 14,
+              "marginBottom": 12,
+            }
+          }
+        >
+          Language
+        </Text>
+        <View
+          style={
+            {
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+              "marginBottom": 12,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#4a2fba",
+                "marginLeft": 0,
+              }
+            }
+          >
+            English
+          </Text>
+          <Icon
+            color="#4a2fba"
+            name="chevron-right"
+            size={20}
+            style={
+              {
+                "marginLeft": 0,
+              }
+            }
+          />
+        </View>
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`LabeledSelectorMenu renders correctly 1`] = `
 {

@@ -8,12 +8,12 @@ import { useDeviceMaintenance } from "../../../hooks/useDeviceMaintenance";
 import { AuroraOSInfo } from "../../../sdk/models";
 import { DeviceScreen } from "../DeviceScreen";
 
-jest.mock("../../../hooks/useDeviceInfo", () => ({
-    useDeviceInfo: jest.fn(),
+vi.mock("../../../hooks/useDeviceInfo", () => ({
+    useDeviceInfo: vi.fn(),
 }));
 
-jest.mock("../../../hooks/useDeviceMaintenance", () => ({
-    useDeviceMaintenance: jest.fn(),
+vi.mock("../../../hooks/useDeviceMaintenance", () => ({
+    useDeviceMaintenance: vi.fn(),
 }));
 
 const renderWithProvider = (ui: React.ReactElement) =>
@@ -28,8 +28,8 @@ describe("DeviceScreen UnitTest", () => {
         mockUseDeviceMaintenance.mockReturnValue({
             connected: false,
             busy: false,
-            onFormatSdCardPress: jest.fn(),
-            onResetDevicePress: jest.fn(),
+            onFormatSdCardPress: vi.fn(),
+            onResetDevicePress: vi.fn(),
         });
     });
 
@@ -56,8 +56,8 @@ describe("DeviceScreen UnitTest", () => {
         mockUseDeviceMaintenance.mockReturnValue({
             connected: true,
             busy: false,
-            onFormatSdCardPress: jest.fn(),
-            onResetDevicePress: jest.fn(),
+            onFormatSdCardPress: vi.fn(),
+            onResetDevicePress: vi.fn(),
         });
 
         const { getByText } = renderWithProvider(<DeviceScreen />);
@@ -71,8 +71,8 @@ describe("DeviceScreen UnitTest", () => {
     });
 
     it("calls the maintenance handlers when connected", () => {
-        const onFormatSdCardPress = jest.fn();
-        const onResetDevicePress = jest.fn();
+        const onFormatSdCardPress = vi.fn();
+        const onResetDevicePress = vi.fn();
         mockUseDeviceInfo.mockReturnValue(new AuroraOSInfo({ version: 10001 }));
         mockUseDeviceMaintenance.mockReturnValue({
             connected: true,

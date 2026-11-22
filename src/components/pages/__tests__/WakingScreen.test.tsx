@@ -5,10 +5,10 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { WakingScreen } from "../WakingScreen";
 
-jest.mock("../../../hooks/useWaking ", () => ({
+vi.mock("../../../hooks/useWaking ", () => ({
     useWaking: () => ({
-        wakeupButtonPress: jest.fn(),
-        snoozeButtonPress: jest.fn(),
+        wakeupButtonPress: vi.fn(),
+        snoozeButtonPress: vi.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,
@@ -19,9 +19,9 @@ jest.mock("../../../hooks/useWaking ", () => ({
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -34,8 +34,8 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useWaking: () => ({
-        wakeupButtonPress: jest.fn(),
-        snoozeButtonPress: jest.fn(),
+        wakeupButtonPress: vi.fn(),
+        snoozeButtonPress: vi.fn(),
         settings: {
             alarmHour: 7,
             alarmMinute: 0,

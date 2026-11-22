@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import { EventIds } from "../../AuroraConstants";
 import { VirtualAuroraDevice } from "../../virtual/VirtualAuroraDevice";

@@ -6,7 +6,7 @@ describe("MainService-test", () => {
         [ConnectionStates.IDLE, ConnectionStates.DISCONNECTED, ConnectionStates.CONNECTED],
         [ConnectionStates.DISCONNECTED, ConnectionStates.CONNECTED, ConnectionStates.DISCONNECTED],
     ])("The connection state should change to Connected or Dicconnected based on the content of ConnectionStates.", (followingConnectionState: ConnectionStates, currentConnectionState: ConnectionStates, resultConnectedState: ConnectionStates) => {
-        const setState = jest.fn();
+        const setState = vi.fn();
 
         onConnectionChange(followingConnectionState, currentConnectionState, setState);
 
@@ -20,7 +20,7 @@ describe("MainService-test", () => {
         [ConnectionStates.BUSY, ConnectionStates.DISCONNECTED],
         [ConnectionStates.CONNECTING, ConnectionStates.DISCONNECTED],
     ])("If the ConnectionState is not related to the connection state, the connection state does not change.", (followingConnectionState: ConnectionStates, currentConnectionState: ConnectionStates) => {
-        const setState = jest.fn();
+        const setState = vi.fn();
 
         onConnectionChange(followingConnectionState, currentConnectionState, setState);
 

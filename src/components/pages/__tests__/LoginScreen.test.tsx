@@ -5,21 +5,21 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { LoginScreen } from "../LoginScreen";
 
-jest.mock("../../../hooks/useLogin", () => ({
+vi.mock("../../../hooks/useLogin", () => ({
     useLogin: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        password: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
-        onForgotPasswordPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onForgotPasswordPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -32,16 +32,15 @@ jest.mock("../../../hooks", () => ({
         scale: 2,
     }),
     useLogin: () => ({
-        email: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        password: { value: "", onChangeText: jest.fn(), onEndEditing: jest.fn(), error: "" },
-        onLoginPress: jest.fn(),
-        onCancelPress: jest.fn(),
+        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+        onLoginPress: vi.fn(),
+        onCancelPress: vi.fn(),
         generalError: "",
-        onForgotPasswordPress: jest.fn(),
-        onSignupPress: jest.fn(),
+        onForgotPasswordPress: vi.fn(),
+        onSignupPress: vi.fn(),
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

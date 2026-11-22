@@ -5,40 +5,42 @@ import { Theme } from "../../../constants";
 import { FilterByDateValues } from "../../../store/sessionStore";
 import { SessionDesktopScreenTemplate } from "../SessionDesktopScreenTemplate";
 
-jest.mock("../../../navigation/SessionTabNavigator", () => {
+vi.mock("../../../navigation/SessionTabNavigator", () => {
     const React = require("react");
     const { View, Text } = require("react-native");
-    return () => (
-        <View>
-            <Text>SessionTabNavigator</Text>
-        </View>
-    );
+    return {
+        default: () => (
+            <View>
+                <Text>SessionTabNavigator</Text>
+            </View>
+        ),
+    };
 });
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
 const filterMenuProps = {
-    onPickerValueChange: jest.fn(),
+    onPickerValueChange: vi.fn(),
     selectedPickerValue: FilterByDateValues.ANY_TIME,
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
     showStarredCheckBoxStatus: "unchecked" as const,
-    onShowStarredCheckBoxPress: jest.fn(),
+    onShowStarredCheckBoxPress: vi.fn(),
     showNoteCheckBoxStatus: "unchecked" as const,
-    onShowNoteCheckBoxPress: jest.fn(),
+    onShowNoteCheckBoxPress: vi.fn(),
 };
 
 const defaultProps = {
     showFilter: false,
     filterMenuProps,
     sessionList: [],
-    onStarPress: jest.fn(),
-    onDeletePress: jest.fn(),
-    onMenuPress: jest.fn(),
-    onRefreshPress: jest.fn(),
-    onFilterPress: jest.fn(),
+    onStarPress: vi.fn(),
+    onDeletePress: vi.fn(),
+    onMenuPress: vi.fn(),
+    onRefreshPress: vi.fn(),
+    onFilterPress: vi.fn(),
     selected: undefined,
 };
 

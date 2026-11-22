@@ -4,15 +4,15 @@ import React from "react";
 import { useNetworkStatus } from "../../../hooks/useNetworkStatus";
 import { OfflineBanner } from "../OfflineBanner";
 
-jest.mock("../../../hooks/useNetworkStatus", () => ({
-    useNetworkStatus: jest.fn(),
+vi.mock("../../../hooks/useNetworkStatus", () => ({
+    useNetworkStatus: vi.fn(),
 }));
 
 const mockUseNetworkStatus = useNetworkStatus as jest.Mock;
 
 describe("OfflineBanner UnitTest", () => {
     afterEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("shows the message when offline", () => {

@@ -3,9 +3,9 @@ import * as Network from "expo-network";
 
 import { toNetworkStatus, useNetworkStatus } from "../useNetworkStatus";
 
-jest.mock("expo-network", () => ({
-    getNetworkStateAsync: jest.fn(),
-    addNetworkStateListener: jest.fn(() => ({ remove: jest.fn() })),
+vi.mock("expo-network", () => ({
+    getNetworkStateAsync: vi.fn(),
+    addNetworkStateListener: vi.fn(() => ({ remove: vi.fn() })),
 }));
 
 describe("toNetworkStatus", () => {
@@ -28,8 +28,8 @@ describe("toNetworkStatus", () => {
 
 describe("useNetworkStatus", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
-        (Network.addNetworkStateListener as jest.Mock).mockReturnValue({ remove: jest.fn() });
+        vi.clearAllMocks();
+        (Network.addNetworkStateListener as jest.Mock).mockReturnValue({ remove: vi.fn() });
     });
 
     it("starts unknown and resolves the initial state", async () => {
@@ -60,7 +60,7 @@ describe("useNetworkStatus", () => {
     });
 
     it("removes the listener on unmount", async () => {
-        const remove = jest.fn();
+        const remove = vi.fn();
         (Network.getNetworkStateAsync as jest.Mock).mockResolvedValue({
             isConnected: true,
             isInternetReachable: true,

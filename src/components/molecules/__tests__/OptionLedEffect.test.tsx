@@ -27,7 +27,7 @@ const defaultProps = {
         shutoffDelay: 0,
     },
     field: { type: "led-effect" as const },
-    onValueChange: jest.fn(),
+    onValueChange: vi.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>

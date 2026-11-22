@@ -19,7 +19,7 @@ const defaultProps = {
     disabled: false,
     value: "enabled",
     field: { type: "toggle" as const, valueEnabled: "enabled", valueDisabled: "disabled" },
-    onValueChange: jest.fn(),
+    onValueChange: vi.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>

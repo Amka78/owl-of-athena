@@ -20,16 +20,16 @@ const mobileDimens = {
 };
 
 const defaultProps = {
-    firstName: { value: "Jane", onChangeText: jest.fn() },
-    lastName: { value: "Doe", onChangeText: jest.fn() },
-    birthDay: { selected: new Date(1990, 0, 1), onChange: jest.fn() },
-    gender: { value: "female", onValueChange: jest.fn() },
+    firstName: { value: "Jane", onChangeText: vi.fn() },
+    lastName: { value: "Doe", onChangeText: vi.fn() },
+    birthDay: { selected: new Date(1990, 0, 1), onChange: vi.fn() },
+    gender: { value: "female", onValueChange: vi.fn() },
     maleRadioButton: { value: "male" },
     femaleRadioButton: { value: "female" },
-    countryCode: { value: "JP", onChangeText: jest.fn() },
-    postalCode: { value: "100-0001", onChangeText: jest.fn() },
-    saveButton: { onPress: jest.fn() },
-    logoutButton: { onPress: jest.fn() },
+    countryCode: { value: "JP", onChangeText: vi.fn() },
+    postalCode: { value: "100-0001", onChangeText: vi.fn() },
+    saveButton: { onPress: vi.fn() },
+    logoutButton: { onPress: vi.fn() },
 };
 
 describe("AccountScreenTemplate", () => {
@@ -48,7 +48,7 @@ describe("AccountScreenTemplate", () => {
     });
 
     it("calls saveButton.onPress when save pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <AccountScreenTemplate
                 {...defaultProps}

@@ -25,9 +25,9 @@ describe("UnsavedProfileMenu", () => {
             <UnsavedProfileMenu
                 isUserProfile={true}
                 dimens={mobileDimens}
-                onSaveAsNewPress={jest.fn()}
-                onOverwriteSavePress={jest.fn()}
-                onCancelPress={jest.fn()}
+                onSaveAsNewPress={vi.fn()}
+                onOverwriteSavePress={vi.fn()}
+                onCancelPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -38,22 +38,22 @@ describe("UnsavedProfileMenu", () => {
             <UnsavedProfileMenu
                 isUserProfile={false}
                 dimens={mobileDimens}
-                onSaveAsNewPress={jest.fn()}
-                onOverwriteSavePress={jest.fn()}
-                onCancelPress={jest.fn()}
+                onSaveAsNewPress={vi.fn()}
+                onOverwriteSavePress={vi.fn()}
+                onCancelPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
 
     it("calls onCancelPress when cancel is pressed", () => {
-        const onCancelPress = jest.fn();
+        const onCancelPress = vi.fn();
         const { getByText } = renderWithProvider(
             <UnsavedProfileMenu
                 isUserProfile={true}
                 dimens={mobileDimens}
-                onSaveAsNewPress={jest.fn()}
-                onOverwriteSavePress={jest.fn()}
+                onSaveAsNewPress={vi.fn()}
+                onOverwriteSavePress={vi.fn()}
                 onCancelPress={onCancelPress}
             />,
         );

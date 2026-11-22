@@ -24,7 +24,7 @@ describe("LabeledSelectorMenu", () => {
     });
 
     it("calls onPress when tapped", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <LabeledSelectorMenu label="Language" value="English" onPress={onPress} />,
         );

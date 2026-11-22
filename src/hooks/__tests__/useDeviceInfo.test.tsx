@@ -12,10 +12,14 @@ const Harness = ({ manager }: { manager: DeviceInfoManager }) => {
 
 const createManager = (
     osInfo?: AuroraOSInfo,
-): DeviceInfoManager & { on: jest.Mock; off: jest.Mock } => ({
-    getOSInfo: jest.fn(() => osInfo),
-    on: jest.fn(),
-    off: jest.fn(),
+): DeviceInfoManager & {
+    on: jest.Mock;
+    off: jest.Mock;
+    getOSInfo: jest.Mock<() => AuroraOSInfo | undefined>;
+} => ({
+    getOSInfo: vi.fn(() => osInfo),
+    on: vi.fn(),
+    off: vi.fn(),
 });
 
 describe("useDeviceInfo", () => {

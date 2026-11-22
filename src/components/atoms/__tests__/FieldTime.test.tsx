@@ -23,13 +23,13 @@ const field = {
 describe("FieldTime UnitTest", () => {
     it("renders correctly", () => {
         const { toJSON } = renderWithProvider(
-            <FieldTime field={field} value="08:00" disabled={false} onValueChange={jest.fn()} />,
+            <FieldTime field={field} value="08:00" disabled={false} onValueChange={vi.fn()} />,
         );
         expect(toJSON()).toBeTruthy();
     });
 
     it("offers the default time when unset", () => {
-        const onValueChange = jest.fn();
+        const onValueChange = vi.fn();
         const { getByText } = renderWithProvider(
             <FieldTime
                 field={field}
@@ -46,14 +46,14 @@ describe("FieldTime UnitTest", () => {
 
     it("renders the picker when a time is set", () => {
         const { queryByText } = renderWithProvider(
-            <FieldTime field={field} value={25200000} disabled={false} onValueChange={jest.fn()} />,
+            <FieldTime field={field} value={25200000} disabled={false} onValueChange={vi.fn()} />,
         );
 
         expect(queryByText("Alarm Not Set")).toBeNull();
     });
 
     it("clears the value", () => {
-        const onValueChange = jest.fn();
+        const onValueChange = vi.fn();
         const { getByText } = renderWithProvider(
             <FieldTime
                 field={field}

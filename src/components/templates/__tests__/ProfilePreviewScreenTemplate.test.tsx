@@ -13,7 +13,7 @@ describe("ProfilePreviewScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <ProfilePreviewScreenTemplate
                 content={JSON.stringify({ name: "default.prof" })}
-                onExportPress={jest.fn()}
+                onExportPress={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -21,7 +21,7 @@ describe("ProfilePreviewScreenTemplate", () => {
 
     it("renders correctly with empty content", () => {
         const { toJSON } = renderWithProvider(
-            <ProfilePreviewScreenTemplate content="" onExportPress={jest.fn()} />,
+            <ProfilePreviewScreenTemplate content="" onExportPress={vi.fn()} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
@@ -29,13 +29,13 @@ describe("ProfilePreviewScreenTemplate", () => {
     it("displays the content in the text input", () => {
         const content = '{"name":"default.prof"}';
         const { getByDisplayValue } = renderWithProvider(
-            <ProfilePreviewScreenTemplate content={content} onExportPress={jest.fn()} />,
+            <ProfilePreviewScreenTemplate content={content} onExportPress={vi.fn()} />,
         );
         expect(getByDisplayValue(content)).toBeTruthy();
     });
 
     it("calls onExportPress when the share button is pressed", () => {
-        const onExportPress = jest.fn();
+        const onExportPress = vi.fn();
         const { getByLabelText } = renderWithProvider(
             <ProfilePreviewScreenTemplate content={"test"} onExportPress={onExportPress} />,
         );

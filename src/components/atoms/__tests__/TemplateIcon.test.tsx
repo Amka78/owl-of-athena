@@ -14,7 +14,7 @@ describe("TemplateIcon UnitTest", () => {
     });
 
     it("calls onPress when pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByTestId } = render(
             <TemplateIcon name="home" onPress={onPress} testID="template-icon" />,
         );
@@ -23,7 +23,7 @@ describe("TemplateIcon UnitTest", () => {
     });
 
     it("does not call onPress when disabled", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByTestId } = render(
             <TemplateIcon name="home" onPress={onPress} disabled={true} testID="template-icon" />,
         );

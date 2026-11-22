@@ -5,7 +5,7 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { SessionScreen } from "../SessionScreen";
 
-jest.mock("../../../hooks/sessions/useSession", () => ({
+vi.mock("../../../hooks/sessions/useSession", () => ({
     useSession: () => ({
         selectedSession: {},
         selectedSessionDetail: {},
@@ -15,7 +15,7 @@ jest.mock("../../../hooks/sessions/useSession", () => ({
         remDuration: { hours: 1, minutes: 45 },
         deepDuration: { hours: 2, minutes: 15 },
         radialProgress: 82,
-        chartSelectButtonPress: jest.fn(),
+        chartSelectButtonPress: vi.fn(),
         currentChart: "PieChart",
         scaleXDomain: [1620000000000, 1620028800000],
         hasSleepData: true,
@@ -25,15 +25,15 @@ jest.mock("../../../hooks/sessions/useSession", () => ({
         showStimEvents: true,
         showAwakeningEvents: false,
         showButtonEvents: false,
-        onSettingsPress: jest.fn(),
-        onExportPress: jest.fn(),
-        onFilterToggle: jest.fn(),
-        onTimelineToggle: jest.fn(),
-        onStimEventsToggle: jest.fn(),
-        onAwakeningEventsToggle: jest.fn(),
-        onButtonEventsToggle: jest.fn(),
-        onExportCsvPress: jest.fn(),
-        onDownloadZipPress: jest.fn(),
+        onSettingsPress: vi.fn(),
+        onExportPress: vi.fn(),
+        onFilterToggle: vi.fn(),
+        onTimelineToggle: vi.fn(),
+        onStimEventsToggle: vi.fn(),
+        onAwakeningEventsToggle: vi.fn(),
+        onButtonEventsToggle: vi.fn(),
+        onExportCsvPress: vi.fn(),
+        onDownloadZipPress: vi.fn(),
     }),
 }));
 

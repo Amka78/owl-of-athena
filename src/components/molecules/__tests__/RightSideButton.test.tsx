@@ -27,7 +27,7 @@ describe("RightSideButton", () => {
     });
 
     it("calls onPress when pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <RightSideButton needMargin={true} screenWidth={375} onPress={onPress}>
                 Save

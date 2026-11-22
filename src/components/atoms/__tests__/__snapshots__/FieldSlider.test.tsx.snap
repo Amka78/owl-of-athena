@@ -1,4 +1,29 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FieldSlider UnitTest > renders correctly 1`] = `
+<View>
+  <Slider
+    disabled={false}
+    maximumValue={60}
+    minimumValue={0}
+    onValueChange={[MockFunction]}
+    step={5}
+    value={30}
+  />
+  <Text
+    style={
+      {
+        "color": "#ffffff",
+        "fontSize": 12,
+        "marginTop": -4,
+        "textAlign": "center",
+      }
+    }
+  >
+    30 min
+  </Text>
+</View>
+`;
 
 exports[`FieldSlider UnitTest renders correctly 1`] = `
 {

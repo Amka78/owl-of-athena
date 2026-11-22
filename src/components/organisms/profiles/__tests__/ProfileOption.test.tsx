@@ -23,8 +23,8 @@ describe("ProfileOption", () => {
             <ProfileOption
                 profileOption={toggleOption}
                 failed={false}
-                onHelpIconPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onHelpIconPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -38,8 +38,8 @@ describe("ProfileOption", () => {
                     failedConditionMessage: "Requires firmware >= 2.0",
                 }}
                 failed={true}
-                onHelpIconPress={jest.fn()}
-                onValueChange={jest.fn()}
+                onHelpIconPress={vi.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();

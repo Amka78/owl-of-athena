@@ -19,7 +19,7 @@ const defaultProps = {
     disabled: false,
     value: 0,
     field: { type: "checkboxes" as const, choices: "", labelNone: "None" },
-    onValueChange: jest.fn(),
+    onValueChange: vi.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>

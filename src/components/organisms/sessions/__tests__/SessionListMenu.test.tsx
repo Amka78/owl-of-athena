@@ -9,20 +9,20 @@ const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);
 
 const defaultProps = {
-    onPickerValueChange: jest.fn(),
+    onPickerValueChange: vi.fn(),
     selectedPickerValue: FilterByDateValues.ANY_TIME,
     anyTimePickerValue: FilterByDateValues.ANY_TIME,
     pastWeekPickerValue: FilterByDateValues.PAST_WEEK,
     pastMonthPickerValue: FilterByDateValues.PAST_MONTH,
     showStarredCheckBoxStatus: "unchecked" as const,
-    onShowStarredCheckBoxPress: jest.fn(),
+    onShowStarredCheckBoxPress: vi.fn(),
     showNoteCheckBoxStatus: "checked" as const,
-    onShowNoteCheckBoxPress: jest.fn(),
+    onShowNoteCheckBoxPress: vi.fn(),
 };
 
 describe("SessionListMenu", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("renders correctly", () => {
@@ -37,7 +37,7 @@ describe("SessionListMenu", () => {
     });
 
     it("calls onShowStarredCheckBoxPress when starred checkbox pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getAllByRole } = renderWithProvider(
             <SessionListMenu {...defaultProps} onShowStarredCheckBoxPress={onPress} />,
         );

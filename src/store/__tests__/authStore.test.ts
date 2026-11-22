@@ -1,5 +1,5 @@
-import { useAuthStore } from "../authStore";
 import type { User } from "../../types";
+import { useAuthStore } from "../authStore";
 
 const user: User = {
     id: "user-1",

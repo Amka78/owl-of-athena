@@ -14,14 +14,14 @@ const defaultProps = {
     showStimEvents: true,
     showAwakeningEvents: false,
     showButtonEvents: false,
-    onFilterToggle: jest.fn(),
-    onTimelineToggle: jest.fn(),
-    onStimEventsToggle: jest.fn(),
-    onAwakeningEventsToggle: jest.fn(),
-    onButtonEventsToggle: jest.fn(),
-    onExportJsonPress: jest.fn(),
-    onExportCsvPress: jest.fn(),
-    onDownloadZipPress: jest.fn(),
+    onFilterToggle: vi.fn(),
+    onTimelineToggle: vi.fn(),
+    onStimEventsToggle: vi.fn(),
+    onAwakeningEventsToggle: vi.fn(),
+    onButtonEventsToggle: vi.fn(),
+    onExportJsonPress: vi.fn(),
+    onExportCsvPress: vi.fn(),
+    onDownloadZipPress: vi.fn(),
 };
 
 describe("SessionDetailsMenu", () => {
@@ -38,7 +38,7 @@ describe("SessionDetailsMenu", () => {
     });
 
     it("disables the event toggles when the timeline is hidden", () => {
-        const onStimEventsToggle = jest.fn();
+        const onStimEventsToggle = vi.fn();
         const { getByTestId } = renderWithProvider(
             <SessionDetailsMenu
                 {...defaultProps}
@@ -52,7 +52,7 @@ describe("SessionDetailsMenu", () => {
     });
 
     it("toggles filter data", () => {
-        const onFilterToggle = jest.fn();
+        const onFilterToggle = vi.fn();
         const { getByTestId } = renderWithProvider(
             <SessionDetailsMenu
                 {...defaultProps}
@@ -65,9 +65,9 @@ describe("SessionDetailsMenu", () => {
     });
 
     it("offers JSON, CSV, and ZIP downloads", () => {
-        const onExportJsonPress = jest.fn();
-        const onExportCsvPress = jest.fn();
-        const onDownloadZipPress = jest.fn();
+        const onExportJsonPress = vi.fn();
+        const onExportCsvPress = vi.fn();
+        const onDownloadZipPress = vi.fn();
         const { getByText } = renderWithProvider(
             <SessionDetailsMenu
                 {...defaultProps}

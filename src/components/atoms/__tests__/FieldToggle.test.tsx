@@ -19,7 +19,7 @@ describe("FieldToggle UnitTest", () => {
                 field={{ type: "toggle", valueEnabled: "enabled", valueDisabled: "disabled" }}
                 value="enabled"
                 disabled={false}
-                onValueChange={jest.fn()}
+                onValueChange={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();

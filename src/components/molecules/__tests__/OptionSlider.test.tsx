@@ -19,7 +19,7 @@ const defaultProps = {
     disabled: false,
     value: 30,
     field: { type: "slider" as const, format: "minutes" as const, min: 0, max: 120, step: 5 },
-    onValueChange: jest.fn(),
+    onValueChange: vi.fn(),
 };
 
 const renderWithProvider = (ui: React.ReactElement) =>

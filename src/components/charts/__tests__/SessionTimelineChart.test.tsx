@@ -18,6 +18,8 @@ const defaultProps = {
             flags: 2,
             bins: [],
             time: 0,
+            auroraEventId: 2,
+            id: 1,
         },
     ],
     awakeningEvents: [
@@ -26,6 +28,8 @@ const defaultProps = {
             flags: 1,
             bins: [],
             time: 0,
+            auroraEventId: 1,
+            id: 2,
         },
     ],
     buttonEvents: [
@@ -34,6 +38,8 @@ const defaultProps = {
             flags: 1,
             bins: [],
             time: 0,
+            auroraEventId: 1,
+            id: 3,
         },
     ],
     showStimEvents: true,

@@ -1,4 +1,84 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ErrorText UnitTest > renders correctly with children text 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "calibre_app_regular",
+            "fontSize": 13,
+            "marginBottom": 18,
+          },
+          {
+            "color": "#ff4310",
+          },
+          undefined,
+        ]
+      }
+    >
+      Error message
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`ErrorText UnitTest > renders without children 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "calibre_app_regular",
+            "fontSize": 13,
+            "marginBottom": 18,
+          },
+          {
+            "color": "#ff4310",
+          },
+          undefined,
+        ]
+      }
+    />
+  </View>
+</View>
+`;
 
 exports[`ErrorText UnitTest renders correctly with children text 1`] = `
 {

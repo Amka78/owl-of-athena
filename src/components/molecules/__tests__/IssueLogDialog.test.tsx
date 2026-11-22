@@ -7,10 +7,10 @@ import { Theme } from "../../../constants";
 import IssueService from "../../../services/IssueService";
 import { IssueLogDialog } from "../IssueLogDialog";
 
-jest.mock("../../../services/IssueService", () => ({
+vi.mock("../../../services/IssueService", () => ({
     __esModule: true,
     default: {
-        getAttachments: jest.fn(),
+        getAttachments: vi.fn(),
     },
 }));
 
@@ -45,7 +45,7 @@ describe("IssueLogDialog", () => {
                 url: "https://example.com/shot.png",
             },
         ]);
-        const openURL = jest.spyOn(Linking, "openURL").mockResolvedValue(true as any);
+        const openURL = vi.spyOn(Linking, "openURL").mockResolvedValue(true as any);
         const { getByText } = renderWithProvider(<IssueLogDialog />);
 
         await act(async () => {

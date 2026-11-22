@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import type React from "react";
-import { Provider } from "react-native-paper";
+import { Checkbox, Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { LabeledCheckBox } from "../LabeledCheckBox";
 
@@ -35,7 +35,7 @@ describe("LabeledCheckBox", () => {
     });
 
     it("calls onPress when checkbox is pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { UNSAFE_getByType } = renderWithProvider(
             <LabeledCheckBox
                 label="Press me"
@@ -44,14 +44,13 @@ describe("LabeledCheckBox", () => {
                 onPress={onPress}
             />,
         );
-        const { Checkbox } = require("react-native-paper");
         const checkbox = UNSAFE_getByType(Checkbox);
         fireEvent(checkbox, "press");
         expect(onPress).toHaveBeenCalledTimes(1);
     });
 
     it("calls onLabelPress when label is pressed", () => {
-        const onLabelPress = jest.fn();
+        const onLabelPress = vi.fn();
         const { getByText } = renderWithProvider(
             <LabeledCheckBox
                 label="Press label"

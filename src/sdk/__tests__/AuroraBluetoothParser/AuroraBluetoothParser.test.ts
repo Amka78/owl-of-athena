@@ -1,11 +1,11 @@
-import type { Mock } from "bun:test";
-import pick from "lodash/pick";
 import fs from "fs";
-import readline from "readline";
+import pick from "lodash/pick";
 import path from "path";
+import readline from "readline";
+import type { Mock } from "vitest";
 import { AuroraBluetoothParser, EventList } from "../../AuroraBluetoothParser";
 import { BleCmdStates } from "../../AuroraConstants";
-import { AuroraEvent, BluetoothStream } from "../../AuroraTypes";
+
 const parser = new AuroraBluetoothParser();
 
 const events = [
@@ -18,7 +18,7 @@ const events = [
     EventList.parseError,
 ];
 
-const eventSpies = new Map<EventList, Mock<any>>();
+const eventSpies = new Map<EventList, Mock>();
 
 const readMockFile = async (inputFile: string): Promise<number> => {
     const lineReader = readline.createInterface({
@@ -42,20 +42,14 @@ const readMockFile = async (inputFile: string): Promise<number> => {
 
             case "object":
                 parser.onCmdStatusCharNotification(
-                    Buffer.from([
-                        BleCmdStates.CMD_RESP_OBJECT_READY,
-                        response.length,
-                    ])
+                    Buffer.from([BleCmdStates.CMD_RESP_OBJECT_READY, response.length]),
                 );
                 parser.cmdDataReceiveResponseObject(response);
                 break;
 
             case "table":
                 parser.onCmdStatusCharNotification(
-                    Buffer.from([
-                        BleCmdStates.CMD_RESP_TABLE_READY,
-                        response.length,
-                    ])
+                    Buffer.from([BleCmdStates.CMD_RESP_TABLE_READY, response.length]),
                 );
                 parser.cmdDataReceiveResponseTable(response);
                 break;
@@ -65,26 +59,24 @@ const readMockFile = async (inputFile: string): Promise<number> => {
                 break;
 
             case "input":
-                parser.onCmdStatusCharNotification(
-                    Buffer.from([BleCmdStates.CMD_INPUT_REQUESTED])
-                );
+                parser.onCmdStatusCharNotification(Buffer.from([BleCmdStates.CMD_INPUT_REQUESTED]));
                 break;
 
             case "status":
                 parser.onCmdStatusCharNotification(
-                    Buffer.from(lineParts[0].split(",").map(Number))
+                    Buffer.from(lineParts[0].split(",").map(Number)),
                 );
                 break;
 
             case "event":
                 parser.onAuroraEventCharNotification(
-                    Buffer.from(lineParts[0].split(",").map(Number))
+                    Buffer.from(lineParts[0].split(",").map(Number)),
                 );
                 break;
 
             case "data":
                 parser.onStreamDataCharNotification(
-                    Buffer.from(lineParts[0].split(",").map(Number))
+                    Buffer.from(lineParts[0].split(",").map(Number)),
                 );
                 break;
 
@@ -107,10 +99,10 @@ const readMockFile = async (inputFile: string): Promise<number> => {
 
 const spiesCalled = (
     exectedEvents: EventList[],
-    eventSpies: Map<EventList, Mock<any>>,
-    omitEvents: EventList[] = []
+    eventSpies: Map<EventList, Mock>,
+    omitEvents: EventList[] = [],
 ): void => {
-    eventSpies.forEach((value: Mock<any>, key: EventList) => {
+    eventSpies.forEach((value: Mock, key: EventList) => {
         if (!omitEvents.includes(key) && exectedEvents.includes(key)) {
             expect(value).toHaveBeenCalled();
         }
@@ -119,10 +111,10 @@ const spiesCalled = (
 
 const spiesCalledOnce = (
     exectedEvents: EventList[],
-    eventSpies: Map<EventList, Mock<any>>,
-    omitEvents: EventList[] = []
+    eventSpies: Map<EventList, Mock>,
+    omitEvents: EventList[] = [],
 ): void => {
-    eventSpies.forEach((value: Mock<any>, key: EventList) => {
+    eventSpies.forEach((value: Mock, key: EventList) => {
         if (!omitEvents.includes(key) && exectedEvents.includes(key)) {
             expect(value).toHaveBeenCalledTimes(1);
         }
@@ -131,10 +123,10 @@ const spiesCalledOnce = (
 
 const spiesNeverCalled = (
     exectedEvents: EventList[],
-    eventSpies: Map<EventList, Mock<any>>,
-    omitEvents: EventList[] = []
+    eventSpies: Map<EventList, Mock>,
+    omitEvents: EventList[] = [],
 ): void => {
-    eventSpies.forEach((value: Mock<any>, key: EventList) => {
+    eventSpies.forEach((value: Mock, key: EventList) => {
         if (!omitEvents.includes(key) && exectedEvents.includes(key)) {
             expect(value).toHaveBeenCalledTimes(0);
         }
@@ -143,17 +135,17 @@ const spiesNeverCalled = (
 
 describe("AuroraBluetoothParserTest", () => {
     beforeAll(() => {
-        events.forEach((event) =>
+        events.forEach((event) => {
             eventSpies.set(
                 event,
-                jest.fn(() => event)
-            )
-        );
+                vi.fn(() => event),
+            );
+        });
     });
     beforeEach(() => {
         parser.reset();
         parser.removeAllListeners();
-        eventSpies.forEach((value: Mock<any>, key: EventList) => {
+        eventSpies.forEach((value: Mock, key: EventList) => {
             value.mockReset();
             parser.on(key, value);
         });
@@ -167,10 +159,7 @@ describe("AuroraBluetoothParserTest", () => {
         spiesCalled([EventList.cmdResponseRead], eventSpies);
 
         isCorrectSucceedResponse();
-        spiesNeverCalled([], eventSpies, [
-            EventList.cmdResponse,
-            EventList.cmdResponseRead,
-        ]);
+        spiesNeverCalled([], eventSpies, [EventList.cmdResponse, EventList.cmdResponseRead]);
     });
 
     it("Testing command response bluetooth parsing (error case)...", async () => {
@@ -180,17 +169,11 @@ describe("AuroraBluetoothParserTest", () => {
 
         const response = getResponseMock();
         if (response!.calls.length === 1) {
-            const filteredResponse = pick(
-                response!.calls[0][0],
-                Object.keys(cmdResponseError)
-            );
+            const filteredResponse = pick(response!.calls[0][0], Object.keys(cmdResponseError));
             expect(filteredResponse).toEqual(cmdResponseError);
         }
 
-        spiesNeverCalled([], eventSpies, [
-            EventList.cmdResponse,
-            EventList.cmdResponseRead,
-        ]);
+        spiesNeverCalled([], eventSpies, [EventList.cmdResponse, EventList.cmdResponseRead]);
     });
 
     /*it("Testing command response bluetooth parsing (timeout case)...", async () => {
@@ -233,9 +216,7 @@ describe("AuroraBluetoothParserTest", () => {
     it("Testing bluetooth parse error...", async () => {
         const lineCount = await readMockFile("BluetoothParseError.mock");
 
-        expect(eventSpies.get(EventList.parseError)).toHaveBeenCalledTimes(
-            lineCount
-        );
+        expect(eventSpies.get(EventList.parseError)).toHaveBeenCalledTimes(lineCount);
 
         spiesNeverCalled([], eventSpies, [EventList.parseError]);
     });
@@ -243,10 +224,7 @@ describe("AuroraBluetoothParserTest", () => {
     it("Testing bluetooth parsing of command with output response...", async () => {
         await readMockFile("BluetoothCmdResponseWithOutput.mock");
         spiesCalledOnce([EventList.cmdResponse], eventSpies);
-        spiesCalled(
-            [EventList.cmdResponseRead, EventList.cmdOutputReady],
-            eventSpies
-        );
+        spiesCalled([EventList.cmdResponseRead, EventList.cmdOutputReady], eventSpies);
 
         isCorrectSucceedResponse();
         spiesNeverCalled([], eventSpies, [
@@ -259,10 +237,7 @@ describe("AuroraBluetoothParserTest", () => {
     it("Testing bluetooth parsing of command with input response...", async () => {
         await readMockFile("BluetoothCmdResponseWithInput.mock");
         spiesCalledOnce([EventList.cmdResponse], eventSpies);
-        spiesCalled(
-            [EventList.cmdResponseRead, EventList.cmdInputRequested],
-            eventSpies
-        );
+        spiesCalled([EventList.cmdResponseRead, EventList.cmdInputRequested], eventSpies);
 
         isCorrectSucceedResponse();
 
@@ -282,38 +257,26 @@ describe("AuroraBluetoothParserTest", () => {
 
         expect(cmdResponse).toHaveBeenCalledTimes(4);
 
-        spiesCalled(
-            [EventList.cmdInputRequested, EventList.cmdOutputReady],
-            eventSpies
-        );
+        spiesCalled([EventList.cmdInputRequested, EventList.cmdOutputReady], eventSpies);
 
         let filteredResponse;
 
         //1st call success
         if (cmdResponse!.mock.calls.length == 4) {
-            filteredResponse = pick(
-                cmdResponse!.mock.calls[0][0],
-                Object.keys(cmdResponseSuccess)
-            );
+            filteredResponse = pick(cmdResponse!.mock.calls[0][0], Object.keys(cmdResponseSuccess));
 
             expect(filteredResponse).toEqual(cmdResponseSuccess);
 
             //2nd call success w/data
-            filteredResponse = pick(
-                cmdResponse!.mock.calls[1][0],
-                Object.keys(cmdResponseSuccess)
-            );
+            filteredResponse = pick(cmdResponse!.mock.calls[1][0], Object.keys(cmdResponseSuccess));
             expect(filteredResponse).toEqual(cmdResponseSuccess);
 
             //3rd call error
-            filteredResponse = pick(
-                cmdResponse!.mock.calls[2][0],
-                Object.keys(cmdResponseError)
-            );
+            filteredResponse = pick(cmdResponse!.mock.calls[2][0], Object.keys(cmdResponseError));
             expect(filteredResponse).toEqual(cmdResponseError);
 
             //4th call contains table
-            const fourthSuccess = cmdResponse!.mock.calls[3][0];
+            const fourthSuccess = cmdResponse!.mock.calls[3][0] as any;
 
             expect(fourthSuccess.error).toBeFalsy();
             expect(Array.isArray(fourthSuccess.response)).toBeTruthy();
@@ -355,11 +318,9 @@ const cmdResponseError = {
     },
 };
 
-function isCorrectStreamData(streamData: Mock<any>): void {
-    streamData!.mock.calls.forEach((value: BluetoothStream[]) => {
-        expect(
-            !value[0].stream || value[0].data.length !== value[0].streamId
-        ).toBeFalsy();
+function isCorrectStreamData(streamData: Mock): void {
+    streamData!.mock.calls.forEach((value: any) => {
+        expect(!value[0].stream || value[0].data.length !== value[0].streamId).toBeFalsy();
         if (value[0].data.length > 1) {
             for (let i = 1; i < value[0].data.length; i++) {
                 expect(value[0].data[i - 1]).toBe(value[0].data[i] - 1);
@@ -368,8 +329,8 @@ function isCorrectStreamData(streamData: Mock<any>): void {
     });
 }
 
-function isCorrectAuroraEvent(auroraEvents: Mock<any>): void {
-    auroraEvents.mock.calls.forEach((value: AuroraEvent[]) => {
+function isCorrectAuroraEvent(auroraEvents: Mock): void {
+    auroraEvents.mock.calls.forEach((value: any) => {
         expect(value[0].flags).toBe(value[0].eventId ** 10);
     });
 }
@@ -377,10 +338,7 @@ function isCorrectAuroraEvent(auroraEvents: Mock<any>): void {
 function isCorrectSucceedResponse(): void {
     const response = getResponseMock();
     if (response.calls.length === 1) {
-        const filteredResponse = pick(
-            response.calls[0][0],
-            Object.keys(cmdResponseSuccess)
-        );
+        const filteredResponse = pick(response.calls[0][0], Object.keys(cmdResponseSuccess));
         expect(filteredResponse).toEqual(cmdResponseSuccess);
     }
 }

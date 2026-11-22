@@ -1,4 +1,20 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Chart UnitTest > renders correctly with required props 1`] = `
+<svg
+  height={136}
+  ref={[Function]}
+  style={
+    {
+      "marginBottom": 32,
+      "marginLeft": 32,
+      "marginRight": 32,
+      "marginTop": 32,
+    }
+  }
+  width={236}
+/>
+`;
 
 exports[`Chart UnitTest renders correctly with required props 1`] = `
 {

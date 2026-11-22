@@ -19,13 +19,13 @@ const mobileDimens = {
     isHorizontal: false,
 };
 
-const textBoxProps = { value: "", onChangeText: jest.fn() };
-const checkBoxProps = { status: "unchecked" as const, onPress: jest.fn(), onLabelPress: jest.fn() };
+const textBoxProps = { value: "", onChangeText: vi.fn() };
+const checkBoxProps = { status: "unchecked" as const, onPress: vi.fn(), onLabelPress: vi.fn() };
 const commonProps = {
     firstNameTextBox: textBoxProps,
     lastNameTextBox: textBoxProps,
-    birthDay: { selected: new Date("2000-01-01"), onChange: jest.fn() },
-    gender: { value: "male", onValueChange: jest.fn() },
+    birthDay: { selected: new Date("2000-01-01"), onChange: vi.fn() },
+    gender: { value: "male", onValueChange: vi.fn() },
     maleRadioButton: { value: "male" },
     femaleRadioButton: { value: "female" },
     newsletterCheckBox: checkBoxProps,
@@ -40,8 +40,8 @@ describe("SignupScreenTemplate", () => {
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
                 labeledCheckBox={checkBoxProps}
-                onSignupPress={jest.fn()}
-                onCancelPress={jest.fn()}
+                onSignupPress={vi.fn()}
+                onCancelPress={vi.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
@@ -57,8 +57,8 @@ describe("SignupScreenTemplate", () => {
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
                 labeledCheckBox={checkBoxProps}
-                onSignupPress={jest.fn()}
-                onCancelPress={jest.fn()}
+                onSignupPress={vi.fn()}
+                onCancelPress={vi.fn()}
                 dimens={mobileDimens}
                 locale="ja-JP"
             />,
@@ -67,7 +67,7 @@ describe("SignupScreenTemplate", () => {
     });
 
     it("calls onSignupPress when signup button pressed", () => {
-        const onSignupPress = jest.fn();
+        const onSignupPress = vi.fn();
         const { getByText } = renderWithProvider(
             <SignupScreenTemplate
                 {...commonProps}
@@ -76,7 +76,7 @@ describe("SignupScreenTemplate", () => {
                 passwordConfirmTextBox={textBoxProps}
                 labeledCheckBox={checkBoxProps}
                 onSignupPress={onSignupPress}
-                onCancelPress={jest.fn()}
+                onCancelPress={vi.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
@@ -93,8 +93,8 @@ describe("SignupScreenTemplate", () => {
                 passwordTextBox={textBoxProps}
                 passwordConfirmTextBox={textBoxProps}
                 labeledCheckBox={checkBoxProps}
-                onSignupPress={jest.fn()}
-                onCancelPress={jest.fn()}
+                onSignupPress={vi.fn()}
+                onCancelPress={vi.fn()}
                 errorText="Email is invalid"
                 dimens={mobileDimens}
                 locale="en-US"

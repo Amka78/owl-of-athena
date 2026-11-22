@@ -8,16 +8,16 @@ import { useQuestionnaireStore } from "../../../store/questionnaireStore";
 import type { Question } from "../../../types";
 import { QuestionnaireDialog } from "../QuestionnaireDialog";
 
-jest.mock("../../../services/QuestionnaireService", () => ({
+vi.mock("../../../services/QuestionnaireService", () => ({
     __esModule: true,
     default: {
-        getById: jest.fn(),
-        getBySlug: jest.fn(),
-        getLatest: jest.fn(),
-        startQuestionnaire: jest.fn(),
-        resumeQuestionnaire: jest.fn(),
-        saveUserResponse: jest.fn(),
-        revisitQuestion: jest.fn(),
+        getById: vi.fn(),
+        getBySlug: vi.fn(),
+        getLatest: vi.fn(),
+        startQuestionnaire: vi.fn(),
+        resumeQuestionnaire: vi.fn(),
+        saveUserResponse: vi.fn(),
+        revisitQuestion: vi.fn(),
     },
 }));
 

@@ -46,8 +46,6 @@ describe("LogService", () => {
             },
         ]);
 
-        expect(text).toBe(
-            '2026-11-04T00:00:00.000Z [ERROR] flash failed {"code":2} retry',
-        );
+        expect(text).toBe('2026-11-04T00:00:00.000Z [ERROR] flash failed {"code":2} retry');
     });
 });

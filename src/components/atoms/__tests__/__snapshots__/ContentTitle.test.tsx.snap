@@ -1,4 +1,46 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContentTitle UnitTest > renders correctly with children text 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "fontFamily": "calibre_app_regular",
+            "fontSize": 24,
+            "marginBottom": 48,
+            "marginTop": 32,
+          },
+          {
+            "color": "rgba(98, 91, 113, 1)",
+          },
+          undefined,
+        ]
+      }
+    >
+      Title Text
+    </Text>
+  </View>
+</View>
+`;
 
 exports[`ContentTitle UnitTest renders correctly with children text 1`] = `
 {

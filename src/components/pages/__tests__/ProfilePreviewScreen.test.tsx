@@ -5,12 +5,11 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { ProfilePreviewScreen } from "../ProfilePreviewScreen";
 
-jest.mock("../../../hooks/profiles/useProfilePreview", () => ({
+vi.mock("../../../hooks/profiles/useProfilePreview", () => ({
     useProfilePreview: () => ({
         content: '{"name":"Sleep Optimizer","description":"Optimized for deep sleep"}',
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

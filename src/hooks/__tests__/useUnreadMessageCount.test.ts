@@ -5,13 +5,13 @@ import { useMessageStore } from "../../store/messageStore";
 import type { UserMessage } from "../../types";
 import { useUnreadMessageCount } from "../useUnreadMessageCount";
 
-jest.mock("../../services/MessageService", () => ({
+vi.mock("../../services/MessageService", () => ({
     __esModule: true,
     default: {
-        getUserMessages: jest.fn(),
-        markMessageAsRead: jest.fn(),
-        markAllMessagesAsRead: jest.fn(),
-        updateMessage: jest.fn(),
+        getUserMessages: vi.fn(),
+        markMessageAsRead: vi.fn(),
+        markAllMessagesAsRead: vi.fn(),
+        updateMessage: vi.fn(),
     },
 }));
 
@@ -25,7 +25,7 @@ const message = (id: string, readAt?: string): UserMessage => ({
 
 describe("useUnreadMessageCount", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         (MessageService.getUserMessages as jest.Mock).mockResolvedValue([]);
         useMessageStore.setState({
             messages: [],

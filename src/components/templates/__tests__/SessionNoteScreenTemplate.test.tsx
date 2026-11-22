@@ -10,7 +10,7 @@ const renderWithProvider = (ui: React.ReactElement) =>
 describe("SessionNoteScreenTemplate", () => {
     it("renders correctly with empty note", () => {
         const { toJSON } = renderWithProvider(
-            <SessionNoteScreenTemplate value="" onChangeText={jest.fn()} onBlur={jest.fn()} />,
+            <SessionNoteScreenTemplate value="" onChangeText={vi.fn()} onBlur={vi.fn()} />,
         );
         expect(toJSON()).toMatchSnapshot();
     });
@@ -19,8 +19,8 @@ describe("SessionNoteScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <SessionNoteScreenTemplate
                 value="Had a vivid dream about flying."
-                onChangeText={jest.fn()}
-                onBlur={jest.fn()}
+                onChangeText={vi.fn()}
+                onBlur={vi.fn()}
             />,
         );
         expect(toJSON()).toMatchSnapshot();
@@ -29,18 +29,18 @@ describe("SessionNoteScreenTemplate", () => {
     it("displays note content", () => {
         const note = "Had a vivid dream about flying.";
         const { getByDisplayValue } = renderWithProvider(
-            <SessionNoteScreenTemplate value={note} onChangeText={jest.fn()} onBlur={jest.fn()} />,
+            <SessionNoteScreenTemplate value={note} onChangeText={vi.fn()} onBlur={vi.fn()} />,
         );
         expect(getByDisplayValue(note)).toBeTruthy();
     });
 
     it("calls onChangeText when text is changed", () => {
-        const onChangeText = jest.fn();
+        const onChangeText = vi.fn();
         const { getByDisplayValue } = renderWithProvider(
             <SessionNoteScreenTemplate
                 value="initial"
                 onChangeText={onChangeText}
-                onBlur={jest.fn()}
+                onBlur={vi.fn()}
             />,
         );
         fireEvent.changeText(getByDisplayValue("initial"), "new text");

@@ -5,21 +5,21 @@ import { useMessageStore } from "../../../store/messageStore";
 import type { UserMessage } from "../../../types";
 import { AccountMessagesScreen } from "../AccountMessagesScreen";
 
-jest.mock("../../../services/MessageService", () => ({
+vi.mock("../../../services/MessageService", () => ({
     __esModule: true,
     default: {
-        getUserMessages: jest.fn(),
-        markMessageAsRead: jest.fn(),
-        markAllMessagesAsRead: jest.fn(),
-        updateMessage: jest.fn(),
+        getUserMessages: vi.fn(),
+        markMessageAsRead: vi.fn(),
+        markAllMessagesAsRead: vi.fn(),
+        updateMessage: vi.fn(),
     },
 }));
 
-jest.mock("../../molecules/MessageDialog", () => ({
+vi.mock("../../molecules/MessageDialog", () => ({
     MessageDialog: () => null,
 }));
 
-jest.mock("../../molecules/QuestionnaireDialog", () => ({
+vi.mock("../../molecules/QuestionnaireDialog", () => ({
     QuestionnaireDialog: () => null,
 }));
 
@@ -33,7 +33,7 @@ const message = (id: string, readAt?: string): UserMessage => ({
 
 describe("AccountMessagesScreen UnitTest", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
         useMessageStore.setState({
             messages: [],
             loading: false,

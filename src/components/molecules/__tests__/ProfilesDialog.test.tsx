@@ -39,7 +39,7 @@ describe("ProfilesDialog", () => {
     });
 
     it("shows dialog after ProfilesDialog.show() is called", async () => {
-        const onConfirm = jest.fn();
+        const onConfirm = vi.fn();
         const { getByText } = renderWithProvider(<ProfilesDialog />);
 
         await act(async () => {

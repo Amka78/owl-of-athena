@@ -1,4 +1,891 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SettingsScreen UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          {
+            "backgroundColor": "#070724",
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "space-between",
+              "marginLeft": 48,
+              "marginRight": 48,
+            },
+            {
+              "backgroundColor": "#070724",
+            },
+            [
+              {
+                "maxHeight": 650,
+                "maxWidth": 650,
+              },
+              undefined,
+            ],
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "marginLeft": 64,
+              "marginRight": 64,
+            }
+          }
+        >
+          <View
+            style={
+              [
+                {
+                  "alignContent": "center",
+                  "alignItems": "center",
+                  "backgroundColor": "transparent",
+                  "borderRadius": 4,
+                  "flexDirection": "row",
+                  "justifyContent": "space-around",
+                  "margin": 5,
+                  "marginLeft": 7,
+                },
+                {
+                  "justifyContent": "center",
+                  "margin": 0,
+                  "marginBottom": 12,
+                  "marginTop": 12,
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                {
+                  "flexDirection": "row",
+                  "marginRight": 5,
+                }
+              }
+            >
+              <TouchableOpacity
+                accessible={true}
+                onPress={[Function]}
+                style={
+                  {
+                    "justifyContent": "center",
+                    "marginRight": 10,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "borderWidth": 1,
+                        "justifyContent": "space-around",
+                        "paddingHorizontal": 5,
+                        "textAlign": "center",
+                      },
+                      {
+                        "color": "rgba(28, 27, 31, 1)",
+                      },
+                      {
+                        "backgroundColor": "#152e4e",
+                        "borderColor": "#bcfeff",
+                        "borderRadius": 4,
+                        "color": "#ffffff",
+                        "fontSize": 35,
+                      },
+                    ]
+                  }
+                >
+                  AM
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                accessible={true}
+                onPress={[Function]}
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "borderWidth": 1,
+                        "justifyContent": "space-around",
+                        "paddingHorizontal": 5,
+                        "textAlign": "center",
+                      },
+                      {
+                        "backgroundColor": "#152e4e",
+                        "borderColor": "#bcfeff",
+                        "borderRadius": 4,
+                        "color": "#ffffff",
+                        "fontSize": 35,
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  0
+                  7
+                </Text>
+              </TouchableOpacity>
+              <Text
+                style={
+                  [
+                    {
+                      "fontSize": 35,
+                      "marginHorizontal": 3,
+                    },
+                    {
+                      "color": "#ffffff",
+                    },
+                  ]
+                }
+              >
+                :
+              </Text>
+              <TouchableOpacity
+                accessible={true}
+                onPress={[Function]}
+              >
+                <Text
+                  style={
+                    [
+                      {
+                        "alignContent": "center",
+                        "alignItems": "center",
+                        "borderWidth": 1,
+                        "justifyContent": "space-around",
+                        "paddingHorizontal": 5,
+                        "textAlign": "center",
+                      },
+                      {
+                        "backgroundColor": "#152e4e",
+                        "borderColor": "#bcfeff",
+                        "borderRadius": 4,
+                        "color": "#ffffff",
+                        "fontSize": 35,
+                      },
+                      {},
+                    ]
+                  }
+                >
+                  30
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View
+            style={{}}
+          >
+            <TouchableOpacity
+              accessible={true}
+              onPress={[MockFunction]}
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#bcfeff",
+                    "flex": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 14,
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                Alarm Sound
+              </Text>
+              <View
+                style={
+                  {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#4a2fba",
+                      "marginLeft": 0,
+                    }
+                  }
+                >
+                  birds
+                </Text>
+                <Icon
+                  color="#4a2fba"
+                  name="chevron-right"
+                  size={20}
+                  style={
+                    {
+                      "marginLeft": 0,
+                    }
+                  }
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{}}
+          >
+            <TouchableOpacity
+              accessible={true}
+              onPress={[MockFunction]}
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#bcfeff",
+                    "flex": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 14,
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                Profile
+              </Text>
+              <View
+                style={
+                  {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#4a2fba",
+                      "marginLeft": 0,
+                    }
+                  }
+                >
+                  Default Profile
+                </Text>
+                <Icon
+                  color="#4a2fba"
+                  name="chevron-right"
+                  size={20}
+                  style={
+                    {
+                      "marginLeft": 0,
+                    }
+                  }
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "flexDirection": "row",
+                  "marginBottom": 12,
+                },
+                {
+                  "width": 375,
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-start",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 14,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Smart Alarm
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-end",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Pressable
+                accessibilityLiveRegion="polite"
+                accessibilityRole="checkbox"
+                accessibilityState={
+                  {
+                    "checked": true,
+                    "disabled": undefined,
+                  }
+                }
+                accessible={true}
+                color="rgba(28, 27, 31, 1)"
+                disabled={false}
+                label="Smart Alarm"
+                labelPlace="left"
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                uncheckedColor="rgba(28, 27, 31, 1)"
+              >
+                <View
+                  style={
+                    {
+                      "opacity": 1,
+                    }
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    allowFontScaling={false}
+                    importantForAccessibility="no-hide-descendants"
+                    pointerEvents="none"
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "backgroundColor": "transparent",
+                        },
+                        {
+                          "color": "rgba(28, 27, 31, 1)",
+                          "fontSize": 24,
+                        },
+                      ]
+                    }
+                  >
+                    □
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "flexDirection": "row",
+                  "marginBottom": 12,
+                },
+                {
+                  "width": 375,
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-start",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 14,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                Dawn Simulating Light
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-end",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Pressable
+                accessibilityLiveRegion="polite"
+                accessibilityRole="checkbox"
+                accessibilityState={
+                  {
+                    "checked": false,
+                    "disabled": undefined,
+                  }
+                }
+                accessible={true}
+                color="rgba(28, 27, 31, 1)"
+                disabled={false}
+                label="Dawn Simulating Light"
+                labelPlace="left"
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                uncheckedColor="rgba(28, 27, 31, 1)"
+              >
+                <View
+                  style={
+                    {
+                      "opacity": 0,
+                    }
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    allowFontScaling={false}
+                    importantForAccessibility="no-hide-descendants"
+                    pointerEvents="none"
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "backgroundColor": "transparent",
+                        },
+                        {
+                          "color": "rgba(28, 27, 31, 1)",
+                          "fontSize": 24,
+                        },
+                      ]
+                    }
+                  >
+                    □
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "flexDirection": "row",
+                  "marginBottom": 12,
+                },
+                {
+                  "width": 375,
+                },
+                undefined,
+              ]
+            }
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-start",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                style={
+                  [
+                    {
+                      "fontFamily": "calibre_app_regular",
+                      "fontSize": 14,
+                    },
+                    {
+                      "color": "rgba(98, 91, 113, 1)",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                REM Stim
+              </Text>
+            </View>
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "flex-end",
+                    "flex": 1,
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Pressable
+                accessibilityLiveRegion="polite"
+                accessibilityRole="checkbox"
+                accessibilityState={
+                  {
+                    "checked": false,
+                    "disabled": undefined,
+                  }
+                }
+                accessible={true}
+                color="rgba(28, 27, 31, 1)"
+                disabled={false}
+                label="REM Stim"
+                labelPlace="left"
+                onPress={[MockFunction]}
+                onPressIn={[Function]}
+                onPressOut={[Function]}
+                ref={null}
+                style={[Function]}
+                uncheckedColor="rgba(28, 27, 31, 1)"
+              >
+                <View
+                  style={
+                    {
+                      "opacity": 0,
+                    }
+                  }
+                >
+                  <Text
+                    accessibilityElementsHidden={true}
+                    allowFontScaling={false}
+                    importantForAccessibility="no-hide-descendants"
+                    pointerEvents="none"
+                    selectable={false}
+                    style={
+                      [
+                        {
+                          "backgroundColor": "transparent",
+                        },
+                        {
+                          "color": "rgba(28, 27, 31, 1)",
+                          "fontSize": 24,
+                        },
+                      ]
+                    }
+                  >
+                    □
+                  </Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
+          <View
+            style={{}}
+          >
+            <TouchableOpacity
+              accessible={true}
+              onPress={[MockFunction]}
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#bcfeff",
+                    "flex": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 14,
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                REM Stim Sound
+              </Text>
+              <View
+                style={
+                  {
+                    "flex": 1,
+                    "flexDirection": "row",
+                    "justifyContent": "flex-end",
+                    "marginBottom": 12,
+                  }
+                }
+              >
+                <Text
+                  style={
+                    {
+                      "color": "#4a2fba",
+                      "marginLeft": 0,
+                    }
+                  }
+                >
+                  white_noise
+                </Text>
+                <Icon
+                  color="#4a2fba"
+                  name="chevron-right"
+                  size={20}
+                  style={
+                    {
+                      "marginLeft": 0,
+                    }
+                  }
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#ffffff",
+              }
+            }
+          >
+            Alarm Volume
+          </Text>
+          <Slider
+            maximumTrackTintColor="#888888"
+            maximumValue={1}
+            minimumTrackTintColor="#00FFFF"
+            minimumValue={0}
+            step={0.05}
+            thumbTintColor="#00FFFF"
+          />
+        </View>
+        <Animated.View
+          ref={null}
+          style={
+            {
+              "backgroundColor": "#00ffe6",
+              "borderRadius": 16,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": AnimatedValue {
+                  "_v": 0,
+                },
+                "width": 0,
+              },
+              "shadowOpacity": AnimatedValue {
+                "_v": 0,
+              },
+              "shadowRadius": AnimatedValue {
+                "_v": 0,
+              },
+            }
+          }
+          testID="button-container-outer-layer"
+        >
+          <Animated.View
+            needMargin={false}
+            screenWidth={375}
+            style={
+              {
+                "0": {
+                  "borderRadius": 16,
+                  "height": 50,
+                  "marginBottom": 16,
+                  "marginTop": 16,
+                },
+                "1": {
+                  "width": 270,
+                },
+                "2": {
+                  "marginRight": undefined,
+                },
+                "backgroundColor": "#00ffe6",
+                "borderColor": "transparent",
+                "borderRadius": 16,
+                "borderStyle": "solid",
+                "borderWidth": 0,
+                "flex": undefined,
+                "minWidth": 64,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": AnimatedValue {
+                    "_v": 0,
+                  },
+                  "width": 0,
+                },
+                "shadowOpacity": AnimatedValue {
+                  "_v": 0,
+                },
+                "shadowRadius": AnimatedValue {
+                  "_v": 0,
+                },
+              }
+            }
+            testID="button-container"
+          >
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "disabled": false,
+                }
+              }
+              disabled={true}
+              onPressIn={[Function]}
+              onPressOut={[Function]}
+              ref={null}
+              style={[Function]}
+              testID="button"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  numberOfLines={1}
+                  ref={
+                    {
+                      "current": null,
+                    }
+                  }
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "textAlign": "left",
+                      },
+                      {
+                        "color": "rgba(28, 27, 31, 1)",
+                        "writingDirection": "ltr",
+                      },
+                      [
+                        {
+                          "fontFamily": "System",
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "letterSpacing": 0.1,
+                          "lineHeight": 20,
+                        },
+                        [
+                          {
+                            "marginHorizontal": 16,
+                            "marginVertical": 9,
+                            "textAlign": "center",
+                          },
+                          false,
+                          {
+                            "marginHorizontal": 24,
+                            "marginVertical": 10,
+                          },
+                          undefined,
+                          false,
+                          {
+                            "color": "rgba(255, 255, 255, 1)",
+                            "fontFamily": "System",
+                            "fontSize": 14,
+                            "fontWeight": "500",
+                            "letterSpacing": 0.1,
+                            "lineHeight": 20,
+                          },
+                          [
+                            {
+                              "fontFamily": "calibre_app_semibold",
+                              "fontSize": 24,
+                              "lineHeight": 29,
+                            },
+                            undefined,
+                          ],
+                        ],
+                      ],
+                    ]
+                  }
+                  testID="button-text"
+                >
+                  SAVE
+                </Text>
+              </View>
+            </Pressable>
+          </Animated.View>
+        </Animated.View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`SettingsScreen UnitTest renders correctly 1`] = `
 {

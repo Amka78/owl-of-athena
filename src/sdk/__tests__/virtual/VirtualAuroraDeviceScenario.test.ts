@@ -1,5 +1,5 @@
-import { describe, expect, test } from "bun:test";
 import { HeatshrinkDecoder } from "heatshrink-ts";
+import { describe, expect, test } from "vitest";
 
 import { EventIds } from "../../AuroraConstants";
 import AuroraSessionReader from "../../AuroraSessionReader";

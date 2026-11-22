@@ -16,7 +16,7 @@
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "resolveJsonModule": true,
-        "types": ["bun"]
+        "types": ["vitest/globals", "node"]
     },
     "exclude": ["node_modules", "coverage", "src-electrobun", "electrobun.config.ts"],
     "extends": "expo/tsconfig.base"

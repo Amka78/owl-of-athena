@@ -1,17 +1,17 @@
-import type { Mock } from "bun:test";
 import type {
     GestureResponderEvent,
     NativeSyntheticEvent,
     TextInputEndEditingEvent,
 } from "react-native";
+import type { Mock } from "vitest";
+import { vi } from "vitest";
 
 import type { Dimensions } from "../hooks/useWindowDimensions";
 
 // @ts-expect-error
 export const FakeGestureResponderEvent: GestureResponderEvent = {};
 // @ts-expect-error
-export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEvent> =
-    {};
+export const FakeTextBoxOnEndEditingEventData: NativeSyntheticEvent<TextInputEndEditingEvent> = {};
 
 export const DesktopDimension: Dimensions = {
     fontScale: 1,
@@ -39,5 +39,5 @@ export const MobileDimension: Dimensions = {
 
 /** Create a mock function that tracks calls */
 export function mockFn<T extends (...args: any[]) => any>(): Mock<ReturnType<T>> {
-    return jest.fn() as unknown as Mock<ReturnType<T>>;
+    return vi.fn() as unknown as Mock<ReturnType<T>>;
 }

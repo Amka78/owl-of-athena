@@ -36,8 +36,8 @@ describe("WakingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
-                onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
+                onWakeupPress={vi.fn()}
+                onSnoozePress={vi.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
@@ -49,8 +49,8 @@ describe("WakingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
-                onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
+                onWakeupPress={vi.fn()}
+                onSnoozePress={vi.fn()}
                 dimens={mobileDimens}
                 locale="ja-JP"
             />,
@@ -62,8 +62,8 @@ describe("WakingScreenTemplate", () => {
         const { toJSON } = renderWithProvider(
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
-                onWakeupPress={jest.fn()}
-                onSnoozePress={jest.fn()}
+                onWakeupPress={vi.fn()}
+                onSnoozePress={vi.fn()}
                 dimens={desktopDimens}
                 locale="en-US"
             />,
@@ -72,12 +72,12 @@ describe("WakingScreenTemplate", () => {
     });
 
     it("calls onWakeupPress when wakeup button pressed", () => {
-        const onWakeupPress = jest.fn();
+        const onWakeupPress = vi.fn();
         const { getByText } = renderWithProvider(
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
                 onWakeupPress={onWakeupPress}
-                onSnoozePress={jest.fn()}
+                onSnoozePress={vi.fn()}
                 dimens={mobileDimens}
                 locale="en-US"
             />,
@@ -87,11 +87,11 @@ describe("WakingScreenTemplate", () => {
     });
 
     it("calls onSnoozePress when snooze button pressed", () => {
-        const onSnoozePress = jest.fn();
+        const onSnoozePress = vi.fn();
         const { getByText } = renderWithProvider(
             <WakingScreenTemplate
                 timeView={{ hours: 6, minutes: 30 }}
-                onWakeupPress={jest.fn()}
+                onWakeupPress={vi.fn()}
                 onSnoozePress={onSnoozePress}
                 dimens={mobileDimens}
                 locale="en-US"

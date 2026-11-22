@@ -1,4 +1,13 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TemplateIcon UnitTest > renders correctly with name="home" 1`] = `
+<Icon
+  color="#ffffff"
+  name="home"
+  size={40}
+  testID="template-icon"
+/>
+`;
 
 exports[`TemplateIcon UnitTest renders correctly with name="home" 1`] = `
 {

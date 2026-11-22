@@ -140,33 +140,33 @@ WHERE id = '<user-uuid>';
 ```bash
 git log --oneline -10
 git status --short
-bun test
+bun run test
 bunx tsc --noEmit
 ```
 
 関連テストを個別に回す例:
 
 ```bash
-bun test src/services/__tests__/ProfileService.test.ts \
+bun run test src/services/__tests__/ProfileService.test.ts \
   src/components/atoms/__tests__/Field*.test.tsx \
   src/components/organisms/profiles/__tests__/*.test.tsx
 
-bun test src/services/__tests__/AuthLinkService.test.ts \
+bun run test src/services/__tests__/AuthLinkService.test.ts \
   src/components/templates/__tests__/ResetPasswordScreenTemplate.test.tsx \
   src/store/__tests__/authStore.test.ts
 
-bun test src/components/charts/__tests__/SessionTimelineChart.test.tsx \
+bun run test src/components/charts/__tests__/SessionTimelineChart.test.tsx \
   src/components/organisms/sessions/__tests__/SessionDetailsMenu.test.tsx
 
-bun test src/services/__tests__/ExportService.test.ts \
+bun run test src/services/__tests__/ExportService.test.ts \
   src/services/__tests__/LogService.test.ts
 
-bun test src/components/pages/__tests__/AboutScreen.test.tsx \
+bun run test src/components/pages/__tests__/AboutScreen.test.tsx \
   src/components/templates/__tests__/AboutScreenTemplate.test.tsx \
   src/components/pages/__tests__/ConsoleScreen.test.tsx \
   src/components/pages/__tests__/AccountScreen.test.tsx
 
-bun test src/hooks/__tests__/useNetworkStatus.test.ts \
+bun run test src/hooks/__tests__/useNetworkStatus.test.ts \
   src/components/atoms/__tests__/OfflineBanner.test.tsx
 ```
 

@@ -35,7 +35,7 @@ describe("FlatButton UnitTest", () => {
     });
 
     it("calls onPress when pressed", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { getByText } = renderWithProvider(
             <FlatButton onPress={onPress}>Test Button</FlatButton>,
         );
@@ -44,7 +44,7 @@ describe("FlatButton UnitTest", () => {
     });
 
     it("marks the button as disabled", () => {
-        const onPress = jest.fn();
+        const onPress = vi.fn();
         const { UNSAFE_getByProps } = renderWithProvider(
             <FlatButton onPress={onPress} disabled>
                 Test Button

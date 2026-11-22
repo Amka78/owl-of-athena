@@ -1,6 +1,6 @@
-import type { Mock } from "bun:test";
+import type { Mock } from "vitest";
 
-jest.mock("expo-asset", () => ({
+vi.mock("expo-asset", () => ({
     Asset: {
         fromModule: () => ({
             downloadAsync: async () => {

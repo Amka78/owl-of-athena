@@ -1,4 +1,66 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`XAxisBottomLine UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Line
+      stroke="#ffffff"
+      x1={0}
+      x2={400}
+      y1={200}
+      y2={200}
+    />
+  </View>
+</View>
+`;
+
+exports[`XAxisBottomLine UnitTest > renders with different dimensions 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Line
+      stroke="#aaaaaa"
+      x1={0}
+      x2={600}
+      y1={100}
+      y2={100}
+    />
+  </View>
+</View>
+`;
 
 exports[`XAxisBottomLine UnitTest renders correctly 1`] = `
 {
@@ -82,6 +144,68 @@ exports[`XAxisBottomLine UnitTest renders with different dimensions 1`] = `
   },
   "type": "View",
 }
+`;
+
+exports[`XAxisTopLine UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Line
+      stroke="#ffffff"
+      x1={0}
+      x2={400}
+      y1={0}
+      y2={0}
+    />
+  </View>
+</View>
+`;
+
+exports[`XAxisTopLine UnitTest > renders with different width and color 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <Line
+      stroke="#cccccc"
+      x1={0}
+      x2={800}
+      y1={0}
+      y2={0}
+    />
+  </View>
+</View>
 `;
 
 exports[`XAxisTopLine UnitTest renders correctly 1`] = `

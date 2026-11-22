@@ -1,4 +1,106 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LabeledRadioButton > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      accessibilityRole="radiogroup"
+    >
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+              "minHeight": 40,
+            },
+            undefined,
+          ]
+        }
+      >
+        <Pressable
+          accessibilityLiveRegion="polite"
+          accessibilityRole="radio"
+          accessibilityState={
+            {
+              "checked": true,
+              "disabled": undefined,
+            }
+          }
+          accessible={true}
+          color="rgba(98, 91, 113, 1)"
+          disabled={false}
+          onPress={[Function]}
+          onPressIn={[Function]}
+          onPressOut={[Function]}
+          ref={null}
+          style={[Function]}
+          uncheckedColor="rgba(98, 91, 113, 1)"
+        >
+          <View
+            style={
+              {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              accessibilityElementsHidden={true}
+              allowFontScaling={false}
+              importantForAccessibility="no-hide-descendants"
+              pointerEvents="none"
+              selectable={false}
+              style={
+                [
+                  {
+                    "backgroundColor": "transparent",
+                  },
+                  {
+                    "color": "rgba(98, 91, 113, 1)",
+                    "fontSize": 24,
+                  },
+                ]
+              }
+            >
+              □
+            </Text>
+          </View>
+        </Pressable>
+        <Text
+          style={
+            [
+              {
+                "color": "rgba(28, 27, 31, 1)",
+              },
+              undefined,
+            ]
+          }
+        >
+          Option 1
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
 
 exports[`LabeledRadioButton renders correctly 1`] = `
 {

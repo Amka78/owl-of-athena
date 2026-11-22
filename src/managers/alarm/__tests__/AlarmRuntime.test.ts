@@ -47,18 +47,18 @@ const flush = async (): Promise<void> => {
 };
 
 const createPlayer = () => ({
-    play: jest.fn(() => Promise.resolve()),
-    stop: jest.fn(() => Promise.resolve()),
+    play: vi.fn(() => Promise.resolve()),
+    stop: vi.fn(() => Promise.resolve()),
 });
 
 const createStorage = (initial: AlarmSnapshot | null = null) => {
     let saved = initial;
     const storage: AlarmStorage = {
-        load: jest.fn(async () => saved),
-        save: jest.fn(async (snapshot: AlarmSnapshot) => {
+        load: vi.fn(async () => saved),
+        save: vi.fn(async (snapshot: AlarmSnapshot) => {
             saved = snapshot;
         }),
-        clear: jest.fn(async () => {
+        clear: vi.fn(async () => {
             saved = null;
         }),
     };
@@ -68,18 +68,18 @@ const createStorage = (initial: AlarmSnapshot | null = null) => {
 const createNotifier = (pendingAction?: AlarmNotificationAction) => {
     let handler: ((action: AlarmNotificationAction) => void) | undefined;
     const notifier: AlarmNotifier = {
-        prepare: jest.fn(async () => undefined),
-        scheduleAt: jest.fn(async () => undefined),
-        cancelScheduled: jest.fn(async () => undefined),
-        notify: jest.fn(async () => undefined),
-        cancel: jest.fn(async () => undefined),
-        subscribe: jest.fn((next: (action: AlarmNotificationAction) => void) => {
+        prepare: vi.fn(async () => undefined),
+        scheduleAt: vi.fn(async () => undefined),
+        cancelScheduled: vi.fn(async () => undefined),
+        notify: vi.fn(async () => undefined),
+        cancel: vi.fn(async () => undefined),
+        subscribe: vi.fn((next: (action: AlarmNotificationAction) => void) => {
             handler = next;
             return () => {
                 handler = undefined;
             };
         }),
-        consumePendingAction: jest.fn(async () => pendingAction),
+        consumePendingAction: vi.fn(async () => pendingAction),
     };
     return { notifier, fire: (action: AlarmNotificationAction) => handler?.(action) };
 };
@@ -102,7 +102,7 @@ describe("AlarmRuntime UnitTest", () => {
         const clock = createClock();
         const runtime = new AlarmRuntime({ clock: clock.clock });
         const player = createPlayer();
-        const onRinging = jest.fn();
+        const onRinging = vi.fn();
         runtime.setPlayer(player);
         runtime.on(AlarmRuntimeEventList.onRinging, onRinging);
 
@@ -134,7 +134,7 @@ describe("AlarmRuntime UnitTest", () => {
         const clock = createClock();
         const runtime = new AlarmRuntime({ clock: clock.clock });
         const player = createPlayer();
-        const onSnoozed = jest.fn();
+        const onSnoozed = vi.fn();
         runtime.setPlayer(player);
         runtime.on(AlarmRuntimeEventList.onSnoozed, onSnoozed);
 
@@ -169,7 +169,7 @@ describe("AlarmRuntime UnitTest", () => {
         const runtime = new AlarmRuntime({ clock: clock.clock });
         const player = createPlayer();
         const { storage, getSaved } = createStorage();
-        const onDismissed = jest.fn();
+        const onDismissed = vi.fn();
         runtime.setPlayer(player);
         runtime.setStorage(storage);
         runtime.on(AlarmRuntimeEventList.onDismissed, onDismissed);
@@ -189,7 +189,7 @@ describe("AlarmRuntime UnitTest", () => {
     it("does nothing when dismissed while idle", async () => {
         const clock = createClock();
         const runtime = new AlarmRuntime({ clock: clock.clock });
-        const onDismissed = jest.fn();
+        const onDismissed = vi.fn();
         runtime.on(AlarmRuntimeEventList.onDismissed, onDismissed);
 
         await runtime.dismiss();
@@ -366,7 +366,7 @@ describe("AlarmRuntime UnitTest", () => {
     it("dismisses when the notification wake up action is used", async () => {
         const clock = createClock();
         const { notifier, fire } = createNotifier();
-        const onDismissed = jest.fn();
+        const onDismissed = vi.fn();
         const runtime = new AlarmRuntime({ clock: clock.clock, notifier });
         runtime.on(AlarmRuntimeEventList.onDismissed, onDismissed);
 

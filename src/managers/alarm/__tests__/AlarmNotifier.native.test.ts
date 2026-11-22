@@ -1,23 +1,41 @@
-import { describe, expect, it, mock } from "bun:test";
 import { Platform } from "react-native";
+import { describe, expect, it, vi } from "vitest";
 
-// bun では expo-notifications（内部で expo-modules-core の型宣言を runtime import する）を
+// vitest では expo-notifications（内部で expo-modules-core の型宣言を runtime import する）を
 // 実ロードできない。静的 import はモック登録より先に実モジュールを評価してしまうため、
-// mock.module で差し替えた後、対象モジュールを動的 import で読み込む。
-const setNotificationHandler = mock(() => {});
-const getPermissionsAsync = mock(async () => ({ status: "granted" }));
-const requestPermissionsAsync = mock(async () => ({ status: "granted" }));
-const setNotificationChannelAsync = mock(async () => ({}));
-const setNotificationCategoryAsync = mock(async () => undefined);
-const scheduleNotificationAsync = mock(async () => "notification-id");
-const cancelScheduledNotificationAsync = mock(async () => undefined);
-const dismissNotificationAsync = mock(async () => undefined);
-const addNotificationResponseReceivedListener = mock(() => () => undefined);
-const getLastNotificationResponseAsync = mock(async () => null);
-const clearLastNotificationResponseAsync = mock(async () => undefined);
+// vi.mock（top-level hoisting される）で差し替えた後、対象モジュールを動的 import で読み込む。
+const {
+    setNotificationHandler,
+    getPermissionsAsync,
+    requestPermissionsAsync,
+    setNotificationChannelAsync,
+    setNotificationCategoryAsync,
+    scheduleNotificationAsync,
+    cancelScheduledNotificationAsync,
+    dismissNotificationAsync,
+    addNotificationResponseReceivedListener,
+    getLastNotificationResponseAsync,
+    clearLastNotificationResponseAsync,
+} = vi.hoisted(() => ({
+    setNotificationHandler: vi.fn(() => {}),
+    getPermissionsAsync: vi.fn(async () => ({ status: "granted" })),
+    requestPermissionsAsync: vi.fn(async () => ({ status: "granted" })),
+    setNotificationChannelAsync: vi.fn(
+        async (_channelId: string, _options: Record<string, unknown>) => ({}),
+    ),
+    setNotificationCategoryAsync: vi.fn(async () => undefined),
+    scheduleNotificationAsync: vi.fn(
+        async (_content: Record<string, unknown>) => "notification-id",
+    ),
+    cancelScheduledNotificationAsync: vi.fn(async () => undefined),
+    dismissNotificationAsync: vi.fn(async () => undefined),
+    addNotificationResponseReceivedListener: vi.fn(() => () => undefined),
+    getLastNotificationResponseAsync: vi.fn(async () => null),
+    clearLastNotificationResponseAsync: vi.fn(async () => undefined),
+}));
 const ANDROID_IMPORTANCE_MAX = 5;
 
-mock.module("expo-notifications", () => ({
+vi.mock("expo-notifications", () => ({
     setNotificationHandler,
     getPermissionsAsync,
     requestPermissionsAsync,

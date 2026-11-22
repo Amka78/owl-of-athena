@@ -5,18 +5,18 @@ import { Provider } from "react-native-paper";
 import { Theme } from "../../../constants";
 import { HomeScreen } from "../HomeScreen";
 
-jest.mock("../../../hooks/useHome", () => ({
+vi.mock("../../../hooks/useHome", () => ({
     useHome: () => ({
         settings: { alarmHour: 9, alarmMinute: 0 },
-        timeViewPress: jest.fn(),
-        goToSleepPress: jest.fn(),
+        timeViewPress: vi.fn(),
+        goToSleepPress: vi.fn(),
         errorText: "",
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -30,12 +30,11 @@ jest.mock("../../../hooks", () => ({
     }),
     useHome: () => ({
         settings: { alarmHour: 9, alarmMinute: 0 },
-        timeViewPress: jest.fn(),
-        goToSleepPress: jest.fn(),
+        timeViewPress: vi.fn(),
+        goToSleepPress: vi.fn(),
         errorText: "",
     }),
 }));
-
 
 const renderWithProvider = (ui: React.ReactElement) =>
     render(<Provider theme={Theme}>{ui}</Provider>);

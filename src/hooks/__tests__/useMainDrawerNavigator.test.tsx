@@ -31,9 +31,9 @@ const desktopDims = {
 
 let mockDims = mobileDims;
 
-jest.mock("../index", () => ({
-    useCheckLogging: jest.fn(),
-    useLogout: () => ({ onPress: jest.fn() }),
+vi.mock("../index", () => ({
+    useCheckLogging: vi.fn(),
+    useLogout: () => ({ onPress: vi.fn() }),
     useWindowDimensions: () => mockDims,
 }));
 
@@ -46,7 +46,7 @@ describe("useMainDrawerNavigator", () => {
     });
 
     it("縦画面（モバイル）では closeDrawer が Drawer 自身へ dispatch される", () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
 
         renderHook(() => useMainDrawerNavigator(createDrawerRef(dispatch)));
 
@@ -55,7 +55,7 @@ describe("useMainDrawerNavigator", () => {
 
     it("デスクトップでは closeDrawer は dispatch されず drawerType が permanent になる", () => {
         mockDims = desktopDims;
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
 
         const { result } = renderHook(() => useMainDrawerNavigator(createDrawerRef(dispatch)));
 
@@ -64,7 +64,7 @@ describe("useMainDrawerNavigator", () => {
     });
 
     it("メニュー押下で toggleDrawer が Drawer 自身へ dispatch される（モバイル・閉状態）", () => {
-        const dispatch = jest.fn();
+        const dispatch = vi.fn();
 
         const { result } = renderHook(() => useMainDrawerNavigator(createDrawerRef(dispatch)));
 

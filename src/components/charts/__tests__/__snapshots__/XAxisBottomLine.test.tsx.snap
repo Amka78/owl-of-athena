@@ -1,4 +1,14 @@
-// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`XAxisBottomLine UnitTest > renders correctly 1`] = `
+<Line
+  stroke="#ffffff"
+  x1={0}
+  x2={300}
+  y1={200}
+  y2={200}
+/>
+`;
 
 exports[`XAxisBottomLine UnitTest renders correctly 1`] = `
 {

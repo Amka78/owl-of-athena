@@ -8,30 +8,30 @@ import { useMessageStore } from "../../../store/messageStore";
 import type { User, UserMessage } from "../../../types";
 import { AccountScreen } from "../AccountScreen";
 
-jest.mock("../../../hooks/useAccount", () => ({
+vi.mock("../../../hooks/useAccount", () => ({
     useAcount: () => ({
         loading: false,
         firstName: "Jane",
-        onFirstNameChangeText: jest.fn(),
+        onFirstNameChangeText: vi.fn(),
         lastName: "Doe",
-        onLastNameChangeText: jest.fn(),
+        onLastNameChangeText: vi.fn(),
         birthDay: new Date("1990-01-15"),
-        onBirthDayChange: jest.fn(),
+        onBirthDayChange: vi.fn(),
         gender: "female",
-        onGenderChange: jest.fn(),
+        onGenderChange: vi.fn(),
         countryCode: "JP",
-        onCountryCodeChangeText: jest.fn(),
+        onCountryCodeChangeText: vi.fn(),
         postalCode: "100-0001",
-        onPostalCodeChangeText: jest.fn(),
-        onSavePress: jest.fn(),
-        onLogoutPress: jest.fn(),
+        onPostalCodeChangeText: vi.fn(),
+        onSavePress: vi.fn(),
+        onLogoutPress: vi.fn(),
         generalError: "",
     }),
 }));
 
-jest.mock("../../../hooks", () => ({
-    useLocale: jest.fn(),
-    useConvertibleHeader: jest.fn(),
+vi.mock("../../../hooks", () => ({
+    useLocale: vi.fn(),
+    useConvertibleHeader: vi.fn(),
     useWindowDimensions: () => ({
         width: 375,
         height: 800,
@@ -46,19 +46,19 @@ jest.mock("../../../hooks", () => ({
     useAcount: () => ({
         loading: false,
         firstName: "Jane",
-        onFirstNameChangeText: jest.fn(),
+        onFirstNameChangeText: vi.fn(),
         lastName: "Doe",
-        onLastNameChangeText: jest.fn(),
+        onLastNameChangeText: vi.fn(),
         birthDay: new Date("1990-01-15"),
-        onBirthDayChange: jest.fn(),
+        onBirthDayChange: vi.fn(),
         gender: "female",
-        onGenderChange: jest.fn(),
+        onGenderChange: vi.fn(),
         countryCode: "JP",
-        onCountryCodeChangeText: jest.fn(),
+        onCountryCodeChangeText: vi.fn(),
         postalCode: "100-0001",
-        onPostalCodeChangeText: jest.fn(),
-        onSavePress: jest.fn(),
-        onLogoutPress: jest.fn(),
+        onPostalCodeChangeText: vi.fn(),
+        onSavePress: vi.fn(),
+        onLogoutPress: vi.fn(),
         generalError: "",
     }),
 }));
