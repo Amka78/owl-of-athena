@@ -39,9 +39,7 @@ const AuroraCmdUploadFile = async function (
 
     const result = await download.downloadAsync();
     if (!result || result.status < 200 || result.status >= 300) {
-        throw new Error(
-            `Failed to download ${srcPath}: ${result?.status ?? "no response"}`,
-        );
+        throw new Error(`Failed to download ${srcPath}: ${result?.status ?? "no response"}`);
     }
 
     try {

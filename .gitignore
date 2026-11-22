@@ -82,6 +82,10 @@ dist/
 dist-desktop/
 dist-desktop-artifacts/
 
+# Vitest キャッシュと Storybook ビルド成果物
+.vitest/
+storybook-static/
+
 # Bun
 .yarnrc
 
