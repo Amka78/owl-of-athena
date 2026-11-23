@@ -114,12 +114,16 @@ win_run() {
   local label="$1"
   shift
   msg "$label"
-  EB_MIRROR_WIN="$WIN_MIRROR" cmd.exe /c "cd /d \"%EB_MIRROR_WIN%\" && $*"
+  # cmd.exe は UNC（\\wsl.localhost\...）を起動ディレクトリにできず、
+  # その後の cd /d より先に失敗する。interop は /mnt/... のカレントを
+  # Windows パスへ翻訳してプロセスを起動するため、ミラーを cwd にした
+  # サブシェルから起動すれば cd も UNC 警告も不要になる。
+  ( cd "$WSL_MIRROR" && cmd.exe /c "$*" )
 }
 
 win_has_bun() {
   # 一過性の interop ハング対策として 30 秒で打ち切る
-  EB_MIRROR_WIN="$WIN_MIRROR" timeout 30 cmd.exe /c "bun --version" >/dev/null 2>&1
+  ( cd "$WSL_MIRROR" && timeout 30 cmd.exe /c "bun --version" ) >/dev/null 2>&1
 }
 
 # 依存変更の有無（package.json / bun.lock がソース側で新しい場合）
