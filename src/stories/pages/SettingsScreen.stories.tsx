@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { SettingsScreen } from "../../components/pages/SettingsScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 // vi.mock ファクトリはファイル先頭へホイストされるため、関数宣言で定義する
 // （const/let 参照は TDZ エラーになる）。
@@ -36,33 +37,12 @@ vi.mock("../../hooks/useSetting", () => ({
     useSetting: mockUseSetting,
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useSetting: mockUseSetting,
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useSetting: mockUseSetting,
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -86,7 +66,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", SettingsScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", SettingsScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", SettingsScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

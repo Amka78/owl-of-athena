@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { AwakeScreen } from "../../components/pages/AwakeScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useAwake", () => ({
     useAwake: () => ({
@@ -13,36 +14,15 @@ vi.mock("../../hooks/useAwake", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useAwake: () => ({
-        questionnaireButtonPress: vi.fn(),
-        skipButtonPress: vi.fn(),
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useAwake: () => ({
+            questionnaireButtonPress: vi.fn(),
+            skipButtonPress: vi.fn(),
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -66,7 +46,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", AwakeScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", AwakeScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", AwakeScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

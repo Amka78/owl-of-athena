@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { HomeScreen } from "../../components/pages/HomeScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useHome", () => ({
     useHome: () => ({
@@ -15,38 +16,10 @@ vi.mock("../../hooks/useHome", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useHome: () => ({
-        settings: { alarmHour: 9, alarmMinute: 0 },
-        timeViewPress: vi.fn(),
-        goToSleepPress: vi.fn(),
-        errorText: "",
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock();
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -70,7 +43,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", HomeScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", HomeScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", HomeScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

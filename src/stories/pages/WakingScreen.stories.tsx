@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { WakingScreen } from "../../components/pages/WakingScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useWaking ", () => ({
     useWaking: () => ({
@@ -19,42 +20,21 @@ vi.mock("../../hooks/useWaking ", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useConvertibleHeader: vi.fn(),
-    useWaking: () => ({
-        wakeupButtonPress: vi.fn(),
-        settings: {
-            alarmHour: 7,
-            alarmMinute: 0,
-            smartAlarmEnabled: true,
-            remStimEnabled: false,
-            dslEnabled: false,
-        },
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useWaking: () => ({
+            wakeupButtonPress: vi.fn(),
+            settings: {
+                alarmHour: 7,
+                alarmMinute: 0,
+                smartAlarmEnabled: true,
+                remStimEnabled: false,
+                dslEnabled: false,
+            },
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -78,7 +58,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", WakingScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", WakingScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", WakingScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { AccountScreen } from "../../components/pages/AccountScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useAccount", () => ({
     useAcount: () => ({
@@ -36,46 +37,25 @@ vi.mock("../../hooks/useDeviceMaintenance", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useAcount: () => ({
-        loading: false,
-        firstName: "Jane",
-        onFirstNameChangeText: vi.fn(),
-        lastName: "Doe",
-        onLastNameChangeText: vi.fn(),
-        birthDay: new Date("1990-01-15"),
-        onBirthDayChange: vi.fn(),
-        gender: "female",
-        onGenderChange: vi.fn(),
-        onSavePress: vi.fn(),
-        onLogoutPress: vi.fn(),
-        generalError: "",
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useAcount: () => ({
+            loading: false,
+            firstName: "Jane",
+            onFirstNameChangeText: vi.fn(),
+            lastName: "Doe",
+            onLastNameChangeText: vi.fn(),
+            birthDay: new Date("1990-01-15"),
+            onBirthDayChange: vi.fn(),
+            gender: "female",
+            onGenderChange: vi.fn(),
+            onSavePress: vi.fn(),
+            onLogoutPress: vi.fn(),
+            generalError: "",
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -99,7 +79,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", AccountScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", AccountScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", AccountScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

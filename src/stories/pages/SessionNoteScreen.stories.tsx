@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { SessionNoteScreen } from "../../components/pages/SessionNoteScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/sessions/useSessionNote", () => ({
     useSessionNote: () => ({
@@ -13,6 +14,11 @@ vi.mock("../../hooks/sessions/useSessionNote", () => ({
         notes: "Great sleep tonight! Felt rested.",
     }),
 }));
+
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock();
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -36,7 +42,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", SessionNoteScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", SessionNoteScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", SessionNoteScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

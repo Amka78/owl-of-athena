@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { ProfileListScreen } from "../../components/pages/ProfileListScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/profiles/useProfileList", () => ({
     useProfileList: () => ({
@@ -27,32 +28,29 @@ vi.mock("../../hooks/profiles/useProfileList", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useProfileList: () => ({
+            showFilter: false,
+            filterCondition: {
+                showOfficial: true,
+                showCommunity: true,
+                showPrivate: true,
+            },
+            onShowOfficialPress: vi.fn(),
+            onShowCommunityPress: vi.fn(),
+            onShowPrivatePress: vi.fn(),
+            onFilterPress: vi.fn(),
+            onRefreshPress: vi.fn(),
+            userId: "guest",
+            list: [],
+            onStarPress: vi.fn(),
+            onSelectProfile: vi.fn(),
+            onDeleteProfile: vi.fn(),
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({
@@ -80,7 +78,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", ProfileListScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", ProfileListScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", ProfileListScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

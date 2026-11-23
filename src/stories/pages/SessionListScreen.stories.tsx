@@ -6,6 +6,7 @@ import { vi } from "vitest";
 import { SessionListScreen } from "../../components/pages/SessionListScreen";
 import { Theme } from "../../constants";
 import { FilterByDateValues } from "../../store/sessionStore";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/sessions/useSessionList", () => ({
     useSessinList: () => ({
@@ -25,6 +26,11 @@ vi.mock("../../hooks/sessions/useSessionList", () => ({
         userId: "guest",
     }),
 }));
+
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock();
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({
@@ -52,7 +58,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", SessionListScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", SessionListScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", SessionListScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

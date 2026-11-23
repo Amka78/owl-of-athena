@@ -5,12 +5,18 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { ProfilePreviewScreen } from "../../components/pages/ProfilePreviewScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/profiles/useProfilePreview", () => ({
     useProfilePreview: () => ({
         content: '{"name":"Sleep Optimizer","description":"Optimized for deep sleep"}',
     }),
 }));
+
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock();
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -34,7 +40,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", ProfilePreviewScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", ProfilePreviewScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", ProfilePreviewScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

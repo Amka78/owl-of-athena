@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { SignupScreen } from "../../components/pages/SignupScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useSignup", () => ({
     useSignup: () => ({
@@ -25,48 +26,27 @@ vi.mock("../../hooks/useSignup", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useConvertibleHeader: vi.fn(),
-    useSignup: () => ({
-        loading: false,
-        emailHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
-        passwordHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
-        passwordConfirmHooks: {
-            value: "",
-            onChangeText: vi.fn(),
-            onEndEditing: vi.fn(),
-            error: "",
-        },
-        checkBoxHooks: { checked: false, onPress: vi.fn() },
-        onSignupPress: vi.fn(),
-        onCancelPress: vi.fn(),
-        onLinkTextPress: vi.fn(),
-        generalError: "",
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useSignup: () => ({
+            loading: false,
+            emailHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+            passwordHooks: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+            passwordConfirmHooks: {
+                value: "",
+                onChangeText: vi.fn(),
+                onEndEditing: vi.fn(),
+                error: "",
+            },
+            checkBoxHooks: { checked: false, onPress: vi.fn() },
+            onSignupPress: vi.fn(),
+            onCancelPress: vi.fn(),
+            onLinkTextPress: vi.fn(),
+            generalError: "",
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -90,7 +70,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", SignupScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", SignupScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", SignupScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },

@@ -5,6 +5,7 @@ import { expect } from "storybook/test";
 import { vi } from "vitest";
 import { LoginScreen } from "../../components/pages/LoginScreen";
 import { Theme } from "../../constants";
+import { renderAt } from "../support/deviceSize";
 
 vi.mock("../../hooks/useLogin", () => ({
     useLogin: () => ({
@@ -18,41 +19,20 @@ vi.mock("../../hooks/useLogin", () => ({
     }),
 }));
 
-vi.mock("../../hooks", () => ({
-    useLocale: () => undefined,
-    useConvertibleHeader: () => undefined,
-    useScreenDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useWindowDimensions: () => ({
-        width: 375,
-        height: 800,
-        isDesktop: false,
-        isLargeWidth: false,
-        isSmallHeight: false,
-        isVertical: true,
-        isHorizontal: false,
-        fontScale: 1,
-        scale: 2,
-    }),
-    useLogin: () => ({
-        email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
-        password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
-        onLoginPress: vi.fn(),
-        onCancelPress: vi.fn(),
-        generalError: "",
-        onForgotPasswordPress: vi.fn(),
-        onSignupPress: vi.fn(),
-    }),
-}));
+vi.mock("../../hooks", async () => {
+    const { hooksMock } = await import("../support/deviceSize");
+    return hooksMock({
+        useLogin: () => ({
+            email: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+            password: { value: "", onChangeText: vi.fn(), onEndEditing: vi.fn(), error: "" },
+            onLoginPress: vi.fn(),
+            onCancelPress: vi.fn(),
+            generalError: "",
+            onForgotPasswordPress: vi.fn(),
+            onSignupPress: vi.fn(),
+        }),
+    });
+});
 
 vi.mock("@react-navigation/native", () => ({
     useNavigation: () => ({ navigate: vi.fn(), goBack: vi.fn() }),
@@ -76,7 +56,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Mobile: Story = {
+    render: renderAt("mobile", LoginScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Tablet: Story = {
+    render: renderAt("tablet", LoginScreen),
+    play: async ({ canvasElement }) => {
+        expect(canvasElement).toBeTruthy();
+    },
+};
+
+export const Desktop: Story = {
+    render: renderAt("desktop", LoginScreen),
     play: async ({ canvasElement }) => {
         expect(canvasElement).toBeTruthy();
     },
