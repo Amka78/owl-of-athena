@@ -21,7 +21,7 @@ import { FilterIcon } from "./FilterIcon";
 import { FlatButton } from "./FlatButton";
 import { FlexSpacer } from "./FlexSpacer";
 import { HomeIcon } from "./HomeIcon";
-import { InfoIcon } from "./Infocon";
+import { InfoIcon } from "./InfoIcon";
 import { InlineTimePicker } from "./InlineTimePicker";
 import { LeftSideButton } from "./LeftSideButton";
 import { ListItem } from "./ListItem";

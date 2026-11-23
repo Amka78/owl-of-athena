@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { ConfirmDialog, LoadingDialog } from "../components/molecules";
 import { LoginScreen, ResetPasswordScreen, SignupScreen, WelcomeScreen } from "../components/pages";
 import { ConfirmEmailScreen } from "../components/pages/ConfirmEmailScreen";
-import { ForgotPasswordScreen } from "../components/pages/ForgotPassswordScreen";
+import { ForgotPasswordScreen } from "../components/pages/ForgotPasswordScreen";
 import { useWindowDimensions } from "../hooks";
 import { StackCommonScreenOptions } from "./StackSettings";
 //#endregion

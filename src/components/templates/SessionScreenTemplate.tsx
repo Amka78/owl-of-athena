@@ -19,7 +19,7 @@ import {
 } from "../organisms/sessions/SessionDetailsMenu";
 import type { SessionChartPieProps } from "../SessionChartPie";
 import type { SessionSleepChartProps } from "../SessionSleepChart";
-import type { TemplateTimeViewProps } from "./TempatedProps";
+import type { TemplateTimeViewProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

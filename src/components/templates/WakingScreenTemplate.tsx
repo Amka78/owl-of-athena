@@ -7,7 +7,7 @@ import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
-import type { TemplateTimeViewProps } from "./TempatedProps";
+import type { TemplateTimeViewProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

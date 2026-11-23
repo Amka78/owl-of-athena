@@ -3,7 +3,7 @@ import type React from "react";
 import { Provider } from "react-native-paper";
 
 import { Theme } from "../../../constants";
-import { ForgotPasswordScreen } from "../ForgotPassswordScreen";
+import { ForgotPasswordScreen } from "../ForgotPasswordScreen";
 
 vi.mock("../../../hooks/useForgotPassword", () => ({
     useForgotPassword: () => ({

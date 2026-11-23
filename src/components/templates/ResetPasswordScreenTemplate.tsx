@@ -15,7 +15,7 @@ import { TextBox } from "../atoms/TextBox";
 import { ConvertibleContentTitle } from "../molecules/ConvertibleContentTitle";
 import { InternalView } from "../molecules/InternalView";
 import { RightSideButton } from "../molecules/RightSideButton";
-import type { TemplateButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

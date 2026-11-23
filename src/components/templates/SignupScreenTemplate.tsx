@@ -22,7 +22,7 @@ import type {
     TemplateRadioButtonProps,
     TemplateTextBoxProps,
     TemplateValidateTextBoxProps,
-} from "./TempatedProps";
+} from "./TemplatedProps";
 //#endregion
 
 //#region Types

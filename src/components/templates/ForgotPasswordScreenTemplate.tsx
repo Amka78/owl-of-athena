@@ -9,7 +9,7 @@ import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { ContentText, ErrorText, FlexSpacer, LeftSideButton, TextBox } from "../atoms";
 import type { ErrorTextProps } from "../atoms/ErrorText";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
-import type { TemplateButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Type

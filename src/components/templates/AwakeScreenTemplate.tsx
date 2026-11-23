@@ -14,7 +14,7 @@ import {
     QuestionnaireDialog,
     RightSideButton,
 } from "../molecules";
-import type { TemplateButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

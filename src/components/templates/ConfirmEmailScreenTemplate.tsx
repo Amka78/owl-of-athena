@@ -7,7 +7,7 @@ import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import { Button, ContentText, ErrorText, FlexSpacer, LeftSideButton } from "../atoms";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
-import type { TemplateButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

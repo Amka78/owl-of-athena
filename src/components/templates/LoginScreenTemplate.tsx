@@ -10,7 +10,7 @@ import type { ContentTitleProps } from "../atoms/ContentTitle";
 import type { ErrorTextProps } from "../atoms/ErrorText";
 import type { TextBoxProps } from "../atoms/TextBox";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
-import type { TemplateButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

@@ -12,7 +12,7 @@ import type {
     TemplateButtonProps,
     TemplateRadioButtonProps,
     TemplateTextBoxProps,
-} from "./TempatedProps";
+} from "./TemplatedProps";
 //#endregion
 
 //#region Types

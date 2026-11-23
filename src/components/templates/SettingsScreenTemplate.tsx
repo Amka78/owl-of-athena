@@ -10,7 +10,7 @@ import { InlineTimePicker, LeftSideButton } from "../atoms";
 import type { InlineTimePickerProps, TimePickerStyle } from "../atoms/InlineTimePicker";
 import { InternalView, LabeledCheckBox, LabeledSelectorMenu, RightSideButton } from "../molecules";
 import type { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
-import type { TemplateButtonProps, TemplateSelectorMenuProps } from "./TempatedProps";
+import type { TemplateButtonProps, TemplateSelectorMenuProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types

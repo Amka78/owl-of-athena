@@ -8,7 +8,7 @@ import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
 import type { ErrorTextProps } from "../atoms/ErrorText";
 import type { TimeViewProps } from "../atoms/TimeView";
 import { InternalView } from "../molecules";
-import type { TemplateButtonProps, TemplateFlatButtonProps } from "./TempatedProps";
+import type { TemplateButtonProps, TemplateFlatButtonProps } from "./TemplatedProps";
 //#endregion
 
 //#region Types
