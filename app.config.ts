@@ -31,6 +31,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     githubUrl: "https://github.com/Amka78/owl-of-athena",
     experiments: {
         ...config.experiments,
+        // Metro の customTransformOptions 経由で babel-preset-expo に渡り、
+        // babel-plugin-react-compiler が（他の transform より先に）適用される。
+        // src 210/210 が react-compiler-healthcheck でコンパイル可と確認済み。
+        reactCompiler: true,
         // GitHub Pages のプロジェクトページ（/owl-of-athena/）で配信するときだけ
         // CI からサブパスを渡す。ローカル開発では未設定のまま。
         ...(process.env.PAGES_BASE_URL ? { baseUrl: process.env.PAGES_BASE_URL } : {}),
