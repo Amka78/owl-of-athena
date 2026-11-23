@@ -1,0 +1,53 @@
+name: Storybook Tests (Nightly)
+
+on:
+  schedule:
+    # UTC 16:00 = JST 翌 1:00 に毎晩実行（PR ゲートから除外した重いスイートを夜間に回す）
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: storybook-nightly
+  cancel-in-progress: true
+
+jobs:
+  storybook:
+    name: storybook tests (vitest browser mode + playwright chromium)
+    runs-on: ubuntu-latest
+    # 通常 6〜7 分だが、profiles 系 stories で稀にハングした実績があるため
+    # 上限を設けて CI リソースの占有を防ぐ
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache bun install cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-install-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # vitest browser mode が playwright chromium を要求するため導入する
+      # （~100-150MB。キャッシュで夜間実行の再取得を回避）
+      - name: Cache playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+
+      - name: Install playwright chromium
+        run: bunx playwright install --with-deps chromium
+
+      - name: Run storybook tests
+        run: bun run test:storybook
