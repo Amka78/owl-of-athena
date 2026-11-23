@@ -29,6 +29,13 @@ jobs:
         with:
           bun-version: latest
 
+      # bun install のダウンロードキャッシュを CI 間で共有（同一 bun.lock なら再取得なし）
+      - name: Cache bun install cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-install-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
