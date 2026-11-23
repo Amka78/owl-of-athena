@@ -37,7 +37,7 @@
     "desktop": "bun run src-electrobun/main.ts",
     "build:desktop": "bun run build:web && bunx electrobun build",
     "build:desktop:release": "bun run build:web && bunx electrobun build --env=stable",
-    "desktop:dev": "concurrently \"expo start --web\" \"sleep 5 && bunx electrobun dev\"",
+    "desktop:dev": "concurrently \"expo start --web\" \"bun -e \\\"Bun.sleepSync(5000)\\\" && bunx electrobun dev\"",
     "format": "biome format --write src/",
     "check": "biome check src/",
     "check:fix": "biome check --write src/"
@@ -146,6 +146,7 @@
     "@vitest/coverage-v8": "^5.1.1",
     "babel-loader": "^8.2.2",
     "babel-preset-expo": "~58.0.23",
+    "concurrently": "^10.0.7",
     "playwright": "^1.65.1",
     "react-compiler-healthcheck": "^1.0.0",
     "react-test-renderer": "19.3.0",
