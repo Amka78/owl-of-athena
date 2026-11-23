@@ -6,10 +6,10 @@ import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { InlineTimePicker, LeftSideButton } from "../atoms";
-import type { InlineTimePickerProps, TimePickerStyle } from "../atoms/InlineTimePicker";
 import { InternalView, LabeledCheckBox, LabeledSelectorMenu, RightSideButton } from "../molecules";
 import type { LabeledCheckBoxProps } from "../molecules/LabeledCheckBox";
+import { InlineTimePicker, LeftSideButton } from "../ui";
+import type { InlineTimePickerProps, TimePickerStyle } from "../ui/InlineTimePicker";
 import type { TemplateButtonProps, TemplateSelectorMenuProps } from "./TemplatedProps";
 //#endregion
 

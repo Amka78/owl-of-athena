@@ -8,20 +8,14 @@ import type { Dimensions } from "../../hooks/";
 import MainDrawerNavigator from "../../navigation/MainDrawerNavigator";
 import { ConnectionStates } from "../../sdk";
 import {
-    FlatButton,
-    HomeIcon,
-    InfoIcon,
-    ProfilesIcon,
-    SessionsIconWithBadge,
-    SettingsIcon,
-} from "../atoms";
-import {
     AuroraInfoDialog,
     ConfirmDialog,
     IssueReportDialog,
     LoadingDialog,
+    SessionsIconWithBadge,
     SessionTransferDialog,
 } from "../molecules";
+import { FlatButton, HomeIcon, InfoIcon, ProfilesIcon, SettingsIcon } from "../ui";
 //#endregion
 
 //#region Types

@@ -1,8 +1,8 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-
-import { FieldSlider, ListItem } from "../atoms";
-import type { ListItemComponentProps } from "../atoms/ListItem";
+import { ListItem } from "../ui";
+import type { ListItemComponentProps } from "../ui/ListItem";
+import { FieldSlider } from "./FieldSlider";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 

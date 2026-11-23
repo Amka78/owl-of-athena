@@ -5,8 +5,8 @@ import { View } from "react-native";
 import { Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { Button, ContentText, TimeView } from "../atoms";
 import { ConvertibleContentTitle, InternalView } from "../molecules";
+import { Button, ContentText, TimeView } from "../ui";
 import type { TemplateTimeViewProps } from "./TemplatedProps";
 //#endregion
 

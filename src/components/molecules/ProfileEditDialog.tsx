@@ -6,7 +6,7 @@ import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
 import { useProfileStore } from "../../store/profileStore";
-import { FlatButton } from "../atoms";
+import { FlatButton } from "../ui";
 import { ValidatableTextBox } from "./ValidatableTextBox";
 
 //#endregion

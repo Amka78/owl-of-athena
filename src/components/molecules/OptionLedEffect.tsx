@@ -3,8 +3,8 @@ import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import type { StimLedValue } from "../../sdk/AuroraTypes";
-import { FieldLedEffect } from "../atoms/FieldLedEffect";
-import { ListItem } from "../atoms/ListItem";
+import { ListItem } from "../ui/ListItem";
+import { FieldLedEffect } from "./FieldLedEffect";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 

@@ -3,7 +3,7 @@ import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
-import { ContentText, FlatButton } from "../atoms";
+import { ContentText, FlatButton } from "../ui";
 
 //#endregion
 

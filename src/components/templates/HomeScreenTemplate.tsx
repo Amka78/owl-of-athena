@@ -4,10 +4,10 @@ import { type TextStyle, TouchableWithoutFeedback, View } from "react-native";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { Button, ErrorText, FlatButton, TimeView } from "../atoms";
-import type { ErrorTextProps } from "../atoms/ErrorText";
-import type { TimeViewProps } from "../atoms/TimeView";
 import { InternalView } from "../molecules";
+import { Button, ErrorText, FlatButton, TimeView } from "../ui";
+import type { ErrorTextProps } from "../ui/ErrorText";
+import type { TimeViewProps } from "../ui/TimeView";
 import type { TemplateButtonProps, TemplateFlatButtonProps } from "./TemplatedProps";
 //#endregion
 

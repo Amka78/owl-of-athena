@@ -2,7 +2,7 @@
 import React, { type FunctionComponent } from "react";
 import { StyleSheet, Text, type TextStyle, View } from "react-native";
 import { useTheme } from "react-native-paper";
-import { TimeView, type TimeViewMode } from "../atoms/TimeView";
+import { TimeView, type TimeViewMode } from "../ui/TimeView";
 //#endregion
 
 //#region Types

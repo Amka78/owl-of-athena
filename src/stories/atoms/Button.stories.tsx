@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { Button } from "../../components/atoms/Button";
+import { Button } from "../../components/ui/Button";
 import { Theme } from "../../constants";
 
 const meta = {

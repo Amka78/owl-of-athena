@@ -4,7 +4,7 @@ import { View, type ViewStyle } from "react-native";
 
 import { Colors, Dimens, Message, MessageKeys } from "../../../constants";
 import type { Dimensions } from "../../../hooks/useWindowDimensions";
-import { Button, FlatButton } from "../../atoms";
+import { Button, FlatButton } from "../../ui";
 //#endregion
 
 //#region Types

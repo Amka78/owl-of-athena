@@ -6,7 +6,7 @@ import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { useDeviceInfo } from "../../hooks/useDeviceInfo";
 import { useDeviceMaintenance } from "../../hooks/useDeviceMaintenance";
 import { buildAuroraInfoRows } from "../../utils/AuroraInfoRows";
-import { FlatButton } from "../atoms";
+import { FlatButton } from "../ui";
 //#endregion
 
 //#region Component

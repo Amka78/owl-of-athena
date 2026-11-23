@@ -5,7 +5,8 @@ import type { ParamListBase } from "@react-navigation/native";
 import type React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
-
+import { ConfirmDialog, SessionsIconWithBadge } from "../components/molecules";
+import { ProfileDesktopScreen, SessionDesktopScreen } from "../components/pages";
 import {
     AdminIcon,
     BatteryIcon,
@@ -14,11 +15,8 @@ import {
     LogoutIcon,
     MenuIcon,
     ProfilesIcon,
-    SessionsIconWithBadge,
     SettingsIcon,
-} from "../components/atoms";
-import { ConfirmDialog } from "../components/molecules";
-import { ProfileDesktopScreen, SessionDesktopScreen } from "../components/pages";
+} from "../components/ui";
 import { Colors, Message, MessageKeys } from "../constants";
 import { useMainDrawerNavigator } from "../hooks";
 import { ConnectionStates } from "../sdk";

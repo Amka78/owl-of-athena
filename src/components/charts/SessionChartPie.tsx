@@ -1,9 +1,9 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
-import { Colors, Message, MessageKeys } from "../constants";
-import type { AuroraSession } from "../sdk/models";
+import { Colors, Message, MessageKeys } from "../../constants";
+import type { AuroraSession } from "../../sdk/models";
 //import { NewChartPie as ChartPie } from "./charts";
-import { ChartPie } from "./charts";
+import ChartPie from "./ChartPie";
 //#endregion
 
 //#region Types

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { FieldLedEffect } from "../../components/atoms/FieldLedEffect";
+import { FieldLedEffect } from "../../components/molecules/FieldLedEffect";
 import { Theme } from "../../constants";
 
 const meta = {

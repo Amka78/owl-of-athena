@@ -5,9 +5,9 @@ import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
 import type { FilterByDateValues } from "../../../store/sessionStore";
-import { MenuContainer } from "../../atoms";
 import { MenuCheckBox } from "../../molecules";
 import type { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
+import { MenuContainer } from "../../ui";
 //#endregion
 
 //#region Types

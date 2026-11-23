@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { ProfileOptionList } from "../../components/organisms/profiles/ProfileOptionList";
+import { ProfileOptionList } from "../../components/features/profiles/ProfileOptionList";
 import { Theme } from "../../constants";
 import { defaultOptions, groupingProfileOptionList } from "../../services/ProfileService";
 

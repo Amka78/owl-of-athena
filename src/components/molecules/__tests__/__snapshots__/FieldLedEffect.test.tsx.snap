@@ -1,0 +1,708 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FieldLedEffect UnitTest > renders correctly 1`] = `
+<View
+  style={
+    [
+      {
+        "flex": 1,
+      },
+      undefined,
+    ]
+  }
+>
+  <View
+    collapsable={false}
+    pointerEvents="box-none"
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "paddingBottom": 8,
+          "paddingHorizontal": 8,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#bcfeff",
+            "fontFamily": "calibre_app_regular",
+            "fontSize": 14,
+            "marginBottom": 4,
+          }
+        }
+      >
+        Choose LED Effect
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+          }
+        }
+      >
+        <Picker
+          enabled={true}
+          onValueChange={[Function]}
+          selectedValue="blink"
+          style={
+            {
+              "backgroundColor": "#4a2fba",
+              "color": "#ffffff",
+              "flex": 1,
+            }
+          }
+        >
+          <Picker.Item
+            label="No Effect"
+            value=""
+          />
+          <Picker.Item
+            label="Set"
+            value="set"
+          />
+          <Picker.Item
+            label="Blink"
+            value="blink"
+          />
+          <Picker.Item
+            label="Alternate"
+            value="alternate"
+          />
+          <Picker.Item
+            label="Transition"
+            value="transition"
+          />
+        </Picker>
+        <Animated.View
+          ref={null}
+          style={
+            {
+              "backgroundColor": "transparent",
+              "borderRadius": 10,
+              "shadowColor": "#000",
+              "shadowOffset": {
+                "height": AnimatedValue {
+                  "_v": 0,
+                },
+                "width": 0,
+              },
+              "shadowOpacity": AnimatedValue {
+                "_v": 0,
+              },
+              "shadowRadius": AnimatedValue {
+                "_v": 0,
+              },
+            }
+          }
+          testID="button-container-outer-layer"
+        >
+          <Animated.View
+            style={
+              {
+                "backgroundColor": "transparent",
+                "borderColor": "transparent",
+                "borderRadius": 10,
+                "borderStyle": "solid",
+                "borderWidth": 0,
+                "flex": undefined,
+                "minWidth": 64,
+                "shadowColor": "#000",
+                "shadowOffset": {
+                  "height": AnimatedValue {
+                    "_v": 0,
+                  },
+                  "width": 0,
+                },
+                "shadowOpacity": AnimatedValue {
+                  "_v": 0,
+                },
+                "shadowRadius": AnimatedValue {
+                  "_v": 0,
+                },
+              }
+            }
+            testID="button-container"
+          >
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={
+                {
+                  "disabled": undefined,
+                }
+              }
+              disabled={false}
+              onPress={[Function]}
+              onPressIn={[Function]}
+              onPressOut={[Function]}
+              ref={null}
+              style={[Function]}
+              testID="button"
+            >
+              <View
+                style={
+                  [
+                    {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                      "justifyContent": "center",
+                    },
+                    [
+                      {
+                        "height": 28,
+                        "marginBottom": 12,
+                        "marginTop": 16,
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                <Text
+                  numberOfLines={1}
+                  ref={
+                    {
+                      "current": null,
+                    }
+                  }
+                  selectable={false}
+                  style={
+                    [
+                      {
+                        "textAlign": "left",
+                      },
+                      {
+                        "color": "rgba(28, 27, 31, 1)",
+                        "writingDirection": "ltr",
+                      },
+                      [
+                        {
+                          "fontFamily": "System",
+                          "fontSize": 14,
+                          "fontWeight": "500",
+                          "letterSpacing": 0.1,
+                          "lineHeight": 20,
+                        },
+                        [
+                          {
+                            "marginHorizontal": 16,
+                            "marginVertical": 9,
+                            "textAlign": "center",
+                          },
+                          false,
+                          {
+                            "marginHorizontal": 12,
+                          },
+                          undefined,
+                          false,
+                          {
+                            "color": "#00ffe6",
+                            "fontFamily": "System",
+                            "fontSize": 14,
+                            "fontWeight": "500",
+                            "letterSpacing": 0.1,
+                            "lineHeight": 20,
+                          },
+                          [
+                            {
+                              "fontFamily": "calibre_app_semibold",
+                              "fontSize": 14,
+                              "marginVertical": 0,
+                            },
+                            {
+                              "color": "rgba(28, 27, 31, 1)",
+                            },
+                            undefined,
+                          ],
+                        ],
+                      ],
+                    ]
+                  }
+                  testID="button-text"
+                >
+                  Preview Effect
+                </Text>
+              </View>
+            </Pressable>
+          </Animated.View>
+        </Animated.View>
+      </View>
+      <View>
+        <View
+          style={
+            {
+              "marginBottom": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "marginBottom": 8,
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#bcfeff",
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                  "marginBottom": 4,
+                }
+              }
+            >
+              Eyes
+            </Text>
+            <Picker
+              enabled={true}
+              onValueChange={[Function]}
+              selectedValue="both"
+              style={
+                {
+                  "backgroundColor": "#4a2fba",
+                  "color": "#ffffff",
+                }
+              }
+            >
+              <Picker.Item
+                label="None"
+                value="none"
+              />
+              <Picker.Item
+                label="Both"
+                value="both"
+              />
+              <Picker.Item
+                label="Left"
+                value="left"
+              />
+              <Picker.Item
+                label="Right"
+                value="right"
+              />
+            </Picker>
+          </View>
+          <Text
+            style={
+              {
+                "color": "#bcfeff",
+                "fontFamily": "calibre_app_regular",
+                "fontSize": 14,
+                "marginBottom": 4,
+              }
+            }
+          >
+            Color
+          </Text>
+          <View
+            style={
+              {
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "marginBottom": 8,
+              }
+            }
+          >
+            <TouchableOpacity
+              accessibilityLabel="white"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#FFFFFF",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="red"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#FF0000",
+                  },
+                  {
+                    "borderColor": "#ffffff",
+                    "borderWidth": 3,
+                  },
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="orange"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#FFFF00",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="pink"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#FF00FF",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="cyan"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#00FFFF",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="green"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#00FF00",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="blue"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#0000FF",
+                  },
+                  undefined,
+                ]
+              }
+            />
+            <TouchableOpacity
+              accessibilityLabel="yellow"
+              accessible={true}
+              disabled={false}
+              onPress={[Function]}
+              style={
+                [
+                  {
+                    "borderColor": "#9B9B9B",
+                    "borderRadius": 16,
+                    "borderWidth": 1,
+                    "height": 32,
+                    "marginBottom": 8,
+                    "marginRight": 8,
+                    "width": 32,
+                  },
+                  {
+                    "backgroundColor": "#FF7700",
+                  },
+                  undefined,
+                ]
+              }
+            />
+          </View>
+          <View
+            style={
+              {
+                "marginBottom": 12,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#bcfeff",
+                    "flexShrink": 1,
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 14,
+                  }
+                }
+              >
+                Brightness
+              </Text>
+              <Text
+                style={
+                  {
+                    "color": "#ffffff",
+                    "fontFamily": "calibre_app_regular",
+                    "fontSize": 14,
+                    "marginLeft": 8,
+                  }
+                }
+              >
+                100%
+              </Text>
+            </View>
+            <Slider
+              disabled={false}
+              maximumValue={100}
+              minimumValue={0}
+              onValueChange={[Function]}
+              step={1}
+              value={100}
+            />
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "marginBottom": 12,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#bcfeff",
+                  "flexShrink": 1,
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                }
+              }
+            >
+              Times to Blink
+            </Text>
+            <Text
+              style={
+                {
+                  "color": "#ffffff",
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                  "marginLeft": 8,
+                }
+              }
+            >
+              5
+            </Text>
+          </View>
+          <Slider
+            disabled={false}
+            maximumValue={100}
+            minimumValue={1}
+            onValueChange={[Function]}
+            step={1}
+            value={5}
+          />
+        </View>
+        <View
+          style={
+            {
+              "marginBottom": 12,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#bcfeff",
+                  "flexShrink": 1,
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                }
+              }
+            >
+              Blink Rate (Hz)
+            </Text>
+            <Text
+              style={
+                {
+                  "color": "#ffffff",
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                  "marginLeft": 8,
+                }
+              }
+            >
+              0.5 Hz
+            </Text>
+          </View>
+          <Slider
+            disabled={false}
+            maximumValue={5}
+            minimumValue={0.125}
+            onValueChange={[Function]}
+            step={0.125}
+            value={0.5}
+          />
+        </View>
+        <View
+          style={
+            {
+              "marginBottom": 12,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#bcfeff",
+                  "flexShrink": 1,
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                }
+              }
+            >
+              Shutoff Delay (s)
+            </Text>
+            <Text
+              style={
+                {
+                  "color": "#ffffff",
+                  "fontFamily": "calibre_app_regular",
+                  "fontSize": 14,
+                  "marginLeft": 8,
+                }
+              }
+            >
+              0 s
+            </Text>
+          </View>
+          <Slider
+            disabled={false}
+            maximumValue={120}
+            minimumValue={0}
+            onValueChange={[Function]}
+            step={5}
+            value={0}
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

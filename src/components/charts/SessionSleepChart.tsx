@@ -1,9 +1,10 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
-import { ChartMovement, ChartSleep } from "../components/charts";
-import { Layout } from "../constants";
-import type { AuroraSessionDetail } from "../sdk/models/AuroraSessionDetail";
+import { Layout } from "../../constants";
+import type { AuroraSessionDetail } from "../../sdk/models/AuroraSessionDetail";
+import { ChartMovement } from "./ChartMovement";
+import { ChartSleep } from "./ChartSleep";
 //#endregion
 
 //#region Types

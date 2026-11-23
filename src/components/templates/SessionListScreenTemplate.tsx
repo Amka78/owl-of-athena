@@ -8,10 +8,10 @@ import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { AuroraSession } from "../../sdk/models";
 import { buildSessionListRows } from "../../services/SessionListService";
-import { DeleteIcon, ListItem, ScrollableList, StandardView, StarIcon } from "../atoms";
-import type { ListItemComponentProps } from "../atoms/ListItem";
 import { ChartRadialProgress } from "../charts";
-import { SessionListMenu, type SessionListMenuProps } from "../organisms/sessions/SessionListMenu";
+import { SessionListMenu, type SessionListMenuProps } from "../features/sessions/SessionListMenu";
+import { DeleteIcon, ListItem, ScrollableList, StandardView, StarIcon } from "../ui";
+import type { ListItemComponentProps } from "../ui/ListItem";
 //#endregion
 
 //#region Types

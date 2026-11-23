@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { ProfileSecondMenu } from "../../../components/organisms/profiles/ProfileSecondMenu";
+import { ProfileSecondMenu } from "../../../components/features/profiles/ProfileSecondMenu";
 import { Theme } from "../../../constants";
 import { getDimensions } from "../../WindowDimensionsForStoryBook";
 

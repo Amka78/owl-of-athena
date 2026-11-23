@@ -2,7 +2,7 @@
 import React, { type FunctionComponent } from "react";
 
 import { Message, MessageKeys } from "../../constants";
-import { ContentText, StandardView } from "../atoms";
+import { ContentText, StandardView } from "../ui";
 //#endregion
 
 //#region Component

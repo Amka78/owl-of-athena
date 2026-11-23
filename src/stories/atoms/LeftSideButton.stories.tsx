@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { LeftSideButton } from "../../components/atoms/LeftSideButton";
+import { LeftSideButton } from "../../components/ui/LeftSideButton";
 import { Theme } from "../../constants";
 
 const meta = {

@@ -8,7 +8,7 @@ import { BuzzerSongs } from "../../sdk/AuroraConstants";
 import type { SongValue } from "../../sdk/AuroraTypes";
 import { BUZZ_SONG_DEFAULTS } from "../../services/ProfileService";
 import { LabeledSlider } from "../molecules/LabeledSlider";
-import { FlatButton } from "./FlatButton";
+import { FlatButton } from "../ui/FlatButton";
 //#endregion
 
 //#region Types

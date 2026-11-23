@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect } from "storybook/test";
-import { InlineTimePicker } from "../../components/atoms/InlineTimePicker";
+import { InlineTimePicker } from "../../components/ui/InlineTimePicker";
 import { Theme } from "../../constants";
 
 const meta = {

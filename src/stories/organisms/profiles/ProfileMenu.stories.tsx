@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect } from "storybook/test";
-import { ProfileMenu } from "../../../components/organisms/profiles/ProfileMenu";
+import { ProfileMenu } from "../../../components/features/profiles/ProfileMenu";
 import { Theme } from "../../../constants";
 
 const meta = {

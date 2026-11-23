@@ -4,8 +4,8 @@ import { type StyleProp, Text, View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import type { TimeField } from "../../sdk/AuroraTypes";
-import { FlatButton } from "./FlatButton";
-import { InlineTimePicker } from "./InlineTimePicker";
+import { FlatButton } from "../ui/FlatButton";
+import { InlineTimePicker } from "../ui/InlineTimePicker";
 //#endregion
 
 //#region Types

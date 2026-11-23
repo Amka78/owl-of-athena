@@ -4,7 +4,7 @@ import { StyleSheet, TextInput, type TextInputProps } from "react-native";
 
 import { Colors } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
-import { StandardView } from "../atoms";
+import { StandardView } from "../ui";
 //#endregion
 
 //#region Types

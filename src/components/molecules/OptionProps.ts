@@ -9,7 +9,7 @@ import type {
     TimeField,
     ToggleField,
 } from "../../sdk/AuroraTypes";
-import type { ListItemComponentProps } from "../atoms/ListItem";
+import type { ListItemComponentProps } from "../ui/ListItem";
 //#endregion
 
 export type OptionProps = {

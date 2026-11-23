@@ -4,7 +4,7 @@ import { Dialog, Portal, RadioButton } from "react-native-paper";
 import { SafeAreaInsetsContext } from "react-native-safe-area-context";
 import { Colors, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
-import { FlatButton } from "../atoms";
+import { FlatButton } from "../ui";
 import { LabeledRadioButton } from "./LabeledRadioButton";
 
 type ProfilesDialogSettings = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn } from "storybook/test";
-import { DeleteIcon } from "../../components/atoms/DeleteIcon";
+import { DeleteIcon } from "../../components/ui/DeleteIcon";
 
 const meta = {
     title: "Atoms/DeleteIcon",

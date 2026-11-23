@@ -7,14 +7,14 @@ import { useConvertibleHeader } from "../../hooks/useConvertibleHeader";
 import { useLocale } from "../../hooks/useLocale";
 import type { useTextBoxReturn } from "../../hooks/useTextBox";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { ContentText } from "../atoms/ContentText";
-import { ErrorText, type ErrorTextProps } from "../atoms/ErrorText";
-import { FlexSpacer } from "../atoms/FlexSpacer";
-import { LeftSideButton } from "../atoms/LeftSideButton";
-import { TextBox } from "../atoms/TextBox";
 import { ConvertibleContentTitle } from "../molecules/ConvertibleContentTitle";
 import { InternalView } from "../molecules/InternalView";
 import { RightSideButton } from "../molecules/RightSideButton";
+import { ContentText } from "../ui/ContentText";
+import { ErrorText, type ErrorTextProps } from "../ui/ErrorText";
+import { FlexSpacer } from "../ui/FlexSpacer";
+import { LeftSideButton } from "../ui/LeftSideButton";
+import { TextBox } from "../ui/TextBox";
 import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 

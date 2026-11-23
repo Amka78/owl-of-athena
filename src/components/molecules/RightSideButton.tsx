@@ -2,7 +2,7 @@
 import React, { type FunctionComponent } from "react";
 
 import { Dimens } from "../../constants";
-import { Button, type ButtonProps } from "../atoms/Button";
+import { Button, type ButtonProps } from "../ui/Button";
 //#endregion
 
 //#region Types

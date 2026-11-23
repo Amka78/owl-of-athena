@@ -2,13 +2,13 @@
 import type React from "react";
 import type { FunctionComponent } from "react";
 import type { AuroraProfileOption, SongValue, StimLedValue } from "../../../sdk/AuroraTypes";
-import { InfoIcon } from "../../atoms";
 import { OptionBuzzSong } from "../../molecules/OptionBuzzSong";
 import { OptionCheckBoxes } from "../../molecules/OptionCheckBoxes";
 import { OptionLedEffect } from "../../molecules/OptionLedEffect";
 import { OptionSlider } from "../../molecules/OptionSlider";
 import { OptionTime } from "../../molecules/OptionTime";
 import { OptionToggle } from "../../molecules/OptionToggle";
+import { InfoIcon } from "../../ui";
 //#endregion
 
 //#region Import Modules

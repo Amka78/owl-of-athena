@@ -3,7 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import type { FunctionComponent } from "react";
 import { StyleSheet, View } from "react-native";
 import { Colors, Message, type MessageKeys } from "../../constants";
-import { ListItem } from "../atoms";
+import { ListItem } from "../ui";
 
 //#endregion
 

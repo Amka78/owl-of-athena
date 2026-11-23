@@ -3,7 +3,7 @@ import type React from "react";
 import { Text } from "react-native";
 import { Provider } from "react-native-paper";
 import { expect } from "storybook/test";
-import { ScrollableList } from "../../components/atoms/ScrollableList";
+import { ScrollableList } from "../../components/ui/ScrollableList";
 import { Theme } from "../../constants";
 
 const meta = {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn } from "storybook/test";
-import { ProfilesIcon } from "../../components/atoms/ProfilesIcon";
+import { ProfilesIcon } from "../../components/ui/ProfilesIcon";
 
 const meta = {
     title: "Atoms/ProfilesIcon",

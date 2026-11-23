@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { UserMessage } from "../../types";
-import { ContentText, FlatButton } from "../atoms";
+import { ContentText, FlatButton } from "../ui";
 
 //#endregion
 

@@ -4,8 +4,8 @@ import type { NativeStackHeaderItemProps } from "@react-navigation/native-stack"
 import React, { type FunctionComponent, useLayoutEffect } from "react";
 import { useWindowDimensions } from "../../hooks";
 import { useProfileList } from "../../hooks/profiles/useProfileList";
-import { FilterIcon, RefreshIcon } from "../atoms";
 import { ProfileListScreenTemplate } from "../templates/ProfileListScreenTemplate";
+import { FilterIcon, RefreshIcon } from "../ui";
 //#endregion
 
 //#region Component

@@ -1,9 +1,9 @@
 //#region Import Modules
 import React, { type FunctionComponent } from "react";
 import { View, type ViewStyle } from "react-native";
-
-import { FieldStreamCheckBoxes, ListItem } from "../atoms";
-import type { ListItemComponentProps } from "../atoms/ListItem";
+import { ListItem } from "../ui";
+import type { ListItemComponentProps } from "../ui/ListItem";
+import { FieldStreamCheckBoxes } from "./FieldStreamCheckboxes";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 

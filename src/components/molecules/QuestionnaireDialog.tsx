@@ -20,7 +20,7 @@ import type {
     QuestionnaireRespondent,
     QuestionResponse,
 } from "../../types";
-import { ContentText, ContentTitle, FlatButton, TextBox } from "../atoms";
+import { ContentText, ContentTitle, FlatButton, TextBox } from "../ui";
 
 //#endregion
 

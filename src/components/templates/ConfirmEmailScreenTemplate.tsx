@@ -5,8 +5,8 @@ import { Alert, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { Button, ContentText, ErrorText, FlexSpacer, LeftSideButton } from "../atoms";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
+import { Button, ContentText, ErrorText, FlexSpacer, LeftSideButton } from "../ui";
 import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 

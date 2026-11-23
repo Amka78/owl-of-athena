@@ -2,8 +2,8 @@
 import React, { type FunctionComponent } from "react";
 
 import ProfileTabNavigator from "../../navigation/ProfileTabNavigator";
-import { FilterIcon, FlexSpacer, RefreshIcon } from "../atoms";
 import { ConvertibleListForm } from "../molecules";
+import { FilterIcon, FlexSpacer, RefreshIcon } from "../ui";
 import {
     ProfileListScreenTemplate,
     type ProfileListScreenTemplateProps,

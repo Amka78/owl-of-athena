@@ -5,11 +5,11 @@ import { type TextStyle, View } from "react-native";
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../atoms";
-import type { ContentTitleProps } from "../atoms/ContentTitle";
-import type { ErrorTextProps } from "../atoms/ErrorText";
-import type { TextBoxProps } from "../atoms/TextBox";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
+import { ErrorText, FlatButton, LeftSideButton, TextBox } from "../ui";
+import type { ContentTitleProps } from "../ui/ContentTitle";
+import type { ErrorTextProps } from "../ui/ErrorText";
+import type { TextBoxProps } from "../ui/TextBox";
 import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 

@@ -7,7 +7,7 @@ import React, { type FunctionComponent, useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Menu } from "react-native-paper";
 
-import { TextBox } from "../atoms";
+import { TextBox } from "../ui";
 import type { DatePickerProps } from "./DatePickerProps";
 //#endregion
 

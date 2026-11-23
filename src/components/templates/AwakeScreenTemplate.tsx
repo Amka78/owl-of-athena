@@ -5,15 +5,15 @@ import { View } from "react-native";
 import { Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { ContentText, LeftSideButton } from "../atoms";
-import type { ContentTextProps } from "../atoms/ContentText";
-import type { ContentTitleProps } from "../atoms/ContentTitle";
 import {
     ConvertibleContentTitle,
     InternalView,
     QuestionnaireDialog,
     RightSideButton,
 } from "../molecules";
+import { ContentText, LeftSideButton } from "../ui";
+import type { ContentTextProps } from "../ui/ContentText";
+import type { ContentTitleProps } from "../ui/ContentTitle";
 import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn } from "storybook/test";
-import { FieldSlider } from "../../components/atoms/FieldSlider";
+import { FieldSlider } from "../../components/molecules/FieldSlider";
 
 const meta = {
     title: "Atoms/FieldSlider",

@@ -8,8 +8,8 @@ import { SafeAreaInsetsContext } from "react-native-safe-area-context";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { AudioList } from "../../sdk/models/AudioList";
 import type { AuroraSound } from "../../types";
-import { FlatButton } from "../atoms";
 import { LabeledRadioButton } from "../molecules";
+import { FlatButton } from "../ui";
 
 //#endregion
 

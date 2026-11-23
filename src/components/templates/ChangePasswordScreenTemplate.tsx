@@ -6,9 +6,9 @@ import { Colors, Message, MessageKeys } from "../../constants";
 import { useConvertibleHeader, useLocale } from "../../hooks";
 import type { useTextBoxReturn } from "../../hooks/useTextBox";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { ContentText, ErrorText, FlexSpacer, LeftSideButton, TextBox } from "../atoms";
-import type { ErrorTextProps } from "../atoms/ErrorText";
 import { ConvertibleContentTitle, InternalView, RightSideButton } from "../molecules";
+import { ContentText, ErrorText, FlexSpacer, LeftSideButton, TextBox } from "../ui";
+import type { ErrorTextProps } from "../ui/ErrorText";
 import type { TemplateButtonProps } from "./TemplatedProps";
 //#endregion
 

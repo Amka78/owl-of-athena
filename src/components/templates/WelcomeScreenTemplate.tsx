@@ -5,8 +5,8 @@ import { type TextStyle, View } from "react-native";
 import { Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { Button, ContentText, ContentTitle, LeftSideButton } from "../atoms";
 import { InternalView, RightSideButton } from "../molecules";
+import { Button, ContentText, ContentTitle, LeftSideButton } from "../ui";
 //#endregion
 
 //#region Types

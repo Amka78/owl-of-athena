@@ -5,7 +5,7 @@ import { View, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
 import type { Dimensions } from "../../../hooks/useWindowDimensions";
-import { FlatButton, LeftSideButton } from "../../atoms";
+import { FlatButton, LeftSideButton } from "../../ui";
 //#endregion
 
 //#region Types

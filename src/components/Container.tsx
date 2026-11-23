@@ -15,7 +15,7 @@ import { APP_SCHEME, Theme } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { isPasswordRecoveryUrl } from "../services/AuthLinkService";
 import { useRecoveryLinkStore } from "../store/recoveryLinkStore";
-import { OfflineBanner } from "./atoms/OfflineBanner";
+import { OfflineBanner } from "./molecules/OfflineBanner";
 //#endregion
 
 //#region Types

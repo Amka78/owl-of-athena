@@ -4,7 +4,7 @@ import { Text, type TextStyle, View, type ViewStyle } from "react-native";
 
 import { Colors } from "../../../constants";
 import type { AuroraProfile } from "../../../sdk/AuroraTypes";
-import { EditIcon } from "../../atoms";
+import { EditIcon } from "../../ui";
 //#endregion
 
 //#region Types

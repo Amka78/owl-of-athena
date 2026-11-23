@@ -6,6 +6,7 @@ import { View, type ViewStyle } from "react-native";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import type { AuroraProfile } from "../../sdk/AuroraTypes";
+import { ProfileListMenu, type ProfileListMenuProps } from "../features/profiles/ProfileListMenu";
 import {
     CommunityIcon,
     DeleteIcon,
@@ -15,9 +16,8 @@ import {
     ScrollableList,
     StandardView,
     StarIcon,
-} from "../atoms";
-import type { ListItemComponentProps } from "../atoms/ListItem";
-import { ProfileListMenu, type ProfileListMenuProps } from "../organisms/profiles/ProfileListMenu";
+} from "../ui";
+import type { ListItemComponentProps } from "../ui/ListItem";
 //#endregion
 
 //#region Types

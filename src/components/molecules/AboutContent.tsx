@@ -3,7 +3,7 @@ import type { FunctionComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Colors, Dimens, Fonts } from "../../constants";
-import { ContentText } from "../atoms/ContentText";
+import { ContentText } from "../ui/ContentText";
 //#endregion
 
 //#region Types

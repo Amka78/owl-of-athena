@@ -5,20 +5,20 @@ import { IconButton } from "react-native-paper";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions, useWindowDimensions } from "../../hooks";
 import type { CurrentChart } from "../../types/CurrentChart";
-import { SessionChartPie, SessionSleepChart } from "..";
-import { ContentText, FlexSpacer, StandardView } from "../atoms";
+import { SessionChartPie, SessionSleepChart } from "../charts";
 import { ChartRadialProgress, type ChartRadialProgressProps } from "../charts/ChartRadialProgress";
+import type { SessionChartPieProps } from "../charts/SessionChartPie";
+import type { SessionSleepChartProps } from "../charts/SessionSleepChart";
 import {
     SessionTimelineChart,
     type SessionTimelineChartProps,
 } from "../charts/SessionTimelineChart";
-import { SessionTimeView } from "../molecules";
 import {
     SessionDetailsMenu,
     type SessionDetailsMenuProps,
-} from "../organisms/sessions/SessionDetailsMenu";
-import type { SessionChartPieProps } from "../SessionChartPie";
-import type { SessionSleepChartProps } from "../SessionSleepChart";
+} from "../features/sessions/SessionDetailsMenu";
+import { SessionTimeView } from "../molecules";
+import { ContentText, FlexSpacer, StandardView } from "../ui";
 import type { TemplateTimeViewProps } from "./TemplatedProps";
 //#endregion
 

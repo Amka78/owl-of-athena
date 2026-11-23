@@ -8,12 +8,12 @@ import { useLocale, useScreenDimensions } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
 import type { AuroraProfile, SongValue, StimLedValue } from "../../sdk/AuroraTypes";
 import type { GroupedProfileOptionList, ProfileOptionValues } from "../../services/ProfileService";
-import { StandardView } from "../atoms";
+import { ProfileMenu } from "../features/profiles/ProfileMenu";
+import { ProfileOptionList } from "../features/profiles/ProfileOptionList";
+import { ProfileSecondMenu } from "../features/profiles/ProfileSecondMenu";
+import { UnsavedProfileMenu } from "../features/profiles/UnsavedProfileMenu";
 import { ProfileEditDialog } from "../molecules/ProfileEditDialog";
-import { ProfileMenu } from "../organisms/profiles/ProfileMenu";
-import { ProfileOptionList } from "../organisms/profiles/ProfileOptionList";
-import { ProfileSecondMenu } from "../organisms/profiles/ProfileSecondMenu";
-import { UnsavedProfileMenu } from "../organisms/profiles/UnsavedProfileMenu";
+import { StandardView } from "../ui";
 //#endregion
 
 export type ProfileScreenTemplateProps = {

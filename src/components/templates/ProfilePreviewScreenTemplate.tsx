@@ -5,7 +5,7 @@ import { IconButton } from "react-native-paper";
 
 import { Colors, Message, MessageKeys } from "../../constants";
 import { useScreenDimensions } from "../../hooks";
-import { StandardView } from "../atoms";
+import { StandardView } from "../ui";
 //#endregion
 
 //#region Types

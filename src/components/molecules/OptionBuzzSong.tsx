@@ -3,8 +3,8 @@ import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 
 import type { SongValue } from "../../sdk/AuroraTypes";
-import { FieldBuzzSong } from "../atoms/FieldBuzzSong";
-import { ListItem } from "../atoms/ListItem";
+import { ListItem } from "../ui/ListItem";
+import { FieldBuzzSong } from "./FieldBuzzSong";
 import type { OptionProps } from "./OptionProps";
 //#endregion
 

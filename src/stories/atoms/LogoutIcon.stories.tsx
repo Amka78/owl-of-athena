@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn } from "storybook/test";
-import { LogoutIcon } from "../../components/atoms/LogoutIcon";
+import { LogoutIcon } from "../../components/ui/LogoutIcon";
 
 const meta = {
     title: "Atoms/LogoutIcon",

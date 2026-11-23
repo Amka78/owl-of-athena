@@ -4,7 +4,7 @@ import type React from "react";
 import type { FunctionComponent } from "react";
 import type { ViewStyle } from "react-native";
 import { Dimens } from "../../constants";
-import { StandardView } from "../atoms";
+import { StandardView } from "../ui";
 //#endregion
 
 //#region Type

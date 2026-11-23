@@ -3,9 +3,9 @@ import React, { type FunctionComponent } from "react";
 import { Text, type TextStyle, type ViewStyle } from "react-native";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
-import { MenuContainer } from "../../atoms";
 import { MenuCheckBox } from "../../molecules";
 import type { CheckBoxStatus } from "../../molecules/LabeledCheckBox";
+import { MenuContainer } from "../../ui";
 //#endregion
 
 //#region Types

@@ -3,8 +3,8 @@ import React, { type FunctionComponent } from "react";
 
 import SessionTabNavigator from "../../navigation/SessionTabNavigator";
 import type { AuroraSession } from "../../sdk/models";
-import { FilterIcon, FlexSpacer, RefreshIcon } from "../atoms";
 import { ConvertibleListForm } from "../molecules";
+import { FilterIcon, FlexSpacer, RefreshIcon } from "../ui";
 import { SessionBlankScreenTemplate } from "./SessionBlankScreenTemplate";
 import {
     SessionListScreenTemplate,

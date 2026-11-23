@@ -6,7 +6,7 @@ import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import type { AuroraOSInfo } from "../../sdk/models";
 import { buildAuroraInfoRows } from "../../utils/AuroraInfoRows";
-import { ContentText, FlatButton } from "../atoms";
+import { ContentText, FlatButton } from "../ui";
 
 //#endregion
 

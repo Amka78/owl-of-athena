@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { FieldToggle } from "../../components/atoms/FieldToggle";
+import { FieldToggle } from "../../components/molecules/FieldToggle";
 import { Theme } from "../../constants";
 
 const meta = {

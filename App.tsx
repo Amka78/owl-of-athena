@@ -7,7 +7,7 @@ import * as Localization from "expo-localization";
 import React from "react";
 import { Platform, StatusBar } from "react-native";
 import { Container } from "./src/components";
-import { UpdateSnackBar } from "./src/components/atoms";
+import { UpdateSnackBar } from "./src/components/molecules";
 import { Message } from "./src/constants";
 import {
     AlarmAudioInstance,

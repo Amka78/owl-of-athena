@@ -5,7 +5,7 @@ import { Dialog } from "react-native-paper";
 
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import { getAppInfo } from "../../utils";
-import { FlatButton } from "../atoms";
+import { FlatButton } from "../ui";
 import { AboutContent, type AboutInfoRow } from "./AboutContent";
 
 //#endregion

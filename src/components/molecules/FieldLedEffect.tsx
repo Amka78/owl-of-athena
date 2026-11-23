@@ -9,7 +9,7 @@ import type { LedEffectName, StimLedValue } from "../../sdk/AuroraTypes";
 import { LED_EFFECT_DEFAULTS } from "../../services/ProfileService";
 import { LabeledSlider } from "../molecules/LabeledSlider";
 import { LedPicker } from "../molecules/LedPicker";
-import { FlatButton } from "./FlatButton";
+import { FlatButton } from "../ui/FlatButton";
 //#endregion
 
 //#region Types

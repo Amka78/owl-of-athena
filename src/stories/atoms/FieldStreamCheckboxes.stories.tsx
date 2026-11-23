@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 import { Provider } from "react-native-paper";
 import { expect, fn } from "storybook/test";
-import { FieldStreamCheckBoxes } from "../../components/atoms/FieldStreamCheckboxes";
+import { FieldStreamCheckBoxes } from "../../components/molecules/FieldStreamCheckboxes";
 import { Theme } from "../../constants";
 
 const meta = {

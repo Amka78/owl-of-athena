@@ -3,7 +3,7 @@ import type { FunctionComponent } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Colors } from "../../constants";
-import { SessionsIcon, type SessionsIconProps } from "./SessionsIcon";
+import { SessionsIcon, type SessionsIconProps } from "../ui/SessionsIcon";
 //#endregion
 
 //#region Types

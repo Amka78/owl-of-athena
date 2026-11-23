@@ -3,7 +3,7 @@ import React, { type FunctionComponent } from "react";
 import { View } from "react-native";
 import { HelperText } from "react-native-paper";
 
-import { TextBox, type TextBoxProps } from "../atoms/TextBox";
+import { TextBox, type TextBoxProps } from "../ui/TextBox";
 //#endregion
 
 //#region Types

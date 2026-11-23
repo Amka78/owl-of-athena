@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type React from "react";
 import { Text } from "react-native";
 import { expect } from "storybook/test";
-import { MenuContainer } from "../../components/atoms/MenuContainer";
+import { MenuContainer } from "../../components/ui/MenuContainer";
 
 const meta = {
     title: "Atoms/MenuContainer",

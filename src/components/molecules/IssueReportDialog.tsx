@@ -10,7 +10,7 @@ import {
 import LogService from "../../services/LogService";
 import { useIssueStore } from "../../store/issueStore";
 import type { IssueAttachmentInput } from "../../types";
-import { ContentText, FlatButton } from "../atoms";
+import { ContentText, FlatButton } from "../ui";
 import { ValidatableTextBox } from "./ValidatableTextBox";
 
 //#endregion

@@ -4,8 +4,8 @@ import { StyleSheet, Text, View, type ViewStyle } from "react-native";
 import { Switch } from "react-native-paper";
 
 import { Colors, Message, MessageKeys } from "../../../constants";
-import { FlatButton } from "../../atoms/FlatButton";
-import { MenuContainer } from "../../atoms/MenuContainer";
+import { FlatButton } from "../../ui/FlatButton";
+import { MenuContainer } from "../../ui/MenuContainer";
 //#endregion
 
 //#region Types

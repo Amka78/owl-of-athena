@@ -6,7 +6,6 @@ import { RadioButton } from "react-native-paper";
 import { Colors, Dimens, Message, MessageKeys } from "../../constants";
 import { useLocale } from "../../hooks";
 import type { Dimensions } from "../../hooks/useWindowDimensions";
-import { ErrorText, LeftSideButton, TextBox } from "../atoms";
 import {
     ConvertibleContentTitle,
     DatePicker,
@@ -17,6 +16,7 @@ import {
     RightSideButton,
     ValidatableTextBox,
 } from "../molecules";
+import { ErrorText, LeftSideButton, TextBox } from "../ui";
 import type {
     TemplateLabeledCheckBoxProps,
     TemplateRadioButtonProps,

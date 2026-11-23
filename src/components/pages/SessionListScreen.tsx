@@ -5,8 +5,8 @@ import React, { type FunctionComponent, useLayoutEffect } from "react";
 
 import { useSessinList } from "../../hooks/sessions/useSessionList";
 import { FilterByDateValues } from "../../store/sessionStore";
-import { FilterIcon, RefreshIcon } from "../atoms";
 import { SessionListScreenTemplate } from "./../templates/SessionListScreenTemplate";
+import { FilterIcon, RefreshIcon } from "../ui";
 //#endregion
 
 //#region Component

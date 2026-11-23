@@ -5,7 +5,7 @@ import { Dialog } from "react-native-paper";
 import { Colors, Dimens, Fonts, Message, MessageKeys } from "../../constants";
 import IssueService from "../../services/IssueService";
 import type { IssueAttachmentWithUrl } from "../../types";
-import { FlatButton } from "../atoms";
+import { FlatButton } from "../ui";
 
 //#endregion
 
