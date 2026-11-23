@@ -1,0 +1,50 @@
+name: CI Quality Gate (PR)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-quality-gate-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: typecheck / biome / react-compiler / vitest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache bun install cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: bun-install-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # 検証は check:all（typecheck→biome→healthcheck→test→test:storybook）から
+      # storybook browser テストだけ外した PR ゲート版。
+      # test:storybook は playwright chromium 必須で約 6〜7 分かかるため、
+      # マージ後の本番系（pages.yml / EAS Update / desktop）が実バンドルを検証する。
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Biome check
+        run: bun run check
+
+      - name: React Compiler health check
+        run: bun run check:react-compiler
+
+      - name: Unit tests (vitest)
+        run: bun run test
