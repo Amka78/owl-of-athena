@@ -1,5 +1,5 @@
 import Flat from "flat";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import AuroraSessionParser from "./AuroraSessionParser";
 import type { DirectoryInfo } from "./AuroraTypes";
 import { camelCaseObjectKeys, parseValueString } from "./util";
@@ -62,7 +62,7 @@ export default class AuroraSessionReader {
             }
         } catch (sessionWithError: any) {
             if (!sessionWithError.date || typeof sessionWithError != "number") {
-                sessionWithError.date = +moment.utc(session.name, "YYYY-MM-DD@HHmm");
+                sessionWithError.date = +dayjs.utc(session.name, "YYYY-MM-DD@HHmm");
             }
             Object.assign(session, sessionWithError);
         }

@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import moment from "moment";
 import PropTypes from "prop-types";
+import dayjs from "../../utils/dayjs";
 import Chart, { type ChartProps } from "./Chart";
 
 export default class ChartLine extends Chart<ChartProps> {
@@ -24,7 +24,7 @@ export default class ChartLine extends Chart<ChartProps> {
         this.buildAxes();
 
         this.axisX!.tickFormat((d) =>
-            moment(d as Date)
+            dayjs(d as Date)
                 .format("h:ma")
                 .slice(0, -1),
         );

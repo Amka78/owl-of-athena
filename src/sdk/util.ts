@@ -1,7 +1,7 @@
 import camelCase from "lodash/camelCase";
 import isPlainObject from "lodash/isPlainObject";
-import moment from "moment";
 import type Stream from "stream";
+import dayjs from "../utils/dayjs";
 import { LedColors, LedEffects } from "./AuroraConstants";
 
 const sleep = (ms = 0): any => new Promise((resolve) => setTimeout(resolve, ms));
@@ -39,19 +39,25 @@ const parseValueString = (value: string): any => {
     }
 
     //support the funky date format GCC uses for __TIME__ constant
-    const date = moment.utc(
-        value,
-        [
-            moment.ISO_8601,
-            "YYYY-MM-DD HH:mm:ss:SSS",
-            "MMM D YYYY - HH:mm:ss",
-            "MMM  D YYYY - HH:mm:ss",
-            "MMM DD YYYY - HH:mm:ss",
-        ],
-        true,
-    );
+    // dayjs は moment.ISO_8601 相当の定数を持たず、また配列渡しの strict 解析は
+    // utc プラグインによるオフセット適用が効かないため、単一フォーマットを順に試す。
+    const gccFormats = [
+        "YYYY-MM-DD HH:mm:ss:SSS",
+        "MMM D YYYY - HH:mm:ss",
+        "MMM  D YYYY - HH:mm:ss",
+        "MMM DD YYYY - HH:mm:ss",
+    ];
+    const parsedGcc = gccFormats
+        .map((format) => dayjs.utc(value, format, true))
+        .find((candidate) => candidate.isValid());
+    // GCC 形式に一致しない場合は ISO 8601 のみ既定パーサー（UTC）で受ける。
+    // フォーマットなしパースは new Date() にフォールバックし、
+    // "value 1" のような文字列を 2001-01-01 として誤解釈するため、
+    // YYYY-MM-DD で始まる文字列に限定する（moment.ISO_8601 の strict 相当）。
+    const isIsoLike = /^\d{4}-\d{2}-\d{2}/.test(value);
+    const date = parsedGcc ?? (isIsoLike ? dayjs.utc(value) : undefined);
 
-    if (date.isValid()) {
+    if (date?.isValid()) {
         return +date;
     }
 

@@ -1,7 +1,6 @@
-import moment from "moment";
-
 import { Message, MessageKeys } from "../constants";
 import type { AuroraOSInfo } from "../sdk/models";
+import dayjs from "./dayjs";
 
 export type AuroraInfoRow = {
     label: string;
@@ -40,7 +39,7 @@ export const buildAuroraInfoRows = (osInfo: AuroraOSInfo): Array<AuroraInfoRow> 
         label: Message.get(MessageKeys.aurora_info_build_date),
         value:
             typeof osInfo.buildDate === "number"
-                ? moment(osInfo.buildDate).utc().format("YYYY-MM-DD HH:mm [UTC]")
+                ? dayjs(osInfo.buildDate).utc().format("YYYY-MM-DD HH:mm [UTC]")
                 : "—",
     },
     {

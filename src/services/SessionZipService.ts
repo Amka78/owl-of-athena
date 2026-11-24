@@ -1,7 +1,7 @@
 //#region Import Modules
 import { strToU8, zipSync } from "fflate";
-import moment from "moment";
 import type { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import dayjs from "../utils/dayjs";
 import { buildSessionEventsCsv, buildSessionExportJson } from "./ExportService";
 //#endregion
 
@@ -18,7 +18,7 @@ const sessionIdPart = (session: AuroraSession): string => {
 };
 
 const sessionTimestamp = (session: AuroraSession): string => {
-    return moment.utc(session.sessionAt ?? 0).format("YYYYMMDD-HHmmss");
+    return dayjs.utc(session.sessionAt ?? 0).format("YYYYMMDD-HHmmss");
 };
 
 /** 1 セッション分の ZIP ファイル名。 */
@@ -28,7 +28,7 @@ export const buildSessionZipFileName = (session: AuroraSession): string => {
 
 /** 複数セッションをまとめた ZIP ファイル名。 */
 export const buildSessionCollectionZipFileName = (): string => {
-    return `sessions-${moment().format("YYYYMMDD-HHmmss")}.zip`;
+    return `sessions-${dayjs().format("YYYYMMDD-HHmmss")}.zip`;
 };
 
 const buildEntries = (item: SessionZipItem, prefix: string): Record<string, Uint8Array> => {

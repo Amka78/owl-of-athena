@@ -1,5 +1,5 @@
 //#region Import Modules
-import moment, { type Moment } from "moment";
+
 import { useCallback, useState } from "react";
 import { ConfirmDialog } from "../../components/molecules/ConfirmDialog";
 import { Message, MessageKeys } from "../../constants";
@@ -10,6 +10,7 @@ import {
     shareText,
 } from "../../services/ExportService";
 import type { CurrentChart } from "../../types/CurrentChart";
+import dayjs, { type Dayjs } from "../../utils/dayjs";
 import { useCheckLogging } from "../useCheckLogging";
 import { useSelectedSessionDetailSelector, useSelectedSessionSelector } from "./";
 
@@ -26,8 +27,8 @@ type Duration = {
 export const useSession = (): {
     selectedSession: AuroraSession;
     selectedSessionDetail: AuroraSessionDetail | undefined;
-    asleepAt?: Moment;
-    awakeAt?: Moment;
+    asleepAt?: Dayjs;
+    awakeAt?: Dayjs;
     sleepDuration?: Duration;
     remDuration?: Duration;
     deepDuration?: Duration;
@@ -64,8 +65,8 @@ export const useSession = (): {
     const [showAwakeningEvents, setShowAwakeningEvents] = useState(false);
     const [showButtonEvents, setShowButtonEvents] = useState(false);
 
-    let asleepAt: Moment | undefined;
-    let awakeAt: Moment | undefined;
+    let asleepAt: Dayjs | undefined;
+    let awakeAt: Dayjs | undefined;
     let sleepDuration: Duration | undefined;
     let remDuration: Duration | undefined;
     let deepDuration: Duration | undefined;
@@ -75,8 +76,8 @@ export const useSession = (): {
     radialProgress = 0;
 
     if (selectedSession) {
-        asleepAt = moment(selectedSession.asleepAt).utc();
-        awakeAt = moment(selectedSession.awakeAt).utc();
+        asleepAt = dayjs(selectedSession.asleepAt).utc();
+        awakeAt = dayjs(selectedSession.awakeAt).utc();
         sleepDuration = getDuration(selectedSession.sleepDuration);
         remDuration = getDuration(selectedSession.remDuration);
         deepDuration = getDuration(selectedSession.deepDuration);

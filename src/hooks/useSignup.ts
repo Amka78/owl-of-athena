@@ -1,6 +1,5 @@
 //#region Import Modules
 import { useNavigation } from "@react-navigation/native";
-import moment from "moment";
 import { useCallback, useState } from "react";
 import { Linking } from "react-native";
 
@@ -9,6 +8,7 @@ import { Message, MessageKeys } from "../constants";
 import type { checkBoxCoreFunctions } from "../hooks/useCheckBox";
 import { validate } from "../services/SignupService";
 import type { Signup } from "../types";
+import dayjs from "../utils/dayjs";
 import { useCheckBox, useTextBox } from "./";
 import type { useTextBoxReturn } from "./useTextBox";
 //#endregion
@@ -91,7 +91,7 @@ export const useSignup = (
                     firstName: signup.firstName,
                     lastName: signup.lastName,
                     birthday: signup.birthday
-                        ? moment(signup.birthday).format("YYYY-MM-DD")
+                        ? dayjs(signup.birthday).format("YYYY-MM-DD")
                         : undefined,
                     gender: signup.gender,
                     newsletter: signup.newsletter,

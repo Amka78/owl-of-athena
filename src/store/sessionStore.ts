@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
-import moment from "moment";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import type { AuroraSession, AuroraSessionDetail } from "../sdk/models";
+import dayjs, { type Dayjs } from "../utils/dayjs";
 
 export enum FilterByDateValues {
     ANY_TIME = "any_time",
@@ -46,16 +46,16 @@ function createFilteredSessionList(
     filterCondition: Partial<SessionFilterCondition>,
 ): AuroraSession[] {
     const filtered: AuroraSession[] = [];
-    let dateFrom: moment.Moment | undefined;
-    const dateTo = moment().utc();
+    let dateFrom: Dayjs | undefined;
+    const dateTo = dayjs().utc();
 
     if (filterCondition.byDate !== FilterByDateValues.ANY_TIME) {
         switch (filterCondition.byDate) {
             case FilterByDateValues.PAST_WEEK:
-                dateFrom = moment().utc().subtract(7, "days");
+                dateFrom = dayjs().utc().subtract(7, "days");
                 break;
             case FilterByDateValues.PAST_MONTH:
-                dateFrom = moment().utc().subtract(1, "month");
+                dateFrom = dayjs().utc().subtract(1, "month");
                 break;
         }
     }
@@ -68,7 +68,7 @@ function createFilteredSessionList(
             continue;
         }
         if (filterCondition.byDate !== FilterByDateValues.ANY_TIME) {
-            if (!moment(session.sessionAt).utc().isBetween(dateFrom, dateTo)) {
+            if (!dayjs(session.sessionAt).utc().isBetween(dateFrom, dateTo)) {
                 continue;
             }
         }

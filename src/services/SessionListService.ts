@@ -1,6 +1,7 @@
 //#region Import Modules
-import moment, { type Moment } from "moment";
+
 import type { AuroraSession } from "../sdk/models";
+import dayjs, { type Dayjs } from "../utils/dayjs";
 //#endregion
 
 //#region Types
@@ -16,13 +17,13 @@ export type SessionListRow =
  */
 export const buildSessionListRows = (
     sessions: AuroraSession[],
-    formatMonth: (sessionAt: Moment) => string,
+    formatMonth: (sessionAt: Dayjs) => string,
 ): SessionListRow[] => {
     const rows: SessionListRow[] = [];
     let currentMonth = "";
 
     for (const session of sessions) {
-        const sessionAt = moment(session.sessionAt);
+        const sessionAt = dayjs(session.sessionAt);
         const monthKey = sessionAt.format("YYYY-MM");
 
         if (monthKey !== currentMonth) {

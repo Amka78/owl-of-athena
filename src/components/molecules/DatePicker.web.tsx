@@ -1,36 +1,35 @@
 //#region Import Modules
-import "rc-calendar/assets/index.css";
+import "react-calendar/dist/Calendar.css";
 
-import moment from "moment";
-import Calendar from "rc-calendar";
 import React, { type FunctionComponent, useState } from "react";
+import Calendar from "react-calendar";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Menu } from "react-native-paper";
 
+import dayjs from "../../utils/dayjs";
 import { TextBox } from "../ui";
 import type { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component
 export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePickerProps) => {
-    const selectedDate = moment(props.selected);
+    const selectedDate = props.selected !== undefined ? dayjs(props.selected) : dayjs();
+    const [showCalendar, setShowCalendar] = useState(false);
+
     const calendar = (
         <Calendar
-            style={{ zIndex: 1001 }}
-            defaultValue={selectedDate}
-            showDateInput={false}
-            onChange={(date: moment.Moment | null): void => {
+            value={props.selected}
+            onChange={(value) => {
+                // selectRange 無効時は単一 Date が渡るが、Array の場合も耐える
+                const date = Array.isArray(value) ? value[0] : value;
                 if (date && props.onChange) {
-                    props.onChange(date.toDate());
+                    props.onChange(date);
                 }
-            }}
-            showOk={true}
-            onOk={(): void => {
                 setShowCalendar(false);
             }}
         />
     );
-    const [showCalendar, setShowCalendar] = useState(false);
+
     return (
         <Menu
             anchor={

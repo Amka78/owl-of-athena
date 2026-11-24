@@ -1,11 +1,11 @@
-import type { Moment } from "moment";
 import type { AuroraSession } from "../../sdk/models";
+import type { Dayjs } from "../../utils/dayjs";
 import { buildSessionListRows } from "../SessionListService";
 
 const session = (id: string, sessionAt: string): AuroraSession =>
     ({ id, sessionAt }) as unknown as AuroraSession;
 
-const formatMonth = (sessionAt: Moment): string => sessionAt.format("YYYY-MM");
+const formatMonth = (sessionAt: Dayjs): string => sessionAt.format("YYYY-MM");
 
 describe("SessionListService", () => {
     it("inserts a month header when the month changes", () => {

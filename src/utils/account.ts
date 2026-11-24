@@ -1,7 +1,7 @@
 //#region Import Modules
-import moment from "moment";
 
 import type { User } from "../types";
+import dayjs from "./dayjs";
 //#endregion
 
 //#region Types
@@ -17,11 +17,11 @@ export type AccountEdits = {
 
 //#region Functions
 /** 誕生日は iOS 版と同じ "yyyy-MM-dd"（端末ローカル）で保存する。 */
-export const formatBirthday = (date: Date): string => moment(date).format("YYYY-MM-DD");
+export const formatBirthday = (date: Date): string => dayjs(date).format("YYYY-MM-DD");
 
 /** "yyyy-MM-dd" を UTC として解釈すると日付がずれるため、ローカルの日付として読む。 */
 export const parseBirthday = (value?: string): Date => {
-    const parsed = moment(value, "YYYY-MM-DD", true);
+    const parsed = dayjs(value, "YYYY-MM-DD", true);
     if (parsed.isValid()) return parsed.toDate();
 
     const fallback = new Date(value ?? Date.now());

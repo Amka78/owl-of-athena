@@ -12,16 +12,16 @@ export const SessionScreen: FunctionComponent = () => {
     return (
         <SessionScreenTemplate
             asleepAtTimeLabel={{
-                hours: sessionHook.asleepAt!.hours(),
-                minutes: sessionHook.asleepAt!.minutes(),
+                hours: sessionHook.asleepAt!.hour(),
+                minutes: sessionHook.asleepAt!.minute(),
             }}
             chartRadialProgress={{
                 value: sessionHook.radialProgress,
                 valueLabel: sessionHook.radialProgress.toString(),
             }}
             awakeTimeLabel={{
-                hours: sessionHook.awakeAt!.hours(),
-                minutes: sessionHook.awakeAt!.minutes(),
+                hours: sessionHook.awakeAt!.hour(),
+                minutes: sessionHook.awakeAt!.minute(),
             }}
             leftSelectButton={{
                 onPress: sessionHook.chartSelectButtonPress,

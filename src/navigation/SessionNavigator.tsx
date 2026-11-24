@@ -1,12 +1,12 @@
 //#region Import Modules
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import moment from "moment";
 import type * as React from "react";
 
 import { SessionListScreen } from "../components/pages";
 import { Message, MessageKeys } from "../constants";
 import { useWindowDimensions } from "../hooks";
 import { useSelectedSessionSelector } from "../hooks/sessions";
+import dayjs from "../utils/dayjs";
 import SessionTabNavigator from "./SessionTabNavigator";
 import { StackCommonScreenOptions } from "./StackSettings";
 
@@ -19,7 +19,7 @@ const SessionNavigator = (): React.ReactNode => {
     const sessionSelector = useSelectedSessionSelector();
     const dimens = useWindowDimensions();
     const title = sessionSelector
-        ? moment(sessionSelector?.sessionAt).format(Message.get(MessageKeys.date_format))
+        ? dayjs(sessionSelector?.sessionAt).format(Message.get(MessageKeys.date_format))
         : "";
 
     return (

@@ -1,11 +1,10 @@
 //#region Import Modules
 import * as d3 from "d3";
-import moment from "moment";
 import React, { type FC } from "react";
 import { Defs, G, LinearGradient, Path, Stop, Text } from "react-native-svg";
-
 import { Colors } from "../../constants";
 import type { AuroraEvent } from "../../sdk/models";
+import dayjs from "../../utils/dayjs";
 import {
     type Axis,
     ChartCore,
@@ -193,8 +192,8 @@ const buildXAxisLabels = (
             color: Colors.white,
             label:
                 tickInterval === "default"
-                    ? moment(value).utc().format("h:mm a").replace(":00", "").slice(0, -1)
-                    : moment(value).utc().format("h"),
+                    ? dayjs(value).utc().format("h:mm a").replace(":00", "").slice(0, -1)
+                    : dayjs(value).utc().format("h"),
             scale: value,
         });
     });

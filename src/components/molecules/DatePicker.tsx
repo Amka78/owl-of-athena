@@ -1,18 +1,18 @@
 //#region Import Modules
 import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment";
 import { type FunctionComponent, useCallback, useState } from "react";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import dayjs, { type Dayjs } from "../../utils/dayjs";
 import { TextBox } from "../ui/TextBox";
 import type { DatePickerProps } from "./DatePickerProps";
 //#endregion
 
 //#region Component
 export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePickerProps) => {
-    const [date, setDate] = useState<moment.Moment | undefined>(
-        props.selected ? moment(props.selected) : undefined,
+    const [date, setDate] = useState<Dayjs | undefined>(
+        props.selected ? dayjs(props.selected) : undefined,
     );
     const [showDateTimePicker, setShowDateTimePicker] = useState(false);
 
@@ -32,7 +32,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = (props: DatePicker
             console.debug(`event:${event}`);
             setShowDateTimePicker(false);
             if (selectedDate) {
-                setDate(moment(selectedDate));
+                setDate(dayjs(selectedDate));
                 props.onChange?.(selectedDate);
             }
         },

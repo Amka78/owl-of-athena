@@ -9,8 +9,8 @@ vi.mock("../../../hooks/sessions/useSession", () => ({
     useSession: () => ({
         selectedSession: {},
         selectedSessionDetail: {},
-        asleepAt: { hours: () => 22, minutes: () => 30 },
-        awakeAt: { hours: () => 6, minutes: () => 0 },
+        asleepAt: { hour: () => 22, minute: () => 30 },
+        awakeAt: { hour: () => 6, minute: () => 0 },
         sleepDuration: { hours: 7, minutes: 30 },
         remDuration: { hours: 1, minutes: 45 },
         deepDuration: { hours: 2, minutes: 15 },

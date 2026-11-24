@@ -1,10 +1,10 @@
 //#region Import Modules
-import moment from "moment";
 import React, { type FC } from "react";
 import { Circle, G, Line, Path, Rect, Text as SvgText } from "react-native-svg";
 
 import { Colors } from "../../constants";
 import type { AuroraEvent } from "../../sdk/models";
+import dayjs from "../../utils/dayjs";
 import { ChartCore, getXScale } from "./ChartCore";
 import { ClippedG } from "./ClippedG";
 //#endregion
@@ -77,7 +77,7 @@ export const SessionTimelineChart: FC<SessionTimelineChartProps> = (
                     fontSize={10}
                     textAnchor={"middle"}
                 >
-                    {moment(date).utc().format("h a")}
+                    {dayjs(date).utc().format("h a")}
                 </SvgText>
             ))}
 
@@ -165,7 +165,7 @@ const TimelineBoundary: FC<{ x: number; date: number; color: string; height: num
                 strokeDasharray={"3,3"}
             ></Line>
             <SvgText x={props.x} y={10} fill={props.color} fontSize={10} textAnchor={"middle"}>
-                {moment(props.date).utc().format("h:mm a")}
+                {dayjs(props.date).utc().format("h:mm a")}
             </SvgText>
         </G>
     );

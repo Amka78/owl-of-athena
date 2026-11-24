@@ -1,5 +1,5 @@
 import { EventEmitter } from "events";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import AuroraCmdResponseParser from "./AuroraCmdResponseParser";
 import {
     EVENT_ID_MAX,
@@ -297,7 +297,7 @@ export default class AuroraSerialParser extends EventEmitter {
                     // @ts-expect-error
                     typeId: LogNamesToTypeIds[logParts[1].toUpperCase()],
                     type: logParts[1].toUpperCase(),
-                    time: +moment(logParts[2], "HH:mm:ss.SSS", true),
+                    time: +dayjs(logParts[2], "HH:mm:ss.SSS", true),
                     message: logParts[3],
                 });
 

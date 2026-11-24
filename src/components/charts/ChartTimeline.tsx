@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 import "d3-selection-multi";
 import type * as d3Multi from "d3-selection-multi";
-import moment from "moment";
 import PropTypes from "prop-types";
+import dayjs from "../../utils/dayjs";
 import Chart, { type ChartProps } from "./Chart";
 
 // d3-selection-multi の .styles/.attrs は prototype パッチ依存で、browser の
@@ -55,7 +55,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .tickFormat((d, i) =>
                 !i || i % 6
                     ? ""
-                    : moment(d as Date)
+                    : dayjs(d as Date)
                           .utc()
                           .format("h:mm a")
                           .replace(":00", "")
@@ -138,7 +138,7 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
             .attr("font-size", (d) => d.labelSize || eventLabelSize)
             .text((d: any) => {
                 return d.label
-                    .replace("${time}", moment(d.date).utc().format("h:mm a").slice(0, -1))
+                    .replace("${time}", dayjs(d.date).utc().format("h:mm a").slice(0, -1))
                     .replace("${flags}", d.flags > 1 ? d.flags : "");
             })
             .call((sel: any) => {

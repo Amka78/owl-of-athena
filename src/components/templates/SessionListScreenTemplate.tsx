@@ -1,5 +1,4 @@
 //#region Import Modules
-import moment from "moment";
 import type React from "react";
 import type { FunctionComponent } from "react";
 import { Text, type TextStyle, View, type ViewStyle } from "react-native";
@@ -8,6 +7,7 @@ import { Colors, Message, MessageKeys } from "../../constants";
 import { useLocale, useScreenDimensions } from "../../hooks";
 import type { AuroraSession } from "../../sdk/models";
 import { buildSessionListRows } from "../../services/SessionListService";
+import dayjs from "../../utils/dayjs";
 import { ChartRadialProgress } from "../charts";
 import { SessionListMenu, type SessionListMenuProps } from "../features/sessions/SessionListMenu";
 import { DeleteIcon, ListItem, ScrollableList, StandardView, StarIcon } from "../ui";
@@ -59,7 +59,7 @@ export const SessionListScreenTemplate: FunctionComponent<SessionListScreenTempl
                     }
 
                     const value = row.session;
-                    const sessionAt = moment(value.sessionAt);
+                    const sessionAt = dayjs(value.sessionAt);
                     return (
                         <ListItem
                             key={row.key}
