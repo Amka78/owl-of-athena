@@ -1,7 +1,6 @@
 import * as d3 from "d3";
 import "d3-selection-multi";
 import type * as d3Multi from "d3-selection-multi";
-import PropTypes from "prop-types";
 import dayjs from "../../utils/dayjs";
 import Chart, { type ChartProps } from "./Chart";
 
@@ -245,28 +244,6 @@ export default class ChartTimeline extends Chart<ChartTimeLineProps> {
         props.y = this.scaleY!(props.y);
 
         return props;
-    };
-
-    static propTypes = {
-        ...Chart.propTypes,
-
-        events: PropTypes.array,
-
-        eventPlacement: PropTypes.oneOf(["above", "below"]),
-
-        eventTickStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-        eventTickWidth: PropTypes.number,
-        eventTickColor: PropTypes.string,
-        eventTickSize: PropTypes.number,
-
-        eventLabelStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-        eventLabelPosition: PropTypes.oneOf(["left", "center", "right"]),
-        eventLabelColor: PropTypes.string,
-        eventLabelSize: PropTypes.number,
-
-        eventIconStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-        eventIconColor: PropTypes.string,
-        eventIconSize: PropTypes.number,
     };
 
     static defaultProps = {

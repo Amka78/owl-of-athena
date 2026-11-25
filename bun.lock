@@ -89,7 +89,6 @@
         "@types/noble": "0.0.40",
         "@types/node": "^24",
         "@types/node-fetch": "^2.5.10",
-        "@types/prop-types": "^15.7.15",
         "@types/react": "19.3.0",
         "@types/react-native-vector-icons": "^6.4.18",
         "@types/react-test-renderer": "^19.0.0",
@@ -918,8 +917,6 @@
     "@types/node": ["@types/node@24.19.2", "", { "dependencies": { "undici-types": ">=7.24.0 <7.24.7" } }, "sha512-93d49wCWJkCyN87MxLpNN6KXPCwFw7bVUg79mGUV1OS40JGWwVCr8n61DXCSqz7CV6/VfPkb7xec7uP2M+QHWQ=="],
 
     "@types/node-fetch": ["@types/node-fetch@2.5.10", "", { "dependencies": { "@types/node": "*", "form-data": "^3.0.0" } }, "sha512-IpkX0AasN44hgEad0gEF/V6EgR5n69VEqPEgnmoM8GsIGro3PowbWs4tR6IhxUTyPLpOn+fiGG6nrQhcmoCuIQ=="],
-
-    "@types/prop-types": ["@types/prop-types@15.7.15", "", {}, "sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw=="],
 
     "@types/qs": ["@types/qs@6.9.6", "", {}, "sha512-0/HnwIfW4ki2D8L8c9GVcG5I72s9jP5GSLVF0VIXDW00kmIpA6O33G7a8n59Tmh7Nz0WUC3rSb7PTY/sdW2JzA=="],
 

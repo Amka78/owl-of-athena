@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import PropTypes from "prop-types";
 import dayjs from "../../utils/dayjs";
 import Chart, { type ChartProps } from "./Chart";
 
@@ -54,11 +53,6 @@ export default class ChartLine extends Chart<ChartProps> {
     processData(): void {
         return;
     }
-
-    static propTypes = {
-        ...Chart.propTypes,
-        data: PropTypes.arrayOf(PropTypes.array).isRequired,
-    };
 
     static defaultProps = {
         ...Chart.defaultProps,

@@ -1,6 +1,5 @@
 import * as d3 from "d3";
 import sortBy from "lodash/sortBy";
-import PropTypes from "prop-types";
 import React, { type CSSProperties } from "react";
 import type { ViewStyle } from "react-native";
 
@@ -391,56 +390,6 @@ export default class Chart<T extends ChartProps> extends React.Component<T> {
 
         this.brushGroup!.transition().call(this.brush!.move, newSelection.map(this.scaleX!));
     }
-
-    static propTypes = {
-        height: PropTypes.number.isRequired,
-        width: PropTypes.number.isRequired,
-
-        margin: PropTypes.shape({
-            top: PropTypes.number,
-            bottom: PropTypes.number,
-            left: PropTypes.number,
-            right: PropTypes.number,
-        }),
-
-        containerStyle: PropTypes.object,
-
-        axisMargin: PropTypes.shape({
-            top: PropTypes.number,
-            bottom: PropTypes.number,
-            left: PropTypes.number,
-            right: PropTypes.number,
-        }),
-
-        dataBins: PropTypes.arrayOf(PropTypes.number),
-        dataBinThreshold: PropTypes.number,
-
-        clipToRange: PropTypes.bool,
-
-        title: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-        titleSize: PropTypes.number,
-        titleColor: PropTypes.string,
-
-        transition: PropTypes.number,
-
-        zoomX: PropTypes.bool,
-        zoomY: PropTypes.bool,
-
-        scaleXDomain: PropTypes.arrayOf(PropTypes.number),
-        scaleYDomain: PropTypes.arrayOf(PropTypes.number),
-
-        axisXEnabled: PropTypes.bool,
-        axisXColor: PropTypes.string,
-        axisXLabelSize: PropTypes.number,
-        axisXLabelColor: PropTypes.string,
-        axisXLabelPadding: PropTypes.number,
-
-        axisYenabled: PropTypes.bool,
-        axisYColor: PropTypes.string,
-        axisYLabelSize: PropTypes.number,
-        axisYLabelColor: PropTypes.string,
-        axisYLabelPadding: PropTypes.number,
-    };
 
     static defaultProps = {
         margin: { top: 32, right: 32, bottom: 32, left: 32 },

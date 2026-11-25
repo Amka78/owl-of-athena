@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 //#region Import Modules
 import { createDrawerNavigator, type DrawerNavigationProp } from "@react-navigation/drawer";
 import type { ParamListBase } from "@react-navigation/native";
