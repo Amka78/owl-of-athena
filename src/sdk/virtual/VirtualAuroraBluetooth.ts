@@ -27,13 +27,13 @@ export class VirtualAuroraBluetooth extends EventEmitter {
     private device: VirtualAuroraDevice;
     private pendingResponseBuffer?: Buffer;
 
-    constructor() {
+    constructor(device?: VirtualAuroraDevice) {
         super();
 
         this.connectionState = ConnectionStates.INIT;
         this.disconnectPending = false;
 
-        this.device = new VirtualAuroraDevice();
+        this.device = device ?? new VirtualAuroraDevice();
         this.bluetoothParser = new AuroraBluetoothParser();
         this.bluetoothParser.on("parseError", this.onParseError);
         this.bluetoothParser.on("cmdResponseRead", this.onParseCmdResponseRead);
